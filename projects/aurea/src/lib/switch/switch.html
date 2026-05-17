@@ -1,0 +1,50 @@
+<div class="au-switch__field">
+  @if (label()) {
+    <div class="au-switch__label-host">
+      <label class="au-switch__label" [attr.for]="resolvedId()">
+        {{ label() }}
+        @if (required() && showRequired()) {
+          <span class="au-switch__required" aria-hidden="true" title="Required">*</span>
+          <span class="au-sr-only">(required)</span>
+        }
+      </label>
+    </div>
+  }
+
+  <div
+    class="au-switch__control-row"
+    [class.au-switch__control-row--from-tab]="fieldFocusByTab()"
+    (focusin)="onControlRowFocusin()"
+    (focusout)="onControlRowFocusout($event)"
+  >
+    <input
+      #inputEl
+      class="au-switch__element"
+      type="checkbox"
+      role="switch"
+      [id]="resolvedId()"
+      [attr.name]="name() || null"
+      [checked]="checked()"
+      [attr.aria-checked]="checked() ? 'true' : 'false'"
+      [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+      [attr.aria-errormessage]="isInvalid() ? errorId() : null"
+      [attr.aria-describedby]="ariaDescribedBy() ?? null"
+      [attr.aria-required]="required() ? 'true' : null"
+      [disabled]="disabled()"
+      [attr.required]="required() ? true : null"
+      (change)="onChange($event)"
+      (blur)="onBlurHost()"
+    />
+  </div>
+
+  @if (hint().trim()) {
+    <p [id]="hintId()" class="au-switch__hint">{{ hint() }}</p>
+  }
+
+  @if (isInvalid()) {
+    <div [id]="errorId()" class="au-switch__error" role="alert">
+      <span class="au-switch__error-glyph" aria-hidden="true">×</span>
+      <span class="au-switch__error-text">{{ displayError() }}</span>
+    </div>
+  }
+</div>
