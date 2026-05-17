@@ -9,6 +9,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
 
 type CheckboxSize = 'sm' | 'md' | 'lg';
@@ -17,9 +18,12 @@ type CheckboxSize = 'sm' | 'md' | 'lg';
  * Aurea design system Checkbox component.
  *
  * @remarks
+ * - **Signal forms:** implements {@link FormCheckboxControl}; bind `[formField]` so `errors` and `invalid`
+ *   stay in sync with your `form()` schema (boolean field).
+ * - **Classic:** use `[(checked)]` and set `errorMessage` and/or `invalid` from the parent.
  * - **Signals:** uses Angular signals (`input()`, `model()`).
  * - **Accessibility:** native `<input type="checkbox">` with programmatic label association.
- *   Uses `aria-checked` for state, supports indeterminate via `aria-pressed`.
+ *   Uses `aria-checked` for state; indeterminate uses `aria-checked="mixed"`.
  * - **Focus:** outer ring on Tab, inset ring on click (`tabFocusState` + `--from-tab` CSS).
  * - **Sizes:** sm (compact), md (default), lg (touch-friendly 44px).
  *
@@ -39,8 +43,11 @@ type CheckboxSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Checkbox {
-  /** Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind directly. */
+export class Checkbox implements FormCheckboxControl {
+  /**
+   * Current checked state — required by {@link FormCheckboxControl}.
+   * Use `[(checked)]` or bind through `formField` (directive writes into the model).
+   */
   readonly checked = model<boolean>(false);
 
   /** Visible label; rendered as `<label for="…">` linked to the input `id`. */
@@ -48,6 +55,13 @@ export class Checkbox {
 
   /** Additional description text below the label. */
   readonly description = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+
+  /** Manual error message (without signal forms, or in addition). */
+  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  /** Errors from signal forms via `formField` (directive populates this when bound). */
+  readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
+  /** Explicit invalid flag from parent (e.g. `formField`). */
+  readonly invalid = input(false);
 
   /** Disables interaction; inherits native `disabled` behavior. */
   readonly disabled = input(false);
@@ -89,6 +103,25 @@ export class Checkbox {
   });
 
   readonly descriptionId = computed(() => `${this.resolvedId()}-desc`);
+  readonly errorId = computed(() => `${this.resolvedId()}-error`);
+
+  readonly displayError = computed(() => {
+    const manual = this.errorMessage().trim();
+    if (manual.length > 0) {
+      return manual;
+    }
+    const list = this.errors();
+    if (list.length === 0) {
+      return '';
+    }
+    const first = list[0]!;
+    return (first.message ?? first.kind) || '';
+  });
+
+  readonly isInvalid = computed(() => this.displayError().length > 0);
+
+  /** Field `invalid` or visible UI error. */
+  readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
 
   readonly isChecked = computed(() => this.effectiveChecked());
 

@@ -1,6 +1,7 @@
 <div
   class="au-checkbox__wrapper"
   [class.au-checkbox__wrapper--from-tab]="focusByTab()"
+  [class.au-checkbox__wrapper--invalid]="effectiveInvalid()"
   (focusin)="onFocusin()"
   (focusout)="onFocusout($event)"
 >
@@ -13,17 +14,32 @@
     [checked]="isChecked()"
     [attr.aria-checked]="effectiveAriaChecked()"
     [attr.aria-describedby]="ariaDescribedBy() ?? null"
+    [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+    [attr.aria-errormessage]="isInvalid() ? errorId() : null"
     [attr.aria-required]="required() ? 'true' : null"
     [disabled]="disabled()"
     [attr.required]="required() ? true : null"
     (change)="onChange($event)"
   />
 
-  @if (label()) {
-    <label class="au-checkbox__label" [attr.for]="resolvedId()">{{ label() }}@if (required()) {<span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>}</label>
-  }
+  @if (label() || description().trim() || displayError()) {
+    <div class="au-checkbox__content">
+      @if (label()) {
+        <label class="au-checkbox__label" [attr.for]="resolvedId()">
+          {{ label() }}@if (required()) {<span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>}
+        </label>
+      }
 
-  @if (description().trim()) {
-    <p [id]="descriptionId()" class="au-checkbox__description">{{ description() }}</p>
+      @if (description().trim()) {
+        <p [id]="descriptionId()" class="au-checkbox__description">{{ description() }}</p>
+      }
+
+      @if (displayError()) {
+        <p [id]="errorId()" class="au-checkbox__error" role="alert">
+          <span class="au-checkbox__error-glyph" aria-hidden="true">×</span>
+          <span class="au-checkbox__error-text">{{ displayError() }}</span>
+        </p>
+      }
+    </div>
   }
 </div>

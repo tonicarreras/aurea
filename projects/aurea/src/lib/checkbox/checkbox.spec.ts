@@ -75,6 +75,58 @@ describe('Checkbox', () => {
     expect(desc?.nativeElement.textContent?.trim()).toBe('Weekly updates');
   });
 
+  it('shows manual errorMessage, aria-invalid, and aria-errormessage', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('errorMessage', 'You must accept.');
+    fix.detectChanges();
+    const input = queryInput(fix);
+    const err = fix.debugElement.query(By.css('.au-checkbox__error'));
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(input.getAttribute('aria-errormessage')).toBe(err?.nativeElement.id);
+    expect(err?.nativeElement.getAttribute('role')).toBe('alert');
+    expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('You must accept.');
+    const wrap = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
+    expect(wrap.classList.contains('au-checkbox__wrapper--invalid')).toBe(true);
+  });
+
+  it('uses first signal-form errors entry when errorMessage is empty', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Required field' }]);
+    fix.detectChanges();
+    const err = fix.debugElement.query(By.css('.au-checkbox__error'));
+    expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Required field');
+  });
+
+  it('uses kind when message missing in errors', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
+    fix.detectChanges();
+    const err = fix.debugElement.query(By.css('.au-checkbox__error-text'));
+    expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
+  });
+
+  it('displayError returns empty when first error has no usable message or kind', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
+    fix.detectChanges();
+    expect(fix.componentInstance.displayError()).toBe('');
+  });
+
+  it('sets aria-invalid from invalid input without visible error text', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('invalid', true);
+    fix.detectChanges();
+    const input = queryInput(fix);
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(fix.debugElement.query(By.css('.au-checkbox__error'))).toBeNull();
+    expect(input.getAttribute('aria-errormessage')).toBeNull();
+  });
+
   it('does not emit when disabled', () => {
     const fix = TestBed.createComponent(Checkbox);
     fix.componentRef.setInput('disabled', true);
@@ -179,13 +231,15 @@ describe('Checkbox', () => {
     expect(wrap.classList.contains('au-checkbox__wrapper--from-tab')).toBe(false);
   });
 
-  it('normalizes nullish label and description transforms', () => {
+  it('normalizes nullish label, description, and errorMessage transforms', () => {
     const fix = TestBed.createComponent(Checkbox);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('description', undefined as unknown as string);
+    fix.componentRef.setInput('errorMessage', null as unknown as string);
     fix.detectChanges();
     expect(fix.componentInstance.label()).toBe('');
     expect(fix.componentInstance.description()).toBe('');
+    expect(fix.componentInstance.errorMessage()).toBe('');
   });
 
   it('stringifies non-null label and description', () => {

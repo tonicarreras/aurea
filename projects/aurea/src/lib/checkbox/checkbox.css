@@ -38,6 +38,16 @@
   user-select: none;
 }
 
+/* Label + description + error stack to the right of the box */
+.au-checkbox__content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-1);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Checkbox input: hide native, show custom box with checkmark */
 /* -------------------------------------------------------------------------- */
@@ -219,10 +229,52 @@
 .au-checkbox__description {
   display: block;
   width: 100%;
-  margin: var(--au-space-1) 0 0 0;
+  margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-tertiary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Validation (signal forms + manual) */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__wrapper--invalid .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-color-form-error);
+  box-shadow: 0 0 0 1px var(--au-color-form-error);
+}
+
+.au-checkbox__wrapper--invalid .au-checkbox__element:checked:not(:disabled),
+.au-checkbox__wrapper--invalid .au-checkbox__element:indeterminate:not(:disabled) {
+  box-shadow: 0 0 0 2px var(--au-color-form-error);
+}
+
+.au-checkbox__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1);
+  width: 100%;
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-semantic-error-contrast);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-checkbox__error-glyph {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 0.9em;
+  line-height: inherit;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  translate: 0 0.05em;
+}
+
+.au-checkbox__error-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--au-weight-regular);
 }
 
 /* -------------------------------------------------------------------------- */

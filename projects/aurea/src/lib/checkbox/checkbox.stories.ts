@@ -13,7 +13,7 @@ const meta: Meta<Checkbox> = {
   argTypes: {
     checked: {
       control: 'boolean',
-      description: 'Current checked state (`ModelSignal<boolean | "indeterminate">`). Use `[(checked)]`.',
+      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',
       table: { category: 'Value' },
     },
     checkedChange: {
@@ -38,6 +38,21 @@ const meta: Meta<Checkbox> = {
     required: {
       control: 'boolean',
       description: 'Sets native `required` and `aria-required`.',
+      table: { category: 'Validation' },
+    },
+    errorMessage: {
+      control: 'text',
+      description: 'Manual error copy (shown when non-empty).',
+      table: { category: 'Validation' },
+    },
+    errors: {
+      control: 'object',
+      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',
+      table: { category: 'Validation' },
+    },
+    invalid: {
+      control: 'boolean',
+      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',
       table: { category: 'Validation' },
     },
     size: {
@@ -167,13 +182,30 @@ export const Required: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',
+        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the label shows a decorative asterisk.',
       },
     },
   },
   args: {
     label: 'I agree to the terms',
     required: true,
+    size: 'md',
+  },
+};
+
+export const WithErrorMessage: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',
+      },
+    },
+  },
+  args: {
+    label: 'I accept the privacy policy',
+    errorMessage: 'This field is required to continue.',
+    checked: false,
     size: 'md',
   },
 };
@@ -216,25 +248,6 @@ export const FocusRing: Story = {
   },
   args: {
     label: 'Focus demo',
-    size: 'md',
-  },
-};
-
-export const DarkTheme: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Dark theme via `data-au-theme="dark"` — tokens switch to dark palette automatically.',
-      },
-    },
-  },
-  render: (args) => ({
-    props: args,
-    template: `<div data-au-theme="dark"><au-checkbox [label]="label" [checked]="checked" [disabled]="disabled" [size]="size" /></div>`,
-  }),
-  args: {
-    label: 'Dark mode checkbox',
-    checked: true,
     size: 'md',
   },
 };
