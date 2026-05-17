@@ -7,9 +7,14 @@ export const tabFocusState = (() => {
   let documentListeners = false;
   return {
     attach() {
-      if (documentListeners || typeof document === 'undefined') {
+      if (documentListeners) {
         return;
       }
+      /* v8 ignore start -- `document` exists in jsdom/browser tests */
+      if (typeof document === 'undefined') {
+        return;
+      }
+      /* v8 ignore stop */
       documentListeners = true;
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {

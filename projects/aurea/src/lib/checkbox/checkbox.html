@@ -20,12 +20,7 @@
   />
 
   @if (label()) {
-    <label class="au-checkbox__label" [attr.for]="resolvedId()">
-      {{ label() }}
-      @if (required()) {
-        <span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>
-      }
-    </label>
+    <label class="au-checkbox__label" [attr.for]="resolvedId()">{{ label() }}@if (required()) {<span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>}</label>
   }
 
   @if (description().trim()) {

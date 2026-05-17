@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { expect } from '@vitest/expect';
+import { By } from '@angular/platform-browser';
 import { Button } from './button';
 
 describe('Button', () => {
@@ -39,14 +39,14 @@ describe('Button', () => {
   });
 
   it('sets data-au-size attribute', () => {
-    component.size.set('lg');
+    fixture.componentRef.setInput('size', 'lg');
     fixture.detectChanges();
     const host = fixture.nativeElement;
     expect(host.getAttribute('data-au-size')).toBe('lg');
   });
 
   it('sets data-au-variant attribute', () => {
-    component.variant.set('outline');
+    fixture.componentRef.setInput('variant', 'outline');
     fixture.detectChanges();
     const host = fixture.nativeElement;
     expect(host.getAttribute('data-au-variant')).toBe('outline');
@@ -63,7 +63,7 @@ describe('Button', () => {
   });
 
   it('does not emit click when disabled', () => {
-    component.disabled.set(true);
+    fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
     const emitted: MouseEvent[] = [];
@@ -76,7 +76,7 @@ describe('Button', () => {
   });
 
   it('does not emit click when loading', () => {
-    component.loading.set(true);
+    fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 
     const emitted: MouseEvent[] = [];
@@ -89,7 +89,7 @@ describe('Button', () => {
   });
 
   it('sets aria-busy when loading', () => {
-    component.loading.set(true);
+    fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
@@ -97,10 +97,58 @@ describe('Button', () => {
   });
 
   it('sets disabled attribute when disabled', () => {
-    component.disabled.set(true);
+    fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
     expect(button.hasAttribute('disabled')).toBe(true);
+  });
+
+  it('focus() forwards to native button', () => {
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    const spy = vi.spyOn(button, 'focus');
+    component.focus();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('sets native name, type, and aria-label from inputs', () => {
+    fixture.componentRef.setInput('name', 'submit-btn');
+    fixture.componentRef.setInput('type', 'submit');
+    fixture.componentRef.setInput('label', 'Send form');
+    fixture.detectChanges();
+    const btn = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    expect(btn.getAttribute('name')).toBe('submit-btn');
+    expect(btn.getAttribute('type')).toBe('submit');
+    expect(btn.getAttribute('aria-label')).toBe('Send form');
+  });
+
+  it('applies from-tab class after Tab then focusin', () => {
+    const btnDe = fixture.debugElement.query(By.css('button'))!;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    btnDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fixture.detectChanges();
+    expect(btnDe.nativeElement.classList.contains('au-button__element--from-tab')).toBe(true);
+    btnDe.triggerEventHandler('focusout', new FocusEvent('focusout'));
+    fixture.detectChanges();
+    expect(btnDe.nativeElement.classList.contains('au-button__element--from-tab')).toBe(false);
+  });
+
+  it('prevents default on click when disabled', () => {
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+    const btnDe = fixture.debugElement.query(By.css('button'))!;
+    const ev = new MouseEvent('click', { cancelable: true });
+    btnDe.triggerEventHandler('click', ev);
+    expect(ev.defaultPrevented).toBe(true);
+  });
+
+  it('prevents default on click when loading', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    const btnDe = fixture.debugElement.query(By.css('button'))!;
+    const ev = new MouseEvent('click', { cancelable: true });
+    btnDe.triggerEventHandler('click', ev);
+    expect(ev.defaultPrevented).toBe(true);
   });
 });

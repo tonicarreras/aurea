@@ -6,3 +6,4 @@ export * from './lib/checkbox';
 export * from './lib/input-text';
 export * from './lib/select';
 export * from './lib/textarea';
+export * from './lib/theme';

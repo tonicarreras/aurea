@@ -87,7 +87,7 @@ describe('Select', () => {
     const options = fix.debugElement.queryAll(By.css('option'));
     expect(options.length).toBe(4); // placeholder + 3 options
     expect(options[0].nativeElement.value).toBe('');
-    expect(options[0].nativeElement.textContent).toBe('Select one...');
+    expect(options[0].nativeElement.textContent?.trim()).toBe('Select one...');
   });
 
   it('renders option disabled when option has disabled flag', () => {
@@ -108,5 +108,152 @@ describe('Select', () => {
     fix.detectChanges();
     const label = fix.debugElement.query(By.css('.au-select__label'));
     expect(label?.nativeElement.textContent).toContain('Choose option');
+  });
+
+  it('sets hint and aria-describedby on the select', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('hint', 'Pick any');
+    fix.detectChanges();
+    const sel = querySelect(fix);
+    const hint = fix.debugElement.query(By.css('.au-select__hint'))!.nativeElement;
+    expect(sel.getAttribute('aria-describedby')).toBe(hint.id);
+    expect(hint.textContent?.trim()).toBe('Pick any');
+  });
+
+  it('emits blur from native select blur', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    let n = 0;
+    fix.componentInstance.blur.subscribe(() => n++);
+    fix.detectChanges();
+    querySelect(fix).dispatchEvent(new FocusEvent('blur'));
+    expect(n).toBe(1);
+  });
+
+  it('focus() focuses the native select', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    const sel = querySelect(fix);
+    const spy = vi.spyOn(sel, 'focus');
+    fix.componentInstance.focus();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('shows displayError from errors when no manual message', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Field required' }] as any);
+    fix.detectChanges();
+    const err = fix.debugElement.query(By.css('.au-select__error-text'));
+    expect(err?.nativeElement.textContent?.trim()).toBe('Field required');
+  });
+
+  it('falls back to kind when message missing', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('errors', [{ kind: 'broken' }] as any);
+    fix.detectChanges();
+    const err = fix.debugElement.query(By.css('.au-select__error-text'));
+    expect(err?.nativeElement.textContent?.trim()).toBe('broken');
+  });
+
+  it('marks aria-invalid when invalid without visible error', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('invalid', true);
+    fix.detectChanges();
+    expect(querySelect(fix).getAttribute('aria-invalid')).toBe('true');
+  });
+
+  it('hides required asterisk when showRequired is false', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('label', 'Country');
+    fix.componentRef.setInput('required', true);
+    fix.componentRef.setInput('showRequired', false);
+    fix.detectChanges();
+    const label = fix.debugElement.query(By.css('.au-select__label'))!.nativeElement;
+    expect(label.textContent).not.toContain('*');
+  });
+
+  it('omits placeholder option when placeholder empty', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    expect(fix.debugElement.queryAll(By.css('option')).length).toBe(3);
+  });
+
+  it('generates id when id omitted', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    expect(querySelect(fix).id.startsWith('au-select-')).toBe(true);
+  });
+
+  it('onControlRowFocusout ignores non-HTMLElement currentTarget', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
+  });
+
+  it('onControlRowFocusout returns when focus stays inside control row', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
+    const sel = querySelect(fix);
+    const ev = new FocusEvent('focusout', { relatedTarget: sel });
+    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    fix.componentInstance.onControlRowFocusout(ev);
+  });
+
+  it('prefers manual errorMessage over errors', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('errorMessage', 'Manual');
+    fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
+    fix.detectChanges();
+    expect(fix.debugElement.query(By.css('.au-select__error-text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+  });
+
+  it('applies and clears from-tab on control row', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    fix.debugElement.query(By.css('.au-select__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.detectChanges();
+    expect(row.classList.contains('au-select__control-row--from-tab')).toBe(true);
+    const out = new FocusEvent('focusout', { relatedTarget: document.body });
+    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    fix.componentInstance.onControlRowFocusout(out);
+    fix.detectChanges();
+    expect(row.classList.contains('au-select__control-row--from-tab')).toBe(false);
+  });
+
+  it('normalizes nullish string inputs in transforms', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('label', null as unknown as string);
+    fix.componentRef.setInput('hint', undefined as unknown as string);
+    fix.componentRef.setInput('errorMessage', null as unknown as string);
+    fix.componentRef.setInput('placeholder', undefined as unknown as string);
+    fix.detectChanges();
+    expect(fix.componentInstance.label()).toBe('');
+    expect(fix.componentInstance.hint()).toBe('');
+    expect(fix.componentInstance.errorMessage()).toBe('');
+    expect(fix.componentInstance.placeholder()).toBe('');
+  });
+
+  it('displayError returns empty when first error has no usable message or kind', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
+    fix.detectChanges();
+    expect(fix.componentInstance.displayError()).toBe('');
   });
 });

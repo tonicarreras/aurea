@@ -47,6 +47,7 @@ describe('Checkbox', () => {
     const fix = TestBed.createComponent(Checkbox);
     fix.componentRef.setInput('label', 'Accept terms');
     fix.componentRef.setInput('id', 'test-checkbox');
+    fix.componentRef.setInput('required', true);
     fix.detectChanges();
     const label = fix.debugElement.query(By.css('.au-checkbox__label'));
     expect(label?.nativeElement.textContent?.trim()).toBe('Accept terms*');
@@ -56,7 +57,7 @@ describe('Checkbox', () => {
 
   it('sets aria-checked for indeterminate state', () => {
     const fix = TestBed.createComponent(Checkbox);
-    fix.componentRef.setInput('checked', 'indeterminate');
+    fix.componentRef.setInput('indeterminate', true);
     fix.detectChanges();
     const input = queryInput(fix);
     expect(input.getAttribute('aria-checked')).toBe('mixed');
@@ -68,8 +69,9 @@ describe('Checkbox', () => {
     fix.componentRef.setInput('description', 'Weekly updates');
     fix.detectChanges();
     const input = queryInput(fix);
-    expect(input.getAttribute('aria-describedby')).toBe('au-checkbox-1-desc');
     const desc = fix.debugElement.query(By.css('.au-checkbox__description'));
+    expect(desc?.nativeElement.id.length).toBeGreaterThan(0);
+    expect(input.getAttribute('aria-describedby')).toBe(desc?.nativeElement.id);
     expect(desc?.nativeElement.textContent?.trim()).toBe('Weekly updates');
   });
 
@@ -86,5 +88,112 @@ describe('Checkbox', () => {
     el.dispatchEvent(new Event('change'));
     sub.unsubscribe();
     expect(n).toBe(0);
+  });
+
+  it('sets name and size on host and input', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('name', 'agree');
+    fix.componentRef.setInput('size', 'sm');
+    fix.detectChanges();
+    expect(queryInput(fix).getAttribute('name')).toBe('agree');
+    expect(fix.nativeElement.getAttribute('data-au-size')).toBe('sm');
+  });
+
+  it('emits blur when onFocusHost runs', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    let n = 0;
+    fix.componentInstance.blur.subscribe(() => n++);
+    fix.componentInstance.onFocusHost();
+    expect(n).toBe(1);
+  });
+
+  it('focus() focuses the native input', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.detectChanges();
+    const el = queryInput(fix);
+    const spy = vi.spyOn(el, 'focus');
+    fix.componentInstance.focus();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('generates id when id input is empty', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.detectChanges();
+    expect(queryInput(fix).id.startsWith('au-checkbox-')).toBe(true);
+  });
+
+  it('sets aria-checked true when checked', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('checked', true);
+    fix.detectChanges();
+    expect(queryInput(fix).getAttribute('aria-checked')).toBe('true');
+  });
+
+  it('does not set aria-describedby without description', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Only');
+    fix.detectChanges();
+    expect(queryInput(fix).getAttribute('aria-describedby')).toBeNull();
+  });
+
+  it('onFocusout returns early for non-HTMLElement currentTarget', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.detectChanges();
+    const ev = { currentTarget: {}, relatedTarget: null } as unknown as FocusEvent;
+    fix.componentInstance.onFocusout(ev);
+  });
+
+  it('onFocusout returns when focus stays inside wrapper', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'X');
+    fix.detectChanges();
+    const wrapper = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('.au-checkbox__label'))!.nativeElement;
+    const ev = new FocusEvent('focusout', { relatedTarget: label });
+    Object.defineProperty(ev, 'currentTarget', { value: wrapper, configurable: true });
+    fix.componentInstance.onFocusout(ev);
+  });
+
+  it('sets aria-required when required', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('required', true);
+    fix.detectChanges();
+    expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
+  });
+
+  it('clears focus-by-tab when focus leaves wrapper', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'X');
+    fix.detectChanges();
+    const wrapDe = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!;
+    const wrap = wrapDe.nativeElement;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    wrapDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.detectChanges();
+    expect(wrap.classList.contains('au-checkbox__wrapper--from-tab')).toBe(true);
+    const out = new FocusEvent('focusout', { relatedTarget: document.body });
+    Object.defineProperty(out, 'currentTarget', { value: wrap, configurable: true });
+    fix.componentInstance.onFocusout(out);
+    fix.detectChanges();
+    expect(wrap.classList.contains('au-checkbox__wrapper--from-tab')).toBe(false);
+  });
+
+  it('normalizes nullish label and description transforms', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', null as unknown as string);
+    fix.componentRef.setInput('description', undefined as unknown as string);
+    fix.detectChanges();
+    expect(fix.componentInstance.label()).toBe('');
+    expect(fix.componentInstance.description()).toBe('');
+  });
+
+  it('stringifies non-null label and description', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'A');
+    fix.componentRef.setInput('description', 'B');
+    fix.detectChanges();
+    expect(fix.componentInstance.label()).toBe('A');
+    expect(fix.componentInstance.description()).toBe('B');
   });
 });

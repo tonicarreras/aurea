@@ -29,6 +29,23 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/aurea/tsconfig.spec.json"
+          },
+          "configurations": {
+            "coverage": {
+              "coverage": true,
+              "coverageReporters": ["text", "text-summary", "html"],
+              "coverageInclude": ["projects/aurea/src/lib/**/*.ts"],
+              "coverageExclude": [
+                "projects/aurea/src/lib/**/*.stories.ts",
+                "projects/aurea/src/lib/**/*.docs-overview.ts"
+              ],
+              "coverageThresholds": {
+                "statements": 100,
+                "branches": 100,
+                "functions": 100,
+                "lines": 100
+              }
+            }
           }
         },
         "storybook": {

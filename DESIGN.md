@@ -41,8 +41,9 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 
 ## Theme and selection
 
-- Light theme: default on `:root`.
-- Dark theme: set `data-au-theme="dark"` on an ancestor (e.g. `<html class="app">`). Redefined tokens adjust surfaces, borders, and rings; `color-scheme: dark` keeps native controls consistent.
+- Light theme: default on `:root` (also `data-au-theme="light"` if you set the attribute explicitly).
+- Dark theme: set `data-au-theme="dark"` on an ancestor (e.g. `<html>` or the app shell). Redefined tokens adjust surfaces, borders, and rings; `color-scheme: dark` keeps native controls consistent.
+- **Angular:** import `AuTheme` from the library and put `[auTheme]="'dark'"`, `[auTheme]="'light'"`, or `[auTheme]="'system'"` on a root element; the directive mirrors the attribute as `data-au-theme` and, in `system` mode, follows `prefers-color-scheme` (including live updates).
 - Text selection: `::selection` uses `--au-color-selection` (follows theme cascade).
 
 ## Forms (Angular 21 + signal forms)
@@ -63,6 +64,7 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 
 - Tokens load as `/au-tokens/au-tokens.css` (story project static dir).
 - Preview shell applies `surface-canvas` background and DS font stack via `au-preview-shell.css` (linked in `preview-head` after `au-tokens.css`).
+- **Dark mode:** the Storybook toolbar includes **Tema** (Claro / Oscuro); it sets `data-au-theme` on `document.documentElement` so every story and the Docs canvas follow `au-tokens.css`.
 - **Docs pages:** long-form Markdown (tables, a11y, keyboard) lives in `*.docs-overview.ts` next to stories and is injected via `parameters.docs.description.component`; per-story notes use `parameters.docs.description.story`. Docs **TOC** is enabled globally in `.storybook/preview.ts`.
 - **Interaction tests**: stories use `play` with `storybook/test` (`userEvent`, `expect`, `within`); the **Interactions** panel helps debug. For terminal/CI this repo uses **@storybook/test-runner** (works with Angular + Webpack; integrated Vitest addon does not apply here). Commands: `bun run test-storybook` (Storybook already running) and `bun run test-storybook:ci` (static build + runner). See `projects/aurea/.storybook/README.md`.
 

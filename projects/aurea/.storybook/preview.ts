@@ -4,11 +4,41 @@ import docJson from '../documentation.json';
 
 setCompodocJson(docJson);
 
+function applyAuThemeFromGlobals(globals: Record<string, unknown>): void {
+  const raw = globals['auTheme'];
+  const theme = raw === 'dark' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-au-theme', theme);
+}
+
 /**
  * a11y (addon 10): use `parameters.a11y` only.
  * @see https://storybook.js.org/docs/writing-tests/accessibility-testing
  */
 const preview: Preview = {
+  globalTypes: {
+    auTheme: {
+      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',
+      defaultValue: 'light',
+      toolbar: {
+        title: 'Tema',
+        icon: 'contrast',
+        items: [
+          { value: 'light', title: 'Claro', icon: 'sun' },
+          { value: 'dark', title: 'Oscuro', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    auTheme: 'light',
+  },
+  decorators: [
+    (storyFn, context) => {
+      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);
+      return storyFn();
+    },
+  ],
   parameters: {
     layout: 'padded',
     docs: {
