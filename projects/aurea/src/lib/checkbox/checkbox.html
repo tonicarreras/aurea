@@ -1,0 +1,34 @@
+<div
+  class="au-checkbox__wrapper"
+  [class.au-checkbox__wrapper--from-tab]="focusByTab()"
+  (focusin)="onFocusin()"
+  (focusout)="onFocusout($event)"
+>
+  <input
+    #inputEl
+    class="au-checkbox__element"
+    type="checkbox"
+    [id]="resolvedId()"
+    [attr.name]="name() || null"
+    [checked]="isChecked()"
+    [attr.aria-checked]="effectiveAriaChecked()"
+    [attr.aria-describedby]="ariaDescribedBy() ?? null"
+    [attr.aria-required]="required() ? 'true' : null"
+    [disabled]="disabled()"
+    [attr.required]="required() ? true : null"
+    (change)="onChange($event)"
+  />
+
+  @if (label()) {
+    <label class="au-checkbox__label" [attr.for]="resolvedId()">
+      {{ label() }}
+      @if (required()) {
+        <span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>
+      }
+    </label>
+  }
+
+  @if (description().trim()) {
+    <p [id]="descriptionId()" class="au-checkbox__description">{{ description() }}</p>
+  }
+</div>

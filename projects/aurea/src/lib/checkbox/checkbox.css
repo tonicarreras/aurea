@@ -1,0 +1,236 @@
+/**
+ * Checkbox — native input with custom visual styling.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Accessibility: WCAG 2.2 AA — focus rings, 24x24 target, 4.5:1 contrast.
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: inline-block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Wrapper: flex row, checkbox + label
+   -------------------------------------------------------------------------- */
+
+.au-checkbox__wrapper {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--au-space-2-5);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Checkbox input: hide native, show custom box with checkmark */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__element {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  width: var(--au-checkbox-size-md);
+  height: var(--au-checkbox-size-md);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--au-color-form-border);
+  border-radius: var(--au-radius-xs);
+  background: var(--au-color-surface-raised);
+  cursor: pointer;
+  transition:
+    border-color var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out),
+    box-shadow var(--au-duration-short) var(--au-ease-in-out);
+  /* Custom checkmark via pseudo-element */
+  position: relative;
+}
+
+/* Checkbox size by size token */
+:host([data-au-size='sm']) .au-checkbox__element {
+  width: var(--au-checkbox-size-sm);
+  height: var(--au-checkbox-size-sm);
+}
+
+:host([data-au-size='md']) .au-checkbox__element,
+:host(:not([data-au-size])) .au-checkbox__element {
+  width: var(--au-checkbox-size-md);
+  height: var(--au-checkbox-size-md);
+}
+
+:host([data-au-size='lg']) .au-checkbox__element {
+  width: var(--au-checkbox-size-lg);
+  height: var(--au-checkbox-size-lg);
+}
+
+/* Hover: darker border */
+.au-checkbox__wrapper:hover .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+/* Checked: action primary fill + checkmark */
+.au-checkbox__element:checked {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+}
+
+.au-checkbox__wrapper:hover .au-checkbox__element:checked:not(:disabled) {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+}
+
+.au-checkbox__element:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  border: solid var(--au-color-text-on-solid);
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+/* Indeterminate: square inside */
+.au-checkbox__element:indeterminate {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+}
+
+.au-checkbox__wrapper:hover .au-checkbox__element:indeterminate:not(:disabled) {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+}
+
+.au-checkbox__element:indeterminate::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  background: var(--au-color-text-on-solid);
+  transform: translate(-50%, -50%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus rings — Tab: outward, pointer: inset/none */
+/* -------------------------------------------------------------------------- */
+
+/* Focus-within on wrapper triggers ring on input */
+.au-checkbox__wrapper:focus-within {
+  outline: none;
+}
+
+/* Inset ring on focus (click / pointer) */
+.au-checkbox__wrapper:focus-within:not(.au-checkbox__wrapper--from-tab) .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+}
+
+/* Outer ring on Tab focus */
+.au-checkbox__wrapper--from-tab:focus-within .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-color-form-border);
+  box-shadow: none;
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Remove default focus on input itself — wrapper handles it */
+.au-checkbox__element:focus,
+.au-checkbox__element:focus-visible {
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Disabled state */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__wrapper:has(.au-checkbox__element:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.au-checkbox__element:disabled {
+  cursor: not-allowed;
+  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-color-border-subtle);
+}
+
+.au-checkbox__element:checked:disabled {
+  background: var(--au-color-form-disabled-foreground);
+  border-color: var(--au-color-form-disabled-foreground);
+}
+
+.au-checkbox__element:indeterminate:disabled {
+  background: var(--au-color-form-disabled-foreground);
+  border-color: var(--au-color-form-disabled-foreground);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Label */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__label {
+  display: inline;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+:host([data-au-size='sm']) .au-checkbox__label {
+  font-size: var(--au-text-xs);
+}
+
+:host([data-au-size='lg']) .au-checkbox__label {
+  font-size: var(--au-text-md);
+}
+
+.au-checkbox__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  margin-left: 0.125em;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Description */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__description {
+  display: block;
+  width: 100%;
+  margin: var(--au-space-1) 0 0 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .au-checkbox__element {
+    transition: none;
+  }
+}

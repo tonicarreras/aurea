@@ -1,0 +1,291 @@
+/**
+ * Input text — built from scratch: crisp border, no faux-3D fill.
+ * Size: `data-au-size` on host (sm | md | lg).
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Stack: label + control + help (no extra chrome) */
+/* -------------------------------------------------------------------------- */
+
+.au-input-text__field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+.au-input-text__label-host {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.au-input-text__label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  position: relative;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+.au-input-text__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+/* Control shell: one surface, one border */
+.au-input-text__control-row {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  /* Align icons/button to the box; height comes from the input, not a large min-height */
+  box-sizing: border-box;
+  border: 1px solid var(--au-color-form-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  transition: var(--au-transition-control);
+}
+
+/* Hover: border only, no ring */
+.au-input-text__control-row:has(.au-input-text__input:hover:not(:disabled)):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+/* Error (no focus) */
+.au-input-text__control-row:has(.au-input-text__input[aria-invalid='true']):not(:focus-within) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+/*
+ * Pointer focus: tight stroke (border + 1px shadow).
+ * Tab-only focus: `.au-input-text__control-row--from-tab` (TS) → outward outline.
+ */
+.au-input-text__control-row:focus-within {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+}
+
+.au-input-text__control-row:focus-within:has(.au-input-text__input[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: 0 0 0 1px var(--au-color-form-error);
+}
+
+/* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
+.au-input-text__control-row--from-tab:focus-within {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-form-border);
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.au-input-text__control-row--from-tab:focus-within:has(.au-input-text__input[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: 2px solid var(--au-color-form-error);
+  outline-offset: 2px;
+}
+
+/* Disabled: whole row muted (<input> may still receive focus / AT per platform) */
+.au-input-text__control-row:has(.au-input-text__input:disabled) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+}
+
+/* No double ring on children: the row draws the ring */
+.au-input-text__input:focus,
+.au-input-text__input:focus-visible,
+.au-input-text__reveal:focus,
+.au-input-text__reveal:focus-visible {
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Input / button */
+/* -------------------------------------------------------------------------- */
+
+.au-input-text__input {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  /* line-height = height: placeholder and value vertically aligned in Chromium / WebKit / Firefox */
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  /* line-height = height → single-line placeholder/value, centered per UA (no height:100% in flex) */
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-size-field-px-md);
+}
+
+:host([data-au-size='sm']) .au-input-text__input {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-size-field-px-sm);
+}
+
+:host([data-au-size='md']) .au-input-text__input,
+:host(:not([data-au-size])) .au-input-text__input {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 var(--au-size-field-px-md);
+}
+
+:host([data-au-size='lg']) .au-input-text__input {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-size-field-px-lg);
+}
+
+.au-input-text__control-row--password .au-input-text__input {
+  padding-right: 0.35rem;
+}
+
+.au-input-text__input::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+  line-height: inherit;
+}
+
+.au-input-text__input:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+}
+
+/* Password action: text, not a pill */
+.au-input-text__reveal {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  align-self: stretch;
+  margin: 0;
+  padding: 0 0.65rem 0 0.5rem;
+  border: 0;
+  border-left: 1px solid var(--au-color-border-subtle);
+  border-radius: 0;
+  background: transparent;
+  color: var(--au-color-action-primary);
+  font: inherit;
+  font-size: var(--au-text-xs);
+  font-weight: var(--au-weight-semibold);
+  letter-spacing: var(--au-tracking-caps);
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    var(--au-transition-glyph), var(--au-transition-background);
+}
+
+.au-input-text__reveal:hover:not(:disabled) {
+  color: var(--au-color-action-primary-hover);
+  background: var(--au-color-surface-elevated);
+}
+
+.au-input-text__reveal:active:not(:disabled) {
+  color: var(--au-color-action-primary-pressed);
+  background: var(--au-color-surface-sunken);
+}
+
+.au-input-text__reveal:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hint and error */
+/* -------------------------------------------------------------------------- */
+
+.au-input-text__hint {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+.au-input-text__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1);
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-semantic-error-contrast);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-input-text__error-glyph {
+  flex: 0 0 auto;
+  margin: 0;
+  /* Multiplication sign, sharper than Latin “x”; decorative only (ARIA in template) */
+  font-size: 0.9em;
+  line-height: inherit;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  translate: 0 0.05em;
+}
+
+.au-input-text__error-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--au-weight-regular);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .au-input-text__control-row,
+  .au-input-text__reveal {
+    transition: none;
+  }
+}

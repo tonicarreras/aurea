@@ -1,0 +1,237 @@
+/**
+ * Textarea — same control grammar as input-text (border, Tab focus, × error).
+ * Multiline: readable line-height; default `resize` vertical (attribute in template).
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Min height aligned with approximate rows + comfortable touch on lg */
+  --au-textarea-min-h-sm: 4.5rem;
+  --au-textarea-min-h-md: 5.5rem;
+  --au-textarea-min-h-lg: 6.5rem;
+  --au-textarea-pad-y: 0.5rem;
+}
+
+:host([data-au-size='sm']) {
+  --au-textarea-pad-y: 0.4rem;
+}
+
+:host([data-au-size='md']) {
+  --au-textarea-pad-y: 0.5rem;
+}
+
+:host([data-au-size='lg']) {
+  --au-textarea-pad-y: 0.6rem;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.au-textarea__field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Extra space before the box so focus outline/shadow does not overlap the label bbox (axe). */
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+.au-textarea__label-host {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.au-textarea__label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  position: relative;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+.au-textarea__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-textarea__control-row {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--au-color-form-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  transition: var(--au-transition-control);
+}
+
+.au-textarea__control-row:has(.au-textarea__input:hover:not(:disabled)):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+.au-textarea__control-row:has(.au-textarea__input[aria-invalid='true']):not(:focus-within) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+.au-textarea__control-row:focus-within {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+}
+
+.au-textarea__control-row:focus-within:has(.au-textarea__input[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: 0 0 0 1px var(--au-color-form-error);
+}
+
+.au-textarea__control-row--from-tab:focus-within {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-form-border);
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.au-textarea__control-row--from-tab:focus-within:has(.au-textarea__input[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: 2px solid var(--au-color-form-error);
+  outline-offset: 2px;
+}
+
+.au-textarea__control-row:has(.au-textarea__input:disabled) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+}
+
+.au-textarea__input:focus,
+.au-textarea__input:focus-visible {
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+.au-textarea__input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  /* Inner corners consistent with host outline */
+  border-top-left-radius: var(--au-radius-2xs);
+  border-top-right-radius: var(--au-radius-2xs);
+  border-bottom-left-radius: var(--au-radius-2xs);
+  border-bottom-right-radius: var(--au-radius-2xs);
+  background: transparent;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-leading-normal);
+  font-synthesis: none;
+  min-height: var(--au-textarea-min-h-md);
+  max-height: min(70vh, 32rem);
+  padding: var(--au-textarea-pad-y) var(--au-size-field-px-md);
+  font-size: var(--au-size-field-text-md);
+  vertical-align: top;
+  /* Avoid growing width-only; user controls height via vertical resize */
+  overflow: auto;
+}
+
+:host([data-au-size='sm']) .au-textarea__input {
+  min-height: var(--au-textarea-min-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: var(--au-textarea-pad-y) var(--au-size-field-px-sm);
+}
+
+:host([data-au-size='md']) .au-textarea__input,
+:host(:not([data-au-size])) .au-textarea__input {
+  min-height: var(--au-textarea-min-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: var(--au-textarea-pad-y) var(--au-size-field-px-md);
+}
+
+:host([data-au-size='lg']) .au-textarea__input {
+  min-height: var(--au-textarea-min-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: var(--au-textarea-pad-y) var(--au-size-field-px-lg);
+}
+
+.au-textarea__input::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+}
+
+.au-textarea__input:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+  resize: none;
+}
+
+/* -------------------------------------------------------------------------- */
+.au-textarea__hint {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+.au-textarea__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1);
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-semantic-error-contrast);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-textarea__error-glyph {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 0.9em;
+  line-height: inherit;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  translate: 0 0.05em;
+}
+
+.au-textarea__error-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--au-weight-regular);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-textarea__control-row {
+    transition: none;
+  }
+}

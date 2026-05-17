@@ -1,0 +1,27 @@
+/**
+ * Storybook visual shell (load in preview-head **after** au-tokens.css).
+ * Do not import from TS: the Storybook builder does not apply CSS loaders to preview.ts.
+ */
+html,
+body,
+#root,
+#storybook-root,
+.sb-show-main {
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+#storybook-root,
+.sb-main-padded {
+  font-family: var(--au-font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: var(--au-color-text-primary);
+  background: var(--au-color-surface-canvas);
+  font-size: var(--au-text-md);
+  line-height: var(--au-leading-normal);
+}
+
+* {
+  box-sizing: border-box;
+}

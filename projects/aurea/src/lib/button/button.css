@@ -1,0 +1,217 @@
+/**
+ * Aurea Button — solid, outline, ghost variants with touch-friendly targets.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Variant: `data-au-variant` on host (primary | secondary | outline | ghost).
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: inline-flex;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button.au-button__element {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-space-2);
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: var(--au-radius-sm);
+  font: inherit;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  letter-spacing: var(--au-tracking-ui);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    var(--au-transition-background),
+    var(--au-transition-border),
+    var(--au-transition-shadow),
+    var(--au-transition-color);
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Sizes: sm (compact), md (default), lg (touch-friendly) */
+/* -------------------------------------------------------------------------- */
+
+:host([data-au-size='sm']) .au-button__element {
+  height: var(--au-size-field-h-sm);
+  padding: 0 var(--au-size-field-px-sm);
+  font-size: var(--au-text-xs);
+}
+
+:host([data-au-size='md']) .au-button__element,
+:host(:not([data-au-size])) .au-button__element {
+  height: var(--au-size-field-h-md);
+  padding: 0 var(--au-size-field-px-md);
+  font-size: var(--au-text-sm);
+}
+
+:host([data-au-size='lg']) .au-button__element {
+  height: var(--au-touch-target-min);
+  min-width: var(--au-touch-target-min);
+  padding: 0 var(--au-space-5);
+  font-size: var(--au-text-md);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Variants */
+/* -------------------------------------------------------------------------- */
+
+/* Primary: solid accent background */
+:host([data-au-variant='primary']) .au-button__element {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+  color: var(--au-color-text-on-solid);
+}
+
+:host([data-au-variant='primary']) .au-button__element:hover:not(:disabled) {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+}
+
+:host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
+  background: var(--au-color-action-primary-pressed);
+  border-color: var(--au-color-action-primary-pressed);
+}
+
+/* Secondary: filled surface, accent text */
+:host([data-au-variant='secondary']) .au-button__element {
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-border-default);
+  color: var(--au-color-text-primary);
+}
+
+:host([data-au-variant='secondary']) .au-button__element:hover:not(:disabled) {
+  background: var(--au-color-surface-elevated);
+  border-color: var(--au-color-border-strong);
+}
+
+:host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+/* Outline: border-only, transparent background */
+:host([data-au-variant='outline']) .au-button__element {
+  background: transparent;
+  border-color: var(--au-color-action-primary);
+  color: var(--au-color-action-primary);
+}
+
+:host([data-au-variant='outline']) .au-button__element:hover:not(:disabled) {
+  background: var(--au-color-surface-elevated);
+}
+
+:host([data-au-variant='outline']) .au-button__element:active:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+/* Ghost: text-only, no border */
+:host([data-au-variant='ghost']) .au-button__element {
+  background: transparent;
+  border-color: transparent;
+  color: var(--au-color-action-primary);
+}
+
+:host([data-au-variant='ghost']) .au-button__element:hover:not(:disabled) {
+  background: var(--au-color-surface-elevated);
+}
+
+:host([data-au-variant='ghost']) .au-button__element:active:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+/* -------------------------------------------------------------------------- */
+/* States: disabled, loading */
+/* -------------------------------------------------------------------------- */
+
+.au-button__element:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.au-button__element[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.au-button__element--loading {
+  cursor: wait;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus: outer ring on Tab, inset on click */
+/* -------------------------------------------------------------------------- */
+
+.au-button__element:focus {
+  outline: none;
+}
+
+.au-button__element:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+}
+
+/* Outer ring on Tab only (not :focus-visible, which fires on click too) */
+.au-button__element--from-tab:focus-visible {
+  box-shadow: none;
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Content and spinner */
+/* -------------------------------------------------------------------------- */
+
+.au-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}
+
+.au-button__content--hidden {
+  visibility: hidden;
+}
+
+.au-button__spinner {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.au-button__spinner-icon {
+  width: 1em;
+  height: 1em;
+  animation: au-button-spin 1s linear infinite;
+}
+
+@keyframes au-button-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion: reduced motion support */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .au-button__element,
+  .au-button__spinner-icon {
+    transition: none;
+    animation: none;
+  }
+}

@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:ital,wght@0,100..900;1,100..900&display=swap');
+
+/**
+ * Aurea — semantic tokens
+ * -----------------------------------------------------------------------------
+ * - Typography: Onest (import above); offline, falls back to system fonts.
+ * - Palette: slate neutrals + one accent; state colors (success, warning) separate from brand.
+ * - Theme: `data-au-theme` on an ancestor (`html`, app shell, or Storybook) + `color-scheme` in dark.
+ * - Usage: only `--au-*` variables in product; reserve raw names for documented primitives.
+ */
+
+/* ==========================================================================
+   Shared layer (theme-agnostic, except a few dark overrides)
+   ========================================================================== */
+
+:root {
+  /* Typography — Onest (variable) + system stack */
+  --au-font-sans:
+    'Onest', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --au-font-mono:
+    'JetBrains Mono', 'Cascadia Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  /* Modular scale (0.25rem = one step in long copy) */
+  --au-text-2xs: 0.6875rem; /* 11 */
+  --au-text-xs: 0.75rem; /* 12 */
+  --au-text-sm: 0.875rem; /* 14 */
+  --au-text-md: 1rem; /* 16 */
+  --au-text-lg: 1.125rem; /* 18 */
+  --au-text-xl: 1.25rem; /* 20 */
+  /* Line height: dense UI (tight) vs. reading (normal) vs. titles (snug) */
+  --au-leading-tight: 1.2;
+  --au-leading-snug: 1.3;
+  --au-leading-normal: 1.5;
+  --au-leading-relaxed: 1.625;
+  /* Letter-spacing by role */
+  --au-tracking-tight: -0.01em;
+  --au-tracking-ui: 0.01em;
+  --au-tracking-caps: 0.04em;
+  /* Weights */
+  --au-weight-regular: 400;
+  --au-weight-medium: 500;
+  --au-weight-semibold: 600;
+  --au-weight-bold: 700;
+}
+
+/* Spacing (4px base) + steps for 8-pt layouts */
+:root {
+  --au-space-0: 0;
+  --au-space-0-5: 0.125rem;
+  --au-space-1: 0.25rem;
+  --au-space-1-5: 0.375rem;
+  --au-space-2: 0.5rem;
+  --au-space-2-5: 0.625rem;
+  --au-space-3: 0.75rem;
+  --au-space-3-5: 0.875rem;
+  --au-space-4: 1rem;
+  --au-space-5: 1.25rem;
+  --au-space-6: 1.5rem;
+  --au-space-7: 1.75rem;
+  --au-space-8: 2rem;
+  --au-space-9: 2.25rem;
+  --au-space-10: 2.5rem;
+  --au-space-12: 3rem;
+  --au-content-max: 40rem; /* 640px — form columns on desktop */
+  --au-touch-target-min: 2.75rem; /* 44px — WCAG 2.5.5 reference; use with `size="lg"` or buttons */
+}
+
+/* Radii: one scale; fields use --au-radius-field (not pill) */
+:root {
+  --au-radius-2xs: 0.0625rem; /* 1px — nearly square */
+  --au-radius-xs: 0.125rem; /* 2px */
+  --au-radius-sm: 0.25rem; /* 4 */
+  --au-radius-md: 0.375rem; /* 6 */
+  --au-radius-lg: 0.5rem; /* 8 */
+  --au-radius-xl: 0.75rem;
+  --au-radius-pill: 9999px;
+  --au-radius-field: 0.125rem; /* 2px — sharp, matches current inputs */
+}
+
+/* Focus: reusable rings (components: combine with border) */
+:root {
+  --au-focus-ring-width: 1px;
+  /* Offset 0: ring aligns with control outline */
+  --au-focus-ring-offset: 0;
+  /* Checkbox sizes: min 24x24 for WCAG 2.5.8 target size */
+  --au-checkbox-size-sm: 1.125rem; /* 18px */
+  --au-checkbox-size-md: 1.25rem; /* 20px */
+  --au-checkbox-size-lg: 1.5rem; /* 24px */
+}
+
+/* Elevation: subtle, readable, no neumorphism */
+:root {
+  --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
+  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.05), 0 1px 1px rgba(15, 20, 26, 0.04);
+  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.04), 0 10px 40px rgba(15, 20, 26, 0.12);
+}
+
+/* Stacking (z-index) — avoid magic numbers in product stylesheets */
+:root {
+  --au-z-base: 0;
+  --au-z-raised: 1;
+  --au-z-sticky: 20;
+  --au-z-popover: 30;
+  --au-z-header: 40;
+  --au-z-drawer: 50;
+  --au-z-modal: 100;
+  --au-z-toast: 200;
+  --au-z-max: 9999;
+}
+
+/* UI transitions: one easing for color, one “logical” for motion */
+:root {
+  --au-duration-instant: 0ms;
+  --au-duration-micro: 80ms;
+  --au-duration-short: 120ms;
+  --au-duration-default: 200ms;
+  --au-duration-slow: 300ms;
+  /* Easings: standard (settle), out, emphasis for micro-interactions */
+  --au-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --au-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --au-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --au-ease-emph: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Single tokens for color/border and shadow */
+  --au-transition-color: color var(--au-duration-short) var(--au-ease-in-out);
+  --au-transition-border: border-color var(--au-duration-short) var(--au-ease-in-out);
+  --au-transition-shadow: box-shadow var(--au-duration-short) var(--au-ease-in-out);
+  --au-transition-background: background-color var(--au-duration-short) var(--au-ease-in-out);
+  --au-transition-control:
+    var(--au-transition-border), var(--au-transition-shadow), var(--au-transition-background);
+  --au-transition-glyph: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+/* ==========================================================================
+   Theme: light (default)
+   ========================================================================== */
+
+:root,
+[data-au-theme='light'] {
+  color-scheme: light;
+  /* Surfaces: subtle elevation hierarchy */
+  --au-color-surface-canvas: #f1f2f4;
+  --au-color-surface-raised: #ffffff;
+  --au-color-surface-elevated: #f8f9fa;
+  --au-color-surface-sunken: #e9ebef;
+  --au-color-surface-inverted: #101418;
+  /* Text: primary, secondary, tertiary, on solid */
+  --au-color-text-primary: #101418;
+  --au-color-text-secondary: #3d4a5c;
+  --au-color-text-tertiary: #5c6b7d; /* AA vs canvas y raised (hints, placeholder) */
+  --au-color-text-placeholder: #8a98a8;
+  --au-color-text-disabled: #a8b0bc;
+  --au-color-text-label: #1e2935;
+  /* Form label: slightly lower contrast than titles, higher than long body */
+  --au-color-text-on-solid: #ffffff;
+  /* Borders: subtle to strong */
+  --au-color-border-subtle: #e0e4ea;
+  --au-color-border-default: #c8ced7;
+  --au-color-border-strong: #8d98a6;
+  /* Accent / link / button */
+  --au-color-action-primary: #1059c8;
+  --au-color-action-primary-hover: #0d4aa3;
+  --au-color-action-primary-pressed: #0a3a85;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
+  /* Focus: ring color (action, not error) */
+  --au-color-focus-ring: #1059c8;
+  --au-color-focus-inner: #0a3a85;
+  /* States (foreground + soft surface for messages) */
+  --au-color-semantic-error: #b42318;
+  --au-color-semantic-error-contrast: #5c0f0a;
+  --au-color-semantic-error-surface: #fff4f2;
+  --au-color-semantic-success: #047857;
+  --au-color-semantic-success-surface: #ecfdf5;
+  --au-color-semantic-warning: #b45309;
+  --au-color-semantic-warning-surface: #fffbeb;
+  --au-color-semantic-info: #0369a1;
+  --au-color-semantic-info-surface: #f0f9ff;
+  /* Text selection */
+  --au-color-selection: rgba(16, 89, 200, 0.2);
+  --au-color-selection-text: inherit;
+  /* Forms: aligned to surfaces, not accent (except focus) */
+  --au-color-form-border: #b8c0cc;
+  --au-color-form-border-hover: #8d98a6;
+  --au-color-form-text: var(--au-color-text-primary);
+  --au-color-form-placeholder: var(--au-color-text-tertiary);
+  --au-color-form-caret: var(--au-color-text-primary);
+  --au-color-form-error: var(--au-color-semantic-error);
+  --au-color-form-error-bg: var(--au-color-semantic-error-surface);
+  --au-color-form-disabled-foreground: #8d98a6;
+  --au-color-form-disabled-surface: #ebedf0;
+  --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
+  /* Ring shadow: single composition (components) */
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  /* Field sizing */
+  --au-size-field-h-sm: 2rem;
+  --au-size-field-h-md: 2.25rem;
+  --au-size-field-h-lg: 2.625rem;
+  --au-size-field-px-sm: 0.625rem;
+  --au-size-field-px-md: 0.75rem;
+  --au-size-field-px-lg: 0.875rem;
+  --au-size-field-text-sm: 0.8125rem;
+  --au-size-field-text-md: 0.9375rem;
+  --au-size-field-text-lg: 1rem;
+  --au-scroll-smooth: smooth;
+}
+
+::selection {
+  background: var(--au-color-selection);
+  color: var(--au-color-selection-text);
+}
+
+/* ==========================================================================
+   Theme: dark
+   ========================================================================== */
+
+[data-au-theme='dark'] {
+  color-scheme: dark;
+  /* Surfaces */
+  --au-color-surface-canvas: #0c0e12;
+  --au-color-surface-raised: #13161c;
+  --au-color-surface-elevated: #181b22;
+  --au-color-surface-sunken: #0a0c0f;
+  --au-color-surface-inverted: #f0f2f4;
+  /* Text */
+  --au-color-text-primary: #eef1f4;
+  --au-color-text-secondary: #a8b2bd;
+  --au-color-text-tertiary: #7a8794;
+  --au-color-text-placeholder: #5c6b7a;
+  --au-color-text-disabled: #5c6b7a;
+  --au-color-text-label: #dce0e5;
+  --au-color-text-on-solid: #0c0e12;
+  /* Borders */
+  --au-color-border-subtle: #252a33;
+  --au-color-border-default: #343b46;
+  --au-color-border-strong: #4d5666;
+  /* Accent */
+  --au-color-action-primary: #5eb0ff;
+  --au-color-action-primary-hover: #7fc0ff;
+  --au-color-action-primary-pressed: #a3d4ff;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
+  /* Focus */
+  --au-color-focus-ring: #5eb0ff;
+  --au-color-focus-inner: #a3d4ff;
+  /* States */
+  --au-color-semantic-error: #f97066;
+  --au-color-semantic-error-contrast: #fec5c0;
+  --au-color-semantic-error-surface: rgba(150, 40, 32, 0.22);
+  --au-color-semantic-success: #4ade80;
+  --au-color-semantic-success-surface: rgba(34, 100, 55, 0.22);
+  --au-color-semantic-warning: #fbbf24;
+  --au-color-semantic-warning-surface: rgba(120, 80, 10, 0.2);
+  --au-color-semantic-info: #38bdf8;
+  --au-color-semantic-info-surface: rgba(15, 80, 120, 0.22);
+  /* Selection */
+  --au-color-selection: rgba(94, 176, 255, 0.28);
+  /* Form */
+  --au-color-form-border: #343b46;
+  --au-color-form-border-hover: #4d5666;
+  --au-color-form-text: var(--au-color-text-primary);
+  --au-color-form-placeholder: var(--au-color-text-tertiary);
+  --au-color-form-caret: var(--au-color-text-primary);
+  --au-color-form-error: var(--au-color-semantic-error);
+  --au-color-form-error-bg: var(--au-color-semantic-error-surface);
+  --au-color-form-disabled-foreground: #5c6b7a;
+  --au-color-form-disabled-surface: #1a1e26;
+  --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
+  /* Dark shadows: edges, not heavy haze */
+  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
+  --au-shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 50px rgba(0, 0, 0, 0.45);
+  /* Rings */
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  --au-scroll-smooth: smooth;
+}
+
+/* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  [data-au-theme='light'],
+  [data-au-theme='dark'] {
+    --au-scroll-smooth: auto;
+  }
+}

@@ -1,0 +1,258 @@
+/**
+ * Select — native select with custom styling.
+ * Size: `data-au-size` on host (sm | md | lg).
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Stack: label + control + help (no extra chrome)
+/* -------------------------------------------------------------------------- */
+
+.au-select__field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+.au-select__label-host {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.au-select__label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  position: relative;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+.au-select__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+/* Control shell: one surface, one border */
+.au-select__control-row {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--au-color-form-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  transition: var(--au-transition-control);
+}
+
+/* Hover: border only, no ring */
+.au-select__control-row:has(.au-select__element:hover:not(:disabled)):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+/* Error (no focus) */
+.au-select__control-row:has(.au-select__element[aria-invalid='true']):not(:focus-within) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+/*
+ * Pointer focus: tight stroke (border + 1px shadow).
+ * Tab-only focus: `.au-select__control-row--from-tab` (TS) → outward outline.
+ */
+.au-select__control-row:focus-within {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+}
+
+.au-select__control-row:focus-within:has(.au-select__element[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: 0 0 0 1px var(--au-color-form-error);
+}
+
+/* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
+.au-select__control-row--from-tab:focus-within {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-form-border);
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.au-select__control-row--from-tab:focus-within:has(.au-select__element[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: 2px solid var(--au-color-form-error);
+  outline-offset: 2px;
+}
+
+/* Disabled: whole row muted */
+.au-select__control-row:has(.au-select__element:disabled) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+}
+
+/* No double ring on children: the row draws the ring */
+.au-select__element:focus,
+.au-select__element:focus-visible {
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Select element */
+/* -------------------------------------------------------------------------- */
+
+.au-select__element {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--au-color-form-text);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-space-8) 0 var(--au-size-field-px-md);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+:host([data-au-size='sm']) .au-select__element {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-space-7) 0 var(--au-size-field-px-sm);
+}
+
+:host([data-au-size='md']) .au-select__element,
+:host(:not([data-au-size])) .au-select__element {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 var(--au-space-8) 0 var(--au-size-field-px-md);
+}
+
+:host([data-au-size='lg']) .au-select__element {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-space-9) 0 var(--au-size-field-px-lg);
+}
+
+.au-select__element:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+}
+
+/* Icon: custom dropdown arrow */
+.au-select__icon {
+  position: absolute;
+  right: var(--au-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--au-color-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([data-au-size='sm']) .au-select__icon {
+  right: var(--au-space-2-5);
+}
+
+:host([data-au-size='lg']) .au-select__icon {
+  right: var(--au-space-4);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hint and error */
+/* -------------------------------------------------------------------------- */
+
+.au-select__hint {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+.au-select__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1);
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-semantic-error-contrast);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-select__error-glyph {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 0.9em;
+  line-height: inherit;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  translate: 0 0.05em;
+}
+
+.au-select__error-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--au-weight-regular);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .au-select__control-row {
+    transition: none;
+  }
+}

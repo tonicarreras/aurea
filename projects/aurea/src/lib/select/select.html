@@ -1,0 +1,68 @@
+<div class="au-select__field">
+  @if (label()) {
+    <div class="au-select__label-host">
+      <label class="au-select__label" [attr.for]="resolvedId()">
+        {{ label() }}
+        @if (required() && showRequired()) {
+          <span class="au-select__required" aria-hidden="true" title="Required">*</span>
+          <span class="au-sr-only">(required)</span>
+        }
+      </label>
+    </div>
+  }
+
+  <div
+    class="au-select__control-row"
+    [class.au-select__control-row--from-tab]="fieldFocusByTab()"
+    (focusin)="onControlRowFocusin()"
+    (focusout)="onControlRowFocusout($event)"
+  >
+    <select
+      #selectEl
+      class="au-select__element"
+      [id]="resolvedId()"
+      [attr.name]="name() || null"
+      [value]="value()"
+      [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+      [attr.aria-errormessage]="isInvalid() ? errorId() : null"
+      [attr.aria-describedby]="ariaDescribedBy() ?? null"
+      [attr.aria-required]="required() ? 'true' : null"
+      [disabled]="disabled()"
+      [attr.required]="required() ? true : null"
+      (change)="onChange($event)"
+      (blur)="onBlurHost()"
+    >
+      @if (hasPlaceholder()) {
+        <option value="" [disabled]="required()" [attr.hidden]="required() ? true : null">
+          {{ placeholder() }}
+        </option>
+      }
+      @for (opt of options(); track opt.value) {
+        <option [value]="opt.value" [disabled]="opt.disabled ?? false">
+          {{ opt.label }}
+        </option>
+      }
+    </select>
+
+    <span class="au-select__icon" aria-hidden="true">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </div>
+
+  @if (hint().trim()) {
+    <p [id]="hintId()" class="au-select__hint">{{ hint() }}</p>
+  }
+
+  @if (isInvalid()) {
+    <div
+      [id]="errorId()"
+      class="au-select__error"
+      role="alert"
+    >
+      <span class="au-select__error-glyph" aria-hidden="true">×</span>
+      <span class="au-select__error-text">{{ displayError() }}</span>
+    </div>
+  }
+</div>

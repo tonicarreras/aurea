@@ -1,0 +1,26 @@
+<button
+  #buttonEl
+  class="au-button__element"
+  [class.au-button__element--loading]="loading()"
+  [class.au-button__element--from-tab]="focusByTab()"
+  [attr.type]="type()"
+  [attr.name]="name() || null"
+  [attr.disabled]="disabled() || loading() ? true : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  [attr.aria-label]="label() || null"
+  (focusin)="onFocusin()"
+  (focusout)="onFocusout()"
+  (click)="onClick($event)"
+>
+  @if (loading()) {
+    <span class="au-button__spinner" aria-hidden="true">
+      <svg class="au-button__spinner-icon" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="32" stroke-dashoffset="12" />
+      </svg>
+    </span>
+  }
+  <span class="au-button__content" [class.au-button__content--hidden]="loading()">
+    <ng-content></ng-content>
+  </span>
+</button>
