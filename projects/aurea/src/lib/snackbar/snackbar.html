@@ -1,0 +1,45 @@
+@if (open()) {
+  <div
+    class="au-snackbar__surface"
+    [attr.role]="liveRole()"
+    [attr.aria-live]="livePoliteness()"
+    aria-atomic="true"
+  >
+    <div class="au-snackbar__body">
+      @if (showMessage()) {
+        <p class="au-snackbar__message">{{ message() }}</p>
+      } @else {
+        <div class="au-snackbar__message">
+          <ng-content></ng-content>
+        </div>
+      }
+    </div>
+
+    @if (actionLabel().trim() || showCloseButton()) {
+      <div class="au-snackbar__actions">
+        @if (actionLabel().trim()) {
+          <button type="button" class="au-snackbar__action" (click)="onActionClick()">
+            {{ actionLabel() }}
+          </button>
+        }
+        @if (showCloseButton()) {
+          <button
+            type="button"
+            class="au-snackbar__close"
+            [attr.aria-label]="closeAriaLabel()"
+            (click)="onCloseClick()"
+          >
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path
+                d="M15 5L5 15M5 5L15 15"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        }
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,211 @@
+/**
+ * Snackbar — transient feedback toast aligned with Aurea surfaces.
+ */
+@import url('../theme/au-tokens.css');
+
+au-snackbar {
+  display: none;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+au-snackbar.au-snackbar--open {
+  position: fixed;
+  inset: 0;
+  z-index: var(--au-z-toast);
+  display: flex;
+  box-sizing: border-box;
+  padding: var(--au-space-4);
+  pointer-events: none;
+}
+
+au-snackbar.au-snackbar--open[data-au-position='bottom-center'] {
+  align-items: flex-end;
+  justify-content: center;
+}
+
+au-snackbar.au-snackbar--open[data-au-position='bottom-start'] {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+au-snackbar.au-snackbar--open[data-au-position='bottom-end'] {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+au-snackbar.au-snackbar--open[data-au-position='top-center'] {
+  align-items: flex-start;
+  justify-content: center;
+}
+
+au-snackbar.au-snackbar--open[data-au-position='top-start'] {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+au-snackbar.au-snackbar--open[data-au-position='top-end'] {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+au-snackbar .au-snackbar__surface {
+  display: flex;
+  align-items: center;
+  gap: var(--au-space-3);
+  box-sizing: border-box;
+  width: min(100%, 24rem);
+  padding: var(--au-space-3) var(--au-space-4);
+  border: 1px solid var(--au-color-border-default);
+  border-radius: var(--au-radius-lg);
+  box-shadow: none;
+  pointer-events: auto;
+  animation: au-snackbar-in var(--au-duration-default) var(--au-ease-out);
+}
+
+au-snackbar[data-au-variant='default'] .au-snackbar__surface,
+au-snackbar:not([data-au-variant]) .au-snackbar__surface {
+  background: var(--au-color-surface-raised);
+  color: var(--au-color-text-primary);
+}
+
+au-snackbar[data-au-variant='success'] .au-snackbar__surface {
+  background: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 24%,
+    var(--au-color-semantic-success-surface)
+  );
+  border-color: color-mix(in srgb, var(--au-color-semantic-success) 52%, transparent);
+  color: var(--au-color-text-primary);
+}
+
+au-snackbar[data-au-variant='warning'] .au-snackbar__surface {
+  background: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 26%,
+    var(--au-color-semantic-warning-surface)
+  );
+  border-color: color-mix(in srgb, var(--au-color-semantic-warning) 55%, transparent);
+  color: var(--au-color-text-primary);
+}
+
+au-snackbar[data-au-variant='error'] .au-snackbar__surface {
+  background: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 26%,
+    var(--au-color-semantic-error-surface)
+  );
+  border-color: color-mix(in srgb, var(--au-color-semantic-error) 55%, transparent);
+  color: var(--au-color-text-primary);
+}
+
+au-snackbar[data-au-variant='info'] .au-snackbar__surface {
+  background: color-mix(in srgb, var(--au-color-semantic-info) 24%, var(--au-color-semantic-info-surface));
+  border-color: color-mix(in srgb, var(--au-color-semantic-info) 52%, transparent);
+  color: var(--au-color-text-primary);
+}
+
+au-snackbar .au-snackbar__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+au-snackbar .au-snackbar__message {
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: inherit;
+}
+
+au-snackbar .au-snackbar__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--au-space-1);
+}
+
+au-snackbar .au-snackbar__action {
+  flex-shrink: 0;
+  padding: var(--au-space-1) var(--au-space-2);
+  border: none;
+  border-radius: var(--au-radius-sm);
+  background: transparent;
+  color: var(--au-color-link);
+  font-family: inherit;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-semibold);
+  line-height: var(--au-leading-tight);
+  cursor: pointer;
+  transition: var(--au-transition-control);
+}
+
+au-snackbar .au-snackbar__action:hover {
+  background: color-mix(in srgb, var(--au-color-link) 10%, transparent);
+}
+
+au-snackbar .au-snackbar__action:focus-visible {
+  outline: var(--au-focus-ring-width) solid var(--au-color-focus-ring);
+  outline-offset: var(--au-focus-ring-offset);
+}
+
+au-snackbar .au-snackbar__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--au-space-8);
+  height: var(--au-space-8);
+  padding: 0;
+  border: none;
+  border-radius: var(--au-radius-sm);
+  background: transparent;
+  color: var(--au-color-text-secondary);
+  cursor: pointer;
+  transition: var(--au-transition-control);
+}
+
+au-snackbar .au-snackbar__close:hover {
+  background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
+  color: var(--au-color-text-primary);
+}
+
+au-snackbar .au-snackbar__close:focus-visible {
+  outline: var(--au-focus-ring-width) solid var(--au-color-focus-ring);
+  outline-offset: var(--au-focus-ring-offset);
+}
+
+@keyframes au-snackbar-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+au-snackbar[data-au-position^='top'] .au-snackbar__surface {
+  animation-name: au-snackbar-in-top;
+}
+
+@keyframes au-snackbar-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  au-snackbar .au-snackbar__surface {
+    animation: none;
+  }
+}

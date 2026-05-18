@@ -267,21 +267,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
             },
             {
                 "name": "Default",
@@ -312,6 +312,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => snackbarRender(args),\n}"
             },
             {
                 "name": "Default",
@@ -402,6 +412,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (fila bajo el puntero) usa tinte azul claro; **selected** (`:checked`) usa relleno primario sólido + barra lateral.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "ErrorPersistent",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n  render: (args) => snackbarRender(args),\n}"
             },
             {
                 "name": "Filled",
@@ -577,21 +597,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputNumber>",
-                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputDate>",
                 "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputNumber>",
+                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -632,6 +652,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<Select>",
                 "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<SnackbarStoryArgs>",
+                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: Snackbar,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: ['bottom-center', 'bottom-start', 'bottom-end', 'top-center', 'top-start', 'top-end'],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -896,6 +926,16 @@
                 "defaultValue": "{ imports: [Tabs, AuTab, AuTabPanel] }"
             },
             {
+                "name": "Success",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n  render: (args) => snackbarRender(args),\n}"
+            },
+            {
                 "name": "tabTemplate",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -904,6 +944,16 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "`\n  <au-tabs\n    [(value)]=\"active\"\n    [variant]=\"variant\"\n    [orientation]=\"orientation\"\n    [size]=\"size\"\n    [ariaLabel]=\"ariaLabel\"\n  >\n    <button type=\"button\" auTab=\"profile\">Profile</button>\n    <button type=\"button\" auTab=\"billing\">Billing</button>\n    <button type=\"button\" auTab=\"security\">Security</button>\n    <div auTabPanel=\"profile\">\n      <h3 style=\"margin: 0 0 0.5rem; font-size: 1rem;\">Profile</h3>\n      <p style=\"margin: 0;\">Update your name, email, and avatar.</p>\n    </div>\n    <div auTabPanel=\"billing\">\n      <h3 style=\"margin: 0 0 0.5rem; font-size: 1rem;\">Billing</h3>\n      <p style=\"margin: 0;\">Manage payment methods and invoices.</p>\n    </div>\n    <div auTabPanel=\"security\">\n      <h3 style=\"margin: 0 0 0.5rem; font-size: 1rem;\">Security</h3>\n      <p style=\"margin: 0;\">Password, 2FA, and active sessions.</p>\n    </div>\n  </au-tabs>\n`"
+            },
+            {
+                "name": "TopEnd",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n  render: (args) => snackbarRender(args),\n}"
             },
             {
                 "name": "Vertical",
@@ -916,14 +966,14 @@
                 "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => tabsRender(args),\n}"
             },
             {
-                "name": "WithBounds",
+                "name": "WithAction",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
+                "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n  render: (args) => snackbarRender(args),\n}"
             },
             {
                 "name": "WithBounds",
@@ -934,6 +984,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+            },
+            {
+                "name": "WithBounds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
             },
             {
                 "name": "WithDescription",
@@ -1154,6 +1214,34 @@
                 ]
             },
             {
+                "name": "snackbarRender",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "args",
+                        "type": "SnackbarStoryArgs",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "args",
+                        "type": "SnackbarStoryArgs",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "tabsRender",
                 "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
                 "ctype": "miscellaneous",
@@ -1200,6 +1288,17 @@
             }
         ],
         "typealiases": [
+            {
+                "name": "SnackbarStoryArgs",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Args wired to <code>au-snackbar-story-host</code> (Storybook canvas + live controls).</p>\n",
+                "kind": 188
+            },
             {
                 "name": "Story",
                 "ctype": "miscellaneous",
@@ -1248,8 +1347,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputNumber>",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1259,8 +1358,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "rawtype": "StoryObj<InputNumber>",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1305,6 +1404,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Select>",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<SnackbarStoryArgs>",
+                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2167,6 +2277,68 @@
                     "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
                 }
             ],
+            "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => snackbarRender(args),\n}"
+                },
+                {
+                    "name": "ErrorPersistent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n  render: (args) => snackbarRender(args),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<SnackbarStoryArgs>",
+                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: Snackbar,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: ['bottom-center', 'bottom-start', 'bottom-end', 'top-center', 'top-start', 'top-end'],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                },
+                {
+                    "name": "Success",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n  render: (args) => snackbarRender(args),\n}"
+                },
+                {
+                    "name": "TopEnd",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n  render: (args) => snackbarRender(args),\n}"
+                },
+                {
+                    "name": "WithAction",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n  render: (args) => snackbarRender(args),\n}"
+                }
+            ],
             "projects/aurea/src/lib/switch/switch.stories.ts": [
                 {
                     "name": "Default",
@@ -2371,6 +2543,36 @@
                     ]
                 }
             ],
+            "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
+                {
+                    "name": "snackbarRender",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "args",
+                            "type": "SnackbarStoryArgs",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "args",
+                            "type": "SnackbarStoryArgs",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "projects/aurea/src/lib/tabs/tabs.stories.ts": [
                 {
                     "name": "tabsRender",
@@ -2421,6 +2623,30 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
+                {
+                    "name": "SnackbarStoryArgs",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Args wired to <code>au-snackbar-story-host</code> (Storybook canvas + live controls).</p>\n",
+                    "kind": 188
+                },
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<SnackbarStoryArgs>",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/aurea/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
@@ -2473,19 +2699,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/input-number/input-number.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<InputNumber>",
-                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/input-date/input-date.stories.ts": [
                 {
                     "name": "Story",
@@ -2493,6 +2706,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputDate>",
                     "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-number/input-number.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputNumber>",
+                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -2611,7 +2837,7 @@
         "children": []
     },
     "coverage": {
-        "count": 1,
+        "count": 2,
         "status": "low",
         "files": [
             {
@@ -3475,6 +3701,96 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/select/select.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "snackbarRender",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ErrorPersistent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Success",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TopEnd",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithAction",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "SnackbarStoryArgs",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
