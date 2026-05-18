@@ -119,7 +119,7 @@ export const DropdownTheming: Story = {
     docs: {
       description: {
         story:
-          'Open the list and toggle **Tema** (toolbar) between Claro and Oscuro. The dropdown uses `--au-color-select-menu-*` tokens (native `<option>`; Safari may rely more on `color-scheme`).',
+          'Open the list and toggle **Tema** (toolbar). **Highlight** (fila bajo el puntero) usa tinte azul claro; **selected** (`:checked`) usa relleno primario sólido + barra lateral.',
       },
     },
   },

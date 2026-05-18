@@ -11,5 +11,6 @@ export * from './lib/dialog';
 export * from './lib/radio-group';
 export * from './lib/select';
 export * from './lib/switch';
+export * from './lib/tabs';
 export * from './lib/textarea';
 export * from './lib/theme';

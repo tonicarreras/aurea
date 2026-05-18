@@ -107,31 +107,111 @@
   display: block;
   width: 100%;
   min-width: 0;
+  height: var(--au-size-field-h-md);
   margin: 0;
-  padding: var(--au-space-2-5) var(--au-space-3);
+  box-sizing: border-box;
+  padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
   border: none;
   border-radius: inherit;
   background: transparent;
   font-family: inherit;
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-primary);
+  font-size: var(--au-size-field-text-md);
+  line-height: var(--au-size-field-h-md);
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
   outline: none;
+  color-scheme: inherit;
+  accent-color: var(--au-color-date-picker-accent);
 }
 
 :host([data-au-size='sm']) .au-input-date__input {
-  padding: var(--au-space-2) var(--au-space-2-5);
-  font-size: var(--au-text-xs);
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 calc(var(--au-size-field-px-sm) + 1.5rem) 0 var(--au-size-field-px-sm);
+}
+
+:host([data-au-size='md']) .au-input-date__input,
+:host(:not([data-au-size])) .au-input-date__input {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
 }
 
 :host([data-au-size='lg']) .au-input-date__input {
-  padding: var(--au-space-3) var(--au-space-3-5);
-  font-size: var(--au-text-md);
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 calc(var(--au-size-field-px-lg) + 2rem) 0 var(--au-size-field-px-lg);
 }
 
 .au-input-date__input:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  color: var(--au-color-form-disabled-foreground);
+  opacity: 0.9;
+}
+
+/* Inline date segments (Chromium / Safari) */
+.au-input-date__input::-webkit-datetime-edit {
+  padding: 0;
+  color: var(--au-color-form-text);
+}
+
+.au-input-date__input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+.au-input-date__input::-webkit-datetime-edit-text {
+  color: var(--au-color-text-tertiary);
+  padding: 0 0.1em;
+}
+
+.au-input-date__input::-webkit-datetime-edit-day-field,
+.au-input-date__input::-webkit-datetime-edit-month-field,
+.au-input-date__input::-webkit-datetime-edit-year-field {
+  padding: 0 0.15em;
+  border-radius: var(--au-radius-xs);
+  color: var(--au-color-form-text);
+}
+
+.au-input-date__input::-webkit-datetime-edit-day-field:focus,
+.au-input-date__input::-webkit-datetime-edit-month-field:focus,
+.au-input-date__input::-webkit-datetime-edit-year-field:focus {
+  background-color: var(--au-color-date-picker-edit-highlight);
+  color: var(--au-color-form-text);
+  outline: none;
+}
+
+/* Calendar trigger icon */
+.au-input-date__input::-webkit-calendar-picker-indicator {
+  position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-inline-start: var(--au-space-2);
+  padding: var(--au-space-1);
+  border-radius: var(--au-radius-sm);
+  cursor: pointer;
+  opacity: 0.78;
+  transition:
+    opacity var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.au-input-date__control-row:hover
+  .au-input-date__input:not(:disabled)::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  background-color: var(--au-color-date-picker-icon-bg);
+}
+
+.au-input-date__control-row:focus-within .au-input-date__input::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  background-color: var(--au-color-date-picker-icon-bg);
+}
+
+/* Firefox: keeps native icon; accent-color styles the popup selection */
+.au-input-date__input::-moz-focus-inner {
+  border: 0;
 }
 
 .au-input-date__hint {

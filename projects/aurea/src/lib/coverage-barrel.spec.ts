@@ -8,6 +8,7 @@ import * as dialog from './dialog/index';
 import * as radioGroup from './radio-group/index';
 import * as select from './select/index';
 import * as switchMod from './switch/index';
+import * as tabs from './tabs/index';
 import * as textarea from './textarea/index';
 import * as theme from './theme/index';
 
@@ -25,6 +26,9 @@ describe('library barrel exports', () => {
     expect(radioGroup.RadioGroup).toBeDefined();
     expect(select.Select).toBeDefined();
     expect(switchMod.Switch).toBeDefined();
+    expect(tabs.Tabs).toBeDefined();
+    expect(tabs.AuTab).toBeDefined();
+    expect(tabs.AuTabPanel).toBeDefined();
     expect(textarea.Textarea).toBeDefined();
     expect(theme.AuTheme).toBeDefined();
   });

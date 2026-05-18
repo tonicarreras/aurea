@@ -33,3 +33,21 @@ export const WithBounds: Story = {
     maxDate: '2026-12-31',
   },
 };
+
+export const CalendarTheming: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Abre el calendario nativo y cambia **Tema** en la barra. `accent-color` y `color-scheme` alinean selección y popup; el icono y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',
+      },
+    },
+  },
+  args: {
+    label: 'Event date',
+    value: '2026-05-18',
+    hint: 'Toggle light / dark in the Storybook toolbar.',
+    minDate: '2026-01-01',
+    maxDate: '2026-12-31',
+  },
+};

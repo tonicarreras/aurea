@@ -185,21 +185,27 @@
   background-color: var(--au-color-select-menu-bg);
 }
 
+/* Committed value (visible in the closed field) */
 .au-select__element option:checked {
   background-color: var(--au-color-select-option-selected-bg);
   color: var(--au-color-select-option-selected-text);
-  font-weight: var(--au-weight-medium);
+  font-weight: var(--au-weight-semibold);
+  box-shadow: inset 3px 0 0 var(--au-color-select-option-selected-marker);
 }
 
+/* Active row while browsing the list — distinct from :checked */
 @media (hover: hover) {
-  .au-select__element option:hover {
-    background-color: var(--au-color-select-option-hover-bg);
-    color: var(--au-color-select-menu-text);
+  .au-select__element option:hover:not(:checked) {
+    background-color: var(--au-color-select-option-highlight-bg);
+    color: var(--au-color-select-option-highlight-text);
+    font-weight: var(--au-weight-medium);
+    box-shadow: inset 3px 0 0 var(--au-color-select-option-highlight-marker);
   }
 
   .au-select__element option:checked:hover {
     background-color: var(--au-color-select-option-selected-bg);
     color: var(--au-color-select-option-selected-text);
+    box-shadow: inset 3px 0 0 var(--au-color-select-option-selected-marker);
   }
 }
 

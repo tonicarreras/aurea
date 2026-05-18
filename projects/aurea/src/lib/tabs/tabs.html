@@ -1,0 +1,14 @@
+<div class="au-tabs__root">
+  <div
+    class="au-tabs__list"
+    role="tablist"
+    [attr.aria-label]="ariaLabel().trim() || null"
+    [attr.aria-orientation]="orientation()"
+    (keydown)="onListKeydown($event)"
+  >
+    <ng-content select="button[auTab]"></ng-content>
+  </div>
+  <div class="au-tabs__panels">
+    <ng-content select="[auTabPanel]"></ng-content>
+  </div>
+</div>
