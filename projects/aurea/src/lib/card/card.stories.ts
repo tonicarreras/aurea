@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
+import { Button } from '../button/button';
+import { AuCardFooter } from './card-footer.directive';
 import { Card } from './card';
 
 const meta: Meta<Card> = {
@@ -33,18 +35,12 @@ export default meta;
 type Story = StoryObj<Card>;
 
 export const Default: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Default elevated card. Projected content receives standard body padding.',
-      },
-    },
-  },
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
-      <au-card>
+      <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Card title</h3>
-        <p auCardBody>Body copy uses design tokens for type and color.</p>
+        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>
       </au-card>
     `,
   }),
@@ -52,11 +48,12 @@ export const Default: Story = {
 
 export const Outlined: Story = {
   args: { variant: 'outlined' },
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
-      <au-card variant="outlined">
+      <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Outlined card</h3>
-        <p auCardBody>Border instead of shadow for lighter layouts.</p>
+        <p auCardBody>Stronger border, no elevation shadow.</p>
       </au-card>
     `,
   }),
@@ -64,26 +61,48 @@ export const Outlined: Story = {
 
 export const Filled: Story = {
   args: { variant: 'filled' },
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
-      <au-card variant="filled">
+      <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Filled card</h3>
-        <p auCardBody>Subtle background for grouped sections.</p>
+        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>
       </au-card>
     `,
   }),
 };
 
 export const WithFooter: Story = {
-  render: () => ({
+  render: (args) => ({
+    props: args,
+    moduleMetadata: { imports: [Button, AuCardFooter] },
     template: `
-      <au-card>
+      <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Confirm</h3>
         <p auCardBody>Review the summary before continuing.</p>
         <div auCardFooter>
-          <button type="button">Cancel</button>
-          <button type="button">Continue</button>
+          <au-button style="margin-right: var(--au-space-2);" variant="secondary" type="button">Cancel</au-button>
+          <au-button type="button">Continue</au-button>
         </div>
+      </au-card>
+    `,
+  }),
+};
+
+export const WithMedia: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <au-card [variant]="variant" [size]="size" style="max-width: 22rem;">
+        <img
+          auCardMedia
+          src="https://picsum.photos/seed/aurea-card/640/240"
+          alt="Decorative cover"
+          width="640"
+          height="240"
+        />
+        <h3 auCardHeader>Featured</h3>
+        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>
       </au-card>
     `,
   }),
@@ -91,9 +110,10 @@ export const WithFooter: Story = {
 
 export const SmallSize: Story = {
   args: { size: 'sm' },
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
-      <au-card size="sm">
+      <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Compact</h3>
         <p auCardBody>Reduced padding for dense lists.</p>
       </au-card>
@@ -103,9 +123,10 @@ export const SmallSize: Story = {
 
 export const LargeSize: Story = {
   args: { size: 'lg' },
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
-      <au-card size="lg">
+      <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Spacious</h3>
         <p auCardBody>More padding for emphasis or hero cards.</p>
       </au-card>

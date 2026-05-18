@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AuCardFooter } from './card-footer.directive';
 import { Card } from './card';
 
 describe('Card', () => {
@@ -60,13 +61,53 @@ describe('Card', () => {
     expect(content.nativeElement.textContent).toBe('Projected content');
   });
 
-  it('applies padding on default projected content via au-card__content', () => {
+  it('applies padding on default projected content via au-card__inner', () => {
     const fix = TestBed.createComponent(TestCardComponent);
     fix.detectChanges();
-    const region = fix.debugElement.query(By.css('.au-card__content'))!.nativeElement as HTMLElement;
+    const region = fix.debugElement.query(By.css('.au-card__inner'))!.nativeElement as HTMLElement;
     const style = getComputedStyle(region);
     expect(style.paddingTop).not.toBe('0px');
     expect(style.paddingLeft).not.toBe('0px');
+  });
+
+  it('zeros projected header and body block margins', () => {
+    const fix = TestBed.createComponent(TestCardSlotsComponent);
+    fix.detectChanges();
+    const header = fix.nativeElement.querySelector('[auCardHeader]') as HTMLElement;
+    const body = fix.nativeElement.querySelector('[auCardBody]') as HTMLElement;
+    for (const el of [header, body]) {
+      const { marginTop, marginBottom } = getComputedStyle(el);
+      expect(marginTop === '0px' || marginTop === '0').toBe(true);
+      expect(marginBottom === '0px' || marginBottom === '0').toBe(true);
+    }
+  });
+
+  it('does not render footer when auCardFooter is absent', () => {
+    const fix = TestBed.createComponent(TestCardComponent);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-card__footer')).toBeNull();
+  });
+
+  it('hasFooter is false when auCardFooter is absent', () => {
+    const fix = TestBed.createComponent(TestCardComponent);
+    fix.detectChanges();
+    const card = fix.debugElement.query(By.directive(Card))!.componentInstance as Card;
+    expect(card.hasFooter()).toBe(false);
+  });
+
+  it('renders footer when auCardFooter is projected', () => {
+    const fix = TestBed.createComponent(TestCardWithFooterComponent);
+    fix.detectChanges();
+    const footer = fix.nativeElement.querySelector('.au-card__footer');
+    expect(footer).toBeTruthy();
+    expect(footer?.textContent).toContain('Save');
+  });
+
+  it('hasFooter is true when auCardFooter is projected', () => {
+    const fix = TestBed.createComponent(TestCardWithFooterComponent);
+    fix.detectChanges();
+    const card = fix.debugElement.query(By.directive(Card))!.componentInstance as Card;
+    expect(card.hasFooter()).toBe(true);
   });
 
   it('variant input has correct default value', () => {
@@ -93,3 +134,30 @@ describe('Card', () => {
   `,
 })
 class TestCardComponent {}
+
+@Component({
+  selector: 'test-card-slots',
+  standalone: true,
+  imports: [Card],
+  template: `
+    <au-card>
+      <h3 auCardHeader>Title</h3>
+      <p auCardBody>Body</p>
+    </au-card>
+  `,
+})
+class TestCardSlotsComponent {}
+
+@Component({
+  selector: 'test-card-footer',
+  standalone: true,
+  imports: [Card, AuCardFooter],
+  template: `
+    <au-card>
+      <h3 auCardHeader>Title</h3>
+      <p auCardBody>Body</p>
+      <button type="button" auCardFooter>Save</button>
+    </au-card>
+  `,
+})
+class TestCardWithFooterComponent {}

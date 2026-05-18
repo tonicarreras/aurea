@@ -1,237 +1,158 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
+
 import { Button } from '../button/button';
+import { AuDialogFooter } from './dialog-footer.directive';
 import { Dialog } from './dialog';
-import { CommonModule } from '@angular/common';
+import { DialogStoryHost } from './dialog-story-host';
 
 const meta: Meta<Dialog> = {
   title: 'Aurea/Dialog',
   component: Dialog,
   tags: ['autodocs', 'au'],
   parameters: {
-    layout: 'fullscreen',
+    layout: 'padded',
+    docs: {
+      description: {
+        component:
+          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',
+      },
+    },
   },
   argTypes: {
-    open: {
-      control: 'boolean',
-      description: 'Controls visibility of the dialog.',
-      table: { category: 'State' },
-    },
-    close: {
-      description: 'Emits when dialog should close.',
-      table: { category: 'Events' },
-    },
-    title: {
-      control: 'text',
-      description: 'Dialog title for accessibility.',
-      table: { category: 'Content' },
-    },
-    showCloseButton: {
-      control: 'boolean',
-      description: 'Show/hide close button in header.',
-      table: { category: 'Content' },
-    },
-    closeOnBackdrop: {
-      control: 'boolean',
-      description: 'Close when the dimmed overlay (outside the panel) is clicked.',
-      table: { category: 'Behavior' },
-    },
-    closeOnEscape: {
-      control: 'boolean',
-      description: 'Close when the user presses Escape (native dialog cancel).',
-      table: { category: 'Behavior' },
-    },
-    ariaLabel: {
-      control: 'text',
-      description: 'Accessible name when there is no visible `title` (sets `aria-label` on the dialog).',
-      table: { category: 'Content' },
-    },
+    open: { control: 'boolean', table: { category: 'State' } },
+    close: { table: { category: 'Events' } },
+    title: { control: 'text', table: { category: 'Content' } },
+    showCloseButton: { control: 'boolean', table: { category: 'Content' } },
+    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },
+    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },
+    ariaLabel: { control: 'text', table: { category: 'Content' } },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg', 'full'],
-      description: 'Dialog width size.',
       table: { category: 'Appearance' },
     },
   },
   args: {
     open: false,
     close: fn(),
-    title: 'Dialog Title',
+    title: 'Dialog title',
     size: 'md',
     showCloseButton: true,
     closeOnBackdrop: true,
     closeOnEscape: true,
+    ariaLabel: '',
   },
 };
 
 export default meta;
 type Story = StoryObj<Dialog>;
 
-// Helper template for dialog with trigger button
-const dialogTemplate = (
-  title: string,
-  body: string,
-  size = 'md',
-  showCloseButton = true,
-  closeOnBackdrop = true,
-  closeOnEscape = true,
-  footerTemplate = ''
-) => `
-  <au-button (click)="open = true">Open Dialog</au-button>
-  <au-dialog [(open)]="open" title="${title}" size="${size}" [showCloseButton]="${showCloseButton}" [closeOnBackdrop]="${closeOnBackdrop}" [closeOnEscape]="${closeOnEscape}">
-    ${body}
-    ${footerTemplate ? `<div auDialogFooter>${footerTemplate}</div>` : ''}
-  </au-dialog>
-`;
-
-export const Default: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Default medium dialog opened via trigger button.',
+function hostStory(config: {
+  hint?: string;
+  triggerLabel?: string;
+  title?: string;
+  body: string;
+  size?: 'sm' | 'md' | 'lg' | 'full';
+  showCloseButton?: boolean;
+  closeOnBackdrop?: boolean;
+  closeOnEscape?: boolean;
+  ariaLabel?: string;
+  showDemoFooter?: boolean;
+}): Story {
+  return {
+    // No `args` in render: Storybook signal-input args are not typed for custom hosts.
+    render: () => ({
+      moduleMetadata: { imports: [DialogStoryHost, Button, AuDialogFooter] },
+      template: `
+        <au-dialog-story-host
+          [hint]="hint"
+          [triggerLabel]="triggerLabel"
+          [title]="title"
+          [size]="size"
+          [showCloseButton]="showCloseButton"
+          [closeOnBackdrop]="closeOnBackdrop"
+          [closeOnEscape]="closeOnEscape"
+          [ariaLabel]="ariaLabel"
+          [showDemoFooter]="showDemoFooter"
+        >
+          ${config.body}
+        </au-dialog-story-host>
+      `,
+      props: {
+        hint: config.hint ?? '',
+        triggerLabel: config.triggerLabel ?? 'Open dialog',
+        title: config.title ?? 'Dialog title',
+        size: config.size ?? 'md',
+        showCloseButton: config.showCloseButton ?? true,
+        closeOnBackdrop: config.closeOnBackdrop ?? true,
+        closeOnEscape: config.closeOnEscape ?? true,
+        ariaLabel: config.ariaLabel ?? '',
+        showDemoFooter: config.showDemoFooter ?? false,
       },
-    },
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: dialogTemplate('Confirm Action', '<p>Are you sure you want to proceed with this action?</p>'),
-    props: { open: false },
-  }),
-};
+    }),
+  };
+}
 
-export const SmallSize: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Small dialog for simple confirmations or alerts.',
-      },
-    },
-  },
-  args: {
-    size: 'sm',
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: dialogTemplate('Confirm', '<p>Continue?</p>', 'sm'),
-    props: { open: false },
-  }),
-};
+export const Default: Story = hostStory({
+  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',
+  title: 'Confirm action',
+  body: '<p>Are you sure you want to proceed with this action?</p>',
+});
 
-export const LargeSize: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Large dialog for complex content or forms.',
-      },
-    },
-  },
-  args: {
-    size: 'lg',
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: dialogTemplate('Detailed View', '<p>This is a larger dialog for displaying more content.</p><p>It can contain forms, multiple sections, or detailed information.</p>', 'lg'),
-    props: { open: false },
-  }),
-};
+export const SmallSize: Story = hostStory({
+  hint: 'Compact width (24rem) for short confirmations.',
+  title: 'Confirm',
+  size: 'sm',
+  body: '<p>Continue?</p>',
+});
 
-export const FullScreen: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Full screen dialog for maximum content space.',
-      },
-    },
-  },
-  args: {
-    size: 'full',
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: dialogTemplate('Full Screen Dialog', '<p>This dialog takes the full viewport minus padding.</p>', 'full'),
-    props: { open: false },
-  }),
-};
+export const LargeSize: Story = hostStory({
+  hint: 'Wider panel (45rem) for forms or longer copy.',
+  title: 'Detailed view',
+  size: 'lg',
+  body: `
+    <p>This dialog can hold multiple paragraphs or form fields.</p>
+    <p>Body scrolls when content exceeds the viewport.</p>
+  `,
+});
 
-export const NoCloseButton: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Dialog without close button in header. User must use backdrop or Escape.',
-      },
-    },
-  },
-  args: {
-    showCloseButton: false,
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: dialogTemplate('No Close Button', '<p>Close using backdrop click or Escape key.</p>', 'md', false),
-    props: { open: false },
-  }),
-};
+export const FullScreen: Story = hostStory({
+  hint: 'Fills the viewport with a 16px inset — for wizards, editors, or immersive flows.',
+  triggerLabel: 'Open full-screen dialog',
+  title: 'Full screen',
+  size: 'full',
+  showDemoFooter: true,
+  body: `
+    <p>The panel stretches to the viewport minus padding.</p>
+    <p>Scroll still works inside the body when content overflows.</p>
+  `,
+});
 
-export const NoBackdropClose: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Dialog that does not close when clicking backdrop.',
-      },
-    },
-  },
-  args: {
-    closeOnBackdrop: false,
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: dialogTemplate('Persistent Dialog', '<p>Backdrop does not dismiss; use the close button or Escape.</p>', 'md', true, false, true),
-    props: { open: false },
-  }),
-};
+export const WithFooter: Story = hostStory({
+  hint: 'Footer actions match card footers. Import `AuDialogFooter` in your host component.',
+  title: 'With footer',
+  showDemoFooter: true,
+  body: '<p>Dialog body content here.</p>',
+});
 
-export const WithFooter: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Dialog with footer actions using `auDialogFooter` attribute selector.',
-      },
-    },
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: `
-      <au-button (click)="open = true">Open Dialog</au-button>
-      <au-dialog [(open)]="open" title="With Footer">
-        <p>Dialog body content here.</p>
-        <div auDialogFooter>
-          <au-button variant="secondary" (click)="open = false">Cancel</au-button>
-          <au-button (click)="open = false">Confirm</au-button>
-        </div>
-      </au-dialog>
-    `,
-    props: { open: false },
-  }),
-};
+export const NoCloseButton: Story = hostStory({
+  hint: 'Dismiss with backdrop click or Escape only.',
+  title: 'No close button',
+  showCloseButton: false,
+  body: '<p>There is no header close control in this variant.</p>',
+});
 
-export const WithoutTitle: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: 'Dialog without title. Useful for simple content or when title is in body.',
-      },
-    },
-  },
-  args: {
-    title: '',
-  },
-  render: () => ({
-    moduleMetadata: { imports: [CommonModule, Button] },
-    template: `
-      <au-button (click)="open = true">Open Dialog</au-button>
-      <au-dialog [(open)]="open" [title]="''">
-        <p>This dialog has no title.</p>
-      </au-dialog>
-    `,
-    props: { open: false },
-  }),
-};
+export const NoBackdropClose: Story = hostStory({
+  hint: 'Backdrop clicks are ignored; use the close button or Escape.',
+  title: 'Persistent dialog',
+  closeOnBackdrop: false,
+  body: '<p>Clicking the dimmed overlay does not close this dialog.</p>',
+});
+
+export const WithoutTitle: Story = hostStory({
+  hint: 'Provide `ariaLabel` when there is no visible title.',
+  title: '',
+  ariaLabel: 'Information',
+  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',
+});

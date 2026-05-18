@@ -31,6 +31,12 @@ body,
   background: var(--au-color-surface-canvas);
 }
 
+.sbdocs-preview {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 /**
  * Docs (MDX) usa Emotion con el tema claro del runtime de Storybook.
  * Con `data-au-theme="dark"` en la raíz del documento forzamos tipografía, tablas, código y TOC a tokens Aurea.

@@ -1,23 +1,28 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ElementRef,
+  ViewEncapsulation,
+  afterRenderEffect,
   computed,
-  effect,
+  inject,
   input,
   model,
   output,
-  viewChild,
+  signal,
 } from '@angular/core';
+import { AuDialogFooter } from './dialog-footer.directive';
 
 /**
  * Design-system **dialog**: native `<dialog>` overlay for focused interactions.
  *
  * @remarks
- * - **Visibility:** `[(open)]` syncs with `showModal()` / `close()`; hidden when closed (`display: none`).
+ * - **Visibility:** `[(open)]` syncs with `showModal()` / `close()` after render via `afterRenderEffect`.
  * - **Sizes:** sm, md (default), lg, full.
  * - **Accessibility:** `aria-labelledby` when `title` is set; `aria-label` when only `ariaLabel` is set.
  * - **Dismiss:** backdrop click (outside panel), Escape (`closeOnEscape`), close button.
+ * - **Footer:** import `AuDialogFooter` in the host that projects `[auDialogFooter]`.
  *
  * @example
  * ```html
@@ -34,6 +39,7 @@ import {
   selector: 'au-dialog',
   templateUrl: './dialog.html',
   styleUrl: './dialog.css',
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-dialog',
@@ -43,7 +49,7 @@ import {
 export class Dialog {
   private static nextTitleId = 0;
 
-  private readonly dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
+  private readonly host = inject(ElementRef<HTMLElement>);
 
   /** Controls visibility; two-way binding with `[(open)]`. */
   readonly open = model<boolean>(false);
@@ -62,6 +68,16 @@ export class Dialog {
   readonly closeOnEscape = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg' | 'full'>('md');
 
+  private readonly footerPresent = signal(false);
+
+  @ContentChild(AuDialogFooter)
+  set footerSlot(slot: AuDialogFooter | undefined) {
+    this.footerPresent.set(slot != null);
+  }
+
+  /** True when `[auDialogFooter]` content is projected. */
+  readonly hasFooter = this.footerPresent.asReadonly();
+
   private readonly titleDomId = `au-dialog-title-${++Dialog.nextTitleId}`;
 
   readonly titleHeadingId = computed(() => {
@@ -69,22 +85,22 @@ export class Dialog {
     return custom ? `${custom}-title` : this.titleDomId;
   });
 
-  constructor() {
-    let lastOpen: boolean | undefined;
-    effect(() => {
-      const isOpen = this.open();
-      if (isOpen === lastOpen) {
-        /* v8 ignore next -- @preserve: guard when unrelated signals re-run the effect */
-        return;
-      }
-      lastOpen = isOpen;
-      const dialog = this.dialogRef().nativeElement;
-      if (isOpen) {
-        this.openDialogElement(dialog);
-      } else if (this.isDialogDisplayed(dialog)) {
-        this.closeDialogElement(dialog);
-      }
-    });
+  /** Syncs `open` to the native `<dialog>` once the view is in the DOM. */
+  private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
+    this.applyOpenStateToNativeDialog();
+  });
+
+  private applyOpenStateToNativeDialog(): void {
+    const isOpen = this.open();
+    const dialog = this.host.nativeElement.querySelector('dialog');
+    if (!dialog) {
+      return;
+    }
+    if (isOpen) {
+      this.openDialogElement(dialog);
+    } else if (this.isDialogDisplayed(dialog)) {
+      this.closeDialogElement(dialog);
+    }
   }
 
   private openDialogElement(dialog: HTMLDialogElement): void {
@@ -116,7 +132,10 @@ export class Dialog {
   }
 
   onCloseButtonClick(): void {
-    this.closeDialogElement(this.dialogRef().nativeElement);
+    const dialog = this.host.nativeElement.querySelector('dialog');
+    if (dialog) {
+      this.closeDialogElement(dialog);
+    }
   }
 
   onDialogClick(event: MouseEvent): void {
@@ -127,7 +146,10 @@ export class Dialog {
     if (target instanceof Element && target.closest('.au-dialog__panel')) {
       return;
     }
-    this.closeDialogElement(this.dialogRef().nativeElement);
+    const dialog = this.host.nativeElement.querySelector('dialog');
+    if (dialog) {
+      this.closeDialogElement(dialog);
+    }
   }
 
   onDialogCancel(event: Event): void {
@@ -136,9 +158,9 @@ export class Dialog {
       return;
     }
     event.preventDefault();
-    const d = this.dialogRef().nativeElement;
-    if (this.isDialogDisplayed(d)) {
-      this.closeDialogElement(d);
+    const dialog = this.host.nativeElement.querySelector('dialog');
+    if (dialog && this.isDialogDisplayed(dialog)) {
+      this.closeDialogElement(dialog);
     }
   }
 

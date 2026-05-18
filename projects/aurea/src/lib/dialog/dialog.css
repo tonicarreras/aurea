@@ -1,9 +1,9 @@
 /**
- * Dialog — native overlay for focused interactions.
+ * Dialog — modal panel aligned with au-card surface and spacing.
  */
 @import url('../theme/au-tokens.css');
 
-:host {
+au-dialog {
   display: contents;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -11,131 +11,153 @@
   text-rendering: optimizeLegibility;
 }
 
-.au-dialog__native {
+au-dialog .au-dialog__native {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  margin: auto;
-  padding: var(--au-space-4);
+  width: 100vw;
+  height: 100vh;
   max-width: 100vw;
   max-height: 100vh;
+  margin: 0;
+  padding: var(--au-space-4);
   border: none;
   background: transparent;
   color: inherit;
 }
 
-.au-dialog__native:not([open]) {
+au-dialog .au-dialog__native:not([open]) {
   display: none;
 }
 
-.au-dialog__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-text-primary) 42%, transparent);
+au-dialog .au-dialog__native::backdrop {
+  background: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
   animation: au-dialog-backdrop-in var(--au-duration-short) var(--au-ease-out);
 }
 
-.au-dialog__panel {
+au-dialog .au-dialog__panel {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-height: min(90vh, calc(100vh - var(--au-space-8)));
   overflow: hidden;
   background: var(--au-color-surface-raised);
+  border: 1px solid var(--au-color-border-subtle);
   border-radius: var(--au-radius-xl);
   box-shadow: var(--au-shadow-overlay);
   animation: au-dialog-panel-in var(--au-duration-default) var(--au-ease-out);
 }
 
-:host([data-au-size='sm']) .au-dialog__panel {
-  max-width: 400px;
+au-dialog[data-au-size='sm'] .au-dialog__panel {
+  max-width: 24rem;
 }
 
-:host([data-au-size='md']) .au-dialog__panel {
-  max-width: 560px;
+au-dialog[data-au-size='md'] .au-dialog__panel,
+au-dialog:not([data-au-size]) .au-dialog__panel {
+  max-width: 35rem;
 }
 
-:host([data-au-size='lg']) .au-dialog__panel {
-  max-width: 720px;
+au-dialog[data-au-size='lg'] .au-dialog__panel {
+  max-width: 45rem;
 }
 
-:host([data-au-size='full']) .au-dialog__native {
+au-dialog[data-au-size='full'] .au-dialog__native {
+  align-items: stretch;
+  justify-content: stretch;
   padding: var(--au-space-4);
 }
 
-:host([data-au-size='full']) .au-dialog__panel {
+au-dialog[data-au-size='full'] .au-dialog__panel {
+  flex: 1 1 auto;
   width: 100%;
   max-width: none;
   height: 100%;
   max-height: none;
+  min-height: 0;
+  border-radius: var(--au-radius-lg);
 }
 
-.au-dialog__header {
+au-dialog .au-dialog__header {
   display: flex;
   flex-shrink: 0;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: var(--au-space-4);
-  padding: var(--au-space-4) var(--au-space-5);
-  border-bottom: 1px solid var(--au-color-divider);
+  gap: var(--au-space-3);
+  padding: var(--au-space-4) var(--au-space-4) var(--au-space-3);
+  border-bottom: 1px solid var(--au-color-border-subtle);
 }
 
-.au-dialog__title {
+au-dialog .au-dialog__title {
   margin: 0;
+  padding: var(--au-space-0-5) 0 0;
   font-size: var(--au-text-lg);
   font-weight: var(--au-weight-semibold);
   line-height: var(--au-leading-tight);
+  letter-spacing: var(--au-tracking-ui);
   color: var(--au-color-text-primary);
 }
 
-.au-dialog__close {
-  display: flex;
+au-dialog .au-dialog__close {
+  display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: var(--au-space-8);
   height: var(--au-space-8);
-  margin: calc(-1 * var(--au-space-2));
-  margin-left: auto;
+  margin: 0;
   padding: 0;
-  border: none;
-  border-radius: var(--au-radius-button);
+  border: 1px solid transparent;
+  border-radius: var(--au-radius-sm);
   background: transparent;
   color: var(--au-color-text-secondary);
   cursor: pointer;
-  transition: var(--au-transition-control);
+  transition:
+    var(--au-transition-background),
+    var(--au-transition-border),
+    var(--au-transition-color),
+    var(--au-transition-shadow);
 }
 
-.au-dialog__close:hover {
-  background: var(--au-color-surface-interactive);
+au-dialog .au-dialog__close:hover {
+  background: var(--au-color-surface-elevated);
+  border-color: var(--au-color-border-subtle);
   color: var(--au-color-text-primary);
 }
 
-.au-dialog__close:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+au-dialog .au-dialog__close:focus-visible {
+  outline: none;
+  border-color: var(--au-color-focus-ring);
+  box-shadow: var(--au-shadow-focus-ring);
 }
 
-.au-dialog__body {
+au-dialog .au-dialog__body {
   flex: 1 1 auto;
   min-height: 0;
-  padding: var(--au-space-5);
+  padding: var(--au-space-4);
   overflow-y: auto;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-primary);
+  color: var(--au-color-text-secondary);
 }
 
-.au-dialog__footer {
+au-dialog .au-dialog__body > * {
+  margin: 0;
+}
+
+au-dialog .au-dialog__body > * + * {
+  margin-top: var(--au-space-3);
+}
+
+au-dialog .au-dialog__footer {
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: var(--au-space-3);
-  padding: var(--au-space-4) var(--au-space-5);
-  border-top: 1px solid var(--au-color-divider);
-}
-
-.au-dialog__footer:not(:has(> *)) {
-  display: none;
-  padding: 0;
-  border-top: none;
+  padding: var(--au-space-3) var(--au-space-4) var(--au-space-4);
+  border-top: 1px solid var(--au-color-border-subtle);
 }
 
 @keyframes au-dialog-backdrop-in {
@@ -150,7 +172,7 @@
 @keyframes au-dialog-panel-in {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(8px) scale(0.99);
   }
   to {
     opacity: 1;
@@ -159,8 +181,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .au-dialog__native::backdrop,
-  .au-dialog__panel {
+  au-dialog .au-dialog__native::backdrop,
+  au-dialog .au-dialog__panel {
     animation: none;
   }
 }

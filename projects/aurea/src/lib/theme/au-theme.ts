@@ -8,13 +8,14 @@ import { computed, DestroyRef, Directive, inject, input, signal } from '@angular
  * - `system`: follows `prefers-color-scheme` and updates when the OS preference changes.
  */
 @Directive({
-  standalone: true,
   selector: '[auTheme]',
   host: {
     '[attr.data-au-theme]': 'resolved()',
   },
 })
 export class AuTheme {
+  private readonly destroyRef = inject(DestroyRef);
+
   readonly auTheme = input<'light' | 'dark' | 'system'>('system');
 
   private readonly prefersDark = signal(false);
@@ -27,7 +28,9 @@ export class AuTheme {
     return this.prefersDark() ? 'dark' : 'light';
   });
 
-  constructor() {
+  private readonly systemColorSchemeBinding = this.bindSystemColorScheme();
+
+  private bindSystemColorScheme(): void {
     if (typeof matchMedia === 'undefined') {
       return;
     }
@@ -35,6 +38,6 @@ export class AuTheme {
     const sync = () => this.prefersDark.set(mq.matches);
     sync();
     mq.addEventListener('change', sync);
-    inject(DestroyRef).onDestroy(() => mq.removeEventListener('change', sync));
+    this.destroyRef.onDestroy(() => mq.removeEventListener('change', sync));
   }
 }

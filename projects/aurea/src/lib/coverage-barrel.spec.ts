@@ -15,11 +15,13 @@ describe('library barrel exports', () => {
   it('re-exports all public components', () => {
     expect(button.Button).toBeDefined();
     expect(card.Card).toBeDefined();
+    expect(card.AuCardFooter).toBeDefined();
     expect(checkbox.Checkbox).toBeDefined();
     expect(inputDate.InputDate).toBeDefined();
     expect(inputNumber.InputNumber).toBeDefined();
     expect(inputText.InputText).toBeDefined();
     expect(dialog.Dialog).toBeDefined();
+    expect(dialog.AuDialogFooter).toBeDefined();
     expect(radioGroup.RadioGroup).toBeDefined();
     expect(select.Select).toBeDefined();
     expect(switchMod.Switch).toBeDefined();

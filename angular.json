@@ -38,7 +38,8 @@
               "coverageInclude": ["projects/aurea/src/lib/**/*.ts"],
               "coverageExclude": [
                 "projects/aurea/src/lib/**/*.stories.ts",
-                "projects/aurea/src/lib/**/*.docs-overview.ts"
+                "projects/aurea/src/lib/**/*.docs-overview.ts",
+                "projects/aurea/src/lib/**/*-story-host.ts"
               ],
               "coverageThresholds": {
                 "statements": 99,

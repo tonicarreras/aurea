@@ -94,7 +94,7 @@ describe('AuTheme', () => {
     expect(el.getAttribute('data-au-theme')).toBe('dark');
   });
 
-  it('constructor skips matchMedia when undefined', () => {
+  it('skips matchMedia when undefined', () => {
     vi.stubGlobal('matchMedia', undefined as unknown as typeof matchMedia);
     const fix = TestBed.createComponent(ThemeHostSystem);
     fix.detectChanges();

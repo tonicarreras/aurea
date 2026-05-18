@@ -32,8 +32,10 @@
       <ng-content></ng-content>
     </div>
 
-    <footer class="au-dialog__footer">
-      <ng-content select="[auDialogFooter]"></ng-content>
-    </footer>
+    @if (hasFooter()) {
+      <footer class="au-dialog__footer">
+        <ng-content select="[auDialogFooter]"></ng-content>
+      </footer>
+    }
   </div>
 </dialog>

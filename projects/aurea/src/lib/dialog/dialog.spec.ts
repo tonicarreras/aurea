@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AuDialogFooter } from './dialog-footer.directive';
 import { Dialog } from './dialog';
 
 describe('Dialog', () => {
@@ -183,6 +184,26 @@ describe('Dialog', () => {
     expect(emitted).toBe(false);
   });
 
+  it('skips render sync when open stays false', async () => {
+    const fix = TestBed.createComponent(Dialog);
+    const el = queryNativeDialog(fix);
+    const closeSpy = vi.fn(function (this: HTMLDialogElement) {
+      this.removeAttribute('open');
+    });
+    try {
+      Object.defineProperty(el, 'close', { value: closeSpy, configurable: true });
+      fix.componentRef.setInput('open', false);
+      fix.detectChanges();
+      await fix.whenStable();
+      const n = closeSpy.mock.calls.length;
+      fix.detectChanges();
+      await fix.whenStable();
+      expect(closeSpy.mock.calls.length).toBe(n);
+    } finally {
+      delete (el as unknown as { close?: unknown }).close;
+    }
+  });
+
   it('skips open sync when open signal is unchanged', () => {
     const fix = TestBed.createComponent(Dialog);
     const el = queryNativeDialog(fix);
@@ -321,6 +342,12 @@ describe('Dialog', () => {
     }
   });
 
+  it('titleHeadingId uses generated id when id input is empty', () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.detectChanges();
+    expect(fix.componentInstance.titleHeadingId()).toMatch(/^au-dialog-title-\d+$/);
+  });
+
   it('uses id input for title heading id', () => {
     const fix = TestBed.createComponent(Dialog);
     fix.componentRef.setInput('open', true);
@@ -383,6 +410,76 @@ describe('Dialog', () => {
     dialogDe.triggerEventHandler('cancel', new Event('cancel', { cancelable: true }));
     expect(n).toBe(0);
   });
+
+  it('does not render footer when auDialogFooter is absent', () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(fix.debugElement.query(By.css('.au-dialog__footer'))).toBeNull();
+    expect(fix.componentInstance.hasFooter()).toBe(false);
+  });
+
+  it('hasFooter is true when auDialogFooter is projected', () => {
+    const fix = TestBed.createComponent(TestDialogWithFooterComponent);
+    fix.detectChanges();
+    const dialog = fix.debugElement.query(By.directive(Dialog))!.componentInstance as Dialog;
+    expect(dialog.hasFooter()).toBe(true);
+  });
+
+  it('polyfills showModal when showModal is missing', () => {
+    const fix = TestBed.createComponent(Dialog);
+    const el = queryNativeDialog(fix);
+    try {
+      Object.defineProperty(el, 'showModal', { value: undefined, configurable: true });
+      fix.componentRef.setInput('open', true);
+      fix.detectChanges();
+      expect(el.hasAttribute('open')).toBe(true);
+    } finally {
+      delete (el as unknown as { showModal?: unknown }).showModal;
+    }
+  });
+
+  it('onDialogClose does not emit when dialog is already closed', () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.componentRef.setInput('open', false);
+    fix.detectChanges();
+    let n = 0;
+    fix.componentInstance.close.subscribe(() => n++);
+    fix.componentInstance.onDialogClose();
+    expect(n).toBe(0);
+  });
+
+  it('tolerates missing dialog node in host during render sync', () => {
+    const fix = TestBed.createComponent(Dialog);
+    vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
+    fix.componentRef.setInput('open', true);
+    expect(() => fix.detectChanges()).not.toThrow();
+    expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
+  });
+
+  it('onCloseButtonClick is noop when dialog node is missing', () => {
+    const fix = TestBed.createComponent(Dialog);
+    vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
+    expect(() => fix.componentInstance.onCloseButtonClick()).not.toThrow();
+  });
+
+  it('onDialogClick is noop when dialog node is missing', () => {
+    const fix = TestBed.createComponent(Dialog);
+    vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
+    const ev = new MouseEvent('click', { bubbles: true });
+    Object.defineProperty(ev, 'target', { value: fix.nativeElement, configurable: true });
+    expect(() => fix.componentInstance.onDialogClick(ev)).not.toThrow();
+  });
+
+  it('close polyfill is noop when open attribute is already absent', () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.detectChanges();
+    const el = queryNativeDialog(fix);
+    Object.defineProperty(el, 'close', { value: undefined, configurable: true });
+    expect(el.hasAttribute('open')).toBe(false);
+    fix.componentInstance.onCloseButtonClick();
+    delete (el as unknown as { close?: unknown }).close;
+  });
 });
 
 @Component({
@@ -400,11 +497,11 @@ class TestDialogComponent {}
 @Component({
   selector: 'test-dialog-footer',
   standalone: true,
-  imports: [Dialog],
+  imports: [Dialog, AuDialogFooter],
   template: `
     <au-dialog [open]="true">
       <p>Dialog body</p>
-      <button auDialogFooter>Footer action</button>
+      <button type="button" auDialogFooter>Footer action</button>
     </au-dialog>
   `,
 })

@@ -221,7 +221,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default elevated card. Projected content receives standard body padding.',\n      },\n    },\n  },\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses design tokens for type and color.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -241,17 +241,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default medium dialog opened via trigger button.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm Action', '<p>Are you sure you want to proceed with this action?</p>'),\n    props: { open: false },\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+                "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
             },
             {
                 "name": "Default",
@@ -262,6 +252,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -312,16 +312,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
-            },
-            {
-                "name": "dialogTemplate",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "(\n  title: string,\n  body: string,\n  size = 'md',\n  showCloseButton = true,\n  closeOnBackdrop = true,\n  closeOnEscape = true,\n  footerTemplate = ''\n) => `\n  <au-button (click)=\"open = true\">Open Dialog</au-button>\n  <au-dialog [(open)]=\"open\" title=\"${title}\" size=\"${size}\" [showCloseButton]=\"${showCloseButton}\" [closeOnBackdrop]=\"${closeOnBackdrop}\" [closeOnEscape]=\"${closeOnEscape}\">\n    ${body}\n    ${footerTemplate ? `<div auDialogFooter>${footerTemplate}</div>` : ''}\n  </au-dialog>\n`"
             },
             {
                 "name": "Disabled",
@@ -381,7 +371,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: () => ({\n    template: `\n      <au-card variant=\"filled\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle background for grouped sections.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "FocusRing",
@@ -411,7 +401,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Full screen dialog for maximum content space.',\n      },\n    },\n  },\n  args: {\n    size: 'full',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Full Screen Dialog', '<p>This dialog takes the full viewport minus padding.</p>', 'full'),\n    props: { open: false },\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Fills the viewport with a 16px inset — for wizards, editors, or immersive flows.',\n  triggerLabel: 'Open full-screen dialog',\n  title: 'Full screen',\n  size: 'full',\n  showDemoFooter: true,\n  body: `\n    <p>The panel stretches to the viewport minus padding.</p>\n    <p>Scroll still works inside the body when content overflows.</p>\n  `,\n})"
             },
             {
                 "name": "Ghost",
@@ -461,7 +451,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { size: 'lg' },\n  render: () => ({\n    template: `\n      <au-card size=\"lg\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "LargeSize",
@@ -481,7 +471,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large dialog for complex content or forms.',\n      },\n    },\n  },\n  args: {\n    size: 'lg',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Detailed View', '<p>This is a larger dialog for displaying more content.</p><p>It can contain forms, multiple sections, or detailed information.</p>', 'lg'),\n    props: { open: false },\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Wider panel (45rem) for forms or longer copy.',\n  title: 'Detailed view',\n  size: 'lg',\n  body: `\n    <p>This dialog can hold multiple paragraphs or form fields.</p>\n    <p>Body scrolls when content exceeds the viewport.</p>\n  `,\n})"
             },
             {
                 "name": "LargeSize",
@@ -541,17 +531,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Dialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n  },\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Controls visibility of the dialog.',\n      table: { category: 'State' },\n    },\n    close: {\n      description: 'Emits when dialog should close.',\n      table: { category: 'Events' },\n    },\n    title: {\n      control: 'text',\n      description: 'Dialog title for accessibility.',\n      table: { category: 'Content' },\n    },\n    showCloseButton: {\n      control: 'boolean',\n      description: 'Show/hide close button in header.',\n      table: { category: 'Content' },\n    },\n    closeOnBackdrop: {\n      control: 'boolean',\n      description: 'Close when the dimmed overlay (outside the panel) is clicked.',\n      table: { category: 'Behavior' },\n    },\n    closeOnEscape: {\n      control: 'boolean',\n      description: 'Close when the user presses Escape (native dialog cancel).',\n      table: { category: 'Behavior' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name when there is no visible `title` (sets `aria-label` on the dialog).',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      description: 'Dialog width size.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog Title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputDate>",
-                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -562,6 +542,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<InputNumber>",
                 "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputDate>",
+                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -641,7 +631,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog that does not close when clicking backdrop.',\n      },\n    },\n  },\n  args: {\n    closeOnBackdrop: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Persistent Dialog', '<p>Backdrop does not dismiss; use the close button or Escape.</p>', 'md', true, false, true),\n    props: { open: false },\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Backdrop clicks are ignored; use the close button or Escape.',\n  title: 'Persistent dialog',\n  closeOnBackdrop: false,\n  body: '<p>Clicking the dimmed overlay does not close this dialog.</p>',\n})"
             },
             {
                 "name": "NoCloseButton",
@@ -651,7 +641,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without close button in header. User must use backdrop or Escape.',\n      },\n    },\n  },\n  args: {\n    showCloseButton: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('No Close Button', '<p>Close using backdrop click or Escape key.</p>', 'md', false),\n    props: { open: false },\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Dismiss with backdrop click or Escape only.',\n  title: 'No close button',\n  showCloseButton: false,\n  body: '<p>There is no header close control in this variant.</p>',\n})"
             },
             {
                 "name": "On",
@@ -681,7 +671,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: () => ({\n    template: `\n      <au-card variant=\"outlined\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Border instead of shadow for lighter layouts.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "Password",
@@ -813,7 +803,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { size: 'sm' },\n  render: () => ({\n    template: `\n      <au-card size=\"sm\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "SmallSize",
@@ -833,17 +823,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small dialog for simple confirmations or alerts.',\n      },\n    },\n  },\n  args: {\n    size: 'sm',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm', '<p>Continue?</p>', 'sm'),\n    props: { open: false },\n  }),\n}"
-            },
-            {
-                "name": "WithBounds",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+                "defaultValue": "hostStory({\n  hint: 'Compact width (24rem) for short confirmations.',\n  title: 'Confirm',\n  size: 'sm',\n  body: '<p>Continue?</p>',\n})"
             },
             {
                 "name": "WithBounds",
@@ -854,6 +834,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
+            },
+            {
+                "name": "WithBounds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
             },
             {
                 "name": "WithDescription",
@@ -923,7 +913,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <button type=\"button\">Cancel</button>\n          <button type=\"button\">Continue</button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "WithFooter",
@@ -933,7 +923,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog with footer actions using `auDialogFooter` attribute selector.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" title=\"With Footer\">\n        <p>Dialog body content here.</p>\n        <div auDialogFooter>\n          <au-button variant=\"secondary\" (click)=\"open = false\">Cancel</au-button>\n          <au-button (click)=\"open = false\">Confirm</au-button>\n        </div>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Footer actions match card footers. Import `AuDialogFooter` in your host component.',\n  title: 'With footer',\n  showDemoFooter: true,\n  body: '<p>Dialog body content here.</p>',\n})"
             },
             {
                 "name": "WithHint",
@@ -956,6 +946,16 @@
                 "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
             },
             {
+                "name": "WithMedia",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "WithoutTitle",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -963,7 +963,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without title. Useful for simple content or when title is in body.',\n      },\n    },\n  },\n  args: {\n    title: '',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" [title]=\"''\">\n        <p>This dialog has no title.</p>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Provide `ariaLabel` when there is no visible title.',\n  title: '',\n  ariaLabel: 'Information',\n  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',\n})"
             },
             {
                 "name": "WithValidation",
@@ -1025,6 +1025,33 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "hostStory",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "config",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "Story",
+                "jsdoctags": [
+                    {
+                        "name": "config",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             }
         ],
         "typealiases": [
@@ -1076,8 +1103,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "rawtype": "StoryObj<InputNumber>",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1087,8 +1114,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputNumber>",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1611,7 +1638,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default elevated card. Projected content receives standard body padding.',\n      },\n    },\n  },\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses design tokens for type and color.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "Filled",
@@ -1621,7 +1648,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: () => ({\n    template: `\n      <au-card variant=\"filled\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle background for grouped sections.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -1631,7 +1658,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: () => ({\n    template: `\n      <au-card size=\"lg\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "meta",
@@ -1651,7 +1678,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: () => ({\n    template: `\n      <au-card variant=\"outlined\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Border instead of shadow for lighter layouts.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "SmallSize",
@@ -1661,7 +1688,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: () => ({\n    template: `\n      <au-card size=\"sm\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "WithFooter",
@@ -1671,7 +1698,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <button type=\"button\">Cancel</button>\n          <button type=\"button\">Continue</button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithMedia",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n  }),\n}"
                 }
             ],
             "projects/aurea/src/lib/dialog/dialog.stories.ts": [
@@ -1683,17 +1720,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default medium dialog opened via trigger button.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm Action', '<p>Are you sure you want to proceed with this action?</p>'),\n    props: { open: false },\n  }),\n}"
-                },
-                {
-                    "name": "dialogTemplate",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "(\n  title: string,\n  body: string,\n  size = 'md',\n  showCloseButton = true,\n  closeOnBackdrop = true,\n  closeOnEscape = true,\n  footerTemplate = ''\n) => `\n  <au-button (click)=\"open = true\">Open Dialog</au-button>\n  <au-dialog [(open)]=\"open\" title=\"${title}\" size=\"${size}\" [showCloseButton]=\"${showCloseButton}\" [closeOnBackdrop]=\"${closeOnBackdrop}\" [closeOnEscape]=\"${closeOnEscape}\">\n    ${body}\n    ${footerTemplate ? `<div auDialogFooter>${footerTemplate}</div>` : ''}\n  </au-dialog>\n`"
+                    "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
                 },
                 {
                     "name": "FullScreen",
@@ -1703,7 +1730,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Full screen dialog for maximum content space.',\n      },\n    },\n  },\n  args: {\n    size: 'full',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Full Screen Dialog', '<p>This dialog takes the full viewport minus padding.</p>', 'full'),\n    props: { open: false },\n  }),\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Fills the viewport with a 16px inset — for wizards, editors, or immersive flows.',\n  triggerLabel: 'Open full-screen dialog',\n  title: 'Full screen',\n  size: 'full',\n  showDemoFooter: true,\n  body: `\n    <p>The panel stretches to the viewport minus padding.</p>\n    <p>Scroll still works inside the body when content overflows.</p>\n  `,\n})"
                 },
                 {
                     "name": "LargeSize",
@@ -1713,7 +1740,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large dialog for complex content or forms.',\n      },\n    },\n  },\n  args: {\n    size: 'lg',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Detailed View', '<p>This is a larger dialog for displaying more content.</p><p>It can contain forms, multiple sections, or detailed information.</p>', 'lg'),\n    props: { open: false },\n  }),\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Wider panel (45rem) for forms or longer copy.',\n  title: 'Detailed view',\n  size: 'lg',\n  body: `\n    <p>This dialog can hold multiple paragraphs or form fields.</p>\n    <p>Body scrolls when content exceeds the viewport.</p>\n  `,\n})"
                 },
                 {
                     "name": "meta",
@@ -1723,7 +1750,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Dialog>",
-                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n  },\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Controls visibility of the dialog.',\n      table: { category: 'State' },\n    },\n    close: {\n      description: 'Emits when dialog should close.',\n      table: { category: 'Events' },\n    },\n    title: {\n      control: 'text',\n      description: 'Dialog title for accessibility.',\n      table: { category: 'Content' },\n    },\n    showCloseButton: {\n      control: 'boolean',\n      description: 'Show/hide close button in header.',\n      table: { category: 'Content' },\n    },\n    closeOnBackdrop: {\n      control: 'boolean',\n      description: 'Close when the dimmed overlay (outside the panel) is clicked.',\n      table: { category: 'Behavior' },\n    },\n    closeOnEscape: {\n      control: 'boolean',\n      description: 'Close when the user presses Escape (native dialog cancel).',\n      table: { category: 'Behavior' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name when there is no visible `title` (sets `aria-label` on the dialog).',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      description: 'Dialog width size.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog Title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
                 },
                 {
                     "name": "NoBackdropClose",
@@ -1733,7 +1760,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog that does not close when clicking backdrop.',\n      },\n    },\n  },\n  args: {\n    closeOnBackdrop: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Persistent Dialog', '<p>Backdrop does not dismiss; use the close button or Escape.</p>', 'md', true, false, true),\n    props: { open: false },\n  }),\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Backdrop clicks are ignored; use the close button or Escape.',\n  title: 'Persistent dialog',\n  closeOnBackdrop: false,\n  body: '<p>Clicking the dimmed overlay does not close this dialog.</p>',\n})"
                 },
                 {
                     "name": "NoCloseButton",
@@ -1743,7 +1770,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without close button in header. User must use backdrop or Escape.',\n      },\n    },\n  },\n  args: {\n    showCloseButton: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('No Close Button', '<p>Close using backdrop click or Escape key.</p>', 'md', false),\n    props: { open: false },\n  }),\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Dismiss with backdrop click or Escape only.',\n  title: 'No close button',\n  showCloseButton: false,\n  body: '<p>There is no header close control in this variant.</p>',\n})"
                 },
                 {
                     "name": "SmallSize",
@@ -1753,7 +1780,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small dialog for simple confirmations or alerts.',\n      },\n    },\n  },\n  args: {\n    size: 'sm',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm', '<p>Continue?</p>', 'sm'),\n    props: { open: false },\n  }),\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Compact width (24rem) for short confirmations.',\n  title: 'Confirm',\n  size: 'sm',\n  body: '<p>Continue?</p>',\n})"
                 },
                 {
                     "name": "WithFooter",
@@ -1763,7 +1790,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog with footer actions using `auDialogFooter` attribute selector.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" title=\"With Footer\">\n        <p>Dialog body content here.</p>\n        <div auDialogFooter>\n          <au-button variant=\"secondary\" (click)=\"open = false\">Cancel</au-button>\n          <au-button (click)=\"open = false\">Confirm</au-button>\n        </div>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Footer actions match card footers. Import `AuDialogFooter` in your host component.',\n  title: 'With footer',\n  showDemoFooter: true,\n  body: '<p>Dialog body content here.</p>',\n})"
                 },
                 {
                     "name": "WithoutTitle",
@@ -1773,39 +1800,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without title. Useful for simple content or when title is in body.',\n      },\n    },\n  },\n  args: {\n    title: '',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" [title]=\"''\">\n        <p>This dialog has no title.</p>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
-                }
-            ],
-            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<InputDate>",
-                    "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-                },
-                {
-                    "name": "WithBounds",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+                    "defaultValue": "hostStory({\n  hint: 'Provide `ariaLabel` when there is no visible title.',\n  title: '',\n  ariaLabel: 'Information',\n  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',\n})"
                 }
             ],
             "projects/aurea/src/lib/input-number/input-number.stories.ts": [
@@ -1838,6 +1833,38 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
+                }
+            ],
+            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<InputDate>",
+                    "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "WithBounds",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
                 }
             ],
             "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
@@ -2056,6 +2083,35 @@
                         }
                     ]
                 }
+            ],
+            "projects/aurea/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "hostStory",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "config",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "Story",
+                    "jsdoctags": [
+                        {
+                            "name": "config",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
             ]
         },
         "groupedEnumerations": {},
@@ -2112,19 +2168,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<InputDate>",
-                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/input-number/input-number.stories.ts": [
                 {
                     "name": "Story",
@@ -2132,6 +2175,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputNumber>",
                     "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputDate>",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -2452,6 +2508,16 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithMedia",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
@@ -2592,10 +2658,10 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
-                "type": "variable",
+                "type": "function",
                 "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
+                "linksubtype": "function",
+                "name": "hostStory",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -2605,7 +2671,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "dialogTemplate",
+                "name": "Default",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
