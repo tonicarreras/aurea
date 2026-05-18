@@ -4,11 +4,11 @@ import {
   ElementRef,
   afterRenderEffect,
   computed,
+  inject,
   input,
   model,
   output,
   signal,
-  viewChild,
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
@@ -93,16 +93,20 @@ export class Checkbox implements FormCheckboxControl {
   /** Focus ring modality: outer ring on Tab, inset on click. */
   protected readonly focusByTab = signal(false);
 
-  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+  private readonly host = inject(ElementRef<HTMLElement>);
 
   constructor() {
     afterRenderEffect(() => {
-      const input = this.inputEl()?.nativeElement;
+      const input = this.nativeInput();
       if (!input) {
         return;
       }
       input.indeterminate = this.indeterminate();
     });
+  }
+
+  private nativeInput(): HTMLInputElement | null {
+    return this.host.nativeElement.querySelector('.au-checkbox__element');
   }
 
   readonly resolvedId = computed(() => {
@@ -194,6 +198,6 @@ export class Checkbox implements FormCheckboxControl {
 
   /** Moves keyboard focus to the native `<input>`. */
   focus(): void {
-    this.inputEl().nativeElement.focus();
+    this.nativeInput()?.focus();
   }
 }

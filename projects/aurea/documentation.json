@@ -257,21 +257,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
             },
             {
                 "name": "Default",
@@ -292,6 +292,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -332,16 +342,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => tabsRender(args),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const billing = canvas.getByRole('tab', { name: 'Billing' });\n    await userEvent.click(billing);\n    await expect(billing).toHaveAttribute('aria-selected', 'true');\n    await expect(canvas.getByRole('tabpanel')).toHaveTextContent('Billing');\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -587,21 +587,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<Dialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputDate>",
                 "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Dialog>",
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -632,6 +632,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<InputText>",
                 "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: InputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<RadioGroup>",
+                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -672,16 +682,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<Tabs>",
                 "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: Tabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<RadioGroup>",
-                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -819,21 +819,21 @@
                 "name": "Required",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/select/select.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
-            },
-            {
-                "name": "Required",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
+            },
+            {
+                "name": "Required",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
             },
             {
                 "name": "sample",
@@ -1469,8 +1469,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Dialog>",
-                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1480,8 +1480,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "rawtype": "StoryObj<Dialog>",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1515,6 +1515,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<InputText>",
                 "file": "projects/aurea/src/lib/input-text/input-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<RadioGroup>",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1559,17 +1570,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Tabs>",
                 "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<RadioGroup>",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2398,6 +2398,48 @@
                     "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
                 }
             ],
+            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<RadioGroup>",
+                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "Required",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
+                },
+                {
+                    "name": "sample",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "RadioOption[]",
+                    "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
+                }
+            ],
             "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
                 {
                     "name": "Default",
@@ -2500,48 +2542,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
-                }
-            ],
-            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<RadioGroup>",
-                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-                },
-                {
-                    "name": "Required",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
-                },
-                {
-                    "name": "sample",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "RadioOption[]",
-                    "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
                 }
             ],
             "projects/aurea/src/lib/textarea/textarea.stories.ts": [
@@ -2943,19 +2943,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/dialog/dialog.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<Dialog>",
-                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/input-date/input-date.stories.ts": [
                 {
                     "name": "Story",
@@ -2963,6 +2950,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputDate>",
                     "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Dialog>",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3002,6 +3002,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputText>",
                     "file": "projects/aurea/src/lib/input-text/input-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<RadioGroup>",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3054,19 +3067,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Tabs>",
                     "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<RadioGroup>",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

@@ -71,6 +71,17 @@ describe('Snackbar', () => {
     expect(surface.getAttribute('aria-live')).toBe('polite');
   });
 
+  it('uses role alert and assertive live region for warning variant', () => {
+    const fix = TestBed.createComponent(Snackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'warning');
+    fix.componentRef.setInput('message', 'Careful');
+    fix.detectChanges();
+    const surface = querySurface(fix)!.nativeElement as HTMLElement;
+    expect(surface.getAttribute('role')).toBe('alert');
+    expect(surface.getAttribute('aria-live')).toBe('assertive');
+  });
+
   it('closes via close button and emits dismiss', () => {
     const fix = TestBed.createComponent(Snackbar);
     const dismiss = vi.fn();
@@ -210,6 +221,40 @@ describe('Snackbar', () => {
     const fix = TestBed.createComponent(Snackbar);
     const inst = fix.componentInstance as unknown as { restoreFromBody: () => void };
     expect(() => inst.restoreFromBody()).not.toThrow();
+  });
+
+  it('restoreFromBody is noop when host was never portaled to body', () => {
+    const wrapper = document.createElement('div');
+    document.body.appendChild(wrapper);
+    const fix = TestBed.createComponent(Snackbar);
+    wrapper.append(fix.nativeElement);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      restoreFromBody: () => void;
+      bodyAnchor: Comment | null;
+    };
+    const anchor = document.createComment('au-snackbar-anchor');
+    wrapper.insertBefore(anchor, fix.nativeElement);
+    inst.bodyAnchor = anchor;
+    expect(fix.nativeElement.parentElement).toBe(wrapper);
+    inst.restoreFromBody();
+    expect(fix.nativeElement.parentElement).toBe(wrapper);
+    expect(wrapper.contains(anchor)).toBe(true);
+    wrapper.remove();
+  });
+
+  it('attachToBody is noop when host is already on document.body', () => {
+    const fix = TestBed.createComponent(Snackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(fix.nativeElement.parentElement).toBe(document.body);
+    const inst = fix.componentInstance as unknown as {
+      attachToBody: () => void;
+      bodyAnchor: Comment | null;
+    };
+    const anchor = inst.bodyAnchor;
+    inst.attachToBody();
+    expect(inst.bodyAnchor).toBe(anchor);
   });
 
   it('restores host to its anchor parent on destroy', () => {

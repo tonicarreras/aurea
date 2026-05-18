@@ -64,6 +64,31 @@ describe('Checkbox', () => {
     expect(input.getAttribute('aria-checked')).toBeNull();
   });
 
+  it('afterRenderEffect no-ops when native input is missing', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.detectChanges();
+    const spy = vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
+    fix.componentRef.setInput('indeterminate', true);
+    expect(() => fix.detectChanges()).not.toThrow();
+    spy.mockRestore();
+  });
+
+  it('shows signal-form error message when errorMessage is empty', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('errors', [{ message: 'Required', kind: 'required' }]);
+    fix.detectChanges();
+    expect(fix.componentInstance.displayError()).toBe('Required');
+  });
+
+  it('falls back to error kind when message is missing', () => {
+    const fix = TestBed.createComponent(Checkbox);
+    fix.componentRef.setInput('label', 'Agree');
+    fix.componentRef.setInput('errors', [{ kind: 'required' }]);
+    fix.detectChanges();
+    expect(fix.componentInstance.displayError()).toBe('required');
+  });
+
   it('shows description with aria-describedby', () => {
     const fix = TestBed.createComponent(Checkbox);
     fix.componentRef.setInput('label', 'Subscribe');

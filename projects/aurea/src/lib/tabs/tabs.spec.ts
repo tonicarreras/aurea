@@ -160,6 +160,20 @@ describe('Tabs', () => {
     expect(fix.componentInstance.active).toBe('b');
   });
 
+  it('vertical keyboard uses ArrowUp when value does not match a tab', async () => {
+    const fix = TestBed.createComponent(TestThreeTabsComponent);
+    fix.componentInstance.orientation = 'vertical';
+    fix.detectChanges();
+    await fix.whenStable();
+    await flushTabsSelection();
+    fix.componentInstance.active = 'missing';
+    fix.detectChanges();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+    fix.detectChanges();
+    expect(fix.componentInstance.active).toBe('c');
+  });
+
   it('jumps to first and last tab with Home and End', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.active = 'b';
