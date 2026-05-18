@@ -6,6 +6,7 @@
   (cancel)="onDialogCancel($event)"
   (close)="onDialogClose()"
   (click)="onDialogClick($event)"
+  (keydown)="onDialogKeydown($event)"
 >
   <div class="au-dialog__panel" (click)="$event.stopPropagation()">
     @if (title() || showCloseButton()) {

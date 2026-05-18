@@ -1,0 +1,32 @@
+/**
+ * Shared validation error message (glyph + text).
+ * Used by form controls: input-text, textarea, select, checkbox, etc.
+ */
+@import url('./au-tokens.css');
+
+.au-field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1);
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-semantic-error-contrast);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-field-error__glyph {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 1.1em;
+  line-height: inherit;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  translate: 0 0.05em;
+}
+
+.au-field-error__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--au-weight-regular);
+}

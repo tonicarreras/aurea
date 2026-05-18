@@ -182,7 +182,7 @@ describe('RadioGroup', () => {
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('errors', [{ kind: 'required' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-radio-group__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('required');
   });
 

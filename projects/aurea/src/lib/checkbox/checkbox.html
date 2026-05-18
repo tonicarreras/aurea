@@ -35,9 +35,9 @@
       }
 
       @if (displayError()) {
-        <p [id]="errorId()" class="au-checkbox__error" role="alert">
-          <span class="au-checkbox__error-glyph" aria-hidden="true">×</span>
-          <span class="au-checkbox__error-text">{{ displayError() }}</span>
+        <p [id]="errorId()" class="au-field-error" role="alert">
+          <span class="au-field-error__glyph" aria-hidden="true">×</span>
+          <span class="au-field-error__text">{{ displayError() }}</span>
         </p>
       }
     </div>

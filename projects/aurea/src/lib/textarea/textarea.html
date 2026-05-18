@@ -53,11 +53,11 @@
   @if (isInvalid()) {
     <div
       [id]="errorId()"
-      class="au-textarea__error"
+      class="au-field-error"
       role="alert"
     >
-      <span class="au-textarea__error-glyph" aria-hidden="true">×</span>
-      <span class="au-textarea__error-text">{{ displayError() }}</span>
+      <span class="au-field-error__glyph" aria-hidden="true">×</span>
+      <span class="au-field-error__text">{{ displayError() }}</span>
     </div>
   }
 </div>

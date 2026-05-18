@@ -471,6 +471,95 @@ describe('Dialog', () => {
     expect(() => fix.componentInstance.onDialogClick(ev)).not.toThrow();
   });
 
+  it('onDialogKeydown is noop when dialog is closed', () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.detectChanges();
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    fix.componentInstance.onDialogKeydown(ev);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('onDialogKeydown is noop when panel is missing', () => {
+    const fix = TestBed.createComponent(Dialog);
+    vi.spyOn(fix.nativeElement, 'querySelector').mockImplementation((sel: unknown) => {
+      if (sel === 'dialog') {
+        return document.createElement('dialog');
+      }
+      return null;
+    });
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    fix.componentInstance.onDialogKeydown(ev);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('wraps Tab from last focusable to first inside the panel', async () => {
+    const fix = TestBed.createComponent(TestDialogFocusTrapComponent);
+    fix.detectChanges();
+    await fix.whenStable();
+    const panel = fix.debugElement.query(By.css('.au-dialog__panel'))!.nativeElement as HTMLElement;
+    const first = panel.querySelector('#trap-first') as HTMLButtonElement;
+    const last = panel.querySelector('#trap-last') as HTMLButtonElement;
+    last.focus();
+    const dialogDe = fix.debugElement.query(By.css('.au-dialog__native'))!;
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    dialogDe.triggerEventHandler('keydown', ev);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(first);
+  });
+
+  it('does not overwrite saved focus when dialog is already displayed', async () => {
+    const trigger = document.createElement('button');
+    document.body.append(trigger);
+    trigger.focus();
+    const fix = TestBed.createComponent(Dialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    await fix.whenStable();
+    const outside = document.createElement('button');
+    document.body.append(outside);
+    outside.focus();
+    fix.componentRef.setInput('title', 'Updated');
+    fix.detectChanges();
+    await fix.whenStable();
+    fix.componentRef.setInput('open', false);
+    fix.detectChanges();
+    await fix.whenStable();
+    queryNativeDialog(fix).dispatchEvent(new Event('close'));
+    fix.detectChanges();
+    expect(document.activeElement).toBe(trigger);
+    trigger.remove();
+    outside.remove();
+  });
+
+  it('skips initial focus when dialog closes before the open microtask', async () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('open', false);
+    fix.detectChanges();
+    await fix.whenStable();
+    expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
+  });
+
+  it('restores focus to the element that opened the dialog', async () => {
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    document.body.append(trigger);
+    trigger.focus();
+    const fix = TestBed.createComponent(Dialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    await fix.whenStable();
+    fix.componentRef.setInput('open', false);
+    fix.detectChanges();
+    await fix.whenStable();
+    queryNativeDialog(fix).dispatchEvent(new Event('close'));
+    fix.detectChanges();
+    expect(document.activeElement).toBe(trigger);
+    trigger.remove();
+  });
+
   it('close polyfill is noop when open attribute is already absent', () => {
     const fix = TestBed.createComponent(Dialog);
     fix.detectChanges();
@@ -506,3 +595,16 @@ class TestDialogComponent {}
   `,
 })
 class TestDialogWithFooterComponent {}
+
+@Component({
+  selector: 'test-dialog-focus-trap',
+  standalone: true,
+  imports: [Dialog],
+  template: `
+    <au-dialog [open]="true" title="Trap" [showCloseButton]="false">
+      <button type="button" id="trap-first">First</button>
+      <button type="button" id="trap-last">Last</button>
+    </au-dialog>
+  `,
+})
+class TestDialogFocusTrapComponent {}

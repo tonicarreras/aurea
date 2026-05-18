@@ -70,7 +70,7 @@ describe('Textarea', () => {
     const ta = queryTextarea(fix);
     expect(ta.getAttribute('aria-invalid')).toBe('true');
     expect(ta.getAttribute('aria-errormessage')).toBe('f-bio-error');
-    const err = fix.debugElement.query(By.css('.au-textarea__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too short');
   });
 
@@ -172,7 +172,7 @@ describe('Textarea', () => {
     const fix = TestBed.createComponent(Textarea);
     fix.componentRef.setInput('errors', [{ kind: 'maxLength', message: 'Too long' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-textarea__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too long');
   });
 
@@ -180,7 +180,7 @@ describe('Textarea', () => {
     const fix = TestBed.createComponent(Textarea);
     fix.componentRef.setInput('errors', [{ kind: 'required' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-textarea__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('required');
   });
 
@@ -233,7 +233,7 @@ describe('Textarea', () => {
     fix.componentRef.setInput('errorMessage', 'Manual');
     fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-textarea__error-text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+    expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
   });
 
   it('applies and clears from-tab on control row', () => {

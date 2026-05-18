@@ -4,6 +4,7 @@
  * Accessibility: WCAG 2.2 AA — focus rings, 24x24 target, 4.5:1 contrast.
  */
 @import url('../theme/au-tokens.css');
+@import url('../theme/au-field-error.css');
 
 :host {
   display: inline-block;
@@ -249,32 +250,8 @@
   box-shadow: 0 0 0 2px var(--au-color-form-error);
 }
 
-.au-checkbox__error {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--au-space-1);
+.au-checkbox .au-field-error {
   width: 100%;
-  margin: 0;
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-semantic-error-contrast);
-  font-weight: var(--au-weight-regular);
-}
-
-.au-checkbox__error-glyph {
-  flex: 0 0 auto;
-  margin: 0;
-  font-size: 0.9em;
-  line-height: inherit;
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-  translate: 0 0.05em;
-}
-
-.au-checkbox__error-text {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-weight: var(--au-weight-regular);
 }
 
 /* -------------------------------------------------------------------------- */

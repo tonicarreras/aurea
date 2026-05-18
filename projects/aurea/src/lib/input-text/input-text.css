@@ -3,6 +3,7 @@
  * Size: `data-au-size` on host (sm | md | lg).
  */
 @import url('../theme/au-tokens.css');
+@import url('../theme/au-field-error.css');
 
 :host {
   display: block;
@@ -249,34 +250,6 @@
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-tertiary);
-}
-
-.au-input-text__error {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--au-space-1);
-  margin: 0;
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-semantic-error-contrast);
-  font-weight: var(--au-weight-regular);
-}
-
-.au-input-text__error-glyph {
-  flex: 0 0 auto;
-  margin: 0;
-  /* Multiplication sign, sharper than Latin “x”; decorative only (ARIA in template) */
-  font-size: 0.9em;
-  line-height: inherit;
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-  translate: 0 0.05em;
-}
-
-.au-input-text__error-text {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-weight: var(--au-weight-regular);
 }
 
 /* -------------------------------------------------------------------------- */

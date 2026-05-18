@@ -42,9 +42,9 @@
   }
 
   @if (isInvalid()) {
-    <div [id]="errorId()" class="au-switch__error" role="alert">
-      <span class="au-switch__error-glyph" aria-hidden="true">×</span>
-      <span class="au-switch__error-text">{{ displayError() }}</span>
+    <div [id]="errorId()" class="au-field-error" role="alert">
+      <span class="au-field-error__glyph" aria-hidden="true">×</span>
+      <span class="au-field-error__text">{{ displayError() }}</span>
     </div>
   }
 </div>

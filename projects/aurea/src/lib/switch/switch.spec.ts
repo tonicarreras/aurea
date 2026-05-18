@@ -85,7 +85,7 @@ describe('Switch', () => {
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-switch__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
   });
 

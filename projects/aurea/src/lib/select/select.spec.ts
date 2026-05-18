@@ -79,7 +79,7 @@ describe('Select', () => {
     const select = querySelect(fix);
     expect(select.getAttribute('aria-invalid')).toBe('true');
     expect(select.getAttribute('aria-errormessage')).toBe('f-select-error');
-    const errText = fix.debugElement.query(By.css('.au-select__error-text'));
+    const errText = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(errText?.nativeElement.textContent?.trim()).toBe('This field is required');
   });
 
@@ -167,7 +167,7 @@ describe('Select', () => {
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Field required' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-select__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Field required');
   });
 
@@ -176,7 +176,7 @@ describe('Select', () => {
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ kind: 'broken' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-select__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('broken');
   });
 
@@ -236,7 +236,7 @@ describe('Select', () => {
     fix.componentRef.setInput('errorMessage', 'Manual');
     fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-select__error-text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+    expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
   });
 
   it('applies and clears from-tab on control row', () => {

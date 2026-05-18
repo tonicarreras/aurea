@@ -13,6 +13,10 @@ import {
   signal,
 } from '@angular/core';
 import { AuDialogFooter } from './dialog-footer.directive';
+import {
+  focusInitialInDialogPanel,
+  handleDialogTabKeydown,
+} from './dialog-focus-trap';
 
 /**
  * Design-system **dialog**: native `<dialog>` overlay for focused interactions.
@@ -22,6 +26,7 @@ import { AuDialogFooter } from './dialog-footer.directive';
  * - **Sizes:** sm, md (default), lg, full.
  * - **Accessibility:** `aria-labelledby` when `title` is set; `aria-label` when only `ariaLabel` is set.
  * - **Dismiss:** backdrop click (outside panel), Escape (`closeOnEscape`), close button.
+ * - **Focus:** Tab cycles within the panel; focus returns to the trigger on close (WCAG modal pattern).
  * - **Footer:** import `AuDialogFooter` in the host that projects `[auDialogFooter]`.
  *
  * @example
@@ -80,6 +85,9 @@ export class Dialog {
 
   private readonly titleDomId = `au-dialog-title-${++Dialog.nextTitleId}`;
 
+  /** Element focused before the dialog opened; restored on close. */
+  private savedFocus: HTMLElement | null = null;
+
   readonly titleHeadingId = computed(() => {
     const custom = this.id();
     return custom ? `${custom}-title` : this.titleDomId;
@@ -104,11 +112,29 @@ export class Dialog {
   }
 
   private openDialogElement(dialog: HTMLDialogElement): void {
+    const wasDisplayed = this.isDialogDisplayed(dialog);
+    if (!wasDisplayed) {
+      this.savedFocus =
+        typeof document !== 'undefined' && document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+    }
     const show = dialog.showModal?.bind(dialog);
     if (show) {
       show();
     } else {
       dialog.setAttribute('open', '');
+    }
+    if (!wasDisplayed) {
+      queueMicrotask(() => {
+        if (!this.open()) {
+          return;
+        }
+        const panel = dialog.querySelector<HTMLElement>('.au-dialog__panel');
+        if (panel) {
+          focusInitialInDialogPanel(panel);
+        }
+      });
     }
   }
 
@@ -152,6 +178,18 @@ export class Dialog {
     }
   }
 
+  onDialogKeydown(event: KeyboardEvent): void {
+    if (!this.open()) {
+      return;
+    }
+    const dialog = this.host.nativeElement.querySelector('dialog');
+    const panel = dialog?.querySelector('.au-dialog__panel') as HTMLElement | null;
+    if (!panel) {
+      return;
+    }
+    handleDialogTabKeydown(event, panel);
+  }
+
   onDialogCancel(event: Event): void {
     if (!this.closeOnEscape()) {
       event.preventDefault();
@@ -168,6 +206,15 @@ export class Dialog {
     if (this.open()) {
       this.open.set(false);
       this.close.emit();
+    }
+    this.restoreSavedFocus();
+  }
+
+  private restoreSavedFocus(): void {
+    const el = this.savedFocus;
+    this.savedFocus = null;
+    if (el?.isConnected) {
+      el.focus();
     }
   }
 }

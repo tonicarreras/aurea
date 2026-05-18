@@ -3,6 +3,7 @@
  * Size: `data-au-size` on host (sm | md | lg).
  */
 @import url('../theme/au-tokens.css');
+@import url('../theme/au-field-error.css');
 
 :host {
   display: block;
@@ -157,6 +158,49 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  /* Inherits `color-scheme` from `data-au-theme` on the document / shell */
+  color-scheme: inherit;
+}
+
+/*
+ * Dropdown list (`<option>`). Chromium / Firefox honor background + color;
+ * Safari may only use `color-scheme` + tokens above. Test with Storybook “Tema”.
+ */
+.au-select__element option {
+  background-color: var(--au-color-select-menu-bg);
+  color: var(--au-color-select-menu-text);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-size-field-text-md);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  padding: var(--au-space-2) var(--au-space-3);
+}
+
+.au-select__element option[value=''] {
+  color: var(--au-color-text-tertiary);
+}
+
+.au-select__element option:disabled {
+  color: var(--au-color-select-option-disabled-text);
+  background-color: var(--au-color-select-menu-bg);
+}
+
+.au-select__element option:checked {
+  background-color: var(--au-color-select-option-selected-bg);
+  color: var(--au-color-select-option-selected-text);
+  font-weight: var(--au-weight-medium);
+}
+
+@media (hover: hover) {
+  .au-select__element option:hover {
+    background-color: var(--au-color-select-option-hover-bg);
+    color: var(--au-color-select-menu-text);
+  }
+
+  .au-select__element option:checked:hover {
+    background-color: var(--au-color-select-option-selected-bg);
+    color: var(--au-color-select-option-selected-text);
+  }
 }
 
 :host([data-au-size='sm']) .au-select__element {
@@ -164,6 +208,10 @@
   line-height: var(--au-size-field-h-sm);
   font-size: var(--au-size-field-text-sm);
   padding: 0 var(--au-space-7) 0 var(--au-size-field-px-sm);
+}
+
+:host([data-au-size='sm']) .au-select__element option {
+  font-size: var(--au-size-field-text-sm);
 }
 
 :host([data-au-size='md']) .au-select__element,
@@ -179,6 +227,10 @@
   line-height: var(--au-size-field-h-lg);
   font-size: var(--au-size-field-text-lg);
   padding: 0 var(--au-space-9) 0 var(--au-size-field-px-lg);
+}
+
+:host([data-au-size='lg']) .au-select__element option {
+  font-size: var(--au-size-field-text-lg);
 }
 
 .au-select__element:disabled {
@@ -218,33 +270,6 @@
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-tertiary);
-}
-
-.au-select__error {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--au-space-1);
-  margin: 0;
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-semantic-error-contrast);
-  font-weight: var(--au-weight-regular);
-}
-
-.au-select__error-glyph {
-  flex: 0 0 auto;
-  margin: 0;
-  font-size: 0.9em;
-  line-height: inherit;
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-  translate: 0 0.05em;
-}
-
-.au-select__error-text {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-weight: var(--au-weight-regular);
 }
 
 /* -------------------------------------------------------------------------- */

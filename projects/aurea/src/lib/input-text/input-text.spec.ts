@@ -70,7 +70,7 @@ describe('InputText', () => {
     const input = queryInput(fix);
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-errormessage')).toBe('f-email-error');
-    const errText = fix.debugElement.query(By.css('.au-input-text__error-text'));
+    const errText = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(errText?.nativeElement.textContent?.trim()).toBe('This field is required');
   });
 
@@ -198,7 +198,7 @@ describe('InputText', () => {
     const fix = TestBed.createComponent(InputText);
     fix.componentRef.setInput('errors', [{ kind: 'minLength', message: 'Too short' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-input-text__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too short');
   });
 
@@ -206,7 +206,7 @@ describe('InputText', () => {
     const fix = TestBed.createComponent(InputText);
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-input-text__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
   });
 
@@ -261,7 +261,7 @@ describe('InputText', () => {
     fix.componentRef.setInput('errorMessage', 'Manual');
     fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-input-text__error-text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+    expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
   });
 
   it('onControlRowFocusout ignores non-HTMLElement', () => {

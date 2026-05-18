@@ -114,6 +114,30 @@ const meta: Meta<Select> = {
 export default meta;
 type Story = StoryObj<Select>;
 
+export const DropdownTheming: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Open the list and toggle **Tema** (toolbar) between Claro and Oscuro. The dropdown uses `--au-color-select-menu-*` tokens (native `<option>`; Safari may rely more on `color-scheme`).',
+      },
+    },
+  },
+  args: {
+    label: 'Region',
+    placeholder: 'Select a region…',
+    options: [
+      { value: 'eu', label: 'Europe' },
+      { value: 'na', label: 'North America' },
+      { value: 'sa', label: 'South America' },
+      { value: 'ap', label: 'Asia Pacific' },
+      { value: 'af', label: 'Africa' },
+      { value: 'oc', label: 'Oceania' },
+    ],
+    size: 'md',
+  },
+};
+
 export const Default: Story = {
   parameters: {
     docs: {

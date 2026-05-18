@@ -257,21 +257,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -547,16 +547,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputDate>",
-                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -572,6 +562,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<InputText>",
                 "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: InputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputDate>",
+                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -913,7 +913,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "WithFooter",
@@ -1114,17 +1114,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<InputTextSignalHost>",
                 "file": "projects/aurea/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
@@ -1138,6 +1127,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<InputText>",
                 "file": "projects/aurea/src/lib/input-text/input-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1698,7 +1698,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "WithMedia",
@@ -2181,19 +2181,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<InputDate>",
-                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/input-text/input-text-signal.stories.ts": [
                 {
                     "name": "Story",
@@ -2214,6 +2201,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputText>",
                     "file": "projects/aurea/src/lib/input-text/input-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputDate>",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

@@ -81,7 +81,7 @@ describe('Checkbox', () => {
     fix.componentRef.setInput('errorMessage', 'You must accept.');
     fix.detectChanges();
     const input = queryInput(fix);
-    const err = fix.debugElement.query(By.css('.au-checkbox__error'));
+    const err = fix.debugElement.query(By.css('.au-field-error'));
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-errormessage')).toBe(err?.nativeElement.id);
     expect(err?.nativeElement.getAttribute('role')).toBe('alert');
@@ -95,7 +95,7 @@ describe('Checkbox', () => {
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Required field' }]);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-checkbox__error'));
+    const err = fix.debugElement.query(By.css('.au-field-error'));
     expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Required field');
   });
 
@@ -104,7 +104,7 @@ describe('Checkbox', () => {
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
-    const err = fix.debugElement.query(By.css('.au-checkbox__error-text'));
+    const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
   });
 
@@ -123,7 +123,7 @@ describe('Checkbox', () => {
     fix.detectChanges();
     const input = queryInput(fix);
     expect(input.getAttribute('aria-invalid')).toBe('true');
-    expect(fix.debugElement.query(By.css('.au-checkbox__error'))).toBeNull();
+    expect(fix.debugElement.query(By.css('.au-field-error'))).toBeNull();
     expect(input.getAttribute('aria-errormessage')).toBeNull();
   });
 
