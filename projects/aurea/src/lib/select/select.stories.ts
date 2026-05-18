@@ -114,6 +114,11 @@ const meta: Meta<Select> = {
 export default meta;
 type Story = StoryObj<Select>;
 
+/** Native label text includes required markers; match by accessible name. */
+function getSelect(canvasElement: HTMLElement, name: string | RegExp) {
+  return within(canvasElement).getByRole('combobox', { name });
+}
+
 export const DropdownTheming: Story = {
   parameters: {
     docs: {
@@ -154,7 +159,7 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
-    const select = el.getByLabelText('Choose an option');
+    const select = getSelect(canvasElement, 'Choose an option');
     await userEvent.selectOptions(select, 'option2');
     await expect(select).toHaveValue('option2');
   },
@@ -200,7 +205,7 @@ export const WithError: Story = {
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
-    const select = el.getByLabelText('Country');
+    const select = getSelect(canvasElement, /Country/);
     await expect(select).toHaveAttribute('aria-invalid', 'true');
     const errId = select.getAttribute('aria-errormessage');
     await expect(errId).toBeTruthy();
@@ -297,7 +302,7 @@ export const Required: Story = {
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
-    const select = el.getByLabelText('Country');
+    const select = getSelect(canvasElement, /Country/);
     await expect(select).toHaveAttribute('aria-required', 'true');
   },
 };
@@ -322,7 +327,7 @@ export const WithHint: Story = {
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
-    const select = el.getByLabelText('Timezone');
+    const select = getSelect(canvasElement, 'Timezone');
     const hintId = select.getAttribute('aria-describedby');
     await expect(hintId).toBeTruthy();
   },

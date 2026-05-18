@@ -533,6 +533,37 @@ describe('Dialog', () => {
     outside.remove();
   });
 
+  it('skips focus save and initial focus when native dialog is already open', async () => {
+    const fix = TestBed.createComponent(Dialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    await fix.whenStable();
+    const dialog = queryNativeDialog(fix);
+    const inst = fix.componentInstance as unknown as {
+      openDialogElement: (d: HTMLDialogElement) => void;
+      savedFocus: HTMLElement | null;
+    };
+    const saved = inst.savedFocus;
+    inst.openDialogElement(dialog);
+    expect(inst.savedFocus).toBe(saved);
+  });
+
+  it('savedFocus is null when activeElement is not an HTMLElement', () => {
+    const fix = TestBed.createComponent(Dialog);
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    document.body.append(svg);
+    const activeSpy = vi.spyOn(document, 'activeElement', 'get').mockReturnValue(svg);
+    try {
+      fix.componentRef.setInput('open', true);
+      fix.detectChanges();
+      const inst = fix.componentInstance as unknown as { savedFocus: HTMLElement | null };
+      expect(inst.savedFocus).toBeNull();
+    } finally {
+      activeSpy.mockRestore();
+      svg.remove();
+    }
+  });
+
   it('skips initial focus when dialog closes before the open microtask', async () => {
     const fix = TestBed.createComponent(Dialog);
     fix.componentRef.setInput('open', true);
@@ -573,7 +604,6 @@ describe('Dialog', () => {
 
 @Component({
   selector: 'test-dialog',
-  standalone: true,
   imports: [Dialog],
   template: `
     <au-dialog [open]="true">
@@ -585,7 +615,6 @@ class TestDialogComponent {}
 
 @Component({
   selector: 'test-dialog-footer',
-  standalone: true,
   imports: [Dialog, AuDialogFooter],
   template: `
     <au-dialog [open]="true">
@@ -598,7 +627,6 @@ class TestDialogWithFooterComponent {}
 
 @Component({
   selector: 'test-dialog-focus-trap',
-  standalone: true,
   imports: [Dialog],
   template: `
     <au-dialog [open]="true" title="Trap" [showCloseButton]="false">

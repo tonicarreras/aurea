@@ -3,12 +3,19 @@ import { fn, expect } from 'storybook/test';
 
 import { Button } from './button';
 
+const storyImports = { imports: [Button] };
+
+function buttonRender(args: Record<string, unknown>, template: string) {
+  return { props: args, moduleMetadata: storyImports, template };
+}
+
 const meta: Meta<Button> = {
   title: 'Aurea/Button',
   component: Button,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
+    docs: { extractArgTypes: () => ({}) },
   },
   argTypes: {
     variant: {
@@ -74,10 +81,11 @@ export const Primary: Story = {
     variant: 'primary',
     size: 'md',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Primary</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Primary</au-button>`,
+    ),
 };
 
 export const Secondary: Story = {
@@ -92,10 +100,11 @@ export const Secondary: Story = {
     variant: 'secondary',
     size: 'md',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Secondary</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Secondary</au-button>`,
+    ),
 };
 
 export const Outline: Story = {
@@ -110,10 +119,11 @@ export const Outline: Story = {
     variant: 'outline',
     size: 'md',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Outline</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Outline</au-button>`,
+    ),
 };
 
 export const Ghost: Story = {
@@ -128,10 +138,11 @@ export const Ghost: Story = {
     variant: 'ghost',
     size: 'md',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Ghost</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Ghost</au-button>`,
+    ),
 };
 
 export const Disabled: Story = {
@@ -146,10 +157,11 @@ export const Disabled: Story = {
     variant: 'primary',
     disabled: true,
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [disabled]="disabled" (click)="click">Disabled</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [disabled]="disabled" (click)="click">Disabled</au-button>`,
+    ),
 };
 
 export const Loading: Story = {
@@ -163,11 +175,13 @@ export const Loading: Story = {
   args: {
     variant: 'primary',
     loading: true,
+    label: 'Processing',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [loading]="loading" (click)="click">Processing...</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [loading]="loading" [label]="label" (click)="click">Processing...</au-button>`,
+    ),
 };
 
 export const Small: Story = {
@@ -182,10 +196,8 @@ export const Small: Story = {
     variant: 'primary',
     size: 'sm',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [size]="size" (click)="click">Small</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(args, `<au-button [variant]="variant" [size]="size" (click)="click">Small</au-button>`),
 };
 
 export const Large: Story = {
@@ -200,10 +212,11 @@ export const Large: Story = {
     variant: 'primary',
     size: 'lg',
   },
-  render: (args) => ({
-    props: args,
-    template: `<au-button [variant]="variant" [size]="size" (click)="click">Large (Touch)</au-button>`,
-  }),
+  render: (args) =>
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [size]="size" (click)="click">Large (Touch)</au-button>`,
+    ),
 };
 
 export const FocusRing: Story = {
@@ -217,15 +230,16 @@ export const FocusRing: Story = {
   args: {
     variant: 'primary',
   },
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    buttonRender(
+      args,
+      `
       <div style="display: flex; gap: 16px; align-items: center;">
         <au-button [variant]="variant" (click)="click">Tab to me</au-button>
         <au-button [variant]="'secondary'">Next element</au-button>
       </div>
     `,
-  }),
+    ),
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('au-button') as HTMLElement;
     const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;
@@ -244,8 +258,10 @@ export const AllVariants: Story = {
       },
     },
   },
-  render: () => ({
-    template: `
+  render: () =>
+    buttonRender(
+      {},
+      `
       <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
         <au-button variant="primary">Primary</au-button>
         <au-button variant="secondary">Secondary</au-button>
@@ -253,5 +269,5 @@ export const AllVariants: Story = {
         <au-button variant="ghost">Ghost</au-button>
       </div>
     `,
-  }),
+    ),
 };

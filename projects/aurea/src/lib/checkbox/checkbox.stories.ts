@@ -120,7 +120,7 @@ export const Checked: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Pre-checked checkbox. Uses `aria-checked="true"`.',
+        story: 'Pre-checked checkbox (`checked` binding).',
       },
     },
   },
@@ -135,7 +135,7 @@ export const Indeterminate: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Indeterminate state (partial selection). Uses `aria-checked="mixed"` — common for "select all" patterns.',
+        story: 'Indeterminate state (partial selection) via the native `indeterminate` property — common for "select all" patterns.',
       },
     },
   },

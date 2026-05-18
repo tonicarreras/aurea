@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Snackbar } from './snackbar';
@@ -173,8 +174,55 @@ describe('Snackbar', () => {
     fix.componentRef.setInput('message', 'Portaled');
     fix.detectChanges();
     expect(fix.nativeElement.parentElement).toBe(document.body);
+    fix.detectChanges();
+    expect(fix.nativeElement.parentElement).toBe(document.body);
     fix.componentInstance.close();
     fix.detectChanges();
+  });
+
+  it('does not portal to body outside the browser platform', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [Snackbar],
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+    }).compileComponents();
+    const fix = TestBed.createComponent(Snackbar);
+    const parentBefore = fix.nativeElement.parentElement;
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'SSR');
+    fix.detectChanges();
+    expect(fix.nativeElement.parentElement).toBe(parentBefore);
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({ imports: [Snackbar] }).compileComponents();
+  });
+
+  it('attachToBody appends host when it has no parent node', () => {
+    const fix = TestBed.createComponent(Snackbar);
+    const host = fix.nativeElement;
+    host.remove();
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(host.parentElement).toBe(document.body);
+    fix.destroy();
+  });
+
+  it('restoreFromBody is noop when anchor is missing', () => {
+    const fix = TestBed.createComponent(Snackbar);
+    const inst = fix.componentInstance as unknown as { restoreFromBody: () => void };
+    expect(() => inst.restoreFromBody()).not.toThrow();
+  });
+
+  it('restores host to its anchor parent on destroy', () => {
+    const wrapper = document.createElement('div');
+    document.body.append(wrapper);
+    const fix = TestBed.createComponent(Snackbar);
+    wrapper.append(fix.nativeElement);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(fix.nativeElement.parentElement).toBe(document.body);
+    fix.destroy();
+    expect(wrapper.contains(fix.nativeElement)).toBe(true);
+    wrapper.remove();
   });
 
   it('projects slot content when message is empty', () => {

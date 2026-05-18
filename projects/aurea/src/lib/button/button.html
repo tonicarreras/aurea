@@ -5,10 +5,10 @@
   [class.au-button__element--from-tab]="focusByTab()"
   [attr.type]="type()"
   [attr.name]="name() || null"
-  [attr.disabled]="disabled() || loading() ? true : null"
+  [attr.disabled]="disabled() ? true : null"
   [attr.aria-busy]="loading() ? 'true' : null"
-  [attr.aria-disabled]="disabled() ? 'true' : null"
-  [attr.aria-label]="label() || null"
+  [attr.aria-disabled]="disabled() || loading() ? 'true' : null"
+  [attr.aria-label]="label().trim() || null"
   (focusin)="onFocusin()"
   (focusout)="onFocusout()"
   (click)="onClick($event)"
@@ -20,7 +20,11 @@
       </svg>
     </span>
   }
-  <span class="au-button__content" [class.au-button__content--hidden]="loading()">
+  <span
+    class="au-button__content"
+    [class.au-button__content--hidden]="loading() && !!label().trim()"
+    [attr.aria-hidden]="loading() && label().trim() ? 'true' : null"
+  >
     <ng-content></ng-content>
   </span>
 </button>

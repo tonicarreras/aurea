@@ -96,6 +96,15 @@ describe('Button', () => {
     expect(button.getAttribute('aria-busy')).toBe('true');
   });
 
+  it('uses aria-disabled instead of native disabled when loading', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    expect(button.hasAttribute('disabled')).toBe(false);
+    expect(button.getAttribute('aria-disabled')).toBe('true');
+  });
+
   it('sets disabled attribute when disabled', () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();

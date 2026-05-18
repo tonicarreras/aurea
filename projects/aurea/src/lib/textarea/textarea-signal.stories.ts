@@ -10,7 +10,6 @@ import { Textarea } from './textarea';
  * Not exported from the library package.
  */
 @Component({
-  standalone: true,
   selector: 'story-textarea-signal-wrapper',
   imports: [Textarea, FormField, CommonModule, JsonPipe],
   template: `

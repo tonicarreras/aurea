@@ -36,6 +36,37 @@ describe('dialog-focus-trap', () => {
     expect(getDialogFocusableElements(panel).map((el) => el.id)).toEqual(['a']);
   });
 
+  it('does not trap Tab from a middle focusable', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+      '<button type="button" id="c">C</button>',
+    );
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    b.focus();
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('does not trap Shift+Tab from a middle focusable', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+      '<button type="button" id="c">C</button>',
+    );
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    b.focus();
+    const ev = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
   it('wraps Tab from last to first', () => {
     const panel = panelWith(
       '<button type="button" id="a">A</button>',
@@ -58,6 +89,27 @@ describe('dialog-focus-trap', () => {
     const a = panel.querySelector('#a') as HTMLButtonElement;
     const b = panel.querySelector('#b') as HTMLButtonElement;
     a.focus();
+    const ev = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(b);
+  });
+
+  it('wraps Shift+Tab from outside to last focusable', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+    );
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    const outside = document.createElement('button');
+    outside.type = 'button';
+    document.body.append(outside);
+    outside.focus();
     const ev = new KeyboardEvent('keydown', {
       key: 'Tab',
       shiftKey: true,
@@ -108,5 +160,13 @@ describe('dialog-focus-trap', () => {
     focusInitialInDialogPanel(panel);
     expect(document.activeElement).toBe(panel);
     expect(panel.tabIndex).toBe(-1);
+  });
+
+  it('focusInitialInDialogPanel does not override an existing tabindex', () => {
+    const panel = panelWith('<p>Text only</p>');
+    panel.tabIndex = 0;
+    focusInitialInDialogPanel(panel);
+    expect(document.activeElement).toBe(panel);
+    expect(panel.tabIndex).toBe(0);
   });
 });

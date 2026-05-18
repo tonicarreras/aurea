@@ -3,21 +3,18 @@ import { TestBed } from '@angular/core/testing';
 import { AuTheme } from './au-theme';
 
 @Component({
-  standalone: true,
   imports: [AuTheme],
   template: `<div auTheme="dark" id="host"></div>`,
 })
 class ThemeHost {}
 
 @Component({
-  standalone: true,
   imports: [AuTheme],
   template: `<div [auTheme]="'light'" id="host2"></div>`,
 })
 class ThemeHostLight {}
 
 @Component({
-  standalone: true,
   imports: [AuTheme],
   template: `<div [auTheme]="mode()" id="sys"></div>`,
 })

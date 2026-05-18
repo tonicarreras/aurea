@@ -90,7 +90,7 @@
         },
         {
             "name": "TextareaSignalHost",
-            "id": "component-TextareaSignalHost-474b2bb0b990f7365b4d5a4cc18f35ab601a0ff83c954357441e5134855f679630e597c0a9baac4e9444d8b40a39f87769719e6b67de37f952e62e8d0deffb00",
+            "id": "component-TextareaSignalHost-eea2d580f1b32899ce403a27530cf00750245eb08f36dd074ff75c5f006e19992676bbc5152cdc223b91ee5ac94797bdeaa4f8d805a8b9dc4237af9db84b65ff",
             "file": "projects/aurea/src/lib/textarea/textarea-signal.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -116,7 +116,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 30,
+                    "line": 29,
                     "modifierKind": [
                         124,
                         148
@@ -131,7 +131,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 31,
+                    "line": 30,
                     "modifierKind": [
                         124,
                         148
@@ -143,7 +143,7 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": true,
+            "standalone": false,
             "imports": [
                 {
                     "name": "Textarea"
@@ -163,7 +163,7 @@
             "description": "<p>Story-only host: <code>au-textarea</code> + <code>form()</code> with <code>required</code> + <code>minLength(20)</code> on <code>bio</code>.\nNot exported from the library package.</p>\n",
             "rawdescription": "\n\nStory-only host: `au-textarea` + `form()` with `required` + `minLength(20)` on `bio`.\nNot exported from the library package.\n",
             "type": "component",
-            "sourceCode": "import { CommonModule, JsonPipe } from '@angular/common';\nimport { Component, signal } from '@angular/core';\nimport { type Meta, type StoryObj } from '@storybook/angular';\nimport { FormField, form, minLength, required } from '@angular/forms/signals';\nimport { TEXTAREA_SIGNAL_DOCS_OVERVIEW } from './textarea-signal.docs-overview';\nimport { Textarea } from './textarea';\n\n/**\n * Story-only host: `au-textarea` + `form()` with `required` + `minLength(20)` on `bio`.\n * Not exported from the library package.\n */\n@Component({\n  standalone: true,\n  selector: 'story-textarea-signal-wrapper',\n  imports: [Textarea, FormField, CommonModule, JsonPipe],\n  template: `\n    <p style=\"font:0.8rem/1.4 var(--au-font-sans,system-ui); color: var(--au-color-text-secondary, #5c6b7a); max-width: 26rem; margin: 0 0 1rem 0\">\n      Model: <code>{{ data() | json }}</code>\n    </p>\n    <au-textarea\n      [formField]=\"fieldRoot.bio\"\n      label=\"Bio\"\n      placeholder=\"Who you are and what you do (20+ characters)…\"\n      [rows]=\"5\"\n      hint=\"Required validation + minimum length (signal form).\"\n    />\n  `,\n})\nexport class TextareaSignalHost {\n  protected readonly data = signal({ bio: '' });\n  protected readonly fieldRoot = form(this.data, (f) => {\n    required(f.bio, { message: 'Bio is required' });\n    minLength(f.bio, 20, { message: 'Write at least 20 characters' });\n  });\n}\n\nconst meta: Meta<TextareaSignalHost> = {\n  title: 'Aurea/Textarea/Signal form',\n  component: TextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TextareaSignalHost>;\n\nexport const WithValidation: Story = {\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type fewer than **20** characters and blur to trigger **minLength** from the schema.',\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { CommonModule, JsonPipe } from '@angular/common';\nimport { Component, signal } from '@angular/core';\nimport { type Meta, type StoryObj } from '@storybook/angular';\nimport { FormField, form, minLength, required } from '@angular/forms/signals';\nimport { TEXTAREA_SIGNAL_DOCS_OVERVIEW } from './textarea-signal.docs-overview';\nimport { Textarea } from './textarea';\n\n/**\n * Story-only host: `au-textarea` + `form()` with `required` + `minLength(20)` on `bio`.\n * Not exported from the library package.\n */\n@Component({\n  selector: 'story-textarea-signal-wrapper',\n  imports: [Textarea, FormField, CommonModule, JsonPipe],\n  template: `\n    <p style=\"font:0.8rem/1.4 var(--au-font-sans,system-ui); color: var(--au-color-text-secondary, #5c6b7a); max-width: 26rem; margin: 0 0 1rem 0\">\n      Model: <code>{{ data() | json }}</code>\n    </p>\n    <au-textarea\n      [formField]=\"fieldRoot.bio\"\n      label=\"Bio\"\n      placeholder=\"Who you are and what you do (20+ characters)…\"\n      [rows]=\"5\"\n      hint=\"Required validation + minimum length (signal form).\"\n    />\n  `,\n})\nexport class TextareaSignalHost {\n  protected readonly data = signal({ bio: '' });\n  protected readonly fieldRoot = form(this.data, (f) => {\n    required(f.bio, { message: 'Bio is required' });\n    minLength(f.bio, 20, { message: 'Write at least 20 characters' });\n  });\n}\n\nconst meta: Meta<TextareaSignalHost> = {\n  title: 'Aurea/Textarea/Signal form',\n  component: TextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TextareaSignalHost>;\n\nexport const WithValidation: Story = {\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type fewer than **20** characters and blur to trigger **minLength** from the schema.',\n      },\n    },\n  },\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -181,7 +181,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () => ({\n    template: `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <au-button variant=\"primary\">Primary</au-button>\n        <au-button variant=\"secondary\">Secondary</au-button>\n        <au-button variant=\"outline\">Outline</au-button>\n        <au-button variant=\"ghost\">Ghost</au-button>\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <au-button variant=\"primary\">Primary</au-button>\n        <au-button variant=\"secondary\">Secondary</au-button>\n        <au-button variant=\"outline\">Outline</au-button>\n        <au-button variant=\"ghost\">Ghost</au-button>\n      </div>\n    `,\n    ),\n}"
             },
             {
                 "name": "CalendarTheming",
@@ -201,7 +201,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox. Uses `aria-checked=\"true\"`.',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox (`checked` binding).',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "CompactSize",
@@ -241,7 +241,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "Default",
@@ -297,21 +297,11 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -321,7 +311,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => snackbarRender(args),\n}"
+                "defaultValue": "{}"
             },
             {
                 "name": "Default",
@@ -347,6 +337,16 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/textarea/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -361,7 +361,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n    ),\n}"
             },
             {
                 "name": "Disabled",
@@ -421,7 +421,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n  render: (args) => snackbarRender(args),\n}"
+                "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n}"
             },
             {
                 "name": "Filled",
@@ -431,7 +431,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "FocusRing",
@@ -441,7 +441,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
             },
             {
                 "name": "FocusRing",
@@ -471,7 +471,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Ghost</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Ghost</au-button>`,\n    ),\n}"
             },
             {
                 "name": "groupedOptions",
@@ -491,7 +491,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Indeterminate state (partial selection). Uses `aria-checked=\"mixed\"` — common for \"select all\" patterns.',\n      },\n    },\n  },\n  args: {\n    label: 'Select items',\n    checked: true,\n    indeterminate: true,\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Indeterminate state (partial selection) via the native `indeterminate` property — common for \"select all\" patterns.',\n      },\n    },\n  },\n  args: {\n    label: 'Select items',\n    checked: true,\n    indeterminate: true,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "Large",
@@ -501,7 +501,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Large (Touch)</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Large (Touch)</au-button>`,\n    ),\n}"
             },
             {
                 "name": "LargeSize",
@@ -511,7 +511,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "LargeSize",
@@ -551,7 +551,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [loading]=\"loading\" (click)=\"click\">Processing...</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"click\">Processing...</au-button>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -561,7 +561,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Button>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: Button,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: Button,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -571,7 +571,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Card>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -637,16 +637,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<RadioGroup>",
-                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -660,8 +650,8 @@
                 "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<SnackbarStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: Snackbar,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: ['bottom-center', 'bottom-start', 'bottom-end', 'top-center', 'top-start', 'top-end'],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                "type": "Meta<SnackbarStoryHost>",
+                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: SnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -682,6 +672,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<Tabs>",
                 "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: Tabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<RadioGroup>",
+                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -741,7 +741,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n    ),\n}"
             },
             {
                 "name": "Outlined",
@@ -751,7 +751,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "Password",
@@ -783,7 +783,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Primary</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Primary</au-button>`,\n    ),\n}"
             },
             {
                 "name": "ReadOnly",
@@ -819,21 +819,21 @@
                 "name": "Required",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
             },
             {
                 "name": "Required",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Country');\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
+                "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
             },
             {
                 "name": "sample",
@@ -863,7 +863,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Secondary</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Secondary</au-button>`,\n    ),\n}"
             },
             {
                 "name": "Small",
@@ -873,7 +873,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Small</au-button>`,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(args, `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Small</au-button>`),\n}"
             },
             {
                 "name": "Small",
@@ -893,7 +893,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "SmallSize",
@@ -919,6 +919,26 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [Button] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [Card] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -933,7 +953,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n  render: (args) => snackbarRender(args),\n}"
+                "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n}"
             },
             {
                 "name": "tabTemplate",
@@ -953,7 +973,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n  render: (args) => snackbarRender(args),\n}"
+                "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n}"
             },
             {
                 "name": "Vertical",
@@ -973,7 +993,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n  render: (args) => snackbarRender(args),\n}"
+                "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n}"
             },
             {
                 "name": "WithBounds",
@@ -1043,7 +1063,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the select in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n    errorMessage: 'Please select a country.',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Country');\n    await expect(select).toHaveAttribute('aria-invalid', 'true');\n    const errId = select.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Please select a country.');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the select in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n    errorMessage: 'Please select a country.',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-invalid', 'true');\n    const errId = select.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Please select a country.');\n  },\n}"
             },
             {
                 "name": "WithError",
@@ -1073,7 +1093,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n      withFooterImports,\n    ),\n}"
             },
             {
                 "name": "WithFooter",
@@ -1086,6 +1106,16 @@
                 "defaultValue": "hostStory({\n  hint: 'Footer actions match card footers. Import `AuDialogFooter` in your host component.',\n  title: 'With footer',\n  showDemoFooter: true,\n  body: '<p>Dialog body content here.</p>',\n})"
             },
             {
+                "name": "withFooterImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [Card, Button, AuCardFooter] }"
+            },
+            {
                 "name": "WithHint",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1093,7 +1123,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
             },
             {
                 "name": "WithHint",
@@ -1113,7 +1143,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "WithoutTitle",
@@ -1187,6 +1217,148 @@
                 ]
             },
             {
+                "name": "buttonRender",
+                "file": "projects/aurea/src/lib/button/button.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "args",
+                        "type": "Record",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "template",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "args",
+                        "type": "Record",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "template",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "cardRender",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "args",
+                        "type": "Record",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "template",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "moduleMetadata",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "storyImports"
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "args",
+                        "type": "Record",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "template",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "moduleMetadata",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "storyImports",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "getSelect",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Native label text includes required markers; match by accessible name.</p>\n",
+                "args": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "name",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "hostStory",
                 "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                 "ctype": "miscellaneous",
@@ -1205,34 +1377,6 @@
                 "jsdoctags": [
                     {
                         "name": "config",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "snackbarRender",
-                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "args": [
-                    {
-                        "name": "args",
-                        "type": "SnackbarStoryArgs",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "jsdoctags": [
-                    {
-                        "name": "args",
-                        "type": "SnackbarStoryArgs",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -1288,17 +1432,6 @@
             }
         ],
         "typealiases": [
-            {
-                "name": "SnackbarStoryArgs",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "literal type",
-                "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "<p>Args wired to <code>au-snackbar-story-host</code> (Storybook canvas + live controls).</p>\n",
-                "kind": 188
-            },
             {
                 "name": "Story",
                 "ctype": "miscellaneous",
@@ -1391,17 +1524,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<RadioGroup>",
-                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<Select>",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
@@ -1413,7 +1535,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<SnackbarStoryArgs>",
+                "rawtype": "StoryObj<SnackbarStoryHost>",
                 "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1437,6 +1559,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Tabs>",
                 "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<RadioGroup>",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1476,7 +1609,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () => ({\n    template: `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <au-button variant=\"primary\">Primary</au-button>\n        <au-button variant=\"secondary\">Secondary</au-button>\n        <au-button variant=\"outline\">Outline</au-button>\n        <au-button variant=\"ghost\">Ghost</au-button>\n      </div>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <au-button variant=\"primary\">Primary</au-button>\n        <au-button variant=\"secondary\">Secondary</au-button>\n        <au-button variant=\"outline\">Outline</au-button>\n        <au-button variant=\"ghost\">Ghost</au-button>\n      </div>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "Disabled",
@@ -1486,7 +1619,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "FocusRing",
@@ -1496,7 +1629,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
                 },
                 {
                     "name": "Ghost",
@@ -1506,7 +1639,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Ghost</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Ghost</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "Large",
@@ -1516,7 +1649,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Large (Touch)</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Large (Touch)</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "Loading",
@@ -1526,7 +1659,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [loading]=\"loading\" (click)=\"click\">Processing...</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"click\">Processing...</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "meta",
@@ -1536,7 +1669,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Button>",
-                    "defaultValue": "{\n  title: 'Aurea/Button',\n  component: Button,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Button',\n  component: Button,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
                 },
                 {
                     "name": "Outline",
@@ -1546,7 +1679,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "Primary",
@@ -1556,7 +1689,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Primary</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Primary</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "Secondary",
@@ -1566,7 +1699,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Secondary</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Secondary</au-button>`,\n    ),\n}"
                 },
                 {
                     "name": "Small",
@@ -1576,7 +1709,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Small</au-button>`,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(args, `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Small</au-button>`),\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{ imports: [Button] }"
                 }
             ],
             "projects/aurea/src/lib/input-date/input-date.stories.ts": [
@@ -1630,7 +1773,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox. Uses `aria-checked=\"true\"`.',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox (`checked` binding).',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "Default",
@@ -1680,7 +1823,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Indeterminate state (partial selection). Uses `aria-checked=\"mixed\"` — common for \"select all\" patterns.',\n      },\n    },\n  },\n  args: {\n    label: 'Select items',\n    checked: true,\n    indeterminate: true,\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Indeterminate state (partial selection) via the native `indeterminate` property — common for \"select all\" patterns.',\n      },\n    },\n  },\n  args: {\n    label: 'Select items',\n    checked: true,\n    indeterminate: true,\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -1834,7 +1977,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
                 },
                 {
                     "name": "Disabled",
@@ -1894,7 +2037,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Country');\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
                 },
                 {
                     "name": "sampleOptions",
@@ -1924,7 +2067,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the select in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n    errorMessage: 'Please select a country.',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Country');\n    await expect(select).toHaveAttribute('aria-invalid', 'true');\n    const errId = select.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Please select a country.');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the select in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n    errorMessage: 'Please select a country.',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-invalid', 'true');\n    const errId = select.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Please select a country.');\n  },\n}"
                 },
                 {
                     "name": "WithHint",
@@ -1934,7 +2077,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
                 },
                 {
                     "name": "WithValue",
@@ -2038,7 +2181,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "Filled",
@@ -2048,7 +2191,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -2058,7 +2201,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "meta",
@@ -2068,7 +2211,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Card>",
-                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "Outlined",
@@ -2078,7 +2221,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "SmallSize",
@@ -2088,7 +2231,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{ imports: [Card] }"
                 },
                 {
                     "name": "WithFooter",
@@ -2098,7 +2251,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Button, AuCardFooter] },\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n      withFooterImports,\n    ),\n}"
+                },
+                {
+                    "name": "withFooterImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{ imports: [Card, Button, AuCardFooter] }"
                 },
                 {
                     "name": "WithMedia",
@@ -2108,7 +2271,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    template: `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n    ),\n}"
                 }
             ],
             "projects/aurea/src/lib/dialog/dialog.stories.ts": [
@@ -2235,48 +2398,6 @@
                     "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
                 }
             ],
-            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<RadioGroup>",
-                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-                },
-                {
-                    "name": "Required",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
-                },
-                {
-                    "name": "sample",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "RadioOption[]",
-                    "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
-                }
-            ],
             "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
                 {
                     "name": "Default",
@@ -2286,7 +2407,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => snackbarRender(args),\n}"
+                    "defaultValue": "{}"
                 },
                 {
                     "name": "ErrorPersistent",
@@ -2296,7 +2417,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n  render: (args) => snackbarRender(args),\n}"
+                    "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -2305,8 +2426,8 @@
                     "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<SnackbarStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: Snackbar,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: ['bottom-center', 'bottom-start', 'bottom-end', 'top-center', 'top-start', 'top-end'],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                    "type": "Meta<SnackbarStoryHost>",
+                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: SnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
                 },
                 {
                     "name": "Success",
@@ -2316,7 +2437,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n  render: (args) => snackbarRender(args),\n}"
+                    "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n}"
                 },
                 {
                     "name": "TopEnd",
@@ -2326,7 +2447,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n  render: (args) => snackbarRender(args),\n}"
+                    "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n}"
                 },
                 {
                     "name": "WithAction",
@@ -2336,7 +2457,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n  render: (args) => snackbarRender(args),\n}"
+                    "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n}"
                 }
             ],
             "projects/aurea/src/lib/switch/switch.stories.ts": [
@@ -2379,6 +2500,48 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
+                }
+            ],
+            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<RadioGroup>",
+                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "Required",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
+                },
+                {
+                    "name": "sample",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "RadioOption[]",
+                    "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
                 }
             ],
             "projects/aurea/src/lib/textarea/textarea.stories.ts": [
@@ -2514,6 +2677,154 @@
                     ]
                 }
             ],
+            "projects/aurea/src/lib/button/button.stories.ts": [
+                {
+                    "name": "buttonRender",
+                    "file": "projects/aurea/src/lib/button/button.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "args",
+                            "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "template",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "args",
+                            "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "template",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "projects/aurea/src/lib/card/card.stories.ts": [
+                {
+                    "name": "cardRender",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "args",
+                            "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "template",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "moduleMetadata",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "storyImports"
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "args",
+                            "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "template",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "moduleMetadata",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "storyImports",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "projects/aurea/src/lib/select/select.stories.ts": [
+                {
+                    "name": "getSelect",
+                    "file": "projects/aurea/src/lib/select/select.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Native label text includes required markers; match by accessible name.</p>\n",
+                    "args": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "name",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "name",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "projects/aurea/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "hostStory",
@@ -2534,36 +2845,6 @@
                     "jsdoctags": [
                         {
                             "name": "config",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                }
-            ],
-            "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
-                {
-                    "name": "snackbarRender",
-                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "args": [
-                        {
-                            "name": "args",
-                            "type": "SnackbarStoryArgs",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "jsdoctags": [
-                        {
-                            "name": "args",
-                            "type": "SnackbarStoryArgs",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -2623,30 +2904,6 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
-            "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
-                {
-                    "name": "SnackbarStoryArgs",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "literal type",
-                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "<p>Args wired to <code>au-snackbar-story-host</code> (Storybook canvas + live controls).</p>\n",
-                    "kind": 188
-                },
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<SnackbarStoryArgs>",
-                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
@@ -2751,19 +3008,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<RadioGroup>",
-                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/select/select.stories.ts": [
                 {
                     "name": "Story",
@@ -2771,6 +3015,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Select>",
                     "file": "projects/aurea/src/lib/select/select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<SnackbarStoryHost>",
+                    "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -2797,6 +3054,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Tabs>",
                     "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<RadioGroup>",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -2859,6 +3129,16 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/button/button.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "buttonRender",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "projects/aurea/src/lib/button/button.stories.ts",
@@ -2972,10 +3252,30 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/button/button.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
                 "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "cardRender",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -3045,7 +3345,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "WithFooter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "withFooterImports",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -3571,6 +3891,16 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/select/select.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getSelect",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/select/select.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3711,16 +4041,6 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                "type": "function",
-                "linktype": "miscellaneous",
-                "linksubtype": "function",
-                "name": "snackbarRender",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3778,16 +4098,6 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
-            },
-            {
-                "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
-                "type": "type alias",
-                "linktype": "miscellaneous",
-                "linksubtype": "typealias",
-                "name": "SnackbarStoryArgs",
-                "coveragePercent": 100,
-                "coverageCount": "1/1",
-                "status": "very-good"
             },
             {
                 "filePath": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",

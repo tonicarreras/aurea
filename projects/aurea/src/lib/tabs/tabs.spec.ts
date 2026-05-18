@@ -147,6 +147,19 @@ describe('Tabs', () => {
     expect(fix.componentInstance.active).toBe('a');
   });
 
+  it('keyboard nav uses index 0 when value does not match a tab', async () => {
+    const fix = TestBed.createComponent(TestTabsUnknownValueComponent);
+    fix.detectChanges();
+    await fix.whenStable();
+    await flushTabsSelection();
+    fix.componentInstance.active = 'missing';
+    fix.detectChanges();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    fix.detectChanges();
+    expect(fix.componentInstance.active).toBe('b');
+  });
+
   it('jumps to first and last tab with Home and End', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.active = 'b';
@@ -320,4 +333,20 @@ class TestThreeTabsComponent {
 })
 class TestTabsWithDisabledComponent {
   active = '';
+}
+
+@Component({
+  selector: 'test-tabs-unknown-value',
+  imports: [Tabs, AuTab, AuTabPanel],
+  template: `
+    <au-tabs [(value)]="active" ariaLabel="Unknown value">
+      <button type="button" auTab="a">A</button>
+      <button type="button" auTab="b">B</button>
+      <div auTabPanel="a">A</div>
+      <div auTabPanel="b">B</div>
+    </au-tabs>
+  `,
+})
+class TestTabsUnknownValueComponent {
+  active = 'missing';
 }

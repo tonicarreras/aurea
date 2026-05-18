@@ -55,12 +55,13 @@ describe('Checkbox', () => {
     expect(input.id).toBe('test-checkbox');
   });
 
-  it('sets aria-checked for indeterminate state', () => {
+  it('sets native indeterminate for indeterminate state', () => {
     const fix = TestBed.createComponent(Checkbox);
     fix.componentRef.setInput('indeterminate', true);
     fix.detectChanges();
     const input = queryInput(fix);
-    expect(input.getAttribute('aria-checked')).toBe('mixed');
+    expect(input.indeterminate).toBe(true);
+    expect(input.getAttribute('aria-checked')).toBeNull();
   });
 
   it('shows description with aria-describedby', () => {
@@ -175,11 +176,12 @@ describe('Checkbox', () => {
     expect(queryInput(fix).id.startsWith('au-checkbox-')).toBe(true);
   });
 
-  it('sets aria-checked true when checked', () => {
+  it('sets native checked when checked', () => {
     const fix = TestBed.createComponent(Checkbox);
     fix.componentRef.setInput('checked', true);
     fix.detectChanges();
-    expect(queryInput(fix).getAttribute('aria-checked')).toBe('true');
+    expect(queryInput(fix).checked).toBe(true);
+    expect(queryInput(fix).getAttribute('aria-checked')).toBeNull();
   });
 
   it('does not set aria-describedby without description', () => {

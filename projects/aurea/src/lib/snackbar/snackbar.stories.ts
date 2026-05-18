@@ -1,31 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import { Snackbar, type SnackbarPosition, type SnackbarVariant } from './snackbar';
+import type { SnackbarPosition, SnackbarVariant } from './snackbar';
 import { SnackbarStoryHost } from './snackbar-story-host';
 
-/** Args wired to `au-snackbar-story-host` (Storybook canvas + live controls). */
-export interface SnackbarStoryArgs {
-  hint: string;
-  triggerLabel: string;
-  open: boolean;
-  message: string;
-  variant: SnackbarVariant;
-  position: SnackbarPosition;
-  durationMs: number;
-  actionLabel: string;
-  showCloseButton: boolean;
-  dismiss: ReturnType<typeof fn>;
-  action: ReturnType<typeof fn>;
-};
-
-const meta: Meta<SnackbarStoryArgs> = {
+const meta: Meta<SnackbarStoryHost> = {
   title: 'Aurea/Snackbar',
-  component: Snackbar,
+  component: SnackbarStoryHost,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'fullscreen',
     docs: {
+      extractArgTypes: () => ({}),
       description: {
         component:
           'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',
@@ -39,12 +25,19 @@ const meta: Meta<SnackbarStoryArgs> = {
     message: { control: 'text', table: { category: 'Content' } },
     variant: {
       control: 'select',
-      options: ['default', 'success', 'warning', 'error', 'info'],
+      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],
       table: { category: 'Appearance' },
     },
     position: {
       control: 'select',
-      options: ['bottom-center', 'bottom-start', 'bottom-end', 'top-center', 'top-start', 'top-end'],
+      options: [
+        'bottom-center',
+        'bottom-start',
+        'bottom-end',
+        'top-center',
+        'top-start',
+        'top-end',
+      ] satisfies SnackbarPosition[],
       table: { category: 'Appearance' },
     },
     durationMs: { control: 'number', table: { category: 'Behavior' } },
@@ -69,33 +62,9 @@ const meta: Meta<SnackbarStoryArgs> = {
 };
 
 export default meta;
-type Story = StoryObj<SnackbarStoryArgs>;
+type Story = StoryObj<SnackbarStoryHost>;
 
-function snackbarRender(args: SnackbarStoryArgs) {
-  return {
-    moduleMetadata: { imports: [SnackbarStoryHost] },
-    props: args,
-    template: `
-      <au-snackbar-story-host
-        [hint]="hint"
-        [triggerLabel]="triggerLabel"
-        [(open)]="open"
-        [message]="message"
-        [variant]="variant"
-        [position]="position"
-        [durationMs]="durationMs"
-        [actionLabel]="actionLabel"
-        [showCloseButton]="showCloseButton"
-        (dismiss)="dismiss($event)"
-        (action)="action($event)"
-      />
-    `,
-  };
-}
-
-export const Default: Story = {
-  render: (args) => snackbarRender(args),
-};
+export const Default: Story = {};
 
 export const Success: Story = {
   args: {
@@ -104,7 +73,6 @@ export const Success: Story = {
     message: 'Profile updated.',
     variant: 'success',
   },
-  render: (args) => snackbarRender(args),
 };
 
 export const WithAction: Story = {
@@ -115,7 +83,6 @@ export const WithAction: Story = {
     actionLabel: 'Undo',
     durationMs: 8000,
   },
-  render: (args) => snackbarRender(args),
 };
 
 export const ErrorPersistent: Story = {
@@ -126,7 +93,6 @@ export const ErrorPersistent: Story = {
     variant: 'error',
     durationMs: 0,
   },
-  render: (args) => snackbarRender(args),
 };
 
 export const TopEnd: Story = {
@@ -137,5 +103,4 @@ export const TopEnd: Story = {
     variant: 'info',
     position: 'top-end',
   },
-  render: (args) => snackbarRender(args),
 };

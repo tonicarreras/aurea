@@ -1,8 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import type { Type } from '@angular/core';
 
 import { Button } from '../button/button';
 import { AuCardFooter } from './card-footer.directive';
 import { Card } from './card';
+
+const storyImports = { imports: [Card] };
+const withFooterImports = { imports: [Card, Button, AuCardFooter] };
+
+function cardRender(
+  args: Record<string, unknown>,
+  template: string,
+  moduleMetadata: { imports: Type<unknown>[] } = storyImports,
+) {
+  return { props: args, moduleMetadata, template };
+}
 
 const meta: Meta<Card> = {
   title: 'Aurea/Card',
@@ -10,6 +22,7 @@ const meta: Meta<Card> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
+    docs: { extractArgTypes: () => ({}) },
   },
   argTypes: {
     variant: {
@@ -35,48 +48,51 @@ export default meta;
 type Story = StoryObj<Card>;
 
 export const Default: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Card title</h3>
         <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>
       </au-card>
     `,
-  }),
+    ),
 };
 
 export const Outlined: Story = {
   args: { variant: 'outlined' },
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Outlined card</h3>
         <p auCardBody>Stronger border, no elevation shadow.</p>
       </au-card>
     `,
-  }),
+    ),
 };
 
 export const Filled: Story = {
   args: { variant: 'filled' },
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Filled card</h3>
         <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>
       </au-card>
     `,
-  }),
+    ),
 };
 
 export const WithFooter: Story = {
-  render: (args) => ({
-    props: args,
-    moduleMetadata: { imports: [Button, AuCardFooter] },
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Confirm</h3>
         <p auCardBody>Review the summary before continuing.</p>
@@ -86,13 +102,15 @@ export const WithFooter: Story = {
         </div>
       </au-card>
     `,
-  }),
+      withFooterImports,
+    ),
 };
 
 export const WithMedia: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size" style="max-width: 22rem;">
         <img
           auCardMedia
@@ -105,31 +123,33 @@ export const WithMedia: Story = {
         <p auCardBody>Media is full-bleed; text keeps inner padding.</p>
       </au-card>
     `,
-  }),
+    ),
 };
 
 export const SmallSize: Story = {
   args: { size: 'sm' },
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Compact</h3>
         <p auCardBody>Reduced padding for dense lists.</p>
       </au-card>
     `,
-  }),
+    ),
 };
 
 export const LargeSize: Story = {
   args: { size: 'lg' },
-  render: (args) => ({
-    props: args,
-    template: `
+  render: (args) =>
+    cardRender(
+      args,
+      `
       <au-card [variant]="variant" [size]="size">
         <h3 auCardHeader>Spacious</h3>
         <p auCardBody>More padding for emphasis or hero cards.</p>
       </au-card>
     `,
-  }),
+    ),
 };

@@ -125,7 +125,6 @@ describe('Card', () => {
 
 @Component({
   selector: 'test-card',
-  standalone: true,
   imports: [Card],
   template: `
     <au-card>
@@ -137,7 +136,6 @@ class TestCardComponent {}
 
 @Component({
   selector: 'test-card-slots',
-  standalone: true,
   imports: [Card],
   template: `
     <au-card>
@@ -150,7 +148,6 @@ class TestCardSlotsComponent {}
 
 @Component({
   selector: 'test-card-footer',
-  standalone: true,
   imports: [Card, AuCardFooter],
   template: `
     <au-card>

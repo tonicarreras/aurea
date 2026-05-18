@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
   computed,
   input,
   model,
@@ -23,7 +24,7 @@ type AuSize = 'sm' | 'md' | 'lg';
  * - **Classic:** use `[(checked)]` and set `errorMessage` and/or `invalid` from the parent.
  * - **Signals:** uses Angular signals (`input()`, `model()`).
  * - **Accessibility:** native `<input type="checkbox">` with programmatic label association.
- *   Uses `aria-checked` for state; indeterminate uses `aria-checked="mixed"`.
+ *   Indeterminate uses the native `indeterminate` property (not `aria-checked` on `<input type="checkbox">`).
  * - **Focus:** outer ring on Tab, inset ring on click (`tabFocusState` + `--from-tab` CSS).
  * - **Sizes:** sm (compact), md (default), lg (touch-friendly 44px).
  *
@@ -69,7 +70,7 @@ export class Checkbox implements FormCheckboxControl {
   /** Sets the native `required` attribute and `aria-required` when true. */
   readonly required = input(false);
 
-  /** Shows indeterminate/indeterminate-like visual state (visual only, not aria-checked). */
+  /** Partial selection; syncs the native `indeterminate` property on the input. */
   readonly indeterminate = input(false);
 
   /** Visual density: sets `data-au-size` on the host (`sm` | `md` | `lg`). */
@@ -93,6 +94,16 @@ export class Checkbox implements FormCheckboxControl {
   protected readonly focusByTab = signal(false);
 
   readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+
+  constructor() {
+    afterRenderEffect(() => {
+      const input = this.inputEl()?.nativeElement;
+      if (!input) {
+        return;
+      }
+      input.indeterminate = this.indeterminate();
+    });
+  }
 
   readonly resolvedId = computed(() => {
     const v = this.id();
@@ -124,13 +135,6 @@ export class Checkbox implements FormCheckboxControl {
   readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
 
   readonly isChecked = computed(() => this.effectiveChecked());
-
-  readonly effectiveAriaChecked = computed((): 'true' | 'false' | 'mixed' => {
-    if (this.indeterminate()) {
-      return 'mixed';
-    }
-    return this.checked() ? 'true' : 'false';
-  });
 
   readonly ariaDescribedBy = computed((): string | null =>
     this.description().trim().length > 0 ? this.descriptionId() : null,

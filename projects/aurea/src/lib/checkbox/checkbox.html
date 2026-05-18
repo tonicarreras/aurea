@@ -12,7 +12,6 @@
     [id]="resolvedId()"
     [attr.name]="name() || null"
     [checked]="isChecked()"
-    [attr.aria-checked]="effectiveAriaChecked()"
     [attr.aria-describedby]="ariaDescribedBy() ?? null"
     [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
     [attr.aria-errormessage]="isInvalid() ? errorId() : null"

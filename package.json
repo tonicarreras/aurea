@@ -11,7 +11,7 @@
     "storybook": "ng run aurea:storybook",
     "build-storybook": "ng run aurea:build-storybook",
     "test-storybook": "test-storybook --config-dir projects/aurea/.storybook --url http://127.0.0.1:6006",
-    "test-storybook:ci": "bun run build-storybook && start-server-and-test 'npx --yes http-server storybook-static -a 127.0.0.1 -p 6006 -s' http://127.0.0.1:6006 'test-storybook --config-dir projects/aurea/.storybook --url http://127.0.0.1:6006'",
+    "test-storybook:ci": "bun run build-storybook && start-server-and-test 'npx --yes http-server storybook-static -a 127.0.0.1 -p 6010 -s' http://127.0.0.1:6010 'test-storybook --config-dir projects/aurea/.storybook --url http://127.0.0.1:6010'",
     "lint": "ng lint"
   },
   "private": true,
@@ -23,6 +23,8 @@
     "@angular/forms": "^21.2.13",
     "@angular/platform-browser": "^21.2.13",
     "@angular/router": "^21.2.13",
+    "@storybook/addon-vitest": "^10.4.0",
+    "add": "^2.0.6",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1"
   },
