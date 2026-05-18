@@ -12,8 +12,9 @@ import {
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
 
-type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
 type AuSize = 'sm' | 'md' | 'lg';
+
+type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
 /**
  * Design-system **single-line** text field: label, control shell, optional hint, error region,
@@ -22,7 +23,8 @@ type AuSize = 'sm' | 'md' | 'lg';
  * @remarks
  * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` so `errors` and `invalid`
  *   are driven by your `form()` schema.
- * - **Classic:** use `[(value)]` and set `errorMessage` and/or `invalid` from the parent.
+ * - **Classic:** use `[(value)]` (empty field ↔ `null`, not `''`).
+ * - **Parsing:** empty string sets `null`.
  * - **Focus:** Tab into the field applies an **outer outline** on the control row; pointer focus uses an
  *   **inset** ring so click users are not surprised by a large outline (`tabFocusState` + `--from-tab` CSS).
  * - **Accessibility:** `aria-invalid`, `aria-errormessage`, `aria-describedby`, `aria-required` are kept
@@ -40,12 +42,12 @@ type AuSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class InputText implements FormValueControl<string> {
+export class InputText implements FormValueControl<string | null> {
   /**
    * Current value — required by {@link FormValueControl}.
    * Use `[(value)]` or bind through `formField` (directive writes into the model).
    */
-  readonly value = model<string>('');
+  readonly value = model<string | null>(null);
 
   /** Optional visible label; rendered as `<label for="…">` linked to the input `id`. */
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -95,7 +97,7 @@ export class InputText implements FormValueControl<string> {
   /** Emits when the native control fires `blur`. */
   readonly blur = output<void>();
   /** Emits the new string on each `input` event when not `disabled`. */
-  readonly valueChange = output<string>();
+  readonly valueChange = output<string | null>();
 
   private static idCounter = 0;
 
@@ -152,13 +154,26 @@ export class InputText implements FormValueControl<string> {
     this.hint().trim().length > 0 ? this.hintId() : null,
   );
 
+  readonly inputDisplay = computed(() => {
+    const v = this.value();
+    if (v === null || v === undefined) {
+      return '';
+    }
+    return v;
+  });
+
   onInput(event: Event): void {
     if (this.disabled()) {
       return;
     }
-    const v = (event.target as HTMLInputElement).value;
-    this.value.set(v);
-    this.valueChange.emit(v);
+    const raw = (event.target as HTMLInputElement).value;
+    if (raw === '') {
+      this.value.set(null);
+      this.valueChange.emit(null);
+      return;
+    }
+    this.value.set(raw);
+    this.valueChange.emit(raw);
   }
 
   onBlurHost(): void {

@@ -12,7 +12,7 @@ import {
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
 
-type SwitchSize = 'sm' | 'md' | 'lg';
+type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Design-system **switch** (boolean toggle): same field chrome as other controls, native checkbox
@@ -48,7 +48,7 @@ export class Switch implements FormCheckboxControl {
   readonly required = input(false);
   readonly showRequired = input(true);
 
-  readonly size = input<SwitchSize>('md');
+  readonly size = input<AuSize>('md');
   readonly id = input<string>('');
   readonly name = input<string>('');
 

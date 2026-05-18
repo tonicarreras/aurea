@@ -214,14 +214,14 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Small size',\n    size: 'sm',\n    placeholder: 'Select...',\n    options: sampleOptions,\n  },\n}"
             },
             {
-                "name": "DarkTheme",
+                "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dark theme via `data-au-theme=\"dark\"` — tokens switch to dark palette automatically.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    template: `<div data-au-theme=\"dark\"><au-checkbox [label]=\"label\" [checked]=\"checked\" [disabled]=\"disabled\" [size]=\"size\" /></div>`,\n  }),\n  args: {\n    label: 'Dark mode checkbox',\n    checked: true,\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default elevated card. Projected content receives standard body padding.',\n      },\n    },\n  },\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses design tokens for type and color.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -237,11 +237,51 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default medium dialog opened via trigger button.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm Action', '<p>Are you sure you want to proceed with this action?</p>'),\n    props: { open: false },\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -257,11 +297,31 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Enable notifications',\n    checked: false,\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/textarea/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
+            },
+            {
+                "name": "dialogTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "(\n  title: string,\n  body: string,\n  size = 'md',\n  showCloseButton = true,\n  closeOnBackdrop = true,\n  closeOnEscape = true,\n  footerTemplate = ''\n) => `\n  <au-button (click)=\"open = true\">Open Dialog</au-button>\n  <au-dialog [(open)]=\"open\" title=\"${title}\" size=\"${size}\" [showCloseButton]=\"${showCloseButton}\" [closeOnBackdrop]=\"${closeOnBackdrop}\" [closeOnEscape]=\"${closeOnEscape}\">\n    ${body}\n    ${footerTemplate ? `<div auDialogFooter>${footerTemplate}</div>` : ''}\n  </au-dialog>\n`"
             },
             {
                 "name": "Disabled",
@@ -314,6 +374,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled but checked — muted fill, non-interactive.',\n      },\n    },\n  },\n  args: {\n    label: 'Already subscribed',\n    checked: true,\n    disabled: true,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "Filled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: () => ({\n    template: `\n      <au-card variant=\"filled\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle background for grouped sections.</p>\n      </au-card>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "FocusRing",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -332,6 +402,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Tab into the checkbox to see the **outer focus ring**; click to see the **inset ring**. Both use `--au-color-focus-ring`.',\n      },\n    },\n  },\n  args: {\n    label: 'Focus demo',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "FullScreen",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Full screen dialog for maximum content space.',\n      },\n    },\n  },\n  args: {\n    size: 'full',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Full Screen Dialog', '<p>This dialog takes the full viewport minus padding.</p>', 'full'),\n    props: { open: false },\n  }),\n}"
             },
             {
                 "name": "Ghost",
@@ -377,11 +457,31 @@
                 "name": "LargeSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'lg' },\n  render: () => ({\n    template: `\n      <au-card size=\"lg\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"lg\"`** (`data-au-size=\"lg\"`) — 24x24 target (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    label: 'Large touch target',\n    size: 'lg',\n  },\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large dialog for complex content or forms.',\n      },\n    },\n  },\n  args: {\n    size: 'lg',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Detailed View', '<p>This is a larger dialog for displaying more content.</p><p>It can contain forms, multiple sections, or detailed information.</p>', 'lg'),\n    props: { open: false },\n  }),\n}"
             },
             {
                 "name": "LargeSize",
@@ -417,11 +517,51 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Card>",
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Checkbox>",
-                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean | \"indeterminate\">`). Use `[(checked)]`.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Dialog>",
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n  },\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Controls visibility of the dialog.',\n      table: { category: 'State' },\n    },\n    close: {\n      description: 'Emits when dialog should close.',\n      table: { category: 'Events' },\n    },\n    title: {\n      control: 'text',\n      description: 'Dialog title for accessibility.',\n      table: { category: 'Content' },\n    },\n    showCloseButton: {\n      control: 'boolean',\n      description: 'Show/hide close button in header.',\n      table: { category: 'Content' },\n    },\n    closeOnBackdrop: {\n      control: 'boolean',\n      description: 'Close when the dimmed overlay (outside the panel) is clicked.',\n      table: { category: 'Behavior' },\n    },\n    closeOnEscape: {\n      control: 'boolean',\n      description: 'Close when the user presses Escape (native dialog cancel).',\n      table: { category: 'Behavior' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name when there is no visible `title` (sets `aria-label` on the dialog).',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      description: 'Dialog width size.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog Title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputDate>",
+                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputNumber>",
+                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -447,11 +587,31 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<RadioGroup>",
+                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Select>",
                 "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Switch>",
+                "defaultValue": "{\n  title: 'Aurea/Switch',\n  component: Switch,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    checkedChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -474,6 +634,36 @@
                 "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: Textarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
+                "name": "NoBackdropClose",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog that does not close when clicking backdrop.',\n      },\n    },\n  },\n  args: {\n    closeOnBackdrop: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Persistent Dialog', '<p>Backdrop does not dismiss; use the close button or Escape.</p>', 'md', true, false, true),\n    props: { open: false },\n  }),\n}"
+            },
+            {
+                "name": "NoCloseButton",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without close button in header. User must use backdrop or Escape.',\n      },\n    },\n  },\n  args: {\n    showCloseButton: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('No Close Button', '<p>Close using backdrop click or Escape key.</p>', 'md', false),\n    props: { open: false },\n  }),\n}"
+            },
+            {
+                "name": "On",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Enabled',\n    checked: true,\n  },\n}"
+            },
+            {
                 "name": "Outline",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -482,6 +672,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) => ({\n    props: args,\n    template: `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n  }),\n}"
+            },
+            {
+                "name": "Outlined",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: () => ({\n    template: `\n      <au-card variant=\"outlined\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Border instead of shadow for lighter layouts.</p>\n      </au-card>\n    `,\n  }),\n}"
             },
             {
                 "name": "Password",
@@ -501,7 +701,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                 "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                 "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
             },
@@ -533,7 +733,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'I agree to the terms',\n    required: true,\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the label shows a decorative asterisk.',\n      },\n    },\n  },\n  args: {\n    label: 'I agree to the terms',\n    required: true,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "Required",
@@ -549,11 +749,31 @@
                 "name": "Required",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
+            },
+            {
+                "name": "Required",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Country');\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
+            },
+            {
+                "name": "sample",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "RadioOption[]",
+                "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
             },
             {
                 "name": "sampleOptions",
@@ -589,11 +809,51 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: () => ({\n    template: `\n      <au-card size=\"sm\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small dialog for simple confirmations or alerts.',\n      },\n    },\n  },\n  args: {\n    size: 'sm',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm', '<p>Continue?</p>', 'sm'),\n    props: { open: false },\n  }),\n}"
+            },
+            {
+                "name": "WithBounds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+            },
+            {
+                "name": "WithBounds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
             },
             {
                 "name": "WithDescription",
@@ -646,6 +906,36 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Error region uses **`role=\"alert\"`** so assistive tech picks up validation text.',\n      },\n    },\n  },\n  args: {\n    label: 'Comment',\n    rows: 3,\n    errorMessage: 'Add at least one sentence.',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Comment');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Add at least one sentence.');\n  },\n}"
             },
             {
+                "name": "WithErrorMessage",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',\n      },\n    },\n  },\n  args: {\n    label: 'I accept the privacy policy',\n    errorMessage: 'This field is required to continue.',\n    checked: false,\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "WithFooter",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <button type=\"button\">Cancel</button>\n          <button type=\"button\">Continue</button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "WithFooter",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog with footer actions using `auDialogFooter` attribute selector.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" title=\"With Footer\">\n        <p>Dialog body content here.</p>\n        <div auDialogFooter>\n          <au-button variant=\"secondary\" (click)=\"open = false\">Cancel</au-button>\n          <au-button (click)=\"open = false\">Confirm</au-button>\n        </div>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
+            },
+            {
                 "name": "WithHint",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -654,6 +944,26 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = el.getByLabelText('Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
+            },
+            {
+                "name": "WithHint",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
+            },
+            {
+                "name": "WithoutTitle",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without title. Useful for simple content or when title is in body.',\n      },\n    },\n  },\n  args: {\n    title: '',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" [title]=\"''\">\n        <p>This dialog has no title.</p>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
             },
             {
                 "name": "WithValidation",
@@ -733,8 +1043,52 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<Card>",
+                "file": "projects/aurea/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<Checkbox>",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<Dialog>",
+                "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<InputNumber>",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -766,8 +1120,30 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<RadioGroup>",
+                "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<Select>",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<Switch>",
+                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -922,16 +1298,6 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox. Uses `aria-checked=\"true\"`.',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
                 },
                 {
-                    "name": "DarkTheme",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dark theme via `data-au-theme=\"dark\"` — tokens switch to dark palette automatically.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    template: `<div data-au-theme=\"dark\"><au-checkbox [label]=\"label\" [checked]=\"checked\" [disabled]=\"disabled\" [size]=\"size\" /></div>`,\n  }),\n  args: {\n    label: 'Dark mode checkbox',\n    checked: true,\n    size: 'md',\n  },\n}"
-                },
-                {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -999,7 +1365,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Checkbox>",
-                    "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean | \"indeterminate\">`). Use `[(checked)]`.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -1009,7 +1375,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'I agree to the terms',\n    required: true,\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the label shows a decorative asterisk.',\n      },\n    },\n  },\n  args: {\n    label: 'I agree to the terms',\n    required: true,\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "SmallSize",
@@ -1030,6 +1396,16 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Checkbox with label and description. Description has `aria-describedby`.',\n      },\n    },\n  },\n  args: {\n    label: 'Subscribe to newsletter',\n    description: 'Receive weekly updates about new features.',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "WithErrorMessage",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',\n      },\n    },\n  },\n  args: {\n    label: 'I accept the privacy policy',\n    errorMessage: 'This field is required to continue.',\n    checked: false,\n    size: 'md',\n  },\n}"
                 }
             ],
             "projects/aurea/src/lib/input-text/input-text.stories.ts": [
@@ -1226,6 +1602,328 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with a pre-selected value.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n      { value: 'mx', label: 'Mexico' },\n    ],\n    value: 'ca',\n  },\n}"
                 }
             ],
+            "projects/aurea/src/lib/card/card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default elevated card. Projected content receives standard body padding.',\n      },\n    },\n  },\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses design tokens for type and color.</p>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Filled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: () => ({\n    template: `\n      <au-card variant=\"filled\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle background for grouped sections.</p>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "LargeSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: () => ({\n    template: `\n      <au-card size=\"lg\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<Card>",
+                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "Outlined",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: () => ({\n    template: `\n      <au-card variant=\"outlined\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Border instead of shadow for lighter layouts.</p>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "SmallSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: () => ({\n    template: `\n      <au-card size=\"sm\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithFooter",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    template: `\n      <au-card>\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <button type=\"button\">Cancel</button>\n          <button type=\"button\">Continue</button>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                }
+            ],
+            "projects/aurea/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default medium dialog opened via trigger button.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm Action', '<p>Are you sure you want to proceed with this action?</p>'),\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "dialogTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "(\n  title: string,\n  body: string,\n  size = 'md',\n  showCloseButton = true,\n  closeOnBackdrop = true,\n  closeOnEscape = true,\n  footerTemplate = ''\n) => `\n  <au-button (click)=\"open = true\">Open Dialog</au-button>\n  <au-dialog [(open)]=\"open\" title=\"${title}\" size=\"${size}\" [showCloseButton]=\"${showCloseButton}\" [closeOnBackdrop]=\"${closeOnBackdrop}\" [closeOnEscape]=\"${closeOnEscape}\">\n    ${body}\n    ${footerTemplate ? `<div auDialogFooter>${footerTemplate}</div>` : ''}\n  </au-dialog>\n`"
+                },
+                {
+                    "name": "FullScreen",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Full screen dialog for maximum content space.',\n      },\n    },\n  },\n  args: {\n    size: 'full',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Full Screen Dialog', '<p>This dialog takes the full viewport minus padding.</p>', 'full'),\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "LargeSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large dialog for complex content or forms.',\n      },\n    },\n  },\n  args: {\n    size: 'lg',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Detailed View', '<p>This is a larger dialog for displaying more content.</p><p>It can contain forms, multiple sections, or detailed information.</p>', 'lg'),\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<Dialog>",
+                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n  },\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Controls visibility of the dialog.',\n      table: { category: 'State' },\n    },\n    close: {\n      description: 'Emits when dialog should close.',\n      table: { category: 'Events' },\n    },\n    title: {\n      control: 'text',\n      description: 'Dialog title for accessibility.',\n      table: { category: 'Content' },\n    },\n    showCloseButton: {\n      control: 'boolean',\n      description: 'Show/hide close button in header.',\n      table: { category: 'Content' },\n    },\n    closeOnBackdrop: {\n      control: 'boolean',\n      description: 'Close when the dimmed overlay (outside the panel) is clicked.',\n      table: { category: 'Behavior' },\n    },\n    closeOnEscape: {\n      control: 'boolean',\n      description: 'Close when the user presses Escape (native dialog cancel).',\n      table: { category: 'Behavior' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name when there is no visible `title` (sets `aria-label` on the dialog).',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      description: 'Dialog width size.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog Title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n  },\n}"
+                },
+                {
+                    "name": "NoBackdropClose",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog that does not close when clicking backdrop.',\n      },\n    },\n  },\n  args: {\n    closeOnBackdrop: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Persistent Dialog', '<p>Backdrop does not dismiss; use the close button or Escape.</p>', 'md', true, false, true),\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "NoCloseButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without close button in header. User must use backdrop or Escape.',\n      },\n    },\n  },\n  args: {\n    showCloseButton: false,\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('No Close Button', '<p>Close using backdrop click or Escape key.</p>', 'md', false),\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "SmallSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small dialog for simple confirmations or alerts.',\n      },\n    },\n  },\n  args: {\n    size: 'sm',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: dialogTemplate('Confirm', '<p>Continue?</p>', 'sm'),\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "WithFooter",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog with footer actions using `auDialogFooter` attribute selector.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" title=\"With Footer\">\n        <p>Dialog body content here.</p>\n        <div auDialogFooter>\n          <au-button variant=\"secondary\" (click)=\"open = false\">Cancel</au-button>\n          <au-button (click)=\"open = false\">Confirm</au-button>\n        </div>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
+                },
+                {
+                    "name": "WithoutTitle",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Dialog without title. Useful for simple content or when title is in body.',\n      },\n    },\n  },\n  args: {\n    title: '',\n  },\n  render: () => ({\n    moduleMetadata: { imports: [CommonModule, Button] },\n    template: `\n      <au-button (click)=\"open = true\">Open Dialog</au-button>\n      <au-dialog [(open)]=\"open\" [title]=\"''\">\n        <p>This dialog has no title.</p>\n      </au-dialog>\n    `,\n    props: { open: false },\n  }),\n}"
+                }
+            ],
+            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<InputDate>",
+                    "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "WithBounds",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+                }
+            ],
+            "projects/aurea/src/lib/input-number/input-number.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<InputNumber>",
+                    "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "WithBounds",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
+                }
+            ],
+            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<RadioGroup>",
+                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "Required",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n}"
+                },
+                {
+                    "name": "sample",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "RadioOption[]",
+                    "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
+                }
+            ],
+            "projects/aurea/src/lib/switch/switch.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Enable notifications',\n    checked: false,\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<Switch>",
+                    "defaultValue": "{\n  title: 'Aurea/Switch',\n  component: Switch,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    checkedChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "On",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Enabled',\n    checked: true,\n  },\n}"
+                },
+                {
+                    "name": "WithHint",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
+                }
+            ],
             "projects/aurea/src/lib/textarea/textarea.stories.ts": [
                 {
                     "name": "Default",
@@ -1321,7 +2019,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                     "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                     "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
                 }
@@ -1375,6 +2073,19 @@
                     "kind": 184
                 }
             ],
+            "projects/aurea/src/lib/card/card.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Card>",
+                    "file": "projects/aurea/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/aurea/src/lib/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Story",
@@ -1382,6 +2093,45 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Checkbox>",
                     "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Dialog>",
+                    "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputDate>",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-number/input-number.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputNumber>",
+                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1414,6 +2164,19 @@
                     "kind": 184
                 }
             ],
+            "projects/aurea/src/lib/radio-group/radio-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<RadioGroup>",
+                    "file": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/aurea/src/lib/select/select.stories.ts": [
                 {
                     "name": "Story",
@@ -1421,6 +2184,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Select>",
                     "file": "projects/aurea/src/lib/select/select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/switch/switch.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Switch>",
+                    "file": "projects/aurea/src/lib/switch/switch.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1461,7 +2237,7 @@
         "children": []
     },
     "coverage": {
-        "count": 2,
+        "count": 1,
         "status": "low",
         "files": [
             {
@@ -1605,11 +2381,81 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Checked",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Filled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LargeSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Outlined",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SmallSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithFooter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/card/card.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1619,7 +2465,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "DarkTheme",
+                "name": "Checked",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1726,6 +2572,206 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithErrorMessage",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "dialogTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "FullScreen",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LargeSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "NoBackdropClose",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "NoCloseButton",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SmallSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithFooter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithoutTitle",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithBounds",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithBounds",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
@@ -1845,6 +2891,56 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/input-text/input-text.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Required",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "sample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/radio-group/radio-group.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
@@ -1975,6 +3071,56 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/select/select.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "On",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithHint",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/switch/switch.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

@@ -28,6 +28,25 @@ describe('Textarea', () => {
     expect(comp.value()).toBe('line\n2');
   });
 
+  it('sets null when cleared', () => {
+    const fix = TestBed.createComponent(Textarea);
+    fix.componentRef.setInput('label', 'Notes');
+    fix.componentRef.setInput('value', 'text');
+    fix.detectChanges();
+    const el = queryTextarea(fix);
+    el.value = '';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(fix.componentInstance.value()).toBeNull();
+  });
+
+  it('inputDisplay is empty when value is null', () => {
+    const fix = TestBed.createComponent(Textarea);
+    fix.componentRef.setInput('label', 'x');
+    fix.detectChanges();
+    expect(fix.componentInstance.inputDisplay()).toBe('');
+  });
+
   it('emits valueChange via outputToObservable', async () => {
     const fix = TestBed.createComponent(Textarea);
     const comp = fix.componentInstance;

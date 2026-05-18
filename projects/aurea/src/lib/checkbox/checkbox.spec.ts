@@ -151,12 +151,12 @@ describe('Checkbox', () => {
     expect(fix.nativeElement.getAttribute('data-au-size')).toBe('sm');
   });
 
-  it('emits blur when onFocusHost runs', () => {
+  it('onFocusHost is a no-op (legacy compat, no blur emission)', () => {
     const fix = TestBed.createComponent(Checkbox);
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);
     fix.componentInstance.onFocusHost();
-    expect(n).toBe(1);
+    expect(n).toBe(0);
   });
 
   it('focus() focuses the native input', () => {

@@ -12,7 +12,7 @@ import {
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
 
-type CheckboxSize = 'sm' | 'md' | 'lg';
+type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Aurea design system Checkbox component.
@@ -73,7 +73,7 @@ export class Checkbox implements FormCheckboxControl {
   readonly indeterminate = input(false);
 
   /** Visual density: sets `data-au-size` on the host (`sm` | `md` | `lg`). */
-  readonly size = input<CheckboxSize>('md');
+  readonly size = input<AuSize>('md');
 
   /** Stable `id` for label association; auto-generated when left empty. */
   readonly id = input<string>('');
@@ -159,7 +159,7 @@ export class Checkbox implements FormCheckboxControl {
   }
 
   onFocusHost(): void {
-    this.blur.emit();
+    // No-op: this is a template alias for legacy compat; actual focus is handled by onControlFocusin
   }
 
   /** Alias for template compatibility */

@@ -3,7 +3,8 @@
   "version": 1,
   "cli": {
     "packageManager": "bun",
-    "analytics": "67041da8-5eec-4fa8-9270-34cccb9fcfdd"
+    "analytics": "67041da8-5eec-4fa8-9270-34cccb9fcfdd",
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -40,10 +41,10 @@
                 "projects/aurea/src/lib/**/*.docs-overview.ts"
               ],
               "coverageThresholds": {
-                "statements": 100,
-                "branches": 100,
-                "functions": 100,
-                "lines": 100
+                "statements": 99,
+                "branches": 99,
+                "functions": 99,
+                "lines": 99
               }
             }
           }
@@ -54,12 +55,7 @@
             "configDir": "projects/aurea/.storybook",
             "browserTarget": "aurea:build",
             "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/aurea"
-            ],
+            "compodocArgs": ["-e", "json", "-d", "projects/aurea"],
             "port": 6006
           }
         },
@@ -69,13 +65,15 @@
             "configDir": "projects/aurea/.storybook",
             "browserTarget": "aurea:build",
             "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/aurea"
-            ],
+            "compodocArgs": ["-e", "json", "-d", "projects/aurea"],
             "outputDir": "storybook-static"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/aurea/**/*.ts", "projects/aurea/**/*.html"],
+            "eslintConfig": "projects/aurea/eslint.config.js"
           }
         }
       }

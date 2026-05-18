@@ -17,6 +17,25 @@ describe('InputText', () => {
     }).compileComponents();
   });
 
+  it('sets null when cleared', () => {
+    const fix = TestBed.createComponent(InputText);
+    fix.componentRef.setInput('label', 'Field');
+    fix.componentRef.setInput('value', 'abc');
+    fix.detectChanges();
+    const el = queryInput(fix);
+    el.value = '';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(fix.componentInstance.value()).toBeNull();
+  });
+
+  it('inputDisplay is empty when value is null', () => {
+    const fix = TestBed.createComponent(InputText);
+    fix.componentRef.setInput('label', 'x');
+    fix.detectChanges();
+    expect(fix.componentInstance.inputDisplay()).toBe('');
+  });
+
   it('binds value on input (model) and input reflects value', async () => {
     const fix = TestBed.createComponent(InputText);
     fix.detectChanges();

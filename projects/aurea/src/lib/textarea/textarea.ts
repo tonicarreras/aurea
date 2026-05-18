@@ -13,6 +13,7 @@ import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
 
 type AuSize = 'sm' | 'md' | 'lg';
+
 type TextareaResize = 'none' | 'vertical' | 'both';
 
 /**
@@ -22,6 +23,8 @@ type TextareaResize = 'none' | 'vertical' | 'both';
  * @remarks
  * - **Resize:** default `vertical` so users can grow height without breaking horizontal layouts.
  * - **Signal forms:** implements {@link FormValueControl}; use `[formField]` like other controls.
+ * - **Classic:** use `[(value)]` (empty field ↔ `null`, not `''`).
+ * - **Parsing:** empty string sets `null`.
  * - **Accessibility:** `aria-invalid`, `aria-errormessage`, `aria-describedby`; error uses `role="alert"`.
  *   The element is implicitly multiline; **do not** set `aria-multiline` redundantly.
  * - **Focus:** same Tab vs pointer ring behavior as `au-input-text` via `tabFocusState`.
@@ -38,9 +41,9 @@ type TextareaResize = 'none' | 'vertical' | 'both';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Textarea implements FormValueControl<string> {
-  /** Bound value (`ModelSignal<string>`). */
-  readonly value = model<string>('');
+export class Textarea implements FormValueControl<string | null> {
+  /** Bound value (`ModelSignal<string | null>`). */
+  readonly value = model<string | null>(null);
 
   /** Optional `<label>` text; associated by `for` / `id`. */
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -89,7 +92,7 @@ export class Textarea implements FormValueControl<string> {
   /** Emits on `blur`. */
   readonly blur = output<void>();
   /** Emits on `input` when not disabled. */
-  readonly valueChange = output<string>();
+  readonly valueChange = output<string | null>();
 
   private static idCounter = 0;
 
@@ -128,13 +131,26 @@ export class Textarea implements FormValueControl<string> {
     this.hint().trim().length > 0 ? this.hintId() : null,
   );
 
+  readonly inputDisplay = computed(() => {
+    const v = this.value();
+    if (v === null || v === undefined) {
+      return '';
+    }
+    return v;
+  });
+
   onInput(event: Event): void {
     if (this.disabled()) {
       return;
     }
-    const v = (event.target as HTMLTextAreaElement).value;
-    this.value.set(v);
-    this.valueChange.emit(v);
+    const raw = (event.target as HTMLTextAreaElement).value;
+    if (raw === '') {
+      this.value.set(null);
+      this.valueChange.emit(null);
+      return;
+    }
+    this.value.set(raw);
+    this.valueChange.emit(raw);
   }
 
   onBlurHost(): void {

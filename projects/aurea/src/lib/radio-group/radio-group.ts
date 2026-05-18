@@ -12,13 +12,13 @@ import {
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
 
+type AuSize = 'sm' | 'md' | 'lg';
+
 export interface RadioOption {
   value: string;
   label: string;
   disabled?: boolean;
 }
-
-type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Design-system **radio group**: native radios in a `<fieldset>`, single `value` model.
@@ -26,6 +26,7 @@ type AuSize = 'sm' | 'md' | 'lg';
  * @remarks
  * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` on a string field.
  * - **Classic:** use `[(value)]` with `options` and optional `errorMessage` / `invalid`.
+ * - **Parsing:** empty string sets `null`.
  * - **Accessibility:** `<fieldset>` + `<legend>`; each radio has a stable `id` / `label for`.
  * - **Focus:** group shell uses the same Tab vs pointer ring pattern as `au-select`.
  *
@@ -41,8 +42,8 @@ type AuSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class RadioGroup implements FormValueControl<string> {
-  readonly value = model<string>('');
+export class RadioGroup implements FormValueControl<string | null> {
+  readonly value = model<string | null>(null);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -52,6 +53,7 @@ export class RadioGroup implements FormValueControl<string> {
 
   readonly options = input<RadioOption[]>([]);
   readonly disabled = input(false);
+  readonly readOnly = input(false);
   readonly required = input(false);
   readonly showRequired = input(true);
 
@@ -60,7 +62,7 @@ export class RadioGroup implements FormValueControl<string> {
   readonly size = input<AuSize>('md');
 
   readonly blur = output<void>();
-  readonly valueChange = output<string>();
+  readonly valueChange = output<string | null>();
 
   private static idCounter = 0;
 
@@ -118,7 +120,7 @@ export class RadioGroup implements FormValueControl<string> {
   }
 
   onRadioChange(event: Event): void {
-    if (this.disabled()) {
+    if (this.disabled() || this.readOnly()) {
       return;
     }
     const el = event.target as HTMLInputElement;

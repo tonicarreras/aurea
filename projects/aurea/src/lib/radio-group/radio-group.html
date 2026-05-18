@@ -26,7 +26,7 @@
               [attr.name]="groupName()"
               [value]="opt.value"
               [checked]="value() === opt.value"
-              [disabled]="disabled() || (opt.disabled ?? false)"
+              [disabled]="disabled() || readOnly() || (opt.disabled ?? false)"
               [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
               [attr.aria-errormessage]="isInvalid() ? errorId() : null"
               [attr.aria-describedby]="ariaDescribedBy() ?? null"

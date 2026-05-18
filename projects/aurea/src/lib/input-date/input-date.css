@@ -1,0 +1,169 @@
+/**
+ * Input date — same field chrome as au-input-number.
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.au-input-date__field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+.au-input-date__label-host {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.au-input-date__label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+.au-input-date__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-input-date__control-row {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--au-color-form-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  transition: var(--au-transition-control);
+}
+
+.au-input-date__control-row:has(.au-input-date__input:hover:not(:disabled)):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+.au-input-date__control-row:has(.au-input-date__input[aria-invalid='true']):not(:focus-within) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+.au-input-date__control-row:focus-within {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+}
+
+.au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: 0 0 0 1px var(--au-color-form-error);
+}
+
+.au-input-date__control-row--from-tab:focus-within {
+  box-shadow: none;
+  border-color: var(--au-color-form-border);
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.au-input-date__control-row--from-tab:focus-within:has(.au-input-date__input[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  outline: 2px solid var(--au-color-form-error);
+}
+
+.au-input-date__input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: var(--au-space-2-5) var(--au-space-3);
+  border: none;
+  border-radius: inherit;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-primary);
+  outline: none;
+}
+
+:host([data-au-size='sm']) .au-input-date__input {
+  padding: var(--au-space-2) var(--au-space-2-5);
+  font-size: var(--au-text-xs);
+}
+
+:host([data-au-size='lg']) .au-input-date__input {
+  padding: var(--au-space-3) var(--au-space-3-5);
+  font-size: var(--au-text-md);
+}
+
+.au-input-date__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.au-input-date__hint {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+.au-input-date__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1);
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-semantic-error-contrast);
+}
+
+.au-input-date__error-glyph {
+  flex: 0 0 auto;
+  font-size: 0.9em;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-input-date__error-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-input-date__control-row {
+    transition: none;
+  }
+}

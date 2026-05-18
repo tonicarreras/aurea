@@ -35,6 +35,26 @@ describe('Select', () => {
     expect(comp.value()).toBe('opt2');
   });
 
+  it('sets null when cleared to empty option', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('placeholder', 'Choose');
+    fix.componentRef.setInput('value', 'opt1');
+    fix.detectChanges();
+    const el = querySelect(fix);
+    el.value = '';
+    el.dispatchEvent(new Event('change'));
+    fix.detectChanges();
+    expect(fix.componentInstance.value()).toBeNull();
+  });
+
+  it('inputDisplay is empty when value is null', () => {
+    const fix = TestBed.createComponent(Select);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    expect(fix.componentInstance.inputDisplay()).toBe('');
+  });
+
   it('emits valueChange via outputToObservable', async () => {
     const fix = TestBed.createComponent(Select);
     fix.componentRef.setInput('options', testOptions);

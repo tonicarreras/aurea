@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { fn, expect, userEvent, within } from 'storybook/test';
+import { fn, expect } from 'storybook/test';
 
 import { Button } from './button';
 
