@@ -35,6 +35,23 @@ body,
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  overflow: visible !important;
+}
+
+
+
+.sb-story,
+.sb-main-padded,
+.sbdocs-preview > div,
+.sbdocs-preview .docs-story {
+  overflow: visible !important;
+}
+
+/* Open combobox hosts above sibling fields / docs preview chrome */
+au-select[data-au-listbox-open],
+au-autocomplete[data-au-listbox-open] {
+  position: relative;
+  z-index: var(--au-z-dropdown);
 }
 
 /**

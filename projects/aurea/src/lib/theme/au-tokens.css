@@ -100,6 +100,8 @@
   --au-z-raised: 1;
   --au-z-sticky: 20;
   --au-z-popover: 30;
+  /* Native-like field dropdowns (select / autocomplete listboxes) */
+  --au-z-dropdown: 9999;
   --au-z-header: 40;
   --au-z-drawer: 50;
   --au-z-modal: 100;

@@ -1,3 +1,4 @@
+import * as autocomplete from './autocomplete/index';
 import * as button from './button/index';
 import * as card from './card/index';
 import * as checkbox from './checkbox/index';
@@ -15,6 +16,7 @@ import * as theme from './theme/index';
 
 describe('library barrel exports', () => {
   it('re-exports all public components', () => {
+    expect(autocomplete.Autocomplete).toBeDefined();
     expect(button.Button).toBeDefined();
     expect(card.Card).toBeDefined();
     expect(card.AuCardFooter).toBeDefined();

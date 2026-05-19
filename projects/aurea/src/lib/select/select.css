@@ -1,12 +1,14 @@
 /**
- * Select — native select with custom styling.
+ * Select — combobox with shared field listbox (same hover as au-autocomplete).
  * Size: `data-au-size` on host (sm | md | lg).
  */
 @import url('../theme/au-tokens.css');
 @import url('../theme/au-field-error.css');
+@import url('../theme/au-field-listbox.css');
 
 :host {
   display: block;
+  overflow: visible;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -35,6 +37,22 @@
   align-items: stretch;
   gap: var(--au-space-2);
   max-width: 100%;
+  overflow: visible;
+}
+
+.au-select__hint,
+.au-select__field > .au-field-error {
+  position: relative;
+  z-index: var(--au-z-base);
+}
+
+.au-select__control-wrap {
+  position: relative;
+  z-index: var(--au-z-raised);
+}
+
+.au-select__control-wrap:has(.au-field-listbox) {
+  z-index: var(--au-z-dropdown);
 }
 
 .au-select__label-host {
@@ -79,13 +97,13 @@
 }
 
 /* Hover: stronger border + subtle fill (distinct from default and from list highlight) */
-.au-select__control-row:has(.au-select__element:hover:not(:disabled)):not(:focus-within) {
+.au-select__control-row:has(.au-select__trigger:hover:not(:disabled)):not(:focus-within) {
   border-color: var(--au-color-form-border-hover);
   background: var(--au-color-select-field-hover-bg);
 }
 
 /* Error (no focus) */
-.au-select__control-row:has(.au-select__element[aria-invalid='true']):not(:focus-within) {
+.au-select__control-row:has(.au-select__trigger[aria-invalid='true']):not(:focus-within) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-form-error-bg);
 }
@@ -99,7 +117,7 @@
   box-shadow: 0 0 0 1px var(--au-color-focus-ring);
 }
 
-.au-select__control-row:focus-within:has(.au-select__element[aria-invalid='true']) {
+.au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
   box-shadow: 0 0 0 1px var(--au-color-form-error);
@@ -114,7 +132,7 @@
   outline-offset: 2px;
 }
 
-.au-select__control-row--from-tab:focus-within:has(.au-select__element[aria-invalid='true']) {
+.au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
   box-shadow: none;
@@ -123,22 +141,16 @@
 }
 
 /* Disabled: whole row muted */
-.au-select__control-row:has(.au-select__element:disabled) {
+.au-select__control-row--open:not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+.au-select__control-row:has(.au-select__trigger:disabled) {
   border-color: var(--au-color-border-subtle);
   background: var(--au-color-form-disabled-surface);
 }
 
-/* No double ring on children: the row draws the ring */
-.au-select__element:focus,
-.au-select__element:focus-visible {
-  outline: none;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Select element */
-/* -------------------------------------------------------------------------- */
-
-.au-select__element {
+.au-select__trigger {
   display: block;
   flex: 1 1 auto;
   min-width: 0;
@@ -156,97 +168,64 @@
   font-synthesis: none;
   padding: 0 var(--au-space-8) 0 var(--au-size-field-px-md);
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  /* Inherits `color-scheme` from `data-au-theme` on the document / shell */
-  color-scheme: inherit;
+  text-align: start;
 }
 
-/*
- * Dropdown list (`<option>`). Chromium / Firefox honor background + color;
- * Safari may only use `color-scheme` + tokens above. Test with Storybook “Tema”.
- */
-.au-select__element option {
-  background-color: var(--au-color-select-menu-bg);
-  color: var(--au-color-select-menu-text);
-  font-family: var(--au-font-sans);
-  font-size: var(--au-size-field-text-md);
-  font-weight: var(--au-weight-regular);
-  line-height: var(--au-leading-normal);
-  padding: var(--au-space-2) var(--au-space-3);
+.au-select__trigger:focus,
+.au-select__trigger:focus-visible {
+  outline: none;
 }
 
-.au-select__element option[value=''] {
+.au-select__value {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.au-select__value--placeholder {
   color: var(--au-color-text-tertiary);
 }
 
-.au-select__element option:disabled {
-  color: var(--au-color-select-option-disabled-text);
-  background-color: var(--au-color-select-menu-bg);
+.au-select__trigger:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
 }
 
-/* Committed value (solid accent — selected in the closed field) */
-.au-select__element option:checked {
-  background-color: var(--au-color-select-option-selected-bg);
-  color: var(--au-color-select-option-selected-text);
-  font-weight: var(--au-weight-semibold);
-  box-shadow: inset 4px 0 0 var(--au-color-select-option-selected-marker);
-}
-
-/* Active row while browsing the list — soft surface, not solid accent */
-@media (hover: hover) {
-  .au-select__element option:hover:not(:checked) {
-    background-color: var(--au-color-select-option-highlight-bg);
-    color: var(--au-color-select-option-highlight-text);
-    font-weight: var(--au-weight-medium);
-    box-shadow: inset 3px 0 0 var(--au-color-select-option-highlight-marker);
-  }
-
-  /* Selected + hover: keep solid selected styling (no revert to highlight) */
-  .au-select__element option:checked:hover {
-    background-color: var(--au-color-select-option-selected-bg);
-    color: var(--au-color-select-option-selected-text);
-    font-weight: var(--au-weight-semibold);
-    box-shadow: inset 4px 0 0 var(--au-color-select-option-selected-marker);
-  }
-}
-
-:host([data-au-size='sm']) .au-select__element {
+:host([data-au-size='sm']) .au-select__trigger {
   height: var(--au-size-field-h-sm);
   line-height: var(--au-size-field-h-sm);
   font-size: var(--au-size-field-text-sm);
   padding: 0 var(--au-space-7) 0 var(--au-size-field-px-sm);
 }
 
-:host([data-au-size='sm']) .au-select__element option {
-  font-size: var(--au-size-field-text-sm);
-}
-
-:host([data-au-size='md']) .au-select__element,
-:host(:not([data-au-size])) .au-select__element {
+:host([data-au-size='md']) .au-select__trigger,
+:host(:not([data-au-size])) .au-select__trigger {
   height: var(--au-size-field-h-md);
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
   padding: 0 var(--au-space-8) 0 var(--au-size-field-px-md);
 }
 
-:host([data-au-size='lg']) .au-select__element {
+:host([data-au-size='lg']) .au-select__trigger {
   height: var(--au-size-field-h-lg);
   line-height: var(--au-size-field-h-lg);
   font-size: var(--au-size-field-text-lg);
   padding: 0 var(--au-space-9) 0 var(--au-size-field-px-lg);
 }
 
-:host([data-au-size='lg']) .au-select__element option {
+:host([data-au-size='sm']) .au-field-listbox__option {
+  font-size: var(--au-size-field-text-sm);
+}
+
+:host([data-au-size='lg']) .au-field-listbox__option {
   font-size: var(--au-size-field-text-lg);
 }
 
-.au-select__element:disabled {
-  color: var(--au-color-form-disabled-foreground);
-  cursor: not-allowed;
-  opacity: 0.9;
-  background: transparent;
+.au-select__control-row--open .au-select__icon {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--au-color-text-secondary);
 }
 
 /* Icon: custom dropdown arrow */
@@ -255,6 +234,7 @@
   right: var(--au-space-3);
   top: 50%;
   transform: translateY(-50%);
+  transition: transform var(--au-duration-fast) var(--au-ease-standard);
   pointer-events: none;
   color: var(--au-color-text-tertiary);
   display: flex;
@@ -286,7 +266,8 @@
 /* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .au-select__control-row {
+  .au-select__control-row,
+  .au-select__icon {
     transition: none;
   }
 }

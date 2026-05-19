@@ -124,7 +124,7 @@ export const DropdownTheming: Story = {
     docs: {
       description: {
         story:
-          'Open the list and toggle **Tema** (toolbar). **Highlight** (fila bajo el puntero) usa tinte azul claro; **selected** (`:checked`) usa relleno primario sólido + barra lateral.',
+          'Open the list and toggle **Tema** (toolbar). **Highlight** (hover / teclado) y **selected** comparten el mismo listbox que `au-autocomplete`.',
       },
     },
   },
@@ -158,10 +158,11 @@ export const Default: Story = {
     size: 'md',
   },
   play: async ({ canvasElement }) => {
-    const el = within(canvasElement);
     const select = getSelect(canvasElement, 'Choose an option');
-    await userEvent.selectOptions(select, 'option2');
-    await expect(select).toHaveValue('option2');
+    await userEvent.click(select);
+    const listbox = within(canvasElement).getByRole('listbox');
+    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));
+    await expect(select).toHaveTextContent('Option Two');
   },
 };
 

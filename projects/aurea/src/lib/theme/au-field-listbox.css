@@ -1,0 +1,131 @@
+/**
+ * Shared dropdown list + option rows (au-select, au-autocomplete).
+ * Import from field components; requires au-tokens.css.
+ *
+ * Hosts set `data-au-listbox-open` while the panel is visible so the whole
+ * component stacks above sibling fields (not only the listbox node).
+ */
+@import url('./au-tokens.css');
+
+:host([data-au-listbox-open]) {
+  position: relative;
+  z-index: var(--au-z-dropdown);
+  overflow: visible;
+}
+
+.au-field-listbox {
+  position: absolute;
+  z-index: var(--au-z-dropdown);
+  inset-inline: 0;
+  top: calc(100% + var(--au-space-1));
+  margin: 0;
+  padding: var(--au-space-1);
+  list-style: none;
+  max-height: 16rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: var(--au-scroll-smooth);
+  border: 1px solid var(--au-color-border-default);
+  border-radius: var(--au-radius-md);
+  background: var(--au-color-select-menu-bg);
+  color: var(--au-color-select-menu-text);
+  font-family: var(--au-font-sans);
+  box-shadow: var(--au-shadow-overlay);
+}
+
+/* Portaled to document.body (see field-listbox-overlay.ts) — top/width set in JS */
+.au-field-listbox--overlay {
+  position: fixed;
+  z-index: var(--au-z-dropdown);
+  inset-inline: auto;
+  top: auto;
+}
+
+.au-field-listbox__option {
+  position: relative;
+  margin: 0;
+  padding: var(--au-space-2) var(--au-space-3);
+  border-radius: var(--au-radius-sm);
+  font-size: var(--au-size-field-text-md);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  cursor: pointer;
+}
+
+.au-field-listbox__option::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 0;
+  width: 2px;
+  background: transparent;
+  border-radius: 0;
+  pointer-events: none;
+}
+
+.au-field-listbox__option--placeholder {
+  color: var(--au-color-text-tertiary);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-field-listbox__option--active:not(.au-field-listbox__option--disabled) {
+  background: var(--au-color-select-option-highlight-bg);
+  color: var(--au-color-select-option-highlight-text);
+  font-weight: var(--au-weight-medium);
+}
+
+.au-field-listbox__option--active:not(.au-field-listbox__option--disabled)::before {
+  background: var(--au-color-select-option-highlight-marker);
+}
+
+.au-field-listbox__option--selected:not(.au-field-listbox__option--disabled) {
+  background: var(--au-color-select-option-selected-bg);
+  color: var(--au-color-select-option-selected-text);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-field-listbox__option--selected:not(.au-field-listbox__option--disabled)::before {
+  background: var(--au-color-select-option-selected-marker);
+}
+
+.au-field-listbox__option--selected.au-field-listbox__option--active:not(.au-field-listbox__option--disabled) {
+  background: var(--au-color-select-option-selected-bg);
+  color: var(--au-color-select-option-selected-text);
+}
+
+.au-field-listbox__option--selected.au-field-listbox__option--active:not(.au-field-listbox__option--disabled)::before {
+  background: var(--au-color-select-option-selected-marker);
+}
+
+.au-field-listbox__option--disabled {
+  color: var(--au-color-select-option-disabled-text);
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(.au-field-listbox__option--selected) {
+    background: var(--au-color-select-option-highlight-bg);
+    color: var(--au-color-select-option-highlight-text);
+    font-weight: var(--au-weight-medium);
+  }
+
+  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(.au-field-listbox__option--selected)::before {
+    background: var(--au-color-select-option-highlight-marker);
+  }
+
+  .au-field-listbox__option--selected:hover:not(.au-field-listbox__option--disabled) {
+    background: var(--au-color-select-option-selected-bg);
+    color: var(--au-color-select-option-selected-text);
+    font-weight: var(--au-weight-semibold);
+  }
+
+  .au-field-listbox__option--selected:hover:not(.au-field-listbox__option--disabled)::before {
+    background: var(--au-color-select-option-selected-marker);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-field-listbox {
+    scroll-behavior: auto;
+  }
+}

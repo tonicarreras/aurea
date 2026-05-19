@@ -1,16 +1,23 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
+  PLATFORM_ID,
+  Renderer2,
+  ViewChild,
+  afterRenderEffect,
   computed,
+  inject,
   input,
   model,
   output,
   signal,
-  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { tabFocusState } from '../au-tab-focus-state';
+import { FieldListboxOverlay, focusLeftFieldControl } from '../theme/field-listbox-overlay';
 
 type AuSize = 'sm' | 'md' | 'lg';
 
@@ -21,16 +28,12 @@ export interface SelectOption {
 }
 
 /**
- * Design-system **select** field: label, control shell, optional hint, error region.
+ * Design-system **select** field: combobox (`button` + `listbox`) with the same dropdown chrome as `au-autocomplete`.
  *
  * @remarks
- * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` so `errors` and `invalid`
- *   are driven by your `form()` schema.
+ * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` on `string | null`.
  * - **Classic:** use `[(value)]` (empty field ↔ `null`, not `''`).
- * - **Parsing:** empty string sets `null`.
- * - **Accessibility:** uses native `<select>` for maximum accessibility (WCAG 4.1.2).
- * - **Focus:** Tab into the field applies an **outer outline** on the control row; pointer focus uses an
- *   **inset** ring so click users are not surprised by a large outline (`tabFocusState` + `--from-tab` CSS).
+ * - **Accessibility:** WAI-ARIA combobox pattern; hidden `name` input for native form posts.
  *
  * @see {@link FormValueControl}
  */
@@ -42,65 +45,59 @@ export interface SelectOption {
   host: {
     class: 'au-select',
     '[attr.data-au-size]': 'size()',
+    '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
   },
 })
 export class Select implements FormValueControl<string | null> {
-  /**
-   * Current value — required by {@link FormValueControl}.
-   * Use `[(value)]` or bind through `formField` (directive writes into the model).
-   */
   readonly value = model<string | null>(null);
 
-  /** Optional visible label; rendered as `<label for="…">` linked to the select `id`. */
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  /** Hint text; linked via `aria-describedby`. */
   readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  /** Manual error message (without signal forms, or in addition). */
   readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  /** Errors from signal forms via `formField` (directive populates this when implemented). */
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
-  /** Explicit invalid flag from parent (e.g. `formField`). */
   readonly invalid = input(false);
 
-  /** Array of select options. */
   readonly options = input<SelectOption[]>([]);
-  /** When true, the select does not accept interaction. */
   readonly disabled = input(false);
-  /** Read-only select (content selectable, not editable). */
   readonly readOnly = input(false);
-  /** Sets the native `required` attribute and `aria-required` when true. */
   readonly required = input(false);
-  /**
-   * When `true` (default) and `required` is `true`, shows a visual `*` and screen-reader-only "(required)".
-   * Set to `false` if your design hides the asterisk but keeps HTML validation.
-   */
   readonly showRequired = input(true);
 
-  /** Stable `id` for label association and ARIA ids; auto-generated when left empty. */
   readonly id = input<string>('');
-  /** Passed to the native `name` attribute for form submission. */
   readonly name = input<string>('');
-  /** Placeholder option value displayed when no value is selected. */
   readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  /** Native `autocomplete` attribute. */
   readonly autocomplete = input<string | undefined>(undefined);
-  /** Visual density: sets `data-au-size` on the host (`sm` | `md` | `lg`). */
   readonly size = input<AuSize>('md');
 
-  /** Emits when the native control fires `blur`. */
   readonly blur = output<void>();
-  /** Emits the new string on each `change` event when not `disabled`. */
   readonly valueChange = output<string | null>();
 
   private static idCounter = 0;
 
-  /**
-   * Outward focus ring only when focus enters the field via Tab (see `onControlRow*` + CSS `--from-tab`);
-   * on click, `pointerdown` clears the signal before `focusin`.
-   */
   protected readonly fieldFocusByTab = signal(false);
+  protected readonly panelOpen = signal(false);
+  protected readonly highlightedIndex = signal(-1);
 
-  readonly selectEl = viewChild.required<ElementRef<HTMLSelectElement>>('selectEl');
+  @ViewChild('listboxEl', { read: ElementRef })
+  private listboxRef?: ElementRef<HTMLUListElement>;
+
+  @ViewChild('triggerEl', { read: ElementRef })
+  private triggerRef?: ElementRef<HTMLButtonElement>;
+
+  private readonly listboxOverlay = new FieldListboxOverlay(
+    inject(DOCUMENT),
+    inject(Renderer2),
+    inject(PLATFORM_ID),
+    inject(DestroyRef),
+  );
+
+  constructor() {
+    afterRenderEffect(() => {
+      const trigger = this.triggerNativeElement();
+      const anchor = trigger.closest('.au-select__control-row')! as HTMLElement;
+      this.listboxOverlay.sync(this.listboxRef?.nativeElement, anchor, this.listboxVisible());
+    });
+  }
 
   readonly resolvedId = computed(() => {
     const v = this.id();
@@ -112,6 +109,7 @@ export class Select implements FormValueControl<string | null> {
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);
   readonly errorId = computed(() => `${this.resolvedId()}-error`);
+  readonly listboxId = computed(() => `${this.resolvedId()}-listbox`);
 
   readonly displayError = computed(() => {
     const manual = this.errorMessage().trim();
@@ -127,11 +125,8 @@ export class Select implements FormValueControl<string | null> {
   });
 
   readonly isInvalid = computed(() => this.displayError().length > 0);
-
-  /** Field `invalid` or visible UI error. */
   readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
 
-  /** Hint only; errors use `aria-errormessage` (ARIA 1.3). */
   readonly ariaDescribedBy = computed((): string | null =>
     this.hint().trim().length > 0 ? this.hintId() : null,
   );
@@ -146,18 +141,164 @@ export class Select implements FormValueControl<string | null> {
     return v;
   });
 
-  onChange(event: Event): void {
-    if (this.disabled()) {
+  readonly triggerLabel = computed(() => {
+    const v = this.value();
+    if (v === null || v === undefined) {
+      return this.placeholder();
+    }
+    return this.options().find((o) => o.value === v)?.label ?? '';
+  });
+
+  readonly showingPlaceholder = computed(
+    () => (this.value() === null || this.value() === undefined) && this.hasPlaceholder(),
+  );
+
+  readonly listboxVisible = computed(() => this.panelOpen());
+
+  readonly listLength = computed(() => this.options().length + (this.hasPlaceholder() ? 1 : 0));
+
+  readonly activeDescendantId = computed((): string | null => {
+    const i = this.highlightedIndex();
+    if (!this.listboxVisible() || i < 0) {
+      return null;
+    }
+    if (this.hasPlaceholder() && i === 0) {
+      return this.placeholderOptionId();
+    }
+    const optIndex = this.hasPlaceholder() ? i - 1 : i;
+    if (optIndex < 0 || optIndex >= this.options().length) {
+      return null;
+    }
+    return this.optionId(optIndex);
+  });
+
+  placeholderOptionIndex(): number {
+    return this.hasPlaceholder() ? 0 : -1;
+  }
+
+  placeholderOptionId(): string {
+    return `${this.resolvedId()}-option-placeholder`;
+  }
+
+  optionListIndex(optionIndex: number): number {
+    return this.hasPlaceholder() ? optionIndex + 1 : optionIndex;
+  }
+
+  optionId(index: number): string {
+    return `${this.resolvedId()}-option-${index}`;
+  }
+
+  onTriggerClick(): void {
+    if (this.disabled() || this.readOnly()) {
       return;
     }
-    const raw = (event.target as HTMLSelectElement).value;
-    if (raw === '') {
-      this.value.set(null);
-      this.valueChange.emit(null);
+    if (this.panelOpen()) {
+      this.closePanel();
       return;
     }
-    this.value.set(raw);
-    this.valueChange.emit(raw);
+    this.openPanel();
+  }
+
+  onKeydown(event: KeyboardEvent): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    const len = this.listLength();
+    switch (event.key) {
+      case 'ArrowDown': {
+        event.preventDefault();
+        if (!this.panelOpen()) {
+          this.openPanel();
+          this.highlightedIndex.set(this.firstHighlightableIndex());
+          return;
+        }
+        this.highlightedIndex.update((i) => this.nextHighlightableIndex(i, len, 1));
+        return;
+      }
+      case 'ArrowUp': {
+        event.preventDefault();
+        if (!this.panelOpen()) {
+          this.openPanel();
+          this.highlightedIndex.set(this.lastHighlightableIndex(len));
+          return;
+        }
+        this.highlightedIndex.update((i) => this.nextHighlightableIndex(i, len, -1));
+        return;
+      }
+      case 'Home': {
+        if (!this.panelOpen()) {
+          return;
+        }
+        event.preventDefault();
+        this.highlightedIndex.set(this.firstHighlightableIndex());
+        return;
+      }
+      case 'End': {
+        if (!this.panelOpen()) {
+          return;
+        }
+        event.preventDefault();
+        this.highlightedIndex.set(this.lastHighlightableIndex(len));
+        return;
+      }
+      case 'Enter':
+      case ' ': {
+        if (!this.panelOpen()) {
+          this.openPanel();
+          return;
+        }
+        event.preventDefault();
+        this.activateHighlighted();
+        return;
+      }
+      case 'Escape': {
+        if (!this.panelOpen()) {
+          return;
+        }
+        event.preventDefault();
+        this.closePanel();
+        return;
+      }
+      default:
+        return;
+    }
+  }
+
+  onOptionPointerEnter(index: number, option?: SelectOption): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    if (option?.disabled) {
+      return;
+    }
+    this.highlightedIndex.set(index);
+  }
+
+  onOptionPointerDown(event: Event, option: SelectOption): void {
+    event.preventDefault();
+    if (option.disabled || this.disabled() || this.readOnly()) {
+      return;
+    }
+    this.selectOption(option);
+  }
+
+  onPlaceholderPointerDown(event: Event): void {
+    event.preventDefault();
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    this.setValue(null);
+    this.closePanel();
+    this.triggerNativeElement().focus();
+  }
+
+  selectOption(option: SelectOption): void {
+    if (option.disabled || this.disabled() || this.readOnly()) {
+      return;
+    }
+    this.setValue(option.value);
+    this.closePanel();
+    this.triggerNativeElement().focus();
   }
 
   onBlurHost(): void {
@@ -170,18 +311,118 @@ export class Select implements FormValueControl<string | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!(event.currentTarget instanceof HTMLElement)) {
-      return;
-    }
-    const to = event.relatedTarget;
-    if (to != null && to instanceof Node && event.currentTarget.contains(to)) {
+    if (!focusLeftFieldControl(event, this.listboxRef?.nativeElement)) {
       return;
     }
     this.fieldFocusByTab.set(false);
+    this.closePanel();
   }
 
-  /** Moves keyboard focus to the native `<select>`. */
   focus(): void {
-    this.selectEl().nativeElement.focus();
+    this.triggerNativeElement().focus();
+  }
+
+  private triggerNativeElement(): HTMLButtonElement {
+    return this.triggerRef!.nativeElement;
+  }
+
+  private openPanel(): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    this.panelOpen.set(true);
+    if (this.highlightedIndex() < 0) {
+      const current = this.value();
+      if (current != null) {
+        const idx = this.options().findIndex((o) => o.value === current && !o.disabled);
+        if (idx >= 0) {
+          this.highlightedIndex.set(this.optionListIndex(idx));
+          return;
+        }
+      }
+      this.highlightedIndex.set(this.firstHighlightableIndex());
+    }
+  }
+
+  private closePanel(): void {
+    this.listboxOverlay.detach();
+    this.panelOpen.set(false);
+    this.highlightedIndex.set(-1);
+  }
+
+  private activateHighlighted(): void {
+    const i = this.highlightedIndex();
+    if (i < 0) {
+      return;
+    }
+    if (this.hasPlaceholder() && i === 0) {
+      this.setValue(null);
+      this.closePanel();
+      return;
+    }
+    const optIndex = this.hasPlaceholder() ? i - 1 : i;
+    const opt = this.options()[optIndex];
+    if (opt && !opt.disabled) {
+      this.selectOption(opt);
+    }
+  }
+
+  private setValue(next: string | null): void {
+    if (this.value() === next) {
+      return;
+    }
+    this.value.set(next);
+    this.valueChange.emit(next);
+  }
+
+  private firstHighlightableIndex(): number {
+    if (this.hasPlaceholder()) {
+      return 0;
+    }
+    const opts = this.options();
+    for (let i = 0; i < opts.length; i++) {
+      if (!opts[i]!.disabled) {
+        return this.optionListIndex(i);
+      }
+    }
+    return -1;
+  }
+
+  private lastHighlightableIndex(len: number): number {
+    for (let i = len - 1; i >= 0; i--) {
+      if (this.isIndexEnabled(i)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  private nextHighlightableIndex(current: number, len: number, delta: 1 | -1): number {
+    if (len === 0) {
+      return -1;
+    }
+    let i = current < 0 ? (delta > 0 ? -1 : len) : current;
+    for (let step = 0; step < len; step++) {
+      i += delta;
+      if (i < 0) {
+        i = len - 1;
+      }
+      if (i >= len) {
+        i = 0;
+      }
+      if (this.isIndexEnabled(i)) {
+        return i;
+      }
+    }
+    return current;
+  }
+
+  private isIndexEnabled(listIndex: number): boolean {
+    if (this.hasPlaceholder() && listIndex === 0) {
+      return true;
+    }
+    const optIndex = this.hasPlaceholder() ? listIndex - 1 : listIndex;
+    const opt = this.options()[optIndex];
+    return opt != null && !opt.disabled;
   }
 }

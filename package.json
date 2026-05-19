@@ -48,7 +48,7 @@
     "@vitest/browser-playwright": "^4.1.6",
     "@vitest/coverage-v8": "^4.1.6",
     "angular-eslint": "21.4.0",
-    "eslint": "^10.3.0",
+    "eslint": "^10.4.0",
     "jsdom": "^28.1.0",
     "ng-packagr": "^21.2.3",
     "playwright": "^1.60.0",

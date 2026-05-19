@@ -1,51 +1,52 @@
-<div class="au-select__field">
+<div class="au-autocomplete__field">
   @if (label()) {
-    <div class="au-select__label-host">
-      <label class="au-select__label" [attr.for]="resolvedId()">
+    <div class="au-autocomplete__label-host">
+      <label class="au-autocomplete__label" [attr.for]="resolvedId()">
         {{ label() }}
         @if (required() && showRequired()) {
-          <span class="au-select__required" aria-hidden="true" title="Required">*</span>
+          <span class="au-autocomplete__required" aria-hidden="true" title="Required">*</span>
           <span class="au-sr-only">(required)</span>
         }
       </label>
     </div>
   }
 
-  <div class="au-select__control-wrap">
+  <div class="au-autocomplete__control-wrap">
     <div
-      class="au-select__control-row"
-      [class.au-select__control-row--open]="listboxVisible()"
-      [class.au-select__control-row--from-tab]="fieldFocusByTab()"
+      class="au-autocomplete__control-row"
+      [class.au-autocomplete__control-row--open]="listboxVisible()"
+      [class.au-autocomplete__control-row--from-tab]="fieldFocusByTab()"
       (focusin)="onControlRowFocusin()"
       (focusout)="onControlRowFocusout($event)"
     >
-      <button
-        #triggerEl
-        type="button"
-        class="au-select__trigger"
+      <input
+        #inputEl
+        class="au-autocomplete__input"
+        type="text"
         role="combobox"
         [id]="resolvedId()"
+        [attr.name]="name() || null"
+        [value]="query()"
+        [attr.placeholder]="placeholder() || null"
+        [attr.autocomplete]="autocomplete() ?? 'off'"
         [attr.aria-expanded]="listboxVisible()"
         [attr.aria-controls]="listboxId()"
         [attr.aria-activedescendant]="activeDescendantId()"
+        aria-autocomplete="list"
         [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
         [attr.aria-errormessage]="isInvalid() ? errorId() : null"
         [attr.aria-describedby]="ariaDescribedBy() ?? null"
         [attr.aria-required]="required() ? 'true' : null"
-        [disabled]="disabled() || readOnly()"
-        (click)="onTriggerClick()"
+        [disabled]="disabled()"
+        [readOnly]="readOnly()"
+        [attr.required]="required() ? true : null"
+        (input)="onInput($event)"
+        (focus)="onInputFocus()"
         (keydown)="onKeydown($event)"
         (blur)="onBlurHost()"
-      >
-        <span
-          class="au-select__value"
-          [class.au-select__value--placeholder]="showingPlaceholder()"
-        >
-          {{ triggerLabel() }}
-        </span>
-      </button>
+      />
 
-      <span class="au-select__icon" aria-hidden="true">
+      <span class="au-autocomplete__icon" aria-hidden="true">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M3 4.5L6 7.5L9 4.5"
@@ -62,49 +63,35 @@
       <ul
         #listboxEl
         [id]="listboxId()"
-        class="au-select__listbox au-field-listbox"
+        class="au-autocomplete__listbox au-field-listbox"
         role="listbox"
-        [attr.aria-label]="label() || 'Options'"
+        [attr.aria-label]="label() || 'Suggestions'"
       >
-        @if (hasPlaceholder()) {
-          <li
-            [id]="placeholderOptionId()"
-            class="au-field-listbox__option au-field-listbox__option--placeholder"
-            role="option"
-            [attr.aria-selected]="value() === null"
-            [class.au-field-listbox__option--active]="highlightedIndex() === placeholderOptionIndex()"
-            (mouseenter)="onOptionPointerEnter(placeholderOptionIndex())"
-            (mousedown)="onPlaceholderPointerDown($event)"
-          >
-            {{ placeholder() }}
-          </li>
-        }
-        @for (opt of options(); track opt.value; let i = $index) {
+        @for (opt of filteredOptions(); track opt.value; let i = $index) {
           <li
             [id]="optionId(i)"
             class="au-field-listbox__option"
             role="option"
             [attr.aria-selected]="value() === opt.value"
             [attr.aria-disabled]="opt.disabled ? 'true' : null"
-            [class.au-field-listbox__option--active]="highlightedIndex() === optionListIndex(i)"
+            [class.au-field-listbox__option--active]="highlightedIndex() === i"
             [class.au-field-listbox__option--selected]="value() === opt.value"
             [class.au-field-listbox__option--disabled]="opt.disabled"
-            (mouseenter)="onOptionPointerEnter(optionListIndex(i), opt)"
+            (mouseenter)="onOptionPointerEnter(i, opt)"
             (mousedown)="onOptionPointerDown($event, opt)"
           >
             {{ opt.label }}
           </li>
         }
+        @if (showNoResults()) {
+          <li class="au-autocomplete__empty" role="status">{{ noResultsText() }}</li>
+        }
       </ul>
     }
   </div>
 
-  @if (name()) {
-    <input type="hidden" [name]="name()" [value]="value() ?? ''" />
-  }
-
   @if (hint().trim()) {
-    <p [id]="hintId()" class="au-select__hint">{{ hint() }}</p>
+    <p [id]="hintId()" class="au-autocomplete__hint">{{ hint() }}</p>
   }
 
   @if (isInvalid()) {

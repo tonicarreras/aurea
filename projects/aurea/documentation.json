@@ -191,7 +191,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. `accent-color` y `color-scheme` alinean selección y popup; el icono y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
             },
             {
                 "name": "Checked",
@@ -202,6 +202,26 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox (`checked` binding).',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "cities",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "AutocompleteOption[]",
+                "defaultValue": "[\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n]"
+            },
+            {
+                "name": "CompactSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n}"
             },
             {
                 "name": "CompactSize",
@@ -237,6 +257,16 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = within(canvasElement).getByRole('listbox');\n    await expect(listbox).toBeVisible();\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -267,21 +297,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
             },
             {
                 "name": "Default",
@@ -311,7 +341,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = within(canvasElement).getByRole('listbox');\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -352,6 +382,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n}"
             },
             {
                 "name": "Disabled",
@@ -411,7 +451,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (fila bajo el puntero) usa tinte azul claro; **selected** (`:checked`) usa relleno primario sólido + barra lateral.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (hover / teclado) y **selected** comparten el mismo listbox que `au-autocomplete`.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "ErrorPersistent",
@@ -494,6 +534,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Indeterminate state (partial selection) via the native `indeterminate` property — common for \"select all\" patterns.',\n      },\n    },\n  },\n  args: {\n    label: 'Select items',\n    checked: true,\n    indeterminate: true,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "KeyboardNavigation",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+            },
+            {
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -502,6 +552,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Large (Touch)</au-button>`,\n    ),\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n}"
             },
             {
                 "name": "LargeSize",
@@ -557,6 +617,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Autocomplete>",
+                "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -597,21 +667,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputNumber>",
-                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputDate>",
                 "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputNumber>",
+                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -702,6 +772,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<Textarea>",
                 "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: Textarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "MinFilterLength",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n}"
             },
             {
                 "name": "NoBackdropClose",
@@ -999,21 +1079,21 @@
                 "name": "WithBounds",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
-            },
-            {
-                "name": "WithBounds",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+            },
+            {
+                "name": "WithBounds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
             },
             {
                 "name": "WithDescription",
@@ -1024,6 +1104,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Checkbox with label and description. Description has `aria-describedby`.',\n      },\n    },\n  },\n  args: {\n    label: 'Subscribe to newsletter',\n    description: 'Receive weekly updates about new features.',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "WithDisabledOptions",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n}"
             },
             {
                 "name": "WithDisabledOptions",
@@ -1044,6 +1134,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled tabs are skipped by keyboard navigation and ignore clicks.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: { ...args, active: 'profile' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-tabs [(value)]=\"active\" [variant]=\"variant\" [ariaLabel]=\"ariaLabel\">\n        <button type=\"button\" auTab=\"profile\">Profile</button>\n        <button type=\"button\" auTab=\"billing\" [auTabDisabled]=\"true\">Billing</button>\n        <button type=\"button\" auTab=\"security\">Security</button>\n        <div auTabPanel=\"profile\"><p style=\"margin:0\">Profile panel</p></div>\n        <div auTabPanel=\"billing\"><p style=\"margin:0\">Billing panel</p></div>\n        <div auTabPanel=\"security\"><p style=\"margin:0\">Security panel</p></div>\n      </au-tabs>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "WithError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n}"
             },
             {
                 "name": "WithError",
@@ -1174,6 +1274,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type fewer than **20** characters and blur to trigger **minLength** from the schema.',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "WithValue",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n}"
             },
             {
                 "name": "WithValue",
@@ -1318,6 +1428,47 @@
                 ]
             },
             {
+                "name": "getCombobox",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "name",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "getSelect",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "ctype": "miscellaneous",
@@ -1436,6 +1587,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<Autocomplete>",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<Button>",
                 "file": "projects/aurea/src/lib/button/button.stories.ts",
                 "deprecated": false,
@@ -1480,8 +1642,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputNumber>",
-                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1491,8 +1653,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "rawtype": "StoryObj<InputNumber>",
+                "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1731,7 +1893,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. `accent-color` y `color-scheme` alinean selección y popup; el icono y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
                 },
                 {
                     "name": "Default",
@@ -1886,6 +2048,118 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',\n      },\n    },\n  },\n  args: {\n    label: 'I accept the privacy policy',\n    errorMessage: 'This field is required to continue.',\n    checked: false,\n    size: 'md',\n  },\n}"
                 }
             ],
+            "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts": [
+                {
+                    "name": "cities",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "AutocompleteOption[]",
+                    "defaultValue": "[\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n]"
+                },
+                {
+                    "name": "CompactSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = within(canvasElement).getByRole('listbox');\n    await expect(listbox).toBeVisible();\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n}"
+                },
+                {
+                    "name": "KeyboardNavigation",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                },
+                {
+                    "name": "LargeSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<Autocomplete>",
+                    "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                },
+                {
+                    "name": "MinFilterLength",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n}"
+                },
+                {
+                    "name": "WithDisabledOptions",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n}"
+                },
+                {
+                    "name": "WithError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n}"
+                },
+                {
+                    "name": "WithValue",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n}"
+                }
+            ],
             "projects/aurea/src/lib/input-text/input-text.stories.ts": [
                 {
                     "name": "CompactSize",
@@ -1977,7 +2251,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.selectOptions(select, 'option2');\n    await expect(select).toHaveValue('option2');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = within(canvasElement).getByRole('listbox');\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
                 },
                 {
                     "name": "Disabled",
@@ -1997,7 +2271,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (fila bajo el puntero) usa tinte azul claro; **selected** (`:checked`) usa relleno primario sólido + barra lateral.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (hover / teclado) y **selected** comparten el mismo listbox que `au-autocomplete`.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "groupedOptions",
@@ -2782,6 +3056,49 @@
                     ]
                 }
             ],
+            "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts": [
+                {
+                    "name": "getCombobox",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "name",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "name",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "projects/aurea/src/lib/select/select.stories.ts": [
                 {
                     "name": "getSelect",
@@ -2904,6 +3221,19 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Autocomplete>",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/aurea/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
@@ -2956,19 +3286,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/input-number/input-number.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<InputNumber>",
-                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/input-date/input-date.stories.ts": [
                 {
                     "name": "Story",
@@ -2976,6 +3293,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputDate>",
                     "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-number/input-number.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputNumber>",
+                    "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3107,7 +3437,7 @@
         "children": []
     },
     "coverage": {
-        "count": 2,
+        "count": 1,
         "status": "low",
         "files": [
             {
@@ -3129,6 +3459,136 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getCombobox",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "cities",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CompactSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "KeyboardNavigation",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LargeSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MinFilterLength",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithDisabledOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithValue",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "projects/aurea/src/lib/button/button.stories.ts",

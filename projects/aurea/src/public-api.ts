@@ -1,6 +1,7 @@
 /*
  * Public API surface of the Aurea library
  */
+export * from './lib/autocomplete';
 export * from './lib/button';
 export * from './lib/card';
 export * from './lib/checkbox';
