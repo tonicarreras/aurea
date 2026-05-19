@@ -1,10 +1,10 @@
-# @aurea
+# @aurea-design-system/components
 
 **Aurea** — design system for **Angular 21**: accessible components, semantic tokens, and signal-friendly forms.
 
 [![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
-[![npm](https://img.shields.io/npm/v/@aurea?label=npm)](https://www.npmjs.com/package/@aurea)
+[![npm](https://img.shields.io/npm/v/@aurea-design-system/components?label=npm)](https://www.npmjs.com/package/@aurea-design-system/components)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
 
 Monorepo project **`components`** (this folder). Official docs: [`projects/docs`](../docs).  
@@ -22,11 +22,11 @@ Source & Storybook: [tonicarreras/aurea-ds](https://github.com/tonicarreras/aure
 ## Install
 
 ```bash
-bun add @aurea
+bun add @aurea-design-system/components
 ```
 
 ```bash
-npm install @aurea
+npm install @aurea-design-system/components
 ```
 
 ---
@@ -38,14 +38,14 @@ npm install @aurea
 In `angular.json` → `styles`, or in `src/styles.scss`:
 
 ```scss
-@import '@aurea/styles/au-tokens.css';
+@import '@aurea-design-system/components/styles/au-tokens.css';
 ```
 
 Optional (form/listbox overlays):
 
 ```scss
-@import '@aurea/styles/au-field-error.css';
-@import '@aurea/styles/au-field-listbox.css';
+@import '@aurea-design-system/components/styles/au-field-error.css';
+@import '@aurea-design-system/components/styles/au-field-listbox.css';
 ```
 
 ### 2. Dark mode (optional)
@@ -59,7 +59,7 @@ Or use the `auTheme` directive from the same package.
 ### 3. Components
 
 ```ts
-import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea';
+import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system/components';
 
 @Component({
   imports: [AuButton, AuCheckbox, AuDivider, AuTooltip],

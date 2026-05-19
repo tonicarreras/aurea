@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuButton, AuDivider } from '@aurea';
+import { AuButton, AuDivider } from '@aurea-design-system/components';
 
 import { DocPage } from '../shared/doc-page';
 
@@ -14,7 +14,7 @@ import { DocPage } from '../shared/doc-page';
     >
       <p>
         Esta aplicación es la <strong>documentación oficial</strong> del paquete
-        <code>@aurea</code>. Aquí encontrarás guías de instalación, temas y ejemplos
+        <code>@aurea-design-system/components</code>. Aquí encontrarás guías de instalación, temas y ejemplos
         interactivos de cada componente.
       </p>
 

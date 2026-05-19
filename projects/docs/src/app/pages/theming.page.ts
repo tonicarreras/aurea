@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { AuButton, AuCard, AuTheme } from '@aurea';
+import { AuButton, AuCard, AuTheme } from '@aurea-design-system/components';
 
 import { CodeBlock } from '../shared/code-block';
 import { DocPage } from '../shared/doc-page';

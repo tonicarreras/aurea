@@ -54,23 +54,29 @@ jobs:
         run: bun run build
 
       - name: Verify package contents and version
+        id: verify_pkg
         run: |
           test -f dist/components/package.json
-          test -f dist/components/fesm2022/au-components.mjs
+          test -f dist/components/fesm2022/aurea-design-system-components.mjs
           test -f dist/components/styles/au-tokens.css
           BUILT=$(node -p "require('./dist/components/package.json').version")
+          PKG=$(node -p "require('./dist/components/package.json').name")
           EXPECTED="${{ steps.publish_version.outputs.version }}"
-          echo "Publishing au-components@${BUILT} (expected ${EXPECTED})"
+          echo "Publishing ${PKG}@${BUILT} (expected ${EXPECTED})"
           test "$BUILT" = "$EXPECTED"
+          test "$PKG" = "@aurea-design-system/components"
+          echo "pkg_name=${PKG}" >> "$GITHUB_OUTPUT"
+          echo "version=${BUILT}" >> "$GITHUB_OUTPUT"
 
       - name: Check npm registry
         id: registries
-        working-directory: dist/components
+        env:
+          PKG_NAME: ${{ steps.verify_pkg.outputs.pkg_name }}
+          PKG_VERSION: ${{ steps.verify_pkg.outputs.version }}
         run: |
-          PKG_VERSION=$(node -p "require('./package.json').version")
           echo "version=${PKG_VERSION}" >> "$GITHUB_OUTPUT"
 
-          if npm view "au-components@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
+          if npm view "${PKG_NAME}@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
             echo "npm_published=true" >> "$GITHUB_OUTPUT"
           else
             echo "npm_published=false" >> "$GITHUB_OUTPUT"
@@ -86,7 +92,7 @@ jobs:
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
             echo "::warning::NPM_TOKEN is not set on the production environment — skipping npm publish."
-            echo "::warning::Add NPM_TOKEN so users can run: bun add au-components"
+            echo "::warning::Add NPM_TOKEN so users can run: bun add @aurea-design-system/components"
           fi
 
       - name: Setup Node for npmjs.org
@@ -95,7 +101,7 @@ jobs:
         with:
           node-version: '22'
           registry-url: https://registry.npmjs.org
-          scope: '@aurea-ds'
+          scope: '@aurea-design-system'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -103,7 +109,7 @@ jobs:
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
         run: |
           echo "npm whoami: $(npm whoami)"
-          echo "If this is not a member of org 'aurea-ds', npm publish will return 403."
+          echo "If this account cannot publish @aurea-design-system/components, npm publish will return 403."
 
       - name: Publish to npm
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
@@ -112,11 +118,11 @@ jobs:
 
       - name: Summary
         run: |
-          echo "## au-components@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "## ${{ steps.verify_pkg.outputs.pkg_name }}@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.registries.outputs.npm_published }}" = "true" ]; then
-            echo "- npm: ✓ already on npmjs" >> "$GITHUB_STEP_SUMMARY"
+            echo "- npm: ✓ already on [npmjs](https://www.npmjs.com/package/@aurea-design-system/components)" >> "$GITHUB_STEP_SUMMARY"
           elif [ "${{ steps.npm_token.outputs.present }}" = "true" ]; then
-            echo "- npm: ✓ published this run" >> "$GITHUB_STEP_SUMMARY"
+            echo "- npm: ✓ published this run → \`bun add @aurea-design-system/components\`" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "- npm: ⚠ skipped (set **NPM_TOKEN** on the **production** environment)" >> "$GITHUB_STEP_SUMMARY"
           fi

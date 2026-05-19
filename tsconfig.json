@@ -4,7 +4,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@aurea": ["./projects/components/src/public-api.ts"]
+      "@aurea-design-system/components": ["./projects/components/src/public-api.ts"]
     },
     "strict": true,
     "noImplicitOverride": true,

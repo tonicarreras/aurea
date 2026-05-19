@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AuButton } from '@aurea';
+import { AuButton } from '@aurea-design-system/components';
 
 import { DOCS_NAV } from '../core/docs-nav';
 

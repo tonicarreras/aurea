@@ -38,7 +38,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     selector: 'au-button',
     summary: 'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
     demoComponent: ButtonDemo,
-    snippet: `import { AuButton } from '@aurea';
+    snippet: `import { AuButton } from '@aurea-design-system/components';
 
 @Component({
   imports: [AuButton],
@@ -56,7 +56,7 @@ export class Example {}`,
     selector: 'au-input-text',
     summary: 'Campo de una línea con etiqueta, hint, error y soporte para signal forms (`formField`).',
     demoComponent: InputTextDemo,
-    snippet: `import { AuInputText } from '@aurea';
+    snippet: `import { AuInputText } from '@aurea-design-system/components';
 
 <au-input-text label="Email" placeholder="tu@correo.com" />`,
   },
@@ -67,7 +67,7 @@ export class Example {}`,
     selector: 'au-textarea',
     summary: 'Texto multilínea con la misma gramática visual que el resto de campos.',
     demoComponent: TextareaDemo,
-    snippet: `import { AuTextarea } from '@aurea';
+    snippet: `import { AuTextarea } from '@aurea-design-system/components';
 
 <au-textarea label="Notas" [rows]="4" />`,
   },
@@ -78,7 +78,7 @@ export class Example {}`,
     selector: 'au-checkbox',
     summary: 'Selección booleana con estado indeterminado y descripción opcional.',
     demoComponent: CheckboxDemo,
-    snippet: `import { AuCheckbox } from '@aurea';
+    snippet: `import { AuCheckbox } from '@aurea-design-system/components';
 
 <au-checkbox label="Recordarme" />`,
   },
@@ -89,7 +89,7 @@ export class Example {}`,
     selector: 'au-switch',
     summary: 'Alternar configuraciones on/off con rol de switch y etiqueta asociada.',
     demoComponent: SwitchDemo,
-    snippet: `import { AuSwitch } from '@aurea';
+    snippet: `import { AuSwitch } from '@aurea-design-system/components';
 
 <au-switch label="Notificaciones" />`,
   },
@@ -100,7 +100,7 @@ export class Example {}`,
     selector: 'au-select',
     summary: 'Lista desplegable con listbox en portal y teclado completo.',
     demoComponent: SelectDemo,
-    snippet: `import { AuSelect, type SelectOption } from '@aurea';
+    snippet: `import { AuSelect, type SelectOption } from '@aurea-design-system/components';
 
 options: SelectOption[] = [
   { value: 'es', label: 'España' },
@@ -114,7 +114,7 @@ options: SelectOption[] = [
     selector: 'au-autocomplete',
     summary: 'Búsqueda con filtrado y misma superficie de campo que select.',
     demoComponent: AutocompleteDemo,
-    snippet: `import { AuAutocomplete } from '@aurea';
+    snippet: `import { AuAutocomplete } from '@aurea-design-system/components';
 
 <au-autocomplete label="Ciudad" [options]="cities" />`,
   },
@@ -125,7 +125,7 @@ options: SelectOption[] = [
     selector: 'au-radio-group',
     summary: 'Elección única entre opciones relacionadas.',
     demoComponent: RadioGroupDemo,
-    snippet: `import { AuRadioGroup } from '@aurea';
+    snippet: `import { AuRadioGroup } from '@aurea-design-system/components';
 
 <au-radio-group label="Plan" [options]="plans" />`,
   },
@@ -136,7 +136,7 @@ options: SelectOption[] = [
     selector: 'au-input-number',
     summary: 'Valor numérico con incremento/decremento y límites opcionales.',
     demoComponent: InputNumberDemo,
-    snippet: `import { AuInputNumber } from '@aurea';
+    snippet: `import { AuInputNumber } from '@aurea-design-system/components';
 
 <au-input-number label="Cantidad" [min]="0" [max]="99" />`,
   },
@@ -147,7 +147,7 @@ options: SelectOption[] = [
     selector: 'au-input-date',
     summary: 'Selector de fecha nativo estilizado con tokens Aurea.',
     demoComponent: InputDateDemo,
-    snippet: `import { AuInputDate } from '@aurea';
+    snippet: `import { AuInputDate } from '@aurea-design-system/components';
 
 <au-input-date label="Fecha" />`,
   },
@@ -158,7 +158,7 @@ options: SelectOption[] = [
     selector: 'au-dialog',
     summary: 'Diálogo modal sobre `<dialog>` nativo con trampa de foco integrada.',
     demoComponent: DialogDemo,
-    snippet: `import { AuDialog, AuDialogFooter, AuButton } from '@aurea';
+    snippet: `import { AuDialog, AuDialogFooter, AuButton } from '@aurea-design-system/components';
 
 <au-dialog [(open)]="open" title="Confirmar">
   <p>¿Continuar?</p>
@@ -174,7 +174,7 @@ options: SelectOption[] = [
     selector: 'au-card',
     summary: 'Superficie con cabecera, cuerpo y pie opcional (`AuCardFooter`).',
     demoComponent: CardDemo,
-    snippet: `import { AuCard, AuCardFooter, AuButton } from '@aurea';
+    snippet: `import { AuCard, AuCardFooter, AuButton } from '@aurea-design-system/components';
 
 <au-card variant="outlined">
   <h3 auCardHeader>Título</h3>
@@ -188,7 +188,7 @@ options: SelectOption[] = [
     selector: 'au-tabs',
     summary: 'Pestañas WAI-ARIA con `AuTab` y `AuTabPanel`.',
     demoComponent: TabsDemo,
-    snippet: `import { AuTabs, AuTab, AuTabPanel } from '@aurea';
+    snippet: `import { AuTabs, AuTab, AuTabPanel } from '@aurea-design-system/components';
 
 <au-tabs [(value)]="tab">
   <button type="button" auTab value="a">Uno</button>
@@ -203,7 +203,7 @@ options: SelectOption[] = [
     selector: 'au-chip',
     summary: 'Etiquetas compactas, removibles o seleccionables.',
     demoComponent: ChipDemo,
-    snippet: `import { AuChip } from '@aurea';
+    snippet: `import { AuChip } from '@aurea-design-system/components';
 
 <au-chip label="Angular" [removable]="true" />`,
   },
@@ -214,7 +214,7 @@ options: SelectOption[] = [
     selector: 'au-snackbar',
     summary: 'Feedback breve con auto-cierre, acción opcional y posiciones configurables.',
     demoComponent: SnackbarDemo,
-    snippet: `import { AuSnackbar } from '@aurea';
+    snippet: `import { AuSnackbar } from '@aurea-design-system/components';
 
 <au-snackbar [(open)]="saved" message="Guardado" variant="success" />`,
   },
@@ -225,7 +225,7 @@ options: SelectOption[] = [
     selector: 'au-divider',
     summary: 'Separador horizontal o vertical, con inset y etiqueta opcional.',
     demoComponent: DividerDemo,
-    snippet: `import { AuDivider } from '@aurea';
+    snippet: `import { AuDivider } from '@aurea-design-system/components';
 
 <au-divider />
 <au-divider label="o" />`,
@@ -237,7 +237,7 @@ options: SelectOption[] = [
     selector: '[auTooltip]',
     summary: 'Directiva de ayuda contextual sobre el elemento disparador.',
     demoComponent: TooltipDemo,
-    snippet: `import { AuTooltip, AuButton } from '@aurea';
+    snippet: `import { AuTooltip, AuButton } from '@aurea-design-system/components';
 
 <au-button auTooltip="Más información">?</au-button>`,
   },
