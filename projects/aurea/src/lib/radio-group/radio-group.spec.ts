@@ -4,15 +4,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { RadioGroup, RadioOption } from './radio-group';
+import { AuRadioGroup, RadioOption } from './radio-group';
 
-describe('RadioGroup', () => {
+describe('AuRadioGroup', () => {
   const opts: RadioOption[] = [
     { value: 'a', label: 'Alpha' },
     { value: 'b', label: 'Beta' },
   ];
 
-  function queryRadios(fixture: ComponentFixture<RadioGroup>): HTMLInputElement[] {
+  function queryRadios(fixture: ComponentFixture<AuRadioGroup>): HTMLInputElement[] {
     return fixture.debugElement
       .queryAll(By.css('.au-radio-group__input'))
       .map((d) => d.nativeElement as HTMLInputElement);
@@ -20,12 +20,12 @@ describe('RadioGroup', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RadioGroup],
+      imports: [AuRadioGroup],
     }).compileComponents();
   });
 
   it('updates value when a radio is selected', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.detectChanges();
@@ -37,7 +37,7 @@ describe('RadioGroup', () => {
   });
 
   it('emits valueChange', async () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     const comp = fix.componentInstance;
@@ -53,7 +53,7 @@ describe('RadioGroup', () => {
   });
 
   it('does not emit when disabled', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('disabled', true);
@@ -69,7 +69,7 @@ describe('RadioGroup', () => {
   });
 
   it('uses custom name when provided', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('name', 'choice');
@@ -78,7 +78,7 @@ describe('RadioGroup', () => {
   });
 
   it('shows error and aria-errormessage on radios', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('id', 'rg1');
@@ -90,7 +90,7 @@ describe('RadioGroup', () => {
   });
 
   it('sets required only on first radio', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('required', true);
@@ -105,7 +105,7 @@ describe('RadioGroup', () => {
       { value: 'a', label: 'A' },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', withDis);
     fix.componentRef.setInput('label', 'Pick');
     fix.detectChanges();
@@ -113,7 +113,7 @@ describe('RadioGroup', () => {
   });
 
   it('focus() focuses first enabled radio', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.detectChanges();
@@ -125,7 +125,7 @@ describe('RadioGroup', () => {
   });
 
   it('optionInputId escapes special characters', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('id', 'rg');
     fix.detectChanges();
     expect(fix.componentInstance.optionInputId('a/b')).toContain('rg');
@@ -133,7 +133,7 @@ describe('RadioGroup', () => {
   });
 
   it('emits blur when focus leaves shell', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     let n = 0;
@@ -147,13 +147,13 @@ describe('RadioGroup', () => {
   });
 
   it('onShellFocusout returns early for non-HTMLElement', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.detectChanges();
     fix.componentInstance.onShellFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onShellFocusout returns when focus stays inside shell', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     let n = 0;
@@ -168,7 +168,7 @@ describe('RadioGroup', () => {
   });
 
   it('legend fallback when label empty', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     const legend = fix.debugElement.query(By.css('.au-radio-group__fieldset legend'))!.nativeElement;
@@ -177,7 +177,7 @@ describe('RadioGroup', () => {
   });
 
   it('uses kind when message missing in errors', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('errors', [{ kind: 'required' }] as any);
@@ -187,7 +187,7 @@ describe('RadioGroup', () => {
   });
 
   it('uses explicit id for option ids', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('id', 'rg99');
@@ -196,7 +196,7 @@ describe('RadioGroup', () => {
   });
 
   it('legend fallback uses name when label empty', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('name', 'channel');
     fix.detectChanges();
@@ -206,7 +206,7 @@ describe('RadioGroup', () => {
   });
 
   it('ignores radio change when target not checked', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('value', 'b');
@@ -216,14 +216,14 @@ describe('RadioGroup', () => {
   });
 
   it('optionInputId falls back to opt when value is only symbols', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('id', 'rg');
     fix.detectChanges();
     expect(fix.componentInstance.optionInputId('---')).toMatch(/rg-opt$/);
   });
 
   it('prefers manual errorMessage over errors', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('errorMessage', 'Manual');
@@ -233,7 +233,7 @@ describe('RadioGroup', () => {
   });
 
   it('displayError empty when first error has no usable text', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
@@ -242,7 +242,7 @@ describe('RadioGroup', () => {
   });
 
   it('sets aria-invalid from invalid without visible error', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('invalid', true);
@@ -251,7 +251,7 @@ describe('RadioGroup', () => {
   });
 
   it('sets hint and aria-describedby on radios', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', 'Pick');
     fix.componentRef.setInput('hint', 'Choose one option');
@@ -261,7 +261,7 @@ describe('RadioGroup', () => {
   });
 
   it('normalizes nullish string inputs', () => {
-    const fix = TestBed.createComponent(RadioGroup);
+    const fix = TestBed.createComponent(AuRadioGroup);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('hint', undefined as unknown as string);

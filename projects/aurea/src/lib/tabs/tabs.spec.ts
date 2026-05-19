@@ -3,21 +3,21 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuTab } from './au-tab.directive';
 import { AuTabPanel } from './au-tab-panel.directive';
-import { Tabs } from './tabs';
+import { AuTabs } from './tabs';
 
 async function flushTabsSelection(): Promise<void> {
   await new Promise<void>((resolve) => queueMicrotask(() => resolve()));
 }
 
-describe('Tabs', () => {
+describe('AuTabs', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Tabs],
+      imports: [AuTabs],
     }).compileComponents();
   });
 
   it('defaults variant to line and size to md', () => {
-    const fix = TestBed.createComponent(Tabs);
+    const fix = TestBed.createComponent(AuTabs);
     fix.detectChanges();
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('line');
@@ -26,7 +26,7 @@ describe('Tabs', () => {
   });
 
   it('applies variant and orientation attributes', () => {
-    const fix = TestBed.createComponent(Tabs);
+    const fix = TestBed.createComponent(AuTabs);
     fix.componentRef.setInput('variant', 'contained');
     fix.componentRef.setInput('orientation', 'vertical');
     fix.componentRef.setInput('size', 'lg');
@@ -84,7 +84,7 @@ describe('Tabs', () => {
     fix.detectChanges();
     let next = '';
     fix.debugElement
-      .query(By.directive(Tabs))!
+      .query(By.directive(AuTabs))!
       .componentInstance.valueChange.subscribe((v: string) => (next = v));
     const billingTab = fix.nativeElement.querySelector('button[auTab="billing"]') as HTMLButtonElement;
     billingTab.click();
@@ -97,7 +97,7 @@ describe('Tabs', () => {
     await fix.whenStable();
     fix.componentInstance.active = 'profile';
     fix.detectChanges();
-    const tabs = fix.debugElement.query(By.directive(Tabs))!.componentInstance as Tabs;
+    const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
     let count = 0;
     tabs.valueChange.subscribe(() => count++);
     tabs.selectTab('profile');
@@ -238,14 +238,14 @@ describe('Tabs', () => {
   });
 
   it('onListKeydown is noop when no enabled tabs', () => {
-    const fix = TestBed.createComponent(Tabs);
+    const fix = TestBed.createComponent(AuTabs);
     const ev = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
     fix.componentInstance.onListKeydown(ev);
     expect(ev.defaultPrevented).toBe(false);
   });
 
   it('tabIdFor and panelIdFor use resolved id', () => {
-    const fix = TestBed.createComponent(Tabs);
+    const fix = TestBed.createComponent(AuTabs);
     fix.componentRef.setInput('id', 'x');
     fix.detectChanges();
     expect(fix.componentInstance.tabIdFor('one')).toBe('x-tab-one');
@@ -267,14 +267,14 @@ describe('Tabs', () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     fix.detectChanges();
     await flushTabsSelection();
-    const tabs = fix.debugElement.query(By.directive(Tabs))!.componentInstance as Tabs;
+    const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
     const first = fix.debugElement.query(By.directive(AuTab))!.injector.get(AuTab);
     tabs.registerTab(first);
     expect(tabs.getEnabledTabs().length).toBe(2);
   });
 
   it('resolvedId is generated when id input is empty', () => {
-    const fix = TestBed.createComponent(Tabs);
+    const fix = TestBed.createComponent(AuTabs);
     fix.detectChanges();
     expect(fix.componentInstance.resolvedId()).toMatch(/^au-tabs-\d+$/);
   });
@@ -282,7 +282,7 @@ describe('Tabs', () => {
 
 @Component({
   selector: 'test-tabs',
-  imports: [Tabs, AuTab, AuTabPanel],
+  imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs [(value)]="active" ariaLabel="Demo tabs">
       <button type="button" auTab="profile">Profile</button>
@@ -298,7 +298,7 @@ class TestTabsComponent {
 
 @Component({
   selector: 'test-tabs-id',
-  imports: [Tabs, AuTab, AuTabPanel],
+  imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs [(value)]="active" id="settings" ariaLabel="Demo tabs">
       <button type="button" auTab="profile">Profile</button>
@@ -314,7 +314,7 @@ class TestTabsWithIdComponent {
 
 @Component({
   selector: 'test-three-tabs',
-  imports: [Tabs, AuTab, AuTabPanel],
+  imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs [(value)]="active" [orientation]="orientation" ariaLabel="Three">
       <button type="button" auTab="a">A</button>
@@ -333,7 +333,7 @@ class TestThreeTabsComponent {
 
 @Component({
   selector: 'test-tabs-disabled',
-  imports: [Tabs, AuTab, AuTabPanel],
+  imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs [(value)]="active" ariaLabel="Disabled">
       <button type="button" auTab="a">A</button>
@@ -351,7 +351,7 @@ class TestTabsWithDisabledComponent {
 
 @Component({
   selector: 'test-tabs-unknown-value',
-  imports: [Tabs, AuTab, AuTabPanel],
+  imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs [(value)]="active" ariaLabel="Unknown value">
       <button type="button" auTab="a">A</button>

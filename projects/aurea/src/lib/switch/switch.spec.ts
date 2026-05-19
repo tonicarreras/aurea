@@ -4,21 +4,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Switch } from './switch';
+import { AuSwitch } from './switch';
 
-describe('Switch', () => {
-  function queryInput(fixture: ComponentFixture<Switch>): HTMLInputElement {
+describe('AuSwitch', () => {
+  function queryInput(fixture: ComponentFixture<AuSwitch>): HTMLInputElement {
     return fixture.debugElement.query(By.css('.au-switch__element'))!.nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Switch],
+      imports: [AuSwitch],
     }).compileComponents();
   });
 
   it('binds checked on change', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'Enable');
     fix.detectChanges();
     const el = queryInput(fix);
@@ -29,7 +29,7 @@ describe('Switch', () => {
   });
 
   it('emits checkedChange', async () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -44,7 +44,7 @@ describe('Switch', () => {
   });
 
   it('does not emit when disabled', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('disabled', true);
     const comp = fix.componentInstance;
@@ -60,7 +60,7 @@ describe('Switch', () => {
   });
 
   it('sets role switch and aria-checked', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'Notifications');
     fix.componentRef.setInput('checked', true);
     fix.detectChanges();
@@ -70,7 +70,7 @@ describe('Switch', () => {
   });
 
   it('shows error and aria-invalid', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('id', 'sw1');
     fix.componentRef.setInput('errorMessage', 'Required');
@@ -81,7 +81,7 @@ describe('Switch', () => {
   });
 
   it('uses kind when message missing in errors', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
@@ -90,7 +90,7 @@ describe('Switch', () => {
   });
 
   it('sets hint and aria-describedby', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('hint', 'Help');
     fix.detectChanges();
@@ -100,7 +100,7 @@ describe('Switch', () => {
   });
 
   it('focus() focuses native input', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.detectChanges();
     const el = queryInput(fix);
@@ -111,7 +111,7 @@ describe('Switch', () => {
   });
 
   it('clears from-tab when focus leaves control row', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-switch__control-row'))!.nativeElement;
@@ -127,13 +127,13 @@ describe('Switch', () => {
   });
 
   it('onControlRowFocusout returns early for non-HTMLElement', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.detectChanges();
     fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onControlRowFocusout returns when focus stays inside row', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-switch__control-row'))!.nativeElement;
@@ -144,7 +144,7 @@ describe('Switch', () => {
   });
 
   it('normalizes nullish label, hint, errorMessage', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('hint', undefined as unknown as string);
     fix.componentRef.setInput('errorMessage', null as unknown as string);
@@ -155,7 +155,7 @@ describe('Switch', () => {
   });
 
   it('displayError empty when first error has no usable message or kind', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
     fix.detectChanges();
@@ -163,7 +163,7 @@ describe('Switch', () => {
   });
 
   it('sets aria-invalid from invalid without visible error', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     fix.componentRef.setInput('invalid', true);
     fix.detectChanges();
@@ -171,7 +171,7 @@ describe('Switch', () => {
   });
 
   it('emits blur on blur handler', () => {
-    const fix = TestBed.createComponent(Switch);
+    const fix = TestBed.createComponent(AuSwitch);
     fix.componentRef.setInput('label', 'X');
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);

@@ -51,7 +51,7 @@ import {
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Dialog {
+export class AuDialog {
   private static nextTitleId = 0;
 
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -83,7 +83,7 @@ export class Dialog {
   /** True when `[auDialogFooter]` content is projected. */
   readonly hasFooter = this.footerPresent.asReadonly();
 
-  private readonly titleDomId = `au-dialog-title-${++Dialog.nextTitleId}`;
+  private readonly titleDomId = `au-dialog-title-${++AuDialog.nextTitleId}`;
 
   /** Element focused before the dialog opened; restored on close. */
   private savedFocus: HTMLElement | null = null;

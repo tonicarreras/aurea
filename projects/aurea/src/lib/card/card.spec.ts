@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuCardFooter } from './card-footer.directive';
-import { Card } from './card';
+import { AuCard } from './card';
 
-describe('Card', () => {
+describe('AuCard', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Card],
+      imports: [AuCard],
     }).compileComponents();
   });
 
   it('renders with elevated variant by default', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.detectChanges();
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('elevated');
@@ -20,35 +20,35 @@ describe('Card', () => {
   });
 
   it('applies variant attribute to host', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.componentRef.setInput('variant', 'outlined');
     fix.detectChanges();
     expect(fix.nativeElement.getAttribute('data-au-variant')).toBe('outlined');
   });
 
   it('applies filled variant', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.componentRef.setInput('variant', 'filled');
     fix.detectChanges();
     expect(fix.nativeElement.getAttribute('data-au-variant')).toBe('filled');
   });
 
   it('applies size attribute to host', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.componentRef.setInput('size', 'sm');
     fix.detectChanges();
     expect(fix.nativeElement.getAttribute('data-au-size')).toBe('sm');
   });
 
   it('applies lg size', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.componentRef.setInput('size', 'lg');
     fix.detectChanges();
     expect(fix.nativeElement.getAttribute('data-au-size')).toBe('lg');
   });
 
   it('default size is md', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.detectChanges();
     expect(fix.nativeElement.getAttribute('data-au-size')).toBe('md');
   });
@@ -91,7 +91,7 @@ describe('Card', () => {
   it('hasFooter is false when auCardFooter is absent', () => {
     const fix = TestBed.createComponent(TestCardComponent);
     fix.detectChanges();
-    const card = fix.debugElement.query(By.directive(Card))!.componentInstance as Card;
+    const card = fix.debugElement.query(By.directive(AuCard))!.componentInstance as AuCard;
     expect(card.hasFooter()).toBe(false);
   });
 
@@ -106,18 +106,18 @@ describe('Card', () => {
   it('hasFooter is true when auCardFooter is projected', () => {
     const fix = TestBed.createComponent(TestCardWithFooterComponent);
     fix.detectChanges();
-    const card = fix.debugElement.query(By.directive(Card))!.componentInstance as Card;
+    const card = fix.debugElement.query(By.directive(AuCard))!.componentInstance as AuCard;
     expect(card.hasFooter()).toBe(true);
   });
 
   it('variant input has correct default value', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.detectChanges();
     expect(fix.componentInstance.variant()).toBe('elevated');
   });
 
   it('size input has correct default value', () => {
-    const fix = TestBed.createComponent(Card);
+    const fix = TestBed.createComponent(AuCard);
     fix.detectChanges();
     expect(fix.componentInstance.size()).toBe('md');
   });
@@ -125,7 +125,7 @@ describe('Card', () => {
 
 @Component({
   selector: 'test-card',
-  imports: [Card],
+  imports: [AuCard],
   template: `
     <au-card>
       <span class="test-content">Projected content</span>
@@ -136,7 +136,7 @@ class TestCardComponent {}
 
 @Component({
   selector: 'test-card-slots',
-  imports: [Card],
+  imports: [AuCard],
   template: `
     <au-card>
       <h3 auCardHeader>Title</h3>
@@ -148,7 +148,7 @@ class TestCardSlotsComponent {}
 
 @Component({
   selector: 'test-card-footer',
-  imports: [Card, AuCardFooter],
+  imports: [AuCard, AuCardFooter],
   template: `
     <au-card>
       <h3 auCardHeader>Title</h3>

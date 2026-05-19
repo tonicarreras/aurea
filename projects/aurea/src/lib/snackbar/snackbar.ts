@@ -57,7 +57,7 @@ export type SnackbarPosition =
     '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
-export class Snackbar {
+export class AuSnackbar {
   private readonly destroyRef = inject(DestroyRef);
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly document = inject(DOCUMENT);

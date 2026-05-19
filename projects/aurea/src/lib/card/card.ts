@@ -43,7 +43,7 @@ export type CardVariant = 'elevated' | 'outlined' | 'filled';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Card {
+export class AuCard {
   /** Visual style: elevated (shadow), outlined (border), filled (background). */
   readonly variant = input<CardVariant>('elevated');
   /** Density: sm (compact), md (default), lg (spacious). */

@@ -2,28 +2,28 @@ import { Component } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Snackbar } from './snackbar';
+import { AuSnackbar } from './snackbar';
 
-describe('Snackbar', () => {
+describe('AuSnackbar', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Snackbar],
+      imports: [AuSnackbar],
     }).compileComponents();
   });
 
-  function querySurface(fixture: ComponentFixture<Snackbar>) {
+  function querySurface(fixture: ComponentFixture<AuSnackbar>) {
     return fixture.debugElement.query(By.css('.au-snackbar__surface'));
   }
 
   it('does not render surface when closed', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
     expect(querySurface(fix)).toBeNull();
   });
 
   it('renders message when open', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Saved');
     fix.detectChanges();
@@ -32,7 +32,7 @@ describe('Snackbar', () => {
   });
 
   it('defaults variant to default and position to bottom-center', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.detectChanges();
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('default');
@@ -40,7 +40,7 @@ describe('Snackbar', () => {
   });
 
   it('applies variant and position attributes', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('variant', 'error');
     fix.componentRef.setInput('position', 'top-end');
     fix.detectChanges();
@@ -50,7 +50,7 @@ describe('Snackbar', () => {
   });
 
   it('uses role alert and assertive live region for error variant', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'error');
     fix.componentRef.setInput('message', 'Failed');
@@ -61,7 +61,7 @@ describe('Snackbar', () => {
   });
 
   it('uses role status and polite live region for success variant', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'success');
     fix.componentRef.setInput('message', 'OK');
@@ -72,7 +72,7 @@ describe('Snackbar', () => {
   });
 
   it('uses role alert and assertive live region for warning variant', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'warning');
     fix.componentRef.setInput('message', 'Careful');
@@ -83,7 +83,7 @@ describe('Snackbar', () => {
   });
 
   it('closes via close button and emits dismiss', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const dismiss = vi.fn();
     fix.componentInstance.dismiss.subscribe(dismiss);
     fix.componentRef.setInput('open', true);
@@ -98,7 +98,7 @@ describe('Snackbar', () => {
   });
 
   it('hides close button when showCloseButton is false', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Hi');
     fix.componentRef.setInput('showCloseButton', false);
@@ -107,7 +107,7 @@ describe('Snackbar', () => {
   });
 
   it('emits action and closes when action is clicked', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const action = vi.fn();
     fix.componentInstance.action.subscribe(action);
     fix.componentRef.setInput('open', true);
@@ -123,7 +123,7 @@ describe('Snackbar', () => {
 
   it('auto-dismisses after durationMs', async () => {
     vi.useFakeTimers();
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const dismiss = vi.fn();
     fix.componentInstance.dismiss.subscribe(dismiss);
     fix.componentRef.setInput('open', true);
@@ -140,7 +140,7 @@ describe('Snackbar', () => {
 
   it('does not auto-dismiss when durationMs is 0', async () => {
     vi.useFakeTimers();
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Stay');
     fix.componentRef.setInput('durationMs', 0);
@@ -154,7 +154,7 @@ describe('Snackbar', () => {
   });
 
   it('closes on Escape via document keydown', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Hi');
     fix.detectChanges();
@@ -164,7 +164,7 @@ describe('Snackbar', () => {
   });
 
   it('ignores Escape when closed', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -172,7 +172,7 @@ describe('Snackbar', () => {
   });
 
   it('close is idempotent when already closed', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const dismiss = vi.fn();
     fix.componentInstance.dismiss.subscribe(dismiss);
     fix.componentInstance.close();
@@ -180,7 +180,7 @@ describe('Snackbar', () => {
   });
 
   it('attaches host to document.body while open', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Portaled');
     fix.detectChanges();
@@ -194,21 +194,21 @@ describe('Snackbar', () => {
   it('does not portal to body outside the browser platform', async () => {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
-      imports: [Snackbar],
+      imports: [AuSnackbar],
       providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
     }).compileComponents();
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const parentBefore = fix.nativeElement.parentElement;
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'SSR');
     fix.detectChanges();
     expect(fix.nativeElement.parentElement).toBe(parentBefore);
     TestBed.resetTestingModule();
-    await TestBed.configureTestingModule({ imports: [Snackbar] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [AuSnackbar] }).compileComponents();
   });
 
   it('attachToBody appends host when it has no parent node', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const host = fix.nativeElement;
     host.remove();
     fix.componentRef.setInput('open', true);
@@ -218,7 +218,7 @@ describe('Snackbar', () => {
   });
 
   it('restoreFromBody is noop when anchor is missing', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     const inst = fix.componentInstance as unknown as { restoreFromBody: () => void };
     expect(() => inst.restoreFromBody()).not.toThrow();
   });
@@ -226,7 +226,7 @@ describe('Snackbar', () => {
   it('restoreFromBody is noop when host was never portaled to body', () => {
     const wrapper = document.createElement('div');
     document.body.appendChild(wrapper);
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     wrapper.append(fix.nativeElement);
     fix.detectChanges();
     const inst = fix.componentInstance as unknown as {
@@ -244,7 +244,7 @@ describe('Snackbar', () => {
   });
 
   it('attachToBody is noop when host is already on document.body', () => {
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     expect(fix.nativeElement.parentElement).toBe(document.body);
@@ -260,7 +260,7 @@ describe('Snackbar', () => {
   it('restores host to its anchor parent on destroy', () => {
     const wrapper = document.createElement('div');
     document.body.append(wrapper);
-    const fix = TestBed.createComponent(Snackbar);
+    const fix = TestBed.createComponent(AuSnackbar);
     wrapper.append(fix.nativeElement);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
@@ -279,7 +279,7 @@ describe('Snackbar', () => {
 });
 
 @Component({
-  imports: [Snackbar],
+  imports: [AuSnackbar],
   template: `
     <au-snackbar [open]="true" message="">
       <span class="snackbar-slot-custom">Custom body</span>

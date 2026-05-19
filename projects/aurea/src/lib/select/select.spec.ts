@@ -4,44 +4,44 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Select, SelectOption } from './select';
+import { AuSelect, SelectOption } from './select';
 
-describe('Select', () => {
+describe('AuSelect', () => {
   const testOptions: SelectOption[] = [
     { value: 'opt1', label: 'Option One' },
     { value: 'opt2', label: 'Option Two' },
     { value: 'opt3', label: 'Option Three' },
   ];
 
-  function queryTrigger(fixture: ComponentFixture<Select>): HTMLButtonElement {
+  function queryTrigger(fixture: ComponentFixture<AuSelect>): HTMLButtonElement {
     return fixture.debugElement.query(By.css('.au-select__trigger'))!.nativeElement as HTMLButtonElement;
   }
 
-  function keydown(fixture: ComponentFixture<Select>, key: string): void {
+  function keydown(fixture: ComponentFixture<AuSelect>, key: string): void {
     queryTrigger(fixture).dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
     fixture.detectChanges();
   }
 
-  function openListbox(fixture: ComponentFixture<Select>): void {
+  function openListbox(fixture: ComponentFixture<AuSelect>): void {
     queryTrigger(fixture).click();
     fixture.detectChanges();
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Select],
+      imports: [AuSelect],
     }).compileComponents();
   });
 
   it('resolves triggerEl view child after render', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     expect(fix.componentInstance['triggerRef']!.nativeElement).toBe(queryTrigger(fix));
   });
 
   it('portals listbox to document.body while open', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     queryTrigger(fix).click();
@@ -52,7 +52,7 @@ describe('Select', () => {
   });
 
   it('binds value when an option is chosen', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     queryTrigger(fix).click();
@@ -64,7 +64,7 @@ describe('Select', () => {
   });
 
   it('sets null when placeholder option is chosen', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.componentRef.setInput('value', 'opt1');
@@ -79,14 +79,14 @@ describe('Select', () => {
   });
 
   it('inputDisplay is empty when value is null', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     expect(fix.componentInstance.inputDisplay()).toBe('');
   });
 
   it('inputDisplay returns the current value string', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'opt2');
     fix.detectChanges();
@@ -94,7 +94,7 @@ describe('Select', () => {
   });
 
   it('emits valueChange via outputToObservable', async () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -108,7 +108,7 @@ describe('Select', () => {
   });
 
   it('shows error, aria-errormessage, and invalid on the combobox', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('id', 'f-select');
     fix.componentRef.setInput('errorMessage', 'This field is required');
     fix.detectChanges();
@@ -120,7 +120,7 @@ describe('Select', () => {
   });
 
   it('does not emit when disabled and changing', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     const comp = fix.componentInstance;
@@ -134,7 +134,7 @@ describe('Select', () => {
   });
 
   it('renders placeholder option when provided', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Select one...');
     fix.detectChanges();
@@ -150,7 +150,7 @@ describe('Select', () => {
       { value: 'opt1', label: 'Option One' },
       { value: 'opt2', label: 'Option Two', disabled: true },
     ];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', optionsWithDisabled);
     fix.detectChanges();
     queryTrigger(fix).click();
@@ -160,7 +160,7 @@ describe('Select', () => {
   });
 
   it('renders label when provided', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('label', 'Choose option');
     fix.detectChanges();
     const label = fix.debugElement.query(By.css('.au-select__label'));
@@ -168,7 +168,7 @@ describe('Select', () => {
   });
 
   it('sets hint and aria-describedby on the select', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('hint', 'Pick any');
     fix.detectChanges();
@@ -179,7 +179,7 @@ describe('Select', () => {
   });
 
   it('emits blur from trigger blur', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);
@@ -189,7 +189,7 @@ describe('Select', () => {
   });
 
   it('focus() focuses the combobox trigger', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const trigger = queryTrigger(fix);
@@ -200,7 +200,7 @@ describe('Select', () => {
   });
 
   it('shows displayError from errors when no manual message', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Field required' }] as any);
     fix.detectChanges();
@@ -209,7 +209,7 @@ describe('Select', () => {
   });
 
   it('falls back to kind when message missing', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ kind: 'broken' }] as any);
     fix.detectChanges();
@@ -218,7 +218,7 @@ describe('Select', () => {
   });
 
   it('marks aria-invalid when invalid without visible error', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('invalid', true);
     fix.detectChanges();
@@ -226,7 +226,7 @@ describe('Select', () => {
   });
 
   it('hides required asterisk when showRequired is false', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('label', 'Country');
     fix.componentRef.setInput('required', true);
     fix.componentRef.setInput('showRequired', false);
@@ -236,7 +236,7 @@ describe('Select', () => {
   });
 
   it('omits placeholder option when placeholder empty', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     queryTrigger(fix).click();
@@ -245,7 +245,7 @@ describe('Select', () => {
   });
 
   it('exposes autocomplete attribute input', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('autocomplete', 'country');
     fix.detectChanges();
@@ -253,7 +253,7 @@ describe('Select', () => {
   });
 
   it('uses explicit id when provided', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('id', 'custom-select');
     fix.detectChanges();
@@ -261,7 +261,7 @@ describe('Select', () => {
   });
 
   it('renders hidden name input for form posts', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('name', 'country');
     fix.componentRef.setInput('value', 'opt2');
@@ -272,21 +272,21 @@ describe('Select', () => {
   });
 
   it('generates id when id omitted', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     expect(queryTrigger(fix).id.startsWith('au-select-')).toBe(true);
   });
 
   it('onControlRowFocusout ignores non-HTMLElement currentTarget', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onControlRowFocusout returns when focus stays inside control row', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
@@ -297,7 +297,7 @@ describe('Select', () => {
   });
 
   it('prefers manual errorMessage over errors', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errorMessage', 'Manual');
     fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
@@ -306,7 +306,7 @@ describe('Select', () => {
   });
 
   it('applies and clears from-tab on control row', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
@@ -322,7 +322,7 @@ describe('Select', () => {
   });
 
   it('normalizes nullish string inputs in transforms', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('hint', undefined as unknown as string);
@@ -336,7 +336,7 @@ describe('Select', () => {
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
     fix.detectChanges();
@@ -344,7 +344,7 @@ describe('Select', () => {
   });
 
   it('keyboard ArrowDown and Enter selects option', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     keydown(fix, 'ArrowDown');
@@ -353,7 +353,7 @@ describe('Select', () => {
   });
 
   it('Space opens panel when closed', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     keydown(fix, ' ');
@@ -361,7 +361,7 @@ describe('Select', () => {
   });
 
   it('Escape closes open panel', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -370,7 +370,7 @@ describe('Select', () => {
   });
 
   it('Home and End move highlight', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -385,7 +385,7 @@ describe('Select', () => {
   });
 
   it('keyboard no-ops when panel closed for Home, End, Escape', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     for (const key of ['Home', 'End', 'Escape']) {
@@ -395,7 +395,7 @@ describe('Select', () => {
   });
 
   it('ArrowUp opens panel and highlights last option', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     keydown(fix, 'ArrowUp');
@@ -405,7 +405,7 @@ describe('Select', () => {
   });
 
   it('ArrowDown moves highlight when panel is already open', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -416,7 +416,7 @@ describe('Select', () => {
   });
 
   it('ArrowDown wraps from last to first highlightable', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -428,7 +428,7 @@ describe('Select', () => {
   });
 
   it('ArrowUp wraps from first to last highlightable', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -444,7 +444,7 @@ describe('Select', () => {
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
     ];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     openListbox(fix);
@@ -455,7 +455,7 @@ describe('Select', () => {
   });
 
   it('trigger click toggles panel closed', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -465,7 +465,7 @@ describe('Select', () => {
   });
 
   it('onKeydown is a no-op when disabled', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -474,7 +474,7 @@ describe('Select', () => {
   });
 
   it('onKeydown is a no-op when readOnly', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
@@ -483,7 +483,7 @@ describe('Select', () => {
   });
 
   it('onTriggerClick is a no-op when disabled only', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -493,7 +493,7 @@ describe('Select', () => {
   });
 
   it('onTriggerClick is a no-op when readOnly only', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
@@ -503,7 +503,7 @@ describe('Select', () => {
   });
 
   it('highlights placeholder row on pointer enter', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.detectChanges();
@@ -516,7 +516,7 @@ describe('Select', () => {
   });
 
   it('does not toggle when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -532,7 +532,7 @@ describe('Select', () => {
   });
 
   it('openPanel is a no-op when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -547,7 +547,7 @@ describe('Select', () => {
   });
 
   it('openPanel highlights current value when reopening', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'opt2');
     fix.detectChanges();
@@ -558,7 +558,7 @@ describe('Select', () => {
   });
 
   it('Enter on placeholder clears value', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.componentRef.setInput('value', 'opt1');
@@ -570,7 +570,7 @@ describe('Select', () => {
   });
 
   it('setValue does not emit when value unchanged', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'opt1');
     const comp = fix.componentInstance;
@@ -586,7 +586,7 @@ describe('Select', () => {
   });
 
   it('highlights option on pointer enter', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -600,7 +600,7 @@ describe('Select', () => {
 
   it('ignores pointer enter on disabled option', () => {
     const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     openListbox(fix);
@@ -610,7 +610,7 @@ describe('Select', () => {
   });
 
   it('ignores pointer enter when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -624,7 +624,7 @@ describe('Select', () => {
 
   it('ignores mousedown on disabled option', () => {
     const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     fix.componentInstance.onOptionPointerDown(new Event('mousedown'), opts[0]!);
@@ -632,7 +632,7 @@ describe('Select', () => {
   });
 
   it('ignores placeholder mousedown when readOnly', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.componentRef.setInput('readOnly', true);
@@ -642,7 +642,7 @@ describe('Select', () => {
   });
 
   it('onControlRowFocusout ignores focus moving into portaled listbox', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -655,7 +655,7 @@ describe('Select', () => {
   });
 
   it('triggerLabel is empty for unknown value', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'missing');
     fix.detectChanges();
@@ -663,7 +663,7 @@ describe('Select', () => {
   });
 
   it('showingPlaceholder is true when value is null and placeholder set', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Pick');
     fix.detectChanges();
@@ -671,7 +671,7 @@ describe('Select', () => {
   });
 
   it('activeDescendantId uses placeholder id when highlighted', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.detectChanges();
@@ -681,7 +681,7 @@ describe('Select', () => {
   });
 
   it('activeDescendantId is null when highlight is out of range', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -699,7 +699,7 @@ describe('Select', () => {
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     keydown(fix, 'ArrowUp');
@@ -707,7 +707,7 @@ describe('Select', () => {
   });
 
   it('ArrowDown on empty list keeps highlight unset', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', []);
     fix.detectChanges();
     keydown(fix, 'ArrowDown');
@@ -715,7 +715,7 @@ describe('Select', () => {
   });
 
   it('ignores unhandled keys in onKeydown', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     keydown(fix, 'Tab');
@@ -724,7 +724,7 @@ describe('Select', () => {
 
   it('Enter does not select when no highlightable option', () => {
     const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     openListbox(fix);
@@ -733,7 +733,7 @@ describe('Select', () => {
   });
 
   it('nextHighlightableIndex returns -1 when list is empty', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', []);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -752,7 +752,7 @@ describe('Select', () => {
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -767,7 +767,7 @@ describe('Select', () => {
   });
 
   it('ArrowUp from unset highlight uses last enabled index', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -784,7 +784,7 @@ describe('Select', () => {
   });
 
   it('exposes option and placeholder id helpers', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.detectChanges();
@@ -796,14 +796,14 @@ describe('Select', () => {
   });
 
   it('placeholderOptionIndex is -1 without placeholder', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     expect(fix.componentInstance.placeholderOptionIndex()).toBe(-1);
   });
 
   it('openPanel keeps highlight when already set', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -820,7 +820,7 @@ describe('Select', () => {
   });
 
   it('onTriggerClick returns early for disabled and readOnly guards', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -833,7 +833,7 @@ describe('Select', () => {
   });
 
   it('onTriggerClick is a no-op when disabled and readOnly', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.componentRef.setInput('readOnly', true);
@@ -844,7 +844,7 @@ describe('Select', () => {
   });
 
   it('End highlights placeholder when it is the only list row', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', []);
     fix.componentRef.setInput('placeholder', 'Pick one');
     fix.detectChanges();
@@ -856,7 +856,7 @@ describe('Select', () => {
   });
 
   it('Enter selects option when list includes a placeholder row', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.detectChanges();
@@ -868,7 +868,7 @@ describe('Select', () => {
   });
 
   it('pointer enter on option row resolves index with placeholder offset', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Choose');
     fix.detectChanges();
@@ -881,7 +881,7 @@ describe('Select', () => {
   });
 
   it('Enter selects highlighted option without placeholder', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     openListbox(fix);
@@ -892,7 +892,7 @@ describe('Select', () => {
 
   it('Enter does not select a disabled highlighted option', () => {
     const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     openListbox(fix);
@@ -901,7 +901,7 @@ describe('Select', () => {
   });
 
   it('ArrowDown from unset highlight starts search at index -1', () => {
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -920,7 +920,7 @@ describe('Select', () => {
       { value: 'opt1', label: 'One', disabled: true },
       { value: 'opt2', label: 'Two' },
     ];
-    const fix = TestBed.createComponent(Select);
+    const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.componentRef.setInput('value', 'opt1');
     fix.detectChanges();

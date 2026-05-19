@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn, expect } from 'storybook/test';
 
-import { Button } from './button';
+import { AuButton } from './button';
 
-const storyImports = { imports: [Button] };
+const storyImports = { imports: [AuButton] };
 
 function buttonRender(args: Record<string, unknown>, template: string) {
   return { props: args, moduleMetadata: storyImports, template };
 }
 
-const meta: Meta<Button> = {
+const meta: Meta<AuButton> = {
   title: 'Aurea/Button',
-  component: Button,
+  component: AuButton,
   tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
@@ -67,7 +67,7 @@ const meta: Meta<Button> = {
 };
 
 export default meta;
-type Story = StoryObj<Button>;
+type Story = StoryObj<AuButton>;
 
 export const Primary: Story = {
   parameters: {

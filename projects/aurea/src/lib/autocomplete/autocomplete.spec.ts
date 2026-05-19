@@ -4,35 +4,35 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Autocomplete, type AutocompleteOption } from './autocomplete';
+import { AuAutocomplete, type AutocompleteOption } from './autocomplete';
 
-describe('Autocomplete', () => {
+describe('AuAutocomplete', () => {
   const testOptions: AutocompleteOption[] = [
     { value: 'mad', label: 'Madrid' },
     { value: 'bcn', label: 'Barcelona' },
     { value: 'vlc', label: 'Valencia' },
   ];
 
-  function queryInput(fixture: ComponentFixture<Autocomplete>): HTMLInputElement {
+  function queryInput(fixture: ComponentFixture<AuAutocomplete>): HTMLInputElement {
     return fixture.debugElement.query(By.css('.au-autocomplete__input'))!
       .nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Autocomplete],
+      imports: [AuAutocomplete],
     }).compileComponents();
   });
 
   it('resolves inputEl view child after render', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     expect(fix.componentInstance['inputRef']!.nativeElement).toBe(queryInput(fix));
   });
 
   it('filters options and selects on mousedown', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -49,7 +49,7 @@ describe('Autocomplete', () => {
   });
 
   it('sets null when cleared', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     fix.detectChanges();
@@ -61,7 +61,7 @@ describe('Autocomplete', () => {
   });
 
   it('emits valueChange via outputToObservable', async () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -74,7 +74,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows error, aria-errormessage, and invalid on the combobox', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('id', 'f-ac');
     fix.componentRef.setInput('errorMessage', 'Required');
     fix.detectChanges();
@@ -84,7 +84,7 @@ describe('Autocomplete', () => {
   });
 
   it('does not select when disabled', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -93,7 +93,7 @@ describe('Autocomplete', () => {
   });
 
   it('opens list on focus', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
@@ -102,7 +102,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInputFocus seeds query from selection when panel was closed', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     fix.detectChanges();
@@ -112,7 +112,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInputFocus does not overwrite query when panel is already open', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const comp = fix.componentInstance;
@@ -123,7 +123,7 @@ describe('Autocomplete', () => {
   });
 
   it('keyboard ArrowDown and Enter selects option', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -135,7 +135,7 @@ describe('Autocomplete', () => {
   });
 
   it('Escape clears query when there is no selected value', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -149,7 +149,7 @@ describe('Autocomplete', () => {
   });
 
   it('Escape closes panel and restores query', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     fix.detectChanges();
@@ -164,7 +164,7 @@ describe('Autocomplete', () => {
   });
 
   it('strictSelection clears invalid query on blur', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -181,7 +181,7 @@ describe('Autocomplete', () => {
   });
 
   it('treats whitespace-only query as below minFilterLength', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('minFilterLength', 1);
     fix.detectChanges();
@@ -194,7 +194,7 @@ describe('Autocomplete', () => {
   });
 
   it('respects minFilterLength', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('minFilterLength', 2);
     fix.detectChanges();
@@ -215,7 +215,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows no-results row when filter matches nothing', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -228,7 +228,7 @@ describe('Autocomplete', () => {
   });
 
   it('renders hint and aria-describedby', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('hint', 'Pick one');
     fix.detectChanges();
@@ -237,7 +237,7 @@ describe('Autocomplete', () => {
   });
 
   it('emits blur', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);
@@ -247,7 +247,7 @@ describe('Autocomplete', () => {
   });
 
   it('focus() focuses the input', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -262,7 +262,7 @@ describe('Autocomplete', () => {
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
     ];
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -276,7 +276,7 @@ describe('Autocomplete', () => {
   });
 
   it('Home and End move highlight', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -295,7 +295,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInput is a no-op when readOnly', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
@@ -308,7 +308,7 @@ describe('Autocomplete', () => {
   });
 
   it('does not emit when disabled on input', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     const comp = fix.componentInstance;
@@ -326,14 +326,14 @@ describe('Autocomplete', () => {
   });
 
   it('onControlRowFocusout ignores non-HTMLElement currentTarget', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onControlRowFocusout returns when focus stays inside', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
@@ -344,7 +344,7 @@ describe('Autocomplete', () => {
   });
 
   it('prefers manual errorMessage over errors', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errorMessage', 'Manual');
     fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
@@ -355,14 +355,14 @@ describe('Autocomplete', () => {
   });
 
   it('generates id when omitted', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     expect(queryInput(fix).id.startsWith('au-autocomplete-')).toBe(true);
   });
 
   it('syncs query when value is set from parent', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'bcn');
     fix.detectChanges();
@@ -370,7 +370,7 @@ describe('Autocomplete', () => {
   });
 
   it('normalizes nullish string inputs', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('hint', undefined as unknown as string);
@@ -386,7 +386,7 @@ describe('Autocomplete', () => {
   });
 
   it('preserves non-empty placeholder and noResultsText', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('placeholder', 'Search…');
     fix.componentRef.setInput('noResultsText', 'Sin coincidencias');
@@ -396,7 +396,7 @@ describe('Autocomplete', () => {
   });
 
   it('uses explicit id when provided', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('id', 'city-ac');
     fix.detectChanges();
@@ -405,7 +405,7 @@ describe('Autocomplete', () => {
   });
 
   it('filters case-sensitively when caseSensitive is true', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('caseSensitive', true);
     fix.detectChanges();
@@ -422,7 +422,7 @@ describe('Autocomplete', () => {
   });
 
   it('does not run handlers when readOnly', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
@@ -439,7 +439,7 @@ describe('Autocomplete', () => {
   });
 
   it('highlights option on pointer enter', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
@@ -454,7 +454,7 @@ describe('Autocomplete', () => {
 
   it('ignores pointer enter on disabled option', () => {
     const opts: AutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
@@ -467,7 +467,7 @@ describe('Autocomplete', () => {
 
   it('ignores mousedown on disabled option', () => {
     const opts: AutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     fix.componentInstance.onOptionPointerDown(new Event('mousedown'), opts[0]!);
@@ -475,7 +475,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowUp opens panel and highlights last option', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -488,7 +488,7 @@ describe('Autocomplete', () => {
   });
 
   it('keyboard no-ops when panel closed for Home, End, Enter, Escape', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -501,7 +501,7 @@ describe('Autocomplete', () => {
 
   it('Enter does not select when no highlightable option', () => {
     const opts: AutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -513,7 +513,7 @@ describe('Autocomplete', () => {
   });
 
   it('clears aria-activedescendant when highlight is past filtered length', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -528,7 +528,7 @@ describe('Autocomplete', () => {
   });
 
   it('omits aria-activedescendant when no option is active', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', []);
     fix.detectChanges();
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
@@ -541,7 +541,7 @@ describe('Autocomplete', () => {
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -554,7 +554,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowDown wraps from last to first highlightable', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -569,7 +569,7 @@ describe('Autocomplete', () => {
   });
 
   it('strictSelection false does not commit invalid text on blur', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('strictSelection', false);
     fix.componentRef.setInput('value', 'mad');
@@ -587,7 +587,7 @@ describe('Autocomplete', () => {
   });
 
   it('findOptionByLabel is case-sensitive when caseSensitive is true', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('caseSensitive', true);
     fix.detectChanges();
@@ -610,7 +610,7 @@ describe('Autocomplete', () => {
   });
 
   it('commitQueryOnClose matches option by value string', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -627,7 +627,7 @@ describe('Autocomplete', () => {
   });
 
   it('setValue does not emit when value unchanged', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     const comp = fix.componentInstance;
@@ -643,7 +643,7 @@ describe('Autocomplete', () => {
   });
 
   it('syncs query to raw value when option missing', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'unknown-code');
     fix.detectChanges();
@@ -651,7 +651,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows displayError from error kind when message is absent', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ kind: 'required' }] as any);
     fix.detectChanges();
@@ -661,7 +661,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows displayError from errors and invalid without message', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Pick one' }] as any);
     fix.detectChanges();
@@ -671,7 +671,7 @@ describe('Autocomplete', () => {
   });
 
   it('marks aria-invalid when invalid without visible error', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('invalid', true);
     fix.detectChanges();
@@ -679,7 +679,7 @@ describe('Autocomplete', () => {
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
     fix.detectChanges();
@@ -687,7 +687,7 @@ describe('Autocomplete', () => {
   });
 
   it('hides required asterisk when showRequired is false', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('label', 'City');
     fix.componentRef.setInput('required', true);
     fix.componentRef.setInput('showRequired', false);
@@ -696,7 +696,7 @@ describe('Autocomplete', () => {
   });
 
   it('applies and clears from-tab on control row', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
@@ -712,7 +712,7 @@ describe('Autocomplete', () => {
   });
 
   it('does not open panel when disabled on focus', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -722,7 +722,7 @@ describe('Autocomplete', () => {
   });
 
   it('openPanel is a no-op when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -737,7 +737,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowUp wraps from first to last highlightable option', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -756,7 +756,7 @@ describe('Autocomplete', () => {
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -766,7 +766,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows selected label on load and when value changes programmatically', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     fix.detectChanges();
@@ -777,7 +777,7 @@ describe('Autocomplete', () => {
   });
 
   it('ignores unhandled keys in onKeydown', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -788,7 +788,7 @@ describe('Autocomplete', () => {
   });
 
   it('ignores pointer enter when component is disabled', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -797,7 +797,7 @@ describe('Autocomplete', () => {
   });
 
   it('ignores pointer enter when component is readOnly', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
@@ -806,7 +806,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows query while panel is open and selected label when closed', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     fix.detectChanges();
@@ -825,7 +825,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowDown does not open empty panel below minFilterLength', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('minFilterLength', 2);
     fix.detectChanges();
@@ -836,7 +836,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowDown opens panel when closed', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -849,7 +849,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowDown moves highlight when panel is already open', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -863,7 +863,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowUp from unset highlight uses nextHighlightableIndex', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -882,7 +882,7 @@ describe('Autocomplete', () => {
   });
 
   it('ArrowDown on empty list keeps highlight unset', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', []);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -894,7 +894,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInputFocus is a no-op when disabled', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('disabled', true);
     fix.detectChanges();
@@ -903,7 +903,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInputFocus is a no-op when readOnly', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
@@ -912,7 +912,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInputFocus is a no-op when query is below minFilterLength', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('minFilterLength', 2);
     fix.detectChanges();
@@ -921,7 +921,7 @@ describe('Autocomplete', () => {
   });
 
   it('onInputFocus keeps highlight when already set', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     const comp = fix.componentInstance as unknown as {
@@ -939,7 +939,7 @@ describe('Autocomplete', () => {
   });
 
   it('commitQueryOnClose leaves query when strictSelection is false', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('strictSelection', false);
     fix.detectChanges();
@@ -954,7 +954,7 @@ describe('Autocomplete', () => {
   });
 
   it('commitQueryOnClose matches label with caseSensitive', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('caseSensitive', true);
     fix.detectChanges();
@@ -971,7 +971,7 @@ describe('Autocomplete', () => {
   });
 
   it('Enter on closed panel is a no-op', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
@@ -980,7 +980,7 @@ describe('Autocomplete', () => {
   });
 
   it('Escape restores selected label in the query', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
     fix.detectChanges();
@@ -995,7 +995,7 @@ describe('Autocomplete', () => {
   });
 
   it('shows required marker and aria-required', () => {
-    const fix = TestBed.createComponent(Autocomplete);
+    const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('label', 'City');
     fix.componentRef.setInput('required', true);

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { Autocomplete, type AutocompleteOption } from './autocomplete';
+import { AuAutocomplete, type AutocompleteOption } from './autocomplete';
 
 const cities: AutocompleteOption[] = [
   { value: 'mad', label: 'Madrid' },
@@ -12,9 +12,9 @@ const cities: AutocompleteOption[] = [
   { value: 'agp', label: 'Málaga' },
 ];
 
-const meta: Meta<Autocomplete> = {
+const meta: Meta<AuAutocomplete> = {
   title: 'Aurea/Autocomplete',
-  component: Autocomplete,
+  component: AuAutocomplete,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -47,7 +47,7 @@ const meta: Meta<Autocomplete> = {
 };
 
 export default meta;
-type Story = StoryObj<Autocomplete>;
+type Story = StoryObj<AuAutocomplete>;
 
 function getCombobox(canvasElement: HTMLElement, name: string | RegExp) {
   return within(canvasElement).getByRole('combobox', { name });

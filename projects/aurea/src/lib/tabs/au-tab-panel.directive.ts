@@ -1,5 +1,5 @@
 import { Directive, computed, inject, input } from '@angular/core';
-import { Tabs } from './tabs';
+import { AuTabs } from './tabs';
 
 /**
  * Tab panel inside `au-tabs`. Pair with a tab button using the same key.
@@ -22,7 +22,7 @@ import { Tabs } from './tabs';
   },
 })
 export class AuTabPanel {
-  private readonly tabs = inject(Tabs);
+  private readonly tabs = inject(AuTabs);
 
   readonly auTabPanel = input.required<string>();
 

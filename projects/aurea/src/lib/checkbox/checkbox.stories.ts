@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { Checkbox } from './checkbox';
+import { AuCheckbox } from './checkbox';
 
-const meta: Meta<Checkbox> = {
+const meta: Meta<AuCheckbox> = {
   title: 'Aurea/Checkbox',
-  component: Checkbox,
+  component: AuCheckbox,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -79,7 +79,7 @@ const meta: Meta<Checkbox> = {
 };
 
 export default meta;
-type Story = StoryObj<Checkbox>;
+type Story = StoryObj<AuCheckbox>;
 
 export const Default: Story = {
   parameters: {

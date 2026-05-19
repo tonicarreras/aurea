@@ -44,7 +44,7 @@ type AuSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Checkbox implements FormCheckboxControl {
+export class AuCheckbox implements FormCheckboxControl {
   /**
    * Current checked state — required by {@link FormCheckboxControl}.
    * Use `[(checked)]` or bind through `formField` (directive writes into the model).
@@ -114,7 +114,7 @@ export class Checkbox implements FormCheckboxControl {
     if (v) {
       return v;
     }
-    return `au-checkbox-${++Checkbox.idCounter}`;
+    return `au-checkbox-${++AuCheckbox.idCounter}`;
   });
 
   readonly descriptionId = computed(() => `${this.resolvedId()}-desc`);

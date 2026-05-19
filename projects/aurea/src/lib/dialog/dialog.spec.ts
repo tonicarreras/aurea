@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuDialogFooter } from './dialog-footer.directive';
-import { Dialog } from './dialog';
+import { AuDialog } from './dialog';
 
-describe('Dialog', () => {
-  function queryNativeDialog(fixture: ComponentFixture<Dialog>): HTMLDialogElement {
+describe('AuDialog', () => {
+  function queryNativeDialog(fixture: ComponentFixture<AuDialog>): HTMLDialogElement {
     return fixture.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
   }
 
@@ -16,7 +16,7 @@ describe('Dialog', () => {
     return dialog.hasAttribute('open');
   }
 
-  function clickOutsidePanel(fixture: ComponentFixture<Dialog>): void {
+  function clickOutsidePanel(fixture: ComponentFixture<AuDialog>): void {
     const dialog = queryNativeDialog(fixture);
     const ev = new MouseEvent('click', { bubbles: true });
     Object.defineProperty(ev, 'target', { value: dialog, configurable: true });
@@ -25,26 +25,26 @@ describe('Dialog', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Dialog],
+      imports: [AuDialog],
     }).compileComponents();
   });
 
   it('keeps native dialog closed when open is false', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
   });
 
   it('opens native dialog when open is true', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
   it('renders with md size by default', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     const host = fix.nativeElement as HTMLElement;
@@ -52,7 +52,7 @@ describe('Dialog', () => {
   });
 
   it('applies size attribute to host', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('size', 'sm');
     fix.detectChanges();
@@ -60,7 +60,7 @@ describe('Dialog', () => {
   });
 
   it('applies lg size', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('size', 'lg');
     fix.detectChanges();
@@ -68,7 +68,7 @@ describe('Dialog', () => {
   });
 
   it('applies full size', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('size', 'full');
     fix.detectChanges();
@@ -76,7 +76,7 @@ describe('Dialog', () => {
   });
 
   it('renders title when provided', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', 'Confirm Action');
     fix.detectChanges();
@@ -85,7 +85,7 @@ describe('Dialog', () => {
   });
 
   it('renders close button by default', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     const closeBtn = fix.debugElement.query(By.css('.au-dialog__close'));
@@ -93,7 +93,7 @@ describe('Dialog', () => {
   });
 
   it('hides close button when showCloseButton is false', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('showCloseButton', false);
     fix.detectChanges();
@@ -102,7 +102,7 @@ describe('Dialog', () => {
   });
 
   it('hides header when no title and showCloseButton is false', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', '');
     fix.componentRef.setInput('showCloseButton', false);
@@ -112,7 +112,7 @@ describe('Dialog', () => {
   });
 
   it('emits close on backdrop click when closeOnBackdrop is true', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     let emitted = false;
@@ -123,7 +123,7 @@ describe('Dialog', () => {
   });
 
   it('does not emit close on backdrop click when closeOnBackdrop is false', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('closeOnBackdrop', false);
     fix.detectChanges();
@@ -134,7 +134,7 @@ describe('Dialog', () => {
   });
 
   it('emits close on close button click', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     let emitted = false;
@@ -145,7 +145,7 @@ describe('Dialog', () => {
   });
 
   it('emits close on Escape via cancel when closeOnEscape is true', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     let emitted = false;
@@ -157,7 +157,7 @@ describe('Dialog', () => {
   });
 
   it('does not emit close on cancel when closeOnEscape is false', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('closeOnEscape', false);
     fix.detectChanges();
@@ -172,7 +172,7 @@ describe('Dialog', () => {
   });
 
   it('does not emit close when clicking inside the panel', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     let emitted = false;
@@ -185,7 +185,7 @@ describe('Dialog', () => {
   });
 
   it('skips render sync when open stays false', async () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     const el = queryNativeDialog(fix);
     const closeSpy = vi.fn(function (this: HTMLDialogElement) {
       this.removeAttribute('open');
@@ -205,7 +205,7 @@ describe('Dialog', () => {
   });
 
   it('skips open sync when open signal is unchanged', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     const el = queryNativeDialog(fix);
     const openSpy = vi.fn(function (this: HTMLDialogElement) {
       this.setAttribute('open', '');
@@ -240,13 +240,13 @@ describe('Dialog', () => {
   });
 
   it('uses native dialog element', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(queryNativeDialog(fix).tagName).toBe('DIALOG');
   });
 
   it('has aria-labelledby matching title id when title is provided', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', 'Test Title');
     fix.detectChanges();
@@ -257,7 +257,7 @@ describe('Dialog', () => {
   });
 
   it('does not have aria-labelledby when title is empty', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', '');
     fix.detectChanges();
@@ -266,43 +266,43 @@ describe('Dialog', () => {
   });
 
   it('open input defaults to false', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.open()).toBe(false);
   });
 
   it('size input defaults to md', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.size()).toBe('md');
   });
 
   it('title input defaults to empty string', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.title()).toBe('');
   });
 
   it('showCloseButton input defaults to true', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.showCloseButton()).toBe(true);
   });
 
   it('closeOnBackdrop input defaults to true', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.closeOnBackdrop()).toBe(true);
   });
 
   it('closeOnEscape input defaults to true', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.closeOnEscape()).toBe(true);
   });
 
   it('uses native showModal/close when present on the element', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
     const showSpy = vi.fn(function (this: HTMLDialogElement) {
@@ -328,7 +328,7 @@ describe('Dialog', () => {
   });
 
   it('polyfills close when close is not a function on the instance', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
@@ -343,13 +343,13 @@ describe('Dialog', () => {
   });
 
   it('titleHeadingId uses generated id when id input is empty', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     expect(fix.componentInstance.titleHeadingId()).toMatch(/^au-dialog-title-\d+$/);
   });
 
   it('uses id input for title heading id', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('id', 'dlg-1');
     fix.componentRef.setInput('title', 'T');
@@ -360,7 +360,7 @@ describe('Dialog', () => {
   });
 
   it('sets aria-label when title is empty and ariaLabel is set', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', '');
     fix.componentRef.setInput('ariaLabel', 'Photo preview');
@@ -370,7 +370,7 @@ describe('Dialog', () => {
   });
 
   it('title change alone does not rerun dialog open sync', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
     const openSpy = vi.fn(function (this: HTMLDialogElement) {
@@ -391,7 +391,7 @@ describe('Dialog', () => {
   });
 
   it('close button tolerates polyfilled dialog already closed', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
     const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
@@ -401,7 +401,7 @@ describe('Dialog', () => {
   });
 
   it('does not close on cancel when dialog is not displayed', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
     let n = 0;
@@ -412,7 +412,7 @@ describe('Dialog', () => {
   });
 
   it('does not render footer when auDialogFooter is absent', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     expect(fix.debugElement.query(By.css('.au-dialog__footer'))).toBeNull();
@@ -422,12 +422,12 @@ describe('Dialog', () => {
   it('hasFooter is true when auDialogFooter is projected', () => {
     const fix = TestBed.createComponent(TestDialogWithFooterComponent);
     fix.detectChanges();
-    const dialog = fix.debugElement.query(By.directive(Dialog))!.componentInstance as Dialog;
+    const dialog = fix.debugElement.query(By.directive(AuDialog))!.componentInstance as AuDialog;
     expect(dialog.hasFooter()).toBe(true);
   });
 
   it('polyfills showModal when showModal is missing', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     const el = queryNativeDialog(fix);
     try {
       Object.defineProperty(el, 'showModal', { value: undefined, configurable: true });
@@ -440,7 +440,7 @@ describe('Dialog', () => {
   });
 
   it('onDialogClose does not emit when dialog is already closed', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
     let n = 0;
@@ -450,7 +450,7 @@ describe('Dialog', () => {
   });
 
   it('tolerates missing dialog node in host during render sync', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     fix.componentRef.setInput('open', true);
     expect(() => fix.detectChanges()).not.toThrow();
@@ -458,13 +458,13 @@ describe('Dialog', () => {
   });
 
   it('onCloseButtonClick is noop when dialog node is missing', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     expect(() => fix.componentInstance.onCloseButtonClick()).not.toThrow();
   });
 
   it('onDialogClick is noop when dialog node is missing', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     const ev = new MouseEvent('click', { bubbles: true });
     Object.defineProperty(ev, 'target', { value: fix.nativeElement, configurable: true });
@@ -472,7 +472,7 @@ describe('Dialog', () => {
   });
 
   it('onDialogKeydown is noop when dialog is closed', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
     fix.componentInstance.onDialogKeydown(ev);
@@ -480,7 +480,7 @@ describe('Dialog', () => {
   });
 
   it('onDialogKeydown is noop when panel is missing', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     vi.spyOn(fix.nativeElement, 'querySelector').mockImplementation((sel: unknown) => {
       if (sel === 'dialog') {
         return document.createElement('dialog');
@@ -513,7 +513,7 @@ describe('Dialog', () => {
     const trigger = document.createElement('button');
     document.body.append(trigger);
     trigger.focus();
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     await fix.whenStable();
@@ -534,7 +534,7 @@ describe('Dialog', () => {
   });
 
   it('skips focus save and initial focus when native dialog is already open', async () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     await fix.whenStable();
@@ -549,7 +549,7 @@ describe('Dialog', () => {
   });
 
   it('savedFocus is null when activeElement is not an HTMLElement', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     document.body.append(svg);
     const activeSpy = vi.spyOn(document, 'activeElement', 'get').mockReturnValue(svg);
@@ -565,7 +565,7 @@ describe('Dialog', () => {
   });
 
   it('skips initial focus when dialog closes before the open microtask', async () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
@@ -578,7 +578,7 @@ describe('Dialog', () => {
     trigger.type = 'button';
     document.body.append(trigger);
     trigger.focus();
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     await fix.whenStable();
@@ -592,7 +592,7 @@ describe('Dialog', () => {
   });
 
   it('close polyfill is noop when open attribute is already absent', () => {
-    const fix = TestBed.createComponent(Dialog);
+    const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
     const el = queryNativeDialog(fix);
     Object.defineProperty(el, 'close', { value: undefined, configurable: true });
@@ -604,7 +604,7 @@ describe('Dialog', () => {
 
 @Component({
   selector: 'test-dialog',
-  imports: [Dialog],
+  imports: [AuDialog],
   template: `
     <au-dialog [open]="true">
       <span class="test-dialog-content">Dialog body content</span>
@@ -615,7 +615,7 @@ class TestDialogComponent {}
 
 @Component({
   selector: 'test-dialog-footer',
-  imports: [Dialog, AuDialogFooter],
+  imports: [AuDialog, AuDialogFooter],
   template: `
     <au-dialog [open]="true">
       <p>Dialog body</p>
@@ -627,7 +627,7 @@ class TestDialogWithFooterComponent {}
 
 @Component({
   selector: 'test-dialog-focus-trap',
-  imports: [Dialog],
+  imports: [AuDialog],
   template: `
     <au-dialog [open]="true" title="Trap" [showCloseButton]="false">
       <button type="button" id="trap-first">First</button>

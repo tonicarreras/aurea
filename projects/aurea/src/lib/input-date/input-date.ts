@@ -36,7 +36,7 @@ type AuSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class InputDate implements FormValueControl<string | null> {
+export class AuInputDate implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -73,7 +73,7 @@ export class InputDate implements FormValueControl<string | null> {
     if (v) {
       return v;
     }
-    return `au-input-date-${++InputDate.idCounter}`;
+    return `au-input-date-${++AuInputDate.idCounter}`;
   });
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);

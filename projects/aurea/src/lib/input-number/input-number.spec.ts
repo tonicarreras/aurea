@@ -4,21 +4,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { InputNumber } from './input-number';
+import { AuInputNumber } from './input-number';
 
-describe('InputNumber', () => {
-  function queryInput(fixture: ComponentFixture<InputNumber>): HTMLInputElement {
+describe('AuInputNumber', () => {
+  function queryInput(fixture: ComponentFixture<AuInputNumber>): HTMLInputElement {
     return fixture.debugElement.query(By.css('.au-input-number__input'))!.nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputNumber],
+      imports: [AuInputNumber],
     }).compileComponents();
   });
 
   it('sets numeric value on input', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'Amount');
     fix.detectChanges();
     const el = queryInput(fix);
@@ -29,7 +29,7 @@ describe('InputNumber', () => {
   });
 
   it('sets null when cleared', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'Amount');
     fix.componentRef.setInput('value', 5);
     fix.detectChanges();
@@ -41,7 +41,7 @@ describe('InputNumber', () => {
   });
 
   it('emits valueChange', async () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -56,7 +56,7 @@ describe('InputNumber', () => {
   });
 
   it('emits null on clear via valueChange', async () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -71,7 +71,7 @@ describe('InputNumber', () => {
   });
 
   it('does not emit when disabled', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('disabled', true);
     const comp = fix.componentInstance;
@@ -87,7 +87,7 @@ describe('InputNumber', () => {
   });
 
   it('does not update model when readOnly', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('value', 1);
     fix.componentRef.setInput('readOnly', true);
@@ -100,7 +100,7 @@ describe('InputNumber', () => {
   });
 
   it('does not update model when parsed number is not finite', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('value', 2);
     fix.detectChanges();
@@ -110,7 +110,7 @@ describe('InputNumber', () => {
   });
 
   it('sets min max and step attributes', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('min', 0);
     fix.componentRef.setInput('max', 10);
@@ -123,7 +123,7 @@ describe('InputNumber', () => {
   });
 
   it('sets step any', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('step', 'any');
     fix.detectChanges();
@@ -131,7 +131,7 @@ describe('InputNumber', () => {
   });
 
   it('shows error and aria-invalid', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('id', 'num1');
     fix.componentRef.setInput('errorMessage', 'Bad');
@@ -142,7 +142,7 @@ describe('InputNumber', () => {
   });
 
   it('focus() focuses input', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.detectChanges();
     const el = queryInput(fix);
@@ -153,13 +153,13 @@ describe('InputNumber', () => {
   });
 
   it('onControlRowFocusout early exit', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.detectChanges();
     fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onControlRowFocusout when focus stays in row', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
@@ -170,7 +170,7 @@ describe('InputNumber', () => {
   });
 
   it('clears from-tab after leaving row', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
@@ -186,7 +186,7 @@ describe('InputNumber', () => {
   });
 
   it('sets hint and aria-describedby', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('hint', 'Numbers only');
     fix.detectChanges();
@@ -195,7 +195,7 @@ describe('InputNumber', () => {
   });
 
   it('stringifies placeholder input', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('placeholder', 'e.g. 42');
     fix.detectChanges();
@@ -203,7 +203,7 @@ describe('InputNumber', () => {
   });
 
   it('normalizes nullish transforms', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('hint', undefined as unknown as string);
     fix.componentRef.setInput('errorMessage', null as unknown as string);
@@ -216,14 +216,14 @@ describe('InputNumber', () => {
   });
 
   it('inputDisplay empty for null value', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.detectChanges();
     expect(fix.componentInstance.inputDisplay()).toBe('');
   });
 
   it('inputDisplay empty when value is undefined', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.detectChanges();
     (fix.componentInstance as unknown as { value: { set: (v: unknown) => void } }).value.set(undefined);
@@ -232,7 +232,7 @@ describe('InputNumber', () => {
   });
 
   it('shows error from errors input', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('errors', [{ kind: 'min', message: 'Too small' }]);
     fix.detectChanges();
@@ -240,7 +240,7 @@ describe('InputNumber', () => {
   });
 
   it('displayError uses kind when message missing', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
@@ -248,7 +248,7 @@ describe('InputNumber', () => {
   });
 
   it('displayError empty when first error has no usable text', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
     fix.detectChanges();
@@ -256,7 +256,7 @@ describe('InputNumber', () => {
   });
 
   it('uses explicit id for resolvedId', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     fix.componentRef.setInput('id', 'my-num');
     fix.detectChanges();
@@ -264,7 +264,7 @@ describe('InputNumber', () => {
   });
 
   it('emits blur from onBlurHost', () => {
-    const fix = TestBed.createComponent(InputNumber);
+    const fix = TestBed.createComponent(AuInputNumber);
     fix.componentRef.setInput('label', 'N');
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);

@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { tabFocusState } from '../au-tab-focus-state';
-import { Tabs } from './tabs';
+import { AuTabs } from './tabs';
 
 /**
  * Tab trigger inside `au-tabs`. Place on a `<button type="button">`.
@@ -38,7 +38,7 @@ import { Tabs } from './tabs';
   },
 })
 export class AuTab {
-  private readonly tabs = inject(Tabs);
+  private readonly tabs = inject(AuTabs);
   private readonly host = inject(ElementRef<HTMLButtonElement>);
   private readonly destroyRef = inject(DestroyRef);
 

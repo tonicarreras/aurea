@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build aurea",
+    "build": "ng build aurea && node scripts/strip-sourcemaps.mjs",
     "pack:package": "ng build aurea && npm pack --prefix dist/aurea --pack-destination=.",
     "publish:github": "ng build aurea && npm publish --prefix dist/aurea --access public",
     "watch": "ng build aurea --watch --configuration development",

@@ -35,7 +35,7 @@ type AuSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Switch implements FormCheckboxControl {
+export class AuSwitch implements FormCheckboxControl {
   readonly checked = model<boolean>(false);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -65,7 +65,7 @@ export class Switch implements FormCheckboxControl {
     if (v) {
       return v;
     }
-    return `au-switch-${++Switch.idCounter}`;
+    return `au-switch-${++AuSwitch.idCounter}`;
   });
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);

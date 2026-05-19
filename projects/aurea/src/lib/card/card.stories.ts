@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import type { Type } from '@angular/core';
 
-import { Button } from '../button/button';
+import { AuButton } from '../button/button';
 import { AuCardFooter } from './card-footer.directive';
-import { Card } from './card';
+import { AuCard } from './card';
 
-const storyImports = { imports: [Card] };
-const withFooterImports = { imports: [Card, Button, AuCardFooter] };
+const storyImports = { imports: [AuCard] };
+const withFooterImports = { imports: [AuCard, AuButton, AuCardFooter] };
 
 function cardRender(
   args: Record<string, unknown>,
@@ -16,9 +16,9 @@ function cardRender(
   return { props: args, moduleMetadata, template };
 }
 
-const meta: Meta<Card> = {
+const meta: Meta<AuCard> = {
   title: 'Aurea/Card',
-  component: Card,
+  component: AuCard,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -45,7 +45,7 @@ const meta: Meta<Card> = {
 };
 
 export default meta;
-type Story = StoryObj<Card>;
+type Story = StoryObj<AuCard>;
 
 export const Default: Story = {
   render: (args) =>

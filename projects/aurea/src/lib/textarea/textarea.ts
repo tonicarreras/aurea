@@ -41,7 +41,7 @@ type TextareaResize = 'none' | 'vertical' | 'both';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Textarea implements FormValueControl<string | null> {
+export class AuTextarea implements FormValueControl<string | null> {
   /** Bound value (`ModelSignal<string | null>`). */
   readonly value = model<string | null>(null);
 
@@ -104,7 +104,7 @@ export class Textarea implements FormValueControl<string | null> {
     if (v) {
       return v;
     }
-    return `au-textarea-${++Textarea.idCounter}`;
+    return `au-textarea-${++AuTextarea.idCounter}`;
   });
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);

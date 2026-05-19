@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { Button } from '../button/button';
+import { AuButton } from '../button/button';
 import { AuDialogFooter } from './dialog-footer.directive';
-import { Dialog } from './dialog';
+import { AuDialog } from './dialog';
 
 /**
  * Storybook-only host: trigger + dialog on a canvas that matches Aurea surfaces.
@@ -9,7 +9,7 @@ import { Dialog } from './dialog';
  */
 @Component({
   selector: 'au-dialog-story-host',
-  imports: [Button, Dialog, AuDialogFooter],
+  imports: [AuButton, AuDialog, AuDialogFooter],
   template: `
     <div class="au-dialog-story" [attr.data-au-story-size]="size()">
       @if (hint()) {

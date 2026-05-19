@@ -4,21 +4,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { InputText } from './input-text';
+import { AuInputText } from './input-text';
 
-describe('InputText', () => {
-  function queryInput(fixture: ComponentFixture<InputText>): HTMLInputElement {
+describe('AuInputText', () => {
+  function queryInput(fixture: ComponentFixture<AuInputText>): HTMLInputElement {
     return fixture.debugElement.query(By.css('.au-input-text__input'))!.nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputText],
+      imports: [AuInputText],
     }).compileComponents();
   });
 
   it('sets null when cleared', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('label', 'Field');
     fix.componentRef.setInput('value', 'abc');
     fix.detectChanges();
@@ -30,14 +30,14 @@ describe('InputText', () => {
   });
 
   it('inputDisplay is empty when value is null', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('label', 'x');
     fix.detectChanges();
     expect(fix.componentInstance.inputDisplay()).toBe('');
   });
 
   it('binds value on input (model) and input reflects value', async () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.detectChanges();
     const comp = fix.componentInstance;
     const el = queryInput(fix);
@@ -48,7 +48,7 @@ describe('InputText', () => {
   });
 
   it('emits valueChange via outputToObservable', async () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
@@ -63,7 +63,7 @@ describe('InputText', () => {
   });
 
   it('shows error, aria-errormessage, and invalid on the input (not the host)', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('id', 'f-email');
     fix.componentRef.setInput('errorMessage', 'This field is required');
     fix.detectChanges();
@@ -75,7 +75,7 @@ describe('InputText', () => {
   });
 
   it('does not emit when disabled and typing', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('disabled', true);
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -90,7 +90,7 @@ describe('InputText', () => {
   });
 
   it('emits blur from native blur', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);
     fix.detectChanges();
@@ -99,7 +99,7 @@ describe('InputText', () => {
   });
 
   it('focus() focuses the native input', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.detectChanges();
     const el = queryInput(fix);
     const spy = vi.spyOn(el, 'focus');
@@ -109,7 +109,7 @@ describe('InputText', () => {
   });
 
   it('sets hint and aria-describedby', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('hint', 'Use work email');
     fix.detectChanges();
     const input = queryInput(fix);
@@ -119,7 +119,7 @@ describe('InputText', () => {
   });
 
   it('shows required marker when required and showRequired', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('label', 'Email');
     fix.componentRef.setInput('required', true);
     fix.detectChanges();
@@ -128,7 +128,7 @@ describe('InputText', () => {
   });
 
   it('hides required marker when showRequired false', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('label', 'Email');
     fix.componentRef.setInput('required', true);
     fix.componentRef.setInput('showRequired', false);
@@ -138,7 +138,7 @@ describe('InputText', () => {
   });
 
   it('toggles password visibility', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('type', 'password');
     fix.detectChanges();
     const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
@@ -155,7 +155,7 @@ describe('InputText', () => {
   });
 
   it('does not render password toggle when showPasswordToggle is false', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('type', 'password');
     fix.componentRef.setInput('showPasswordToggle', false);
     fix.detectChanges();
@@ -163,21 +163,21 @@ describe('InputText', () => {
   });
 
   it('keeps non-password type from effectiveInputType', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('type', 'email');
     fix.detectChanges();
     expect(queryInput(fix).getAttribute('type')).toBe('email');
   });
 
   it('sets readOnly on the input', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('readOnly', true);
     fix.detectChanges();
     expect(queryInput(fix).readOnly).toBe(true);
   });
 
   it('sets name, placeholder, autocomplete, min and max length', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('name', 'user');
     fix.componentRef.setInput('placeholder', 'Type here');
     fix.componentRef.setInput('autocomplete', 'username');
@@ -195,7 +195,7 @@ describe('InputText', () => {
   });
 
   it('shows error from errors when no manual message', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('errors', [{ kind: 'minLength', message: 'Too short' }] as any);
     fix.detectChanges();
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
@@ -203,7 +203,7 @@ describe('InputText', () => {
   });
 
   it('uses kind when message missing in errors', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
@@ -211,20 +211,20 @@ describe('InputText', () => {
   });
 
   it('marks aria-invalid when invalid without message', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('invalid', true);
     fix.detectChanges();
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
   it('generates id when id omitted', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.detectChanges();
     expect(queryInput(fix).id.startsWith('au-input-text-')).toBe(true);
   });
 
   it('applies from-tab on control row after Tab', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -234,7 +234,7 @@ describe('InputText', () => {
   });
 
   it('clears from-tab after focus leaves control row', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -249,7 +249,7 @@ describe('InputText', () => {
   });
 
   it('adds password control row class when toggle shown', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('type', 'password');
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
@@ -257,7 +257,7 @@ describe('InputText', () => {
   });
 
   it('prefers manual errorMessage over errors', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('errorMessage', 'Manual');
     fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
     fix.detectChanges();
@@ -265,13 +265,13 @@ describe('InputText', () => {
   });
 
   it('onControlRowFocusout ignores non-HTMLElement', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.detectChanges();
     fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onControlRowFocusout returns when focus stays inside row', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('type', 'password');
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
@@ -282,7 +282,7 @@ describe('InputText', () => {
   });
 
   it('normalizes nullish string inputs in transforms', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('hint', undefined as unknown as string);
     fix.componentRef.setInput('errorMessage', null as unknown as string);
@@ -295,14 +295,14 @@ describe('InputText', () => {
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
     fix.detectChanges();
     expect(fix.componentInstance.displayError()).toBe('');
   });
 
   it('togglePasswordVisibility toggles type without using the reveal button', () => {
-    const fix = TestBed.createComponent(InputText);
+    const fix = TestBed.createComponent(AuInputText);
     fix.componentRef.setInput('type', 'password');
     fix.detectChanges();
     fix.componentInstance.togglePasswordVisibility();

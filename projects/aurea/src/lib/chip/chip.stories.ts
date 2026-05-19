@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { Chip } from './chip';
+import { AuChip } from './chip';
 
-const meta: Meta<Chip> = {
+const meta: Meta<AuChip> = {
   title: 'Aurea/Chip',
-  component: Chip,
+  component: AuChip,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -63,7 +63,7 @@ const meta: Meta<Chip> = {
 };
 
 export default meta;
-type Story = StoryObj<Chip>;
+type Story = StoryObj<AuChip>;
 
 export const Default: Story = {
   args: {
@@ -141,7 +141,7 @@ export const ChipGroup: Story = {
   },
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [Chip] },
+    moduleMetadata: { imports: [AuChip] },
     template: `
       <div role="list" style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
         <au-chip label="Angular" removable />

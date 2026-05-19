@@ -42,7 +42,7 @@ export type ButtonType = 'button' | 'submit' | 'reset';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class Button {
+export class AuButton {
   /** Visual style: primary (solid), secondary (filled), outline (border), ghost (text-only). */
   readonly variant = input<ButtonVariant>('primary');
   /** Density: sm (compact), md (default), lg (prominent/touch-friendly). */

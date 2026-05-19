@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AuTab } from './au-tab.directive';
 import { AuTabPanel } from './au-tab-panel.directive';
-import { Tabs } from './tabs';
+import { AuTabs } from './tabs';
 
 describe('AuTabPanel', () => {
   it('is defined', () => {
@@ -12,7 +12,7 @@ describe('AuTabPanel', () => {
 
 @Component({
   selector: 'test-tabs-panel',
-  imports: [Tabs, AuTab, AuTabPanel],
+  imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs value="a" ariaLabel="Test">
       <button type="button" auTab="a">A</button>

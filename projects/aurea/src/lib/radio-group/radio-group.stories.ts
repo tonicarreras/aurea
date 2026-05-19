@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import { RadioGroup, RadioOption } from './radio-group';
+import { AuRadioGroup, RadioOption } from './radio-group';
 
 const sample: RadioOption[] = [
   { value: 'email', label: 'Email' },
@@ -9,9 +9,9 @@ const sample: RadioOption[] = [
   { value: 'none', label: 'None' },
 ];
 
-const meta: Meta<RadioGroup> = {
+const meta: Meta<AuRadioGroup> = {
   title: 'Aurea/Radio group',
-  component: RadioGroup,
+  component: AuRadioGroup,
   tags: ['autodocs', 'au'],
   parameters: { layout: 'padded' },
   args: {
@@ -22,7 +22,7 @@ const meta: Meta<RadioGroup> = {
 };
 
 export default meta;
-type Story = StoryObj<RadioGroup>;
+type Story = StoryObj<AuRadioGroup>;
 
 export const Default: Story = {
   args: {

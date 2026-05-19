@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import { InputNumber } from './input-number';
+import { AuInputNumber } from './input-number';
 
-const meta: Meta<InputNumber> = {
+const meta: Meta<AuInputNumber> = {
   title: 'Aurea/Input number',
-  component: InputNumber,
+  component: AuInputNumber,
   tags: ['autodocs', 'au'],
   parameters: { layout: 'padded' },
   args: {
@@ -15,7 +15,7 @@ const meta: Meta<InputNumber> = {
 };
 
 export default meta;
-type Story = StoryObj<InputNumber>;
+type Story = StoryObj<AuInputNumber>;
 
 export const Default: Story = {
   args: {

@@ -6,7 +6,7 @@ import { SnackbarStoryHost } from './snackbar-story-host';
 
 const meta: Meta<SnackbarStoryHost> = {
   title: 'Aurea/Snackbar',
-  component: SnackbarStoryHost,
+  component: AuSnackbarStoryHost,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'fullscreen',

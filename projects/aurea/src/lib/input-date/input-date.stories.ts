@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import { InputDate } from './input-date';
+import { AuInputDate } from './input-date';
 
-const meta: Meta<InputDate> = {
+const meta: Meta<AuInputDate> = {
   title: 'Aurea/Input date',
-  component: InputDate,
+  component: AuInputDate,
   tags: ['autodocs', 'au'],
   parameters: { layout: 'padded' },
   args: {
@@ -15,7 +15,7 @@ const meta: Meta<InputDate> = {
 };
 
 export default meta;
-type Story = StoryObj<InputDate>;
+type Story = StoryObj<AuInputDate>;
 
 export const Default: Story = {
   args: {

@@ -37,7 +37,7 @@ export type DividerOrientation = 'horizontal' | 'vertical';
     '[attr.data-au-labeled]': 'hasLabel() && orientation() === "horizontal" ? "" : null',
   },
 })
-export class Divider {
+export class AuDivider {
   /** Rule direction: horizontal (default) or vertical. */
   readonly orientation = input<DividerOrientation>('horizontal');
 

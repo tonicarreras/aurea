@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 
-import { Button } from '../button/button';
+import { AuButton } from '../button/button';
 import { AuTooltip } from './au-tooltip.directive';
 import type { TooltipPlacement } from '../theme/tooltip-position';
 
-const storyImports = { imports: [AuTooltip, Button] };
+const storyImports = { imports: [AuTooltip, AuButton] };
 
 interface TooltipStoryArgs {
   text: string;

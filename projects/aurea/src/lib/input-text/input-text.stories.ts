@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { INPUT_TEXT_DOCS_OVERVIEW } from './input-text.docs-overview';
-import { InputText } from './input-text';
+import { AuInputText } from './input-text';
 
-const meta: Meta<InputText> = {
+const meta: Meta<AuInputText> = {
   title: 'Aurea/InputText',
-  component: InputText,
+  component: AuInputText,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -130,7 +130,7 @@ const meta: Meta<InputText> = {
 };
 
 export default meta;
-type Story = StoryObj<InputText>;
+type Story = StoryObj<AuInputText>;
 
 export const Default: Story = {
   parameters: {

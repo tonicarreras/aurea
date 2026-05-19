@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { Select, type SelectOption } from './select';
+import { AuSelect, type SelectOption } from './select';
 
 const sampleOptions: SelectOption[] = [
   { value: 'option1', label: 'Option One' },
@@ -18,9 +18,9 @@ const groupedOptions: SelectOption[] = [
   { value: 'group5', label: 'Group B - Option 3', disabled: true },
 ];
 
-const meta: Meta<Select> = {
+const meta: Meta<AuSelect> = {
   title: 'Aurea/Select',
-  component: Select,
+  component: AuSelect,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -113,7 +113,7 @@ const meta: Meta<Select> = {
 };
 
 export default meta;
-type Story = StoryObj<Select>;
+type Story = StoryObj<AuSelect>;
 
 /** Native label text includes required markers; match by accessible name. */
 function getSelect(canvasElement: HTMLElement, name: string | RegExp) {

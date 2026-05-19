@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { TEXTAREA_DOCS_OVERVIEW } from './textarea.docs-overview';
-import { Textarea } from './textarea';
+import { AuTextarea } from './textarea';
 
-const meta: Meta<Textarea> = {
+const meta: Meta<AuTextarea> = {
   title: 'Aurea/Textarea',
-  component: Textarea,
+  component: AuTextarea,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -129,7 +129,7 @@ const meta: Meta<Textarea> = {
 };
 
 export default meta;
-type Story = StoryObj<Textarea>;
+type Story = StoryObj<AuTextarea>;
 
 export const Default: Story = {
   parameters: {

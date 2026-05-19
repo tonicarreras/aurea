@@ -42,7 +42,7 @@ type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search'
     '[attr.data-au-size]': 'size()',
   },
 })
-export class InputText implements FormValueControl<string | null> {
+export class AuInputText implements FormValueControl<string | null> {
   /**
    * Current value — required by {@link FormValueControl}.
    * Use `[(value)]` or bind through `formField` (directive writes into the model).
@@ -115,7 +115,7 @@ export class InputText implements FormValueControl<string | null> {
     if (v) {
       return v;
     }
-    return `au-input-text-${++InputText.idCounter}`;
+    return `au-input-text-${++AuInputText.idCounter}`;
   });
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);

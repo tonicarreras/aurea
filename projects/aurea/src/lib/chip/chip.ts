@@ -44,7 +44,7 @@ export type ChipSize = 'sm' | 'md';
     '[attr.role]': 'hostRole()',
   },
 })
-export class Chip {
+export class AuChip {
   /** Visible text when not using projected content. */
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
 

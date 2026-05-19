@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
-import { Divider } from './divider';
+import { AuDivider } from './divider';
 
-const meta: Meta<Divider> = {
+const meta: Meta<AuDivider> = {
   title: 'Aurea/Divider',
-  component: Divider,
+  component: AuDivider,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -35,12 +35,12 @@ const meta: Meta<Divider> = {
 };
 
 export default meta;
-type Story = StoryObj<Divider>;
+type Story = StoryObj<AuDivider>;
 
 export const Default: Story = {
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [Divider] },
+    moduleMetadata: { imports: [AuDivider] },
     template: `
       <div style="max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;">
         <p style="margin: 0;">Section above</p>
@@ -65,7 +65,7 @@ export const Vertical: Story = {
   args: { orientation: 'vertical' },
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [Divider] },
+    moduleMetadata: { imports: [AuDivider] },
     template: `
       <div style="display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;">
         <span>Projects</span>

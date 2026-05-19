@@ -46,7 +46,7 @@ export type TabsSize = 'sm' | 'md' | 'lg';
     '[attr.data-au-orientation]': 'orientation()',
   },
 })
-export class Tabs {
+export class AuTabs {
   private static idCounter = 0;
 
   private readonly tabRegistry = signal<readonly AuTab[]>([]);
@@ -66,7 +66,7 @@ export class Tabs {
 
   readonly resolvedId = computed(() => {
     const custom = this.id();
-    return custom || `au-tabs-${++Tabs.idCounter}`;
+    return custom || `au-tabs-${++AuTabs.idCounter}`;
   });
 
   registerTab(tab: AuTab): void {

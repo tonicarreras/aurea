@@ -42,7 +42,7 @@ export interface RadioOption {
     '[attr.data-au-size]': 'size()',
   },
 })
-export class RadioGroup implements FormValueControl<string | null> {
+export class AuRadioGroup implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -74,7 +74,7 @@ export class RadioGroup implements FormValueControl<string | null> {
     if (v) {
       return v;
     }
-    return `au-radio-group-${++RadioGroup.idCounter}`;
+    return `au-radio-group-${++AuRadioGroup.idCounter}`;
   });
 
   readonly legendId = computed(() => `${this.resolvedId()}-legend`);

@@ -58,10 +58,10 @@ Or use the `auTheme` directive from the same package.
 ### 3. Components
 
 ```ts
-import { Button, Checkbox, Divider, AuTooltip } from '@aurea-ds/aurea';
+import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-ds/aurea';
 
 @Component({
-  imports: [Button, Checkbox, Divider, AuTooltip],
+  imports: [AuButton, AuCheckbox, AuDivider, AuTooltip],
   template: `
     <au-button variant="primary">Save</au-button>
     <au-button variant="outline" auTooltip="Extra help">?</au-button>
@@ -78,22 +78,22 @@ export class Example {}
 
 | Export | Selector / API | Notes |
 |--------|----------------|-------|
-| `Button` | `<au-button>` | Variants, loading, focus ring |
-| `InputText` | `<au-input-text>` | Signal forms via `formField` |
-| `Textarea` | `<au-textarea>` | |
-| `Checkbox` | `<au-checkbox>` | |
-| `Select` | `<au-select>` | Portaled listbox |
-| `Autocomplete` | `<au-autocomplete>` | |
-| `Switch` | `<au-switch>` | |
-| `RadioGroup` | `<au-radio-group>` | |
-| `InputNumber` | `<au-input-number>` | |
-| `InputDate` | `<au-input-date>` | |
-| `Dialog` | `<au-dialog>` | Native `<dialog>` |
-| `Card` | `<au-card>` | `AuCardFooter` directive |
-| `Tabs` | `<au-tabs>` | `AuTab`, `AuTabPanel` |
-| `Chip` | `<au-chip>` | Removable / selectable |
-| `Snackbar` | `<au-snackbar>` | |
-| `Divider` | `<au-divider>` | Horizontal / vertical |
+| `AuButton` | `<au-button>` | Variants, loading, focus ring |
+| `AuInputText` | `<au-input-text>` | Signal forms via `formField` |
+| `AuTextarea` | `<au-textarea>` | |
+| `AuCheckbox` | `<au-checkbox>` | |
+| `AuSelect` | `<au-select>` | Portaled listbox |
+| `AuAutocomplete` | `<au-autocomplete>` | |
+| `AuSwitch` | `<au-switch>` | |
+| `AuRadioGroup` | `<au-radio-group>` | |
+| `AuInputNumber` | `<au-input-number>` | |
+| `AuInputDate` | `<au-input-date>` | |
+| `AuDialog` | `<au-dialog>` | Native `<dialog>` |
+| `AuCard` | `<au-card>` | `AuCardFooter` directive |
+| `AuTabs` | `<au-tabs>` | `AuTab`, `AuTabPanel` |
+| `AuChip` | `<au-chip>` | Removable / selectable |
+| `AuSnackbar` | `<au-snackbar>` | |
+| `AuDivider` | `<au-divider>` | Horizontal / vertical |
 | `AuTooltip` | `[auTooltip]` | Directive on the trigger |
 | `AuTheme` | `[auTheme]` | `light` / `dark` / `system` |
 

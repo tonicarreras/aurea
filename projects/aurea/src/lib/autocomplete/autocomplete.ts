@@ -51,7 +51,7 @@ export interface AutocompleteOption {
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
   },
 })
-export class Autocomplete implements FormValueControl<string | null> {
+export class AuAutocomplete implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -110,7 +110,7 @@ export class Autocomplete implements FormValueControl<string | null> {
     if (v) {
       return v;
     }
-    return `au-autocomplete-${++Autocomplete.idCounter}`;
+    return `au-autocomplete-${++AuAutocomplete.idCounter}`;
   });
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);

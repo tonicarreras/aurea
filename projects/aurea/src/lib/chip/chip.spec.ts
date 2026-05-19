@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Chip } from './chip';
+import { AuChip } from './chip';
 
-describe('Chip', () => {
-  let fixture: ComponentFixture<Chip>;
-  let component: Chip;
+describe('AuChip', () => {
+  let fixture: ComponentFixture<AuChip>;
+  let component: AuChip;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Chip],
+      imports: [AuChip],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Chip);
+    fixture = TestBed.createComponent(AuChip);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('label', 'TypeScript');
     fixture.detectChanges();

@@ -4,21 +4,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Checkbox } from './checkbox';
+import { AuCheckbox } from './checkbox';
 
-describe('Checkbox', () => {
-  function queryInput(fixture: ComponentFixture<Checkbox>): HTMLInputElement {
+describe('AuCheckbox', () => {
+  function queryInput(fixture: ComponentFixture<AuCheckbox>): HTMLInputElement {
     return fixture.debugElement.query(By.css('.au-checkbox__element'))!.nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Checkbox],
+      imports: [AuCheckbox],
     }).compileComponents();
   });
 
   it('binds checked value on change (model)', async () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.detectChanges();
     const comp = fix.componentInstance;
     const el = queryInput(fix);
@@ -29,7 +29,7 @@ describe('Checkbox', () => {
   });
 
   it('emits checkedChange via outputToObservable', async () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
@@ -44,7 +44,7 @@ describe('Checkbox', () => {
   });
 
   it('shows label and links via for/id', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Accept terms');
     fix.componentRef.setInput('id', 'test-checkbox');
     fix.componentRef.setInput('required', true);
@@ -56,7 +56,7 @@ describe('Checkbox', () => {
   });
 
   it('sets native indeterminate for indeterminate state', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('indeterminate', true);
     fix.detectChanges();
     const input = queryInput(fix);
@@ -65,7 +65,7 @@ describe('Checkbox', () => {
   });
 
   it('afterRenderEffect no-ops when native input is missing', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.detectChanges();
     const spy = vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     fix.componentRef.setInput('indeterminate', true);
@@ -74,7 +74,7 @@ describe('Checkbox', () => {
   });
 
   it('shows signal-form error message when errorMessage is empty', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ message: 'Required', kind: 'required' }]);
     fix.detectChanges();
@@ -82,7 +82,7 @@ describe('Checkbox', () => {
   });
 
   it('falls back to error kind when message is missing', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ kind: 'required' }]);
     fix.detectChanges();
@@ -90,7 +90,7 @@ describe('Checkbox', () => {
   });
 
   it('shows description with aria-describedby', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Subscribe');
     fix.componentRef.setInput('description', 'Weekly updates');
     fix.detectChanges();
@@ -102,7 +102,7 @@ describe('Checkbox', () => {
   });
 
   it('shows manual errorMessage, aria-invalid, and aria-errormessage', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errorMessage', 'You must accept.');
     fix.detectChanges();
@@ -117,7 +117,7 @@ describe('Checkbox', () => {
   });
 
   it('uses first signal-form errors entry when errorMessage is empty', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Required field' }]);
     fix.detectChanges();
@@ -126,7 +126,7 @@ describe('Checkbox', () => {
   });
 
   it('uses kind when message missing in errors', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ kind: 'pattern' }] as any);
     fix.detectChanges();
@@ -135,7 +135,7 @@ describe('Checkbox', () => {
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
     fix.detectChanges();
@@ -143,7 +143,7 @@ describe('Checkbox', () => {
   });
 
   it('sets aria-invalid from invalid input without visible error text', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Agree');
     fix.componentRef.setInput('invalid', true);
     fix.detectChanges();
@@ -154,7 +154,7 @@ describe('Checkbox', () => {
   });
 
   it('does not emit when disabled', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('disabled', true);
     const comp = fix.componentInstance;
     const inj = TestBed.inject(Injector);
@@ -169,7 +169,7 @@ describe('Checkbox', () => {
   });
 
   it('sets name and size on host and input', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('name', 'agree');
     fix.componentRef.setInput('size', 'sm');
     fix.detectChanges();
@@ -178,7 +178,7 @@ describe('Checkbox', () => {
   });
 
   it('onFocusHost is a no-op (legacy compat, no blur emission)', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     let n = 0;
     fix.componentInstance.blur.subscribe(() => n++);
     fix.componentInstance.onFocusHost();
@@ -186,7 +186,7 @@ describe('Checkbox', () => {
   });
 
   it('focus() focuses the native input', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.detectChanges();
     const el = queryInput(fix);
     const spy = vi.spyOn(el, 'focus');
@@ -196,13 +196,13 @@ describe('Checkbox', () => {
   });
 
   it('generates id when id input is empty', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.detectChanges();
     expect(queryInput(fix).id.startsWith('au-checkbox-')).toBe(true);
   });
 
   it('sets native checked when checked', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('checked', true);
     fix.detectChanges();
     expect(queryInput(fix).checked).toBe(true);
@@ -210,21 +210,21 @@ describe('Checkbox', () => {
   });
 
   it('does not set aria-describedby without description', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Only');
     fix.detectChanges();
     expect(queryInput(fix).getAttribute('aria-describedby')).toBeNull();
   });
 
   it('onFocusout returns early for non-HTMLElement currentTarget', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.detectChanges();
     const ev = { currentTarget: {}, relatedTarget: null } as unknown as FocusEvent;
     fix.componentInstance.onFocusout(ev);
   });
 
   it('onFocusout returns when focus stays inside wrapper', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'X');
     fix.detectChanges();
     const wrapper = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
@@ -235,14 +235,14 @@ describe('Checkbox', () => {
   });
 
   it('sets aria-required when required', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('required', true);
     fix.detectChanges();
     expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
   });
 
   it('clears focus-by-tab when focus leaves wrapper', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'X');
     fix.detectChanges();
     const wrapDe = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!;
@@ -259,7 +259,7 @@ describe('Checkbox', () => {
   });
 
   it('normalizes nullish label, description, and errorMessage transforms', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', null as unknown as string);
     fix.componentRef.setInput('description', undefined as unknown as string);
     fix.componentRef.setInput('errorMessage', null as unknown as string);
@@ -270,7 +270,7 @@ describe('Checkbox', () => {
   });
 
   it('stringifies non-null label and description', () => {
-    const fix = TestBed.createComponent(Checkbox);
+    const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'A');
     fix.componentRef.setInput('description', 'B');
     fix.detectChanges();

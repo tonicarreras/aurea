@@ -3,13 +3,13 @@ import { expect, userEvent, within } from 'storybook/test';
 
 import { AuTab } from './au-tab.directive';
 import { AuTabPanel } from './au-tab-panel.directive';
-import { Tabs } from './tabs';
+import { AuTabs } from './tabs';
 
-const storyImports = { imports: [Tabs, AuTab, AuTabPanel] };
+const storyImports = { imports: [AuTabs, AuTab, AuTabPanel] };
 
-const meta: Meta<Tabs> = {
+const meta: Meta<AuTabs> = {
   title: 'Aurea/Tabs',
-  component: Tabs,
+  component: AuTabs,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -60,7 +60,7 @@ const meta: Meta<Tabs> = {
 };
 
 export default meta;
-type Story = StoryObj<Tabs>;
+type Story = StoryObj<AuTabs>;
 
 const tabTemplate = `
   <au-tabs

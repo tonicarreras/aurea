@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import { Button } from '../button/button';
+import { AuButton } from '../button/button';
 import { AuDialogFooter } from './dialog-footer.directive';
-import { Dialog } from './dialog';
+import { AuDialog } from './dialog';
 import { DialogStoryHost } from './dialog-story-host';
 
-const meta: Meta<Dialog> = {
+const meta: Meta<AuDialog> = {
   title: 'Aurea/Dialog',
-  component: Dialog,
+  component: AuDialog,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
@@ -46,7 +46,7 @@ const meta: Meta<Dialog> = {
 };
 
 export default meta;
-type Story = StoryObj<Dialog>;
+type Story = StoryObj<AuDialog>;
 
 function hostStory(config: {
   hint?: string;
@@ -63,7 +63,7 @@ function hostStory(config: {
   return {
     // No `args` in render: Storybook signal-input args are not typed for custom hosts.
     render: () => ({
-      moduleMetadata: { imports: [DialogStoryHost, Button, AuDialogFooter] },
+      moduleMetadata: { imports: [AuDialogStoryHost, AuButton, AuDialogFooter] },
       template: `
         <au-dialog-story-host
           [hint]="hint"

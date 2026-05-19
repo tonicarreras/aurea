@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Divider } from './divider';
+import { AuDivider } from './divider';
 
-describe('Divider', () => {
-  let fixture: ComponentFixture<Divider>;
-  let component: Divider;
+describe('AuDivider', () => {
+  let fixture: ComponentFixture<AuDivider>;
+  let component: AuDivider;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Divider],
+      imports: [AuDivider],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Divider);
+    fixture = TestBed.createComponent(AuDivider);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

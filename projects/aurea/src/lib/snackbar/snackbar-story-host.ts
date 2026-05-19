@@ -1,6 +1,6 @@
 import { Component, input, model, output } from '@angular/core';
-import { Button } from '../button/button';
-import { Snackbar, type SnackbarPosition, type SnackbarVariant } from './snackbar';
+import { AuButton } from '../button/button';
+import { AuSnackbar, type SnackbarPosition, type SnackbarVariant } from './snackbar';
 
 /**
  * Storybook-only host: trigger + snackbar on a canvas that matches Aurea surfaces.
@@ -8,7 +8,7 @@ import { Snackbar, type SnackbarPosition, type SnackbarVariant } from './snackba
  */
 @Component({
   selector: 'au-snackbar-story-host',
-  imports: [Button, Snackbar],
+  imports: [AuButton, AuSnackbar],
   template: `
     <div class="au-snackbar-story-wrap">
       <div class="au-snackbar-story">

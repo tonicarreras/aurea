@@ -48,7 +48,7 @@ export interface SelectOption {
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
   },
 })
-export class Select implements FormValueControl<string | null> {
+export class AuSelect implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
@@ -104,7 +104,7 @@ export class Select implements FormValueControl<string | null> {
     if (v) {
       return v;
     }
-    return `au-select-${++Select.idCounter}`;
+    return `au-select-${++AuSelect.idCounter}`;
   });
 
   readonly hintId = computed(() => `${this.resolvedId()}-hint`);
