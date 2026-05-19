@@ -86,22 +86,57 @@ jobs:
             echo "npm_published=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish to npm (install without token)
-        if: steps.registries.outputs.npm_published != 'true'
-        working-directory: dist/aurea
+      - name: Detect NPM_TOKEN
+        id: npm_token
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -n "${NPM_TOKEN}" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::NPM_TOKEN is not set on the production environment — skipping npm publish."
+            echo "::warning::Add an npm Automation token as NPM_TOKEN so users can run: bun add @tonicarreras/aurea"
+          fi
+
+      - name: Setup Node for npmjs.org
+        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: https://registry.npmjs.org
+          scope: '@tonicarreras'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to npm (install without token)
+        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        working-directory: dist/aurea
         run: npm publish --access public
+
+      - name: Setup Node for GitHub Packages
+        if: steps.registries.outputs.gh_published != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: https://npm.pkg.github.com
+          scope: '@tonicarreras'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
 
       - name: Publish to GitHub Packages
         if: steps.registries.outputs.gh_published != 'true'
         working-directory: dist/aurea
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
         run: npm publish --access public --registry=https://npm.pkg.github.com
 
       - name: Summary
         run: |
           echo "## @tonicarreras/aurea@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- npm: ${{ steps.registries.outputs.npm_published == 'true' && '✓ already on npmjs' || 'published (requires NPM_TOKEN secret)' }}" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.registries.outputs.npm_published }}" = "true" ]; then
+            echo "- npm: ✓ already on npmjs" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "${{ steps.npm_token.outputs.present }}" = "true" ]; then
+            echo "- npm: ✓ published this run" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- npm: ⚠ skipped (set **NPM_TOKEN** on the **production** environment)" >> "$GITHUB_STEP_SUMMARY"
+          fi
           echo "- GitHub Packages: ${{ steps.registries.outputs.gh_published == 'true' && '✓ already on GitHub' || '✓ published' }}" >> "$GITHUB_STEP_SUMMARY"

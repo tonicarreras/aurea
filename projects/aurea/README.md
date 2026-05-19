@@ -34,8 +34,8 @@ bun add @tonicarreras/aurea
 npm install @tonicarreras/aurea
 ```
 
-> Requires the **`NPM_TOKEN`** secret in the repo’s `production` environment so CI can publish to npm.
-> Create an [npm access token](https://www.npmjs.com/settings/~your-user/tokens) (type **Automation**) and add it as secret **`NPM_TOKEN`**.
+> **Maintainers:** add secret **`NPM_TOKEN`** under **Settings → Environments → production** (not only repo secrets).
+> Token: [npm](https://www.npmjs.com/settings/~tokens) → **Generate new token** → type **Granular** or **Automation** with publish rights for `@tonicarreras`.
 
 ### GitHub Packages (optional mirror)
 
