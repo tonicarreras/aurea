@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build aurea",
+    "pack:package": "ng build aurea && npm pack --prefix dist/aurea --pack-destination=.",
+    "publish:github": "ng build aurea && npm publish --prefix dist/aurea --access public",
     "watch": "ng build aurea --watch --configuration development",
     "test": "ng test aurea --no-watch",
     "test:coverage": "ng test aurea --no-watch --configuration=coverage",

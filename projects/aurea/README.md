@@ -26,20 +26,48 @@ ng build aurea
 
 This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
 
-### Publishing the Library
+### Publishing to GitHub Packages
 
-Once the project is built, you can publish your library by following these steps:
+Package name: **`@tonicarreras/aurea`**. Published to `https://npm.pkg.github.com` on each
+[GitHub Release](https://github.com/tonicarreras/aurea-ds/releases) (workflow
+`.github/workflows/publish.yml`).
 
-1. Navigate to the `dist` directory:
+**CI publish:** add repository secret **`GH_PACKAGES_TOKEN`** (fine-grained or classic PAT with
+`write:packages` and `read:packages`). The workflow sets `NODE_AUTH_TOKEN` via `actions/setup-node` — no
+`.npmrc` in the repo.
 
-   ```bash
-   cd dist/aurea
-   ```
+**Manual publish** (same token exported in the shell):
 
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
+```bash
+export NODE_AUTH_TOKEN=ghp_...
+bun run publish:github
+```
+
+**Dry run** (creates a `.tgz` in the repo root):
+
+```bash
+bun run pack:package
+```
+
+### Installing in an Angular app
+
+**CI (recommended):** `actions/setup-node` with `registry-url: https://npm.pkg.github.com`,
+`scope: '@tonicarreras'`, and `NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}`.
+
+**Local:** `export NODE_AUTH_TOKEN=…` (PAT with `read:packages`) before `npm install`, or
+`npm login --registry=https://npm.pkg.github.com` (writes to your user config, not this repo).
+
+```bash
+npm install @tonicarreras/aurea
+```
+
+```scss
+@import '@tonicarreras/aurea/styles/au-tokens.css';
+```
+
+```ts
+import { Button, Divider } from '@tonicarreras/aurea';
+```
 
 ## Running unit tests
 

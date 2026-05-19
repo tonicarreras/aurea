@@ -2,6 +2,9 @@
 .agents/
 .claude/
 
+# Packaged library tarballs (npm pack)
+/*.tgz
+
 # Compiled output
 /dist
 /tmp

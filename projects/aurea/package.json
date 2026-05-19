@@ -1,6 +1,26 @@
 {
-  "name": "aurea",
-  "version": "0.0.1",
+  "name": "@tonicarreras/aurea",
+  "version": "0.1.0",
+  "description": "Aurea design system for Angular 21 — accessible components and semantic tokens.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonicarreras/aurea-ds.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tonicarreras/aurea-ds/issues"
+  },
+  "homepage": "https://github.com/tonicarreras/aurea-ds#readme",
+  "keywords": [
+    "angular",
+    "design-system",
+    "components",
+    "accessibility",
+    "aurea"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
@@ -11,5 +31,10 @@
   },
   "sideEffects": [
     "**/*.css"
-  ]
+  ],
+  "exports": {
+    "./styles/au-tokens.css": "./styles/au-tokens.css",
+    "./styles/au-field-error.css": "./styles/au-field-error.css",
+    "./styles/au-field-listbox.css": "./styles/au-field-listbox.css"
+  }
 }

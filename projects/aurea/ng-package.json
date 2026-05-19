@@ -3,5 +3,22 @@
   "dest": "../../dist/aurea",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    {
+      "glob": "au-tokens.css",
+      "input": "src/lib/theme",
+      "output": "styles"
+    },
+    {
+      "glob": "au-field-error.css",
+      "input": "src/lib/theme",
+      "output": "styles"
+    },
+    {
+      "glob": "au-field-listbox.css",
+      "input": "src/lib/theme",
+      "output": "styles"
+    }
+  ]
 }

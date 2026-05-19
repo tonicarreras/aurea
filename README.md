@@ -51,17 +51,30 @@ Aurea is built on three pillars:
 
 ## 🚀 Quick Start
 
+### Develop this repo
+
 ```bash
-# Clone the repository
 git clone https://github.com/tonicarreras/aurea-ds.git
 cd aurea-ds
-
-# Install dependencies
 bun install
-
-# Start Storybook
 bun run storybook
 ```
+
+### Install the package (GitHub Packages)
+
+In CI, configure Node with `registry-url: https://npm.pkg.github.com`, scope `@tonicarreras`, and
+`NODE_AUTH_TOKEN` from a secret (PAT with `read:packages`). Locally, export the same token or run
+`npm login --registry=https://npm.pkg.github.com` once (no `.npmrc` committed to the repo).
+
+```bash
+npm install @tonicarreras/aurea
+```
+
+Then in app styles: `@import '@tonicarreras/aurea/styles/au-tokens.css';` and import components from
+`@tonicarreras/aurea`.
+
+Published on each [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases). The workflow
+uses the **`GH_PACKAGES_TOKEN`** repository secret. See [`projects/aurea/README.md`](projects/aurea/README.md).
 
 ---
 
