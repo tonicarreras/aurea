@@ -4,9 +4,9 @@
 
 [![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
+[![npm](https://img.shields.io/npm/v/@tonicarreras/aurea?label=npm)](https://www.npmjs.com/package/@tonicarreras/aurea)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
 
-Public package on [GitHub Packages](https://github.com/tonicarreras/aurea-ds/packages).  
 Source & Storybook: [tonicarreras/aurea-ds](https://github.com/tonicarreras/aurea-ds).
 
 ---
@@ -20,29 +20,37 @@ Source & Storybook: [tonicarreras/aurea-ds](https://github.com/tonicarreras/aure
 
 ## Install
 
-The scoped name is **`@tonicarreras/aurea`** (not `tonicarreras aurea`).  
-The package is **public**: you do **not** need a token to install, only to tell Bun/npm which registry serves the `@tonicarreras` scope.
+Scoped name: **`@tonicarreras/aurea`** (not `tonicarreras aurea`).
 
-### 1. Scope registry (once per project)
+### npm / Bun (recommended — no token)
 
-Create or append **`.npmrc`** in your Angular app root:
-
-```ini
-@tonicarreras:registry=https://npm.pkg.github.com
-```
-
-Do **not** add `_authToken` for a public package.  
-If you still see permission errors, the package may be **private** on GitHub — open the package page → **Package settings** → **Change visibility** → **Public**, then try again.
-
-### 2. Add the dependency
+Published to [npmjs.com](https://www.npmjs.com/package/@tonicarreras/aurea). No `.npmrc` required:
 
 ```bash
 bun add @tonicarreras/aurea
 ```
 
 ```bash
-# npm
 npm install @tonicarreras/aurea
+```
+
+> Requires the **`NPM_TOKEN`** secret in the repo’s `production` environment so CI can publish to npm.
+> Create an [npm access token](https://www.npmjs.com/settings/~your-user/tokens) (type **Automation**) and add it as secret **`NPM_TOKEN`**.
+
+### GitHub Packages (optional mirror)
+
+GitHub’s npm registry **always requires authentication**, even for public packages ([docs](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry)).
+
+In your app root, `.npmrc`:
+
+```ini
+@tonicarreras:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+```bash
+export NODE_AUTH_TOKEN=ghp_…   # PAT with read:packages
+bun add @tonicarreras/aurea
 ```
 
 ---
@@ -65,8 +73,6 @@ Optional (form/listbox overlays):
 ```
 
 ### 2. Dark mode (optional)
-
-On a layout root or `document.documentElement`:
 
 ```html
 <html data-au-theme="dark">
@@ -120,27 +126,19 @@ export class Example {}
 
 ## Troubleshooting install
 
-| Error | Cause | Fix |
-|-------|--------|-----|
-| `404` / package not found | Wrong name or registry | Use `@tonicarreras/aurea` + `.npmrc` scope line above |
-| `401` / `403` permission | Package still private, or stray `_authToken` | Make package **public** on GitHub; remove invalid token from `.npmrc` |
-| Resolves from `registry.npmjs.org` | Missing scope mapping | Add `@tonicarreras:registry=…` to `.npmrc` |
+| Symptom | Cause | Fix |
+|---------|--------|-----|
+| Asks for token with only `@tonicarreras:registry=…github` | GitHub npm **always** needs auth | Install from **npm** (above) or add `_authToken` |
+| `404` on npm | Version not published to npmjs yet | Add `NPM_TOKEN` secret and run publish workflow |
+| `404` on GitHub | Wrong registry / private package | Use npm, or fix visibility + `.npmrc` |
 
 ---
 
-## Contributing
+## Publishing (maintainers)
 
-This package is built from the [aurea-ds](https://github.com/tonicarreras/aurea-ds) monorepo (`projects/aurea`).  
-Clone the repo, run `bun install`, `bun run storybook`, and `bun run test:coverage` (100% thresholds).
-
-Releases are published to GitHub Packages on each [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases).
-
-1. Bump **`version`** in `projects/aurea/package.json` and commit (e.g. `0.1.2`).
-2. Create and push tag **`v0.1.2`** and publish a GitHub Release for that tag.
-3. The workflow takes the version from the **release tag** (`v0.1.2` → `0.1.2`), not from an older re-run.
-4. If that version already exists on the registry, publish is **skipped** (no `409`).
-
-**Manual run:** Actions → Publish → Run workflow → optional **version** input (`0.1.2`). Without input, uses `projects/aurea/package.json`.
+1. Bump `version` in `projects/aurea/package.json`.
+2. Tag `v0.1.2` and create a GitHub Release.
+3. Workflow publishes to **npm** (needs `NPM_TOKEN`) and **GitHub Packages**.
 
 ---
 

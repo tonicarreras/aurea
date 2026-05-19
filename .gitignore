@@ -11,6 +11,9 @@
 /out-tsc
 /bazel-out
 
+# Local registry auth (never commit tokens)
+.npmrc
+
 # Node
 /node_modules
 npm-debug.log
