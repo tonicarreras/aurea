@@ -109,6 +109,40 @@
   --au-z-max: 9999;
 }
 
+/* Tooltip — portaled bubble (must set font on the bubble; not inherited from host) */
+:root {
+  --au-tooltip-gap: 0.6rem;
+}
+
+.au-tooltip__bubble {
+  box-sizing: border-box;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: var(--au-space-2) var(--au-space-3);
+  border-radius: var(--au-radius-sm);
+  background: var(--au-color-surface-inverted);
+  color: var(--au-color-text-on-solid);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  letter-spacing: var(--au-tracking-ui);
+  box-shadow: var(--au-shadow-overlay);
+  pointer-events: none;
+  z-index: var(--au-z-popover);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-tooltip__bubble--overlay {
+  position: fixed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-tooltip__bubble {
+    transition: none;
+  }
+}
+
 /* UI transitions: one easing for color, one “logical” for motion */
 :root {
   --au-duration-instant: 0ms;

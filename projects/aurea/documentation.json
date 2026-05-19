@@ -1,6 +1,72 @@
 {
     "pipes": [],
-    "interfaces": [],
+    "interfaces": [
+        {
+            "name": "TooltipStoryArgs",
+            "id": "interface-TooltipStoryArgs-cfee42230b1b486caa9181882e9b368f63cd2f47ec4687175c930523301ee39bb806007acd5f9082539816dbdf2677887d4e70c2ee4be2168e2063100f916eae",
+            "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { Button } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { TooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, Button] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: TooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
+            "properties": [
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "hideDelay",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "placement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TooltipPlacement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "showDelay",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13
+                },
+                {
+                    "name": "text",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        }
+    ],
     "injectables": [],
     "guards": [],
     "interceptors": [],
@@ -287,21 +353,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic checkbox with label. The **play** function clicks the checkbox.',\n      },\n    },\n  },\n  args: {\n    label: 'Accept terms',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const checkbox = el.getByRole('checkbox');\n    await userEvent.click(checkbox);\n    await expect(checkbox).toBeChecked();\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -404,6 +470,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
             },
             {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n}"
+            },
+            {
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -427,21 +503,21 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
-            },
-            {
-                "name": "Disabled",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled checkbox — muted, non-interactive, still focusable by AT.',\n      },\n    },\n  },\n  args: {\n    label: 'Disabled option',\n    disabled: true,\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
             },
             {
                 "name": "Disabled",
@@ -462,6 +538,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled select; still focusable but `valueChange` does not fire.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n    value: 'us',\n    disabled: true,\n  },\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n}"
             },
             {
                 "name": "DisabledChecked",
@@ -564,6 +650,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Indeterminate state (partial selection) via the native `indeterminate` property — common for \"select all\" patterns.',\n      },\n    },\n  },\n  args: {\n    label: 'Select items',\n    checked: true,\n    indeterminate: true,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "Instant",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n}"
+            },
+            {
                 "name": "KeyboardNavigation",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -644,6 +740,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"click\">Processing...</au-button>`,\n    ),\n}"
             },
             {
+                "name": "LongText",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n}"
+            },
+            {
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -677,21 +783,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<Chip>",
-                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: Chip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Checkbox>",
                 "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Chip>",
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: Chip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -814,6 +920,16 @@
                 "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: Textarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<TooltipStoryArgs>",
+                "defaultValue": "{\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n}"
+            },
+            {
                 "name": "MinFilterLength",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -892,6 +1008,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Password toggle is a **button** with `aria-pressed` and an explicit **Show password** / **Hide password** label. Tab into the field vs click to see different focus ring treatments.',\n      },\n    },\n  },\n  args: {\n    label: 'Password',\n    type: 'password',\n    placeholder: 'Min. 8 characters',\n    autocomplete: 'new-password',\n    showPasswordToggle: true,\n  },\n}"
+            },
+            {
+                "name": "PlacementBottom",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n}"
             },
             {
                 "name": "preview",
@@ -1059,21 +1185,21 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
-            },
-            {
-                "name": "SmallSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
             },
             {
                 "name": "SmallSize",
@@ -1114,6 +1240,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [Tabs, AuTab, AuTabPanel] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [AuTooltip, Button] }"
             },
             {
                 "name": "Success",
@@ -1766,8 +1902,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Chip>",
-                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "rawtype": "StoryObj<Checkbox>",
+                "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1777,8 +1913,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Checkbox>",
-                "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                "rawtype": "StoryObj<Chip>",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1911,6 +2047,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Textarea>",
                 "file": "projects/aurea/src/lib/textarea/textarea.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<TooltipStoryArgs>",
+                "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3109,6 +3256,78 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Error region uses **`role=\"alert\"`** so assistive tech picks up validation text.',\n      },\n    },\n  },\n  args: {\n    label: 'Comment',\n    rows: 3,\n    errorMessage: 'Add at least one sentence.',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Comment');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Add at least one sentence.');\n  },\n}"
                 }
             ],
+            "projects/aurea/src/lib/tooltip/tooltip.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n}"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "Instant",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "LongText",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<TooltipStoryArgs>",
+                    "defaultValue": "{\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n}"
+                },
+                {
+                    "name": "PlacementBottom",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{ imports: [AuTooltip, Button] }"
+                }
+            ],
             "projects/aurea/src/lib/input-text/input-text-signal.stories.ts": [
                 {
                     "name": "meta",
@@ -3565,19 +3784,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/chip/chip.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<Chip>",
-                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Story",
@@ -3585,6 +3791,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Checkbox>",
                     "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/chip/chip.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Chip>",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3746,6 +3965,19 @@
                     "description": "",
                     "kind": 184
                 }
+            ],
+            "projects/aurea/src/lib/tooltip/tooltip.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<TooltipStoryArgs>",
+                    "file": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
             ]
         }
     },
@@ -3755,7 +3987,7 @@
         "children": []
     },
     "coverage": {
-        "count": 3,
+        "count": 2,
         "status": "low",
         "files": [
             {
@@ -5238,6 +5470,95 @@
             },
             {
                 "filePath": "projects/aurea/src/lib/textarea/textarea.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "TooltipStoryArgs",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Instant",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LongText",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "PlacementBottom",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/tooltip/tooltip.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

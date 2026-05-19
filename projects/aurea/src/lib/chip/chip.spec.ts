@@ -51,8 +51,10 @@ describe('Chip', () => {
     fixture.detectChanges();
     let n = 0;
     component.removed.subscribe(() => n++);
-    const remove = fixture.nativeElement.querySelector('.au-chip__remove') as HTMLButtonElement;
-    remove.click();
+    const removeDe = fixture.debugElement.query(By.css('.au-chip__remove'))!;
+    const ev = new MouseEvent('click', { cancelable: true, bubbles: true });
+    removeDe.triggerEventHandler('click', ev);
+    expect(ev.defaultPrevented).toBe(true);
     expect(n).toBe(0);
   });
 
@@ -168,6 +170,15 @@ describe('Chip', () => {
     fixture.componentRef.setInput('label', null as unknown as string);
     fixture.detectChanges();
     expect(component.resolvedLabel()).toBe('');
+  });
+
+  it('transforms null removeLabel to empty string', () => {
+    fixture.componentRef.setInput('removable', true);
+    fixture.componentRef.setInput('removeLabel', null as unknown as string);
+    fixture.detectChanges();
+    expect(component.removeLabel()).toBe('');
+    const remove = fixture.nativeElement.querySelector('.au-chip__remove') as HTMLButtonElement;
+    expect(remove.getAttribute('aria-label')).toBe('Remove TypeScript');
   });
 
   it('selectable chip emits click on toggle', () => {

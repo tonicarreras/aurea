@@ -13,6 +13,7 @@ import * as snackbar from './snackbar/index';
 import * as switchMod from './switch/index';
 import * as tabs from './tabs/index';
 import * as textarea from './textarea/index';
+import * as tooltip from './tooltip/index';
 import * as theme from './theme/index';
 
 describe('library barrel exports', () => {
@@ -36,6 +37,7 @@ describe('library barrel exports', () => {
     expect(tabs.AuTab).toBeDefined();
     expect(tabs.AuTabPanel).toBeDefined();
     expect(textarea.Textarea).toBeDefined();
+    expect(tooltip.AuTooltip).toBeDefined();
     expect(theme.AuTheme).toBeDefined();
   });
 });

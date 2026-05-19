@@ -44,7 +44,7 @@ au-dialog .au-dialog__panel {
   overflow: hidden;
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-subtle);
-  border-radius: var(--au-radius-xl);
+  border-radius: var(--au-radius-sm);
   box-shadow: var(--au-shadow-overlay);
   animation: au-dialog-panel-in var(--au-duration-default) var(--au-ease-out);
 }
