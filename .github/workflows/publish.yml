@@ -35,7 +35,7 @@ jobs:
             VERSION="${{ inputs.version }}"
             echo "Source: workflow input → ${VERSION}"
           else
-            VERSION=$(node -p "require('./projects/aurea/package.json').version")
+            VERSION=$(node -p "require('./package.json').version")
             echo "Source: projects/aurea/package.json → ${VERSION}"
           fi
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
