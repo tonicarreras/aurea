@@ -66,22 +66,10 @@ bun install
 bun run storybook
 ```
 
-### Install the package (GitHub Packages)
+### Use the published package
 
-In CI, configure Node with `registry-url: https://npm.pkg.github.com`, scope `@tonicarreras`, and
-`NODE_AUTH_TOKEN` from a secret (PAT with `read:packages`). Locally, export the same token or run
-`npm login --registry=https://npm.pkg.github.com` once (no `.npmrc` committed to the repo).
-
-```bash
-npm install @tonicarreras/aurea
-```
-
-Then in app styles: `@import '@tonicarreras/aurea/styles/au-tokens.css';` and import components from
-`@tonicarreras/aurea`.
-
-Published on each [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases) using the
-**production** environment (`GH_PACKAGES_TOKEN`, or `GITHUB_TOKEN` as fallback). See
-[`projects/aurea/README.md`](projects/aurea/README.md).
+Install and usage docs for consumers: **[`projects/aurea/README.md`](projects/aurea/README.md)**  
+(package **`@tonicarreras/aurea`**, public on GitHub Packages).
 
 ---
 

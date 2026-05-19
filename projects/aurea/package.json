@@ -19,7 +19,8 @@
     "aurea"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
   },
   "peerDependencies": {
     "@angular/common": "^21.2.0",
