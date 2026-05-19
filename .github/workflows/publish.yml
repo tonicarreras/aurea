@@ -12,7 +12,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   publish:
@@ -64,21 +63,12 @@ jobs:
           echo "Publishing @aurea-ds/aurea@${BUILT} (expected ${EXPECTED})"
           test "$BUILT" = "$EXPECTED"
 
-      - name: Check published versions
+      - name: Check npm registry
         id: registries
         working-directory: dist/aurea
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
         run: |
           PKG_VERSION=$(node -p "require('./package.json').version")
           echo "version=${PKG_VERSION}" >> "$GITHUB_OUTPUT"
-
-          if npm view "@aurea-ds/aurea@${PKG_VERSION}" version \
-            --registry=https://npm.pkg.github.com 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
-            echo "gh_published=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "gh_published=false" >> "$GITHUB_OUTPUT"
-          fi
 
           if npm view "@aurea-ds/aurea@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
             echo "npm_published=true" >> "$GITHUB_OUTPUT"
@@ -115,25 +105,10 @@ jobs:
           echo "npm whoami: $(npm whoami)"
           echo "If this is not a member of org 'aurea-ds', npm publish will return 403."
 
-      - name: Publish to npm (install without token)
+      - name: Publish to npm
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
         working-directory: dist/aurea
         run: npm publish --access public
-
-      - name: Setup Node for GitHub Packages
-        if: steps.registries.outputs.gh_published != 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: https://npm.pkg.github.com
-          scope: '@aurea-ds'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
-
-      - name: Publish to GitHub Packages
-        if: steps.registries.outputs.gh_published != 'true'
-        working-directory: dist/aurea
-        run: npm publish --access public --registry=https://npm.pkg.github.com
 
       - name: Summary
         run: |
@@ -145,4 +120,3 @@ jobs:
           else
             echo "- npm: ⚠ skipped (set **NPM_TOKEN** on the **production** environment)" >> "$GITHUB_STEP_SUMMARY"
           fi
-          echo "- GitHub Packages: ${{ steps.registries.outputs.gh_published == 'true' && '✓ already on GitHub' || '✓ published' }}" >> "$GITHUB_STEP_SUMMARY"
