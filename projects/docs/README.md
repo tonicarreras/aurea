@@ -1,6 +1,6 @@
 # Aurea — documentación oficial
 
-App Angular que consume la librería desde el monorepo (`@aurea-ds/aurea` → `projects/components/src`).
+App Angular que consume la librería desde el monorepo (`@aurea` → `projects/components/src`).
 
 ## Comandos
 

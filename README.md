@@ -64,7 +64,7 @@ Monorepo **aurea** with two Angular projects:
 
 | Project | Path | Role |
 |---------|------|------|
-| **components** | [`projects/components`](projects/components) | Design system library (npm: `@aurea-ds/aurea`) |
+| **components** | [`projects/components`](projects/components) | Design system library (npm: `@aurea`) |
 | **docs** | [`projects/docs`](projects/docs) | Official documentation site |
 
 ### Develop this repo
@@ -81,7 +81,7 @@ bun run test          # unit tests (components)
 ### Use the published package
 
 Install and usage docs for consumers: **[`projects/components/README.md`](projects/components/README.md)**  
-(package **`@aurea-ds/aurea`** on [npm](https://www.npmjs.com/package/@aurea-ds/aurea)).
+(package **`@aurea`** on [npm](https://www.npmjs.com/package/@aurea)).
 
 ---
 
@@ -99,7 +99,7 @@ Install and usage docs for consumers: **[`projects/components/README.md`](projec
 
 ## 📖 Documentación oficial
 
-App Angular en `projects/docs` que consume `@aurea-ds/aurea` desde el monorepo: guías, temas y vista previa de cada componente.
+App Angular en `projects/docs` que consume `@aurea` desde el monorepo: guías, temas y vista previa de cada componente.
 
 ```bash
 bun run docs          # http://127.0.0.1:4200

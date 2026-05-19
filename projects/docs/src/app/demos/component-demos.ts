@@ -24,7 +24,7 @@ import {
   type AutocompleteOption,
   type RadioOption,
   type SelectOption,
-} from '@aurea-ds/aurea';
+} from '@aurea';
 
 const selectOptions: SelectOption[] = [
   { value: 'es', label: 'España' },

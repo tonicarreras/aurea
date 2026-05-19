@@ -37,15 +37,15 @@ import { DocPage } from '../shared/doc-page';
   `,
 })
 export class GetStartedPage {
-  readonly installSnippet = `bun add @aurea-ds/aurea
+  readonly installSnippet = `bun add @aurea
 # o
-npm install @aurea-ds/aurea`;
+npm install @aurea`;
 
-  readonly stylesSnippet = `@import '@aurea-ds/aurea/styles/au-tokens.css';
-@import '@aurea-ds/aurea/styles/au-field-error.css';
-@import '@aurea-ds/aurea/styles/au-field-listbox.css';`;
+  readonly stylesSnippet = `@import '@aurea/styles/au-tokens.css';
+@import '@aurea/styles/au-field-error.css';
+@import '@aurea/styles/au-field-listbox.css';`;
 
-  readonly componentSnippet = `import { AuButton, AuCheckbox } from '@aurea-ds/aurea';
+  readonly componentSnippet = `import { AuButton, AuCheckbox } from '@aurea';
 
 @Component({
   imports: [AuButton, AuCheckbox],

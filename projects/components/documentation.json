@@ -373,21 +373,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -823,21 +823,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuDivider>",
-                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuDialog>",
                 "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuDivider>",
+                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -1974,8 +1974,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDivider>",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "rawtype": "StoryObj<AuDialog>",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1985,8 +1985,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDialog>",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "rawtype": "StoryObj<AuDivider>",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3005,58 +3005,6 @@
                     "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n    ),\n}"
                 }
             ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Inset",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuDivider>",
-                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
-                },
-                {
-                    "name": "Vertical",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "WithLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
-                }
-            ],
             "projects/components/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "Default",
@@ -3147,6 +3095,58 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "hostStory({\n  hint: 'Provide `ariaLabel` when there is no visible title.',\n  title: '',\n  ariaLabel: 'Information',\n  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',\n})"
+                }
+            ],
+            "projects/components/src/lib/divider/divider.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Inset",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDivider>",
+                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                },
+                {
+                    "name": "Vertical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
                 }
             ],
             "projects/components/src/lib/input-number/input-number.stories.ts": [
@@ -3923,19 +3923,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuDivider>",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "Story",
@@ -3943,6 +3930,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuDialog>",
                     "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/divider/divider.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuDivider>",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
