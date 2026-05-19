@@ -32,16 +32,10 @@ Package name: **`@tonicarreras/aurea`**. Published to `https://npm.pkg.github.co
 [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases) (workflow
 `.github/workflows/publish.yml`).
 
-**CI publish:** add repository secret **`GH_PACKAGES_TOKEN`** (fine-grained or classic PAT).
+**CI publish:** job `environment: production` reads **`GH_PACKAGES_TOKEN`** from that environment
+(PAT with `write:packages` / `read:packages`). If unset, falls back to **`GITHUB_TOKEN`**.
 
-| Token type | Required permissions |
-|------------|-------------------|
-| Classic PAT | `write:packages`, `read:packages`, and `repo` if the repository is private |
-| Fine-grained PAT | Repository access to `aurea-ds`, **Packages: Read and write** |
-
-`setup-node` receives `NODE_AUTH_TOKEN` when it runs so npm auth is configured on the runner (no `.npmrc` in the repo).
-
-**Manual publish** (same token exported in the shell):
+**Manual publish** (PAT with `write:packages`, or a fine-grained token with Packages read/write):
 
 ```bash
 export NODE_AUTH_TOKEN=ghp_...
@@ -56,11 +50,10 @@ bun run pack:package
 
 ### Installing in an Angular app
 
-**CI (recommended):** `actions/setup-node` with `registry-url: https://npm.pkg.github.com`,
-`scope: '@tonicarreras'`, and `NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}`.
+**CI (same repo or org):** `NODE_AUTH_TOKEN: ${{ github.token }}` with `packages: read` on the job.
 
-**Local:** `export NODE_AUTH_TOKEN=…` (PAT with `read:packages`) before `npm install`, or
-`npm login --registry=https://npm.pkg.github.com` (writes to your user config, not this repo).
+**Other repos / local:** PAT with `read:packages` — `export NODE_AUTH_TOKEN=ghp_…` before
+`npm install`, or `npm login --registry=https://npm.pkg.github.com` (user config only).
 
 ```bash
 npm install @tonicarreras/aurea

@@ -7,22 +7,18 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: production
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+      # production environment: GH_PACKAGES_TOKEN. Fallback: GITHUB_TOKEN.
+      NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Require publish token
-        run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "::error::Repository secret GH_PACKAGES_TOKEN is missing or empty."
-            exit 1
-          fi
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -36,7 +32,7 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@tonicarreras'
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
 
       - name: Install dependencies
         run: bun install --frozen-lockfile

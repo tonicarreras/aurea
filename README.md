@@ -79,8 +79,9 @@ npm install @tonicarreras/aurea
 Then in app styles: `@import '@tonicarreras/aurea/styles/au-tokens.css';` and import components from
 `@tonicarreras/aurea`.
 
-Published on each [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases). The workflow
-uses the **`GH_PACKAGES_TOKEN`** repository secret. See [`projects/aurea/README.md`](projects/aurea/README.md).
+Published on each [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases) using the
+**production** environment (`GH_PACKAGES_TOKEN`, or `GITHUB_TOKEN` as fallback). See
+[`projects/aurea/README.md`](projects/aurea/README.md).
 
 ---
 
