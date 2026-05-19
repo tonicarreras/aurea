@@ -101,6 +101,27 @@ describe('Autocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
   });
 
+  it('onInputFocus seeds query from selection when panel was closed', () => {
+    const fix = TestBed.createComponent(Autocomplete);
+    fix.componentRef.setInput('options', testOptions);
+    fix.componentRef.setInput('value', 'mad');
+    fix.detectChanges();
+    queryInput(fix).dispatchEvent(new FocusEvent('focus'));
+    fix.detectChanges();
+    expect(fix.componentInstance['query']()).toBe('Madrid');
+  });
+
+  it('onInputFocus does not overwrite query when panel is already open', () => {
+    const fix = TestBed.createComponent(Autocomplete);
+    fix.componentRef.setInput('options', testOptions);
+    fix.detectChanges();
+    const comp = fix.componentInstance;
+    comp['panelOpen'].set(true);
+    comp['query'].set('bar');
+    comp.onInputFocus();
+    expect(comp['query']()).toBe('bar');
+  });
+
   it('keyboard ArrowDown and Enter selects option', () => {
     const fix = TestBed.createComponent(Autocomplete);
     fix.componentRef.setInput('options', testOptions);
@@ -744,7 +765,7 @@ describe('Autocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
   });
 
-  it('effect skips query sync while value is written programmatically', () => {
+  it('shows selected label on load and when value changes programmatically', () => {
     const fix = TestBed.createComponent(Autocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
@@ -784,7 +805,7 @@ describe('Autocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('effect does not sync query while syncingFromValue is true', () => {
+  it('shows query while panel is open and selected label when closed', () => {
     const fix = TestBed.createComponent(Autocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.componentRef.setInput('value', 'mad');
@@ -793,16 +814,11 @@ describe('Autocomplete', () => {
     input.value = 'typing';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
-      syncingFromValue: { set(v: boolean): void };
-      panelOpen: { set(v: boolean): void };
-    };
-    comp.panelOpen.set(false);
-    comp.syncingFromValue.set(true);
-    fix.componentRef.setInput('value', 'bcn');
-    fix.detectChanges();
     expect(input.value).toBe('typing');
-    comp.syncingFromValue.set(false);
+    const comp = fix.componentInstance as unknown as { panelOpen: { set(v: boolean): void } };
+    comp.panelOpen.set(false);
+    fix.detectChanges();
+    expect(input.value).toBe('Madrid');
     fix.componentRef.setInput('value', 'bcn');
     fix.detectChanges();
     expect(input.value).toBe('Barcelona');

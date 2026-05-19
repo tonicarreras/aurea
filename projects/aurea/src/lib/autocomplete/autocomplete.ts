@@ -9,7 +9,6 @@ import {
   ViewChild,
   afterRenderEffect,
   computed,
-  effect,
   inject,
   input,
   model,
@@ -93,8 +92,6 @@ export class Autocomplete implements FormValueControl<string | null> {
   protected readonly query = signal('');
   protected readonly highlightedIndex = signal(-1);
 
-  private readonly syncingFromValue = signal(false);
-
   @ViewChild('listboxEl', { read: ElementRef })
   private listboxRef?: ElementRef<HTMLUListElement>;
 
@@ -148,6 +145,22 @@ export class Autocomplete implements FormValueControl<string | null> {
     return this.options().find((o) => o.value === v) ?? null;
   });
 
+  /** Input text: query while filtering; selected label when closed (no post-render flash). */
+  readonly inputValue = computed(() => {
+    if (this.panelOpen()) {
+      return this.query();
+    }
+    const opt = this.selectedOption();
+    if (opt) {
+      return opt.label;
+    }
+    const v = this.value();
+    if (v == null) {
+      return '';
+    }
+    return String(v);
+  });
+
   readonly filteredOptions = computed(() => {
     const q = this.query().trim();
     const min = this.minFilterLength();
@@ -189,16 +202,6 @@ export class Autocomplete implements FormValueControl<string | null> {
   });
 
   constructor() {
-    effect(() => {
-      const v = this.value();
-      const opt = this.selectedOption();
-      if (this.syncingFromValue()) {
-        return;
-      }
-      if (!this.panelOpen()) {
-        this.query.set(opt?.label ?? (v == null ? '' : String(v)));
-      }
-    });
     afterRenderEffect(() => {
       const input = this.inputNativeElement();
       const anchor = input.closest('.au-autocomplete__control-row')! as HTMLElement;
@@ -322,6 +325,10 @@ export class Autocomplete implements FormValueControl<string | null> {
     if (this.disabled() || this.readOnly()) {
       return;
     }
+    if (!this.panelOpen()) {
+      const opt = this.selectedOption();
+      this.query.set(opt?.label ?? this.query());
+    }
     if (!this.meetsMinFilterLength()) {
       return;
     }
@@ -404,10 +411,8 @@ export class Autocomplete implements FormValueControl<string | null> {
     if (this.value() === next) {
       return;
     }
-    this.syncingFromValue.set(true);
     this.value.set(next);
     this.valueChange.emit(next);
-    this.syncingFromValue.set(false);
   }
 
   private findOptionByLabel(label: string): AutocompleteOption | undefined {
