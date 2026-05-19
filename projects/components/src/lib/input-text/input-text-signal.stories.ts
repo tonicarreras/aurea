@@ -18,14 +18,14 @@ import { AuInputText } from './input-text';
     </p>
     <au-input-text
       [formField]="fieldRoot.email"
-      label="Email"
+      label="Email" 
       type="email"
       placeholder="you@company.com"
       hint="Required validation and email format (signal form)."
     />
   `,
 })
-export class InputTextSignalHost {
+export class AuInputTextSignalHost {
   protected readonly data = signal({ email: '' });
   protected readonly fieldRoot = form(this.data, (f) => {
     required(f.email, { message: 'Email is required' });
@@ -33,7 +33,7 @@ export class InputTextSignalHost {
   });
 }
 
-const meta: Meta<InputTextSignalHost> = {
+const meta: Meta<AuInputTextSignalHost> = {
   title: 'Aurea/InputText/Signal form',
   component: AuInputTextSignalHost,
   tags: ['autodocs', 'au'],
@@ -49,7 +49,7 @@ const meta: Meta<InputTextSignalHost> = {
 };
 
 export default meta;
-type Story = StoryObj<InputTextSignalHost>;
+type Story = StoryObj<AuInputTextSignalHost>;
 
 export const WithValidation: Story = {
   name: 'With validation',

@@ -4,7 +4,7 @@ import { fn } from 'storybook/test';
 import { AuButton } from '../button/button';
 import { AuDialogFooter } from './dialog-footer.directive';
 import { AuDialog } from './dialog';
-import { DialogStoryHost } from './dialog-story-host';
+import { AuDialogStoryHost } from './dialog-story-host';
 
 const meta: Meta<AuDialog> = {
   title: 'Aurea/Dialog',

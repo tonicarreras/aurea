@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
 import type { SnackbarPosition, SnackbarVariant } from './snackbar';
-import { SnackbarStoryHost } from './snackbar-story-host';
+import { AuSnackbarStoryHost } from './snackbar-story-host';
 
-const meta: Meta<SnackbarStoryHost> = {
+const meta: Meta<AuSnackbarStoryHost> = {
   title: 'Aurea/Snackbar',
   component: AuSnackbarStoryHost,
   tags: ['autodocs', 'au'],
@@ -62,7 +62,7 @@ const meta: Meta<SnackbarStoryHost> = {
 };
 
 export default meta;
-type Story = StoryObj<SnackbarStoryHost>;
+type Story = StoryObj<AuSnackbarStoryHost>;
 
 export const Default: Story = {};
 

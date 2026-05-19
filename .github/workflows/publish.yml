@@ -56,11 +56,11 @@ jobs:
       - name: Verify package contents and version
         run: |
           test -f dist/components/package.json
-          test -f dist/components/fesm2022/aurea-ds-aurea.mjs
+          test -f dist/components/fesm2022/au-components.mjs
           test -f dist/components/styles/au-tokens.css
           BUILT=$(node -p "require('./dist/components/package.json').version")
           EXPECTED="${{ steps.publish_version.outputs.version }}"
-          echo "Publishing @aurea-ds/aurea@${BUILT} (expected ${EXPECTED})"
+          echo "Publishing au-components@${BUILT} (expected ${EXPECTED})"
           test "$BUILT" = "$EXPECTED"
 
       - name: Check npm registry
@@ -70,7 +70,7 @@ jobs:
           PKG_VERSION=$(node -p "require('./package.json').version")
           echo "version=${PKG_VERSION}" >> "$GITHUB_OUTPUT"
 
-          if npm view "@aurea-ds/aurea@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
+          if npm view "au-components@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
             echo "npm_published=true" >> "$GITHUB_OUTPUT"
           else
             echo "npm_published=false" >> "$GITHUB_OUTPUT"
@@ -86,7 +86,7 @@ jobs:
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
             echo "::warning::NPM_TOKEN is not set on the production environment — skipping npm publish."
-            echo "::warning::Add NPM_TOKEN so users can run: bun add @aurea-ds/aurea"
+            echo "::warning::Add NPM_TOKEN so users can run: bun add au-components"
           fi
 
       - name: Setup Node for npmjs.org
@@ -112,7 +112,7 @@ jobs:
 
       - name: Summary
         run: |
-          echo "## @aurea-ds/aurea@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "## au-components@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.registries.outputs.npm_published }}" = "true" ]; then
             echo "- npm: ✓ already on npmjs" >> "$GITHUB_STEP_SUMMARY"
           elif [ "${{ steps.npm_token.outputs.present }}" = "true" ]; then

@@ -25,7 +25,7 @@ import { AuTextarea } from './textarea';
     />
   `,
 })
-export class TextareaSignalHost {
+export class AuTextareaSignalHost {
   protected readonly data = signal({ bio: '' });
   protected readonly fieldRoot = form(this.data, (f) => {
     required(f.bio, { message: 'Bio is required' });
@@ -33,7 +33,7 @@ export class TextareaSignalHost {
   });
 }
 
-const meta: Meta<TextareaSignalHost> = {
+const meta: Meta<AuTextareaSignalHost> = {
   title: 'Aurea/Textarea/Signal form',
   component: AuTextareaSignalHost,
   tags: ['autodocs', 'au'],
@@ -49,7 +49,7 @@ const meta: Meta<TextareaSignalHost> = {
 };
 
 export default meta;
-type Story = StoryObj<TextareaSignalHost>;
+type Story = StoryObj<AuTextareaSignalHost>;
 
 export const WithValidation: Story = {
   name: 'With validation',

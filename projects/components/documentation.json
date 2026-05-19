@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "TooltipStoryArgs",
-            "id": "interface-TooltipStoryArgs-cfee42230b1b486caa9181882e9b368f63cd2f47ec4687175c930523301ee39bb806007acd5f9082539816dbdf2677887d4e70c2ee4be2168e2063100f916eae",
+            "id": "interface-TooltipStoryArgs-eeef383e170c5aaf793f3b9bd6da1a0c345526158b3532c265a45e5fce20cecd17f0375bab1898708057122ddc2e0d441b49bc0a00197b02431aa99a138d5536",
             "file": "projects/components/src/lib/tooltip/tooltip.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { Button } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { TooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, Button] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: TooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { TooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: TooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
             "properties": [
                 {
                     "name": "disabled",
@@ -74,8 +74,8 @@
     "directives": [],
     "components": [
         {
-            "name": "InputTextSignalHost",
-            "id": "component-InputTextSignalHost-1b326311d84cc57056a143a9b440ae3c97a438bbfbb3c62e43dbe2c3c12b06b4b194a319048c938be4e299340e68cfa5ea470ddd0d0b44080a6811d05a325907",
+            "name": "AuInputTextSignalHost",
+            "id": "component-AuInputTextSignalHost-2cfe69c143c69b35faa2fcfce98ff03d5f560a15feb9cbaecbc1da5baddbc3c5a1be42025eec1328e3b59fed274cb015212bcd466301e644390688750806a26d",
             "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -131,7 +131,7 @@
             "standalone": false,
             "imports": [
                 {
-                    "name": "InputText"
+                    "name": "AuInputText"
                 },
                 {
                     "name": "FormField"
@@ -148,15 +148,15 @@
             "description": "<p>Story-only host: wires <code>au-input-text</code> to <code>form()</code> with <code>required</code> + <code>email</code> validators.\nShipped for Storybook; not part of the published public API.</p>\n",
             "rawdescription": "\n\nStory-only host: wires `au-input-text` to `form()` with `required` + `email` validators.\nShipped for Storybook; not part of the published public API.\n",
             "type": "component",
-            "sourceCode": "import { CommonModule, JsonPipe } from '@angular/common';\nimport { Component, signal } from '@angular/core';\nimport { type Meta, type StoryObj } from '@storybook/angular';\nimport { FormField, email, form, required } from '@angular/forms/signals';\nimport { INPUT_TEXT_SIGNAL_DOCS_OVERVIEW } from './input-text-signal.docs-overview';\nimport { InputText } from './input-text';\n\n/**\n * Story-only host: wires `au-input-text` to `form()` with `required` + `email` validators.\n * Shipped for Storybook; not part of the published public API.\n */\n@Component({\n  selector: 'story-input-signal-wrapper',\n  imports: [InputText, FormField, CommonModule, JsonPipe],\n  template: `\n    <p style=\"font:0.8rem/1.4 var(--au-font-sans,system-ui); color: var(--au-color-text-secondary, #5c6b7a); max-width: 26rem; margin: 0 0 1rem 0\">\n      Model: <code>{{ data() | json }}</code>\n    </p>\n    <au-input-text\n      [formField]=\"fieldRoot.email\"\n      label=\"Email\"\n      type=\"email\"\n      placeholder=\"you@company.com\"\n      hint=\"Required validation and email format (signal form).\"\n    />\n  `,\n})\nexport class InputTextSignalHost {\n  protected readonly data = signal({ email: '' });\n  protected readonly fieldRoot = form(this.data, (f) => {\n    required(f.email, { message: 'Email is required' });\n    email(f.email, { message: 'Enter a valid email address' });\n  });\n}\n\nconst meta: Meta<InputTextSignalHost> = {\n  title: 'Aurea/InputText/Signal form',\n  component: InputTextSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: INPUT_TEXT_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<InputTextSignalHost>;\n\nexport const WithValidation: Story = {\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Interact with the field to see **signal form** validation messages flow into `au-input-text`.',\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { CommonModule, JsonPipe } from '@angular/common';\nimport { Component, signal } from '@angular/core';\nimport { type Meta, type StoryObj } from '@storybook/angular';\nimport { FormField, email, form, required } from '@angular/forms/signals';\nimport { INPUT_TEXT_SIGNAL_DOCS_OVERVIEW } from './input-text-signal.docs-overview';\nimport { AuInputText } from './input-text';\n\n/**\n * Story-only host: wires `au-input-text` to `form()` with `required` + `email` validators.\n * Shipped for Storybook; not part of the published public API.\n */\n@Component({\n  selector: 'story-input-signal-wrapper',\n  imports: [AuInputText, FormField, CommonModule, JsonPipe],\n  template: `\n    <p style=\"font:0.8rem/1.4 var(--au-font-sans,system-ui); color: var(--au-color-text-secondary, #5c6b7a); max-width: 26rem; margin: 0 0 1rem 0\">\n      Model: <code>{{ data() | json }}</code>\n    </p>\n    <au-input-text\n      [formField]=\"fieldRoot.email\"\n      label=\"Email\" \n      type=\"email\"\n      placeholder=\"you@company.com\"\n      hint=\"Required validation and email format (signal form).\"\n    />\n  `,\n})\nexport class AuInputTextSignalHost {\n  protected readonly data = signal({ email: '' });\n  protected readonly fieldRoot = form(this.data, (f) => {\n    required(f.email, { message: 'Email is required' });\n    email(f.email, { message: 'Enter a valid email address' });\n  });\n}\n\nconst meta: Meta<AuInputTextSignalHost> = {\n  title: 'Aurea/InputText/Signal form',\n  component: AuInputTextSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: INPUT_TEXT_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<AuInputTextSignalHost>;\n\nexport const WithValidation: Story = {\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Interact with the field to see **signal form** validation messages flow into `au-input-text`.',\n      },\n    },\n  },\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": []
         },
         {
-            "name": "TextareaSignalHost",
-            "id": "component-TextareaSignalHost-eea2d580f1b32899ce403a27530cf00750245eb08f36dd074ff75c5f006e19992676bbc5152cdc223b91ee5ac94797bdeaa4f8d805a8b9dc4237af9db84b65ff",
+            "name": "AuTextareaSignalHost",
+            "id": "component-AuTextareaSignalHost-4d8ff81e3494b203962921bd4191bafc59851656e80cba2e1b58db52c39a06ef0d7f345cf86858e8a3f9b1d716cef84b182e1d6eddbfbdba1f3755cd341ec77e",
             "file": "projects/components/src/lib/textarea/textarea-signal.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -212,7 +212,7 @@
             "standalone": false,
             "imports": [
                 {
-                    "name": "Textarea"
+                    "name": "AuTextarea"
                 },
                 {
                     "name": "FormField"
@@ -229,7 +229,7 @@
             "description": "<p>Story-only host: <code>au-textarea</code> + <code>form()</code> with <code>required</code> + <code>minLength(20)</code> on <code>bio</code>.\nNot exported from the library package.</p>\n",
             "rawdescription": "\n\nStory-only host: `au-textarea` + `form()` with `required` + `minLength(20)` on `bio`.\nNot exported from the library package.\n",
             "type": "component",
-            "sourceCode": "import { CommonModule, JsonPipe } from '@angular/common';\nimport { Component, signal } from '@angular/core';\nimport { type Meta, type StoryObj } from '@storybook/angular';\nimport { FormField, form, minLength, required } from '@angular/forms/signals';\nimport { TEXTAREA_SIGNAL_DOCS_OVERVIEW } from './textarea-signal.docs-overview';\nimport { Textarea } from './textarea';\n\n/**\n * Story-only host: `au-textarea` + `form()` with `required` + `minLength(20)` on `bio`.\n * Not exported from the library package.\n */\n@Component({\n  selector: 'story-textarea-signal-wrapper',\n  imports: [Textarea, FormField, CommonModule, JsonPipe],\n  template: `\n    <p style=\"font:0.8rem/1.4 var(--au-font-sans,system-ui); color: var(--au-color-text-secondary, #5c6b7a); max-width: 26rem; margin: 0 0 1rem 0\">\n      Model: <code>{{ data() | json }}</code>\n    </p>\n    <au-textarea\n      [formField]=\"fieldRoot.bio\"\n      label=\"Bio\"\n      placeholder=\"Who you are and what you do (20+ characters)…\"\n      [rows]=\"5\"\n      hint=\"Required validation + minimum length (signal form).\"\n    />\n  `,\n})\nexport class TextareaSignalHost {\n  protected readonly data = signal({ bio: '' });\n  protected readonly fieldRoot = form(this.data, (f) => {\n    required(f.bio, { message: 'Bio is required' });\n    minLength(f.bio, 20, { message: 'Write at least 20 characters' });\n  });\n}\n\nconst meta: Meta<TextareaSignalHost> = {\n  title: 'Aurea/Textarea/Signal form',\n  component: TextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TextareaSignalHost>;\n\nexport const WithValidation: Story = {\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type fewer than **20** characters and blur to trigger **minLength** from the schema.',\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { CommonModule, JsonPipe } from '@angular/common';\nimport { Component, signal } from '@angular/core';\nimport { type Meta, type StoryObj } from '@storybook/angular';\nimport { FormField, form, minLength, required } from '@angular/forms/signals';\nimport { TEXTAREA_SIGNAL_DOCS_OVERVIEW } from './textarea-signal.docs-overview';\nimport { AuTextarea } from './textarea';\n\n/**\n * Story-only host: `au-textarea` + `form()` with `required` + `minLength(20)` on `bio`.\n * Not exported from the library package.\n */\n@Component({\n  selector: 'story-textarea-signal-wrapper',\n  imports: [AuTextarea, FormField, CommonModule, JsonPipe],\n  template: `\n    <p style=\"font:0.8rem/1.4 var(--au-font-sans,system-ui); color: var(--au-color-text-secondary, #5c6b7a); max-width: 26rem; margin: 0 0 1rem 0\">\n      Model: <code>{{ data() | json }}</code>\n    </p>\n    <au-textarea\n      [formField]=\"fieldRoot.bio\"\n      label=\"Bio\"\n      placeholder=\"Who you are and what you do (20+ characters)…\"\n      [rows]=\"5\"\n      hint=\"Required validation + minimum length (signal form).\"\n    />\n  `,\n})\nexport class AuTextareaSignalHost {\n  protected readonly data = signal({ bio: '' });\n  protected readonly fieldRoot = form(this.data, (f) => {\n    required(f.bio, { message: 'Bio is required' });\n    minLength(f.bio, 20, { message: 'Write at least 20 characters' });\n  });\n}\n\nconst meta: Meta<AuTextareaSignalHost> = {\n  title: 'Aurea/Textarea/Signal form',\n  component: AuTextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<AuTextareaSignalHost>;\n\nexport const WithValidation: Story = {\n  name: 'With validation',\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type fewer than **20** characters and blur to trigger **minLength** from the schema.',\n      },\n    },\n  },\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -277,7 +277,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Chip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuChip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "cities",
@@ -373,21 +373,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Divider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
             },
             {
                 "name": "Default",
@@ -776,8 +776,8 @@
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Autocomplete>",
-                "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuAutocomplete>",
+                "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -786,8 +786,8 @@
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Button>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: Button,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -796,8 +796,8 @@
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Card>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                "type": "Meta<AuCard>",
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -806,8 +806,8 @@
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Checkbox>",
-                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+                "type": "Meta<AuCheckbox>",
+                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -816,18 +816,8 @@
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Chip>",
-                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: Chip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<Dialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                "type": "Meta<AuChip>",
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -836,8 +826,18 @@
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Divider>",
-                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: Divider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                "type": "Meta<AuDivider>",
+                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuDialog>",
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -846,8 +846,8 @@
                 "file": "projects/components/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<InputDate>",
-                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuInputDate>",
+                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -856,8 +856,8 @@
                 "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<InputNumber>",
-                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuInputNumber>",
+                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -866,8 +866,8 @@
                 "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<InputTextSignalHost>",
-                "defaultValue": "{\n  title: 'Aurea/InputText/Signal form',\n  component: InputTextSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: INPUT_TEXT_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
+                "type": "Meta<AuInputTextSignalHost>",
+                "defaultValue": "{\n  title: 'Aurea/InputText/Signal form',\n  component: AuInputTextSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: INPUT_TEXT_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -876,8 +876,8 @@
                 "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<InputText>",
-                "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: InputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuInputText>",
+                "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -886,8 +886,8 @@
                 "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<RadioGroup>",
-                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuRadioGroup>",
+                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -896,8 +896,8 @@
                 "file": "projects/components/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Select>",
-                "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuSelect>",
+                "defaultValue": "{\n  title: 'Aurea/Select',\n  component: AuSelect,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -906,8 +906,8 @@
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<SnackbarStoryHost>",
-                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: SnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                "type": "Meta<AuSnackbarStoryHost>",
+                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -916,8 +916,8 @@
                 "file": "projects/components/src/lib/switch/switch.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Switch>",
-                "defaultValue": "{\n  title: 'Aurea/Switch',\n  component: Switch,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    checkedChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuSwitch>",
+                "defaultValue": "{\n  title: 'Aurea/Switch',\n  component: AuSwitch,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    checkedChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -926,8 +926,8 @@
                 "file": "projects/components/src/lib/tabs/tabs.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Tabs>",
-                "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: Tabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
+                "type": "Meta<AuTabs>",
+                "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: AuTabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -936,8 +936,8 @@
                 "file": "projects/components/src/lib/textarea/textarea-signal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<TextareaSignalHost>",
-                "defaultValue": "{\n  title: 'Aurea/Textarea/Signal form',\n  component: TextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
+                "type": "Meta<AuTextareaSignalHost>",
+                "defaultValue": "{\n  title: 'Aurea/Textarea/Signal form',\n  component: AuTextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -946,8 +946,8 @@
                 "file": "projects/components/src/lib/textarea/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<Textarea>",
-                "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: Textarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "type": "Meta<AuTextarea>",
+                "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: AuTextarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -1249,7 +1249,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{ imports: [Button] }"
+                "defaultValue": "{ imports: [AuButton] }"
             },
             {
                 "name": "storyImports",
@@ -1259,7 +1259,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{ imports: [Card] }"
+                "defaultValue": "{ imports: [AuCard] }"
             },
             {
                 "name": "storyImports",
@@ -1269,7 +1269,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{ imports: [Tabs, AuTab, AuTabPanel] }"
+                "defaultValue": "{ imports: [AuTabs, AuTab, AuTabPanel] }"
             },
             {
                 "name": "storyImports",
@@ -1279,7 +1279,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{ imports: [AuTooltip, Button] }"
+                "defaultValue": "{ imports: [AuTooltip, AuButton] }"
             },
             {
                 "name": "Success",
@@ -1319,7 +1319,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Divider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Vertical",
@@ -1479,7 +1479,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{ imports: [Card, Button, AuCardFooter] }"
+                "defaultValue": "{ imports: [AuCard, AuButton, AuCardFooter] }"
             },
             {
                 "name": "WithHint",
@@ -1919,7 +1919,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Autocomplete>",
+                "rawtype": "StoryObj<AuAutocomplete>",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1930,7 +1930,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Button>",
+                "rawtype": "StoryObj<AuButton>",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1941,7 +1941,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Card>",
+                "rawtype": "StoryObj<AuCard>",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1952,7 +1952,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Checkbox>",
+                "rawtype": "StoryObj<AuCheckbox>",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1963,7 +1963,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Chip>",
+                "rawtype": "StoryObj<AuChip>",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1974,18 +1974,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Dialog>",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<Divider>",
+                "rawtype": "StoryObj<AuDivider>",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1996,7 +1985,18 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
+                "rawtype": "StoryObj<AuDialog>",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuInputDate>",
                 "file": "projects/components/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2007,7 +2007,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputNumber>",
+                "rawtype": "StoryObj<AuInputNumber>",
                 "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2018,7 +2018,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputTextSignalHost>",
+                "rawtype": "StoryObj<AuInputTextSignalHost>",
                 "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2029,7 +2029,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputText>",
+                "rawtype": "StoryObj<AuInputText>",
                 "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2040,7 +2040,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<RadioGroup>",
+                "rawtype": "StoryObj<AuRadioGroup>",
                 "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2051,7 +2051,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Select>",
+                "rawtype": "StoryObj<AuSelect>",
                 "file": "projects/components/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2062,7 +2062,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<SnackbarStoryHost>",
+                "rawtype": "StoryObj<AuSnackbarStoryHost>",
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2073,7 +2073,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Switch>",
+                "rawtype": "StoryObj<AuSwitch>",
                 "file": "projects/components/src/lib/switch/switch.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2084,7 +2084,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Tabs>",
+                "rawtype": "StoryObj<AuTabs>",
                 "file": "projects/components/src/lib/tabs/tabs.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2095,7 +2095,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<TextareaSignalHost>",
+                "rawtype": "StoryObj<AuTextareaSignalHost>",
                 "file": "projects/components/src/lib/textarea/textarea-signal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2106,7 +2106,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Textarea>",
+                "rawtype": "StoryObj<AuTextarea>",
                 "file": "projects/components/src/lib/textarea/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2195,8 +2195,8 @@
                     "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Button>",
-                    "defaultValue": "{\n  title: 'Aurea/Button',\n  component: Button,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                    "type": "Meta<AuButton>",
+                    "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
                 },
                 {
                     "name": "Outline",
@@ -2246,7 +2246,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{ imports: [Button] }"
+                    "defaultValue": "{ imports: [AuButton] }"
                 }
             ],
             "projects/components/src/lib/input-date/input-date.stories.ts": [
@@ -2277,8 +2277,8 @@
                     "file": "projects/components/src/lib/input-date/input-date.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<InputDate>",
-                    "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuInputDate>",
+                    "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "WithBounds",
@@ -2369,8 +2369,8 @@
                     "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Checkbox>",
-                    "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: Checkbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+                    "type": "Meta<AuCheckbox>",
+                    "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -2422,7 +2422,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Chip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuChip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "Default",
@@ -2451,8 +2451,8 @@
                     "file": "projects/components/src/lib/chip/chip.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Chip>",
-                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: Chip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+                    "type": "Meta<AuChip>",
+                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
                 },
                 {
                     "name": "Outline",
@@ -2573,8 +2573,8 @@
                     "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Autocomplete>",
-                    "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuAutocomplete>",
+                    "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "MinFilterLength",
@@ -2655,8 +2655,8 @@
                     "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<InputText>",
-                    "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: InputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuInputText>",
+                    "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "Password",
@@ -2757,8 +2757,8 @@
                     "file": "projects/components/src/lib/select/select.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Select>",
-                    "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuSelect>",
+                    "defaultValue": "{\n  title: 'Aurea/Select',\n  component: AuSelect,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -2849,8 +2849,8 @@
                     "file": "projects/components/src/lib/tabs/tabs.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Tabs>",
-                    "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: Tabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
+                    "type": "Meta<AuTabs>",
+                    "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: AuTabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
                 },
                 {
                     "name": "Small",
@@ -2870,7 +2870,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{ imports: [Tabs, AuTab, AuTabPanel] }"
+                    "defaultValue": "{ imports: [AuTabs, AuTab, AuTabPanel] }"
                 },
                 {
                     "name": "tabTemplate",
@@ -2941,8 +2941,8 @@
                     "file": "projects/components/src/lib/card/card.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Card>",
-                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                    "type": "Meta<AuCard>",
+                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "Outlined",
@@ -2972,7 +2972,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{ imports: [Card] }"
+                    "defaultValue": "{ imports: [AuCard] }"
                 },
                 {
                     "name": "WithFooter",
@@ -2992,7 +2992,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{ imports: [Card, Button, AuCardFooter] }"
+                    "defaultValue": "{ imports: [AuCard, AuButton, AuCardFooter] }"
                 },
                 {
                     "name": "WithMedia",
@@ -3003,6 +3003,58 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n    ),\n}"
+                }
+            ],
+            "projects/components/src/lib/divider/divider.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Inset",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDivider>",
+                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                },
+                {
+                    "name": "Vertical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
                 }
             ],
             "projects/components/src/lib/dialog/dialog.stories.ts": [
@@ -3043,8 +3095,8 @@
                     "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Dialog>",
-                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: Dialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                    "type": "Meta<AuDialog>",
+                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
                 },
                 {
                     "name": "NoBackdropClose",
@@ -3097,58 +3149,6 @@
                     "defaultValue": "hostStory({\n  hint: 'Provide `ariaLabel` when there is no visible title.',\n  title: '',\n  ariaLabel: 'Information',\n  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',\n})"
                 }
             ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Divider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Inset",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<Divider>",
-                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: Divider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
-                },
-                {
-                    "name": "Vertical",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Divider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "WithLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
-                }
-            ],
             "projects/components/src/lib/input-number/input-number.stories.ts": [
                 {
                     "name": "Default",
@@ -3167,8 +3167,8 @@
                     "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<InputNumber>",
-                    "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuInputNumber>",
+                    "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "WithBounds",
@@ -3199,8 +3199,8 @@
                     "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<RadioGroup>",
-                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: RadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuRadioGroup>",
+                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -3251,8 +3251,8 @@
                     "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<SnackbarStoryHost>",
-                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: SnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                    "type": "Meta<AuSnackbarStoryHost>",
+                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
                 },
                 {
                     "name": "Success",
@@ -3303,8 +3303,8 @@
                     "file": "projects/components/src/lib/switch/switch.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Switch>",
-                    "defaultValue": "{\n  title: 'Aurea/Switch',\n  component: Switch,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    checkedChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuSwitch>",
+                    "defaultValue": "{\n  title: 'Aurea/Switch',\n  component: AuSwitch,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    checkedChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "On",
@@ -3345,8 +3345,8 @@
                     "file": "projects/components/src/lib/textarea/textarea.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<Textarea>",
-                    "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: Textarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "type": "Meta<AuTextarea>",
+                    "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: AuTextarea,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: TEXTAREA_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; `for` matches textarea `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper text; `aria-describedby` when set.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error; overrides `errors` display when non-empty.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid from parent or directive.',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Native `required` + `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    id: { control: 'text', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "ReadOnly",
@@ -3438,7 +3438,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{ imports: [AuTooltip, Button] }"
+                    "defaultValue": "{ imports: [AuTooltip, AuButton] }"
                 }
             ],
             "projects/components/src/lib/input-text/input-text-signal.stories.ts": [
@@ -3449,8 +3449,8 @@
                     "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<InputTextSignalHost>",
-                    "defaultValue": "{\n  title: 'Aurea/InputText/Signal form',\n  component: InputTextSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: INPUT_TEXT_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
+                    "type": "Meta<AuInputTextSignalHost>",
+                    "defaultValue": "{\n  title: 'Aurea/InputText/Signal form',\n  component: AuInputTextSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: INPUT_TEXT_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "WithValidation",
@@ -3471,8 +3471,8 @@
                     "file": "projects/components/src/lib/textarea/textarea-signal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<TextareaSignalHost>",
-                    "defaultValue": "{\n  title: 'Aurea/Textarea/Signal form',\n  component: TextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
+                    "type": "Meta<AuTextareaSignalHost>",
+                    "defaultValue": "{\n  title: 'Aurea/Textarea/Signal form',\n  component: AuTextareaSignalHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component: TEXTAREA_SIGNAL_DOCS_OVERVIEW,\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "WithValidation",
@@ -3863,7 +3863,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Autocomplete>",
+                    "rawtype": "StoryObj<AuAutocomplete>",
                     "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3876,7 +3876,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Button>",
+                    "rawtype": "StoryObj<AuButton>",
                     "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3889,7 +3889,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Card>",
+                    "rawtype": "StoryObj<AuCard>",
                     "file": "projects/components/src/lib/card/card.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3902,7 +3902,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Checkbox>",
+                    "rawtype": "StoryObj<AuCheckbox>",
                     "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3915,21 +3915,8 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Chip>",
+                    "rawtype": "StoryObj<AuChip>",
                     "file": "projects/components/src/lib/chip/chip.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/dialog/dialog.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<Dialog>",
-                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3941,8 +3928,21 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Divider>",
+                    "rawtype": "StoryObj<AuDivider>",
                     "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuDialog>",
+                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3954,7 +3954,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<InputDate>",
+                    "rawtype": "StoryObj<AuInputDate>",
                     "file": "projects/components/src/lib/input-date/input-date.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3967,7 +3967,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<InputNumber>",
+                    "rawtype": "StoryObj<AuInputNumber>",
                     "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3980,7 +3980,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<InputTextSignalHost>",
+                    "rawtype": "StoryObj<AuInputTextSignalHost>",
                     "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3993,7 +3993,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<InputText>",
+                    "rawtype": "StoryObj<AuInputText>",
                     "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4006,7 +4006,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<RadioGroup>",
+                    "rawtype": "StoryObj<AuRadioGroup>",
                     "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4019,7 +4019,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Select>",
+                    "rawtype": "StoryObj<AuSelect>",
                     "file": "projects/components/src/lib/select/select.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4032,7 +4032,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<SnackbarStoryHost>",
+                    "rawtype": "StoryObj<AuSnackbarStoryHost>",
                     "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4045,7 +4045,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Switch>",
+                    "rawtype": "StoryObj<AuSwitch>",
                     "file": "projects/components/src/lib/switch/switch.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4058,7 +4058,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Tabs>",
+                    "rawtype": "StoryObj<AuTabs>",
                     "file": "projects/components/src/lib/tabs/tabs.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4071,7 +4071,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<TextareaSignalHost>",
+                    "rawtype": "StoryObj<AuTextareaSignalHost>",
                     "file": "projects/components/src/lib/textarea/textarea-signal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -4084,7 +4084,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<Textarea>",
+                    "rawtype": "StoryObj<AuTextarea>",
                     "file": "projects/components/src/lib/textarea/textarea.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -5030,7 +5030,7 @@
                 "filePath": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "InputTextSignalHost",
+                "name": "AuInputTextSignalHost",
                 "coveragePercent": 33,
                 "coverageCount": "1/3",
                 "status": "medium"
@@ -5579,7 +5579,7 @@
                 "filePath": "projects/components/src/lib/textarea/textarea-signal.stories.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "TextareaSignalHost",
+                "name": "AuTextareaSignalHost",
                 "coveragePercent": 33,
                 "coverageCount": "1/3",
                 "status": "medium"

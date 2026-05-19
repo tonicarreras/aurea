@@ -68,7 +68,7 @@ import { AuDialog } from './dialog';
     `,
   ],
 })
-export class DialogStoryHost {
+export class AuDialogStoryHost {
   open = false;
 
   readonly hint = input('');

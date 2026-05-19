@@ -62,7 +62,7 @@ import { AuSnackbar, type SnackbarPosition, type SnackbarVariant } from './snack
     `,
   ],
 })
-export class SnackbarStoryHost {
+export class AuSnackbarStoryHost {
   readonly hint = input('');
   readonly triggerLabel = input('Show snackbar');
   readonly open = model(false);
