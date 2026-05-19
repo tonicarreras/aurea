@@ -1,0 +1,42 @@
+@import '../../components/src/lib/theme/au-tokens.css';
+@import '../../components/src/lib/theme/au-field-error.css';
+@import '../../components/src/lib/theme/au-field-listbox.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-md);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-primary);
+  background: var(--au-color-surface-canvas);
+}
+
+a {
+  color: var(--au-color-accent);
+}
+
+a:hover {
+  color: var(--au-color-accent-hover);
+}
+
+code,
+pre {
+  font-family: var(--au-font-mono);
+  font-size: var(--au-text-sm);
+}
+
+:focus-visible {
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}

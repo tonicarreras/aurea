@@ -32,12 +32,12 @@ jobs:
             VERSION="${{ inputs.version }}"
             echo "Source: workflow input → ${VERSION}"
           else
-            VERSION=$(node -p "require('./package.json').version")
-            echo "Source: projects/aurea/package.json → ${VERSION}"
+            VERSION=$(node -p "require('./projects/components/package.json').version")
+            echo "Source: projects/components/package.json → ${VERSION}"
           fi
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           npm version "$VERSION" --no-git-tag-version --allow-same-version
-        working-directory: projects/aurea
+        working-directory: projects/components
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -55,17 +55,17 @@ jobs:
 
       - name: Verify package contents and version
         run: |
-          test -f dist/aurea/package.json
-          test -f dist/aurea/fesm2022/aurea-ds-aurea.mjs
-          test -f dist/aurea/styles/au-tokens.css
-          BUILT=$(node -p "require('./dist/aurea/package.json').version")
+          test -f dist/components/package.json
+          test -f dist/components/fesm2022/aurea-ds-aurea.mjs
+          test -f dist/components/styles/au-tokens.css
+          BUILT=$(node -p "require('./dist/components/package.json').version")
           EXPECTED="${{ steps.publish_version.outputs.version }}"
           echo "Publishing @aurea-ds/aurea@${BUILT} (expected ${EXPECTED})"
           test "$BUILT" = "$EXPECTED"
 
       - name: Check npm registry
         id: registries
-        working-directory: dist/aurea
+        working-directory: dist/components
         run: |
           PKG_VERSION=$(node -p "require('./package.json').version")
           echo "version=${PKG_VERSION}" >> "$GITHUB_OUTPUT"
@@ -107,7 +107,7 @@ jobs:
 
       - name: Publish to npm
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
-        working-directory: dist/aurea
+        working-directory: dist/components
         run: npm publish --access public
 
       - name: Summary

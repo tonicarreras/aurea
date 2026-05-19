@@ -2,7 +2,7 @@
 import { readdir, readFile, unlink, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const distDir = join(process.cwd(), 'dist', 'aurea');
+const distDir = join(process.cwd(), 'dist', 'components');
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });

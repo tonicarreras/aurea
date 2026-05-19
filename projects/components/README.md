@@ -7,6 +7,7 @@
 [![npm](https://img.shields.io/npm/v/@aurea-ds/aurea?label=npm)](https://www.npmjs.com/package/@aurea-ds/aurea)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
 
+Monorepo project **`components`** (this folder). Official docs: [`projects/docs`](../docs).  
 Source & Storybook: [tonicarreras/aurea-ds](https://github.com/tonicarreras/aurea-ds).
 
 ---

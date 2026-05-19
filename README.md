@@ -22,6 +22,7 @@
   <a href="#-features">Features</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-components">Components</a> •
+  <a href="#-documentación">Docs</a> •
   <a href="#-storybook">Storybook</a> •
   <a href="#-test-coverage">Coverage</a> •
   <a href="#-tokens">Tokens</a>
@@ -57,18 +58,29 @@ Aurea is built on three pillars:
 
 ## 🚀 Quick Start
 
+### Repository layout
+
+Monorepo **aurea** with two Angular projects:
+
+| Project | Path | Role |
+|---------|------|------|
+| **components** | [`projects/components`](projects/components) | Design system library (npm: `@aurea-ds/aurea`) |
+| **docs** | [`projects/docs`](projects/docs) | Official documentation site |
+
 ### Develop this repo
 
 ```bash
 git clone https://github.com/tonicarreras/aurea-ds.git
 cd aurea-ds
 bun install
-bun run storybook
+bun run storybook     # components — Storybook (puerto 6006)
+bun run docs          # docs — documentación oficial (puerto 4200)
+bun run test          # unit tests (components)
 ```
 
 ### Use the published package
 
-Install and usage docs for consumers: **[`projects/aurea/README.md`](projects/aurea/README.md)**  
+Install and usage docs for consumers: **[`projects/components/README.md`](projects/components/README.md)**  
 (package **`@aurea-ds/aurea`** on [npm](https://www.npmjs.com/package/@aurea-ds/aurea)).
 
 ---
@@ -82,6 +94,19 @@ Install and usage docs for consumers: **[`projects/aurea/README.md`](projects/au
 | `au-textarea` | Multi-line text area with resize control | ✅ |
 | `au-checkbox` | Accessible checkbox with custom styling | ✅ |
 | `au-select` | Dropdown select with keyboard navigation | ✅ |
+
+---
+
+## 📖 Documentación oficial
+
+App Angular en `projects/docs` que consume `@aurea-ds/aurea` desde el monorepo: guías, temas y vista previa de cada componente.
+
+```bash
+bun run docs          # http://127.0.0.1:4200
+bun run build:docs    # salida en dist/docs/browser
+```
+
+Storybook sigue siendo el catálogo interactivo para desarrollo y pruebas; la app **docs** es la referencia pública orientada a consumidores.
 
 ---
 
@@ -124,7 +149,7 @@ Run `bun run test:coverage` locally to see the current file-level report and tot
 
 | Included | Excluded |
 |----------|----------|
-| `projects/aurea/src/lib/**/*.ts` | `*.stories.ts`, `*.docs-overview.ts`, `*-story-host.ts` |
+| `projects/components/src/lib/**/*.ts` | `*.stories.ts`, `*.docs-overview.ts`, `*-story-host.ts` |
 
 ### Commands
 
@@ -136,7 +161,7 @@ bun run test
 bun run test:coverage
 ```
 
-After `test:coverage`, open the HTML report at `coverage/aurea/index.html`.
+After `test:coverage`, open the HTML report at `coverage/components/index.html`.
 
 ### CI
 
