@@ -10,6 +10,11 @@
 
 [![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
+[![Tests](https://github.com/tonicarreras/aurea-ds/actions/workflows/test.yml/badge.svg)](https://github.com/tonicarreras/aurea-ds/actions/workflows/test.yml)
+[![Statements](https://img.shields.io/badge/statements-100%25-brightgreen)](#-test-coverage)
+[![Branches](https://img.shields.io/badge/branches-100%25-brightgreen)](#-test-coverage)
+[![Functions](https://img.shields.io/badge/functions-100%25-brightgreen)](#-test-coverage)
+[![Lines](https://img.shields.io/badge/lines-100%25-brightgreen)](#-test-coverage)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-success)](https://github.com/tonicarreras/aurea-ds)
 
@@ -18,6 +23,7 @@
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-components">Components</a> •
   <a href="#-storybook">Storybook</a> •
+  <a href="#-test-coverage">Coverage</a> •
   <a href="#-tokens">Tokens</a>
 </p>
 
@@ -111,6 +117,47 @@ bun run test-storybook:ci
 
 ---
 
+## 🧪 Test coverage
+
+Unit tests run with **Vitest** (via `ng test`). Coverage is collected with **v8** and enforced in CI at
+**100%** for statements, branches, functions, and lines (`angular.json` → `coverageThresholds`).
+
+| Metric | Threshold | Enforced in CI |
+|--------|-----------|----------------|
+| Statements | 100% | ✅ |
+| Branches | 100% | ✅ |
+| Functions | 100% | ✅ |
+| Lines | 100% | ✅ |
+
+Run `bun run test:coverage` locally to see the current file-level report and totals.
+
+### Scope
+
+| Included | Excluded |
+|----------|----------|
+| `projects/aurea/src/lib/**/*.ts` | `*.stories.ts`, `*.docs-overview.ts`, `*-story-host.ts` |
+
+### Commands
+
+```bash
+# Unit tests only
+bun run test
+
+# Unit tests + coverage report (fails below 100%)
+bun run test:coverage
+```
+
+After `test:coverage`, open the HTML report at `coverage/aurea/index.html`.
+
+### CI
+
+| Workflow | What it runs |
+|----------|----------------|
+| [Test](.github/workflows/test.yml) | `bun run test:coverage` on push/PR to `main` and `develop` |
+| Storybook (local/CI) | `bun run test-storybook:ci` — interaction tests, separate from unit coverage |
+
+---
+
 ## 🎨 Design Tokens
 
 Aurea uses semantic tokens organized by category:
@@ -139,7 +186,7 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 - **Framework**: Angular 21 (Signals, Standalone APIs)
 - **Package Manager**: Bun
-- **Testing**: Vitest + Playwright
+- **Testing**: Vitest (100% unit coverage) + Playwright (Storybook test-runner)
 - **Documentation**: Storybook 10
 - **Accessibility**: WCAG 2.2 AA
 
