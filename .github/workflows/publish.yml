@@ -11,21 +11,32 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Require publish token
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::Repository secret GH_PACKAGES_TOKEN is missing or empty."
+            exit 1
+          fi
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
 
-      - name: Setup Node (for npm publish)
+      - name: Setup Node (GitHub Packages auth)
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           registry-url: https://npm.pkg.github.com
           scope: '@tonicarreras'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -44,6 +55,4 @@ jobs:
 
       - name: Publish to GitHub Packages
         working-directory: dist/aurea
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+        run: npm publish --access public --registry=https://npm.pkg.github.com

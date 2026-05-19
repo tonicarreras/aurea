@@ -32,9 +32,14 @@ Package name: **`@tonicarreras/aurea`**. Published to `https://npm.pkg.github.co
 [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases) (workflow
 `.github/workflows/publish.yml`).
 
-**CI publish:** add repository secret **`GH_PACKAGES_TOKEN`** (fine-grained or classic PAT with
-`write:packages` and `read:packages`). The workflow sets `NODE_AUTH_TOKEN` via `actions/setup-node` — no
-`.npmrc` in the repo.
+**CI publish:** add repository secret **`GH_PACKAGES_TOKEN`** (fine-grained or classic PAT).
+
+| Token type | Required permissions |
+|------------|-------------------|
+| Classic PAT | `write:packages`, `read:packages`, and `repo` if the repository is private |
+| Fine-grained PAT | Repository access to `aurea-ds`, **Packages: Read and write** |
+
+`setup-node` receives `NODE_AUTH_TOKEN` when it runs so npm auth is configured on the runner (no `.npmrc` in the repo).
 
 **Manual publish** (same token exported in the shell):
 
