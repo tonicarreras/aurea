@@ -8,6 +8,7 @@
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
+  color-scheme: inherit;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -183,33 +184,80 @@
   outline: none;
 }
 
-/* Calendar trigger icon */
-.au-input-date__input::-webkit-calendar-picker-indicator {
-  position: relative;
+/* Decorative calendar icon (same pattern as au-select chevron) */
+.au-input-date__icon {
+  position: absolute;
+  inset-inline-end: var(--au-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: var(--au-color-date-picker-icon);
+  transition: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+:host([data-au-size='sm']) .au-input-date__icon {
+  inset-inline-end: var(--au-space-2-5);
+}
+
+:host([data-au-size='lg']) .au-input-date__icon {
+  inset-inline-end: var(--au-space-4);
+}
+
+:host([data-au-size='sm']) .au-input-date__icon-svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+:host([data-au-size='lg']) .au-input-date__icon-svg {
   width: 1.125rem;
   height: 1.125rem;
-  margin-inline-start: var(--au-space-2);
-  padding: var(--au-space-1);
-  border-radius: var(--au-radius-sm);
+}
+
+.au-input-date__control-row:has(.au-input-date__input:not(:disabled):hover) .au-input-date__icon,
+.au-input-date__control-row:focus-within .au-input-date__icon {
+  color: var(--au-color-date-picker-icon-hover);
+}
+
+.au-input-date__control-row:focus-within .au-input-date__icon {
+  color: var(--au-color-date-picker-icon-active);
+}
+
+.au-input-date__control-row:has(.au-input-date__input:disabled) .au-input-date__icon {
+  color: var(--au-color-form-disabled-foreground);
+  opacity: 0.9;
+}
+
+/*
+ * Chromium / Safari: invisible hit target over the decorative icon.
+ * Firefox keeps its native icon; `accent-color` styles popup selection.
+ */
+.au-input-date__input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.75rem;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
   cursor: pointer;
-  opacity: 0.78;
-  transition:
-    opacity var(--au-duration-short) var(--au-ease-in-out),
-    background-color var(--au-duration-short) var(--au-ease-in-out);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.au-input-date__control-row:hover
-  .au-input-date__input:not(:disabled)::-webkit-calendar-picker-indicator {
-  opacity: 1;
-  background-color: var(--au-color-date-picker-icon-bg);
+:host([data-au-size='sm']) .au-input-date__input::-webkit-calendar-picker-indicator {
+  width: 2.5rem;
 }
 
-.au-input-date__control-row:focus-within .au-input-date__input::-webkit-calendar-picker-indicator {
-  opacity: 1;
-  background-color: var(--au-color-date-picker-icon-bg);
+:host([data-au-size='lg']) .au-input-date__input::-webkit-calendar-picker-indicator {
+  width: 3rem;
 }
 
-/* Firefox: keeps native icon; accent-color styles the popup selection */
+/* Firefox: native icon + accent-color on popup selection */
 .au-input-date__input::-moz-focus-inner {
   border: 0;
 }
@@ -222,7 +270,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .au-input-date__control-row {
+  .au-input-date__control-row,
+  .au-input-date__icon {
     transition: none;
   }
 }

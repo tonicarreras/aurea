@@ -187,21 +187,29 @@
   --au-color-form-error-bg: var(--au-color-semantic-error-surface);
   --au-color-form-disabled-foreground: #8d98a6;
   --au-color-form-disabled-surface: #ebedf0;
+  /* Switch (off): track vs thumb ≥ 3:1 (WCAG non-text UI) */
+  --au-color-switch-track-off: #8d98a6;
+  --au-color-switch-track-off-hover: #6b7785;
+  --au-color-switch-track-off-border: #5c6b7d;
+  --au-color-switch-thumb-off: #ffffff;
   /* Native `<select>` dropdown list (`option`; browser support varies) */
   --au-color-select-menu-bg: var(--au-color-surface-raised);
   --au-color-select-menu-text: var(--au-color-form-text);
-  /* Highlight = option under pointer / keyboard while list is open */
-  --au-color-select-option-highlight-bg: #d4e4fa;
+  --au-color-select-field-hover-bg: #f4f7fb;
+  /* Highlight = row under pointer while the list is open (soft surface, not solid accent) */
+  --au-color-select-option-highlight-bg: #e3ecf8;
   --au-color-select-option-highlight-text: #0a3a85;
   --au-color-select-option-highlight-marker: #1059c8;
-  /* Selected = committed value in the field */
-  --au-color-select-option-selected-bg: var(--au-color-action-primary);
+  /* Selected = committed value (solid accent; distinct from highlight) */
+  --au-color-select-option-selected-bg: #0d4aa3;
   --au-color-select-option-selected-text: #ffffff;
-  --au-color-select-option-selected-marker: #0a3a85;
+  --au-color-select-option-selected-marker: #7eb8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
   /* Native `input[type="date"]` popup + accent (browser support varies) */
   --au-color-date-picker-accent: var(--au-color-action-primary);
-  --au-color-date-picker-icon-bg: var(--au-color-surface-elevated);
+  --au-color-date-picker-icon: var(--au-color-text-tertiary);
+  --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
+  --au-color-date-picker-icon-active: var(--au-color-action-primary);
   --au-color-date-picker-edit-highlight: rgba(16, 89, 200, 0.14);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Ring shadow: single composition (components) */
@@ -280,18 +288,26 @@
   --au-color-form-error-bg: var(--au-color-semantic-error-surface);
   --au-color-form-disabled-foreground: #5c6b7a;
   --au-color-form-disabled-surface: #1a1e26;
+  /* Switch (off) */
+  --au-color-switch-track-off: #4d5666;
+  --au-color-switch-track-off-hover: #5c6b7d;
+  --au-color-switch-track-off-border: #6b7785;
+  --au-color-switch-thumb-off: #f0f2f4;
   /* Native `<select>` dropdown list */
   --au-color-select-menu-bg: var(--au-color-surface-elevated);
   --au-color-select-menu-text: var(--au-color-form-text);
-  --au-color-select-option-highlight-bg: rgba(94, 176, 255, 0.24);
+  --au-color-select-field-hover-bg: #1c222c;
+  --au-color-select-option-highlight-bg: #2a3340;
   --au-color-select-option-highlight-text: #eef1f4;
   --au-color-select-option-highlight-marker: #7fc0ff;
-  --au-color-select-option-selected-bg: #2f7ec8;
+  --au-color-select-option-selected-bg: #3b8fd9;
   --au-color-select-option-selected-text: #ffffff;
-  --au-color-select-option-selected-marker: #a3d4ff;
+  --au-color-select-option-selected-marker: #cfe8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
   --au-color-date-picker-accent: var(--au-color-action-primary);
-  --au-color-date-picker-icon-bg: #252a33;
+  --au-color-date-picker-icon: var(--au-color-text-tertiary);
+  --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
+  --au-color-date-picker-icon-active: var(--au-color-action-primary);
   --au-color-date-picker-edit-highlight: rgba(94, 176, 255, 0.22);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */

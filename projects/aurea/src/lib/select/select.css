@@ -78,9 +78,10 @@
   transition: var(--au-transition-control);
 }
 
-/* Hover: border only, no ring */
+/* Hover: stronger border + subtle fill (distinct from default and from list highlight) */
 .au-select__control-row:has(.au-select__element:hover:not(:disabled)):not(:focus-within) {
   border-color: var(--au-color-form-border-hover);
+  background: var(--au-color-select-field-hover-bg);
 }
 
 /* Error (no focus) */
@@ -185,15 +186,15 @@
   background-color: var(--au-color-select-menu-bg);
 }
 
-/* Committed value (visible in the closed field) */
+/* Committed value (solid accent — selected in the closed field) */
 .au-select__element option:checked {
   background-color: var(--au-color-select-option-selected-bg);
   color: var(--au-color-select-option-selected-text);
   font-weight: var(--au-weight-semibold);
-  box-shadow: inset 3px 0 0 var(--au-color-select-option-selected-marker);
+  box-shadow: inset 4px 0 0 var(--au-color-select-option-selected-marker);
 }
 
-/* Active row while browsing the list — distinct from :checked */
+/* Active row while browsing the list — soft surface, not solid accent */
 @media (hover: hover) {
   .au-select__element option:hover:not(:checked) {
     background-color: var(--au-color-select-option-highlight-bg);
@@ -202,10 +203,12 @@
     box-shadow: inset 3px 0 0 var(--au-color-select-option-highlight-marker);
   }
 
+  /* Selected + hover: keep solid selected styling (no revert to highlight) */
   .au-select__element option:checked:hover {
     background-color: var(--au-color-select-option-selected-bg);
     color: var(--au-color-select-option-selected-text);
-    box-shadow: inset 3px 0 0 var(--au-color-select-option-selected-marker);
+    font-weight: var(--au-weight-semibold);
+    box-shadow: inset 4px 0 0 var(--au-color-select-option-selected-marker);
   }
 }
 

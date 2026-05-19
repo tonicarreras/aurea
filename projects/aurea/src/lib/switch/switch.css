@@ -116,12 +116,17 @@
   width: 2.75rem;
   height: 1.5rem;
   border-radius: 999px;
-  border: 1px solid var(--au-color-form-border);
-  background: var(--au-color-surface-sunken);
+  border: 1px solid var(--au-color-switch-track-off-border);
+  background: var(--au-color-switch-track-off);
   transition:
     border-color var(--au-duration-short) var(--au-ease-in-out),
     background-color var(--au-duration-short) var(--au-ease-in-out),
     box-shadow var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.au-switch__element:not(:checked):hover:not(:disabled) {
+  background: var(--au-color-switch-track-off-hover);
+  border-color: var(--au-color-switch-track-off-border);
 }
 
 :host([data-au-size='sm']) .au-switch__element {
@@ -139,6 +144,11 @@
   border-color: var(--au-color-action-primary);
 }
 
+.au-switch__element:checked::after {
+  background: var(--au-color-text-on-solid);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 22%);
+}
+
 .au-switch__element::after {
   content: '';
   position: absolute;
@@ -147,8 +157,10 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--au-color-surface-elevated);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+  background: var(--au-color-switch-thumb-off);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 18%),
+    0 0 0 1px rgb(0 0 0 / 6%);
   transform: translate(0, -50%);
   transition: transform var(--au-duration-short) var(--au-ease-in-out);
 }

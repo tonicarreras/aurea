@@ -39,7 +39,7 @@ export const CalendarTheming: Story = {
     docs: {
       description: {
         story:
-          'Abre el calendario nativo y cambia **Tema** en la barra. `accent-color` y `color-scheme` alinean selección y popup; el icono y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',
+          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',
       },
     },
   },

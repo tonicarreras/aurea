@@ -257,16 +257,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -282,6 +272,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -587,16 +587,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputDate>",
-                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -612,6 +602,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<InputNumber>",
                 "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: InputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputDate>",
+                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: InputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -999,21 +999,21 @@
                 "name": "WithBounds",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
-            },
-            {
-                "name": "WithBounds",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n}"
+            },
+            {
+                "name": "WithBounds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
             },
             {
                 "name": "WithDescription",
@@ -1469,17 +1469,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputDate>",
-                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<Dialog>",
                 "file": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
@@ -1493,6 +1482,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<InputNumber>",
                 "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<InputDate>",
+                "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2943,19 +2943,6 @@
                     "kind": 184
                 }
             ],
-            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<InputDate>",
-                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/aurea/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "Story",
@@ -2976,6 +2963,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputNumber>",
                     "file": "projects/aurea/src/lib/input-number/input-number.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/aurea/src/lib/input-date/input-date.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<InputDate>",
+                    "file": "projects/aurea/src/lib/input-date/input-date.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
