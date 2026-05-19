@@ -57,11 +57,11 @@ jobs:
       - name: Verify package contents and version
         run: |
           test -f dist/aurea/package.json
-          test -f dist/aurea/fesm2022/tonicarreras-aurea.mjs
+          test -f dist/aurea/fesm2022/aurea-ds-aurea.mjs
           test -f dist/aurea/styles/au-tokens.css
           BUILT=$(node -p "require('./dist/aurea/package.json').version")
           EXPECTED="${{ steps.publish_version.outputs.version }}"
-          echo "Publishing @tonicarreras/aurea@${BUILT} (expected ${EXPECTED})"
+          echo "Publishing @aurea-ds/aurea@${BUILT} (expected ${EXPECTED})"
           test "$BUILT" = "$EXPECTED"
 
       - name: Check published versions
@@ -73,14 +73,14 @@ jobs:
           PKG_VERSION=$(node -p "require('./package.json').version")
           echo "version=${PKG_VERSION}" >> "$GITHUB_OUTPUT"
 
-          if npm view "@tonicarreras/aurea@${PKG_VERSION}" version \
+          if npm view "@aurea-ds/aurea@${PKG_VERSION}" version \
             --registry=https://npm.pkg.github.com 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
             echo "gh_published=true" >> "$GITHUB_OUTPUT"
           else
             echo "gh_published=false" >> "$GITHUB_OUTPUT"
           fi
 
-          if npm view "@tonicarreras/aurea@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
+          if npm view "@aurea-ds/aurea@${PKG_VERSION}" version 2>/dev/null | grep -Fxq "${PKG_VERSION}"; then
             echo "npm_published=true" >> "$GITHUB_OUTPUT"
           else
             echo "npm_published=false" >> "$GITHUB_OUTPUT"
@@ -96,7 +96,7 @@ jobs:
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
             echo "::warning::NPM_TOKEN is not set on the production environment — skipping npm publish."
-            echo "::warning::Add an npm Automation token as NPM_TOKEN so users can run: bun add @tonicarreras/aurea"
+            echo "::warning::Add NPM_TOKEN so users can run: bun add @aurea-ds/aurea"
           fi
 
       - name: Setup Node for npmjs.org
@@ -105,14 +105,18 @@ jobs:
         with:
           node-version: '22'
           registry-url: https://registry.npmjs.org
-          scope: '@tonicarreras'
+          scope: '@aurea-ds'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm (install without token)
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
         working-directory: dist/aurea
-        run: npm publish --access public
+        run: |
+          npm publish --access public || {
+            echo "::error::npm publish failed. For 403: use a Granular token with publish access to @aurea-ds on npm. See projects/aurea/README.md"
+            exit 1
+          }
 
       - name: Setup Node for GitHub Packages
         if: steps.registries.outputs.gh_published != 'true'
@@ -120,7 +124,7 @@ jobs:
         with:
           node-version: '22'
           registry-url: https://npm.pkg.github.com
-          scope: '@tonicarreras'
+          scope: '@aurea-ds'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
 
@@ -131,7 +135,7 @@ jobs:
 
       - name: Summary
         run: |
-          echo "## @tonicarreras/aurea@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "## @aurea-ds/aurea@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.registries.outputs.npm_published }}" = "true" ]; then
             echo "- npm: ✓ already on npmjs" >> "$GITHUB_STEP_SUMMARY"
           elif [ "${{ steps.npm_token.outputs.present }}" = "true" ]; then
