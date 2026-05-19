@@ -1,0 +1,63 @@
+/**
+ * Aurea Divider — section separator.
+ */
+@import url('../theme/au-tokens.css');
+
+:host {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-secondary);
+  -webkit-font-smoothing: antialiased;
+}
+
+:host([data-au-orientation='horizontal']) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  border-top: 1.5px solid var(--au-color-border-subtle);
+}
+
+:host([data-au-orientation='horizontal'][data-au-inset]) {
+  margin-inline-start: var(--au-space-4);
+  width: auto;
+  flex: 1 1 auto;
+}
+
+:host([data-au-orientation='horizontal'][data-au-labeled]) {
+  display: flex;
+  gap: var(--au-space-3);
+  border-top: 0;
+}
+
+:host([data-au-orientation='horizontal'][data-au-labeled]) .au-divider__rule {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 0;
+  border: 0;
+  border-top: 1.5px solid var(--au-color-border-subtle);
+}
+
+:host([data-au-orientation='horizontal'][data-au-labeled]) .au-divider__label {
+  flex: 0 0 auto;
+  font-size: var(--au-text-xs);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-normal);
+  letter-spacing: var(--au-tracking-ui);
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+:host([data-au-orientation='vertical']) {
+  display: inline-block;
+  align-self: stretch;
+  width: 0;
+  min-height: var(--au-space-4);
+  margin: 0;
+  border: 0;
+  border-inline-start: 1.5px solid var(--au-color-border-subtle);
+}

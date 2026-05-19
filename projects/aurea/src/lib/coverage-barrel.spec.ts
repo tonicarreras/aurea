@@ -7,6 +7,7 @@ import * as inputDate from './input-date/index';
 import * as inputNumber from './input-number/index';
 import * as inputText from './input-text/index';
 import * as dialog from './dialog/index';
+import * as divider from './divider/index';
 import * as radioGroup from './radio-group/index';
 import * as select from './select/index';
 import * as snackbar from './snackbar/index';
@@ -28,6 +29,7 @@ describe('library barrel exports', () => {
     expect(inputNumber.InputNumber).toBeDefined();
     expect(inputText.InputText).toBeDefined();
     expect(dialog.Dialog).toBeDefined();
+    expect(divider.Divider).toBeDefined();
     expect(dialog.AuDialogFooter).toBeDefined();
     expect(radioGroup.RadioGroup).toBeDefined();
     expect(select.Select).toBeDefined();
