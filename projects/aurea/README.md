@@ -135,6 +135,13 @@ Clone the repo, run `bun install`, `bun run storybook`, and `bun run test:covera
 
 Releases are published to GitHub Packages on each [GitHub Release](https://github.com/tonicarreras/aurea-ds/releases).
 
+1. Bump **`version`** in `projects/aurea/package.json` and commit (e.g. `0.1.2`).
+2. Create and push tag **`v0.1.2`** and publish a GitHub Release for that tag.
+3. The workflow takes the version from the **release tag** (`v0.1.2` → `0.1.2`), not from an older re-run.
+4. If that version already exists on the registry, publish is **skipped** (no `409`).
+
+**Manual run:** Actions → Publish → Run workflow → optional **version** input (`0.1.2`). Without input, uses `projects/aurea/package.json`.
+
 ---
 
 ## License
