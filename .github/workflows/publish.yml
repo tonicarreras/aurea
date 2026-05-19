@@ -32,8 +32,8 @@ jobs:
             VERSION="${{ inputs.version }}"
             echo "Source: workflow input → ${VERSION}"
           else
-            VERSION=$(node -p "require('./projects/components/package.json').version")
-            echo "Source: projects/components/package.json → ${VERSION}"
+            VERSION=$(node -p "require('./package.json').version")
+            echo "Source: package.json → ${VERSION}"
           fi
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           npm version "$VERSION" --no-git-tag-version --allow-same-version
