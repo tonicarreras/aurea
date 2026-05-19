@@ -1,0 +1,48 @@
+@if (selectable()) {
+  <button
+    type="button"
+    class="au-chip__surface"
+    [class.au-chip__surface--from-tab]="focusByTab()"
+    [disabled]="disabled()"
+    [attr.aria-pressed]="selected() ? 'true' : 'false'"
+    (focusin)="onFocusin()"
+    (focusout)="onFocusout()"
+    (click)="onChipClick($event)"
+  >
+    <span class="au-chip__label">
+      @if (resolvedLabel()) {
+        {{ resolvedLabel() }}
+      } @else {
+        <ng-content />
+      }
+    </span>
+  </button>
+} @else {
+  <span
+    class="au-chip__surface"
+    [class.au-chip__surface--disabled]="disabled()"
+  >
+    <span class="au-chip__label">
+      @if (resolvedLabel()) {
+        {{ resolvedLabel() }}
+      } @else {
+        <ng-content />
+      }
+    </span>
+    @if (removable()) {
+      <button
+        type="button"
+        class="au-chip__remove"
+        [class.au-chip__remove--from-tab]="focusByTab()"
+        [disabled]="disabled()"
+        [attr.aria-label]="removeAriaLabel()"
+        (focusin)="onFocusin()"
+        (focusout)="onFocusout()"
+        (click)="onRemoveClick($event)"
+        (keydown)="onRemoveKeydown($event)"
+      >
+        <span class="au-chip__remove-glyph" aria-hidden="true">×</span>
+      </button>
+    }
+  </span>
+}

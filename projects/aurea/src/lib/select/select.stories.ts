@@ -24,6 +24,7 @@ const meta: Meta<Select> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
+    docs: { extractArgTypes: () => ({}) },
   },
   argTypes: {
     value: {
@@ -119,6 +120,11 @@ function getSelect(canvasElement: HTMLElement, name: string | RegExp) {
   return within(canvasElement).getByRole('combobox', { name });
 }
 
+/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */
+function getListbox(canvasElement: HTMLElement) {
+  return within(canvasElement.ownerDocument.body).getByRole('listbox');
+}
+
 export const DropdownTheming: Story = {
   parameters: {
     docs: {
@@ -160,7 +166,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const select = getSelect(canvasElement, 'Choose an option');
     await userEvent.click(select);
-    const listbox = within(canvasElement).getByRole('listbox');
+    const listbox = getListbox(canvasElement);
     await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));
     await expect(select).toHaveTextContent('Option Two');
   },

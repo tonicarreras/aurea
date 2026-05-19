@@ -5,6 +5,7 @@ export * from './lib/autocomplete';
 export * from './lib/button';
 export * from './lib/card';
 export * from './lib/checkbox';
+export * from './lib/chip';
 export * from './lib/input-date';
 export * from './lib/input-number';
 export * from './lib/input-text';

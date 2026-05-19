@@ -2,6 +2,7 @@ import * as autocomplete from './autocomplete/index';
 import * as button from './button/index';
 import * as card from './card/index';
 import * as checkbox from './checkbox/index';
+import * as chip from './chip/index';
 import * as inputDate from './input-date/index';
 import * as inputNumber from './input-number/index';
 import * as inputText from './input-text/index';
@@ -21,6 +22,7 @@ describe('library barrel exports', () => {
     expect(card.Card).toBeDefined();
     expect(card.AuCardFooter).toBeDefined();
     expect(checkbox.Checkbox).toBeDefined();
+    expect(chip.Chip).toBeDefined();
     expect(inputDate.InputDate).toBeDefined();
     expect(inputNumber.InputNumber).toBeDefined();
     expect(inputText.InputText).toBeDefined();

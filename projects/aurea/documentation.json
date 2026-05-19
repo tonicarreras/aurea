@@ -204,6 +204,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox (`checked` binding).',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "ChipGroup",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Chip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "cities",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -261,7 +271,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = within(canvasElement).getByRole('listbox');\n    await expect(listbox).toBeVisible();\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await expect(listbox).toBeVisible();\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -272,6 +282,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -337,6 +357,16 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -367,16 +397,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/select/select.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = within(canvasElement).getByRole('listbox');\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/textarea/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -402,6 +422,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n    ),\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
             },
             {
                 "name": "Disabled",
@@ -541,7 +571,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
             },
             {
                 "name": "Large",
@@ -621,7 +651,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Autocomplete>",
-                "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -642,6 +672,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<Card>",
                 "defaultValue": "{\n  title: 'Aurea/Card',\n  component: Card,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Chip>",
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: Chip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -717,6 +757,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<Select>",
+                "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -742,16 +792,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<Tabs>",
                 "defaultValue": "{\n  title: 'Aurea/Tabs',\n  component: Tabs,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active tab key (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits when the active tab changes.',\n      table: { category: 'Events' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for the tablist.',\n      table: { category: 'Accessibility' },\n    },\n    variant: {\n      control: 'select',\n      options: ['line', 'contained'],\n      table: { category: 'Appearance' },\n    },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'line',\n    orientation: 'horizontal',\n    size: 'md',\n    ariaLabel: 'Account sections',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/aurea/src/lib/select/select.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<Select>",
-                "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -824,6 +864,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n    ),\n}"
             },
             {
+                "name": "Outline",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Outline',\n    variant: 'outline',\n  },\n}"
+            },
+            {
                 "name": "Outlined",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -874,6 +924,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',\n      },\n    },\n  },\n  args: {\n    label: 'System block',\n    value: 'Auto-generated content.\\nNot editable by the user.',\n    readOnly: true,\n  },\n}"
+            },
+            {
+                "name": "Removable",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Angular',\n    removable: true,\n  },\n  play: async ({ canvasElement }) => {\n    const remove = within(canvasElement).getByRole('button', { name: /remove angular/i });\n    await userEvent.click(remove);\n    await expect(remove).toBeEnabled();\n  },\n}"
             },
             {
                 "name": "Required",
@@ -946,6 +1006,26 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Secondary</au-button>`,\n    ),\n}"
             },
             {
+                "name": "Selectable",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Draft only',\n    selectable: true,\n    selected: false,\n  },\n  play: async ({ canvasElement }) => {\n    const chip = within(canvasElement).getByRole('button', { name: 'Draft only' });\n    await expect(chip).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(chip);\n    await expect(chip).toHaveAttribute('aria-pressed', 'true');\n  },\n}"
+            },
+            {
+                "name": "Selected",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Published',\n    selectable: true,\n    selected: true,\n    variant: 'accent',\n  },\n}"
+            },
+            {
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -974,6 +1054,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
             },
             {
                 "name": "SmallSize",
@@ -1219,21 +1309,21 @@
                 "name": "WithHint",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
-            },
-            {
-                "name": "WithHint",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
+            },
+            {
+                "name": "WithHint",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/aurea/src/lib/switch/switch.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
             },
             {
                 "name": "WithMedia",
@@ -1469,6 +1559,62 @@
                 ]
             },
             {
+                "name": "getListbox",
+                "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Listbox is portaled to <code>document.body</code> (see <code>FieldListboxOverlay</code>).</p>\n",
+                "args": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "getListbox",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Listbox is portaled to <code>document.body</code> (see <code>FieldListboxOverlay</code>).</p>\n",
+                "args": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "canvasElement",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "getSelect",
                 "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "ctype": "miscellaneous",
@@ -1620,6 +1766,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<Chip>",
+                "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<Checkbox>",
                 "file": "projects/aurea/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
@@ -1697,6 +1854,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<Select>",
+                "file": "projects/aurea/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<SnackbarStoryHost>",
                 "file": "projects/aurea/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
@@ -1721,17 +1889,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Tabs>",
                 "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<Select>",
-                "file": "projects/aurea/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2048,6 +2205,98 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',\n      },\n    },\n  },\n  args: {\n    label: 'I accept the privacy policy',\n    errorMessage: 'This field is required to continue.',\n    checked: false,\n    size: 'md',\n  },\n}"
                 }
             ],
+            "projects/aurea/src/lib/chip/chip.stories.ts": [
+                {
+                    "name": "ChipGroup",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [Chip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<Chip>",
+                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: Chip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+                },
+                {
+                    "name": "Outline",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Outline',\n    variant: 'outline',\n  },\n}"
+                },
+                {
+                    "name": "Removable",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Angular',\n    removable: true,\n  },\n  play: async ({ canvasElement }) => {\n    const remove = within(canvasElement).getByRole('button', { name: /remove angular/i });\n    await userEvent.click(remove);\n    await expect(remove).toBeEnabled();\n  },\n}"
+                },
+                {
+                    "name": "Selectable",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Draft only',\n    selectable: true,\n    selected: false,\n  },\n  play: async ({ canvasElement }) => {\n    const chip = within(canvasElement).getByRole('button', { name: 'Draft only' });\n    await expect(chip).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(chip);\n    await expect(chip).toHaveAttribute('aria-pressed', 'true');\n  },\n}"
+                },
+                {
+                    "name": "Selected",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Published',\n    selectable: true,\n    selected: true,\n    variant: 'accent',\n  },\n}"
+                },
+                {
+                    "name": "SmallSize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
+                }
+            ],
             "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "cities",
@@ -2077,7 +2326,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = within(canvasElement).getByRole('listbox');\n    await expect(listbox).toBeVisible();\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                    "defaultValue": "{\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await expect(listbox).toBeVisible();\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
                 },
                 {
                     "name": "Disabled",
@@ -2097,7 +2346,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -2117,7 +2366,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Autocomplete>",
-                    "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: Autocomplete,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    label: { control: 'text', table: { category: 'Chrome' } },\n    hint: { control: 'text', table: { category: 'Chrome' } },\n    placeholder: { control: 'text', table: { category: 'Chrome' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n  },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "MinFilterLength",
@@ -2251,7 +2500,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = within(canvasElement).getByRole('listbox');\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
                 },
                 {
                     "name": "Disabled",
@@ -2301,7 +2550,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Select>",
-                    "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Select',\n  component: Select,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -3097,9 +3346,65 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "getListbox",
+                    "file": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Listbox is portaled to <code>document.body</code> (see <code>FieldListboxOverlay</code>).</p>\n",
+                    "args": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "projects/aurea/src/lib/select/select.stories.ts": [
+                {
+                    "name": "getListbox",
+                    "file": "projects/aurea/src/lib/select/select.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Listbox is portaled to <code>document.body</code> (see <code>FieldListboxOverlay</code>).</p>\n",
+                    "args": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "canvasElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "getSelect",
                     "file": "projects/aurea/src/lib/select/select.stories.ts",
@@ -3260,6 +3565,19 @@
                     "kind": 184
                 }
             ],
+            "projects/aurea/src/lib/chip/chip.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Chip>",
+                    "file": "projects/aurea/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/aurea/src/lib/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Story",
@@ -3351,6 +3669,19 @@
                     "kind": 184
                 }
             ],
+            "projects/aurea/src/lib/select/select.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Select>",
+                    "file": "projects/aurea/src/lib/select/select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/aurea/src/lib/snackbar/snackbar.stories.ts": [
                 {
                     "name": "Story",
@@ -3384,19 +3715,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Tabs>",
                     "file": "projects/aurea/src/lib/tabs/tabs.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/aurea/src/lib/select/select.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<Select>",
-                    "file": "projects/aurea/src/lib/select/select.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3437,7 +3755,7 @@
         "children": []
     },
     "coverage": {
-        "count": 1,
+        "count": 3,
         "status": "low",
         "files": [
             {
@@ -3469,6 +3787,16 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getListbox",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "projects/aurea/src/lib/autocomplete/autocomplete.stories.ts",
@@ -3981,6 +4309,106 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ChipGroup",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Outline",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Removable",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Selectable",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Selected",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SmallSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/chip/chip.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/aurea/src/lib/dialog/dialog.stories.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
@@ -4348,6 +4776,16 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "projects/aurea/src/lib/select/select.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getListbox",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "projects/aurea/src/lib/select/select.stories.ts",

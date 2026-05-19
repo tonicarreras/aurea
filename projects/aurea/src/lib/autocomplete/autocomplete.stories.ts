@@ -18,6 +18,7 @@ const meta: Meta<Autocomplete> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
+    docs: { extractArgTypes: () => ({}) },
   },
   argTypes: {
     value: {
@@ -52,6 +53,11 @@ function getCombobox(canvasElement: HTMLElement, name: string | RegExp) {
   return within(canvasElement).getByRole('combobox', { name });
 }
 
+/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */
+function getListbox(canvasElement: HTMLElement) {
+  return within(canvasElement.ownerDocument.body).getByRole('listbox');
+}
+
 export const Default: Story = {
   args: {
     label: 'City',
@@ -62,7 +68,7 @@ export const Default: Story = {
     const combo = getCombobox(canvasElement, 'City');
     await userEvent.click(combo);
     await userEvent.type(combo, 'bar');
-    const listbox = within(canvasElement).getByRole('listbox');
+    const listbox = getListbox(canvasElement);
     await expect(listbox).toBeVisible();
     await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));
     await expect(combo).toHaveValue('Barcelona');
@@ -142,7 +148,7 @@ export const KeyboardNavigation: Story = {
   play: async ({ canvasElement }) => {
     const combo = getCombobox(canvasElement, 'City');
     await userEvent.click(combo);
-    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+    await userEvent.keyboard('{ArrowDown}{Enter}');
     await expect(combo).toHaveValue('Barcelona');
   },
 };
