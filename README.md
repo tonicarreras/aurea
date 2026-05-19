@@ -69,7 +69,7 @@ bun run storybook
 ### Use the published package
 
 Install and usage docs for consumers: **[`projects/aurea/README.md`](projects/aurea/README.md)**  
-(package **`@aurea-ds/aurea`**, on npm and GitHub Packages).
+(package **`@aurea-ds/aurea`** on [npm](https://www.npmjs.com/package/@aurea-ds/aurea)).
 
 ---
 

@@ -109,14 +109,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Verify npm identity (debug 403)
+        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        run: |
+          echo "npm whoami: $(npm whoami)"
+          echo "If this is not a member of org 'aurea-ds', npm publish will return 403."
+
       - name: Publish to npm (install without token)
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
         working-directory: dist/aurea
-        run: |
-          npm publish --access public || {
-            echo "::error::npm publish failed. For 403: use a Granular token with publish access to @aurea-ds on npm. See projects/aurea/README.md"
-            exit 1
-          }
+        run: npm publish --access public
 
       - name: Setup Node for GitHub Packages
         if: steps.registries.outputs.gh_published != 'true'
