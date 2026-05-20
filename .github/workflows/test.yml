@@ -1,10 +1,16 @@
 name: Test
 
+# pull_request: PRs hacia main/develop (p. ej. develop → main).
+# push solo en main: evita duplicar con push a develop + pull_request en la misma PR.
 on:
-  push:
-    branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  push:
+    branches: [main]
+
+concurrency:
+  group: test-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

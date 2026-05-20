@@ -17,4 +17,6 @@
 
 Global Playwright/CLI tweaks: `test-runner.ts` in this folder (`@storybook/test-runner` reads it via `--config-dir`).
 
-Stories with **wrapper** components using `formField` + a custom template: if the Angular/docs enhancer returns `Invalid component` in the test-runner, add to that story’s `Meta`: `parameters.docs.extractArgTypes: () => ({})` (the signal demos in this repo already do). Export story names as ASCII in `export const` (e.g. `WithValidation` + `name: 'With validation'`) so URLs and the runner stay aligned.
+Stories with **custom `render`** (Button, Card, Divider, etc.): `preview.ts` disables Compodoc `extractArgTypes` / `extractComponentDescription` globally so static builds (Netlify, `build-storybook`) do not throw `Invalid component undefined` when class names are minified. Add `parameters.docs.description.component` on the story `Meta` when you want an Autodocs blurb.
+
+Signal-form hosts: same `extractArgTypes` override on the story `Meta` if needed. Export story names as ASCII in `export const` (e.g. `WithValidation` + `name: 'With validation'`) so URLs and the runner stay aligned.

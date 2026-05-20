@@ -43,6 +43,9 @@ const preview: Preview = {
     layout: 'padded',
     docs: {
       toc: true,
+      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */
+      extractArgTypes: () => ({}),
+      extractComponentDescription: () => null,
     },
     a11y: {
       /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */

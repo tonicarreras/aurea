@@ -1,0 +1,9 @@
+# Docs app (https://aurea-ds.netlify.app/)
+[build]
+  command = "bun install --frozen-lockfile && bun run build:docs"
+  publish = "dist/docs/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
