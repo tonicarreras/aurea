@@ -1149,7 +1149,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
             },
             {
                 "name": "sample",
@@ -1519,7 +1519,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
             },
             {
                 "name": "WithHint",
@@ -2809,7 +2809,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
                 },
                 {
                     "name": "sampleOptions",
@@ -2849,7 +2849,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with hint text linked via **`aria-describedby`** when present.',\n      },\n    },\n  },\n  args: {\n    label: 'Timezone',\n    placeholder: 'Select timezone',\n    hint: 'Used for scheduling and notifications.',\n    options: [\n      { value: 'est', label: 'Eastern Time (EST)' },\n      { value: 'pst', label: 'Pacific Time (PST)' },\n      { value: 'utc', label: 'UTC' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Timezone');\n    const hintId = select.getAttribute('aria-describedby');\n    await expect(hintId).toBeTruthy();\n  },\n}"
                 },
                 {
                     "name": "WithValue",
