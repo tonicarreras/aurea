@@ -1,25 +1,22 @@
 name: Publish package
 
+# Solo publica tras merge a main (PR cerrada + merged), release o manual.
+# No corre en PRs abiertas ni en pushes a develop.
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: [main]
-    paths:
-      - 'projects/components/**'
-      - '.github/workflows/publish.yml'
-      - 'angular.json'
-      - 'package.json'
-      - 'bun.lock'
   release:
     types: [published]
   workflow_dispatch:
     inputs:
       version:
-        description: 'Override semver (manual only). Push to main uses projects/components/package.json.'
+        description: 'Override semver (manual only). Otherwise uses projects/components/package.json.'
         required: false
         type: string
 
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-npm-${{ github.event.pull_request.merge_commit_sha || github.sha }}
   cancel-in-progress: false
 
 permissions:
@@ -30,12 +27,14 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'release' ||
-      github.event_name == 'push'
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
 
       - name: Resolve publish version
         id: publish_version
