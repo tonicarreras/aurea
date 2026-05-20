@@ -1,7 +1,7 @@
 import type { ComponentDoc } from './component-docs.registry';
 import type { DocsLocale } from './docs-locale';
-import { COMPONENT_DOC_EXAMPLES_EN } from '../i18n/locales/en/examples';
-import { COMPONENT_DOC_EXAMPLES_ES } from '../i18n/locales/es/examples';
+import { COMPONENT_DOC_EXAMPLES_EN } from '../i18n/locales/en/examples/index';
+import { COMPONENT_DOC_EXAMPLES_ES } from '../i18n/locales/es/examples/index';
 import type { ComponentDocExample } from '../i18n/types/example';
 
 export type { ComponentDocExample } from '../i18n/types/example';
