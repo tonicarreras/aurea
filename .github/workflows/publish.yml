@@ -1,25 +1,22 @@
 name: Publish package
 
+# Solo publica tras merge a main (PR cerrada + merged), release o manual.
+# No corre en PRs abiertas ni en pushes a develop.
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: [main]
-    paths:
-      - 'projects/components/**'
-      - '.github/workflows/publish.yml'
-      - 'angular.json'
-      - 'package.json'
-      - 'bun.lock'
   release:
     types: [published]
   workflow_dispatch:
     inputs:
       version:
-        description: 'Override semver (manual only). Push to main uses projects/components/package.json.'
+        description: 'Override semver (manual only). Otherwise uses projects/components/package.json.'
         required: false
         type: string
 
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-npm-${{ github.event.pull_request.merge_commit_sha || github.sha }}
   cancel-in-progress: false
 
 permissions:
@@ -30,12 +27,14 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'release' ||
-      github.event_name == 'push'
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
 
       - name: Resolve publish version
         id: publish_version
@@ -79,6 +78,7 @@ jobs:
         run: bun run test
 
       - name: Build library
+        id: build_lib
         if: steps.npm_skip.outputs.already_published != 'true'
         run: bun run build
 
@@ -128,7 +128,11 @@ jobs:
           fi
 
       - name: Setup Node for npmjs.org
-        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.build_lib.outcome == 'success' &&
+          steps.npm_token.outputs.present == 'true' &&
+          steps.registries.outputs.npm_published != 'true'
         uses: actions/setup-node@v5
         with:
           node-version: '22'
@@ -138,15 +142,26 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Verify npm identity (debug 403)
-        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.build_lib.outcome == 'success' &&
+          steps.npm_token.outputs.present == 'true' &&
+          steps.registries.outputs.npm_published != 'true'
         run: |
           echo "npm whoami: $(npm whoami)"
           echo "If this account cannot publish @aurea-design-system/components, npm publish will return 403."
 
       - name: Publish to npm
-        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.build_lib.outcome == 'success' &&
+          steps.verify_pkg.outcome == 'success' &&
+          steps.npm_token.outputs.present == 'true' &&
+          steps.registries.outputs.npm_published != 'true'
         working-directory: dist/components
-        run: npm publish --access public
+        run: |
+          test -f package.json || (echo "::error::dist/components missing — build did not run or failed." && exit 1)
+          npm publish --access public
 
       - name: Summary
         run: |
