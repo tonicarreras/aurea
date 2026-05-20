@@ -15,11 +15,11 @@
 </p>
 
 <p align="center">
+  <a href="https://aurea-ds.netlify.app/">Documentation</a> •
+  <a href="https://aurea-ds-storybook.netlify.app/">Storybook</a> •
   <a href="#-features">Features</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-components">Components</a> •
-  <a href="#-official-documentation">Docs</a> •
-  <a href="#-storybook">Storybook</a> •
   <a href="#-test-coverage">Coverage</a> •
   <a href="#-tokens">Tokens</a>
 </p>
@@ -93,18 +93,22 @@ Install and usage docs for consumers: **[`projects/components/README.md`](projec
 
 ## 📖 Official documentation
 
-Angular app in `projects/docs` that consumes `@aurea-design-system/components` from the monorepo: guides, theming, and a live preview for each component.
+**Live site:** [aurea-ds.netlify.app](https://aurea-ds.netlify.app/) — guides, theming, and a live preview for each component (English and Spanish: `/en/...`, `/es/...`).
+
+Angular app in `projects/docs` that consumes `@aurea-design-system/components` from the monorepo.
 
 ```bash
 bun run docs          # http://127.0.0.1:4200
 bun run build:docs    # output in dist/docs/browser
 ```
 
-Storybook remains the interactive catalog for development and testing; the **docs** app is the public, consumer-oriented reference in **English** and **Spanish** (`/en/...`, `/es/...`).
+Storybook remains the interactive catalog for development and testing; the **docs** app is the public, consumer-oriented reference.
 
 ---
 
 ## 📚 Storybook
+
+**Live catalog:** [aurea-ds-storybook.netlify.app](https://aurea-ds-storybook.netlify.app/)
 
 Interactive component documentation with:
 

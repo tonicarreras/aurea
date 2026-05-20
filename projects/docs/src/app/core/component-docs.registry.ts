@@ -21,7 +21,7 @@ import {
   TabsDemo,
   TextareaDemo,
   TooltipDemo,
-} from '../demos/component-demos';
+} from '../demos/previews';
 
 export type ComponentApiKind = 'input' | 'model' | 'output';
 

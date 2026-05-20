@@ -21,7 +21,7 @@
   --docs-code-bg: #f4f6f9;
   --docs-code-fg: #1a2332;
   --docs-token-comment: #64748b;
-  --docs-token-keyword: #1059c8;
+  --docs-token-keyword: var(--au-color-action-primary);
   --docs-token-string: #047857;
   --docs-token-function: #7c3aed;
   --docs-token-punctuation: #475569;
@@ -68,7 +68,7 @@
   --docs-code-bg: #1c2230;
   --docs-code-fg: #e8edf4;
   --docs-token-comment: #8b9cb0;
-  --docs-token-keyword: #6ba3ff;
+  --docs-token-keyword: var(--au-color-action-primary);
   --docs-token-string: #4ade80;
   --docs-token-function: #c4b5fd;
   --docs-token-punctuation: #94a3b8;

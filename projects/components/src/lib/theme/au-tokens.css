@@ -293,15 +293,15 @@
   --au-color-border-subtle: #252a33;
   --au-color-border-default: #343b46;
   --au-color-border-strong: #4d5666;
-  /* Accent */
-  --au-color-action-primary: #5eb0ff;
-  --au-color-action-primary-hover: #7fc0ff;
-  --au-color-action-primary-pressed: #a3d4ff;
+  /* Accent — lighter sky blue (readable on #0c–#18 surfaces; avoids light-mode #1059c8) */
+  --au-color-action-primary: #6eb4ff;
+  --au-color-action-primary-hover: #8ec5ff;
+  --au-color-action-primary-pressed: #b0d8ff;
   --au-color-link: var(--au-color-action-primary);
   --au-color-link-hover: var(--au-color-action-primary-hover);
   /* Focus */
-  --au-color-focus-ring: #5eb0ff;
-  --au-color-focus-inner: #a3d4ff;
+  --au-color-focus-ring: #6eb4ff;
+  --au-color-focus-inner: #b0d8ff;
   /* States */
   --au-color-semantic-error: #f97066;
   --au-color-semantic-error-contrast: #fec5c0;
@@ -313,7 +313,7 @@
   --au-color-semantic-info: #38bdf8;
   --au-color-semantic-info-surface: rgba(15, 80, 120, 0.22);
   /* Selection */
-  --au-color-selection: rgba(94, 176, 255, 0.28);
+  --au-color-selection: rgba(110, 180, 255, 0.28);
   /* Form */
   --au-color-form-border: #343b46;
   --au-color-form-border-hover: #4d5666;
@@ -335,8 +335,8 @@
   --au-color-select-field-hover-bg: #1c222c;
   --au-color-select-option-highlight-bg: #2a3340;
   --au-color-select-option-highlight-text: #eef1f4;
-  --au-color-select-option-highlight-marker: #7fc0ff;
-  --au-color-select-option-selected-bg: #3b8fd9;
+  --au-color-select-option-highlight-marker: #8ec5ff;
+  --au-color-select-option-selected-bg: #3d8fd4;
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #cfe8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
@@ -344,7 +344,7 @@
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(94, 176, 255, 0.22);
+  --au-color-date-picker-edit-highlight: rgba(110, 180, 255, 0.22);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
