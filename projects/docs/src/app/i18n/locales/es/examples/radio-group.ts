@@ -23,9 +23,9 @@ export const examples: ComponentDocExample[] = [
     },
     {
       title: 'Opción deshabilitada',
-      description: 'Marca `disabled: true` en una entrada de `RadioOption`.',
+      description: 'Marca `disabled: true` en una entrada de `AuRadioOption`.',
       demoComponent: ExampleRadioGroupDisabledOptionDemo,
-      code: `plans: RadioOption[] = [
+      code: `plans: AuRadioOption[] = [
   { value: 'free', label: 'Gratis' },
   { value: 'pro', label: 'Pro', disabled: true },
 ];

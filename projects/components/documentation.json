@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "TooltipStoryArgs",
-            "id": "interface-TooltipStoryArgs-8366862f7323271cb7ba863837d3c59917bfc05a9e08de5dbf428cfcef19d741a7c504b7ebcfa07868cba95b58d2991d1dab37a2b38f5bae588efe5d2fc4fc64",
+            "id": "interface-TooltipStoryArgs-ba75c7e460454e3ca56896b15c1894a583c19bd602050373ac0a626428955b669934c00591d21aa609a35d518090890f292e80515434eaafb3ad6dc855973d40",
             "file": "projects/components/src/lib/tooltip/tooltip.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { TooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: TooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',\n      },\n    },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { AuTooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: AuTooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',\n      },\n    },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
             "properties": [
                 {
                     "name": "disabled",
@@ -34,7 +34,7 @@
                     "name": "placement",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "TooltipPlacement",
+                    "type": "AuTooltipPlacement",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
@@ -250,6 +250,26 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <au-button variant=\"primary\">Primary</au-button>\n        <au-button variant=\"secondary\">Secondary</au-button>\n        <au-button variant=\"outline\">Outline</au-button>\n        <au-button variant=\"ghost\">Ghost</au-button>\n      </div>\n    `,\n    ),\n}"
             },
             {
+                "name": "Animations",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 1.25rem;\">\n        <div>\n          <p style=\"margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--au-color-text-secondary);\">Pulse</p>\n          <au-skeleton variant=\"text\" animation=\"pulse\" />\n        </div>\n        <div>\n          <p style=\"margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--au-color-text-secondary);\">Wave</p>\n          <au-skeleton variant=\"text\" animation=\"wave\" />\n        </div>\n        <div>\n          <p style=\"margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--au-color-text-secondary);\">None</p>\n          <au-skeleton variant=\"text\" animation=\"none\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Button",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'button', animation: 'pulse' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"display: flex; flex-wrap: wrap; gap: 0.75rem;\">\n        <au-skeleton variant=\"button\" size=\"sm\" [animation]=\"animation\" />\n        <au-skeleton variant=\"button\" size=\"md\" [animation]=\"animation\" />\n        <au-skeleton variant=\"button\" size=\"lg\" [animation]=\"animation\" />\n      </div>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "CalendarTheming",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -258,6 +278,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+            },
+            {
+                "name": "CardPlaceholder",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading card\"\n        style=\"\n          width: 100%;\n          max-width: 22rem;\n          box-sizing: border-box;\n          padding: 1rem;\n          border-radius: var(--au-radius-lg);\n          border: 1px solid var(--au-color-border-default);\n          background: var(--au-color-surface-raised);\n          display: flex;\n          flex-direction: column;\n          gap: 0.75rem;\n          overflow: hidden;\n        \"\n      >\n        <au-skeleton variant=\"rounded\" animation=\"wave\" height=\"9rem\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"55%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"80%\" />\n        <div\n          style=\"\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.5rem;\n            margin-top: 0.25rem;\n            width: 100%;\n            min-width: 0;\n          \"\n        >\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"5.5rem\" />\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"4rem\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Checked",
@@ -277,7 +307,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuChip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuChip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable [inList]=\"true\" />\n        <au-chip label=\"TypeScript\" removable [inList]=\"true\" />\n        <au-chip label=\"Vitest\" removable [inList]=\"true\" />\n      </div>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Circular",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'circular', animation: 'wave' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"display: flex; align-items: center; gap: 1rem;\">\n        <au-skeleton variant=\"circular\" size=\"sm\" [animation]=\"animation\" />\n        <au-skeleton variant=\"circular\" size=\"md\" [animation]=\"animation\" />\n        <au-skeleton variant=\"circular\" size=\"lg\" [animation]=\"animation\" />\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "cities",
@@ -286,7 +326,7 @@
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "AutocompleteOption[]",
+                "type": "AuAutocompleteOption[]",
                 "defaultValue": "[\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n]"
             },
             {
@@ -403,21 +443,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -617,7 +657,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
             },
             {
                 "name": "FocusRing",
@@ -656,7 +696,7 @@
                 "file": "projects/components/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "SelectOption[]",
+                "type": "AuSelectOption[]",
                 "defaultValue": "[\n  { value: 'group1', label: 'Group A - Option 1', disabled: true },\n  { value: 'group2', label: 'Group A - Option 2' },\n  { value: 'group3', label: 'Group B - Option 1' },\n  { value: 'group4', label: 'Group B - Option 2' },\n  { value: 'group5', label: 'Group B - Option 3', disabled: true },\n]"
             },
             {
@@ -760,6 +800,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"lg\"`** (`data-au-size=\"lg\"`) for larger touch targets.',\n      },\n    },\n  },\n  args: {\n    label: 'Large size',\n    size: 'lg',\n    placeholder: 'Select...',\n    options: sampleOptions,\n  },\n}"
             },
             {
+                "name": "ListPlaceholder",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading list\"\n        style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\"\n      >\n        @for (row of [1, 2, 3]; track row) {\n          <div style=\"display: flex; align-items: center; gap: 0.75rem;\">\n            <au-skeleton variant=\"circular\" size=\"md\" animation=\"wave\" />\n            <div style=\"flex: 1; display: flex; flex-direction: column; gap: 0.375rem;\">\n              <au-skeleton variant=\"text\" animation=\"wave\" width=\"35%\" />\n              <au-skeleton variant=\"text\" animation=\"wave\" />\n            </div>\n          </div>\n        }\n      </div>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "Loading",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -817,7 +867,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuCheckbox>",
-                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows the visible asterisk and screen-reader “(required)” when `required` is true.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -827,7 +877,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuChip>",
-                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    inList: {\n      control: 'boolean',\n      description: 'Sets `role=\"listitem\"` when true; parent needs `role=\"list\"`.',\n      table: { category: 'Accessibility' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -863,6 +913,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuInputNumber>",
+                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -883,16 +943,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuInputNumber>",
-                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -907,7 +957,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuSelect>",
-                "defaultValue": "{\n  title: 'Aurea/Select',\n  component: AuSelect,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Select',\n  component: AuSelect,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `AuSelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuSkeleton>",
+                "defaultValue": "{\n  title: 'Aurea/Skeleton',\n  component: AuSkeleton,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Loading placeholders with text, circular, rectangular, rounded, and button shapes. Pulse or wave animation; set `aria-busy` on the parent region.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['text', 'circular', 'rectangular', 'rounded', 'button'],\n      table: { category: 'Appearance' },\n    },\n    animation: {\n      control: 'select',\n      options: ['pulse', 'wave', 'none'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    width: {\n      control: 'text',\n      description: 'CSS width (e.g. `100%`, `12rem`).',\n      table: { category: 'Layout' },\n    },\n    height: {\n      control: 'text',\n      description: 'CSS height override.',\n      table: { category: 'Layout' },\n    },\n    radius: {\n      control: 'text',\n      description: 'Border-radius override.',\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    variant: 'text',\n    animation: 'pulse',\n    size: 'md',\n    width: undefined,\n    height: undefined,\n    radius: undefined,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -917,7 +977,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuSnackbarStoryHost>",
-                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies AuSnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -1077,7 +1137,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                 "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                 "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
             },
@@ -1100,6 +1160,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',\n      },\n    },\n  },\n  args: {\n    label: 'System block',\n    value: 'Auto-generated content.\\nNot editable by the user.',\n    readOnly: true,\n  },\n}"
+            },
+            {
+                "name": "Rectangular",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'rectangular', animation: 'wave' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <au-skeleton\n        [variant]=\"variant\"\n        [animation]=\"animation\"\n        [width]=\"width ?? '100%'\"\n        [height]=\"height ?? '8rem'\"\n      />\n    `,\n  }),\n}"
             },
             {
                 "name": "Removable",
@@ -1152,13 +1222,23 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
             },
             {
+                "name": "Rounded",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'rounded', animation: 'pulse' },\n  render: Rectangular.render,\n}"
+            },
+            {
                 "name": "sample",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "RadioOption[]",
+                "type": "AuRadioOption[]",
                 "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
             },
             {
@@ -1168,7 +1248,7 @@
                 "file": "projects/components/src/lib/select/select.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "SelectOption[]",
+                "type": "AuSelectOption[]",
                 "defaultValue": "[\n  { value: 'option1', label: 'Option One' },\n  { value: 'option2', label: 'Option Two' },\n  { value: 'option3', label: 'Option Three' },\n  { value: 'option4', label: 'Option Four' },\n]"
             },
             {
@@ -1330,6 +1410,16 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "`\n  <au-tabs\n    [(value)]=\"active\"\n    [variant]=\"variant\"\n    [orientation]=\"orientation\"\n    [size]=\"size\"\n    [ariaLabel]=\"ariaLabel\"\n  >\n    <button type=\"button\" auTab=\"profile\">Profile</button>\n    <button type=\"button\" auTab=\"billing\">Billing</button>\n    <button type=\"button\" auTab=\"security\">Security</button>\n    <div auTabPanel=\"profile\">\n      <h3 style=\"margin: 0 0 0.5rem; font-size: 1rem;\">Profile</h3>\n      <p style=\"margin: 0;\">Update your name, email, and avatar.</p>\n    </div>\n    <div auTabPanel=\"billing\">\n      <h3 style=\"margin: 0 0 0.5rem; font-size: 1rem;\">Billing</h3>\n      <p style=\"margin: 0;\">Manage payment methods and invoices.</p>\n    </div>\n    <div auTabPanel=\"security\">\n      <h3 style=\"margin: 0 0 0.5rem; font-size: 1rem;\">Security</h3>\n      <p style=\"margin: 0;\">Password, 2FA, and active sessions.</p>\n    </div>\n  </au-tabs>\n`"
+            },
+            {
+                "name": "Text",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 0.5rem;\">\n        <au-skeleton\n          [variant]=\"variant\"\n          [animation]=\"animation\"\n          [size]=\"size\"\n          [width]=\"width\"\n          [height]=\"height\"\n          [radius]=\"radius\"\n        />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"75%\" />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"50%\" />\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "TopEnd",
@@ -2037,6 +2127,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuInputNumber>",
+                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuInputTextSignalHost>",
                 "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
@@ -2059,17 +2160,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuInputNumber>",
-                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuRadioGroup>",
                 "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                 "deprecated": false,
@@ -2083,6 +2173,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuSelect>",
                 "file": "projects/components/src/lib/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuSkeleton>",
+                "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2197,7 +2298,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
                 },
                 {
                     "name": "Ghost",
@@ -2288,6 +2389,98 @@
                     "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{ imports: [AuButton] }"
+                }
+            ],
+            "projects/components/src/lib/skeleton/skeleton.stories.ts": [
+                {
+                    "name": "Animations",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 1.25rem;\">\n        <div>\n          <p style=\"margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--au-color-text-secondary);\">Pulse</p>\n          <au-skeleton variant=\"text\" animation=\"pulse\" />\n        </div>\n        <div>\n          <p style=\"margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--au-color-text-secondary);\">Wave</p>\n          <au-skeleton variant=\"text\" animation=\"wave\" />\n        </div>\n        <div>\n          <p style=\"margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--au-color-text-secondary);\">None</p>\n          <au-skeleton variant=\"text\" animation=\"none\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Button",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'button', animation: 'pulse' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"display: flex; flex-wrap: wrap; gap: 0.75rem;\">\n        <au-skeleton variant=\"button\" size=\"sm\" [animation]=\"animation\" />\n        <au-skeleton variant=\"button\" size=\"md\" [animation]=\"animation\" />\n        <au-skeleton variant=\"button\" size=\"lg\" [animation]=\"animation\" />\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "CardPlaceholder",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading card\"\n        style=\"\n          width: 100%;\n          max-width: 22rem;\n          box-sizing: border-box;\n          padding: 1rem;\n          border-radius: var(--au-radius-lg);\n          border: 1px solid var(--au-color-border-default);\n          background: var(--au-color-surface-raised);\n          display: flex;\n          flex-direction: column;\n          gap: 0.75rem;\n          overflow: hidden;\n        \"\n      >\n        <au-skeleton variant=\"rounded\" animation=\"wave\" height=\"9rem\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"55%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"80%\" />\n        <div\n          style=\"\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.5rem;\n            margin-top: 0.25rem;\n            width: 100%;\n            min-width: 0;\n          \"\n        >\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"5.5rem\" />\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"4rem\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Circular",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'circular', animation: 'wave' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"display: flex; align-items: center; gap: 1rem;\">\n        <au-skeleton variant=\"circular\" size=\"sm\" [animation]=\"animation\" />\n        <au-skeleton variant=\"circular\" size=\"md\" [animation]=\"animation\" />\n        <au-skeleton variant=\"circular\" size=\"lg\" [animation]=\"animation\" />\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "ListPlaceholder",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading list\"\n        style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\"\n      >\n        @for (row of [1, 2, 3]; track row) {\n          <div style=\"display: flex; align-items: center; gap: 0.75rem;\">\n            <au-skeleton variant=\"circular\" size=\"md\" animation=\"wave\" />\n            <div style=\"flex: 1; display: flex; flex-direction: column; gap: 0.375rem;\">\n              <au-skeleton variant=\"text\" animation=\"wave\" width=\"35%\" />\n              <au-skeleton variant=\"text\" animation=\"wave\" />\n            </div>\n          </div>\n        }\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuSkeleton>",
+                    "defaultValue": "{\n  title: 'Aurea/Skeleton',\n  component: AuSkeleton,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Loading placeholders with text, circular, rectangular, rounded, and button shapes. Pulse or wave animation; set `aria-busy` on the parent region.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['text', 'circular', 'rectangular', 'rounded', 'button'],\n      table: { category: 'Appearance' },\n    },\n    animation: {\n      control: 'select',\n      options: ['pulse', 'wave', 'none'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    width: {\n      control: 'text',\n      description: 'CSS width (e.g. `100%`, `12rem`).',\n      table: { category: 'Layout' },\n    },\n    height: {\n      control: 'text',\n      description: 'CSS height override.',\n      table: { category: 'Layout' },\n    },\n    radius: {\n      control: 'text',\n      description: 'Border-radius override.',\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    variant: 'text',\n    animation: 'pulse',\n    size: 'md',\n    width: undefined,\n    height: undefined,\n    radius: undefined,\n  },\n}"
+                },
+                {
+                    "name": "Rectangular",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'rectangular', animation: 'wave' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <au-skeleton\n        [variant]=\"variant\"\n        [animation]=\"animation\"\n        [width]=\"width ?? '100%'\"\n        [height]=\"height ?? '8rem'\"\n      />\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Rounded",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'rounded', animation: 'pulse' },\n  render: Rectangular.render,\n}"
+                },
+                {
+                    "name": "Text",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 0.5rem;\">\n        <au-skeleton\n          [variant]=\"variant\"\n          [animation]=\"animation\"\n          [size]=\"size\"\n          [width]=\"width\"\n          [height]=\"height\"\n          [radius]=\"radius\"\n        />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"75%\" />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"50%\" />\n      </div>\n    `,\n  }),\n}"
                 }
             ],
             "projects/components/src/lib/input-date/input-date.stories.ts": [
@@ -2411,7 +2604,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuCheckbox>",
-                    "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n  },\n  argTypes: {\n    checked: {\n      control: 'boolean',\n      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'Shows the visible asterisk and screen-reader “(required)” when `required` is true.',\n      table: { category: 'Validation' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error copy (shown when non-empty).',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms (first message shown when `errorMessage` is empty).',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'Invalid flag from the bound field (e.g. `formField`); drives `aria-invalid` and error styling.',\n      table: { category: 'Validation' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    checked: false,\n    checkedChange: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -2463,7 +2656,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuChip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </div>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Wrap related chips in a list (`role=\"list\"`) for static/removable tags, or a `role=\"group\"` with `aria-label` for filter chips.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuChip] },\n    template: `\n      <div role=\"list\" style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-chip label=\"Angular\" removable [inList]=\"true\" />\n        <au-chip label=\"TypeScript\" removable [inList]=\"true\" />\n        <au-chip label=\"Vitest\" removable [inList]=\"true\" />\n      </div>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "Default",
@@ -2493,7 +2686,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuChip>",
-                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    inList: {\n      control: 'boolean',\n      description: 'Sets `role=\"listitem\"` when true; parent needs `role=\"list\"`.',\n      table: { category: 'Accessibility' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
                 },
                 {
                     "name": "Outline",
@@ -2554,7 +2747,7 @@
                     "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "AutocompleteOption[]",
+                    "type": "AuAutocompleteOption[]",
                     "defaultValue": "[\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n]"
                 },
                 {
@@ -2778,7 +2971,7 @@
                     "file": "projects/components/src/lib/select/select.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "SelectOption[]",
+                    "type": "AuSelectOption[]",
                     "defaultValue": "[\n  { value: 'group1', label: 'Group A - Option 1', disabled: true },\n  { value: 'group2', label: 'Group A - Option 2' },\n  { value: 'group3', label: 'Group B - Option 1' },\n  { value: 'group4', label: 'Group B - Option 2' },\n  { value: 'group5', label: 'Group B - Option 3', disabled: true },\n]"
                 },
                 {
@@ -2799,7 +2992,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuSelect>",
-                    "defaultValue": "{\n  title: 'Aurea/Select',\n  component: AuSelect,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `SelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Select',\n  component: AuSelect,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every change event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the select loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Placeholder option displayed when no value is selected.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader \"(required)\".',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    options: {\n      description: 'Array of `AuSelectOption` objects.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables the select and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
                 },
                 {
                     "name": "Required",
@@ -2818,7 +3011,7 @@
                     "file": "projects/components/src/lib/select/select.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "SelectOption[]",
+                    "type": "AuSelectOption[]",
                     "defaultValue": "[\n  { value: 'option1', label: 'Option One' },\n  { value: 'option2', label: 'Option Two' },\n  { value: 'option3', label: 'Option Three' },\n  { value: 'option4', label: 'Option Four' },\n]"
                 },
                 {
@@ -3260,7 +3453,7 @@
                     "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "RadioOption[]",
+                    "type": "AuRadioOption[]",
                     "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
                 }
             ],
@@ -3293,7 +3486,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuSnackbarStoryHost>",
-                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies AuSnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
                 },
                 {
                     "name": "Success",
@@ -3567,7 +3760,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                     "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                     "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
                 }
@@ -4035,6 +4228,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/input-number/input-number.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuInputNumber>",
+                    "file": "projects/components/src/lib/input-number/input-number.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/input-text/input-text-signal.stories.ts": [
                 {
                     "name": "Story",
@@ -4061,19 +4267,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/input-number/input-number.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuInputNumber>",
-                    "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/radio-group/radio-group.stories.ts": [
                 {
                     "name": "Story",
@@ -4094,6 +4287,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuSelect>",
                     "file": "projects/components/src/lib/select/select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/skeleton/skeleton.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuSkeleton>",
+                    "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -5433,6 +5639,106 @@
             },
             {
                 "filePath": "projects/components/src/lib/select/select.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Animations",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Button",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CardPlaceholder",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Circular",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ListPlaceholder",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Rectangular",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Rounded",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Text",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/skeleton/skeleton.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

@@ -138,7 +138,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   select: {
     intro: [
       'Desplegable tipo combobox: botón trigger + listbox en portal con teclado completo (flechas, Home/End, Escape).',
-      'Opciones tipadas `SelectOption[]`; valor del modelo = `value` de la opción, no el label.',
+      'Opciones tipadas `AuSelectOption[]`; valor del modelo = `value` de la opción, no el label.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -157,16 +157,16 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Patrón combobox ARIA (`aria-expanded`, `aria-controls`, `listbox`/`option`).',
-      'Opciones deshabilitadas respetan `disabled` en `SelectOption`.',
+      'Opciones deshabilitadas respetan `disabled` en `AuSelectOption`.',
     ],
     keyboard: [
       'Space/Enter abre; flechas mueven highlight; Enter selecciona; Escape cierra.',
     ],
-    relatedExports: ['SelectOption'],
+    relatedExports: ['AuSelectOption'],
   },
   autocomplete: {
     intro: [
-      'Campo de búsqueda que filtra `AutocompleteOption[]` al escribir (insensible a mayúsculas por defecto).',
+      'Campo de búsqueda que filtra `AuAutocompleteOption[]` al escribir (insensible a mayúsculas por defecto).',
       'Misma superficie y listbox que `au-select`; `strictSelection` evita valores libres al perder foco.',
     ],
     whenToUse: {
@@ -183,12 +183,12 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     accessibility: ['Combobox con listbox; estado abierto en `data-au-listbox-open`.'],
     keyboard: ['Igual que select; escritura filtra opciones.'],
-    relatedExports: ['AutocompleteOption'],
+    relatedExports: ['AuAutocompleteOption'],
   },
   'radio-group': {
     intro: [
       'Grupo de botones radio nativos dentro de un shell con leyenda. Una sola selección por `name`.',
-      'Valor del modelo = `value` de la `RadioOption` activa.',
+      'Valor del modelo = `value` de la `AuRadioOption` activa.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -203,7 +203,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       { region: 'Opciones', detail: 'Cada radio con label propio.' },
     ],
     accessibility: ['Leyenda asociada; navegación por flechas entre radios del mismo nombre.'],
-    relatedExports: ['RadioOption'],
+    relatedExports: ['AuRadioOption'],
   },
   'input-number': {
     intro: [

@@ -10,9 +10,8 @@ import {
   viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
-
-type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Design-system **numeric** field backed by `<input type="number">`, with `null` for empty input.

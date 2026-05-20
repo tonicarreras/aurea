@@ -138,7 +138,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   select: {
     intro: [
       'Combobox-style dropdown: trigger button + portaled listbox with full keyboard (arrows, Home/End, Escape).',
-      'Typed `SelectOption[]`; model value = option `value`, not the label.',
+      'Typed `AuSelectOption[]`; model value = option `value`, not the label.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -157,16 +157,16 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'ARIA combobox pattern (`aria-expanded`, `aria-controls`, `listbox`/`option`).',
-      'Disabled options respect `disabled` on `SelectOption`.',
+      'Disabled options respect `disabled` on `AuSelectOption`.',
     ],
     keyboard: [
       'Space/Enter opens; arrows move highlight; Enter selects; Escape closes.',
     ],
-    relatedExports: ['SelectOption'],
+    relatedExports: ['AuSelectOption'],
   },
   autocomplete: {
     intro: [
-      'Search field filtering `AutocompleteOption[]` as you type (case-insensitive by default).',
+      'Search field filtering `AuAutocompleteOption[]` as you type (case-insensitive by default).',
       'Same surface and listbox as `au-select`; `strictSelection` prevents free text on blur.',
     ],
     whenToUse: {
@@ -183,12 +183,12 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: ['Combobox with listbox; open state on `data-au-listbox-open`.'],
     keyboard: ['Same as select; typing filters options.'],
-    relatedExports: ['AutocompleteOption'],
+    relatedExports: ['AuAutocompleteOption'],
   },
   'radio-group': {
     intro: [
       'Native radio buttons in a shell with legend. Single selection per `name`.',
-      'Model value = active `RadioOption` `value`.',
+      'Model value = active `AuRadioOption` `value`.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -203,7 +203,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Options', detail: 'Each radio with its own label.' },
     ],
     accessibility: ['Associated legend; arrow keys move among radios with the same name.'],
-    relatedExports: ['RadioOption'],
+    relatedExports: ['AuRadioOption'],
   },
   'input-number': {
     intro: [

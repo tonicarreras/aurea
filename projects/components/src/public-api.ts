@@ -1,6 +1,8 @@
 /*
  * Public API surface of the Aurea library
  */
+export type { AuSize } from './lib/au-size';
+export type { AuFieldOption } from './lib/field-option';
 export * from './lib/autocomplete';
 export * from './lib/button';
 export * from './lib/card';
@@ -13,6 +15,7 @@ export * from './lib/dialog';
 export * from './lib/divider';
 export * from './lib/radio-group';
 export * from './lib/select';
+export * from './lib/skeleton';
 export * from './lib/snackbar';
 export * from './lib/steps';
 export * from './lib/switch';

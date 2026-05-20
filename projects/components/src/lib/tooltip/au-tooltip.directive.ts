@@ -12,7 +12,7 @@ import {
   signal,
 } from '@angular/core';
 import { TooltipOverlay } from '../theme/tooltip-overlay';
-import type { TooltipPlacement } from '../theme/tooltip-position';
+import type { AuTooltipPlacement } from '../theme/tooltip-position';
 
 /**
  * Design-system **tooltip**: supplementary label on hover or keyboard focus.
@@ -44,7 +44,7 @@ export class AuTooltip {
   readonly auTooltip = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
 
   /** Preferred placement; flips when there is not enough viewport space. */
-  readonly auTooltipPlacement = input<TooltipPlacement>('top');
+  readonly auTooltipPlacement = input<AuTooltipPlacement>('top');
 
   /** Milliseconds before showing after hover/focus. */
   readonly auTooltipShowDelay = input(200);
@@ -79,18 +79,16 @@ export class AuTooltip {
     this.visible() && this.hasText() ? this.tooltipId : null,
   );
 
-  constructor() {
-    afterRenderEffect(() => {
-      if (!this.visible() || !this.hasText()) {
-        this.overlay.detach();
-        this.removeBubble();
-        return;
-      }
-      const bubble = this.ensureBubble();
-      this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
-      this.overlay.sync(bubble, this.host.nativeElement, this.auTooltipPlacement());
-    });
-  }
+  private readonly syncTooltipOverlay = afterRenderEffect(() => {
+    if (!this.visible() || !this.hasText()) {
+      this.overlay.detach();
+      this.removeBubble();
+      return;
+    }
+    const bubble = this.ensureBubble();
+    this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
+    this.overlay.sync(bubble, this.host.nativeElement, this.auTooltipPlacement());
+  });
 
   protected onPointerEnter(): void {
     this.scheduleShow();

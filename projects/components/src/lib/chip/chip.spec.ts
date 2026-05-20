@@ -25,8 +25,14 @@ describe('AuChip', () => {
     expect(fixture.nativeElement.textContent).toContain('TypeScript');
   });
 
-  it('uses listitem role on host for static chips', () => {
+  it('uses listitem role when inList is true', () => {
+    fixture.componentRef.setInput('inList', true);
+    fixture.detectChanges();
     expect(fixture.nativeElement.getAttribute('role')).toBe('listitem');
+  });
+
+  it('omits list role on host by default', () => {
+    expect(fixture.nativeElement.getAttribute('role')).toBeNull();
   });
 
   it('applies default variant and size on host', () => {

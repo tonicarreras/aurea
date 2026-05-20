@@ -4,10 +4,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuAutocomplete, type AutocompleteOption } from './autocomplete';
+import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
 
 describe('AuAutocomplete', () => {
-  const testOptions: AutocompleteOption[] = [
+  const testOptions: AuAutocompleteOption[] = [
     { value: 'mad', label: 'Madrid' },
     { value: 'bcn', label: 'Barcelona' },
     { value: 'vlc', label: 'Valencia' },
@@ -28,7 +28,7 @@ describe('AuAutocomplete', () => {
     const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
-    expect(fix.componentInstance['inputRef']!.nativeElement).toBe(queryInput(fix));
+    expect(fix.componentInstance['inputEl']().nativeElement).toBe(queryInput(fix));
   });
 
   it('filters options and selects on mousedown', () => {
@@ -258,7 +258,7 @@ describe('AuAutocomplete', () => {
   });
 
   it('skips disabled options on ArrowDown', () => {
-    const opts: AutocompleteOption[] = [
+    const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
     ];
@@ -453,7 +453,7 @@ describe('AuAutocomplete', () => {
   });
 
   it('ignores pointer enter on disabled option', () => {
-    const opts: AutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -466,7 +466,7 @@ describe('AuAutocomplete', () => {
   });
 
   it('ignores mousedown on disabled option', () => {
-    const opts: AutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -500,7 +500,7 @@ describe('AuAutocomplete', () => {
   });
 
   it('Enter does not select when no highlightable option', () => {
-    const opts: AutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuAutocomplete);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -537,7 +537,7 @@ describe('AuAutocomplete', () => {
   });
 
   it('keeps no active option when list is all disabled', () => {
-    const opts: AutocompleteOption[] = [
+    const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
@@ -752,7 +752,7 @@ describe('AuAutocomplete', () => {
   });
 
   it('lastHighlightableIndex is -1 when every option is disabled', () => {
-    const opts: AutocompleteOption[] = [
+    const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];

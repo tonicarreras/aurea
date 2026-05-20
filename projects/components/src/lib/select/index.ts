@@ -1,2 +1,2 @@
 export * from './select';
-export type { SelectOption } from './select';
+export type { AuSelectOption } from './select';

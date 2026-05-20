@@ -150,9 +150,9 @@ export class Example {}`,
     selector: 'au-select',
     summary: 'Lista desplegable con listbox en portal y teclado completo.',
     demoComponent: SelectDemo,
-    snippet: `import { AuSelect, type SelectOption } from '@aurea-design-system/components';
+    snippet: `import { AuSelect, type AuSelectOption } from '@aurea-design-system/components';
 
-options: SelectOption[] = [
+options: AuSelectOption[] = [
   { value: 'es', label: 'España' },
   { value: 'mx', label: 'México' },
 ];`,

@@ -40,6 +40,11 @@ const meta: Meta<AuCheckbox> = {
       description: 'Sets native `required` and `aria-required`.',
       table: { category: 'Validation' },
     },
+    showRequired: {
+      control: 'boolean',
+      description: 'Shows the visible asterisk and screen-reader “(required)” when `required` is true.',
+      table: { category: 'Validation' },
+    },
     errorMessage: {
       control: 'text',
       description: 'Manual error copy (shown when non-empty).',

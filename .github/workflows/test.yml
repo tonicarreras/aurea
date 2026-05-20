@@ -33,6 +33,12 @@ jobs:
       - name: Unit tests with coverage
         run: bun run test:coverage
 
+      - name: Install Playwright (Storybook test-runner)
+        run: bunx playwright install --with-deps chromium
+
+      - name: Storybook test-runner (play + a11y)
+        run: bun run test-storybook:ci
+
       - name: Coverage job summary
         if: always()
         run: node scripts/write-coverage-summary.mjs

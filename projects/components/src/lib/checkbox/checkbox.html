@@ -25,7 +25,11 @@
     <div class="au-checkbox__content">
       @if (label()) {
         <label class="au-checkbox__label" [attr.for]="resolvedId()">
-          {{ label() }}@if (required()) {<span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>}
+          {{ label() }}
+          @if (required() && showRequired()) {
+            <span class="au-checkbox__required" aria-hidden="true" title="Required">*</span>
+            <span class="au-sr-only">(required)</span>
+          }
         </label>
       }
 

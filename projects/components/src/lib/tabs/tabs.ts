@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { AuTab } from './au-tab.directive';
 
-export type TabsVariant = 'line' | 'contained';
-export type TabsOrientation = 'horizontal' | 'vertical';
-export type TabsSize = 'sm' | 'md' | 'lg';
+export type AuTabsVariant = 'line' | 'contained';
+export type AuTabsOrientation = 'horizontal' | 'vertical';
+export type AuTabsSize = 'sm' | 'md' | 'lg';
 
 /**
  * Design-system **tabs**: WAI-ARIA tablist with projected tab buttons and panels.
@@ -56,9 +56,9 @@ export class AuTabs {
   /** Accessible name for the tablist when no visible label wraps the control. */
   readonly ariaLabel = input<string>('');
   /** Visual style: underline (line) or segmented control (contained). */
-  readonly variant = input<TabsVariant>('line');
-  readonly orientation = input<TabsOrientation>('horizontal');
-  readonly size = input<TabsSize>('md');
+  readonly variant = input<AuTabsVariant>('line');
+  readonly orientation = input<AuTabsOrientation>('horizontal');
+  readonly size = input<AuTabsSize>('md');
   /** Optional id prefix for tab/panel elements. */
   readonly id = input<string>('');
 

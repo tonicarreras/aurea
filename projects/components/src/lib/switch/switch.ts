@@ -10,9 +10,8 @@ import {
   viewChild,
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
-
-type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Design-system **switch** (boolean toggle): same field chrome as other controls, native checkbox

@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { AuSelect, type SelectOption } from './select';
+import { AuSelect, type AuSelectOption } from './select';
 
-const sampleOptions: SelectOption[] = [
+const sampleOptions: AuSelectOption[] = [
   { value: 'option1', label: 'Option One' },
   { value: 'option2', label: 'Option Two' },
   { value: 'option3', label: 'Option Three' },
   { value: 'option4', label: 'Option Four' },
 ];
 
-const groupedOptions: SelectOption[] = [
+const groupedOptions: AuSelectOption[] = [
   { value: 'group1', label: 'Group A - Option 1', disabled: true },
   { value: 'group2', label: 'Group A - Option 2' },
   { value: 'group3', label: 'Group B - Option 1' },
@@ -80,7 +80,7 @@ const meta: Meta<AuSelect> = {
       table: { category: 'Validation' },
     },
     options: {
-      description: 'Array of `SelectOption` objects.',
+      description: 'Array of `AuSelectOption` objects.',
       table: { category: 'Field' },
     },
     disabled: {

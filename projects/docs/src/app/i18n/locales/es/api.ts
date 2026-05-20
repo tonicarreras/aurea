@@ -147,7 +147,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     ],
   },
   select: {
-    importNames: ['AuSelect', 'type SelectOption'],
+    importNames: ['AuSelect', 'type AuSelectOption'],
     sections: [
       {
         title: 'AuSelect',
@@ -159,7 +159,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('errorMessage', 'string', 'Error.', "''"),
           i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
           i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('options', 'SelectOption[]', '`{ value, label, disabled? }[]`.', '[]'),
+          i('options', 'AuSelectOption[]', '`{ value, label, disabled? }[]`.', '[]'),
           i('disabled', 'boolean', 'Desactivado.', 'false'),
           i('readOnly', 'boolean', 'Listbox visible pero sin cambiar valor.', 'false'),
           i('required', 'boolean', 'Obligatorio.', 'false'),
@@ -176,14 +176,14 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     ],
   },
   autocomplete: {
-    importNames: ['AuAutocomplete', 'type AutocompleteOption'],
+    importNames: ['AuAutocomplete', 'type AuAutocompleteOption'],
     sections: [
       {
         title: 'AuAutocomplete',
         description: 'Filtra opciones al escribir. Patrón combobox ARIA.',
         rows: [
           ...FIELD_STRING,
-          i('options', 'AutocompleteOption[]', 'Lista de sugerencias.', '[]'),
+          i('options', 'AuAutocompleteOption[]', 'Lista de sugerencias.', '[]'),
           i('minFilterLength', 'number', 'Caracteres mínimos antes de filtrar.', '0'),
           i('caseSensitive', 'boolean', 'Filtro sensible a mayúsculas.', 'false'),
           i('strictSelection', 'boolean', 'Blur limpia si no hay coincidencia exacta.', 'true'),
@@ -194,7 +194,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     ],
   },
   'radio-group': {
-    importNames: ['AuRadioGroup', 'type RadioOption'],
+    importNames: ['AuRadioGroup', 'type AuRadioOption'],
     sections: [
       {
         title: 'AuRadioGroup',
@@ -206,7 +206,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('errorMessage', 'string', 'Error.', "''"),
           i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
           i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('options', 'RadioOption[]', 'Opciones del grupo.', '[]'),
+          i('options', 'AuRadioOption[]', 'Opciones del grupo.', '[]'),
           i('disabled', 'boolean', 'Desactiva todo el grupo.', 'false'),
           i('required', 'boolean', 'Obligatorio.', 'false'),
           i('id', 'string', 'Prefijo de ids.', "''"),
@@ -394,7 +394,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           m('open', 'ModelSignal<boolean>', 'Visibilidad.'),
           i('message', 'string', 'Texto principal (o slot proyectado).', "''"),
           i('variant', "'default' | 'success' | 'warning' | 'error' | 'info'", 'Semántica visual.', "'default'"),
-          i('position', 'SnackbarPosition', 'Esquina de la pantalla.', "'bottom-center'"),
+          i('position', 'AuSnackbarPosition', 'Esquina de la pantalla.', "'bottom-center'"),
           i('durationMs', 'number', 'Auto-cierre en ms; `0` desactiva timer.', '5000'),
           i('actionLabel', 'string', 'Etiqueta del botón de acción opcional.', "''"),
           i('showCloseButton', 'boolean', 'Botón cerrar.', 'true'),
@@ -426,7 +426,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
         description: 'Directiva en el disparador enfocable (`button`, `a`, etc.).',
         rows: [
           i('auTooltip', 'string', 'Texto del globo (vacío = sin tooltip).', "''"),
-          i('auTooltipPlacement', 'TooltipPlacement', 'Posición preferida; voltea si no cabe.', "'top'"),
+          i('auTooltipPlacement', 'AuTooltipPlacement', 'Posición preferida; voltea si no cabe.', "'top'"),
           i('auTooltipShowDelay', 'number', 'Retardo al mostrar (ms).', '200'),
           i('auTooltipHideDelay', 'number', 'Retardo al ocultar (ms).', '100'),
           i('auTooltipDisabled', 'boolean', 'Suprime el tooltip.', 'false'),

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuRadioGroup, type RadioOption } from '@aurea-design-system/components';
+import { AuRadioGroup, type AuRadioOption } from '@aurea-design-system/components';
 import { radioOptions } from '../shared/demo-fixtures';
 
 @Component({
@@ -38,7 +38,7 @@ export class ExampleRadioGroupErrorDemo {
   `,
 })
 export class ExampleRadioGroupDisabledOptionDemo {
-  readonly options: RadioOption[] = [
+  readonly options: AuRadioOption[] = [
     { value: 'free', label: 'Gratis' },
     { value: 'pro', label: 'Pro', disabled: true },
   ];

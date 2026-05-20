@@ -181,8 +181,9 @@ button.au-button__element {
   visibility: hidden;
 }
 
-.au-button__spinner {
+.au-button__element--loading .au-button__spinner {
   position: absolute;
+  inset: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;

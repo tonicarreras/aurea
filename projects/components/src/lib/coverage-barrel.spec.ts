@@ -10,6 +10,7 @@ import * as dialog from './dialog/index';
 import * as divider from './divider/index';
 import * as radioGroup from './radio-group/index';
 import * as select from './select/index';
+import * as skeleton from './skeleton/index';
 import * as snackbar from './snackbar/index';
 import * as switchMod from './switch/index';
 import * as tabs from './tabs/index';
@@ -33,6 +34,7 @@ describe('library barrel exports', () => {
     expect(dialog.AuDialogFooter).toBeDefined();
     expect(radioGroup.AuRadioGroup).toBeDefined();
     expect(select.AuSelect).toBeDefined();
+    expect(skeleton.AuSkeleton).toBeDefined();
     expect(snackbar.AuSnackbar).toBeDefined();
     expect(switchMod.AuSwitch).toBeDefined();
     expect(tabs.AuTabs).toBeDefined();

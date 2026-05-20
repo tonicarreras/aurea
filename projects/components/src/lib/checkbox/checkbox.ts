@@ -4,16 +4,15 @@ import {
   ElementRef,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
-
-type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Aurea design system Checkbox component.
@@ -70,6 +69,9 @@ export class AuCheckbox implements FormCheckboxControl {
   /** Sets the native `required` attribute and `aria-required` when true. */
   readonly required = input(false);
 
+  /** When true with `required`, shows the visible asterisk and screen-reader “(required)”. */
+  readonly showRequired = input(true);
+
   /** Partial selection; syncs the native `indeterminate` property on the input. */
   readonly indeterminate = input(false);
 
@@ -93,21 +95,11 @@ export class AuCheckbox implements FormCheckboxControl {
   /** Focus ring modality: outer ring on Tab, inset on click. */
   protected readonly focusByTab = signal(false);
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-  constructor() {
-    afterRenderEffect(() => {
-      const input = this.nativeInput();
-      if (!input) {
-        return;
-      }
-      input.indeterminate = this.indeterminate();
-    });
-  }
-
-  private nativeInput(): HTMLInputElement | null {
-    return this.host.nativeElement.querySelector('.au-checkbox__element');
-  }
+  private readonly syncIndeterminate = afterRenderEffect(() => {
+    this.inputEl().nativeElement.indeterminate = this.indeterminate();
+  });
 
   readonly resolvedId = computed(() => {
     const v = this.id();
@@ -198,6 +190,6 @@ export class AuCheckbox implements FormCheckboxControl {
 
   /** Moves keyboard focus to the native `<input>`. */
   focus(): void {
-    this.nativeInput()?.focus();
+    this.inputEl()?.nativeElement.focus();
   }
 }

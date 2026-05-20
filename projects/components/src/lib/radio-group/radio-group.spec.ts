@@ -4,10 +4,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuRadioGroup, RadioOption } from './radio-group';
+import { AuRadioGroup, AuRadioOption } from './radio-group';
 
 describe('AuRadioGroup', () => {
-  const opts: RadioOption[] = [
+  const opts: AuRadioOption[] = [
     { value: 'a', label: 'Alpha' },
     { value: 'b', label: 'Beta' },
   ];
@@ -101,7 +101,7 @@ describe('AuRadioGroup', () => {
   });
 
   it('disables individual option', () => {
-    const withDis: RadioOption[] = [
+    const withDis: AuRadioOption[] = [
       { value: 'a', label: 'A' },
       { value: 'b', label: 'B', disabled: true },
     ];

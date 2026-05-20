@@ -9,7 +9,7 @@ export const examples: ComponentDocExample[] = [
 {
       title: 'Select con opciones',
       demoComponent: ExampleSelectBasicDemo,
-      code: `options: SelectOption[] = [
+      code: `options: AuSelectOption[] = [
   { value: 'es', label: 'España' },
   { value: 'mx', label: 'México' },
 ];

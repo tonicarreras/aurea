@@ -10,9 +10,8 @@ import {
   viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
-
-type AuSize = 'sm' | 'md' | 'lg';
 
 /**
  * Design-system **date** field: native `<input type="date">` with the same chrome as other fields.

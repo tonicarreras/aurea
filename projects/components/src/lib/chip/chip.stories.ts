@@ -47,6 +47,11 @@ const meta: Meta<AuChip> = {
       description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',
       table: { category: 'Behavior' },
     },
+    inList: {
+      control: 'boolean',
+      description: 'Sets `role="listitem"` when true; parent needs `role="list"`.',
+      table: { category: 'Accessibility' },
+    },
     selected: {
       control: 'boolean',
       table: { category: 'Value' },
@@ -150,9 +155,9 @@ export const ChipGroup: Story = {
     moduleMetadata: { imports: [AuChip] },
     template: `
       <div role="list" style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
-        <au-chip label="Angular" removable />
-        <au-chip label="TypeScript" removable />
-        <au-chip label="Vitest" removable />
+        <au-chip label="Angular" removable [inList]="true" />
+        <au-chip label="TypeScript" removable [inList]="true" />
+        <au-chip label="Vitest" removable [inList]="true" />
       </div>
     `,
   }),

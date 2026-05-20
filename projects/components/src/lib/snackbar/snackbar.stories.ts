@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import type { SnackbarPosition, SnackbarVariant } from './snackbar';
+import type { AuSnackbarPosition, AuSnackbarVariant } from './snackbar';
 import { AuSnackbarStoryHost } from './snackbar-story-host';
 
 const meta: Meta<AuSnackbarStoryHost> = {
@@ -25,7 +25,7 @@ const meta: Meta<AuSnackbarStoryHost> = {
     message: { control: 'text', table: { category: 'Content' } },
     variant: {
       control: 'select',
-      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],
+      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],
       table: { category: 'Appearance' },
     },
     position: {
@@ -37,7 +37,7 @@ const meta: Meta<AuSnackbarStoryHost> = {
         'top-center',
         'top-start',
         'top-end',
-      ] satisfies SnackbarPosition[],
+      ] satisfies AuSnackbarPosition[],
       table: { category: 'Appearance' },
     },
     durationMs: { control: 'number', table: { category: 'Behavior' } },

@@ -50,7 +50,9 @@ describe('AuCheckbox', () => {
     fix.componentRef.setInput('required', true);
     fix.detectChanges();
     const label = fix.debugElement.query(By.css('.au-checkbox__label'));
-    expect(label?.nativeElement.textContent?.trim()).toBe('Accept terms*');
+    expect(label?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Accept terms');
+    expect(label?.nativeElement.textContent).toContain('*');
+    expect(label?.nativeElement.textContent).toContain('(required)');
     const input = queryInput(fix);
     expect(input.id).toBe('test-checkbox');
   });
@@ -64,13 +66,15 @@ describe('AuCheckbox', () => {
     expect(input.getAttribute('aria-checked')).toBeNull();
   });
 
-  it('afterRenderEffect no-ops when native input is missing', () => {
+  it('hides required marker when showRequired is false', () => {
     const fix = TestBed.createComponent(AuCheckbox);
+    fix.componentRef.setInput('label', 'Accept terms');
+    fix.componentRef.setInput('required', true);
+    fix.componentRef.setInput('showRequired', false);
     fix.detectChanges();
-    const spy = vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
-    fix.componentRef.setInput('indeterminate', true);
-    expect(() => fix.detectChanges()).not.toThrow();
-    spy.mockRestore();
+    const label = fix.debugElement.query(By.css('.au-checkbox__label'));
+    expect(label?.nativeElement.textContent?.trim()).toBe('Accept terms');
+    expect(fix.nativeElement.querySelector('.au-checkbox__required')).toBeNull();
   });
 
   it('shows signal-form error message when errorMessage is empty', () => {

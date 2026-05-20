@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { AuAutocomplete, type AutocompleteOption } from './autocomplete';
+import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
 
-const cities: AutocompleteOption[] = [
+const cities: AuAutocompleteOption[] = [
   { value: 'mad', label: 'Madrid' },
   { value: 'bcn', label: 'Barcelona' },
   { value: 'vlc', label: 'Valencia' },

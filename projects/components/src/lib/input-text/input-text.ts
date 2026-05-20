@@ -10,9 +10,8 @@ import {
   viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
-
-type AuSize = 'sm' | 'md' | 'lg';
 
 type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
 

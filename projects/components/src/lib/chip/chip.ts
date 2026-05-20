@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import { tabFocusState } from '../au-tab-focus-state';
 
-export type ChipVariant = 'filled' | 'outline' | 'accent';
-export type ChipSize = 'sm' | 'md';
+export type AuChipVariant = 'filled' | 'outline' | 'accent';
+export type AuChipSize = 'sm' | 'md';
 
 /**
  * Aurea design system **chip**: compact label for filters, tags, or selections.
@@ -22,7 +22,7 @@ export type ChipSize = 'sm' | 'md';
  * - **Selectable:** toggle filter chip (`selectable` + `[(selected)]`, `aria-pressed`).
  * - **Removable:** dismissible tag with a dedicated remove control (`removable`, `removed` event).
  * - **Focus:** outer ring on Tab, inset on pointer (`tabFocusState` + `--from-tab` CSS).
- * - **Groups:** wrap chips in a container with `role="list"`; each chip uses `role="listitem"` when removable or static.
+ * - **Groups:** wrap chips in `role="list"` and set `inList` on each static/removable chip for `role="listitem"`.
  *
  * @example
  * ```html
@@ -49,10 +49,10 @@ export class AuChip {
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
 
   /** Visual style: filled (default surface), outline (border), accent (selected/tinted). */
-  readonly variant = input<ChipVariant>('filled');
+  readonly variant = input<AuChipVariant>('filled');
 
   /** Density: sm (compact), md (default). */
-  readonly size = input<ChipSize>('md');
+  readonly size = input<AuChipSize>('md');
 
   readonly disabled = input(false);
 
@@ -61,6 +61,12 @@ export class AuChip {
 
   /** Toggle filter chip; uses `aria-pressed` on the inner control. */
   readonly selectable = input(false);
+
+  /**
+   * When true with a static/removable chip, sets `role="listitem"` on the host.
+   * The parent wrapper must use `role="list"`.
+   */
+  readonly inList = input(false);
 
   /** Selected state when `selectable` is true. */
   readonly selected = model(false);
@@ -82,7 +88,7 @@ export class AuChip {
   private readonly host = inject(ElementRef<HTMLElement>);
 
   readonly hostRole = computed((): string | null => {
-    if (this.selectable()) {
+    if (this.selectable() || !this.inList()) {
       return null;
     }
     return 'listitem';

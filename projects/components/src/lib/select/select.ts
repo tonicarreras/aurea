@@ -6,7 +6,6 @@ import {
   ElementRef,
   PLATFORM_ID,
   Renderer2,
-  ViewChild,
   afterRenderEffect,
   computed,
   inject,
@@ -14,18 +13,15 @@ import {
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
+import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../theme/field-listbox-overlay';
 
-type AuSize = 'sm' | 'md' | 'lg';
-
-export interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
+export type AuSelectOption = AuFieldOption;
 
 /**
  * Design-system **select** field: combobox (`button` + `listbox`) with the same dropdown chrome as `au-autocomplete`.
@@ -57,7 +53,7 @@ export class AuSelect implements FormValueControl<string | null> {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
-  readonly options = input<SelectOption[]>([]);
+  readonly options = input<AuSelectOption[]>([]);
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
@@ -78,11 +74,8 @@ export class AuSelect implements FormValueControl<string | null> {
   protected readonly panelOpen = signal(false);
   protected readonly highlightedIndex = signal(-1);
 
-  @ViewChild('listboxEl', { read: ElementRef })
-  private listboxRef?: ElementRef<HTMLUListElement>;
-
-  @ViewChild('triggerEl', { read: ElementRef })
-  private triggerRef?: ElementRef<HTMLButtonElement>;
+  private readonly listboxEl = viewChild<ElementRef<HTMLUListElement>>('listboxEl');
+  private readonly triggerEl = viewChild.required<ElementRef<HTMLButtonElement>>('triggerEl');
 
   private readonly listboxOverlay = new FieldListboxOverlay(
     inject(DOCUMENT),
@@ -91,13 +84,11 @@ export class AuSelect implements FormValueControl<string | null> {
     inject(DestroyRef),
   );
 
-  constructor() {
-    afterRenderEffect(() => {
-      const trigger = this.triggerNativeElement();
-      const anchor = trigger.closest('.au-select__control-row')! as HTMLElement;
-      this.listboxOverlay.sync(this.listboxRef?.nativeElement, anchor, this.listboxVisible());
-    });
-  }
+  private readonly syncListboxOverlay = afterRenderEffect(() => {
+    const trigger = this.triggerEl().nativeElement;
+    const anchor = trigger.closest('.au-select__control-row')! as HTMLElement;
+    this.listboxOverlay.sync(this.listboxEl()?.nativeElement, anchor, this.listboxVisible());
+  });
 
   readonly resolvedId = computed(() => {
     const v = this.id();
@@ -264,7 +255,7 @@ export class AuSelect implements FormValueControl<string | null> {
     }
   }
 
-  onOptionPointerEnter(index: number, option?: SelectOption): void {
+  onOptionPointerEnter(index: number, option?: AuSelectOption): void {
     if (this.disabled() || this.readOnly()) {
       return;
     }
@@ -274,7 +265,7 @@ export class AuSelect implements FormValueControl<string | null> {
     this.highlightedIndex.set(index);
   }
 
-  onOptionPointerDown(event: Event, option: SelectOption): void {
+  onOptionPointerDown(event: Event, option: AuSelectOption): void {
     event.preventDefault();
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
@@ -292,7 +283,7 @@ export class AuSelect implements FormValueControl<string | null> {
     this.triggerNativeElement().focus();
   }
 
-  selectOption(option: SelectOption): void {
+  selectOption(option: AuSelectOption): void {
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
     }
@@ -311,7 +302,7 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!focusLeftFieldControl(event, this.listboxRef?.nativeElement)) {
+    if (!focusLeftFieldControl(event, this.listboxEl()?.nativeElement)) {
       return;
     }
     this.fieldFocusByTab.set(false);
@@ -323,7 +314,7 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   private triggerNativeElement(): HTMLButtonElement {
-    return this.triggerRef!.nativeElement;
+    return this.triggerEl().nativeElement;
   }
 
   private openPanel(): void {

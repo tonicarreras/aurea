@@ -3,13 +3,13 @@ import { expect, userEvent, within } from 'storybook/test';
 
 import { AuButton } from '../button/button';
 import { AuTooltip } from './au-tooltip.directive';
-import type { TooltipPlacement } from '../theme/tooltip-position';
+import type { AuTooltipPlacement } from '../theme/tooltip-position';
 
 const storyImports = { imports: [AuTooltip, AuButton] };
 
 interface TooltipStoryArgs {
   text: string;
-  placement: TooltipPlacement;
+  placement: AuTooltipPlacement;
   showDelay: number;
   hideDelay: number;
   disabled: boolean;

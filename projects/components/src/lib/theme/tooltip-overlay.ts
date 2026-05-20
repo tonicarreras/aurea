@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import type { DestroyRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
-import { computeTooltipPosition, type TooltipPlacement } from './tooltip-position';
+import { computeTooltipPosition, type AuTooltipPlacement } from './tooltip-position';
 
 /** Resolves a length custom property to pixels (handles `var()` chains). */
 export function readCssLengthPx(document: Document, customProp: string, fallbackPx: number): number {
@@ -21,7 +21,7 @@ export class TooltipOverlay {
   private anchor: Comment | null = null;
   private activeBubble: HTMLElement | null = null;
   private activeAnchor: HTMLElement | null = null;
-  private resolvedPlacement: TooltipPlacement = 'top';
+  private resolvedPlacement: AuTooltipPlacement = 'top';
 
   private readonly onWindowChange = (): void => {
     if (this.activeBubble && this.activeAnchor) {
@@ -41,8 +41,8 @@ export class TooltipOverlay {
   sync(
     bubble: HTMLElement | undefined,
     anchor: HTMLElement,
-    placement: TooltipPlacement,
-  ): TooltipPlacement {
+    placement: AuTooltipPlacement,
+  ): AuTooltipPlacement {
     if (!isPlatformBrowser(this.platformId)) {
       return placement;
     }
@@ -94,8 +94,8 @@ export class TooltipOverlay {
   private position(
     bubble: HTMLElement,
     anchor: HTMLElement,
-    placement: TooltipPlacement,
-  ): TooltipPlacement {
+    placement: AuTooltipPlacement,
+  ): AuTooltipPlacement {
     this.activeAnchor = anchor;
     this.resolvedPlacement = placement;
     const gap = readCssLengthPx(this.document, '--au-tooltip-gap', 12);

@@ -4,10 +4,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuSelect, SelectOption } from './select';
+import { AuSelect, AuSelectOption } from './select';
 
 describe('AuSelect', () => {
-  const testOptions: SelectOption[] = [
+  const testOptions: AuSelectOption[] = [
     { value: 'opt1', label: 'Option One' },
     { value: 'opt2', label: 'Option Two' },
     { value: 'opt3', label: 'Option Three' },
@@ -37,7 +37,7 @@ describe('AuSelect', () => {
     const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', testOptions);
     fix.detectChanges();
-    expect(fix.componentInstance['triggerRef']!.nativeElement).toBe(queryTrigger(fix));
+    expect(fix.componentInstance['triggerEl']().nativeElement).toBe(queryTrigger(fix));
   });
 
   it('portals listbox to document.body while open', () => {
@@ -146,7 +146,7 @@ describe('AuSelect', () => {
   });
 
   it('renders option disabled when option has disabled flag', () => {
-    const optionsWithDisabled: SelectOption[] = [
+    const optionsWithDisabled: AuSelectOption[] = [
       { value: 'opt1', label: 'Option One' },
       { value: 'opt2', label: 'Option Two', disabled: true },
     ];
@@ -440,7 +440,7 @@ describe('AuSelect', () => {
   });
 
   it('skips disabled options on ArrowDown', () => {
-    const opts: SelectOption[] = [
+    const opts: AuSelectOption[] = [
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
     ];
@@ -599,7 +599,7 @@ describe('AuSelect', () => {
   });
 
   it('ignores pointer enter on disabled option', () => {
-    const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -623,7 +623,7 @@ describe('AuSelect', () => {
   });
 
   it('ignores mousedown on disabled option', () => {
-    const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -695,7 +695,7 @@ describe('AuSelect', () => {
   });
 
   it('lastHighlightableIndex is -1 when every option is disabled', () => {
-    const opts: SelectOption[] = [
+    const opts: AuSelectOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
@@ -723,7 +723,7 @@ describe('AuSelect', () => {
   });
 
   it('Enter does not select when no highlightable option', () => {
-    const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -748,7 +748,7 @@ describe('AuSelect', () => {
   });
 
   it('nextHighlightableIndex returns current when no enabled target exists', () => {
-    const opts: SelectOption[] = [
+    const opts: AuSelectOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
@@ -891,7 +891,7 @@ describe('AuSelect', () => {
   });
 
   it('Enter does not select a disabled highlighted option', () => {
-    const opts: SelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
+    const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = TestBed.createComponent(AuSelect);
     fix.componentRef.setInput('options', opts);
     fix.detectChanges();
@@ -916,7 +916,7 @@ describe('AuSelect', () => {
   });
 
   it('openPanel highlights matching value when current option is disabled', () => {
-    const opts: SelectOption[] = [
+    const opts: AuSelectOption[] = [
       { value: 'opt1', label: 'One', disabled: true },
       { value: 'opt2', label: 'Two' },
     ];

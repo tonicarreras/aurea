@@ -15,8 +15,8 @@ import {
   output,
 } from '@angular/core';
 
-export type SnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
-export type SnackbarPosition =
+export type AuSnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
+export type AuSnackbarPosition =
   | 'bottom-center'
   | 'bottom-start'
   | 'bottom-end'
@@ -76,8 +76,8 @@ export class AuSnackbar {
 
   /** Primary text; ignored when empty if default slot content is projected. */
   readonly message = input<string>('');
-  readonly variant = input<SnackbarVariant>('default');
-  readonly position = input<SnackbarPosition>('bottom-center');
+  readonly variant = input<AuSnackbarVariant>('default');
+  readonly position = input<AuSnackbarPosition>('bottom-center');
   /** Auto-dismiss delay in ms; `0` keeps the snackbar open until the user dismisses it. */
   readonly durationMs = input<number>(5000);
   /** Label for the optional action button. */
@@ -96,18 +96,19 @@ export class AuSnackbar {
 
   readonly showMessage = computed(() => this.message().trim().length > 0);
 
+  private readonly syncOpenState = afterRenderEffect(() => {
+    const isOpen = this.open();
+    const duration = this.durationMs();
+    this.clearDismissTimer();
+    if (isOpen && duration > 0) {
+      this.dismissTimer = setTimeout(() => this.close(), duration);
+    }
+    if (isOpen) {
+      this.attachToBody();
+    }
+  });
+
   constructor() {
-    afterRenderEffect(() => {
-      const isOpen = this.open();
-      const duration = this.durationMs();
-      this.clearDismissTimer();
-      if (isOpen && duration > 0) {
-        this.dismissTimer = setTimeout(() => this.close(), duration);
-      }
-      if (isOpen) {
-        this.attachToBody();
-      }
-    });
     this.destroyRef.onDestroy(() => {
       this.clearDismissTimer();
       this.restoreFromBody();

@@ -10,15 +10,11 @@ import {
   viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
 import { tabFocusState } from '../au-tab-focus-state';
+import type { AuFieldOption } from '../field-option';
 
-type AuSize = 'sm' | 'md' | 'lg';
-
-export interface RadioOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
+export type AuRadioOption = AuFieldOption;
 
 /**
  * Design-system **radio group**: native radios in a `<fieldset>`, single `value` model.
@@ -51,7 +47,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
-  readonly options = input<RadioOption[]>([]);
+  readonly options = input<AuRadioOption[]>([]);
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);

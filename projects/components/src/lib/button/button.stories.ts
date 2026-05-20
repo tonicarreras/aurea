@@ -248,7 +248,7 @@ export const FocusRing: Story = {
     ),
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('au-button') as HTMLElement;
-    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;
+    const firstButton = button?.querySelector('button') as HTMLButtonElement;
     if (firstButton) {
       firstButton.focus();
       await expect(firstButton).toHaveFocus();

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import { AuRadioGroup, RadioOption } from './radio-group';
+import { AuRadioGroup, AuRadioOption } from './radio-group';
 
-const sample: RadioOption[] = [
+const sample: AuRadioOption[] = [
   { value: 'email', label: 'Email' },
   { value: 'sms', label: 'SMS' },
   { value: 'none', label: 'None' },

@@ -1,6 +1,15 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuButton } from './button';
+
+@Component({
+  imports: [AuButton],
+  template: `<au-button [loading]="loading">Save changes</au-button>`,
+})
+class ButtonLoadingHost {
+  loading = true;
+}
 
 describe('AuButton', () => {
   let component: AuButton;
@@ -159,5 +168,24 @@ describe('AuButton', () => {
     const ev = new MouseEvent('click', { cancelable: true });
     btnDe.triggerEventHandler('click', ev);
     expect(ev.defaultPrevented).toBe(true);
+  });
+});
+
+describe('AuButton loading with projected text', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonLoadingHost],
+    }).compileComponents();
+  });
+
+  it('hides projected text visually and exposes it via aria-label', () => {
+    const fix = TestBed.createComponent(ButtonLoadingHost);
+    fix.detectChanges();
+    const button = fix.nativeElement.querySelector('button') as HTMLButtonElement;
+    const content = fix.nativeElement.querySelector('.au-button__content') as HTMLElement;
+    expect(content.classList.contains('au-button__content--hidden')).toBe(true);
+    expect(content.getAttribute('aria-hidden')).toBe('true');
+    expect(button.getAttribute('aria-label')).toBe('Save changes');
+    expect(fix.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
   });
 });

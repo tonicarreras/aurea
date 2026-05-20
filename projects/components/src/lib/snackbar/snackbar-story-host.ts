@@ -1,6 +1,6 @@
 import { Component, input, model, output } from '@angular/core';
 import { AuButton } from '../button/button';
-import { AuSnackbar, type SnackbarPosition, type SnackbarVariant } from './snackbar';
+import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './snackbar';
 
 /**
  * Storybook-only host: trigger + snackbar on a canvas that matches Aurea surfaces.
@@ -67,8 +67,8 @@ export class AuSnackbarStoryHost {
   readonly triggerLabel = input('Show snackbar');
   readonly open = model(false);
   readonly message = input('Changes saved successfully.');
-  readonly variant = input<SnackbarVariant>('default');
-  readonly position = input<SnackbarPosition>('bottom-center');
+  readonly variant = input<AuSnackbarVariant>('default');
+  readonly position = input<AuSnackbarPosition>('bottom-center');
   readonly durationMs = input(5000);
   readonly actionLabel = input('');
   readonly showCloseButton = input(true);

@@ -1,6 +1,6 @@
-export type TooltipPlacement = 'top' | 'bottom' | 'start' | 'end';
+export type AuTooltipPlacement = 'top' | 'bottom' | 'start' | 'end';
 
-export interface TooltipViewport {
+export interface AuTooltipViewport {
   width: number;
   height: number;
 }
@@ -14,11 +14,11 @@ const VIEWPORT_MARGIN = 8;
 export function computeTooltipPosition(
   anchor: DOMRect,
   bubble: DOMRect,
-  placement: TooltipPlacement,
+  placement: AuTooltipPlacement,
   gap: number,
-  viewport: TooltipViewport,
-): { top: number; left: number; placement: TooltipPlacement } {
-  const candidates: TooltipPlacement[] = [placement, ...fallbackPlacements(placement)];
+  viewport: AuTooltipViewport,
+): { top: number; left: number; placement: AuTooltipPlacement } {
+  const candidates: AuTooltipPlacement[] = [placement, ...fallbackPlacements(placement)];
   for (const candidate of candidates) {
     const coords = coordsForPlacement(anchor, bubble, candidate, gap);
     if (fitsViewport(coords, bubble, viewport)) {
@@ -33,7 +33,7 @@ export function computeTooltipPosition(
   };
 }
 
-function fallbackPlacements(primary: TooltipPlacement): TooltipPlacement[] {
+function fallbackPlacements(primary: AuTooltipPlacement): AuTooltipPlacement[] {
   switch (primary) {
     case 'top':
       return ['bottom', 'end', 'start'];
@@ -51,7 +51,7 @@ function fallbackPlacements(primary: TooltipPlacement): TooltipPlacement[] {
 function coordsForPlacement(
   anchor: DOMRect,
   bubble: DOMRect,
-  placement: TooltipPlacement,
+  placement: AuTooltipPlacement,
   gap: number,
 ): { top: number; left: number } {
   switch (placement) {
@@ -82,7 +82,7 @@ function coordsForPlacement(
 function fitsViewport(
   coords: { top: number; left: number },
   bubble: DOMRect,
-  viewport: TooltipViewport,
+  viewport: AuTooltipViewport,
 ): boolean {
   return (
     coords.top >= VIEWPORT_MARGIN &&
