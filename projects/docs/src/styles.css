@@ -2,6 +2,81 @@
 @import '../../components/src/lib/theme/au-field-error.css';
 @import '../../components/src/lib/theme/au-field-listbox.css';
 
+/* Docs-only aliases (nav / links used legacy accent names) */
+:root {
+  --au-color-accent: var(--au-color-action-primary);
+  --au-color-accent-hover: var(--au-color-action-primary-hover);
+  --au-color-accent-subtle: color-mix(in srgb, var(--au-color-action-primary) 12%, transparent);
+  --docs-glow: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
+  --docs-mesh-1: color-mix(in srgb, var(--au-color-action-primary) 18%, transparent);
+  --docs-mesh-2: color-mix(in srgb, #c9a227 14%, transparent);
+  --docs-nav-inset: clamp(var(--au-space-4), 3vw, 2rem);
+  --docs-header-height: 3.75rem;
+  --docs-layout-gap: var(--au-space-6);
+  --docs-content-max: 112rem;
+  --docs-sidebar-breakpoint: 68rem;
+  --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 65%, transparent);
+  --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 35%, transparent);
+  --docs-elevated-shadow: 0 4px 24px color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
+  --docs-code-bg: #f4f6f9;
+  --docs-code-fg: #1a2332;
+  --docs-token-comment: #64748b;
+  --docs-token-keyword: #1059c8;
+  --docs-token-string: #047857;
+  --docs-token-function: #7c3aed;
+  --docs-token-punctuation: #475569;
+  --docs-token-tag: #0d4aa3;
+  --docs-token-attr: #b45309;
+  --docs-token-builtin: #0e7490;
+}
+
+/* Referencias inline (`nombre`, `[prop]`) en prosa de la documentación */
+.docs-inline-code {
+  padding: 0.12em 0.45em;
+  border-radius: var(--au-radius-xs);
+  border: 1px solid var(--docs-border-fine);
+  background: color-mix(in srgb, var(--au-color-accent) 10%, var(--au-color-surface-raised));
+  font-family: var(--au-font-mono);
+  font-size: 0.88em;
+  font-weight: var(--au-weight-medium);
+  color: var(--au-color-text-primary);
+  white-space: normal;
+  vertical-align: baseline;
+  text-wrap: wrap;
+}
+
+[data-au-theme='dark'] .docs-inline-code {
+  border-color: var(--docs-border-fine);
+  background: var(--au-color-surface-elevated);
+  color: var(--au-color-text-primary);
+}
+
+[data-au-theme='dark'] {
+  /* Paleta docs: oscuro suave (más contraste entre capas, menos negro puro) */
+  --au-color-surface-canvas: #161a22;
+  --au-color-surface-raised: #1f2430;
+  --au-color-surface-elevated: #272d3b;
+  --au-color-surface-sunken: #12151c;
+  --au-color-border-subtle: #343b4a;
+  --au-color-border-default: #434c5c;
+  --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent);
+  --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 22%, transparent);
+  --docs-glow: transparent;
+  --docs-mesh-1: color-mix(in srgb, var(--au-color-action-primary) 7%, transparent);
+  --docs-mesh-2: color-mix(in srgb, #c9a227 5%, transparent);
+  --docs-elevated-shadow: 0 4px 24px color-mix(in srgb, #000 28%, transparent);
+  --docs-code-bg: #1c2230;
+  --docs-code-fg: #e8edf4;
+  --docs-token-comment: #8b9cb0;
+  --docs-token-keyword: #6ba3ff;
+  --docs-token-string: #4ade80;
+  --docs-token-function: #c4b5fd;
+  --docs-token-punctuation: #94a3b8;
+  --docs-token-tag: #93c5fd;
+  --docs-token-attr: #fcd34d;
+  --docs-token-builtin: #67e8f9;
+}
+
 *,
 *::before,
 *::after {
@@ -19,7 +94,16 @@ body {
   font-size: var(--au-text-md);
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-primary);
-  background: var(--au-color-surface-canvas);
+  background-color: var(--au-color-surface-canvas);
+  background-image:
+    linear-gradient(var(--docs-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--docs-grid-line) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  background-position: center top;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--au-color-accent) 22%, transparent);
 }
 
 a {
@@ -39,4 +123,133 @@ pre {
 :focus-visible {
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 2px;
+}
+
+/* ---- Motion primitives ---- */
+
+@keyframes docs-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes docs-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes docs-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(2%, -3%) scale(1.04);
+  }
+
+  66% {
+    transform: translate(-2%, 2%) scale(0.96);
+  }
+}
+
+@keyframes docs-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes docs-shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes docs-pulse-soft {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* Prism token colours (docs code blocks) */
+.docs-code .token.comment,
+.docs-code .token.prolog,
+.docs-code .token.doctype {
+  color: var(--docs-token-comment);
+  font-style: italic;
+}
+
+.docs-code .token.keyword,
+.docs-code .token.atrule,
+.docs-code .token.selector {
+  color: var(--docs-token-keyword);
+}
+
+.docs-code .token.string,
+.docs-code .token.char,
+.docs-code .token.attr-value,
+.docs-code .token.regex {
+  color: var(--docs-token-string);
+}
+
+.docs-code .token.function,
+.docs-code .token.class-name {
+  color: var(--docs-token-function);
+}
+
+.docs-code .token.punctuation,
+.docs-code .token.operator {
+  color: var(--docs-token-punctuation);
+}
+
+.docs-code .token.tag {
+  color: var(--docs-token-tag);
+}
+
+.docs-code .token.attr-name {
+  color: var(--docs-token-attr);
+}
+
+.docs-code .token.builtin,
+.docs-code .token.boolean,
+.docs-code .token.number {
+  color: var(--docs-token-builtin);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

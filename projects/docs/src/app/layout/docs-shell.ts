@@ -1,26 +1,47 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AuButton } from '@aurea-design-system/components';
 
+import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
 import { DOCS_NAV } from '../core/docs-nav';
+import { AngularLogo } from '../shared/angular-logo';
+import { GithubIcon, NpmIcon, StorybookIcon } from '../shared/brand-icons';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 
 @Component({
   selector: 'docs-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, AuButton],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    AngularLogo,
+    GithubIcon,
+    NpmIcon,
+    StorybookIcon,
+  ],
   host: {
     class: 'docs-shell',
     '[attr.data-au-theme]': 'resolvedTheme()',
   },
   template: `
+    <div class="docs-atmosphere" aria-hidden="true">
+      <div class="docs-atmosphere__orb docs-atmosphere__orb--1"></div>
+      <div class="docs-atmosphere__orb docs-atmosphere__orb--2"></div>
+      <div class="docs-atmosphere__orb docs-atmosphere__orb--3"></div>
+    </div>
+
     <a class="docs-skip" href="#docs-main">Saltar al contenido</a>
 
     <header class="docs-header">
       <div class="docs-header__brand">
-        <a routerLink="/" class="docs-header__logo">Aurea</a>
-        <span class="docs-header__tag">Documentación</span>
+        <a routerLink="/" class="docs-header__logo">
+          <docs-angular-logo />
+          <span class="docs-header__logo-text">
+            <span class="docs-header__name">Aurea</span>
+            <span class="docs-header__tag">Design system</span>
+          </span>
+        </a>
       </div>
       <div class="docs-header__actions">
         <label class="docs-theme-picker">
@@ -35,14 +56,35 @@ type ThemeMode = 'light' | 'dark' | 'system';
             <option value="dark">Oscuro</option>
           </select>
         </label>
-        <au-button
-          variant="outline"
-          size="sm"
-          type="button"
-          (click)="openStorybook()"
-        >
-          Storybook
-        </au-button>
+        <div class="docs-header__icon-links">
+          <a
+            class="docs-header__icon-link"
+            [href]="links.github"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Repositorio en GitHub"
+          >
+            <docs-github-icon />
+          </a>
+          <a
+            class="docs-header__icon-link docs-header__icon-link--npm"
+            [href]="links.npm"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Paquete en npm"
+          >
+            <docs-npm-icon />
+          </a>
+          <a
+            class="docs-header__icon-link docs-header__icon-link--storybook"
+            [href]="links.storybook"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Abrir Storybook"
+          >
+            <docs-storybook-icon />
+          </a>
+        </div>
       </div>
     </header>
 
@@ -58,7 +100,9 @@ type ThemeMode = 'light' | 'dark' | 'system';
                     class="docs-nav__link"
                     [routerLink]="item.path"
                     routerLinkActive="docs-nav__link--active"
-                    [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+                    [routerLinkActiveOptions]="{
+                      exact: item.exact === true || item.path === '/',
+                    }"
                   >
                     {{ item.label }}
                   </a>
@@ -78,6 +122,7 @@ type ThemeMode = 'light' | 'dark' | 'system';
 })
 export class DocsShell {
   readonly nav = DOCS_NAV;
+  readonly links = DOCS_EXTERNAL_LINKS;
   readonly theme = signal<ThemeMode>('system');
   readonly resolvedTheme = signal<'light' | 'dark'>('light');
 
@@ -93,10 +138,6 @@ export class DocsShell {
     const value = (event.target as HTMLSelectElement).value as ThemeMode;
     this.theme.set(value);
     this.syncResolvedTheme();
-  }
-
-  openStorybook(): void {
-    window.open('http://127.0.0.1:6006', '_blank', 'noopener,noreferrer');
   }
 
   private syncResolvedTheme(): void {

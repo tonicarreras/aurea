@@ -1,6 +1,8 @@
 export interface DocsNavLink {
   path: string;
   label: string;
+  /** When true, active only on exact URL (e.g. índice vs. /componentes/:slug). */
+  exact?: boolean;
 }
 
 export interface DocsNavSection {
@@ -20,7 +22,7 @@ export const DOCS_NAV: DocsNavSection[] = [
   {
     title: 'Componentes',
     items: [
-      { path: '/componentes', label: 'Índice' },
+      { path: '/componentes', label: 'Índice', exact: true },
       { path: '/componentes/button', label: 'Button' },
       { path: '/componentes/input-text', label: 'Input text' },
       { path: '/componentes/textarea', label: 'Textarea' },

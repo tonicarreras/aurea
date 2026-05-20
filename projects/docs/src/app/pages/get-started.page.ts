@@ -1,7 +1,28 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { CodeBlock } from '../shared/code-block';
+import type { CodeLanguage } from '../shared/code-highlight';
 import { DocPage } from '../shared/doc-page';
+
+export interface GetStartedRequirement {
+  name: string;
+  version: string;
+  href: string;
+}
+
+export type GetStartedStep =
+  | {
+      title: string;
+      intro?: string;
+      requirements: GetStartedRequirement[];
+    }
+  | {
+      title: string;
+      intro?: string;
+      code: string;
+      language: CodeLanguage;
+      expandLabel: string;
+    };
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,39 +32,150 @@ import { DocPage } from '../shared/doc-page';
       title="Empezar"
       lead="Instala el paquete publicado y conecta tokens y componentes en tu aplicación Angular 21."
     >
-      <h2>Requisitos</h2>
-      <ul>
-        <li>Angular 21.2+</li>
-        <li>Node 20.19+ en el toolchain del proyecto</li>
-      </ul>
-
-      <h2>Instalación</h2>
-      <docs-code-block [code]="installSnippet" />
-
-      <h2>Tokens globales</h2>
-      <p>Importa los estilos semánticos en <code>angular.json</code> o en tu hoja global:</p>
-      <docs-code-block [code]="stylesSnippet" />
-
-      <h2>Primer componente</h2>
-      <docs-code-block [code]="componentSnippet" />
-
-      <h2>Desarrollo en este monorepo</h2>
-      <p>
-        La app de documentación consume la librería desde el código fuente del workspace
-        (<code>projects/components</code>). Para trabajar en el design system:
-      </p>
-      <docs-code-block [code]="monorepoSnippet" />
+      <ol class="docs-steps">
+        @for (step of steps; track step.title; let i = $index) {
+          <li class="docs-steps__item" [style.animation-delay]="80 + i * 60 + 'ms'">
+            <span class="docs-steps__num" aria-hidden="true">{{ i + 1 }}</span>
+            <div class="docs-steps__content">
+              <h2 class="docs-steps__title">{{ step.title }}</h2>
+              @if (step.intro) {
+                <p>{{ step.intro }}</p>
+              }
+              @if ('requirements' in step) {
+                <ul class="docs-requirements">
+                  @for (req of step.requirements; track req.name) {
+                    <li class="docs-requirements__item">
+                      <a
+                        class="docs-requirements__link"
+                        [href]="req.href"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {{ req.name }}
+                      </a>
+                      <span class="docs-requirements__version">{{ req.version }}</span>
+                    </li>
+                  }
+                </ul>
+              } @else if ('code' in step) {
+                <docs-code-block
+                  [code]="step.code"
+                  [language]="step.language"
+                  [expandLabel]="step.expandLabel"
+                />
+              }
+            </div>
+          </li>
+        }
+      </ol>
     </docs-page>
   `,
+  styles: [
+    `
+      .docs-steps {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--au-space-6);
+      }
+
+      .docs-steps__item {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--au-space-4);
+        animation: docs-fade-up 0.5s var(--au-ease-out) both;
+      }
+
+      .docs-steps__num {
+        display: grid;
+        place-items: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: var(--au-radius-pill);
+        background: var(--au-color-accent-subtle);
+        color: var(--au-color-accent);
+        font-size: var(--au-text-sm);
+        font-weight: var(--au-weight-bold);
+      }
+
+      .docs-steps__title {
+        margin: 0 0 var(--au-space-2);
+        font-size: var(--au-text-lg);
+        font-weight: var(--au-weight-semibold);
+      }
+
+      .docs-steps__content p {
+        margin: 0 0 var(--au-space-3);
+      }
+
+      ::ng-deep .docs-steps__content h2 {
+        margin-top: 0;
+      }
+
+      .docs-requirements {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--au-space-3);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .docs-requirements__item {
+        display: flex;
+        align-items: center;
+        align-self: center;
+        gap: var(--au-space-2-5);
+        box-sizing: border-box;
+        height: 2rem;
+        margin: 0;
+        padding: 0 var(--au-space-4);
+        border: 1px solid var(--docs-border-fine);
+        border-radius: var(--au-radius-pill);
+        background: var(--au-color-surface-raised);
+        font-size: var(--au-text-sm);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .docs-requirements__link {
+        display: inline-flex;
+        align-items: center;
+        font-weight: var(--au-weight-semibold);
+        font-size: inherit;
+        line-height: 1;
+        color: var(--au-color-accent);
+        text-decoration: none;
+      }
+
+      .docs-requirements__link:hover {
+        color: var(--au-color-accent-hover);
+        text-decoration: underline;
+      }
+
+      .docs-requirements__version {
+        display: inline-flex;
+        align-items: center;
+        color: var(--au-color-text-secondary);
+        font-size: var(--au-text-xs);
+        font-weight: var(--au-weight-medium);
+        line-height: 1;
+        white-space: nowrap;
+      }
+    `,
+  ],
 })
 export class GetStartedPage {
   readonly installSnippet = `bun add @aurea-design-system/components
-# o
-npm install @aurea-design-system/components`;
+ # or 
+ pnpm add @aurea-design-system/components`;
 
   readonly stylesSnippet = `@import '@aurea-design-system/components/styles/au-tokens.css';
-@import '@aurea-design-system/components/styles/au-field-error.css';
-@import '@aurea-design-system/components/styles/au-field-listbox.css';`;
+ @import '@aurea-design-system/components/styles/au-field-error.css';
+ @import '@aurea-design-system/components/styles/au-field-listbox.css';`;
 
   readonly componentSnippet = `import { AuButton, AuCheckbox } from '@aurea-design-system/components';
 
@@ -56,7 +188,41 @@ npm install @aurea-design-system/components`;
 })
 export class ProfileForm {}`;
 
-  readonly monorepoSnippet = `bun install
-bun run docs          # documentación oficial (esta app)
-bun run storybook     # catálogo interactivo + pruebas`;
+  readonly steps: GetStartedStep[] = [
+    {
+      title: 'Requisitos',
+      intro: 'Versiones mínimas en el toolchain del proyecto:',
+      requirements: [
+        {
+          name: 'Angular',
+          version: '21.2+',
+          href: 'https://angular.dev/',
+        },
+        {
+          name: 'Node.js',
+          version: '20.19+',
+          href: 'https://nodejs.org/',
+        },
+      ],
+    },
+    {
+      title: 'Instalación',
+      code: this.installSnippet,
+      language: 'bash',
+      expandLabel: 'Ver instalación',
+    },
+    {
+      title: 'Tokens globales',
+      intro: 'Importa los estilos semánticos en angular.json o en tu hoja global:',
+      code: this.stylesSnippet,
+      language: 'css',
+      expandLabel: 'Ver imports CSS',
+    },
+    {
+      title: 'Primer componente',
+      code: this.componentSnippet,
+      language: 'typescript',
+      expandLabel: 'Ver ejemplo Angular',
+    },
+  ];
 }

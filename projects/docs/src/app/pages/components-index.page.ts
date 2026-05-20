@@ -3,22 +3,29 @@ import { RouterLink } from '@angular/router';
 
 import { COMPONENT_DOCS } from '../core/component-docs.registry';
 import { DocPage } from '../shared/doc-page';
+import { DocsInlineText } from '../shared/docs-inline-text';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, RouterLink],
+  imports: [DocPage, RouterLink, DocsInlineText],
   template: `
     <docs-page
       title="Componentes"
       lead="Catálogo de primitivos del design system. Cada página incluye vista previa y ejemplo de importación."
     >
       <ul class="docs-components-index">
-        @for (doc of docs; track doc.slug) {
-          <li class="docs-components-index__item">
+        @for (doc of docs; track doc.slug; let i = $index) {
+          <li
+            class="docs-components-index__item"
+            [style.animation-delay]="60 + i * 40 + 'ms'"
+          >
             <a [routerLink]="['/componentes', doc.slug]" class="docs-components-index__link">
               <span class="docs-components-index__name">{{ doc.title }}</span>
               <code class="docs-components-index__export">{{ doc.exportName }}</code>
-              <span class="docs-components-index__summary">{{ doc.summary }}</span>
+              <span class="docs-components-index__summary">
+                <docs-inline-text [text]="doc.summary" />
+              </span>
+              <span class="docs-components-index__arrow" aria-hidden="true">→</span>
             </a>
           </li>
         }
@@ -31,24 +38,51 @@ import { DocPage } from '../shared/doc-page';
         margin: 0;
         padding: 0;
         list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: var(--au-space-3);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+        gap: var(--au-space-4);
+      }
+
+      .docs-components-index__item {
+        animation: docs-fade-up 0.45s var(--au-ease-out) both;
+      }
+
+      :host-context([data-au-theme='dark']) .docs-components-index__link {
+        border-color: var(--docs-border-fine);
+        background: var(--au-color-surface-raised);
       }
 
       .docs-components-index__link {
+        position: relative;
         display: grid;
-        gap: var(--au-space-1);
-        padding: var(--au-space-4);
+        gap: var(--au-space-2);
+        height: 100%;
+        padding: var(--au-space-5);
         border: 1px solid var(--au-color-border-subtle);
         border-radius: var(--au-radius-md);
         text-decoration: none;
-        background: var(--au-color-surface-raised);
-        transition: border-color 0.15s ease;
+        background: color-mix(in srgb, var(--au-color-surface-raised) 92%, transparent);
+        transition:
+          transform var(--au-duration-default) var(--au-ease-emph),
+          border-color var(--au-duration-short) var(--au-ease-in-out),
+          box-shadow var(--au-duration-short) var(--au-ease-in-out);
       }
 
-      .docs-components-index__link:hover {
-        border-color: var(--au-color-accent);
+      @media (hover: hover) {
+        .docs-components-index__link:hover {
+          transform: translateY(-2px);
+          border-color: var(--au-color-accent);
+        }
+
+        .docs-components-index__link:hover .docs-components-index__arrow {
+          transform: translate(4px, -4px);
+          opacity: 1;
+        }
+
+        :host-context([data-au-theme='dark']) .docs-components-index__link:hover {
+          transform: none;
+          border-color: color-mix(in srgb, var(--au-color-border-subtle) 70%, transparent);
+        }
       }
 
       .docs-components-index__name {
@@ -64,6 +98,19 @@ import { DocPage } from '../shared/doc-page';
       .docs-components-index__summary {
         font-size: var(--au-text-sm);
         color: var(--au-color-text-secondary);
+        line-height: var(--au-leading-relaxed);
+      }
+
+      .docs-components-index__arrow {
+        position: absolute;
+        top: var(--au-space-4);
+        right: var(--au-space-4);
+        font-size: var(--au-text-lg);
+        color: var(--au-color-accent);
+        opacity: 0.35;
+        transition:
+          transform var(--au-duration-short) var(--au-ease-emph),
+          opacity var(--au-duration-short) var(--au-ease-in-out);
       }
     `,
   ],

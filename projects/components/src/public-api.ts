@@ -14,6 +14,7 @@ export * from './lib/divider';
 export * from './lib/radio-group';
 export * from './lib/select';
 export * from './lib/snackbar';
+export * from './lib/steps';
 export * from './lib/switch';
 export * from './lib/tabs';
 export * from './lib/textarea';

@@ -20,6 +20,36 @@ import {
   TooltipDemo,
 } from '../demos/component-demos';
 
+export type ComponentApiKind = 'input' | 'model' | 'output';
+
+export interface ComponentApiEntry {
+  name: string;
+  type: string;
+  description: string;
+  defaultValue?: string;
+  kind?: ComponentApiKind;
+}
+
+export interface ComponentDocApiSection {
+  title: string;
+  description?: string;
+  rows: ComponentApiEntry[];
+}
+
+export interface ComponentStylingToken {
+  token: string;
+  description: string;
+}
+
+export type ComponentDocStepId = 'overview' | 'api' | 'styling' | 'examples';
+
+export const COMPONENT_DOC_STEPS: readonly { id: ComponentDocStepId; label: string }[] = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'api', label: 'API' },
+  { id: 'styling', label: 'Styling' },
+  { id: 'examples', label: 'Examples' },
+] as const;
+
 export interface ComponentDoc {
   slug: string;
   title: string;
@@ -28,7 +58,19 @@ export interface ComponentDoc {
   summary: string;
   demoComponent: Type<unknown>;
   snippet: string;
+  api?: ComponentApiEntry[];
+  styling?: ComponentStylingToken[];
 }
+
+/** Reserva genérica si falta entrada en `component-doc-styling.ts`. */
+export const DEFAULT_COMPONENT_STYLING: ComponentStylingToken[] = [
+  { token: '--au-font-sans', description: 'Tipografía base del componente.' },
+  { token: '--au-color-text-primary', description: 'Texto principal.' },
+  { token: '--au-color-surface-raised', description: 'Superficie de fondo habitual.' },
+  { token: '--au-color-border-subtle', description: 'Bordes discretos.' },
+  { token: '--au-color-action-primary', description: 'Acento de foco y acciones.' },
+  { token: '--au-radius-md', description: 'Radio de esquina por defecto.' },
+];
 
 export const COMPONENT_DOCS: ComponentDoc[] = [
   {
@@ -191,9 +233,9 @@ options: SelectOption[] = [
     snippet: `import { AuTabs, AuTab, AuTabPanel } from '@aurea-design-system/components';
 
 <au-tabs [(value)]="tab">
-  <button type="button" auTab value="a">Uno</button>
-  <button type="button" auTab value="b">Dos</button>
-  <div auTabPanel value="a">Panel A</div>
+  <button type="button" auTab="a">Uno</button>
+  <button type="button" auTab="b">Dos</button>
+  <div auTabPanel="a">Panel A</div>
 </au-tabs>`,
   },
   {

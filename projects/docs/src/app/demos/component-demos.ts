@@ -203,12 +203,12 @@ export class CardDemo {}
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
     <au-tabs [(value)]="tab" ariaLabel="Ejemplo de pestañas" style="max-width: 28rem">
-      <button type="button" auTab value="general">General</button>
-      <button type="button" auTab value="seguridad">Seguridad</button>
-      <div auTabPanel value="general">
+      <button type="button" auTab="general">General</button>
+      <button type="button" auTab="seguridad">Seguridad</button>
+      <div auTabPanel="general">
         <p>Preferencias generales de la cuenta.</p>
       </div>
-      <div auTabPanel value="seguridad">
+      <div auTabPanel="seguridad">
         <p>Contraseña y autenticación en dos pasos.</p>
       </div>
     </au-tabs>
@@ -285,7 +285,7 @@ export class DividerDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button variant="outline" auTooltip="Texto de ayuda contextual" placement="top">
+    <au-button variant="outline" auTooltip="Texto de ayuda contextual" auTooltipPlacement="top">
       Pasar el cursor
     </au-button>
   `,
