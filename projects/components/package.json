@@ -1,6 +1,6 @@
 {
   "name": "@aurea-design-system/components",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Aurea design system for Angular 21 — accessible components and semantic tokens.",
   "license": "MIT",
   "author": "Toni Carreras",
