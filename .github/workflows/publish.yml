@@ -79,6 +79,7 @@ jobs:
         run: bun run test
 
       - name: Build library
+        id: build_lib
         if: steps.npm_skip.outputs.already_published != 'true'
         run: bun run build
 
@@ -128,7 +129,11 @@ jobs:
           fi
 
       - name: Setup Node for npmjs.org
-        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.build_lib.outcome == 'success' &&
+          steps.npm_token.outputs.present == 'true' &&
+          steps.registries.outputs.npm_published != 'true'
         uses: actions/setup-node@v5
         with:
           node-version: '22'
@@ -138,15 +143,26 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Verify npm identity (debug 403)
-        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.build_lib.outcome == 'success' &&
+          steps.npm_token.outputs.present == 'true' &&
+          steps.registries.outputs.npm_published != 'true'
         run: |
           echo "npm whoami: $(npm whoami)"
           echo "If this account cannot publish @aurea-design-system/components, npm publish will return 403."
 
       - name: Publish to npm
-        if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.build_lib.outcome == 'success' &&
+          steps.verify_pkg.outcome == 'success' &&
+          steps.npm_token.outputs.present == 'true' &&
+          steps.registries.outputs.npm_published != 'true'
         working-directory: dist/components
-        run: npm publish --access public
+        run: |
+          test -f package.json || (echo "::error::dist/components missing — build did not run or failed." && exit 1)
+          npm publish --access public
 
       - name: Summary
         run: |
