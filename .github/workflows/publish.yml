@@ -1,21 +1,36 @@
 name: Publish package
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/components/**'
+      - '.github/workflows/publish.yml'
+      - 'angular.json'
+      - 'package.json'
+      - 'bun.lock'
   release:
     types: [published]
   workflow_dispatch:
     inputs:
       version:
-        description: 'Semver to publish (manual runs only; releases use the tag, e.g. v0.1.2 → 0.1.2)'
+        description: 'Override semver (manual only). Push to main uses projects/components/package.json.'
         required: false
         type: string
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
   publish:
-    if: github.event_name == 'release' || github.ref == 'refs/heads/main'
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'release' ||
+      github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -48,13 +63,27 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Check if version is already on npm
+        id: npm_skip
+        run: |
+          VERSION="${{ steps.publish_version.outputs.version }}"
+          if npm view "@aurea-design-system/components@${VERSION}" version 2>/dev/null | grep -Fxq "${VERSION}"; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+            echo "Version ${VERSION} is already on npm — skipping build and publish."
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Test
+        if: steps.npm_skip.outputs.already_published != 'true'
         run: bun run test
 
       - name: Build library
+        if: steps.npm_skip.outputs.already_published != 'true'
         run: bun run build
 
       - name: Verify package contents and version
+        if: steps.npm_skip.outputs.already_published != 'true'
         id: verify_pkg
         run: |
           test -f dist/components/package.json
@@ -71,6 +100,7 @@ jobs:
           echo "version=${BUILT}" >> "$GITHUB_OUTPUT"
 
       - name: Check npm registry
+        if: steps.npm_skip.outputs.already_published != 'true'
         id: registries
         env:
           PKG_NAME: ${{ steps.verify_pkg.outputs.pkg_name }}
@@ -120,6 +150,12 @@ jobs:
 
       - name: Summary
         run: |
+          VERSION="${{ steps.publish_version.outputs.version }}"
+          if [ "${{ steps.npm_skip.outputs.already_published }}" = "true" ]; then
+            echo "## @aurea-design-system/components@${VERSION}" >> "$GITHUB_STEP_SUMMARY"
+            echo "- npm: ✓ already published (no action)" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           echo "## ${{ steps.verify_pkg.outputs.pkg_name }}@${{ steps.registries.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.registries.outputs.npm_published }}" = "true" ]; then
             echo "- npm: ✓ already on [npmjs](https://www.npmjs.com/package/@aurea-design-system/components)" >> "$GITHUB_STEP_SUMMARY"

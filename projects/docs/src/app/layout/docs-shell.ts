@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
@@ -137,6 +144,13 @@ export class DocsShell {
 
   constructor() {
     this.syncResolvedTheme();
+    effect(() => {
+      const theme = this.resolvedTheme();
+      if (typeof document === 'undefined') {
+        return;
+      }
+      document.documentElement.setAttribute('data-au-theme', theme);
+    });
     if (typeof matchMedia !== 'undefined') {
       const mq = matchMedia('(prefers-color-scheme: dark)');
       mq.addEventListener('change', () => this.syncResolvedTheme());

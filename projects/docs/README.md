@@ -10,6 +10,7 @@ bun run docs
 bun run build:docs
 ```
 
+- **Producción:** [https://aurea-ds.netlify.app/](https://aurea-ds.netlify.app/)
 - **Dev:** [http://127.0.0.1:4200](http://127.0.0.1:4200)
 - **Build:** `dist/docs/browser`
 
@@ -27,4 +28,4 @@ Todas las URLs llevan prefijo de idioma (`es` o `en`):
 
 `/` redirige a `/es`.
 
-Storybook (`bun run storybook`) sigue siendo el entorno de desarrollo del DS; esta app es la documentación orientada a quien integra el paquete.
+Storybook en producción: [https://aurea-ds-storybook.netlify.app/](https://aurea-ds-storybook.netlify.app/) (`bun run storybook` en local). Esta app es la documentación orientada a quien integra el paquete.

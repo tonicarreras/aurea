@@ -7,8 +7,11 @@
 [![npm](https://img.shields.io/npm/v/@aurea-design-system/components?label=npm)](https://www.npmjs.com/package/@aurea-design-system/components)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
 
-Monorepo project **`components`** (this folder). Official docs: [`projects/docs`](../docs).  
-Source & Storybook: [tonicarreras/aurea-ds](https://github.com/tonicarreras/aurea-ds).
+Monorepo project **`components`** (this folder).
+
+- **Documentation:** [aurea-ds.netlify.app](https://aurea-ds.netlify.app/)
+- **Storybook:** [aurea-ds-storybook.netlify.app](https://aurea-ds-storybook.netlify.app/)
+- **Source:** [tonicarreras/aurea](https://github.com/tonicarreras/aurea)
 
 ---
 
