@@ -15,11 +15,12 @@ permissions:
 
 jobs:
   publish:
+    if: github.event_name == 'release' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Resolve publish version
         id: publish_version
@@ -98,7 +99,7 @@ jobs:
 
       - name: Setup Node for npmjs.org
         if: steps.npm_token.outputs.present == 'true' && steps.registries.outputs.npm_published != 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           registry-url: https://registry.npmjs.org

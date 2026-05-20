@@ -8,14 +8,10 @@
 <p align="center">
   <a href="https://angular.dev"><img src="https://img.shields.io/badge/Angular-21-DD0031?logo=angular" alt="Angular" /></a>
   <a href="https://www.w3.org/WAI/WCAG21/quickref/"><img src="https://img.shields.io/badge/WCAG-2.2_AA-2ecc71" alt="WCAG" /></a>
-  <a href="https://github.com/tonicarreras/aurea-ds/actions/workflows/test.yml"><img src="https://github.com/tonicarreras/aurea-ds/actions/workflows/test.yml/badge.svg" alt="Tests" /></a>
-  <a href="#-test-coverage"><img src="https://img.shields.io/badge/statements-100%25-brightgreen" alt="Statements" /></a>
-  <a href="#-test-coverage"><img src="https://img.shields.io/badge/branches-100%25-brightgreen" alt="Branches" /></a>
-  <a href="#-test-coverage"><img src="https://img.shields.io/badge/functions-100%25-brightgreen" alt="Functions" /></a>
-  <a href="#-test-coverage"><img src="https://img.shields.io/badge/lines-100%25-brightgreen" alt="Lines" /></a>
+  <a href="https://github.com/tonicarreras/aurea/actions/workflows/test.yml?query=branch%3Adevelop"><img src="https://github.com/tonicarreras/aurea/actions/workflows/test.yml/badge.svg?branch=develop&amp;event=push" alt="Tests" /></a>
   <a href="https://www.npmjs.com/package/@aurea-design-system/components"><img src="https://img.shields.io/npm/v/@aurea-design-system/components?label=npm" alt="npm" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue" alt="License" /></a>
-  <a href="https://github.com/tonicarreras/aurea-ds"><img src="https://img.shields.io/badge/status-active-success" alt="Status" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/tonicarreras/aurea?color=blue" alt="License" /></a>
+  <a href="https://github.com/tonicarreras/aurea"><img src="https://img.shields.io/badge/status-active-success" alt="Status" /></a>
 </p>
 
 <p align="center">
@@ -68,8 +64,8 @@ Monorepo **aurea** with two Angular projects:
 ### Develop this repo
 
 ```bash
-git clone https://github.com/tonicarreras/aurea-ds.git
-cd aurea-ds
+git clone https://github.com/tonicarreras/aurea.git
+cd aurea
 bun install
 bun run storybook     # components — Storybook (port 6006)
 bun run docs          # docs — official documentation site (port 4200)
@@ -212,7 +208,7 @@ The monorepo root stays `"private": true` so only the library is published to np
 
 | Artifact | Visibility |
 |----------|------------|
-| GitHub repo | Public — [`tonicarreras/aurea-ds`](https://github.com/tonicarreras/aurea-ds) |
+| GitHub repo | Public — [`tonicarreras/aurea`](https://github.com/tonicarreras/aurea) |
 | npm package | Public — [`@aurea-design-system/components`](https://www.npmjs.com/package/@aurea-design-system/components) |
 | License | MIT — [LICENSE](LICENSE) |
 
