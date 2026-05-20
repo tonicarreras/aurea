@@ -22,7 +22,13 @@ const meta: Meta<AuCard> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
-    docs: { extractArgTypes: () => ({}) },
+    docs: {
+      extractArgTypes: () => ({}),
+      description: {
+        component:
+          'Container for grouped content with elevated, outlined, or filled variants. Project header, body, footer (`AuCardFooter`), and media slots.',
+      },
+    },
   },
   argTypes: {
     variant: {

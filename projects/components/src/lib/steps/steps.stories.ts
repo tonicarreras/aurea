@@ -12,7 +12,13 @@ const meta: Meta<AuSteps> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
-    docs: { extractArgTypes: () => ({}) },
+    docs: {
+      extractArgTypes: () => ({}),
+      description: {
+        component:
+          'Documentation stepper: projected `auStep` triggers and `auStepPanel` regions with keyboard navigation and `aria-current` on the active step.',
+      },
+    },
   },
   args: {
     ariaLabel: 'Documentation sections',

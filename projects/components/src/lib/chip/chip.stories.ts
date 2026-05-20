@@ -9,7 +9,13 @@ const meta: Meta<AuChip> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
-    docs: { extractArgTypes: () => ({}) },
+    docs: {
+      extractArgTypes: () => ({}),
+      description: {
+        component:
+          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',
+      },
+    },
   },
   argTypes: {
     label: {

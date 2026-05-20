@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "TooltipStoryArgs",
-            "id": "interface-TooltipStoryArgs-eeef383e170c5aaf793f3b9bd6da1a0c345526158b3532c265a45e5fce20cecd17f0375bab1898708057122ddc2e0d441b49bc0a00197b02431aa99a138d5536",
+            "id": "interface-TooltipStoryArgs-8366862f7323271cb7ba863837d3c59917bfc05a9e08de5dbf428cfcef19d741a7c504b7ebcfa07868cba95b58d2991d1dab37a2b38f5bae588efe5d2fc4fc64",
             "file": "projects/components/src/lib/tooltip/tooltip.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { TooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: TooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button/button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { TooltipPlacement } from '../theme/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: TooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',\n      },\n    },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <au-button\n        variant=\"outline\"\n        [auTooltip]=\"text\"\n        [auTooltipPlacement]=\"placement\"\n        [auTooltipShowDelay]=\"showDelay\"\n        [auTooltipHideDelay]=\"hideDelay\"\n        [auTooltipDisabled]=\"disabled\"\n      >\n        Hover or focus me\n      </au-button>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
             "properties": [
                 {
                     "name": "disabled",
@@ -403,21 +403,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
             },
             {
                 "name": "Default",
@@ -797,7 +797,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Aurea button with primary, secondary, outline, and ghost variants; sizes sm–lg; loading and disabled states; WCAG 2.2 focus rings.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -807,7 +807,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuCard>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Container for grouped content with elevated, outlined, or filled variants. Project header, body, footer (`AuCardFooter`), and media slots.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -827,7 +827,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuChip>",
-                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -837,7 +837,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuDialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -847,7 +847,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuDivider>",
-                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Visual separator between sections. Horizontal (optional inset or label) or vertical in flex layouts; `role=\"separator\"` with `aria-orientation`.',\n      },\n    },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -858,16 +858,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuInputDate>",
                 "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuInputNumber>",
-                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -888,6 +878,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuInputText>",
                 "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: INPUT_TEXT_DOCS_OVERVIEW,\n      },\n    },\n  },\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label; linked with `for` / `id`.',\n      table: { category: 'Chrome' },\n    },\n    hint: {\n      control: 'text',\n      description: 'Helper copy; `aria-describedby` when non-empty.',\n      table: { category: 'Chrome' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Chrome' },\n    },\n    showRequired: {\n      control: 'boolean',\n      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',\n      table: { category: 'Chrome' },\n    },\n    errorMessage: {\n      control: 'text',\n      description: 'Manual error string; takes precedence over `errors` for display.',\n      table: { category: 'Validation' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    invalid: {\n      control: 'boolean',\n      description: 'External invalid flag (e.g. from `formField`).',\n      table: { category: 'Validation' },\n    },\n    required: {\n      control: 'boolean',\n      description: 'Sets native `required` and `aria-required`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    id: {\n      control: 'text',\n      description: 'Explicit `id`; auto-generated when empty.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  },\n  args: {\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuInputNumber>",
+                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  args: {\n    valueChange: fn(),\n    blur: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -927,7 +927,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuSteps>",
-                "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Documentation stepper: projected `auStep` triggers and `auStepPanel` regions with keyboard navigation and `aria-current` on the active step.',\n      },\n    },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -977,7 +977,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<TooltipStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',\n      },\n    },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n}"
             },
             {
                 "name": "MinFilterLength",
@@ -1077,7 +1077,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                 "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                 "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
             },
@@ -2037,17 +2037,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuInputNumber>",
-                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuInputTextSignalHost>",
                 "file": "projects/components/src/lib/input-text/input-text-signal.stories.ts",
                 "deprecated": false,
@@ -2061,6 +2050,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuInputText>",
                 "file": "projects/components/src/lib/input-text/input-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuInputNumber>",
+                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2237,7 +2237,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuButton>",
-                    "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Aurea button with primary, secondary, outline, and ghost variants; sizes sm–lg; loading and disabled states; WCAG 2.2 focus rings.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
                 },
                 {
                     "name": "Outline",
@@ -2493,7 +2493,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuChip>",
-                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
                 },
                 {
                     "name": "Outline",
@@ -2983,7 +2983,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuCard>",
-                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Container for grouped content with elevated, outlined, or filled variants. Project header, body, footer (`AuCardFooter`), and media slots.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "Outlined",
@@ -3085,7 +3085,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuDialog>",
-                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
                 },
                 {
                     "name": "NoBackdropClose",
@@ -3167,7 +3167,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuDivider>",
-                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Visual separator between sections. Horizontal (optional inset or label) or vertical in flex layouts; `role=\"separator\"` with `aria-orientation`.',\n      },\n    },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
                 },
                 {
                     "name": "Vertical",
@@ -3459,7 +3459,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<TooltipStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'centered',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',\n      },\n    },\n  },\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n}"
                 },
                 {
                     "name": "PlacementBottom",
@@ -3501,7 +3501,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuSteps>",
-                    "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Documentation stepper: projected `auStep` triggers and `auStepPanel` regions with keyboard navigation and `aria-current` on the active step.',\n      },\n    },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
                 },
                 {
                     "name": "storyImports",
@@ -3567,7 +3567,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n  },\n  decorators: [\n    (storyFn, context) => {\n      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                     "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                     "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
                 }
@@ -4035,19 +4035,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/input-number/input-number.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuInputNumber>",
-                    "file": "projects/components/src/lib/input-number/input-number.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/input-text/input-text-signal.stories.ts": [
                 {
                     "name": "Story",
@@ -4068,6 +4055,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuInputText>",
                     "file": "projects/components/src/lib/input-text/input-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/input-number/input-number.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuInputNumber>",
+                    "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

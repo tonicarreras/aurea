@@ -20,7 +20,13 @@ const meta: Meta<TooltipStoryArgs> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'centered',
-    docs: { extractArgTypes: () => ({}) },
+    docs: {
+      extractArgTypes: () => ({}),
+      description: {
+        component:
+          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',
+      },
+    },
   },
   argTypes: {
     text: { control: 'text', table: { category: 'Content' } },
