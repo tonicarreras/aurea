@@ -11,6 +11,7 @@ export * from './lib/chip';
 export * from './lib/input-date';
 export * from './lib/input-number';
 export * from './lib/input-text';
+export * from './lib/message';
 export * from './lib/dialog';
 export * from './lib/divider';
 export * from './lib/radio-group';

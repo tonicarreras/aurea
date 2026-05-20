@@ -6,6 +6,7 @@ import * as chip from './chip/index';
 import * as inputDate from './input-date/index';
 import * as inputNumber from './input-number/index';
 import * as inputText from './input-text/index';
+import * as message from './message/index';
 import * as dialog from './dialog/index';
 import * as divider from './divider/index';
 import * as radioGroup from './radio-group/index';
@@ -29,6 +30,7 @@ describe('library barrel exports', () => {
     expect(inputDate.AuInputDate).toBeDefined();
     expect(inputNumber.AuInputNumber).toBeDefined();
     expect(inputText.AuInputText).toBeDefined();
+    expect(message.AuMessage).toBeDefined();
     expect(dialog.AuDialog).toBeDefined();
     expect(divider.AuDivider).toBeDefined();
     expect(dialog.AuDialogFooter).toBeDefined();
