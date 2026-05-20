@@ -8,7 +8,13 @@ const meta: Meta<AuDivider> = {
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'padded',
-    docs: { extractArgTypes: () => ({}) },
+    docs: {
+      extractArgTypes: () => ({}),
+      description: {
+        component:
+          'Visual separator between sections. Horizontal (optional inset or label) or vertical in flex layouts; `role="separator"` with `aria-orientation`.',
+      },
+    },
   },
   argTypes: {
     orientation: {

@@ -1,0 +1,2 @@
+# SPA fallback — rutas como /es/components/button deben cargar index.html (Angular router).
+/*    /index.html   200

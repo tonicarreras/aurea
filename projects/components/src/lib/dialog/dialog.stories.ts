@@ -13,6 +13,7 @@ const meta: Meta<AuDialog> = {
   parameters: {
     layout: 'padded',
     docs: {
+      extractArgTypes: () => ({}),
       description: {
         component:
           'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',

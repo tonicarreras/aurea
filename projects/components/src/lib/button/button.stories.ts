@@ -15,7 +15,13 @@ const meta: Meta<AuButton> = {
   tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
-    docs: { extractArgTypes: () => ({}) },
+    docs: {
+      extractArgTypes: () => ({}),
+      description: {
+        component:
+          'Aurea button with primary, secondary, outline, and ghost variants; sizes sm–lg; loading and disabled states; WCAG 2.2 focus rings.',
+      },
+    },
   },
   argTypes: {
     variant: {
