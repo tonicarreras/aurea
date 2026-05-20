@@ -15,6 +15,7 @@
 [![Branches](https://img.shields.io/badge/branches-100%25-brightgreen)](#-test-coverage)
 [![Functions](https://img.shields.io/badge/functions-100%25-brightgreen)](#-test-coverage)
 [![Lines](https://img.shields.io/badge/lines-100%25-brightgreen)](#-test-coverage)
+[![npm](https://img.shields.io/npm/v/@aurea-design-system/components?label=npm)](https://www.npmjs.com/package/@aurea-design-system/components)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-success)](https://github.com/tonicarreras/aurea-ds)
 
@@ -208,7 +209,15 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+The published package **`@aurea-design-system/components`** is [MIT](LICENSE). You may use it freely in commercial and open-source apps.
+
+The monorepo root stays `"private": true` so only the library is published to npm; the repo is open source for transparency and contributions.
+
+| Artifact | Visibility |
+|----------|------------|
+| GitHub repo | Public — [`tonicarreras/aurea-ds`](https://github.com/tonicarreras/aurea-ds) |
+| npm package | Public — [`@aurea-design-system/components`](https://www.npmjs.com/package/@aurea-design-system/components) |
+| License | MIT — [LICENSE](LICENSE) |
 
 ---
 

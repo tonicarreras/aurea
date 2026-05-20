@@ -57,6 +57,7 @@ jobs:
         id: verify_pkg
         run: |
           test -f dist/components/package.json
+          test -f dist/components/LICENSE
           test -f dist/components/fesm2022/aurea-design-system-components.mjs
           test -f dist/components/styles/au-tokens.css
           BUILT=$(node -p "require('./dist/components/package.json').version")

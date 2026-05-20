@@ -570,6 +570,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled but checked — muted fill, non-interactive.',\n      },\n    },\n  },\n  args: {\n    label: 'Already subscribed',\n    checked: true,\n    disabled: true,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "DocsNavigation",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/steps/steps.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, section: 'overview' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-steps [(value)]=\"section\" [ariaLabel]=\"ariaLabel\" [size]=\"size\">\n        <button type=\"button\" auStep=\"overview\">Overview</button>\n        <button type=\"button\" auStep=\"api\">API</button>\n        <button type=\"button\" auStep=\"styling\">Styling</button>\n        <button type=\"button\" auStep=\"examples\">Examples</button>\n        <div auStepPanel=\"overview\"><p>Overview content</p></div>\n        <div auStepPanel=\"api\"><p>API reference</p></div>\n        <div auStepPanel=\"styling\"><p>Design tokens</p></div>\n        <div auStepPanel=\"examples\"><p>Usage examples</p></div>\n      </au-steps>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "DropdownTheming",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -908,6 +918,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuSnackbarStoryHost>",
                 "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies SnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies SnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/steps/steps.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuSteps>",
+                "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -1260,6 +1280,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuCard] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/steps/steps.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [AuSteps, AuStep, AuStepPanel] }"
             },
             {
                 "name": "storyImports",
@@ -2064,6 +2094,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuSnackbarStoryHost>",
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuSteps>",
+                "file": "projects/components/src/lib/steps/steps.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3441,6 +3482,38 @@
                     "defaultValue": "{ imports: [AuTooltip, AuButton] }"
                 }
             ],
+            "projects/components/src/lib/steps/steps.stories.ts": [
+                {
+                    "name": "DocsNavigation",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/steps/steps.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, section: 'overview' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-steps [(value)]=\"section\" [ariaLabel]=\"ariaLabel\" [size]=\"size\">\n        <button type=\"button\" auStep=\"overview\">Overview</button>\n        <button type=\"button\" auStep=\"api\">API</button>\n        <button type=\"button\" auStep=\"styling\">Styling</button>\n        <button type=\"button\" auStep=\"examples\">Examples</button>\n        <div auStepPanel=\"overview\"><p>Overview content</p></div>\n        <div auStepPanel=\"api\"><p>API reference</p></div>\n        <div auStepPanel=\"styling\"><p>Design tokens</p></div>\n        <div auStepPanel=\"examples\"><p>Usage examples</p></div>\n      </au-steps>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/steps/steps.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuSteps>",
+                    "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: { extractArgTypes: () => ({}) },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/steps/steps.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{ imports: [AuSteps, AuStep, AuStepPanel] }"
+                }
+            ],
             "projects/components/src/lib/input-text/input-text-signal.stories.ts": [
                 {
                     "name": "meta",
@@ -4034,6 +4107,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuSnackbarStoryHost>",
                     "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/steps/steps.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuSteps>",
+                    "file": "projects/components/src/lib/steps/steps.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -5417,6 +5503,46 @@
             },
             {
                 "filePath": "projects/components/src/lib/snackbar/snackbar.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DocsNavigation",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

@@ -450,7 +450,8 @@ export class AuAutocomplete implements FormValueControl<string | null> {
       return -1;
     }
     let i = current < 0 ? (delta > 0 ? -1 : opts.length) : current;
-    for (let step = 0; step < opts.length; step++) {
+    let remaining = opts.length;
+    while (remaining--) {
       i += delta;
       if (i < 0) {
         i = opts.length - 1;

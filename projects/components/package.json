@@ -3,14 +3,15 @@
   "version": "0.1.4",
   "description": "Aurea design system for Angular 21 — accessible components and semantic tokens.",
   "license": "MIT",
+  "author": "Toni Carreras",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tonicarreras/aurea.git"
+    "url": "git+https://github.com/tonicarreras/aurea-ds.git"
   },
   "bugs": {
-    "url": "https://github.com/tonicarreras/aurea/issues"
+    "url": "https://github.com/tonicarreras/aurea-ds/issues"
   },
-  "homepage": "https://github.com/tonicarreras/aurea#readme",
+  "homepage": "https://github.com/tonicarreras/aurea-ds#readme",
   "keywords": [
     "angular",
     "design-system",

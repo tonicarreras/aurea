@@ -6,6 +6,11 @@
   },
   "assets": [
     {
+      "glob": "LICENSE",
+      "input": ".",
+      "output": "."
+    },
+    {
       "glob": "au-tokens.css",
       "input": "src/lib/theme",
       "output": "styles"

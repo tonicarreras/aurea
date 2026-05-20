@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-export type InlineTextPart = { type: 'text' | 'code'; value: string };
+export interface InlineTextPart { type: 'text' | 'code'; value: string }
 
 /** Divide texto con fragmentos entre backticks (`código`) en partes texto/código. */
 export function splitInlineCode(text: string): InlineTextPart[] {
