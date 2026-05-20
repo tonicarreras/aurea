@@ -1,0 +1,47 @@
+name: Test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Unit tests with coverage
+        run: bun run test:coverage
+
+      - name: Coverage job summary
+        if: always()
+        run: node scripts/write-coverage-summary.mjs
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/components/
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Build docs
+        run: bun run build:docs

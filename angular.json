@@ -34,7 +34,7 @@
           "configurations": {
             "coverage": {
               "coverage": true,
-              "coverageReporters": ["text", "text-summary", "html"],
+              "coverageReporters": ["text", "text-summary", "html", "json-summary"],
               "coverageInclude": ["projects/components/src/lib/**/*.ts"],
               "coverageExclude": [
                 "projects/components/src/lib/**/*.stories.ts",
