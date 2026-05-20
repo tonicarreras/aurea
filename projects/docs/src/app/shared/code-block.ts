@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { type CodeLanguage, highlightCode } from './code-highlight';
 
 @Component({
@@ -24,7 +25,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             (click)="toggle()"
           >
             <span class="docs-code-panel__chevron" aria-hidden="true"></span>
-            <span>{{ expanded() ? collapseLabel() : expandLabel() }}</span>
+            <span>{{ expanded() ? resolvedCollapseLabel() : resolvedExpandLabel() }}</span>
             @if (showLanguage() && language() !== 'text') {
               <span class="docs-code-panel__lang">{{ languageLabel() }}</span>
             }
@@ -37,9 +38,9 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             class="docs-code-panel__copy"
             [class.docs-code-panel__copy--done]="copied()"
             (click)="copy($event)"
-            [attr.aria-label]="copied() ? 'Código copiado' : 'Copiar código'"
+            [attr.aria-label]="copied() ? copyDoneAria() : copyAria()"
           >
-            {{ copied() ? 'Copiado ✓' : 'Copiar' }}
+            {{ copied() ? copyDoneLabel() : copyLabel() }}
           </button>
         }
       </div>
@@ -207,11 +208,12 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
 })
 export class CodeBlock {
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly i18n = inject(DocsLocaleService);
 
   readonly code = input.required<string>();
   readonly language = input<CodeLanguage>('typescript');
-  readonly expandLabel = input('Ver código');
-  readonly collapseLabel = input('Ocultar código');
+  readonly expandLabel = input<string | undefined>(undefined);
+  readonly collapseLabel = input<string | undefined>(undefined);
   readonly showLanguage = input(true);
 
   readonly expanded = signal(true);
@@ -239,6 +241,30 @@ export class CodeBlock {
     const html = highlightCode(this.code(), this.language());
     return this.sanitizer.bypassSecurityTrustHtml(html);
   });
+
+  resolvedExpandLabel(): string {
+    return this.expandLabel() ?? this.i18n.messages().codeBlock.show;
+  }
+
+  resolvedCollapseLabel(): string {
+    return this.collapseLabel() ?? this.i18n.messages().codeBlock.hide;
+  }
+
+  copyLabel(): string {
+    return this.i18n.messages().codeBlock.copy;
+  }
+
+  copyDoneLabel(): string {
+    return `${this.i18n.messages().codeBlock.copied} ✓`;
+  }
+
+  copyAria(): string {
+    return this.i18n.locale() === 'en' ? 'Copy code' : 'Copiar código';
+  }
+
+  copyDoneAria(): string {
+    return this.i18n.locale() === 'en' ? 'Code copied' : 'Código copiado';
+  }
 
   toggle(): void {
     this.expanded.update((open) => !open);

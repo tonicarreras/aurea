@@ -13,14 +13,18 @@ bun run build:docs
 - **Dev:** [http://127.0.0.1:4200](http://127.0.0.1:4200)
 - **Build:** `dist/docs/browser`
 
-## Contenido
+## Rutas
+
+Todas las URLs llevan prefijo de idioma (`es` o `en`):
 
 | Ruta | Descripción |
 |------|-------------|
-| `/` | Introducción |
-| `/empezar` | Instalación y primer uso |
-| `/temas` | Tokens y modo claro/oscuro |
-| `/componentes` | Índice de componentes |
-| `/componentes/:slug` | Vista previa + snippet por componente |
+| `/es`, `/en` | Inicio |
+| `/es/get-started`, `/en/get-started` | Instalación y primer uso |
+| `/es/themes`, `/en/themes` | Tokens y modo claro/oscuro |
+| `/es/components`, `/en/components` | Índice de componentes |
+| `/es/components/:slug`, `/en/components/:slug` | Vista previa + documentación por componente |
+
+`/` redirige a `/es`.
 
 Storybook (`bun run storybook`) sigue siendo el entorno de desarrollo del DS; esta app es la documentación orientada a quien integra el paquete.

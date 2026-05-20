@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { CodeBlock } from '../shared/code-block';
 import type { CodeLanguage } from '../shared/code-highlight';
 import { DocPage } from '../shared/doc-page';
@@ -28,12 +29,9 @@ export type GetStartedStep =
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DocPage, CodeBlock],
   template: `
-    <docs-page
-      title="Empezar"
-      lead="Instala el paquete publicado y conecta tokens y componentes en tu aplicación Angular 21."
-    >
+    <docs-page [title]="i18n.messages().getStarted.title" [lead]="i18n.messages().getStarted.lead">
       <ol class="docs-steps">
-        @for (step of steps; track step.title; let i = $index) {
+        @for (step of steps(); track step.title; let i = $index) {
           <li class="docs-steps__item" [style.animation-delay]="80 + i * 60 + 'ms'">
             <span class="docs-steps__num" aria-hidden="true">{{ i + 1 }}</span>
             <div class="docs-steps__content">
@@ -169,6 +167,8 @@ export type GetStartedStep =
   ],
 })
 export class GetStartedPage {
+  readonly i18n = inject(DocsLocaleService);
+
   readonly installSnippet = `bun add @aurea-design-system/components
  # or 
  pnpm add @aurea-design-system/components`;
@@ -188,41 +188,36 @@ export class GetStartedPage {
 })
 export class ProfileForm {}`;
 
-  readonly steps: GetStartedStep[] = [
-    {
-      title: 'Requisitos',
-      intro: 'Versiones mínimas en el toolchain del proyecto:',
-      requirements: [
-        {
-          name: 'Angular',
-          version: '21.2+',
-          href: 'https://angular.dev/',
-        },
-        {
-          name: 'Node.js',
-          version: '20.19+',
-          href: 'https://nodejs.org/',
-        },
-      ],
-    },
-    {
-      title: 'Instalación',
-      code: this.installSnippet,
-      language: 'bash',
-      expandLabel: 'Ver instalación',
-    },
-    {
-      title: 'Tokens globales',
-      intro: 'Importa los estilos semánticos en angular.json o en tu hoja global:',
-      code: this.stylesSnippet,
-      language: 'css',
-      expandLabel: 'Ver imports CSS',
-    },
-    {
-      title: 'Primer componente',
-      code: this.componentSnippet,
-      language: 'typescript',
-      expandLabel: 'Ver ejemplo Angular',
-    },
-  ];
+  readonly steps = computed((): GetStartedStep[] => {
+    const s = this.i18n.messages().getStarted.steps;
+    return [
+      {
+        title: s.requirements.title,
+        intro: s.requirements.intro,
+        requirements: [
+          { name: 'Angular', version: '21.2+', href: 'https://angular.dev/' },
+          { name: 'Node.js', version: '20.19+', href: 'https://nodejs.org/' },
+        ],
+      },
+      {
+        title: s.install.title,
+        code: this.installSnippet,
+        language: 'bash',
+        expandLabel: s.install.expand,
+      },
+      {
+        title: s.tokens.title,
+        intro: s.tokens.intro,
+        code: this.stylesSnippet,
+        language: 'css',
+        expandLabel: s.tokens.expand,
+      },
+      {
+        title: s.firstComponent.title,
+        code: this.componentSnippet,
+        language: 'typescript',
+        expandLabel: s.firstComponent.expand,
+      },
+    ];
+  });
 }

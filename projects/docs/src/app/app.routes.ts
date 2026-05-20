@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 
+import { DEFAULT_DOCS_LOCALE } from './core/docs-locale';
 import { DocsShell } from './layout/docs-shell';
 
 export const routes: Routes = [
+  { path: '', redirectTo: DEFAULT_DOCS_LOCALE, pathMatch: 'full' },
   {
-    path: '',
+    path: ':lang',
     component: DocsShell,
     children: [
       {
@@ -12,23 +14,26 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/home.page').then((m) => m.HomePage),
       },
       {
-        path: 'empezar',
+        path: 'get-started',
         loadComponent: () => import('./pages/get-started.page').then((m) => m.GetStartedPage),
       },
       {
-        path: 'temas',
+        path: 'themes',
         loadComponent: () => import('./pages/theming.page').then((m) => m.ThemingPage),
       },
       {
-        path: 'componentes',
+        path: 'components',
         loadComponent: () =>
           import('./pages/components-index.page').then((m) => m.ComponentsIndexPage),
       },
       {
-        path: 'componentes/:slug',
+        path: 'components/:slug',
         loadComponent: () => import('./pages/component-doc.page').then((m) => m.ComponentDocPage),
       },
     ],
   },
-  { path: '**', redirectTo: '' },
+  {
+    path: '**',
+    redirectTo: DEFAULT_DOCS_LOCALE,
+  },
 ];

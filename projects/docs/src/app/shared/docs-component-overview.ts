@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import type { ComponentDocOverview } from '../core/component-doc-overview';
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocsInlineText } from './docs-inline-text';
 
 @Component({
@@ -11,8 +12,8 @@ import { DocsInlineText } from './docs-inline-text';
     @if (overview(); as o) {
       <div class="docs-overview">
         <section class="docs-overview__intro" aria-labelledby="docs-overview-intro-heading">
-          <h3 id="docs-overview-intro-heading" class="docs-overview__sr-only">Introducción</h3>
-          @for (paragraph of o.intro; track paragraph) {
+          <h3 id="docs-overview-intro-heading" class="docs-overview__sr-only">{{ ui().introSr }}</h3>
+          @for (paragraph of o.intro; track $index) {
             <p class="docs-overview__intro-p">
               <docs-inline-text [text]="paragraph" />
             </p>
@@ -20,7 +21,7 @@ import { DocsInlineText } from './docs-inline-text';
 
           @if (o.relatedExports?.length) {
             <div class="docs-overview__exports">
-              <span class="docs-overview__exports-label">Exportaciones relacionadas</span>
+              <span class="docs-overview__exports-label">{{ ui().relatedExports }}</span>
               <ul class="docs-overview__export-chips">
                 @for (name of o.relatedExports; track name) {
                   <li><code class="docs-overview__chip">{{ name }}</code></li>
@@ -37,7 +38,7 @@ import { DocsInlineText } from './docs-inline-text';
               <h3 class="docs-overview__card-title">{{ o.whenToUse.title }}</h3>
             </header>
             <ul class="docs-overview__list">
-              @for (item of o.whenToUse.items; track item) {
+              @for (item of o.whenToUse.items; track $index) {
                 <li><docs-inline-text [text]="item" /></li>
               }
             </ul>
@@ -53,7 +54,7 @@ import { DocsInlineText } from './docs-inline-text';
                 <h3 class="docs-overview__card-title">{{ o.whenNotToUse.title }}</h3>
               </header>
               <ul class="docs-overview__list">
-                @for (item of o.whenNotToUse.items; track item) {
+                @for (item of o.whenNotToUse.items; track $index) {
                   <li><docs-inline-text [text]="item" /></li>
                 }
               </ul>
@@ -64,7 +65,7 @@ import { DocsInlineText } from './docs-inline-text';
         <article class="docs-overview__card">
           <header class="docs-overview__card-head">
             <span class="docs-overview__card-marker" aria-hidden="true"></span>
-            <h3 class="docs-overview__card-title">Anatomía</h3>
+            <h3 class="docs-overview__card-title">{{ ui().anatomy }}</h3>
           </header>
           <dl class="docs-overview__anatomy">
             @for (row of o.anatomy; track row.region) {
@@ -79,10 +80,10 @@ import { DocsInlineText } from './docs-inline-text';
         <article class="docs-overview__card">
           <header class="docs-overview__card-head">
             <span class="docs-overview__card-marker" aria-hidden="true"></span>
-            <h3 class="docs-overview__card-title">Accesibilidad</h3>
+            <h3 class="docs-overview__card-title">{{ ui().accessibility }}</h3>
           </header>
           <ul class="docs-overview__list">
-            @for (item of o.accessibility; track item) {
+            @for (item of o.accessibility; track $index) {
               <li><docs-inline-text [text]="item" /></li>
             }
           </ul>
@@ -92,10 +93,10 @@ import { DocsInlineText } from './docs-inline-text';
           <article class="docs-overview__card">
             <header class="docs-overview__card-head">
               <span class="docs-overview__card-marker" aria-hidden="true"></span>
-              <h3 class="docs-overview__card-title">Teclado</h3>
+              <h3 class="docs-overview__card-title">{{ ui().keyboard }}</h3>
             </header>
             <ul class="docs-overview__list">
-              @for (item of o.keyboard; track item) {
+              @for (item of o.keyboard; track $index) {
                 <li><docs-inline-text [text]="item" /></li>
               }
             </ul>
@@ -344,5 +345,8 @@ import { DocsInlineText } from './docs-inline-text';
   ],
 })
 export class DocsComponentOverview {
+  private readonly i18n = inject(DocsLocaleService);
   readonly overview = input<ComponentDocOverview | null>(null);
+
+  readonly ui = computed(() => this.i18n.messages().overviewUi);
 }

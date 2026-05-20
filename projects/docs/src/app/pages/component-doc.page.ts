@@ -18,9 +18,11 @@ import { map } from 'rxjs';
 
 import {
   COMPONENT_DOCS_BY_SLUG,
-  type ComponentDoc,
+  componentDocSummary,
   type ComponentDocStepId,
 } from '../core/component-docs.registry';
+import { DocsLocaleService } from '../core/docs-locale.service';
+import { DOCS_ROUTES } from '../core/docs-locale';
 import { importSnippetFor, resolveComponentApi } from '../core/component-doc-api';
 import { resolveComponentExamples } from '../core/component-doc-examples';
 import { resolveComponentOverview } from '../core/component-doc-overview';
@@ -53,39 +55,39 @@ import { DocsTokenList } from '../shared/docs-token-list';
   ],
   template: `
     @if (doc(); as meta) {
-      <docs-page [title]="meta.title" [lead]="meta.summary">
+      <docs-page [title]="meta.title" [lead]="summaryText()">
         <au-steps
           class="docs-component-steps"
           layout="tabs"
           [value]="section()"
           (valueChange)="onSectionChange($event)"
-          [ariaLabel]="'Secciones de ' + meta.title"
+          [ariaLabel]="i18n.messages().componentDoc.sectionsAria(meta.title)"
           size="md"
         >
-          <button type="button" auStep="overview">Overview</button>
-          <button type="button" auStep="api">API</button>
-          <button type="button" auStep="styling">Styling</button>
-          <button type="button" auStep="examples">Examples</button>
+          <button type="button" auStep="overview">{{ i18n.messages().componentDoc.overview }}</button>
+          <button type="button" auStep="api">{{ i18n.messages().componentDoc.api }}</button>
+          <button type="button" auStep="styling">{{ i18n.messages().componentDoc.styling }}</button>
+          <button type="button" auStep="examples">{{ i18n.messages().componentDoc.examples }}</button>
 
           <div auStepPanel="overview" class="docs-component-step">
-            <h2 class="docs-component-step__title">Overview</h2>
+            <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.overview }}</h2>
 
-            <ul class="docs-meta" aria-label="Metadatos del componente">
+            <ul class="docs-meta" [attr.aria-label]="meta.title">
               <li class="docs-meta__item">
-                <span class="docs-meta__label">Export</span>
+                <span class="docs-meta__label">{{ i18n.messages().componentDoc.export }}</span>
                 <code>{{ meta.exportName }}</code>
               </li>
               <li class="docs-meta__item">
-                <span class="docs-meta__label">Selector</span>
+                <span class="docs-meta__label">{{ i18n.messages().componentDoc.selector }}</span>
                 <code>{{ meta.selector }}</code>
               </li>
             </ul>
 
             <div class="docs-overview-block">
-              @if (overview(meta); as ov) {
+              @if (overview(); as ov) {
                 <docs-component-overview [overview]="ov" />
               } @else {
-                <p class="docs-component-step__lead">{{ meta.summary }}</p>
+                <p class="docs-component-step__lead">{{ summaryText() }}</p>
               }
             </div>
 
@@ -95,21 +97,21 @@ import { DocsTokenList } from '../shared/docs-token-list';
           </div>
 
           <div auStepPanel="api" class="docs-component-step">
-            <h2 class="docs-component-step__title">API</h2>
+            <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.api }}</h2>
             <p class="docs-component-step__lead">
-              API de <code>{{ meta.exportName }}</code>. Los inputs usan signals de Angular
-              (<docs-inline-text [text]="signalApiHint" />).
+              <docs-inline-text [text]="i18n.messages().componentDoc.apiLead(meta.exportName)" />
+              <docs-inline-text [text]="i18n.messages().componentDoc.signalApiHint" />
             </p>
 
             <docs-code-block
-              [code]="importSnippet(meta)"
+              [code]="importSnippet()"
               language="typescript"
               [showLanguage]="false"
-              expandLabel="Import"
-              collapseLabel="Ocultar import"
+              [expandLabel]="i18n.messages().componentDoc.importExpand"
+              [collapseLabel]="i18n.messages().componentDoc.importCollapse"
             />
 
-            @for (section of apiSections(meta); track section.title) {
+            @for (section of apiSections(); track section.title) {
               <section class="docs-api-section">
                 <h3 class="docs-api-section__title">{{ section.title }}</h3>
                 @if (section.description) {
@@ -121,35 +123,27 @@ import { DocsTokenList } from '../shared/docs-token-list';
               </section>
             } @empty {
               <p class="docs-component-step__note">
-                Consulta la pestaña <strong>Autodocs</strong> en Storybook para la referencia
-                completa de este componente.
+                <docs-inline-text [text]="i18n.messages().componentDoc.apiEmpty" />
               </p>
             }
           </div>
 
           <div auStepPanel="styling" class="docs-component-step">
-            <h2 class="docs-component-step__title">
-              Styling
-            </h2>
+            <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.styling }}</h2>
             <p class="docs-component-step__lead">
-              Tokens que <strong>{{ meta.title }}</strong> consume en su CSS (específicos de este
-              componente). La paleta global, formularios compartidos y capas del tema están en
-              <a routerLink="/temas">Temas y tokens</a>.
+              <docs-inline-text [text]="i18n.messages().componentDoc.stylingLead(meta.title)" />
+              <a [routerLink]="i18n.link(DOCS_ROUTES.themes)">{{ i18n.messages().componentDoc.themesLink }}</a>.
             </p>
 
-            <docs-token-list [tokens]="stylingTokens(meta)" />
+            <docs-token-list [tokens]="stylingTokens()" />
           </div>
 
           <div auStepPanel="examples" class="docs-component-step">
-            <h2 class="docs-component-step__title">
-              Examples
-            </h2>
-            <p class="docs-component-step__lead">
-              Variantes con vista previa en vivo y fragmento de código listo para copiar.
-            </p>
+            <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.examples }}</h2>
+            <p class="docs-component-step__lead">{{ i18n.messages().componentDoc.examplesLead }}</p>
 
             <div class="docs-examples">
-              @for (example of examples(meta); track example.title) {
+              @for (example of examples(); track example.title) {
                 <docs-component-example
                   [title]="example.title"
                   [description]="example.description"
@@ -163,8 +157,15 @@ import { DocsTokenList } from '../shared/docs-token-list';
         </au-steps>
       </docs-page>
     } @else {
-      <docs-page title="No encontrado" lead="No hay documentación para este componente.">
-        <p><a routerLink="/componentes">Volver al índice</a></p>
+      <docs-page
+        [title]="i18n.messages().componentDoc.notFoundTitle"
+        [lead]="i18n.messages().componentDoc.notFoundLead"
+      >
+        <p>
+          <a [routerLink]="i18n.link(DOCS_ROUTES.components)">{{
+            i18n.messages().componentDoc.backToIndex
+          }}</a>
+        </p>
       </docs-page>
     }
   `,
@@ -312,11 +313,10 @@ import { DocsTokenList } from '../shared/docs-token-list';
 })
 export class ComponentDocPage {
   private readonly route = inject(ActivatedRoute);
+  readonly i18n = inject(DocsLocaleService);
+  readonly DOCS_ROUTES = DOCS_ROUTES;
 
   readonly section = model<ComponentDocStepId>('overview');
-
-  /** Fragmento con backticks para {@link DocsInlineText} en la pestaña API. */
-  readonly signalApiHint = '`input()`, `model()`, `output()`';
 
   constructor() {
     effect(() => {
@@ -332,27 +332,37 @@ export class ComponentDocPage {
 
   readonly doc = computed(() => COMPONENT_DOCS_BY_SLUG[this.slug()] ?? null);
 
-  overview(meta: ComponentDoc) {
-    return resolveComponentOverview(meta);
-  }
+  readonly summaryText = computed(() => {
+    const meta = this.doc();
+    return meta ? componentDocSummary(meta, this.i18n.locale()) : '';
+  });
 
-  apiSections(meta: ComponentDoc) {
-    return resolveComponentApi(meta).sections;
-  }
+  readonly overview = computed(() => {
+    const meta = this.doc();
+    return meta ? resolveComponentOverview(meta, this.i18n.locale()) : null;
+  });
 
-  stylingTokens(meta: ComponentDoc) {
-    return resolveComponentStyling(meta);
-  }
+  readonly apiSections = computed(() => {
+    const meta = this.doc();
+    return meta ? resolveComponentApi(meta, this.i18n.locale()).sections : [];
+  });
 
-  importSnippet(meta: ComponentDoc): string {
-    return importSnippetFor(meta);
-  }
+  readonly stylingTokens = computed(() => {
+    const meta = this.doc();
+    return meta ? resolveComponentStyling(meta, this.i18n.locale()) : [];
+  });
+
+  readonly importSnippet = computed(() => {
+    const meta = this.doc();
+    return meta ? importSnippetFor(meta, this.i18n.locale()) : '';
+  });
+
+  readonly examples = computed(() => {
+    const meta = this.doc();
+    return meta ? resolveComponentExamples(meta, this.i18n.locale()) : [];
+  });
 
   onSectionChange(next: string): void {
     this.section.set(next as ComponentDocStepId);
-  }
-
-  examples(meta: ComponentDoc) {
-    return resolveComponentExamples(meta);
   }
 }

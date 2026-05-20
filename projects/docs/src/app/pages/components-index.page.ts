@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { COMPONENT_DOCS } from '../core/component-docs.registry';
+import {
+  COMPONENT_DOCS,
+  componentDocSummary,
+} from '../core/component-docs.registry';
+import { DOCS_ROUTES } from '../core/docs-locale';
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocPage } from '../shared/doc-page';
 import { DocsInlineText } from '../shared/docs-inline-text';
 
@@ -9,17 +14,14 @@ import { DocsInlineText } from '../shared/docs-inline-text';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DocPage, RouterLink, DocsInlineText],
   template: `
-    <docs-page
-      title="Componentes"
-      lead="Catálogo de primitivos del design system. Cada página incluye vista previa y ejemplo de importación."
-    >
+    <docs-page [title]="i18n.messages().componentsIndex.title" [lead]="i18n.messages().componentsIndex.lead">
       <ul class="docs-components-index">
-        @for (doc of docs; track doc.slug; let i = $index) {
+        @for (doc of docs(); track doc.slug; let i = $index) {
           <li
             class="docs-components-index__item"
             [style.animation-delay]="60 + i * 40 + 'ms'"
           >
-            <a [routerLink]="['/componentes', doc.slug]" class="docs-components-index__link">
+            <a [routerLink]="docLink(doc.slug)" class="docs-components-index__link">
               <span class="docs-components-index__name">{{ doc.title }}</span>
               <code class="docs-components-index__export">{{ doc.exportName }}</code>
               <span class="docs-components-index__summary">
@@ -91,7 +93,8 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       }
 
       .docs-components-index__export {
-        font-size: var(--au-text-sm);
+        font-family: var(--au-font-mono);
+        font-size: var(--au-text-xs);
         color: var(--au-color-accent);
       }
 
@@ -107,7 +110,7 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         right: var(--au-space-4);
         font-size: var(--au-text-lg);
         color: var(--au-color-accent);
-        opacity: 0.35;
+        opacity: 0.45;
         transition:
           transform var(--au-duration-short) var(--au-ease-emph),
           opacity var(--au-duration-short) var(--au-ease-in-out);
@@ -116,5 +119,16 @@ import { DocsInlineText } from '../shared/docs-inline-text';
   ],
 })
 export class ComponentsIndexPage {
-  readonly docs = COMPONENT_DOCS;
+  readonly i18n = inject(DocsLocaleService);
+
+  readonly docs = computed(() =>
+    COMPONENT_DOCS.map((doc) => ({
+      ...doc,
+      summary: componentDocSummary(doc, this.i18n.locale()),
+    })),
+  );
+
+  docLink(slug: string): string[] {
+    return this.i18n.link(DOCS_ROUTES.components, slug);
+  }
 }

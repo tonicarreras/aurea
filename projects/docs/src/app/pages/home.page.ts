@@ -1,22 +1,25 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuButton, AuDivider } from '@aurea-design-system/components';
 
 import { COMPONENT_DOCS } from '../core/component-docs.registry';
+import { DOCS_ROUTES } from '../core/docs-locale';
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocPage } from '../shared/doc-page';
+import { DocsInlineText } from '../shared/docs-inline-text';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, RouterLink, AuButton, AuDivider],
+  imports: [DocPage, RouterLink, AuButton, AuDivider, DocsInlineText],
   template: `
     <docs-page
       [hero]="true"
-      eyebrow="Angular 21 · Accesible · Signals"
-      title="Aurea Design System"
-      lead="Componentes listos para producción, tokens semánticos y formularios con signals — documentados, probados y publicados en npm."
+      [eyebrow]="i18n.messages().home.eyebrow"
+      [title]="i18n.messages().home.title"
+      [lead]="i18n.messages().home.lead"
     >
-      <section class="docs-home-stats" aria-label="Resumen del sistema">
-        @for (stat of stats; track stat.label; let i = $index) {
+      <section class="docs-home-stats" [attr.aria-label]="i18n.messages().home.statsAria">
+        @for (stat of stats(); track stat.label; let i = $index) {
           <article
             class="docs-home-stats__card"
             [style.animation-delay]="i * 80 + 'ms'"
@@ -27,8 +30,8 @@ import { DocPage } from '../shared/doc-page';
         }
       </section>
 
-      <section class="docs-home-grid" aria-label="Explorar documentación">
-        @for (card of exploreCards; track card.title; let i = $index) {
+      <section class="docs-home-grid" [attr.aria-label]="i18n.messages().home.exploreAria">
+        @for (card of exploreCards(); track card.title; let i = $index) {
           <a
             class="docs-home-grid__card"
             [routerLink]="card.link"
@@ -45,16 +48,15 @@ import { DocPage } from '../shared/doc-page';
       <au-divider />
 
       <p>
-        Paquete npm <code>@aurea-design-system/components</code> — guías, temas y demos
-        interactivas en esta app; catálogo completo en Storybook.
+        <docs-inline-text [text]="i18n.messages().home.footer" />
       </p>
 
       <div class="docs-home-cta">
-        <a routerLink="/componentes/button">
-          <au-button variant="primary">Ver componentes</au-button>
+        <a [routerLink]="i18n.link(DOCS_ROUTES.components, 'button')">
+          <au-button variant="primary">{{ i18n.messages().home.ctaComponents }}</au-button>
         </a>
-        <a routerLink="/empezar">
-          <au-button variant="outline">Guía de instalación</au-button>
+        <a [routerLink]="i18n.link(DOCS_ROUTES.getStarted)">
+          <au-button variant="outline">{{ i18n.messages().home.ctaInstall }}</au-button>
         </a>
       </div>
     </docs-page>
@@ -229,32 +231,41 @@ import { DocPage } from '../shared/doc-page';
   ],
 })
 export class HomePage {
+  readonly i18n = inject(DocsLocaleService);
+  readonly DOCS_ROUTES = DOCS_ROUTES;
   readonly componentCount = COMPONENT_DOCS.length;
 
-  readonly stats = [
-    { value: String(this.componentCount), label: 'Componentes' },
-    { value: 'WCAG 2.2', label: 'Accesibilidad' },
-    { value: 'Signals', label: 'Formularios' },
-  ];
+  readonly stats = computed(() => {
+    const m = this.i18n.messages().home;
+    return [
+      { value: String(this.componentCount), label: m.statsComponents },
+      { value: 'WCAG 2.2', label: m.statsA11y },
+      { value: 'Signals', label: m.statsForms },
+    ];
+  });
 
-  readonly exploreCards = [
-    {
-      icon: '⚡',
-      title: 'Empezar',
-      text: 'Instala el paquete y conecta tokens en tu app Angular.',
-      link: '/empezar',
-    },
-    {
-      icon: '◐',
-      title: 'Temas',
-      text: 'Modo claro, oscuro y variables --au-* semánticas.',
-      link: '/temas',
-    },
-    {
-      icon: '▣',
-      title: 'Componentes',
-      text: 'Vistas previas en vivo y fragmentos de código.',
-      link: '/componentes',
-    },
-  ];
+  readonly exploreCards = computed(() => {
+    const m = this.i18n.messages().home;
+    const link = this.i18n.link.bind(this.i18n);
+    return [
+      {
+        icon: '⚡',
+        title: m.cardGetStartedTitle,
+        text: m.cardGetStartedText,
+        link: link(DOCS_ROUTES.getStarted),
+      },
+      {
+        icon: '◐',
+        title: m.cardThemesTitle,
+        text: m.cardThemesText,
+        link: link(DOCS_ROUTES.themes),
+      },
+      {
+        icon: '▣',
+        title: m.cardComponentsTitle,
+        text: m.cardComponentsText,
+        link: link(DOCS_ROUTES.components),
+      },
+    ];
+  });
 }

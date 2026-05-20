@@ -1,45 +1,47 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuButton, AuCard, AuTheme } from '@aurea-design-system/components';
 
-import { THEME_TOKEN_GROUPS } from '../core/docs-theme-tokens';
+import { DOCS_ROUTES } from '../core/docs-locale';
+import { DocsLocaleService } from '../core/docs-locale.service';
+import { themeTokenGroups } from '../core/docs-theme-tokens';
 import { CodeBlock } from '../shared/code-block';
 import { DocPage } from '../shared/doc-page';
+import { DocsInlineText } from '../shared/docs-inline-text';
 import { DocsTokenList } from '../shared/docs-token-list';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, CodeBlock, DocsTokenList, AuButton, AuCard, AuTheme, RouterLink],
+  imports: [DocPage, CodeBlock, DocsTokenList, AuButton, AuCard, AuTheme, RouterLink, DocsInlineText],
   template: `
-    <docs-page
-      title="Temas y tokens"
-      lead="Variables globales --au-* definidas en au-tokens.css. Cada componente documenta solo los tokens que consume en su pestaña Styling."
-    >
-      <h2>Atributo de tema</h2>
+    <docs-page [title]="i18n.messages().themes.title" [lead]="i18n.messages().themes.lead">
+      <h2>{{ i18n.messages().themes.attrHeading }}</h2>
       <p>
-        Coloca <code>data-au-theme</code> en un ancestro (por ejemplo <code>&lt;html&gt;</code> o el shell
-        de la app). Valores: <code>light</code>, <code>dark</code>.
+        <docs-inline-text [text]="i18n.messages().themes.attrBody" />
       </p>
-      <docs-code-block [code]="htmlSnippet" language="html" expandLabel="Ver HTML" />
+      <docs-code-block [code]="htmlSnippet" language="html" [expandLabel]="i18n.messages().themes.attrExpand" />
 
-      <h2>Directiva AuTheme</h2>
+      <h2>{{ i18n.messages().themes.directiveHeading }}</h2>
       <p>
-        Alternativa reactiva con <code>system</code> para seguir
-        <code>prefers-color-scheme</code>:
+        <docs-inline-text [text]="i18n.messages().themes.directiveBody" />
       </p>
-      <docs-code-block [code]="directiveSnippet" language="typescript" expandLabel="Ver TypeScript" />
+      <docs-code-block
+        [code]="directiveSnippet"
+        language="typescript"
+        [expandLabel]="i18n.messages().themes.directiveExpand"
+      />
 
-      <h2>Vista previa</h2>
+      <h2>{{ i18n.messages().themes.previewHeading }}</h2>
       <div
         class="docs-theme-preview"
         [class.docs-theme-preview--dark]="previewTheme() === 'dark'"
         [auTheme]="previewTheme()"
       >
         <au-card variant="outlined">
-          <h3 auCardHeader>Superficie de ejemplo</h3>
-          <p>Los colores siguen el tema del contenedor.</p>
+          <h3 auCardHeader>{{ i18n.messages().themes.previewCardTitle }}</h3>
+          <p>{{ i18n.messages().themes.previewCardBody }}</p>
           <div class="docs-theme-preview__swatches" aria-hidden="true">
-            @for (swatch of swatches; track swatch) {
+            @for (swatch of swatches; track $index) {
               <span class="docs-theme-preview__swatch" [style.background]="swatch"></span>
             }
           </div>
@@ -50,7 +52,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
               type="button"
               (click)="previewTheme.set('light')"
             >
-              Claro
+              {{ i18n.messages().themes.previewLight }}
             </au-button>
             <au-button
               size="sm"
@@ -58,20 +60,19 @@ import { DocsTokenList } from '../shared/docs-token-list';
               type="button"
               (click)="previewTheme.set('dark')"
             >
-              Oscuro
+              {{ i18n.messages().themes.previewDark }}
             </au-button>
           </div>
         </au-card>
       </div>
 
-      <h2>Tokens globales</h2>
+      <h2>{{ i18n.messages().themes.globalHeading }}</h2>
       <p>
-        Sobrescribe en <code>:root</code> o <code>[data-au-theme]</code>. Los tokens de un componente
-        concreto (p. ej. <code>--au-card-padding</code>) se listan en la página de ese componente —
-        <a routerLink="/componentes">índice de componentes</a>.
+        <docs-inline-text [text]="i18n.messages().themes.globalBody" />
+        <a [routerLink]="i18n.link(DOCS_ROUTES.components)">{{ i18n.messages().themes.globalLink }}</a>.
       </p>
 
-      @for (group of tokenGroups; track group.title) {
+      @for (group of tokenGroups(); track group.title) {
         <section class="docs-theme-group">
           <h3 class="docs-theme-group__title">{{ group.title }}</h3>
           @if (group.description) {
@@ -81,10 +82,9 @@ import { DocsTokenList } from '../shared/docs-token-list';
         </section>
       }
 
-      <h2>Regla de uso</h2>
+      <h2>{{ i18n.messages().themes.ruleHeading }}</h2>
       <p>
-        En producto, usa solo variables <code>--au-*</code> documentadas. Reserva nombres primitivos para
-        capas internas del tema. Fuente de verdad:
+        <docs-inline-text [text]="i18n.messages().themes.ruleBody" />
         <code>projects/components/src/lib/theme/au-tokens.css</code>.
       </p>
     </docs-page>
@@ -156,8 +156,11 @@ import { DocsTokenList } from '../shared/docs-token-list';
   ],
 })
 export class ThemingPage {
+  readonly i18n = inject(DocsLocaleService);
+  readonly DOCS_ROUTES = DOCS_ROUTES;
   readonly previewTheme = signal<'light' | 'dark'>('light');
-  readonly tokenGroups = THEME_TOKEN_GROUPS;
+
+  readonly tokenGroups = computed(() => themeTokenGroups(this.i18n.locale()));
 
   readonly swatches = [
     'var(--au-color-surface-raised)',
@@ -167,7 +170,7 @@ export class ThemingPage {
   ];
 
   readonly htmlSnippet = `<html data-au-theme="dark">
-  <!-- tu app -->
+  <!-- your app -->
 </html>`;
 
   readonly directiveSnippet = `<div class="app-shell" [auTheme]="'system'">

@@ -1,0 +1,420 @@
+import type { ComponentDocOverview } from '../../../core/component-doc-overview';
+
+export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
+  button: {
+    intro: [
+      'Botón de acción con variantes primary, secondary, outline y ghost. El contenido proyectado es la etiqueta visible; usa `label` si solo muestras un icono.',
+      'El foco distingue teclado (anillo exterior) y ratón (anillo interior) mediante `tabFocusState`, alineado con el resto de controles Aurea.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Acciones principales o secundarias en formularios, diálogos y barras de herramientas.',
+        'Estados de carga con `loading` sin cambiar el layout.',
+        'Envío de formularios con `type="submit"`.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Navegación entre vistas → enlaces (`<a>`) o tabs.',
+        'Conmutar un ajuste on/off → `au-switch`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Host `au-button`', detail: 'Atributos `data-au-variant` y `data-au-size`.' },
+      { region: 'Botón nativo', detail: 'Proyección de contenido; `aria-busy` cuando `loading`.' },
+    ],
+    accessibility: [
+      'Anillo de foco visible al tabular (`--au-color-focus-ring`).',
+      '`loading` activa `aria-busy` y bloquea el click.',
+      'Tamaño `lg` respeta `--au-touch-target-min` (44px).',
+    ],
+    keyboard: ['Enter y Space activan el botón nativo.', 'Tab enfoca el control; foco restaurado tras cerrar diálogos.'],
+  },
+  'input-text': {
+    intro: [
+      'Campo de una línea con etiqueta, hint, región de error y toggle de contraseña opcional.',
+      'Implementa `FormValueControl<string | null>`: enlaza `[formField]` en signal forms o `[(value)]` en modo manual. Un campo vacío se representa como `null`, no como cadena vacía.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Texto, email, URL, teléfono, búsqueda o contraseña con la misma cromática que el resto de campos.',
+        'Validación con signal forms o `errorMessage` / `invalid` manuales.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Texto multilínea → `au-textarea`.', 'Elección en lista → `au-select` o `au-autocomplete`.'],
+    },
+    anatomy: [
+      { region: 'Etiqueta', detail: '`<label for>`; asterisco opcional con `showRequired`.' },
+      { region: 'Shell', detail: 'Borde, fondo y anillos de foco/error.' },
+      { region: 'Input nativo', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby`.' },
+      { region: 'Toggle contraseña', detail: 'Solo con `type="password"` y `showPasswordToggle`.' },
+      { region: 'Hint / error', detail: 'Hint en `<p>`; error con `role="alert"`.' },
+    ],
+    accessibility: [
+      'Nombre accesible vía etiqueta visible o `aria-label` externo.',
+      'Errores enlazados con `aria-errormessage`; hints con `aria-describedby`.',
+      'Toggle de contraseña con `aria-pressed` y etiquetas Mostrar/Ocultar.',
+    ],
+    keyboard: [
+      'Tab entra al campo con anillo exterior (`--from-tab`); clic usa anillo interior.',
+      'Space en el toggle de contraseña alterna visibilidad.',
+    ],
+  },
+  textarea: {
+    intro: [
+      'Área de texto multilínea con la misma gramática visual que `au-input-text`: label, hint, error y tamaños sm/md/lg.',
+      'Altura mínima controlada por `--au-textarea-min-h-*`; `resize` configurable.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Comentarios, descripciones largas, notas.', 'Contenido que no cabe en una sola línea.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Una sola línea → `au-input-text`.', 'Editor rico → componente de terceros.'],
+    },
+    anatomy: [
+      { region: 'Shell', detail: 'Igual que campos de una línea.' },
+      { region: '`<textarea>`', detail: 'Padding vertical `--au-textarea-pad-y`.' },
+    ],
+    accessibility: [
+      'Misma semántica de label, error y hint que input-text.',
+      'Contraste de placeholder y hint en tokens de texto terciario.',
+    ],
+  },
+  checkbox: {
+    intro: [
+      'Casilla booleana con etiqueta y descripción opcional. Soporta `indeterminate` para selección parcial.',
+      'Implementa `FormCheckboxControl` para signal forms con `[(checked)]` o `[formField]`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Aceptar términos, permisos múltiples independientes.',
+        'Patrón «seleccionar todo» con estado indeterminado en el padre.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Un solo on/off de configuración → `au-switch`.', 'Elección única en lista → `au-radio-group`.'],
+    },
+    anatomy: [
+      { region: 'Input nativo', detail: 'Checkbox real; estado indeterminado nativo.' },
+      { region: 'Etiqueta / descripción', detail: 'Texto principal y secundario.' },
+    ],
+    accessibility: [
+      'Asociación label/input con `id`/`for`.',
+      'Indeterminado vía propiedad nativa (no `aria-checked` inventado).',
+      'Anillo de foco diferenciado teclado vs puntero.',
+    ],
+  },
+  switch: {
+    intro: [
+      'Interruptor on/off con `role="switch"` sobre checkbox nativo estilizado.',
+      'Comparte shell de campo (borde, error, hint) con el resto de formularios.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Preferencias inmediatas (notificaciones, modo oscuro).', 'Activar/desactivar una función del sistema.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Varias opciones excluyentes → `au-radio-group`.', 'Aceptar legal → `au-checkbox`.'],
+    },
+    anatomy: [
+      { region: 'Pista y thumb', detail: 'Tokens `--au-color-switch-track-*` y thumb.' },
+      { region: 'Label / hint', detail: 'Misma estructura que otros campos.' },
+    ],
+    accessibility: [
+      '`role="switch"` y estado `aria-checked`.',
+      'Contraste pista/thumb documentado en tokens (WCAG UI components).',
+    ],
+  },
+  select: {
+    intro: [
+      'Desplegable tipo combobox: botón trigger + listbox en portal con teclado completo (flechas, Home/End, Escape).',
+      'Opciones tipadas `SelectOption[]`; valor del modelo = `value` de la opción, no el label.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Listas cerradas de 4–20 ítems donde el usuario conoce las opciones.',
+        'Formularios que deben enviar un `name` estable en POST.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Búsqueda con filtrado → `au-autocomplete`.', 'Solo 2–3 opciones visibles → `au-radio-group`.'],
+    },
+    anatomy: [
+      { region: 'Trigger', detail: 'Muestra label de la opción seleccionada.' },
+      { region: 'Listbox portal', detail: 'Highlight vs selected con tokens distintos.' },
+    ],
+    accessibility: [
+      'Patrón combobox ARIA (`aria-expanded`, `aria-controls`, `listbox`/`option`).',
+      'Opciones deshabilitadas respetan `disabled` en `SelectOption`.',
+    ],
+    keyboard: [
+      'Space/Enter abre; flechas mueven highlight; Enter selecciona; Escape cierra.',
+    ],
+    relatedExports: ['SelectOption'],
+  },
+  autocomplete: {
+    intro: [
+      'Campo de búsqueda que filtra `AutocompleteOption[]` al escribir (insensible a mayúsculas por defecto).',
+      'Misma superficie y listbox que `au-select`; `strictSelection` evita valores libres al perder foco.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Catálogos largos (ciudades, usuarios, SKU).', 'Cuando el usuario conoce parte del texto a buscar.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Lista corta fija → `au-select`.', 'Texto libre sin lista → `au-input-text`.'],
+    },
+    anatomy: [
+      { region: 'Input de búsqueda', detail: 'Combobox con query en tiempo real.' },
+      { region: 'Panel de sugerencias', detail: '`noResultsText` cuando el filtro no coincide.' },
+    ],
+    accessibility: ['Combobox con listbox; estado abierto en `data-au-listbox-open`.'],
+    keyboard: ['Igual que select; escritura filtra opciones.'],
+    relatedExports: ['AutocompleteOption'],
+  },
+  'radio-group': {
+    intro: [
+      'Grupo de botones radio nativos dentro de un shell con leyenda. Una sola selección por `name`.',
+      'Valor del modelo = `value` de la `RadioOption` activa.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['2–5 opciones mutuamente excluyentes visibles sin desplegar.', 'Planes, métodos de pago, tipo de cuenta.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Muchas opciones → `au-select`.', 'Booleano → checkbox o switch.'],
+    },
+    anatomy: [
+      { region: 'Leyenda', detail: 'Label del grupo.' },
+      { region: 'Opciones', detail: 'Cada radio con label propio.' },
+    ],
+    accessibility: ['Leyenda asociada; navegación por flechas entre radios del mismo nombre.'],
+    relatedExports: ['RadioOption'],
+  },
+  'input-number': {
+    intro: [
+      'Entrada numérica con `min`, `max` y `step`; vacío ↔ `null`.',
+      'Botones de incremento/decremento estilizados en el mismo shell de campo.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Cantidades, edad, porcentajes con límites conocidos.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Formato moneda con máscara → capa de dominio sobre input-text.', 'Rango continuo → slider dedicado.'],
+    },
+    anatomy: [
+      { region: 'Input `type="number"`', detail: 'Parsing a número finito o `null`.' },
+      { region: 'Steppers', detail: 'Respetan min/max nativos.' },
+    ],
+    accessibility: ['Label, error y foco como el resto de campos.'],
+  },
+  'input-date': {
+    intro: [
+      'Selector de fecha nativo (`<input type="date">`) con tokens Aurea en icono y popup del SO.',
+      'Valor en formato ISO `YYYY-MM-DD` o `null`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Fechas de calendario con picker del sistema operativo.', 'Filtros de rango con `minDate` / `maxDate`.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Calendario inline personalizado → componente compuesto o librería externa.'],
+    },
+    anatomy: [
+      { region: 'Input nativo', detail: 'Tokens `--au-color-date-picker-*` para icono y acento.' },
+    ],
+    accessibility: ['Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.'],
+  },
+  dialog: {
+    intro: [
+      'Modal sobre `<dialog>` nativo: backdrop, trampa de foco, cierre por Escape y clic fuera (configurable).',
+      'Proyecta cuerpo libre y pie opcional con `auDialogFooter`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Confirmaciones destructivas o flujos que requieren decisión explícita.',
+        'Formularios cortos que no merecen una ruta nueva.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Confirmación ligera → `au-snackbar` con acción.', 'Panel lateral persistente → layout propio.'],
+    },
+    anatomy: [
+      { region: 'Backdrop', detail: 'Mezcla `--au-color-surface-inverted`.' },
+      { region: 'Panel', detail: 'Cabecera, cuerpo, pie (`auDialogFooter`).' },
+    ],
+    accessibility: [
+      '`aria-labelledby` con `title` o `aria-label`.',
+      'Foco inicial dentro del panel; restauración al elemento disparador al cerrar.',
+      'Tab cicla dentro del diálogo.',
+    ],
+    keyboard: ['Escape cierra si `closeOnEscape`.', 'Tab / Shift+Tab atrapados en el panel.'],
+    relatedExports: ['AuDialogFooter'],
+  },
+  card: {
+    intro: [
+      'Superficie agrupada con variantes elevated, outlined y filled. Proyección por regiones: media, cabecera, cuerpo y pie.',
+      'El host es un `<article>`: incluye un heading en `auCardHeader` para el outline del documento.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Resúmenes de entidad, tiles de dashboard, bloques de configuración.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Solo separar contenido → `au-divider` o espaciado.', 'Overlay bloqueante → `au-dialog`.'],
+    },
+    anatomy: [
+      { region: 'auCardMedia', detail: 'A sangre, fuera del padding interior.' },
+      { region: 'auCardHeader / auCardBody', detail: 'Título y contenido con gap `--au-card-main-gap`.' },
+      { region: 'auCardFooter', detail: 'Acciones alineadas tras borde superior.' },
+    ],
+    accessibility: [
+      'Usa heading en cabecera para jerarquía.',
+      'Acciones en footer con botones reales (`au-button`).',
+    ],
+    relatedExports: ['AuCardFooter'],
+  },
+  tabs: {
+    intro: [
+      'Pestañas WAI-ARIA: `tablist`, `tab` y `tabpanel`. Solo la pestaña activa está en orden de tabulación (`tabindex="0"`).',
+      'Variantes `line` (subrayado) y `contained` (segmented).',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Alternar entre paneles relacionados en la misma página (cuenta, ajustes).',
+        'Cuando el usuario no debe navegar a otra URL.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Navegación global de la app → router y menú.', 'Pasos secuenciales con validación → `au-steps`.'],
+    },
+    anatomy: [
+      { region: 'button[auTab]', detail: 'Disparadores en el tablist.' },
+      { region: '[auTabPanel]', detail: 'Contenido; `hidden` cuando inactivo.' },
+    ],
+    accessibility: [
+      '`aria-selected`, `aria-controls`, ids emparejados tab/panel.',
+      'Orientación expuesta en el tablist.',
+    ],
+    keyboard: [
+      'Flechas cambian pestaña activa (horizontal o vertical según `orientation`).',
+      'Home/End al primer/último tab.',
+    ],
+    relatedExports: ['AuTab', 'AuTabPanel'],
+  },
+  chip: {
+    intro: [
+      'Etiqueta compacta en tres modos: estática, seleccionable (`selectable` + `aria-pressed`) o removible (`removed`).',
+      'Variantes filled, outline y accent (resaltado tipo filtro activo).',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Tags, filtros activos, metadatos de ítem.', 'Selección múltiple de categorías en toolbar.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Acción principal → `au-button`.', 'Navegación principal → tabs o enlaces.'],
+    },
+    anatomy: [
+      { region: 'Superficie', detail: 'Proyección o `label` input.' },
+      { region: 'Botón quitar', detail: 'Solo si `removable`; etiqueta `removeLabel` opcional.' },
+    ],
+    accessibility: [
+      'Chip removible: botón con nombre accesible.',
+      'Selectable: `aria-pressed` sincronizado con `selected`.',
+    ],
+  },
+  snackbar: {
+    intro: [
+      'Mensaje breve no modal con auto-cierre (`durationMs`), acción opcional y posición en pantalla.',
+      'Se teleporta al `body` para no quedar recortado por `overflow`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Confirmar guardado, error recuperable, aviso sin bloquear la UI.',
+        'Feedback tras una acción donde un diálogo sería pesado.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Decisión obligatoria → `au-dialog`.', 'Error de formulario en campo → `errorMessage` del campo.'],
+    },
+    anatomy: [
+      { region: 'Mensaje', detail: 'Input `message` o contenido proyectado.' },
+      { region: 'Acción / cerrar', detail: 'Botones opcionales.' },
+    ],
+    accessibility: [
+      '`role="status"` o `role="alert"` según variant (warning/error = alert).',
+      '`aria-live` acorde; botón cerrar con `closeAriaLabel`.',
+    ],
+  },
+  divider: {
+    intro: [
+      'Separador semántico `role="separator"` horizontal o vertical, con inset y etiqueta opcional centrada.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Separar secciones de contenido o ítems de lista.',
+        'Separador vertical entre grupos en flex.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Solo espacio → utilidades de spacing.', 'Borde de tarjeta → variant del `au-card`.'],
+    },
+    anatomy: [
+      { region: 'Regla', detail: 'Línea `--au-color-border-subtle`.' },
+      { region: 'Label', detail: 'Solo horizontal; texto entre dos mitades de línea.' },
+    ],
+    accessibility: ['`aria-orientation` según `orientation`.'],
+  },
+  tooltip: {
+    intro: [
+      'Ayuda contextual en portal al hacer hover o foco en el disparador. Retardos configurables para evitar parpadeos.',
+      'No sustituye a una etiqueta visible: el disparador debe tener nombre accesible propio.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Iconos de acción sin texto visible.', 'Aclarar un control ya etiquetado.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Información esencial → texto visible o `hint` en el campo.',
+        'Contenido largo o interactivo → popover o diálogo.',
+      ],
+    },
+    anatomy: [
+      { region: 'Disparador', detail: 'Elemento con `auTooltip` (p. ej. `au-button`).' },
+      { region: 'Globo', detail: 'Clase `.au-tooltip` en `document.body`.' },
+    ],
+    accessibility: [
+      '`role="tooltip"` y `aria-describedby` en el host mientras está abierto.',
+      'No contiene foco interactivo.',
+    ],
+  },
+};

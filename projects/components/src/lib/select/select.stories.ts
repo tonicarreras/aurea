@@ -308,7 +308,6 @@ export const Required: Story = {
     ],
   },
   play: async ({ canvasElement }) => {
-    const el = within(canvasElement);
     const select = getSelect(canvasElement, /Country/);
     await expect(select).toHaveAttribute('aria-required', 'true');
   },
@@ -333,7 +332,6 @@ export const WithHint: Story = {
     ],
   },
   play: async ({ canvasElement }) => {
-    const el = within(canvasElement);
     const select = getSelect(canvasElement, 'Timezone');
     const hintId = select.getAttribute('aria-describedby');
     await expect(hintId).toBeTruthy();

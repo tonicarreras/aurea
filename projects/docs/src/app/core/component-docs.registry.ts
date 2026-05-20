@@ -1,5 +1,8 @@
 import { Type } from '@angular/core';
 
+import { COMPONENT_SUMMARIES } from '../i18n';
+import { type DocsLocale, pickL } from './docs-locale';
+
 import {
   AutocompleteDemo,
   ButtonDemo,
@@ -34,6 +37,11 @@ export interface ComponentDocApiSection {
   title: string;
   description?: string;
   rows: ComponentApiEntry[];
+}
+
+export interface ResolvedComponentApi {
+  importNames: string[];
+  sections: ComponentDocApiSection[];
 }
 
 export interface ComponentStylingToken {
@@ -288,3 +296,8 @@ options: SelectOption[] = [
 export const COMPONENT_DOCS_BY_SLUG = Object.fromEntries(
   COMPONENT_DOCS.map((doc) => [doc.slug, doc]),
 ) as Record<string, ComponentDoc>;
+
+export function componentDocSummary(doc: ComponentDoc, locale: DocsLocale): string {
+  const localized = COMPONENT_SUMMARIES[doc.slug];
+  return localized ? pickL(localized, locale) : doc.summary;
+}

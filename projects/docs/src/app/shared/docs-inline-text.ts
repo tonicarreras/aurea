@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-export interface InlineTextPart { type: 'text' | 'code'; value: string }
+export interface InlineTextPart {
+  /** Stable key for `@for` tracking (index + kind + value). */
+  key: string;
+  type: 'text' | 'code';
+  value: string;
+}
 
 /** Divide texto con fragmentos entre backticks (`código`) en partes texto/código. */
 export function splitInlineCode(text: string): InlineTextPart[] {
@@ -8,27 +13,36 @@ export function splitInlineCode(text: string): InlineTextPart[] {
   const re = /`([^`]+)`/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
+  let partIndex = 0;
+
+  const push = (type: InlineTextPart['type'], value: string): void => {
+    parts.push({ key: `${partIndex++}:${type}:${value}`, type, value });
+  };
 
   while ((match = re.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      parts.push({ type: 'text', value: text.slice(lastIndex, match.index) });
+      push('text', text.slice(lastIndex, match.index));
     }
-    parts.push({ type: 'code', value: match[1] });
+    push('code', match[1]);
     lastIndex = match.index + match[0].length;
   }
 
   if (lastIndex < text.length) {
-    parts.push({ type: 'text', value: text.slice(lastIndex) });
+    push('text', text.slice(lastIndex));
   }
 
-  return parts.length > 0 ? parts : [{ type: 'text', value: text }];
+  return parts.length > 0 ? parts : [pushSingle(text)];
+}
+
+function pushSingle(text: string): InlineTextPart {
+  return { key: `0:text:${text}`, type: 'text', value: text };
 }
 
 @Component({
   selector: 'docs-inline-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @for (part of parts(); track $index) {
+    @for (part of parts(); track part.key) {
       @if (part.type === 'code') {
         <code class="docs-inline-code">{{ part.value }}</code>
       } @else {

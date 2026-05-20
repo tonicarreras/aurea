@@ -23,7 +23,7 @@
   <a href="#-features">Features</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-components">Components</a> •
-  <a href="#-documentación">Docs</a> •
+  <a href="#-official-documentation">Docs</a> •
   <a href="#-storybook">Storybook</a> •
   <a href="#-test-coverage">Coverage</a> •
   <a href="#-tokens">Tokens</a>
@@ -74,8 +74,8 @@ Monorepo **aurea** with two Angular projects:
 git clone https://github.com/tonicarreras/aurea-ds.git
 cd aurea-ds
 bun install
-bun run storybook     # components — Storybook (puerto 6006)
-bun run docs          # docs — documentación oficial (puerto 4200)
+bun run storybook     # components — Storybook (port 6006)
+bun run docs          # docs — official documentation site (port 4200)
 bun run test          # unit tests (components)
 ```
 
@@ -98,16 +98,16 @@ Install and usage docs for consumers: **[`projects/components/README.md`](projec
 
 ---
 
-## 📖 Documentación oficial
+## 📖 Official documentation
 
-App Angular en `projects/docs` que consume `@aurea-design-system/components` desde el monorepo: guías, temas y vista previa de cada componente.
+Angular app in `projects/docs` that consumes `@aurea-design-system/components` from the monorepo: guides, theming, and a live preview for each component.
 
 ```bash
 bun run docs          # http://127.0.0.1:4200
-bun run build:docs    # salida en dist/docs/browser
+bun run build:docs    # output in dist/docs/browser
 ```
 
-Storybook sigue siendo el catálogo interactivo para desarrollo y pruebas; la app **docs** es la referencia pública orientada a consumidores.
+Storybook remains the interactive catalog for development and testing; the **docs** app is the public, consumer-oriented reference in **English** and **Spanish** (`/en/...`, `/es/...`).
 
 ---
 

@@ -45,6 +45,7 @@ const radioOptions: RadioOption[] = [
 ];
 
 @Component({
+  selector: 'docs-preview-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `
@@ -69,6 +70,7 @@ const radioOptions: RadioOption[] = [
 export class ButtonDemo {}
 
 @Component({
+  selector: 'docs-preview-input-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputText],
   template: `<au-input-text label="Nombre" placeholder="Tu nombre" style="max-width: 20rem" />`,
@@ -76,6 +78,7 @@ export class ButtonDemo {}
 export class InputTextDemo {}
 
 @Component({
+  selector: 'docs-preview-textarea',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTextarea],
   template: `<au-textarea label="Bio" [rows]="3" placeholder="Cuéntanos sobre ti…" style="max-width: 24rem" />`,
@@ -83,6 +86,7 @@ export class InputTextDemo {}
 export class TextareaDemo {}
 
 @Component({
+  selector: 'docs-preview-checkbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
   template: `
@@ -104,6 +108,7 @@ export class TextareaDemo {}
 export class CheckboxDemo {}
 
 @Component({
+  selector: 'docs-preview-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSwitch],
   template: `<au-switch label="Modo oscuro del sistema" />`,
@@ -111,6 +116,7 @@ export class CheckboxDemo {}
 export class SwitchDemo {}
 
 @Component({
+  selector: 'docs-preview-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSelect],
   template: `
@@ -127,6 +133,7 @@ export class SelectDemo {
 }
 
 @Component({
+  selector: 'docs-preview-autocomplete',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuAutocomplete],
   template: `
@@ -143,6 +150,7 @@ export class AutocompleteDemo {
 }
 
 @Component({
+  selector: 'docs-preview-radio-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuRadioGroup],
   template: `<au-radio-group label="Plan" [options]="options" />`,
@@ -152,6 +160,7 @@ export class RadioGroupDemo {
 }
 
 @Component({
+  selector: 'docs-preview-input-number',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputNumber],
   template: `<au-input-number label="Cantidad" [min]="0" [max]="10" style="max-width: 12rem" />`,
@@ -159,6 +168,7 @@ export class RadioGroupDemo {
 export class InputNumberDemo {}
 
 @Component({
+  selector: 'docs-preview-input-date',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputDate],
   template: `<au-input-date label="Fecha de inicio" style="max-width: 14rem" />`,
@@ -166,6 +176,7 @@ export class InputNumberDemo {}
 export class InputDateDemo {}
 
 @Component({
+  selector: 'docs-preview-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuDialog, AuDialogFooter],
   template: `
@@ -184,6 +195,7 @@ export class DialogDemo {
 }
 
 @Component({
+  selector: 'docs-preview-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard, AuCardFooter, AuButton],
   template: `
@@ -199,6 +211,7 @@ export class DialogDemo {
 export class CardDemo {}
 
 @Component({
+  selector: 'docs-preview-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
@@ -219,6 +232,7 @@ export class TabsDemo {
 }
 
 @Component({
+  selector: 'docs-preview-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
   template: `
@@ -241,6 +255,7 @@ export class TabsDemo {
 export class ChipDemo {}
 
 @Component({
+  selector: 'docs-preview-snackbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
@@ -258,6 +273,7 @@ export class SnackbarDemo {
 }
 
 @Component({
+  selector: 'docs-preview-divider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuDivider],
   template: `
@@ -282,6 +298,7 @@ export class SnackbarDemo {
 export class DividerDemo {}
 
 @Component({
+  selector: 'docs-preview-tooltip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
-import { DOCS_NAV } from '../core/docs-nav';
+import { DocsLocaleService } from '../core/docs-locale.service';
+import type { DocsLocale } from '../core/docs-locale';
 import { AngularLogo } from '../shared/angular-logo';
 import { GithubIcon, NpmIcon, StorybookIcon } from '../shared/brand-icons';
 
@@ -23,6 +24,7 @@ type ThemeMode = 'light' | 'dark' | 'system';
   host: {
     class: 'docs-shell',
     '[attr.data-au-theme]': 'resolvedTheme()',
+    '[attr.lang]': 'locale.locale()',
   },
   template: `
     <div class="docs-atmosphere" aria-hidden="true">
@@ -31,11 +33,11 @@ type ThemeMode = 'light' | 'dark' | 'system';
       <div class="docs-atmosphere__orb docs-atmosphere__orb--3"></div>
     </div>
 
-    <a class="docs-skip" href="#docs-main">Saltar al contenido</a>
+    <a class="docs-skip" href="#docs-main">{{ locale.messages().shell.skipToContent }}</a>
 
     <header class="docs-header">
       <div class="docs-header__brand">
-        <a routerLink="/" class="docs-header__logo">
+        <a [routerLink]="locale.link()" class="docs-header__logo">
           <docs-angular-logo />
           <span class="docs-header__logo-text">
             <span class="docs-header__name">Aurea</span>
@@ -44,25 +46,32 @@ type ThemeMode = 'light' | 'dark' | 'system';
         </a>
       </div>
       <div class="docs-header__actions">
-        <label class="docs-theme-picker">
-          <span class="docs-theme-picker__label">Tema</span>
+        <label class="docs-lang-picker">
+          <span class="docs-lang-picker__label">{{ locale.messages().shell.lang }}</span>
           <select
-            class="docs-theme-picker__select"
-            [value]="theme()"
-            (change)="onThemeChange($event)"
+            class="docs-lang-picker__select"
+            [value]="locale.locale()"
+            (change)="onLangChange($event)"
           >
-            <option value="system">Sistema</option>
-            <option value="light">Claro</option>
-            <option value="dark">Oscuro</option>
+            <option value="en">{{ locale.messages().shell.langEn }}</option>
+            <option value="es">{{ locale.messages().shell.langEs }}</option>
           </select>
         </label>
+        <button
+          type="button"
+          class="docs-theme-toggle"
+          (click)="cycleTheme()"
+          [attr.aria-label]="themeToggleAria()"
+        >
+          <span class="docs-theme-toggle__emoji" aria-hidden="true">{{ themeEmoji() }}</span>
+        </button>
         <div class="docs-header__icon-links">
           <a
             class="docs-header__icon-link"
             [href]="links.github"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Repositorio en GitHub"
+            [attr.aria-label]="locale.messages().shell.githubAria"
           >
             <docs-github-icon />
           </a>
@@ -71,7 +80,7 @@ type ThemeMode = 'light' | 'dark' | 'system';
             [href]="links.npm"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Paquete en npm"
+            [attr.aria-label]="locale.messages().shell.npmAria"
           >
             <docs-npm-icon />
           </a>
@@ -80,7 +89,7 @@ type ThemeMode = 'light' | 'dark' | 'system';
             [href]="links.storybook"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Abrir Storybook"
+            [attr.aria-label]="locale.messages().shell.storybookAria"
           >
             <docs-storybook-icon />
           </a>
@@ -89,8 +98,8 @@ type ThemeMode = 'light' | 'dark' | 'system';
     </header>
 
     <div class="docs-layout">
-      <nav class="docs-nav" aria-label="Documentación">
-        @for (section of nav; track section.title) {
+      <nav class="docs-nav" [attr.aria-label]="locale.messages().shell.navAria">
+        @for (section of locale.nav(); track section.title) {
           <section class="docs-nav__section">
             <h2 class="docs-nav__heading">{{ section.title }}</h2>
             <ul class="docs-nav__list">
@@ -98,10 +107,10 @@ type ThemeMode = 'light' | 'dark' | 'system';
                 <li>
                   <a
                     class="docs-nav__link"
-                    [routerLink]="item.path"
+                    [routerLink]="locale.link(item.path)"
                     routerLinkActive="docs-nav__link--active"
                     [routerLinkActiveOptions]="{
-                      exact: item.exact === true || item.path === '/',
+                      exact: item.exact === true || item.path === '',
                     }"
                   >
                     {{ item.label }}
@@ -121,7 +130,7 @@ type ThemeMode = 'light' | 'dark' | 'system';
   styleUrl: './docs-shell.css',
 })
 export class DocsShell {
-  readonly nav = DOCS_NAV;
+  readonly locale = inject(DocsLocaleService);
   readonly links = DOCS_EXTERNAL_LINKS;
   readonly theme = signal<ThemeMode>('system');
   readonly resolvedTheme = signal<'light' | 'dark'>('light');
@@ -134,9 +143,30 @@ export class DocsShell {
     }
   }
 
-  onThemeChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value as ThemeMode;
-    this.theme.set(value);
+  onLangChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value as DocsLocale;
+    this.locale.switchLocale(value);
+  }
+
+  readonly themeEmoji = computed(() => {
+    const mode = this.theme();
+    if (mode === 'light') {
+      return '☀️';
+    }
+    if (mode === 'dark') {
+      return '🌙';
+    }
+    return '🖥️';
+  });
+
+  themeToggleAria(): string {
+    return this.locale.messages().shell.themeToggleAria(this.theme());
+  }
+
+  cycleTheme(): void {
+    const order: ThemeMode[] = ['light', 'dark', 'system'];
+    const index = order.indexOf(this.theme());
+    this.theme.set(order[(index + 1) % order.length]!);
     this.syncResolvedTheme();
   }
 

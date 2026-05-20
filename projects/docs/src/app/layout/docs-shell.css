@@ -142,14 +142,14 @@
 .docs-header__actions {
   display: flex;
   align-items: center;
-  gap: var(--au-space-3);
+  gap: var(--au-space-5);
   flex-shrink: 0;
 }
 
 .docs-header__icon-links {
   display: flex;
   align-items: center;
-  gap: var(--au-space-1-5);
+  gap: var(--au-space-2-5);
 }
 
 .docs-header__icon-link {
@@ -200,7 +200,7 @@
   background: color-mix(in srgb, #ff4785 10%, transparent);
 }
 
-.docs-theme-picker {
+.docs-lang-picker {
   display: flex;
   align-items: center;
   gap: var(--au-space-2);
@@ -208,7 +208,7 @@
   color: var(--au-color-text-secondary);
 }
 
-.docs-theme-picker__select {
+.docs-lang-picker__select {
   padding: var(--au-space-1-5) var(--au-space-2-5);
   border: 1px solid var(--au-color-border-subtle);
   border-radius: var(--au-radius-sm);
@@ -219,18 +219,54 @@
   transition: border-color var(--au-duration-short) var(--au-ease-in-out);
 }
 
-[data-au-theme='dark'] .docs-theme-picker__select {
+[data-au-theme='dark'] .docs-lang-picker__select {
   border-color: color-mix(in srgb, var(--au-color-border-subtle) 50%, transparent);
 }
 
-.docs-theme-picker__select:hover {
+.docs-lang-picker__select:hover {
   border-color: var(--au-color-border-default);
 }
 
-.docs-theme-picker__select:focus-visible {
+.docs-lang-picker__select:focus-visible {
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 2px;
   box-shadow: none;
+}
+
+.docs-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-sm);
+  background: var(--au-color-surface-canvas);
+  cursor: pointer;
+  transition:
+    border-color var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out),
+    transform var(--au-duration-short) var(--au-ease-emph);
+}
+
+.docs-theme-toggle:hover {
+  border-color: var(--au-color-border-default);
+  background: color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
+}
+
+.docs-theme-toggle:active {
+  transform: scale(0.94);
+}
+
+.docs-theme-toggle:focus-visible {
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.docs-theme-toggle__emoji {
+  font-size: 1.125rem;
+  line-height: 1;
 }
 
 .docs-layout {

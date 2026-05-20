@@ -61,6 +61,7 @@ const radioOptions: RadioOption[] = [
 // —— Button ——
 
 @Component({
+  selector: 'docs-example-button-primary',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `<au-button variant="primary">Guardar</au-button>`,
@@ -68,6 +69,7 @@ const radioOptions: RadioOption[] = [
 export class ExampleButtonPrimaryDemo {}
 
 @Component({
+  selector: 'docs-example-button-secondary',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `<au-button variant="secondary">Cancelar</au-button>`,
@@ -75,6 +77,7 @@ export class ExampleButtonPrimaryDemo {}
 export class ExampleButtonSecondaryDemo {}
 
 @Component({
+  selector: 'docs-example-button-outline',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `<au-button variant="outline">Más opciones</au-button>`,
@@ -82,6 +85,7 @@ export class ExampleButtonSecondaryDemo {}
 export class ExampleButtonOutlineDemo {}
 
 @Component({
+  selector: 'docs-example-button-ghost',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `<au-button variant="ghost">Descartar</au-button>`,
@@ -89,6 +93,7 @@ export class ExampleButtonOutlineDemo {}
 export class ExampleButtonGhostDemo {}
 
 @Component({
+  selector: 'docs-example-button-loading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `<au-button variant="primary" [loading]="true">Guardando…</au-button>`,
@@ -96,6 +101,7 @@ export class ExampleButtonGhostDemo {}
 export class ExampleButtonLoadingDemo {}
 
 @Component({
+  selector: 'docs-example-button-disabled',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `<au-button variant="primary" [disabled]="true">No disponible</au-button>`,
@@ -103,6 +109,7 @@ export class ExampleButtonLoadingDemo {}
 export class ExampleButtonDisabledDemo {}
 
 @Component({
+  selector: 'docs-example-button-sizes',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
   template: `
@@ -119,6 +126,7 @@ export class ExampleButtonSizesDemo {}
 // —— Input text ——
 
 @Component({
+  selector: 'docs-example-input-text-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputText],
   template: `<au-input-text label="Email" placeholder="tu@correo.com" style="max-width: 20rem" />`,
@@ -126,6 +134,7 @@ export class ExampleButtonSizesDemo {}
 export class ExampleInputTextBasicDemo {}
 
 @Component({
+  selector: 'docs-example-input-text-hint',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputText],
   template: `
@@ -140,6 +149,7 @@ export class ExampleInputTextBasicDemo {}
 export class ExampleInputTextHintDemo {}
 
 @Component({
+  selector: 'docs-example-input-text-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputText],
   template: `
@@ -156,6 +166,7 @@ export class ExampleInputTextErrorDemo {}
 // —— Textarea ——
 
 @Component({
+  selector: 'docs-example-textarea-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTextarea],
   template: `<au-textarea label="Comentario" [rows]="3" placeholder="Escribe aquí…" style="max-width: 24rem" />`,
@@ -163,6 +174,7 @@ export class ExampleInputTextErrorDemo {}
 export class ExampleTextareaBasicDemo {}
 
 @Component({
+  selector: 'docs-example-textarea-hint',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTextarea],
   template: `
@@ -179,6 +191,7 @@ export class ExampleTextareaHintDemo {}
 // —— Checkbox ——
 
 @Component({
+  selector: 'docs-example-checkbox-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
   template: `<au-checkbox label="Acepto los términos" />`,
@@ -186,6 +199,7 @@ export class ExampleTextareaHintDemo {}
 export class ExampleCheckboxBasicDemo {}
 
 @Component({
+  selector: 'docs-example-checkbox-checked',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
   template: `<au-checkbox label="Newsletter" [checked]="true" />`,
@@ -193,6 +207,7 @@ export class ExampleCheckboxBasicDemo {}
 export class ExampleCheckboxCheckedDemo {}
 
 @Component({
+  selector: 'docs-example-checkbox-indeterminate',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
   template: `<au-checkbox label="Seleccionar todo" [indeterminate]="true" />`,
@@ -202,6 +217,7 @@ export class ExampleCheckboxIndeterminateDemo {}
 // —— Switch ——
 
 @Component({
+  selector: 'docs-example-switch-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSwitch],
   template: `<au-switch label="Notificaciones push" />`,
@@ -209,6 +225,7 @@ export class ExampleCheckboxIndeterminateDemo {}
 export class ExampleSwitchBasicDemo {}
 
 @Component({
+  selector: 'docs-example-switch-disabled',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSwitch],
   template: `<au-switch label="Modo avión" [checked]="true" [disabled]="true" />`,
@@ -218,6 +235,7 @@ export class ExampleSwitchDisabledDemo {}
 // —— Select / Autocomplete ——
 
 @Component({
+  selector: 'docs-example-select-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSelect],
   template: `
@@ -229,6 +247,7 @@ export class ExampleSelectBasicDemo {
 }
 
 @Component({
+  selector: 'docs-example-autocomplete-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuAutocomplete],
   template: `
@@ -247,6 +266,7 @@ export class ExampleAutocompleteBasicDemo {
 // —— Radio / Number / Date ——
 
 @Component({
+  selector: 'docs-example-radio-group-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuRadioGroup],
   template: `<au-radio-group label="Plan" [options]="options" />`,
@@ -256,6 +276,7 @@ export class ExampleRadioGroupBasicDemo {
 }
 
 @Component({
+  selector: 'docs-example-input-number-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputNumber],
   template: `<au-input-number label="Cantidad" [min]="0" [max]="10" style="max-width: 12rem" />`,
@@ -263,6 +284,7 @@ export class ExampleRadioGroupBasicDemo {
 export class ExampleInputNumberBasicDemo {}
 
 @Component({
+  selector: 'docs-example-input-date-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuInputDate],
   template: `<au-input-date label="Fecha de entrega" style="max-width: 14rem" />`,
@@ -272,6 +294,7 @@ export class ExampleInputDateBasicDemo {}
 // —— Dialog ——
 
 @Component({
+  selector: 'docs-example-dialog-confirm',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuDialog, AuDialogFooter],
   template: `
@@ -292,6 +315,7 @@ export class ExampleDialogConfirmDemo {
 // —— Card ——
 
 @Component({
+  selector: 'docs-example-card-elevated',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard],
   template: `
@@ -304,6 +328,7 @@ export class ExampleDialogConfirmDemo {
 export class ExampleCardElevatedDemo {}
 
 @Component({
+  selector: 'docs-example-card-outlined',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard],
   template: `
@@ -316,6 +341,7 @@ export class ExampleCardElevatedDemo {}
 export class ExampleCardOutlinedDemo {}
 
 @Component({
+  selector: 'docs-example-card-filled-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard, AuCardFooter, AuButton],
   template: `
@@ -333,6 +359,7 @@ export class ExampleCardFilledFooterDemo {}
 // —— Tabs ——
 
 @Component({
+  selector: 'docs-example-tabs-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
@@ -351,6 +378,7 @@ export class ExampleTabsBasicDemo {
 // —— Chip ——
 
 @Component({
+  selector: 'docs-example-chip-filled',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
   template: `<au-chip label="Angular" />`,
@@ -358,6 +386,7 @@ export class ExampleTabsBasicDemo {
 export class ExampleChipFilledDemo {}
 
 @Component({
+  selector: 'docs-example-chip-outline',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
   template: `<au-chip label="TypeScript" variant="outline" />`,
@@ -365,6 +394,7 @@ export class ExampleChipFilledDemo {}
 export class ExampleChipOutlineDemo {}
 
 @Component({
+  selector: 'docs-example-chip-removable',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
   template: `<au-chip label="Filtro activo" variant="accent" [removable]="true" />`,
@@ -374,6 +404,7 @@ export class ExampleChipRemovableDemo {}
 // —— Snackbar ——
 
 @Component({
+  selector: 'docs-example-snackbar-success',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
@@ -386,6 +417,7 @@ export class ExampleSnackbarSuccessDemo {
 }
 
 @Component({
+  selector: 'docs-example-snackbar-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
@@ -400,6 +432,7 @@ export class ExampleSnackbarErrorDemo {
 // —— Divider ——
 
 @Component({
+  selector: 'docs-example-divider-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuDivider],
   template: `
@@ -414,6 +447,7 @@ export class ExampleSnackbarErrorDemo {
 export class ExampleDividerBasicDemo {}
 
 @Component({
+  selector: 'docs-example-divider-label',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuDivider],
   template: `<au-divider label="o continúa con" style="max-width: 18rem" />`,
@@ -423,6 +457,7 @@ export class ExampleDividerLabelDemo {}
 // —— Tooltip ——
 
 @Component({
+  selector: 'docs-example-tooltip-top',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
@@ -434,6 +469,7 @@ export class ExampleDividerLabelDemo {}
 export class ExampleTooltipTopDemo {}
 
 @Component({
+  selector: 'docs-example-tooltip-right',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
