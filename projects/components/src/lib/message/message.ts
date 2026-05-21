@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
+import { AuIcon, type AuIconName } from '../icon/icon';
+
 export type AuMessageVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 
 /**
@@ -7,10 +9,10 @@ export type AuMessageVariant = 'default' | 'success' | 'warning' | 'error' | 'in
  *
  * @remarks
  * - **Variants:** default, success, warning, error, info (semantic surfaces from tokens).
- * - **Icons:** Material-style glyphs (`check_circle`, `warning`, `error`, `info`); `default` has none.
+ * - **Icons:** {@link AuIcon} Material-style glyphs; `default` has none.
  * - **Content:** `message` input or projected default slot; optional `title`.
  * - **Dismissible:** optional close control emits `dismiss`.
- * - **Accessibility:** `role="alert"` for error/warning; `role="status"` for default/success/info.
+ * - **Accessibility:** `role` on the inner surface — `alert` (error/warning) or `status` (default/success/info).
  *
  * @example
  * ```html
@@ -22,41 +24,48 @@ export type AuMessageVariant = 'default' | 'success' | 'warning' | 'error' | 'in
  */
 @Component({
   selector: 'au-message',
+  imports: [AuIcon],
   templateUrl: './message.html',
   styleUrl: './message.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-message',
     '[attr.data-au-variant]': 'variant()',
-    '[attr.role]': 'liveRole()',
   },
 })
 export class AuMessage {
-  /** Visual tone: neutral or semantic state. */
   readonly variant = input<AuMessageVariant>('default');
 
-  /** Optional heading above the body text. */
   readonly title = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
 
-  /** Body copy when not using projected content. */
   readonly message = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
 
-  /** Shows a dismiss button and emits `dismiss` when activated. */
   readonly dismissible = input(false);
 
-  /** Accessible name for the dismiss control. */
   readonly closeAriaLabel = input<string, string>('Dismiss message', {
     transform: (v) => (v == null ? '' : String(v)),
   });
 
-  /** When false, hides the semantic icon (success, warning, error, info). `default` never shows an icon. */
   readonly showIcon = input(true);
 
-  /** Emits when the user dismisses a dismissible message. */
   readonly dismiss = output<void>();
 
-  /** Semantic variants only; `default` has no leading icon. */
   readonly showVariantIcon = computed(() => this.showIcon() && this.variant() !== 'default');
+
+  readonly variantIcon = computed((): AuIconName | null => {
+    switch (this.variant()) {
+      case 'success':
+        return 'check-circle';
+      case 'warning':
+        return 'warning';
+      case 'error':
+        return 'error';
+      case 'info':
+        return 'info';
+      default:
+        return null;
+    }
+  });
 
   readonly resolvedTitle = computed(() => this.title().trim());
 

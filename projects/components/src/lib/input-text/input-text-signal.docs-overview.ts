@@ -16,8 +16,9 @@ Storybook’s docs extractor can fail on advanced directive trees. This host kee
 |-------|------|
 | \`signal({ email: '' })\` | Holds the model |
 | \`form(data, schema)\` | Builds \`fieldRoot\` with validators |
+| \`au-form-field\` | Label, hint, and error chrome |
 | \`FormField\` + \`[formField]="fieldRoot.email"\` | Connects the input to the schema |
-| \`au-input-text\` | Renders UI; receives \`errors\` / \`invalid\` from the directive |
+| \`au-input-text\` | Control only; receives \`errors\` / \`invalid\` from the directive |
 
 ## Try it
 

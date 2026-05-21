@@ -177,13 +177,16 @@ export class GetStartedPage {
  @import '@aurea-design-system/components/styles/au-field-error.css';
  @import '@aurea-design-system/components/styles/au-field-listbox.css';`;
 
-  readonly componentSnippet = `import { AuButton, AuCheckbox } from '@aurea-design-system/components';
+  readonly componentSnippet = `import { AuButton, AuCheckbox, AuFormField, AuInputText } from '@aurea-design-system/components';
 
 @Component({
-  imports: [AuButton, AuCheckbox],
+  imports: [AuButton, AuCheckbox, AuFormField, AuInputText],
   template: \`
-    <au-button variant="primary">Guardar</au-button>
+    <au-form-field label="Email" [required]="true">
+      <au-input-text type="email" placeholder="tu@correo.com" />
+    </au-form-field>
     <au-checkbox label="Recordarme" />
+    <au-button variant="primary">Guardar</au-button>
   \`,
 })
 export class ProfileForm {}`;

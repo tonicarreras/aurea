@@ -1,116 +1,91 @@
-<div class="au-select__field">
-  @if (label()) {
-    <div class="au-select__label-host">
-      <label class="au-select__label" [attr.for]="resolvedId()">
-        {{ label() }}
-        @if (required() && showRequired()) {
-          <span class="au-select__required" aria-hidden="true" title="Required">*</span>
-          <span class="au-sr-only">(required)</span>
-        }
-      </label>
-    </div>
-  }
-
-  <div class="au-select__control-wrap">
-    <div
-      class="au-select__control-row"
-      [class.au-select__control-row--open]="listboxVisible()"
-      [class.au-select__control-row--from-tab]="fieldFocusByTab()"
-      (focusin)="onControlRowFocusin()"
-      (focusout)="onControlRowFocusout($event)"
+<div class="au-select__control-wrap">
+  <div
+    class="au-select__control-row"
+    [class.au-select__control-row--open]="listboxVisible()"
+    [class.au-select__control-row--from-tab]="fieldFocusByTab()"
+    (focusin)="onControlRowFocusin()"
+    (focusout)="onControlRowFocusout($event)"
+  >
+    <button
+      #triggerEl
+      type="button"
+      class="au-select__trigger"
+      role="combobox"
+      [id]="controlId()"
+      [attr.aria-expanded]="listboxVisible()"
+      [attr.aria-controls]="listboxId()"
+      [attr.aria-activedescendant]="activeDescendantId()"
+      [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+      [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
+      [attr.aria-describedby]="ariaDescribedBy() ?? null"
+      [attr.aria-required]="required() ? 'true' : null"
+      [disabled]="disabled() || readOnly()"
+      (click)="onTriggerClick()"
+      (keydown)="onKeydown($event)"
+      (blur)="onBlurHost()"
     >
-      <button
-        #triggerEl
-        type="button"
-        class="au-select__trigger"
-        role="combobox"
-        [id]="resolvedId()"
-        [attr.aria-expanded]="listboxVisible()"
-        [attr.aria-controls]="listboxId()"
-        [attr.aria-activedescendant]="activeDescendantId()"
-        [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
-        [attr.aria-errormessage]="isInvalid() ? errorId() : null"
-        [attr.aria-describedby]="ariaDescribedBy() ?? null"
-        [attr.aria-required]="required() ? 'true' : null"
-        [disabled]="disabled() || readOnly()"
-        (click)="onTriggerClick()"
-        (keydown)="onKeydown($event)"
-        (blur)="onBlurHost()"
+      <span
+        class="au-select__value"
+        [class.au-select__value--placeholder]="showingPlaceholder()"
       >
-        <span
-          class="au-select__value"
-          [class.au-select__value--placeholder]="showingPlaceholder()"
-        >
-          {{ triggerLabel() }}
-        </span>
-      </button>
-
-      <span class="au-select__icon" aria-hidden="true">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M3 4.5L6 7.5L9 4.5"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        {{ triggerLabel() }}
       </span>
-    </div>
+    </button>
 
-    @if (listboxVisible()) {
-      <ul
-        #listboxEl
-        [id]="listboxId()"
-        class="au-select__listbox au-field-listbox"
-        role="listbox"
-        [attr.aria-label]="label() || 'Options'"
-      >
-        @if (hasPlaceholder()) {
-          <li
-            [id]="placeholderOptionId()"
-            class="au-field-listbox__option au-field-listbox__option--placeholder"
-            role="option"
-            [attr.aria-selected]="value() === null"
-            [class.au-field-listbox__option--active]="highlightedIndex() === placeholderOptionIndex()"
-            (mouseenter)="onOptionPointerEnter(placeholderOptionIndex())"
-            (mousedown)="onPlaceholderPointerDown($event)"
-          >
-            {{ placeholder() }}
-          </li>
-        }
-        @for (opt of options(); track opt.value; let i = $index) {
-          <li
-            [id]="optionId(i)"
-            class="au-field-listbox__option"
-            role="option"
-            [attr.aria-selected]="value() === opt.value"
-            [attr.aria-disabled]="opt.disabled ? 'true' : null"
-            [class.au-field-listbox__option--active]="highlightedIndex() === optionListIndex(i)"
-            [class.au-field-listbox__option--selected]="value() === opt.value"
-            [class.au-field-listbox__option--disabled]="opt.disabled"
-            (mouseenter)="onOptionPointerEnter(optionListIndex(i), opt)"
-            (mousedown)="onOptionPointerDown($event, opt)"
-          >
-            {{ opt.label }}
-          </li>
-        }
-      </ul>
-    }
+    <span class="au-select__icon" aria-hidden="true">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3 4.5L6 7.5L9 4.5"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
   </div>
 
-  @if (name()) {
-    <input type="hidden" [name]="name()" [value]="value() ?? ''" />
-  }
-
-  @if (hint().trim()) {
-    <p [id]="hintId()" class="au-select__hint">{{ hint() }}</p>
-  }
-
-  @if (isInvalid()) {
-    <div [id]="errorId()" class="au-field-error" role="alert">
-      <span class="au-field-error__glyph" aria-hidden="true">×</span>
-      <span class="au-field-error__text">{{ displayError() }}</span>
-    </div>
+  @if (listboxVisible()) {
+    <ul
+      #listboxEl
+      [id]="listboxId()"
+      class="au-select__listbox au-field-listbox"
+      role="listbox"
+      [attr.aria-label]="formField.label() || 'Options'"
+    >
+      @if (hasPlaceholder()) {
+        <li
+          [id]="placeholderOptionId()"
+          class="au-field-listbox__option au-field-listbox__option--placeholder"
+          role="option"
+          [attr.aria-selected]="value() === null"
+          [class.au-field-listbox__option--active]="highlightedIndex() === placeholderOptionIndex()"
+          (mouseenter)="onOptionPointerEnter(placeholderOptionIndex())"
+          (mousedown)="onPlaceholderPointerDown($event)"
+        >
+          {{ placeholder() }}
+        </li>
+      }
+      @for (opt of options(); track opt.value; let i = $index) {
+        <li
+          [id]="optionId(i)"
+          class="au-field-listbox__option"
+          role="option"
+          [attr.aria-selected]="value() === opt.value"
+          [attr.aria-disabled]="opt.disabled ? 'true' : null"
+          [class.au-field-listbox__option--active]="highlightedIndex() === optionListIndex(i)"
+          [class.au-field-listbox__option--selected]="value() === opt.value"
+          [class.au-field-listbox__option--disabled]="opt.disabled"
+          (mouseenter)="onOptionPointerEnter(optionListIndex(i), opt)"
+          (mousedown)="onOptionPointerDown($event, opt)"
+        >
+          {{ opt.label }}
+        </li>
+      }
+    </ul>
   }
 </div>
+
+@if (name()) {
+  <input type="hidden" [name]="name()" [value]="value() ?? ''" />
+}

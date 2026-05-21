@@ -39,7 +39,8 @@
               "coverageExclude": [
                 "projects/components/src/lib/**/*.stories.ts",
                 "projects/components/src/lib/**/*.docs-overview.ts",
-                "projects/components/src/lib/**/*-story-host.ts"
+                "projects/components/src/lib/**/*-story-host.ts",
+                "projects/components/src/lib/**/form-field.harness.ts"
               ],
               "coverageThresholds": {
                 "statements": 100,

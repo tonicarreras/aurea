@@ -190,19 +190,9 @@ button.au-button__element {
   pointer-events: none;
 }
 
-.au-button__spinner-icon {
+.au-button__spinner au-icon {
   width: 1em;
   height: 1em;
-  animation: au-button-spin 1s linear infinite;
-}
-
-@keyframes au-button-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -210,9 +200,7 @@ button.au-button__element {
 /* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .au-button__element,
-  .au-button__spinner-icon {
+  .au-button__element {
     transition: none;
-    animation: none;
   }
 }

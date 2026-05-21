@@ -6,29 +6,29 @@ import {
 import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
-{
-      title: 'Con límites',
-      demoComponent: ExampleInputNumberBasicDemo,
-      code: `<au-input-number label="Quantity" [min]="0" [max]="10" />`,
-    },
-    {
-      title: 'With error',
-      demoComponent: ExampleInputNumberErrorDemo,
-      code: `<au-input-number
+  {
+    title: 'With limits',
+    demoComponent: ExampleInputNumberBasicDemo,
+    code: `<au-form-field label="Quantity">
+  <au-input-number [min]="0" [max]="10" />
+</au-form-field>`,
+  },
+  {
+    title: 'With error',
+    demoComponent: ExampleInputNumberErrorDemo,
+    code: `<au-form-field
   label="Quantity"
-  [min]="1"
-  [max]="10"
   errorMessage="Enter a value between 1 and 10."
-/>`,
-    },
-    {
-      title: 'With hint',
-      demoComponent: ExampleInputNumberHintDemo,
-      code: `<au-input-number
-  label="Units"
-  [min]="0"
-  [max]="99"
-  hint="Maximum 99 per order."
-/>`,
-    },
+  [invalid]="true"
+>
+  <au-input-number [min]="1" [max]="10" />
+</au-form-field>`,
+  },
+  {
+    title: 'With hint',
+    demoComponent: ExampleInputNumberHintDemo,
+    code: `<au-form-field label="Units" hint="Maximum 99 per order.">
+  <au-input-number [min]="0" [max]="99" />
+</au-form-field>`,
+  },
 ];

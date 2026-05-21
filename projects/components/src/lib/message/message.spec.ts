@@ -20,20 +20,25 @@ describe('AuMessage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('defaults to default variant and status role', () => {
+  it('defaults to default variant and status role on surface', () => {
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('default');
-    expect(host.getAttribute('role')).toBe('status');
+    expect(host.querySelector('.au-message__surface')?.getAttribute('role')).toBe('status');
+    expect(host.getAttribute('role')).toBeNull();
   });
 
-  it('uses alert role for error and warning', () => {
+  it('uses alert role on surface for error and warning', () => {
     fixture.componentRef.setInput('variant', 'error');
     fixture.detectChanges();
-    expect(fixture.nativeElement.getAttribute('role')).toBe('alert');
+    expect(fixture.nativeElement.querySelector('.au-message__surface')?.getAttribute('role')).toBe(
+      'alert',
+    );
 
     fixture.componentRef.setInput('variant', 'warning');
     fixture.detectChanges();
-    expect(fixture.nativeElement.getAttribute('role')).toBe('alert');
+    expect(fixture.nativeElement.querySelector('.au-message__surface')?.getAttribute('role')).toBe(
+      'alert',
+    );
   });
 
   it('renders title and message', () => {
@@ -99,6 +104,21 @@ describe('AuMessage', () => {
     fixture.componentRef.setInput('variant', 'success');
     fixture.detectChanges();
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');
+  });
+
+  it('variantIcon is null for default variant', () => {
+    fixture.componentRef.setInput('variant', 'default');
+    fixture.detectChanges();
+    expect(component.variantIcon()).toBeNull();
+  });
+
+  it('maps variant to icon names', () => {
+    fixture.componentRef.setInput('variant', 'info');
+    fixture.detectChanges();
+    expect(component.variantIcon()).toBe('info');
+    fixture.componentRef.setInput('variant', 'warning');
+    fixture.detectChanges();
+    expect(component.variantIcon()).toBe('warning');
   });
 
   it('treats null title and message as empty', () => {

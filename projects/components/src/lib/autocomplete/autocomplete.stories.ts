@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field/form-field-story-chrome';
 import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
 
 const cities: AuAutocompleteOption[] = [
@@ -12,7 +19,23 @@ const cities: AuAutocompleteOption[] = [
   { value: 'agp', label: 'Málaga' },
 ];
 
-const meta: Meta<AuAutocomplete> = {
+interface AutocompleteStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  options: AuAutocompleteOption[];
+  disabled: boolean;
+  readOnly: boolean;
+  minFilterLength: number;
+  strictSelection: boolean;
+  caseSensitive: boolean;
+  size: 'sm' | 'md' | 'lg';
+  name: string;
+  errors: readonly unknown[];
+}
+
+const meta: Meta<AutocompleteStoryArgs> = {
   title: 'Aurea/Autocomplete',
   component: AuAutocomplete,
   tags: ['autodocs', 'au'],
@@ -21,6 +44,7 @@ const meta: Meta<AuAutocomplete> = {
     docs: { extractArgTypes: () => ({}) },
   },
   argTypes: {
+    ...fieldChromeArgTypes,
     value: {
       control: 'text',
       description: 'Selected option `value` (`string | null`).',
@@ -28,26 +52,57 @@ const meta: Meta<AuAutocomplete> = {
     },
     valueChange: { table: { category: 'Events' } },
     blur: { table: { category: 'Events' } },
-    label: { control: 'text', table: { category: 'Chrome' } },
-    hint: { control: 'text', table: { category: 'Chrome' } },
-    placeholder: { control: 'text', table: { category: 'Chrome' } },
+    placeholder: { control: 'text', table: { category: 'Field' } },
     options: { control: false, table: { category: 'Field' } },
     errors: { control: false, table: { category: 'Validation' } },
     minFilterLength: { control: 'number', table: { category: 'Field' } },
     strictSelection: { control: 'boolean', table: { category: 'Field' } },
+    caseSensitive: { control: 'boolean', table: { category: 'Field' } },
     size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },
-    errorMessage: { control: 'text', table: { category: 'Validation' } },
-    invalid: { control: 'boolean', table: { category: 'Validation' } },
-    required: { control: 'boolean', table: { category: 'Validation' } },
-  },
+    disabled: { control: 'boolean', table: { category: 'Field' } },
+    readOnly: { control: 'boolean', table: { category: 'Field' } },
+    name: { control: 'text', table: { category: 'Field' } },
+  } as Meta<AutocompleteStoryArgs>['argTypes'],
   args: {
+    ...defaultFieldChromeArgs,
     valueChange: fn(),
     blur: fn(),
+    value: null,
+    placeholder: '',
+    options: [],
+    disabled: false,
+    readOnly: false,
+    minFilterLength: 0,
+    strictSelection: true,
+    caseSensitive: false,
+    size: 'md',
+    name: '',
+    errors: [],
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuAutocomplete],
+      args,
+      `<au-autocomplete
+  [(value)]="value"
+  [options]="options"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [minFilterLength]="minFilterLength"
+  [strictSelection]="strictSelection"
+  [caseSensitive]="caseSensitive"
+  [size]="size"
+  [name]="name"
+  [invalid]="invalid"
+  [errors]="$any(errors)"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuAutocomplete>;
+type Story = StoryObj<AutocompleteStoryArgs>;
 
 function getCombobox(canvasElement: HTMLElement, name: string | RegExp) {
   return within(canvasElement).getByRole('combobox', { name });
@@ -88,6 +143,7 @@ export const WithError: Story = {
     label: 'City',
     options: cities,
     errorMessage: 'Choose a city from the list.',
+    invalid: true,
   },
   play: async ({ canvasElement }) => {
     const combo = getCombobox(canvasElement, /City/);

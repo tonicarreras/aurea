@@ -12,6 +12,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from './dialog-footer.directive';
 import {
   focusInitialInDialogPanel,
@@ -42,6 +43,7 @@ import {
  */
 @Component({
   selector: 'au-dialog',
+  imports: [AuIcon],
   templateUrl: './dialog.html',
   styleUrl: './dialog.css',
   encapsulation: ViewEncapsulation.None,

@@ -5,45 +5,46 @@ import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuSelect, AuSelectOption } from './select';
+import {
+  AuSelectTestHost,
+  applyFieldHarnessInputs,
+  createFieldFixture,
+  queryControl,
+} from '../form-field/form-field-test-support';
 
 describe('AuSelect', () => {
+  function CONTROL(fixture: ComponentFixture<AuSelectTestHost>) {
+    return queryControl(fixture, AuSelect);
+  }
+
   const testOptions: AuSelectOption[] = [
     { value: 'opt1', label: 'Option One' },
     { value: 'opt2', label: 'Option Two' },
     { value: 'opt3', label: 'Option Three' },
   ];
 
-  function queryTrigger(fixture: ComponentFixture<AuSelect>): HTMLButtonElement {
+  function queryTrigger(fixture: ComponentFixture<AuSelectTestHost>): HTMLButtonElement {
     return fixture.debugElement.query(By.css('.au-select__trigger'))!.nativeElement as HTMLButtonElement;
   }
 
-  function keydown(fixture: ComponentFixture<AuSelect>, key: string): void {
+  function keydown(fixture: ComponentFixture<AuSelectTestHost>, key: string): void {
     queryTrigger(fixture).dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
     fixture.detectChanges();
   }
 
-  function openListbox(fixture: ComponentFixture<AuSelect>): void {
+  function openListbox(fixture: ComponentFixture<AuSelectTestHost>): void {
     queryTrigger(fixture).click();
     fixture.detectChanges();
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuSelect],
+      imports: [AuSelectTestHost],
     }).compileComponents();
   });
 
-  it('resolves triggerEl view child after render', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    expect(fix.componentInstance['triggerEl']().nativeElement).toBe(queryTrigger(fix));
-  });
-
   it('portals listbox to document.body while open', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     queryTrigger(fix).click();
     fix.detectChanges();
     const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!.nativeElement as HTMLElement;
@@ -51,67 +52,88 @@ describe('AuSelect', () => {
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(true);
   });
 
+  it('listboxNative returns undefined when the listbox node is not in the document', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    openListbox(fix);
+    const spy = vi.spyOn(document, 'getElementById').mockReturnValue(null);
+    expect(CONTROL(fix)['listboxNative']()).toBeUndefined();
+    spy.mockRestore();
+  });
+
   it('binds value when an option is chosen', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     queryTrigger(fix).click();
     fix.detectChanges();
     const option = fix.debugElement.queryAll(By.css('.au-field-listbox__option'))[1]!.nativeElement;
     option.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     fix.detectChanges();
-    expect(fix.componentInstance.value()).toBe('opt2');
+    expect(CONTROL(fix).value()).toBe('opt2');
+  });
+
+  it('coerces numeric placeholder through transform', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.placeholder = 42 as unknown as string;
+    });
+    expect(CONTROL(fix).placeholder()).toBe('42');
+  });
+
+  it('normalizes nullish placeholder transform', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.placeholder = null as unknown as string;
+    });
+    expect(CONTROL(fix).placeholder()).toBe('');
   });
 
   it('sets null when placeholder option is chosen', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.componentRef.setInput('value', 'opt1');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+    f.componentInstance.value = 'opt1';
+});
     queryTrigger(fix).click();
     fix.detectChanges();
     const placeholder = fix.debugElement.query(By.css('.au-field-listbox__option--placeholder'))!
       .nativeElement;
     placeholder.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     fix.detectChanges();
-    expect(fix.componentInstance.value()).toBeNull();
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('inputDisplay is empty when value is null', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    expect(fix.componentInstance.inputDisplay()).toBe('');
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    expect(CONTROL(fix).inputDisplay()).toBe('');
   });
 
   it('inputDisplay returns the current value string', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('value', 'opt2');
-    fix.detectChanges();
-    expect(fix.componentInstance.inputDisplay()).toBe('opt2');
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.value = 'opt2';
+});
+    expect(CONTROL(fix).inputDisplay()).toBe('opt2');
   });
 
   it('emits valueChange via outputToObservable', async () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    const comp = fix.componentInstance;
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    });
+    const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
     );
-    fix.componentInstance.selectOption(testOptions[2]!);
+    CONTROL(fix).selectOption(testOptions[2]!);
     const v = await p;
     expect(v).toBe('opt3');
   });
 
   it('shows error, aria-errormessage, and invalid on the combobox', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('id', 'f-select');
-    fix.componentRef.setInput('errorMessage', 'This field is required');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    applyFieldHarnessInputs(f, { controlId: 'f-select' });
+    applyFieldHarnessInputs(f, { errorMessage: 'This field is required' });
+    });
     const trigger = queryTrigger(fix);
     expect(trigger.getAttribute('aria-invalid')).toBe('true');
     expect(trigger.getAttribute('aria-errormessage')).toBe('f-select-error');
@@ -120,24 +142,25 @@ describe('AuSelect', () => {
   });
 
   it('does not emit when disabled and changing', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    const comp = fix.componentInstance;
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.disabled = true;
+    });
+    const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () => outputToObservable(comp.valueChange).subscribe(() => n++));
     fix.detectChanges();
-    fix.componentInstance.selectOption(testOptions[1]!);
+    CONTROL(fix).selectOption(testOptions[1]!);
     sub.unsubscribe();
     expect(n).toBe(0);
   });
 
   it('renders placeholder option when provided', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Select one...');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Select one...';
+});
     queryTrigger(fix).click();
     fix.detectChanges();
     const options = fix.debugElement.queryAll(By.css('.au-field-listbox__option'));
@@ -150,9 +173,7 @@ describe('AuSelect', () => {
       { value: 'opt1', label: 'Option One' },
       { value: 'opt2', label: 'Option Two', disabled: true },
     ];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', optionsWithDisabled);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = optionsWithDisabled; });
     queryTrigger(fix).click();
     fix.detectChanges();
     const options = fix.debugElement.queryAll(By.css('.au-field-listbox__option'));
@@ -160,155 +181,151 @@ describe('AuSelect', () => {
   });
 
   it('renders label when provided', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('label', 'Choose option');
-    fix.detectChanges();
-    const label = fix.debugElement.query(By.css('.au-select__label'));
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    applyFieldHarnessInputs(f, { label: 'Choose option' });
+    });
+    const label = fix.debugElement.query(By.css('.au-form-field__label'));
     expect(label?.nativeElement.textContent).toContain('Choose option');
   });
 
   it('sets hint and aria-describedby on the select', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('hint', 'Pick any');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    applyFieldHarnessInputs(f, { hint: 'Pick any' });
+    });
     const trigger = queryTrigger(fix);
-    const hint = fix.debugElement.query(By.css('.au-select__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
     expect(trigger.getAttribute('aria-describedby')).toBe(hint.id);
     expect(hint.textContent?.trim()).toBe('Pick any');
   });
 
+  it('onControlRowFocusin runs', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+    });
+    (CONTROL(fix) as unknown as { onControlRowFocusin(): void }).onControlRowFocusin();
+  });
+
   it('emits blur from trigger blur', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    });
     let n = 0;
-    fix.componentInstance.blur.subscribe(() => n++);
+    CONTROL(fix).blur.subscribe(() => n++);
     fix.detectChanges();
     queryTrigger(fix).dispatchEvent(new FocusEvent('blur'));
     expect(n).toBe(1);
   });
 
   it('focus() focuses the combobox trigger', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     const trigger = queryTrigger(fix);
     const spy = vi.spyOn(trigger, 'focus');
-    fix.componentInstance.focus();
+    CONTROL(fix).focus();
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });
 
   it('shows displayError from errors when no manual message', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('errors', [{ kind: 'required', message: 'Field required' }] as any);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.errors = [{ kind: 'required', message: 'Field required' }] as any;
+    });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Field required');
   });
 
   it('falls back to kind when message missing', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('errors', [{ kind: 'broken' }] as any);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.errors = [{ kind: 'broken' }] as any;
+    });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('broken');
   });
 
   it('marks aria-invalid when invalid without visible error', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('invalid', true);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.invalid = true;
+});
     expect(queryTrigger(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
   it('hides required asterisk when showRequired is false', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('label', 'Country');
-    fix.componentRef.setInput('required', true);
-    fix.componentRef.setInput('showRequired', false);
-    fix.detectChanges();
-    const label = fix.debugElement.query(By.css('.au-select__label'))!.nativeElement;
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    applyFieldHarnessInputs(f, { label: 'Country' });
+    f.componentInstance.required = true;
+    f.componentRef.setInput('ffShowRequired', false);
+    });
+    const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
     expect(label.textContent).not.toContain('*');
   });
 
   it('omits placeholder option when placeholder empty', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     queryTrigger(fix).click();
     fix.detectChanges();
     expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(3);
   });
 
   it('exposes autocomplete attribute input', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('autocomplete', 'country');
-    fix.detectChanges();
-    expect(fix.componentInstance.autocomplete()).toBe('country');
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.autocomplete = 'country' as string;
+});
+    expect(CONTROL(fix).autocomplete()).toBe('country');
   });
 
   it('uses explicit id when provided', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('id', 'custom-select');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    applyFieldHarnessInputs(f, { controlId: 'custom-select' });
+    });
     expect(queryTrigger(fix).id).toBe('custom-select');
   });
 
   it('renders hidden name input for form posts', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('name', 'country');
-    fix.componentRef.setInput('value', 'opt2');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.name = 'country';
+    f.componentInstance.value = 'opt2';
+});
     const hidden = fix.debugElement.query(By.css('input[type="hidden"]'))!.nativeElement as HTMLInputElement;
     expect(hidden.name).toBe('country');
     expect(hidden.value).toBe('opt2');
   });
 
   it('generates id when id omitted', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    expect(queryTrigger(fix).id.startsWith('au-select-')).toBe(true);
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    expect(queryTrigger(fix).id.startsWith('au-field-')).toBe(true);
   });
 
   it('onControlRowFocusout ignores non-HTMLElement currentTarget', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    fix.componentInstance.onControlRowFocusout({ currentTarget: {} } as FocusEvent);
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
   it('onControlRowFocusout returns when focus stays inside control row', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
     const trigger = queryTrigger(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: trigger });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
-    fix.componentInstance.onControlRowFocusout(ev);
+    CONTROL(fix).onControlRowFocusout(ev);
   });
 
   it('prefers manual errorMessage over errors', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('errorMessage', 'Manual');
-    fix.componentRef.setInput('errors', [{ kind: 'x', message: 'ignored' }] as any);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    applyFieldHarnessInputs(f, { errorMessage: 'Manual' });
+    f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
+    });
     expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
   });
 
   it('applies and clears from-tab on control row', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement.query(By.css('.au-select__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
@@ -316,63 +333,41 @@ describe('AuSelect', () => {
     expect(row.classList.contains('au-select__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
-    fix.componentInstance.onControlRowFocusout(out);
+    CONTROL(fix).onControlRowFocusout(out);
     fix.detectChanges();
     expect(row.classList.contains('au-select__control-row--from-tab')).toBe(false);
   });
 
-  it('normalizes nullish string inputs in transforms', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('label', null as unknown as string);
-    fix.componentRef.setInput('hint', undefined as unknown as string);
-    fix.componentRef.setInput('errorMessage', null as unknown as string);
-    fix.componentRef.setInput('placeholder', undefined as unknown as string);
-    fix.detectChanges();
-    expect(fix.componentInstance.label()).toBe('');
-    expect(fix.componentInstance.hint()).toBe('');
-    expect(fix.componentInstance.errorMessage()).toBe('');
-    expect(fix.componentInstance.placeholder()).toBe('');
-  });
-
   it('displayError returns empty when first error has no usable message or kind', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('errors', [{ message: '', kind: '' }] as any);
-    fix.detectChanges();
-    expect(fix.componentInstance.displayError()).toBe('');
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.errors = [{ message: '', kind: '' }] as any;
+    });
+    expect(CONTROL(fix).displayError()).toBe('');
   });
 
   it('keyboard ArrowDown and Enter selects option', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     keydown(fix, 'ArrowDown');
     keydown(fix, 'Enter');
-    expect(fix.componentInstance.value()).toBe('opt1');
+    expect(CONTROL(fix).value()).toBe('opt1');
   });
 
   it('Space opens panel when closed', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     keydown(fix, ' ');
     expect(document.querySelector('.au-field-listbox')).toBeTruthy();
   });
 
   it('Escape closes open panel', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     keydown(fix, 'Escape');
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('Home and End move highlight', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     keydown(fix, 'End');
     expect(
@@ -385,9 +380,7 @@ describe('AuSelect', () => {
   });
 
   it('keyboard no-ops when panel closed for Home, End, Escape', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     for (const key of ['Home', 'End', 'Escape']) {
       keydown(fix, key);
     }
@@ -395,9 +388,7 @@ describe('AuSelect', () => {
   });
 
   it('ArrowUp opens panel and highlights last option', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     keydown(fix, 'ArrowUp');
     expect(
       fix.debugElement.query(By.css('.au-field-listbox__option--active'))?.nativeElement.textContent?.trim(),
@@ -405,9 +396,7 @@ describe('AuSelect', () => {
   });
 
   it('ArrowDown moves highlight when panel is already open', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     keydown(fix, 'ArrowDown');
     expect(
@@ -416,9 +405,7 @@ describe('AuSelect', () => {
   });
 
   it('ArrowDown wraps from last to first highlightable', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     keydown(fix, 'End');
     keydown(fix, 'ArrowDown');
@@ -428,9 +415,7 @@ describe('AuSelect', () => {
   });
 
   it('ArrowUp wraps from first to last highlightable', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     keydown(fix, 'Home');
     keydown(fix, 'ArrowUp');
@@ -444,9 +429,7 @@ describe('AuSelect', () => {
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
     ];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
     openListbox(fix);
     keydown(fix, 'ArrowDown');
     expect(
@@ -455,9 +438,7 @@ describe('AuSelect', () => {
   });
 
   it('trigger click toggles panel closed', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     queryTrigger(fix).click();
     fix.detectChanges();
@@ -465,50 +446,50 @@ describe('AuSelect', () => {
   });
 
   it('onKeydown is a no-op when disabled', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.disabled = true;
+});
     keydown(fix, 'ArrowDown');
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('onKeydown is a no-op when readOnly', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.readOnly = true;
+});
     keydown(fix, 'ArrowDown');
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('onTriggerClick is a no-op when disabled only', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.disabled = true;
+});
     queryTrigger(fix).click();
     fix.detectChanges();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('onTriggerClick is a no-op when readOnly only', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.readOnly = true;
+});
     queryTrigger(fix).click();
     fix.detectChanges();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('highlights placeholder row on pointer enter', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+});
     openListbox(fix);
-    fix.componentInstance.onOptionPointerEnter(0);
+    CONTROL(fix).onOptionPointerEnter(0);
     fix.detectChanges();
     expect(
       fix.debugElement.query(By.css('.au-field-listbox__option--active'))?.nativeElement.textContent?.trim(),
@@ -516,41 +497,44 @@ describe('AuSelect', () => {
   });
 
   it('does not toggle when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.detectChanges();
-    queryTrigger(fix).click();
-    fix.detectChanges();
+    const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.disabled = true;
+    });
+    queryTrigger(fixDisabled).click();
+    fixDisabled.detectChanges();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
-    fix.componentRef.setInput('disabled', false);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
-    queryTrigger(fix).click();
-    fix.detectChanges();
+
+    const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.readOnly = true;
+    });
+    queryTrigger(fixReadOnly).click();
+    fixReadOnly.detectChanges();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('openPanel is a no-op when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as { openPanel(): void };
-    comp.openPanel();
+    const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.disabled = true;
+    });
+    (CONTROL(fixDisabled) as unknown as { openPanel(): void }).openPanel();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
-    fix.componentRef.setInput('disabled', false);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
-    comp.openPanel();
+
+    const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.readOnly = true;
+    });
+    (CONTROL(fixReadOnly) as unknown as { openPanel(): void }).openPanel();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('openPanel highlights current value when reopening', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('value', 'opt2');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.value = 'opt2';
+});
     openListbox(fix);
     expect(
       fix.debugElement.query(By.css('.au-field-listbox__option--active'))?.nativeElement.textContent?.trim(),
@@ -558,22 +542,23 @@ describe('AuSelect', () => {
   });
 
   it('Enter on placeholder clears value', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.componentRef.setInput('value', 'opt1');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+    f.componentInstance.value = 'opt1';
+});
     openListbox(fix);
     keydown(fix, 'Home');
     keydown(fix, 'Enter');
-    expect(fix.componentInstance.value()).toBeNull();
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('setValue does not emit when value unchanged', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('value', 'opt1');
-    const comp = fix.componentInstance;
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.value = 'opt1';
+    });
+    const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
@@ -586,9 +571,7 @@ describe('AuSelect', () => {
   });
 
   it('highlights option on pointer enter', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     const option = fix.debugElement.queryAll(By.css('.au-field-listbox__option'))[1]!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
@@ -600,91 +583,85 @@ describe('AuSelect', () => {
 
   it('ignores pointer enter on disabled option', () => {
     const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
     openListbox(fix);
-    fix.componentInstance.onOptionPointerEnter(0, opts[0]!);
+    CONTROL(fix).onOptionPointerEnter(0, opts[0]!);
     fix.detectChanges();
     expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
   });
 
   it('ignores pointer enter when disabled or readOnly', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.detectChanges();
-    fix.componentInstance.onOptionPointerEnter(0, testOptions[0]!);
-    fix.componentRef.setInput('disabled', false);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
-    fix.componentInstance.onOptionPointerEnter(0, testOptions[0]!);
+    const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.disabled = true;
+    });
+    CONTROL(fixDisabled).onOptionPointerEnter(0, testOptions[0]!);
+
+    const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.readOnly = true;
+    });
+    CONTROL(fixReadOnly).onOptionPointerEnter(0, testOptions[0]!);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('ignores mousedown on disabled option', () => {
     const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
-    fix.componentInstance.onOptionPointerDown(new Event('mousedown'), opts[0]!);
-    expect(fix.componentInstance.value()).toBeNull();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
+    CONTROL(fix).onOptionPointerDown(new Event('mousedown'), opts[0]!);
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('ignores placeholder mousedown when readOnly', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
-    fix.componentInstance.onPlaceholderPointerDown(new Event('mousedown'));
-    expect(fix.componentInstance.value()).toBeNull();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+    f.componentInstance.readOnly = true;
+});
+    CONTROL(fix).onPlaceholderPointerDown(new Event('mousedown'));
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('onControlRowFocusout ignores focus moving into portaled listbox', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
     const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: option });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
-    fix.componentInstance.onControlRowFocusout(ev);
+    CONTROL(fix).onControlRowFocusout(ev);
     expect(document.querySelector('.au-field-listbox')).toBeTruthy();
   });
 
   it('triggerLabel is empty for unknown value', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('value', 'missing');
-    fix.detectChanges();
-    expect(fix.componentInstance.triggerLabel()).toBe('');
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.value = 'missing';
+});
+    expect(CONTROL(fix).triggerLabel()).toBe('');
   });
 
   it('showingPlaceholder is true when value is null and placeholder set', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Pick');
-    fix.detectChanges();
-    expect(fix.componentInstance.showingPlaceholder()).toBe(true);
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Pick';
+});
+    expect(CONTROL(fix).showingPlaceholder()).toBe(true);
   });
 
   it('activeDescendantId uses placeholder id when highlighted', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+});
     openListbox(fix);
     keydown(fix, 'Home');
     expect(queryTrigger(fix).getAttribute('aria-activedescendant')).toContain('-option-placeholder');
   });
 
   it('activeDescendantId is null when highlight is out of range', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    const comp = CONTROL(fix) as unknown as {
       panelOpen: { set(v: boolean): void };
       highlightedIndex: { set(v: number): void };
     };
@@ -699,44 +676,34 @@ describe('AuSelect', () => {
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
     keydown(fix, 'ArrowUp');
     expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
   });
 
   it('ArrowDown on empty list keeps highlight unset', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', []);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = []; });
     keydown(fix, 'ArrowDown');
     expect(queryTrigger(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
   it('ignores unhandled keys in onKeydown', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     keydown(fix, 'Tab');
-    expect(fix.componentInstance.value()).toBeNull();
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('Enter does not select when no highlightable option', () => {
     const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
     openListbox(fix);
     keydown(fix, 'Enter');
-    expect(fix.componentInstance.value()).toBeNull();
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('nextHighlightableIndex returns -1 when list is empty', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', []);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = []; });
+    const comp = CONTROL(fix) as unknown as {
       panelOpen: { set(v: boolean): void };
       highlightedIndex: { set(v: number): void; (): number };
     };
@@ -752,10 +719,8 @@ describe('AuSelect', () => {
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
     ];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
+    const comp = CONTROL(fix) as unknown as {
       panelOpen: { set(v: boolean): void };
       highlightedIndex: { set(v: number): void; (): number };
     };
@@ -767,10 +732,8 @@ describe('AuSelect', () => {
   });
 
   it('ArrowUp from unset highlight uses last enabled index', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    const comp = CONTROL(fix) as unknown as {
       panelOpen: { set(v: boolean): void };
       highlightedIndex: { set(v: number): void };
     };
@@ -784,11 +747,11 @@ describe('AuSelect', () => {
   });
 
   it('exposes option and placeholder id helpers', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.detectChanges();
-    const comp = fix.componentInstance;
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+});
+    const comp = CONTROL(fix);
     expect(comp.placeholderOptionIndex()).toBe(0);
     expect(comp.placeholderOptionId()).toContain('-option-placeholder');
     expect(comp.optionListIndex(1)).toBe(2);
@@ -796,17 +759,13 @@ describe('AuSelect', () => {
   });
 
   it('placeholderOptionIndex is -1 without placeholder', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    expect(fix.componentInstance.placeholderOptionIndex()).toBe(-1);
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    expect(CONTROL(fix).placeholderOptionIndex()).toBe(-1);
   });
 
   it('openPanel keeps highlight when already set', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    const comp = CONTROL(fix) as unknown as {
       panelOpen: { set(v: boolean): void };
       highlightedIndex: { set(v: number): void; (): number };
     };
@@ -820,34 +779,36 @@ describe('AuSelect', () => {
   });
 
   it('onTriggerClick returns early for disabled and readOnly guards', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.detectChanges();
-    fix.componentInstance.onTriggerClick();
-    fix.componentRef.setInput('disabled', false);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
-    fix.componentInstance.onTriggerClick();
+    const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.disabled = true;
+    });
+    CONTROL(fixDisabled).onTriggerClick();
+
+    const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.readOnly = true;
+    });
+    CONTROL(fixReadOnly).onTriggerClick();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('onTriggerClick is a no-op when disabled and readOnly', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('disabled', true);
-    fix.componentRef.setInput('readOnly', true);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.disabled = true;
+    f.componentInstance.readOnly = true;
+});
     queryTrigger(fix).click();
     fix.detectChanges();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
   it('End highlights placeholder when it is the only list row', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', []);
-    fix.componentRef.setInput('placeholder', 'Pick one');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = [];
+    f.componentInstance.placeholder = 'Pick one';
+});
     openListbox(fix);
     keydown(fix, 'End');
     expect(
@@ -856,24 +817,24 @@ describe('AuSelect', () => {
   });
 
   it('Enter selects option when list includes a placeholder row', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+});
     openListbox(fix);
     keydown(fix, 'ArrowDown');
     keydown(fix, 'ArrowDown');
     keydown(fix, 'Enter');
-    expect(fix.componentInstance.value()).toBe('opt2');
+    expect(CONTROL(fix).value()).toBe('opt2');
   });
 
   it('pointer enter on option row resolves index with placeholder offset', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.componentRef.setInput('placeholder', 'Choose');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = testOptions;
+    f.componentInstance.placeholder = 'Choose';
+});
     openListbox(fix);
-    fix.componentInstance.onOptionPointerEnter(2, testOptions[1]);
+    CONTROL(fix).onOptionPointerEnter(2, testOptions[1]);
     fix.detectChanges();
     expect(
       fix.debugElement.query(By.css('.au-field-listbox__option--active'))?.nativeElement.textContent?.trim(),
@@ -881,30 +842,24 @@ describe('AuSelect', () => {
   });
 
   it('Enter selects highlighted option without placeholder', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     openListbox(fix);
     keydown(fix, 'Home');
     keydown(fix, 'Enter');
-    expect(fix.componentInstance.value()).toBe('opt1');
+    expect(CONTROL(fix).value()).toBe('opt1');
   });
 
   it('Enter does not select a disabled highlighted option', () => {
     const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = opts; });
     openListbox(fix);
     keydown(fix, 'Enter');
-    expect(fix.componentInstance.value()).toBeNull();
+    expect(CONTROL(fix).value()).toBeNull();
   });
 
   it('ArrowDown from unset highlight starts search at index -1', () => {
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', testOptions);
-    fix.detectChanges();
-    const comp = fix.componentInstance as unknown as {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
+    const comp = CONTROL(fix) as unknown as {
       panelOpen: { set(v: boolean): void };
       highlightedIndex: { set(v: number): void; (): number };
     };
@@ -920,10 +875,10 @@ describe('AuSelect', () => {
       { value: 'opt1', label: 'One', disabled: true },
       { value: 'opt2', label: 'Two' },
     ];
-    const fix = TestBed.createComponent(AuSelect);
-    fix.componentRef.setInput('options', opts);
-    fix.componentRef.setInput('value', 'opt1');
-    fix.detectChanges();
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+    f.componentInstance.options = opts;
+    f.componentInstance.value = 'opt1';
+});
     openListbox(fix);
     expect(
       fix.debugElement.query(By.css('.au-field-listbox__option--active'))?.nativeElement.textContent?.trim(),

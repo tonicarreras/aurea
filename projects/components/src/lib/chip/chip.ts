@@ -9,6 +9,8 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { AuIcon } from '../icon/icon';
+import { AuListItem } from '../list/au-list-item.directive';
 import { tabFocusState } from '../au-tab-focus-state';
 
 export type AuChipVariant = 'filled' | 'outline' | 'accent';
@@ -22,7 +24,8 @@ export type AuChipSize = 'sm' | 'md';
  * - **Selectable:** toggle filter chip (`selectable` + `[(selected)]`, `aria-pressed`).
  * - **Removable:** dismissible tag with a dedicated remove control (`removable`, `removed` event).
  * - **Focus:** outer ring on Tab, inset on pointer (`tabFocusState` + `--from-tab` CSS).
- * - **Groups:** wrap chips in `role="list"` and set `inList` on each static/removable chip for `role="listitem"`.
+ * - **Groups:** static/removable → {@link AuList}; selectable filters → {@link AuChipGroup}.
+ * - **`selectable` and `removable` are mutually exclusive** (if both are set, both are ignored).
  *
  * @example
  * ```html
@@ -33,15 +36,21 @@ export type AuChipSize = 'sm' | 'md';
  */
 @Component({
   selector: 'au-chip',
+  imports: [AuIcon],
   templateUrl: './chip.html',
   styleUrl: './chip.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [
+    {
+      directive: AuListItem,
+      inputs: ['auListItemDisabled: selectable'],
+    },
+  ],
   host: {
     class: 'au-chip',
     '[attr.data-au-variant]': 'variant()',
     '[attr.data-au-size]': 'size()',
-    '[attr.data-au-selected]': 'selectable() && selected() ? "" : null',
-    '[attr.role]': 'hostRole()',
+    '[attr.data-au-selected]': 'isSelectable() && selected() ? "" : null',
   },
 })
 export class AuChip {
@@ -56,17 +65,17 @@ export class AuChip {
 
   readonly disabled = input(false);
 
-  /** Shows a remove button and emits `removed` (not combinable with `selectable`). */
+  /** Shows a remove button and emits `removed` (mutually exclusive with `selectable`). */
   readonly removable = input(false);
 
-  /** Toggle filter chip; uses `aria-pressed` on the inner control. */
+  /** Toggle filter chip; uses `aria-pressed` (mutually exclusive with `removable`). */
   readonly selectable = input(false);
 
-  /**
-   * When true with a static/removable chip, sets `role="listitem"` on the host.
-   * The parent wrapper must use `role="list"`.
-   */
-  readonly inList = input(false);
+  /** True only when `selectable` and not `removable`. */
+  readonly isSelectable = computed(() => this.selectable() && !this.removable());
+
+  /** True only when `removable` and not `selectable`. */
+  readonly isRemovable = computed(() => this.removable() && !this.selectable());
 
   /** Selected state when `selectable` is true. */
   readonly selected = model(false);
@@ -86,13 +95,6 @@ export class AuChip {
   protected readonly focusByTab = signal(false);
 
   private readonly host = inject(ElementRef<HTMLElement>);
-
-  readonly hostRole = computed((): string | null => {
-    if (this.selectable() || !this.inList()) {
-      return null;
-    }
-    return 'listitem';
-  });
 
   readonly removeAriaLabel = computed(() => {
     const custom = this.removeLabel().trim();

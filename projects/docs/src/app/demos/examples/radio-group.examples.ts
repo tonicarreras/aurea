@@ -1,12 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuRadioGroup, type AuRadioOption } from '@aurea-design-system/components';
+import { AuFormField, AuRadioGroup } from '@aurea-design-system/components';
 import { radioOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-example-radio-group-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuRadioGroup],
-  template: `<au-radio-group label="Plan" [options]="options" />`,
+  imports: [AuFormField, AuRadioGroup],
+  template: `
+    <au-form-field label="Plan">
+      <au-radio-group [options]="options" />
+    </au-form-field>
+  `,
 })
 export class ExampleRadioGroupBasicDemo {
   readonly options = radioOptions;
@@ -15,14 +19,15 @@ export class ExampleRadioGroupBasicDemo {
 @Component({
   selector: 'docs-example-radio-group-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuRadioGroup],
+  imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-radio-group
+    <au-form-field
       label="Plan"
-      [options]="options"
-      [required]="true"
       errorMessage="Elige un plan para continuar."
-    />
+      [invalid]="true"
+    >
+      <au-radio-group [options]="options" />
+    </au-form-field>
   `,
 })
 export class ExampleRadioGroupErrorDemo {
@@ -30,16 +35,15 @@ export class ExampleRadioGroupErrorDemo {
 }
 
 @Component({
-  selector: 'docs-example-radio-group-disabled-option',
+  selector: 'docs-example-radio-group-hint',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuRadioGroup],
+  imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-radio-group label="Plan" [options]="options" hint="La opción Pro estará disponible pronto." />
+    <au-form-field label="Plan" hint="La opción Pro estará disponible pronto.">
+      <au-radio-group [options]="options" />
+    </au-form-field>
   `,
 })
-export class ExampleRadioGroupDisabledOptionDemo {
-  readonly options: AuRadioOption[] = [
-    { value: 'free', label: 'Gratis' },
-    { value: 'pro', label: 'Pro', disabled: true },
-  ];
+export class ExampleRadioGroupHintDemo {
+  readonly options = radioOptions;
 }

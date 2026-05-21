@@ -17,6 +17,13 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       description: 'Transiciones de fondo, borde y sombra entre estados.',
     },
   ],
+  'form-field': [
+    { token: '--au-color-text-label', description: 'Etiqueta visible sobre el control proyectado.' },
+    { token: '--au-color-form-error', description: 'Mensaje de error y asterisco de obligatorio.' },
+    { token: '--au-color-text-tertiary', description: 'Texto de hint bajo el control.' },
+    { token: '--au-text-sm', description: 'Tipografía de label, hint y error.' },
+    { token: '--au-space-2', description: 'Separación vertical entre label, control y mensajes.' },
+  ],
   'input-text': [
     { token: '--au-color-form-border', description: 'Borde del campo en reposo.' },
     { token: '--au-color-form-border-hover', description: 'Borde al pasar el cursor por el control.' },
@@ -138,6 +145,14 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Anillo de foco en el botón tab.' },
     { token: '--au-transition-color', description: 'Transición de color al cambiar de pestaña.' },
   ],
+  'chip-group': [
+    { token: '--au-space-2', description: 'Separación entre chips en la fila.' },
+    { token: '--au-color-focus-ring', description: 'Foco en chips seleccionables del grupo.' },
+  ],
+  list: [
+    { token: '--au-space-2', description: 'Separación entre ítems de la lista.' },
+    { token: '--au-color-focus-ring', description: 'Anillo de foco en ítems interactivos.' },
+  ],
   chip: [
     { token: '--au-color-surface-elevated', description: 'Fondo de la variante filled.' },
     { token: '--au-color-border-subtle', description: 'Borde de filled y outline.' },
@@ -146,6 +161,32 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-sm', description: 'Esquinas del chip.' },
     { token: '--au-text-xs / --au-text-sm', description: 'Tipografía según `size`.' },
     { token: '--au-color-focus-ring', description: 'Foco cuando el chip es interactivo.' },
+  ],
+  message: [
+    { token: '--au-message-bg', description: 'Fondo según variante.' },
+    { token: '--au-message-border', description: 'Borde según variante.' },
+    { token: '--au-message-accent', description: 'Acento de icono y título.' },
+    { token: '--au-color-semantic-success-surface', description: 'Fondo success.' },
+    { token: '--au-color-semantic-error-surface', description: 'Fondo error.' },
+    { token: '--au-radius-sm', description: 'Radio del aviso.' },
+  ],
+  icon: [
+    { token: 'data-au-icon', description: 'Selecciona el glifo SVG en CSS.' },
+    { token: 'data-au-size', description: 'Dimensiones sm / md / lg.' },
+    { token: '--au-color-text-primary', description: 'Color heredado del trazo.' },
+  ],
+  skeleton: [
+    { token: '--au-color-skeleton-base', description: 'Relleno en superficies raised (ajustado por tema).' },
+    { token: '--au-color-skeleton-shimmer', description: 'Pico más claro para pulse y wave.' },
+    { token: '--au-radius-xs / sm / lg', description: 'Esquinas por variante.' },
+    { token: '--au-size-field-h-md', description: 'Altura de barra tipo botón (md).' },
+  ],
+  steps: [
+    { token: '--au-color-border-subtle', description: 'Línea bajo los pasos.' },
+    { token: '--au-color-action-primary', description: 'Paso activo e indicador.' },
+    { token: '--au-color-text-secondary', description: 'Pasos inactivos.' },
+    { token: '--au-color-focus-ring', description: 'Foco en botones de paso.' },
+    { token: '--au-space-6 / --au-space-10', description: 'Separación rail / paneles.' },
   ],
   snackbar: [
     { token: '--au-z-toast', description: 'Capa de toasts sobre modales y dropdowns.' },

@@ -1,10 +1,39 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field/form-field-story-chrome';
 import { TEXTAREA_DOCS_OVERVIEW } from './textarea.docs-overview';
 import { AuTextarea } from './textarea';
 
-const meta: Meta<AuTextarea> = {
+type TextareaResize = 'none' | 'vertical' | 'both';
+
+interface TextareaStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  rows: number;
+  cols: number | undefined;
+  resize: TextareaResize;
+  wrap: 'soft' | 'hard';
+  spellcheck: boolean | undefined;
+  disabled: boolean;
+  readOnly: boolean;
+  name: string;
+  autocomplete: string | undefined;
+  minLength: number | undefined;
+  maxLength: number | undefined;
+  size: 'sm' | 'md' | 'lg';
+  errors: readonly unknown[];
+}
+
+const meta: Meta<TextareaStoryArgs> = {
   title: 'Aurea/Textarea',
   component: AuTextarea,
   tags: ['autodocs', 'au'],
@@ -17,6 +46,7 @@ const meta: Meta<AuTextarea> = {
     },
   },
   argTypes: {
+    ...fieldChromeArgTypes,
     value: {
       control: 'text',
       description: 'Current value (`ModelSignal<string>`).',
@@ -30,43 +60,13 @@ const meta: Meta<AuTextarea> = {
       description: 'Emits when the textarea loses focus.',
       table: { category: 'Events' },
     },
-    label: {
-      control: 'text',
-      description: 'Visible label; `for` matches textarea `id`.',
-      table: { category: 'Chrome' },
-    },
-    hint: {
-      control: 'text',
-      description: 'Helper text; `aria-describedby` when set.',
-      table: { category: 'Chrome' },
-    },
     placeholder: {
       control: 'text',
       description: 'Native placeholder.',
-      table: { category: 'Chrome' },
-    },
-    showRequired: {
-      control: 'boolean',
-      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',
-      table: { category: 'Chrome' },
-    },
-    errorMessage: {
-      control: 'text',
-      description: 'Manual error; overrides `errors` display when non-empty.',
-      table: { category: 'Validation' },
+      table: { category: 'Field' },
     },
     errors: {
       description: 'Signal-form errors via `formField`.',
-      table: { category: 'Validation' },
-    },
-    invalid: {
-      control: 'boolean',
-      description: 'External invalid from parent or directive.',
-      table: { category: 'Validation' },
-    },
-    required: {
-      control: 'boolean',
-      description: 'Native `required` + `aria-required`.',
       table: { category: 'Validation' },
     },
     minLength: {
@@ -117,19 +117,57 @@ const meta: Meta<AuTextarea> = {
       description: 'Padding and type scale.',
       table: { category: 'Field' },
     },
-    id: { control: 'text', table: { category: 'Field' } },
     name: { control: 'text', table: { category: 'Field' } },
     autocomplete: { control: 'text', table: { category: 'Field' } },
-  },
+  } as Meta<TextareaStoryArgs>['argTypes'],
   args: {
+    ...defaultFieldChromeArgs,
     value: '',
     valueChange: fn(),
     blur: fn(),
+    placeholder: '',
+    rows: 4,
+    cols: undefined,
+    resize: 'vertical',
+    wrap: 'soft',
+    spellcheck: undefined,
+    disabled: false,
+    readOnly: false,
+    name: '',
+    autocomplete: undefined,
+    minLength: undefined,
+    maxLength: undefined,
+    size: 'md',
+    errors: [],
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuTextarea],
+      args,
+      `<au-textarea
+  [(value)]="value"
+  [placeholder]="placeholder"
+  [rows]="rows"
+  [cols]="cols"
+  [resize]="resize"
+  [wrap]="wrap"
+  [spellcheck]="spellcheck"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [name]="name"
+  [autocomplete]="autocomplete"
+  [minLength]="minLength"
+  [maxLength]="maxLength"
+  [size]="size"
+  [invalid]="invalid"
+  [errors]="$any(errors)"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuTextarea>;
+type Story = StoryObj<TextareaStoryArgs>;
 
 export const Default: Story = {
   parameters: {
@@ -167,6 +205,7 @@ export const WithError: Story = {
     label: 'Comment',
     rows: 3,
     errorMessage: 'Add at least one sentence.',
+    invalid: true,
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);

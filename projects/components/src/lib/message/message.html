@@ -1,52 +1,7 @@
-<div class="au-message__surface">
-  @if (showVariantIcon()) {
-    <span class="au-message__icon" aria-hidden="true">
-      @switch (variant()) {
-        @case ('success') {
-          <!-- Material: check_circle (outline) -->
-          <svg class="au-message__icon-svg" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75" />
-            <path
-              d="M8.5 12.5 11 15 16 9"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        }
-        @case ('warning') {
-          <!-- Material: warning — triangle + exclamation (offset from apex) -->
-          <svg class="au-message__icon-svg" viewBox="0 0 24 24" fill="none">
-            <g transform="translate(12 12) scale(1.1) translate(-12 -12)">
-              <path
-                d="M12 5.25 19.75 19.25H4.25L12 5.25Z"
-                stroke="currentColor"
-                stroke-width="1.75"
-                stroke-linejoin="round"
-              />
-            </g>
-            <path d="M12 10.75v3" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" />
-            <circle cx="12" cy="16.75" r="1.5" fill="currentColor" />
-          </svg>
-        }
-        @case ('error') {
-          <!-- Material: error (outline) — circle + exclamation -->
-          <svg class="au-message__icon-svg" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75" />
-            <path d="M12 8.25v3.5" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" />
-            <circle cx="12" cy="16.75" r="1.5" fill="currentColor" />
-          </svg>
-        }
-        @case ('info') {
-          <!-- Material: info (outline) -->
-          <svg class="au-message__icon-svg" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75" />
-            <circle cx="12" cy="8" r="1.25" fill="currentColor" />
-            <path d="M12 11v6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" />
-          </svg>
-        }
-      }
+<div class="au-message__surface" [attr.role]="liveRole()">
+  @if (showVariantIcon() && variantIcon(); as iconName) {
+    <span class="au-message__icon">
+      <au-icon [name]="iconName" size="md" />
     </span>
   }
 
@@ -70,14 +25,7 @@
       [attr.aria-label]="closeAriaLabel()"
       (click)="onDismissClick()"
     >
-      <svg class="au-message__close-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path
-          d="M4 4 12 12M12 4 4 12"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-        />
-      </svg>
+      <au-icon name="close" size="sm" />
     </button>
   }
 </div>

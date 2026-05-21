@@ -24,5 +24,3 @@ export class ExampleChipOutlineDemo {}
   template: `<au-chip label="Filtro activo" variant="accent" [removable]="true" />`,
 })
 export class ExampleChipRemovableDemo {}
-
-// —— Snackbar ——

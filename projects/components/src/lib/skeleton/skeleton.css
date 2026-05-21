@@ -6,8 +6,8 @@
 @import url('../theme/au-tokens.css');
 
 :host {
-  --au-skeleton-base: var(--au-color-surface-sunken);
-  --au-skeleton-highlight: var(--au-color-surface-elevated);
+  --au-skeleton-base: var(--au-color-skeleton-base);
+  --au-skeleton-highlight: var(--au-color-skeleton-shimmer);
 
   display: block;
   position: relative;
@@ -17,6 +17,7 @@
   min-width: 0;
   box-sizing: border-box;
   background-color: var(--au-skeleton-base);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--au-color-text-primary) 6%, transparent);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -54,17 +55,17 @@
 /* -------------------------------------------------------------------------- */
 
 :host([data-au-animation='pulse']) {
-  animation: au-skeleton-pulse 1.6s ease-in-out infinite;
+  animation: au-skeleton-pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes au-skeleton-pulse {
   0%,
   100% {
-    opacity: 0.55;
+    background-color: var(--au-skeleton-base);
   }
 
   50% {
-    opacity: 1;
+    background-color: var(--au-skeleton-highlight);
   }
 }
 
@@ -77,13 +78,16 @@
   position: absolute;
   inset: 0;
   transform: translateX(-100%);
+  opacity: 0.85;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--au-skeleton-highlight) 45%,
-    transparent 90%
+    color-mix(in srgb, var(--au-skeleton-highlight) 55%, transparent) 42%,
+    var(--au-skeleton-highlight) 50%,
+    color-mix(in srgb, var(--au-skeleton-highlight) 55%, transparent) 58%,
+    transparent 100%
   );
-  animation: au-skeleton-wave 1.4s ease-in-out infinite;
+  animation: au-skeleton-wave 1.35s ease-in-out infinite;
 }
 
 @keyframes au-skeleton-wave {
@@ -102,7 +106,15 @@
     animation: none;
   }
 
+  :host([data-au-animation='wave'])::after {
+    opacity: 0;
+  }
+
   :host([data-au-animation='pulse']) {
-    opacity: 0.75;
+    background-color: color-mix(
+      in srgb,
+      var(--au-skeleton-base) 65%,
+      var(--au-skeleton-highlight)
+    );
   }
 }

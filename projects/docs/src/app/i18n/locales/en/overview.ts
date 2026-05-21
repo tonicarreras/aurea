@@ -32,9 +32,41 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     keyboard: ['Enter and Space activate the native button.', 'Tab focuses the control; focus restored after closing dialogs.'],
   },
+  'form-field': {
+    intro: [
+      'Shared label, hint, and error chrome around a projected control (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
+      'Exposes `AU_FORM_FIELD` via DI so the child gets the same `controlId`, `hintId`, and `errorId` for ARIA wiring.',
+      'Checkbox and switch keep their inline `label` on the control; use `au-form-field` for hint and error only.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Any standard field where label/hint/error should match the design system.',
+        'Signal forms: child `errors` / `invalid` flow into the wrapper error region.',
+        'Stable ids with optional `[controlIdInput]`.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Checkbox with only an inline label and no hint/error → bare `au-checkbox`.',
+        'Non-form layout → do not wrap.',
+      ],
+    },
+    anatomy: [
+      { region: 'Label', detail: '`<label for>` tied to child `controlId`.' },
+      { region: 'Projected control', detail: 'Single focusable control in the default slot.' },
+      { region: 'Hint / error', detail: 'Hint `<p>`; error `role="alert"` with shared styles.' },
+    ],
+    accessibility: [
+      'Child receives `aria-describedby` / `aria-errormessage` from context ids.',
+      'Required asterisk is decorative with screen-reader text.',
+    ],
+    relatedExports: ['AU_FORM_FIELD', 'AuFormFieldContext'],
+  },
   'input-text': {
     intro: [
-      'Single-line field with label, hint, error region, and optional password toggle.',
+      'Single-line control projected inside `au-form-field` for label, hint, and error.',
       'Implements `FormValueControl<string | null>`: bind `[formField]` in signal forms or `[(value)]` manually. An empty field is `null`, not an empty string.',
     ],
     whenToUse: {
@@ -49,11 +81,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       items: ['Multi-line text → `au-textarea`.', 'Pick from a list → `au-select` or `au-autocomplete`.'],
     },
     anatomy: [
-      { region: 'Label', detail: '`<label for>`; optional asterisk with `showRequired`.' },
-      { region: 'Shell', detail: 'Border, background, and focus/error rings.' },
-      { region: 'Native input', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby`.' },
+      { region: '`au-form-field`', detail: 'Label, hint, and error outside the control.' },
+      { region: 'Shell', detail: 'Border, background, and focus/error rings on the input row.' },
+      { region: 'Native input', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` via context.' },
       { region: 'Password toggle', detail: 'Only with `type="password"` and `showPasswordToggle`.' },
-      { region: 'Hint / error', detail: 'Hint in `<p>`; error with `role="alert"`.' },
     ],
     accessibility: [
       'Accessible name via visible label or external `aria-label`.',
@@ -67,7 +98,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   textarea: {
     intro: [
-      'Multi-line area with the same visual grammar as `au-input-text`: label, hint, error, and sm/md/lg sizes.',
+      'Multi-line control projected inside `au-form-field`; same sm/md/lg sizes as other fields.',
       'Minimum height via `--au-textarea-min-h-*`; configurable `resize`.',
     ],
     whenToUse: {
@@ -335,7 +366,12 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Primary action → `au-button`.', 'Primary navigation → tabs or links.'],
+      items: [
+        'Primary action → `au-button`.',
+        'Primary navigation → tabs or links.',
+        'Selectable filters in a row → `au-chip-group`.',
+        'Removable tag list → `au-list`.',
+      ],
     },
     anatomy: [
       { region: 'Surface', detail: 'Projection or `label` input.' },
@@ -370,6 +406,125 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       '`role="status"` or `role="alert"` by variant (warning/error = alert).',
       'Matching `aria-live`; close button with `closeAriaLabel`.',
     ],
+  },
+  'chip-group': {
+    intro: [
+      'Accessible wrapper (`role="group"`) for a row of selectable filter chips.',
+      'Pair with `au-chip` `[selectable]`; do not use for removable tag lists.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: ['Toolbar filters (status, category).', 'Multi-toggle filters where each chip is independent.'],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Removable tags → `au-list` + `removable` chips.', 'Single chip → bare `au-chip`.'],
+    },
+    anatomy: [{ region: 'Group', detail: '`aria-label` or `aria-labelledby` required.' }],
+    accessibility: ['Named group; chips expose `aria-pressed` when selectable.'],
+  },
+  list: {
+    intro: [
+      'Accessible list (`role="list"`) for removable chips or custom rows with `auListItem`.',
+      'Chips inside automatically become `listitem` unless `selectable`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: ['Selected tags the user can remove.', 'Horizontal rows of peer items with list semantics.'],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Filter toggles → `au-chip-group`.', 'Navigation → tabs or links.'],
+    },
+    anatomy: [
+      { region: 'List host', detail: '`au-list` with flex row layout.' },
+      { region: 'Items', detail: '`au-chip` removable or `<div auListItem>`.' },
+    ],
+    accessibility: ['Provide `ariaLabel` or `ariaLabelledBy`.'],
+    relatedExports: ['AuListItem'],
+  },
+  message: {
+    intro: [
+      'Inline callout for page-level status, validation summaries, or contextual help.',
+      'Semantic variants map to token surfaces; optional `au-icon` glyph per variant.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Form-level errors above fields.',
+        'Success after save, policy notices, non-blocking warnings.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Transient toast → `au-snackbar`.', 'Field error → `au-form-field` `errorMessage`.'],
+    },
+    anatomy: [
+      { region: 'Icon', detail: 'Variant glyph when `showIcon` (not on default).' },
+      { region: 'Title / body', detail: '`title` + `message` or projected slot.' },
+      { region: 'Dismiss', detail: 'Optional close button.' },
+    ],
+    accessibility: [
+      'Error and warning: `role="alert"`.',
+      'Default, success, info: `role="status"`.',
+    ],
+  },
+  icon: {
+    intro: [
+      'Shared SVG glyphs (check, warning, error, info, close, spinner) at sm/md/lg.',
+      'Decorative by default — the parent control carries the accessible name.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: ['Inside `au-message`, removable chips, loading buttons.', 'Consistent stroke icons across the DS.'],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Custom brand icons → your own SVG.', 'Icon-only button → set `label` on `au-button`.'],
+    },
+    anatomy: [{ region: 'SVG', detail: '`data-au-icon` + `data-au-size` on host.' }],
+    accessibility: ['Host is `aria-hidden="true"`.'],
+    relatedExports: ['AuIconName', 'AuIconSize'],
+  },
+  skeleton: {
+    intro: [
+      'Loading placeholders: text lines, circles (avatars), blocks, and button bars.',
+      'Pulse or wave animation; parent should set `aria-busy` while loading.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: ['Card/list loading states.', 'Profile header placeholder.'],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Spinner on a button → `au-icon` spinner.', 'Empty state → visible copy, not skeleton.'],
+    },
+    anatomy: [{ region: 'Host', detail: '`role="presentation"`; size from variant + `size`.' }],
+    accessibility: ['Decorative only; pair with `aria-busy` on the loading region.'],
+  },
+  steps: {
+    intro: [
+      'Horizontal step navigation for docs and wizards: `button[auStep]` + `[auStepPanel]`.',
+      '`layout="tabs"` shows one panel; `layout="sections"` scrolls to visible sections.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: ['Documentation sites (Overview / API / Examples).', 'Multi-section pages with stable keys.'],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['App primary nav → `au-tabs`.', 'Strict wizard with completion → dedicated stepper.'],
+    },
+    anatomy: [
+      { region: 'Step list', detail: 'Horizontal buttons with active indicator.' },
+      { region: 'Panels', detail: 'Tab panels or always-visible regions.' },
+    ],
+    accessibility: [
+      'Tabs layout: tablist + tab + tabpanel.',
+      'Sections layout: `aria-current` on active step.',
+    ],
+    keyboard: ['Arrow keys, Home, and End move between enabled steps.'],
+    relatedExports: ['AuStep', 'AuStepPanel', 'AuStepsLayout'],
   },
   divider: {
     intro: [

@@ -1,4 +1,5 @@
 import { examples as buttonExamples } from './button';
+import { examples as formFieldExamples } from './form-field';
 import { examples as inputTextExamples } from './input-text';
 import { examples as textareaExamples } from './textarea';
 import { examples as checkboxExamples } from './checkbox';
@@ -12,7 +13,13 @@ import { examples as dialogExamples } from './dialog';
 import { examples as cardExamples } from './card';
 import { examples as tabsExamples } from './tabs';
 import { examples as chipExamples } from './chip';
+import { examples as chipGroupExamples } from './chip-group';
+import { examples as listExamples } from './list';
 import { examples as snackbarExamples } from './snackbar';
+import { examples as messageExamples } from './message';
+import { examples as iconExamples } from './icon';
+import { examples as skeletonExamples } from './skeleton';
+import { examples as stepsExamples } from './steps';
 import { examples as dividerExamples } from './divider';
 import { examples as tooltipExamples } from './tooltip';
 import type { ComponentDocExample } from '../../../types/example';
@@ -21,6 +28,7 @@ export type { ComponentDocExample } from '../../../types/example';
 
 export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = {
   button: buttonExamples,
+  'form-field': formFieldExamples,
   'input-text': inputTextExamples,
   textarea: textareaExamples,
   checkbox: checkboxExamples,
@@ -34,7 +42,13 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   card: cardExamples,
   tabs: tabsExamples,
   chip: chipExamples,
+  'chip-group': chipGroupExamples,
+  list: listExamples,
   snackbar: snackbarExamples,
+  message: messageExamples,
+  icon: iconExamples,
+  skeleton: skeletonExamples,
+  steps: stepsExamples,
   divider: dividerExamples,
   tooltip: tooltipExamples,
 };

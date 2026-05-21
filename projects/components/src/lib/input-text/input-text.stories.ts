@@ -1,10 +1,36 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field/form-field-story-chrome';
 import { INPUT_TEXT_DOCS_OVERVIEW } from './input-text.docs-overview';
 import { AuInputText } from './input-text';
 
-const meta: Meta<AuInputText> = {
+type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
+
+interface InputTextStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  type: InputTextType;
+  disabled: boolean;
+  readOnly: boolean;
+  name: string;
+  autocomplete: string | undefined;
+  minLength: number | undefined;
+  maxLength: number | undefined;
+  size: 'sm' | 'md' | 'lg';
+  showPasswordToggle: boolean;
+  errors: readonly unknown[];
+}
+
+const meta: Meta<InputTextStoryArgs> = {
   title: 'Aurea/InputText',
   component: AuInputText,
   tags: ['autodocs', 'au'],
@@ -17,6 +43,7 @@ const meta: Meta<AuInputText> = {
     },
   },
   argTypes: {
+    ...fieldChromeArgTypes,
     value: {
       control: 'text',
       description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',
@@ -30,43 +57,13 @@ const meta: Meta<AuInputText> = {
       description: 'Emits when the input loses focus.',
       table: { category: 'Events' },
     },
-    label: {
-      control: 'text',
-      description: 'Visible label; linked with `for` / `id`.',
-      table: { category: 'Chrome' },
-    },
-    hint: {
-      control: 'text',
-      description: 'Helper copy; `aria-describedby` when non-empty.',
-      table: { category: 'Chrome' },
-    },
     placeholder: {
       control: 'text',
       description: 'Native placeholder; use hint for longer guidance.',
-      table: { category: 'Chrome' },
-    },
-    showRequired: {
-      control: 'boolean',
-      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',
-      table: { category: 'Chrome' },
-    },
-    errorMessage: {
-      control: 'text',
-      description: 'Manual error string; takes precedence over `errors` for display.',
-      table: { category: 'Validation' },
+      table: { category: 'Field' },
     },
     errors: {
       description: 'Populated by `formField` from signal forms.',
-      table: { category: 'Validation' },
-    },
-    invalid: {
-      control: 'boolean',
-      description: 'External invalid flag (e.g. from `formField`).',
-      table: { category: 'Validation' },
-    },
-    required: {
-      control: 'boolean',
-      description: 'Sets native `required` and `aria-required`.',
       table: { category: 'Validation' },
     },
     minLength: {
@@ -101,11 +98,6 @@ const meta: Meta<AuInputText> = {
       description: 'Density token on `data-au-size`.',
       table: { category: 'Field' },
     },
-    id: {
-      control: 'text',
-      description: 'Explicit `id`; auto-generated when empty.',
-      table: { category: 'Field' },
-    },
     name: {
       control: 'text',
       description: 'Native `name` for form posts.',
@@ -121,16 +113,49 @@ const meta: Meta<AuInputText> = {
       description: 'Only applies when `type` is `password`.',
       table: { category: 'Password' },
     },
-  },
+  } as Meta<InputTextStoryArgs>['argTypes'],
   args: {
+    ...defaultFieldChromeArgs,
     value: '',
     valueChange: fn(),
     blur: fn(),
+    placeholder: '',
+    type: 'text',
+    disabled: false,
+    readOnly: false,
+    name: '',
+    autocomplete: undefined,
+    minLength: undefined,
+    maxLength: undefined,
+    size: 'md',
+    showPasswordToggle: true,
+    errors: [],
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuInputText],
+      args,
+      `<au-input-text
+  [(value)]="value"
+  [placeholder]="placeholder"
+  [type]="type"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [name]="name"
+  [autocomplete]="autocomplete"
+  [minLength]="minLength"
+  [maxLength]="maxLength"
+  [size]="size"
+  [showPasswordToggle]="showPasswordToggle"
+  [invalid]="invalid"
+  [errors]="$any(errors)"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuInputText>;
+type Story = StoryObj<InputTextStoryArgs>;
 
 export const Default: Story = {
   parameters: {
@@ -169,6 +194,7 @@ export const WithError: Story = {
     placeholder: 'you@example.com',
     type: 'email',
     errorMessage: 'Enter a valid email address.',
+    invalid: true,
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);

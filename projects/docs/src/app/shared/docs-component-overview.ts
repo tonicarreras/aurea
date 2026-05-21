@@ -13,7 +13,7 @@ import { DocsInlineText } from './docs-inline-text';
       <div class="docs-overview">
         <section class="docs-overview__intro" aria-labelledby="docs-overview-intro-heading">
           <h3 id="docs-overview-intro-heading" class="docs-overview__sr-only">{{ ui().introSr }}</h3>
-          @for (paragraph of o.intro; track $index) {
+          @for (paragraph of o.intro; track paragraph) {
             <p class="docs-overview__intro-p">
               <docs-inline-text [text]="paragraph" />
             </p>
@@ -23,8 +23,8 @@ import { DocsInlineText } from './docs-inline-text';
             <div class="docs-overview__exports">
               <span class="docs-overview__exports-label">{{ ui().relatedExports }}</span>
               <ul class="docs-overview__export-chips">
-                @for (name of o.relatedExports; track name) {
-                  <li><code class="docs-overview__chip">{{ name }}</code></li>
+                @for (exportName of o.relatedExports; track exportName) {
+                  <li><code class="docs-overview__chip">{{ exportName }}</code></li>
                 }
               </ul>
             </div>
@@ -38,7 +38,7 @@ import { DocsInlineText } from './docs-inline-text';
               <h3 class="docs-overview__card-title">{{ o.whenToUse.title }}</h3>
             </header>
             <ul class="docs-overview__list">
-              @for (item of o.whenToUse.items; track $index) {
+              @for (item of o.whenToUse.items; track item) {
                 <li><docs-inline-text [text]="item" /></li>
               }
             </ul>
@@ -54,7 +54,7 @@ import { DocsInlineText } from './docs-inline-text';
                 <h3 class="docs-overview__card-title">{{ o.whenNotToUse.title }}</h3>
               </header>
               <ul class="docs-overview__list">
-                @for (item of o.whenNotToUse.items; track $index) {
+                @for (item of o.whenNotToUse.items; track item) {
                   <li><docs-inline-text [text]="item" /></li>
                 }
               </ul>
@@ -83,7 +83,7 @@ import { DocsInlineText } from './docs-inline-text';
             <h3 class="docs-overview__card-title">{{ ui().accessibility }}</h3>
           </header>
           <ul class="docs-overview__list">
-            @for (item of o.accessibility; track $index) {
+            @for (item of o.accessibility; track item) {
               <li><docs-inline-text [text]="item" /></li>
             }
           </ul>
@@ -96,7 +96,7 @@ import { DocsInlineText } from './docs-inline-text';
               <h3 class="docs-overview__card-title">{{ ui().keyboard }}</h3>
             </header>
             <ul class="docs-overview__list">
-              @for (item of o.keyboard; track $index) {
+              @for (item of o.keyboard; track item) {
                 <li><docs-inline-text [text]="item" /></li>
               }
             </ul>

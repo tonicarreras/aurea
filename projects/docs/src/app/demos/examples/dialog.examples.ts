@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
-import { AuButton, AuDialog, AuDialogFooter, AuInputText } from '@aurea-design-system/components';
+import { AuButton, AuDialog, AuDialogFooter, AuFormField, AuInputText } from '@aurea-design-system/components';
 import { DEMO_STACK } from '../shared/demo-layout';
 
 @Component({
@@ -24,23 +24,25 @@ export class ExampleDialogConfirmDemo {
 @Component({
   selector: 'docs-example-dialog-form-validation',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuButton, AuDialog, AuDialogFooter, AuInputText],
+  imports: [AuButton, AuDialog, AuDialogFooter, AuFormField, AuInputText],
   template: `
     <au-button type="button" (click)="open.set(true)">Editar perfil</au-button>
     <au-dialog [(open)]="open" title="Editar perfil" size="md">
       <div class="docs-demo-stack">
-        <au-input-text
+        <au-form-field
           label="Nombre"
           errorMessage="El nombre es obligatorio."
-          placeholder="Tu nombre"
-          style="max-width: 100%"
-        />
-        <au-input-text
+          [invalid]="true"
+        >
+          <au-input-text placeholder="Tu nombre" style="max-width: 100%" />
+        </au-form-field>
+        <au-form-field
           label="Email"
           errorMessage="Introduce un correo válido."
-          placeholder="tu@correo.com"
-          style="max-width: 100%"
-        />
+          [invalid]="true"
+        >
+          <au-input-text type="email" placeholder="tu@correo.com" style="max-width: 100%" />
+        </au-form-field>
       </div>
       <div auDialogFooter>
         <au-button variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>

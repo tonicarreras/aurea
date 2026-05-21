@@ -1,33 +1,34 @@
 import {
   ExampleInputDateBasicDemo,
   ExampleInputDateErrorDemo,
-  ExampleInputDateRangeDemo,
+  ExampleInputDateHintDemo,
 } from '../../../../demos/examples/input-date.examples';
 import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
-{
-      title: 'Fecha',
-      demoComponent: ExampleInputDateBasicDemo,
-      code: `<au-input-date label="Fecha de entrega" />`,
-    },
-    {
-      title: 'Con error',
-      demoComponent: ExampleInputDateErrorDemo,
-      code: `<au-input-date
+  {
+    title: 'Fecha',
+    demoComponent: ExampleInputDateBasicDemo,
+    code: `<au-form-field label="Fecha de entrega">
+  <au-input-date />
+</au-form-field>`,
+  },
+  {
+    title: 'Con error',
+    demoComponent: ExampleInputDateErrorDemo,
+    code: `<au-form-field
   label="Fecha de entrega"
   errorMessage="Selecciona una fecha válida."
-/>`,
-    },
-    {
-      title: 'Rango de fechas',
-      description: 'Usa `minDate` y `maxDate` (ISO `YYYY-MM-DD`) para el atributo nativo `min`/`max`.',
-      demoComponent: ExampleInputDateRangeDemo,
-      code: `<au-input-date
-  label="Fecha de entrega"
-  minDate="2026-01-01"
-  maxDate="2026-12-31"
-  hint="Solo entregas en 2026."
-/>`,
-    },
+  [invalid]="true"
+>
+  <au-input-date />
+</au-form-field>`,
+  },
+  {
+    title: 'Rango de fechas',
+    demoComponent: ExampleInputDateHintDemo,
+    code: `<au-form-field label="Fecha de entrega" hint="Solo entregas en 2026.">
+  <au-input-date minDate="2026-01-01" maxDate="2026-12-31" />
+</au-form-field>`,
+  },
 ];

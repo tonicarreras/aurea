@@ -1,0 +1,10 @@
+@import url('../theme/au-tokens.css');
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--au-space-2);
+  align-items: center;
+  box-sizing: border-box;
+  font-family: var(--au-font-sans);
+}

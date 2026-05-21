@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field/form-field-story-chrome';
 import { AuSelect, type AuSelectOption } from './select';
 
 const sampleOptions: AuSelectOption[] = [
@@ -18,7 +25,21 @@ const groupedOptions: AuSelectOption[] = [
   { value: 'group5', label: 'Group B - Option 3', disabled: true },
 ];
 
-const meta: Meta<AuSelect> = {
+interface SelectStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  options: AuSelectOption[];
+  disabled: boolean;
+  readOnly: boolean;
+  size: 'sm' | 'md' | 'lg';
+  name: string;
+  autocomplete: string | undefined;
+  errors: readonly unknown[];
+}
+
+const meta: Meta<SelectStoryArgs> = {
   title: 'Aurea/Select',
   component: AuSelect,
   tags: ['autodocs', 'au'],
@@ -27,6 +48,7 @@ const meta: Meta<AuSelect> = {
     docs: { extractArgTypes: () => ({}) },
   },
   argTypes: {
+    ...fieldChromeArgTypes,
     value: {
       control: 'text',
       description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',
@@ -40,43 +62,13 @@ const meta: Meta<AuSelect> = {
       description: 'Emits when the select loses focus.',
       table: { category: 'Events' },
     },
-    label: {
-      control: 'text',
-      description: 'Visible label; linked with `for` / `id`.',
-      table: { category: 'Chrome' },
-    },
-    hint: {
-      control: 'text',
-      description: 'Helper copy; `aria-describedby` when non-empty.',
-      table: { category: 'Chrome' },
-    },
     placeholder: {
       control: 'text',
       description: 'Placeholder option displayed when no value is selected.',
-      table: { category: 'Chrome' },
-    },
-    showRequired: {
-      control: 'boolean',
-      description: 'When `true` and `required`, shows `*` and screen-reader "(required)".',
-      table: { category: 'Chrome' },
-    },
-    errorMessage: {
-      control: 'text',
-      description: 'Manual error string; takes precedence over `errors` for display.',
-      table: { category: 'Validation' },
+      table: { category: 'Field' },
     },
     errors: {
       description: 'Populated by `formField` from signal forms.',
-      table: { category: 'Validation' },
-    },
-    invalid: {
-      control: 'boolean',
-      description: 'External invalid flag (e.g. from `formField`).',
-      table: { category: 'Validation' },
-    },
-    required: {
-      control: 'boolean',
-      description: 'Sets native `required` and `aria-required`.',
       table: { category: 'Validation' },
     },
     options: {
@@ -88,15 +80,14 @@ const meta: Meta<AuSelect> = {
       description: 'Disables the select and suppresses `valueChange`.',
       table: { category: 'Field' },
     },
+    readOnly: {
+      control: 'boolean',
+      table: { category: 'Field' },
+    },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
       description: 'Density token on `data-au-size`.',
-      table: { category: 'Field' },
-    },
-    id: {
-      control: 'text',
-      description: 'Explicit `id`; auto-generated when empty.',
       table: { category: 'Field' },
     },
     name: {
@@ -104,16 +95,44 @@ const meta: Meta<AuSelect> = {
       description: 'Native `name` for form posts.',
       table: { category: 'Field' },
     },
-  },
+    autocomplete: { control: 'text', table: { category: 'Field' } },
+  } as Meta<SelectStoryArgs>['argTypes'],
   args: {
-    value: '',
+    ...defaultFieldChromeArgs,
+    value: null,
     valueChange: fn(),
     blur: fn(),
+    placeholder: '',
+    options: [],
+    disabled: false,
+    readOnly: false,
+    size: 'md',
+    name: '',
+    autocomplete: undefined,
+    errors: [],
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuSelect],
+      args,
+      `<au-select
+  [(value)]="value"
+  [options]="options"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [size]="size"
+  [name]="name"
+  [autocomplete]="autocomplete"
+  [invalid]="invalid"
+  [errors]="$any(errors)"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuSelect>;
+type Story = StoryObj<SelectStoryArgs>;
 
 /** Native label text includes required markers; match by accessible name. */
 function getSelect(canvasElement: HTMLElement, name: string | RegExp) {
@@ -209,6 +228,7 @@ export const WithError: Story = {
       { value: 'ca', label: 'Canada' },
     ],
     errorMessage: 'Please select a country.',
+    invalid: true,
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);

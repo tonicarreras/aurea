@@ -1,54 +1,47 @@
-<div class="au-radio-group__field">
-  <div
-    #fieldEl
-    class="au-radio-group__shell"
-    [class.au-radio-group__shell--from-tab]="fieldFocusByTab()"
-    [class.au-radio-group__shell--invalid]="effectiveInvalid()"
-    (focusin)="onShellFocusin()"
-    (focusout)="onShellFocusout($event)"
-  >
-    <fieldset class="au-radio-group__fieldset">
-      <legend [id]="legendId()" [class.au-radio-group__legend]="label().trim().length > 0" [class.au-sr-only]="label().trim().length === 0">
-        {{ label().trim().length > 0 ? label() : legendFallback() }}
-        @if (required() && showRequired() && label().trim().length > 0) {
-          <span class="au-radio-group__required" aria-hidden="true" title="Required">*</span>
-          <span class="au-sr-only">(required)</span>
-        }
-      </legend>
+<div
+  #fieldEl
+  class="au-radio-group__shell"
+  [class.au-radio-group__shell--from-tab]="fieldFocusByTab()"
+  [class.au-radio-group__shell--invalid]="effectiveInvalid()"
+  (focusin)="onShellFocusin()"
+  (focusout)="onShellFocusout($event)"
+>
+  <fieldset class="au-radio-group__fieldset">
+    <legend
+      [id]="legendId()"
+      [class.au-radio-group__legend]="formField.label().trim().length > 0"
+      [class.au-sr-only]="formField.label().trim().length === 0"
+    >
+      {{ legendText() }}
+      @if (required() && formField.showRequired() && formField.label().trim().length > 0) {
+        <span class="au-radio-group__required" aria-hidden="true" title="Required">*</span>
+        <span class="au-sr-only">(required)</span>
+      }
+    </legend>
 
-      <div class="au-radio-group__options">
-        @for (opt of options(); track opt.value; let i = $index) {
-          <div class="au-radio-group__row">
-            <input
-              class="au-radio-group__input"
-              type="radio"
-              [id]="optionInputId(opt.value)"
-              [attr.name]="groupName()"
-              [value]="opt.value"
-              [checked]="value() === opt.value"
-              [disabled]="disabled() || readOnly() || (opt.disabled ?? false)"
-              [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
-              [attr.aria-errormessage]="isInvalid() ? errorId() : null"
-              [attr.aria-describedby]="ariaDescribedBy() ?? null"
-              [attr.aria-required]="required() ? 'true' : null"
-              [attr.required]="required() && i === 0 ? true : null"
-              (change)="onRadioChange($event)"
-            />
-            <label class="au-radio-group__option-label" [attr.for]="optionInputId(opt.value)">{{ opt.label }}</label>
-          </div>
-        }
-      </div>
-    </fieldset>
-  </div>
-
-  @if (hint().trim()) {
-    <p [id]="hintId()" class="au-radio-group__hint">{{ hint() }}</p>
-  }
-
-  @if (isInvalid()) {
-    <div [id]="errorId()" class="au-field-error" role="alert">
-      <span class="au-field-error__glyph" aria-hidden="true">×</span>
-      <span class="au-field-error__text">{{ displayError() }}</span>
+    <div class="au-radio-group__options">
+      @for (opt of options(); track opt.value; let i = $index) {
+        <div class="au-radio-group__row">
+          <input
+            class="au-radio-group__input"
+            type="radio"
+            [id]="optionInputId(opt.value)"
+            [attr.name]="groupName()"
+            [value]="opt.value"
+            [checked]="value() === opt.value"
+            [disabled]="disabled() || readOnly() || (opt.disabled ?? false)"
+            [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+            [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
+            [attr.aria-describedby]="ariaDescribedBy() ?? null"
+            [attr.aria-required]="required() ? 'true' : null"
+            [attr.required]="required() && i === 0 ? true : null"
+            (change)="onRadioChange($event)"
+          />
+          <label class="au-radio-group__option-label" [attr.for]="optionInputId(opt.value)">{{
+            opt.label
+          }}</label>
+        </div>
+      }
     </div>
-  }
+  </fieldset>
 </div>

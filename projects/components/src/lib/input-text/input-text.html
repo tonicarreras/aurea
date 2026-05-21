@@ -1,74 +1,45 @@
-<div class="au-input-text__field">
-  @if (label()) {
-    <div class="au-input-text__label-host">
-      <label class="au-input-text__label" [attr.for]="resolvedId()">
-        {{ label() }}
-        @if (required() && showRequired()) {
-          <span class="au-input-text__required" aria-hidden="true" title="Required">*</span>
-          <span class="au-sr-only">(required)</span>
-        }
-      </label>
-    </div>
-  }
+<div
+  class="au-input-text__control-row"
+  [class.au-input-text__control-row--password]="hasPasswordUi()"
+  [class.au-input-text__control-row--from-tab]="fieldFocusByTab()"
+  (focusin)="onControlRowFocusin()"
+  (focusout)="onControlRowFocusout($event)"
+>
+  <input
+    #inputEl
+    class="au-input-text__input"
+    [id]="controlId()"
+    [attr.name]="name() || null"
+    [type]="effectiveInputType()"
+    [value]="inputDisplay()"
+    [attr.placeholder]="placeholder() || null"
+    [attr.autocomplete]="autocomplete() ?? null"
+    [readOnly]="readOnly()"
+    [attr.required]="required() ? true : null"
+    [attr.minlength]="minLength() ?? null"
+    [attr.maxlength]="maxLength() ?? null"
+    [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+    [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
+    [attr.aria-describedby]="ariaDescribedBy() ?? null"
+    [attr.aria-required]="required() ? 'true' : null"
+    [disabled]="disabled()"
+    (input)="onInput($event)"
+    (blur)="onBlurHost()"
+  />
 
-  <div
-    class="au-input-text__control-row"
-    [class.au-input-text__control-row--password]="hasPasswordUi()"
-    [class.au-input-text__control-row--from-tab]="fieldFocusByTab()"
-    (focusin)="onControlRowFocusin()"
-    (focusout)="onControlRowFocusout($event)"
-  >
-    <input
-      #inputEl
-      class="au-input-text__input"
-      [id]="resolvedId()"
-      [attr.name]="name() || null"
-      [type]="effectiveInputType()"
-      [value]="inputDisplay()"
-      [attr.placeholder]="placeholder() || null"
-      [attr.autocomplete]="autocomplete() ?? null"
-      [readOnly]="readOnly()"
-      [attr.required]="required() ? true : null"
-      [attr.minlength]="minLength() ?? null"
-      [attr.maxlength]="maxLength() ?? null"
-      [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
-      [attr.aria-errormessage]="isInvalid() ? errorId() : null"
-      [attr.aria-describedby]="ariaDescribedBy() ?? null"
-      [attr.aria-required]="required() ? 'true' : null"
-      [disabled]="disabled()"
-      (input)="onInput($event)"
-      (blur)="onBlurHost()"
-    />
-
-    @if (hasPasswordUi()) {
-      <button
-        type="button"
-        class="au-input-text__reveal"
-        [attr.aria-pressed]="passwordRevealed()"
-        [attr.aria-label]="passwordRevealed() ? 'Hide password' : 'Show password'"
-        (click)="togglePasswordVisibility()"
-      >
-        @if (passwordRevealed()) {
-          <span class="au-input-text__reveal-text" aria-hidden="true">Hide</span>
-        } @else {
-          <span class="au-input-text__reveal-text" aria-hidden="true">Show</span>
-        }
-      </button>
-    }
-  </div>
-
-  @if (hint().trim()) {
-    <p [id]="hintId()" class="au-input-text__hint">{{ hint() }}</p>
-  }
-
-  @if (isInvalid()) {
-    <div
-      [id]="errorId()"
-      class="au-field-error"
-      role="alert"
+  @if (hasPasswordUi()) {
+    <button
+      type="button"
+      class="au-input-text__reveal"
+      [attr.aria-pressed]="passwordRevealed()"
+      [attr.aria-label]="passwordRevealed() ? 'Hide password' : 'Show password'"
+      (click)="togglePasswordVisibility()"
     >
-      <span class="au-field-error__glyph" aria-hidden="true">×</span>
-      <span class="au-field-error__text">{{ displayError() }}</span>
-    </div>
+      @if (passwordRevealed()) {
+        <span class="au-input-text__reveal-text" aria-hidden="true">Hide</span>
+      } @else {
+        <span class="au-input-text__reveal-text" aria-hidden="true">Show</span>
+      }
+    </button>
   }
 </div>

@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuAutocomplete } from '@aurea-design-system/components';
+import { AuAutocomplete, AuFormField } from '@aurea-design-system/components';
 import { autocompleteOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-example-autocomplete-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuAutocomplete],
+  imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-autocomplete
-      label="Ciudad"
-      placeholder="Buscar…"
-      [options]="options"
-      style="max-width: 16rem"
-    />
+    <au-form-field label="Ciudad">
+      <au-autocomplete
+        placeholder="Buscar…"
+        [options]="options"
+        style="max-width: 16rem"
+      />
+    </au-form-field>
   `,
 })
 export class ExampleAutocompleteBasicDemo {
@@ -22,15 +23,19 @@ export class ExampleAutocompleteBasicDemo {
 @Component({
   selector: 'docs-example-autocomplete-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuAutocomplete],
+  imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-autocomplete
+    <au-form-field
       label="Ciudad"
-      placeholder="Buscar…"
-      [options]="options"
       errorMessage="Elige una ciudad de la lista."
-      style="max-width: 16rem"
-    />
+      [invalid]="true"
+    >
+      <au-autocomplete
+        placeholder="Buscar…"
+        [options]="options"
+        style="max-width: 16rem"
+      />
+    </au-form-field>
   `,
 })
 export class ExampleAutocompleteErrorDemo {
@@ -40,19 +45,17 @@ export class ExampleAutocompleteErrorDemo {
 @Component({
   selector: 'docs-example-autocomplete-hint',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuAutocomplete],
+  imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-autocomplete
-      label="Ciudad"
-      placeholder="Buscar…"
-      [options]="options"
-      hint="Escribe para filtrar; elige con Enter o clic."
-      style="max-width: 16rem"
-    />
+    <au-form-field label="Ciudad" hint="Escribe para filtrar; elige con Enter o clic.">
+      <au-autocomplete
+        placeholder="Buscar…"
+        [options]="options"
+        style="max-width: 16rem"
+      />
+    </au-form-field>
   `,
 })
 export class ExampleAutocompleteHintDemo {
   readonly options = autocompleteOptions;
 }
-
-// —— Radio / Number / Date ——

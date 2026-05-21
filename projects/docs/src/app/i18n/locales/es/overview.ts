@@ -32,9 +32,41 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     keyboard: ['Enter y Space activan el botón nativo.', 'Tab enfoca el control; foco restaurado tras cerrar diálogos.'],
   },
+  'form-field': {
+    intro: [
+      'Cromado compartido de etiqueta, hint y error alrededor de un control proyectado (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
+      'Expone `AU_FORM_FIELD` por DI para que el hijo comparta `controlId`, `hintId` y `errorId` en ARIA.',
+      'Checkbox y switch mantienen `label` inline en el control; usa `au-form-field` solo para hint y error.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Campos estándar con etiqueta/hint/error alineados al design system.',
+        'Signal forms: `errors` / `invalid` del hijo alimentan la región de error del wrapper.',
+        'Ids estables con `[controlIdInput]` opcional.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Checkbox solo con etiqueta inline y sin hint/error → `au-checkbox` sin wrapper.',
+        'Layout que no es formulario → no envolver.',
+      ],
+    },
+    anatomy: [
+      { region: 'Etiqueta', detail: '`<label for>` enlazado al `controlId` del hijo.' },
+      { region: 'Control proyectado', detail: 'Un solo control enfocable en el slot por defecto.' },
+      { region: 'Hint / error', detail: 'Hint en `<p>`; error `role="alert"` con estilos compartidos.' },
+    ],
+    accessibility: [
+      'El hijo recibe `aria-describedby` / `aria-errormessage` desde los ids del contexto.',
+      'El asterisco de obligatorio es decorativo con texto para lectores de pantalla.',
+    ],
+    relatedExports: ['AU_FORM_FIELD', 'AuFormFieldContext'],
+  },
   'input-text': {
     intro: [
-      'Campo de una línea con etiqueta, hint, región de error y toggle de contraseña opcional.',
+      'Control de una línea proyectado dentro de `au-form-field` para etiqueta, hint y error.',
       'Implementa `FormValueControl<string | null>`: enlaza `[formField]` en signal forms o `[(value)]` en modo manual. Un campo vacío se representa como `null`, no como cadena vacía.',
     ],
     whenToUse: {
@@ -49,11 +81,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       items: ['Texto multilínea → `au-textarea`.', 'Elección en lista → `au-select` o `au-autocomplete`.'],
     },
     anatomy: [
-      { region: 'Etiqueta', detail: '`<label for>`; asterisco opcional con `showRequired`.' },
-      { region: 'Shell', detail: 'Borde, fondo y anillos de foco/error.' },
-      { region: 'Input nativo', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby`.' },
+      { region: '`au-form-field`', detail: 'Etiqueta, hint y error fuera del control.' },
+      { region: 'Shell', detail: 'Borde, fondo y anillos de foco/error en la fila del input.' },
+      { region: 'Input nativo', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` vía contexto.' },
       { region: 'Toggle contraseña', detail: 'Solo con `type="password"` y `showPasswordToggle`.' },
-      { region: 'Hint / error', detail: 'Hint en `<p>`; error con `role="alert"`.' },
     ],
     accessibility: [
       'Nombre accesible vía etiqueta visible o `aria-label` externo.',
@@ -67,7 +98,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   textarea: {
     intro: [
-      'Área de texto multilínea con la misma gramática visual que `au-input-text`: label, hint, error y tamaños sm/md/lg.',
+      'Control multilínea proyectado dentro de `au-form-field`; mismos tamaños sm/md/lg que el resto de campos.',
       'Altura mínima controlada por `--au-textarea-min-h-*`; `resize` configurable.',
     ],
     whenToUse: {
@@ -335,7 +366,12 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Acción principal → `au-button`.', 'Navegación principal → tabs o enlaces.'],
+      items: [
+        'Acción principal → `au-button`.',
+        'Navegación principal → tabs o enlaces.',
+        'Filtros seleccionables → `au-chip-group`.',
+        'Lista de tags removibles → `au-list`.',
+      ],
     },
     anatomy: [
       { region: 'Superficie', detail: 'Proyección o `label` input.' },
@@ -370,6 +406,122 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       '`role="status"` o `role="alert"` según variant (warning/error = alert).',
       '`aria-live` acorde; botón cerrar con `closeAriaLabel`.',
     ],
+  },
+  'chip-group': {
+    intro: [
+      'Contenedor accesible (`role="group"`) para chips de filtro seleccionables.',
+      'Combina con `au-chip` `[selectable]`; no uses listas de tags removibles aquí.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Filtros en toolbar (estado, categoría).', 'Toggles independientes en una fila.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Tags removibles → `au-list` + chips `removable`.', 'Un solo chip → `au-chip` suelto.'],
+    },
+    anatomy: [{ region: 'Grupo', detail: 'Requiere `ariaLabel` o `ariaLabelledBy`.' }],
+    accessibility: ['Grupo nombrado; chips con `aria-pressed` si son seleccionables.'],
+  },
+  list: {
+    intro: [
+      'Lista accesible (`role="list"`) para chips removibles o filas con `auListItem`.',
+      'Los chips hijos pasan a `listitem` salvo que sean `selectable`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Tags seleccionados que el usuario puede quitar.', 'Filas horizontales con semántica de lista.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Filtros toggle → `au-chip-group`.', 'Navegación → tabs o enlaces.'],
+    },
+    anatomy: [
+      { region: 'Host lista', detail: '`au-list` en fila flex.' },
+      { region: 'Ítems', detail: 'Chips `removable` o `<div auListItem>`.' },
+    ],
+    accessibility: ['Indica `ariaLabel` o `ariaLabelledBy`.'],
+    relatedExports: ['AuListItem'],
+  },
+  message: {
+    intro: [
+      'Aviso inline para estado de página, resumen de validación o ayuda contextual.',
+      'Variantes semánticas con tokens; icono `au-icon` opcional.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Errores de formulario a nivel de página.',
+        'Éxito tras guardar, avisos de política, advertencias no bloqueantes.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Toast → `au-snackbar`.', 'Error de campo → `errorMessage` en `au-form-field`.'],
+    },
+    anatomy: [
+      { region: 'Icono', detail: 'Glifo de variante si `showIcon` (no en default).' },
+      { region: 'Título / cuerpo', detail: '`title` + `message` o slot.' },
+      { region: 'Cerrar', detail: 'Botón opcional.' },
+    ],
+    accessibility: ['Error/warning: `role="alert"`.', 'Resto: `role="status"`.'],
+  },
+  icon: {
+    intro: [
+      'Glifos SVG compartidos (check, warning, error, info, close, spinner) en sm/md/lg.',
+      'Decorativos por defecto — el control padre lleva el nombre accesible.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Dentro de `au-message`, chips removibles, botones en carga.', 'Iconografía coherente en el DS.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Iconos de marca → SVG propio.', 'Botón solo icono → `label` en `au-button`.'],
+    },
+    anatomy: [{ region: 'SVG', detail: '`data-au-icon` y `data-au-size` en el host.' }],
+    accessibility: ['Host con `aria-hidden="true"`.'],
+    relatedExports: ['AuIconName', 'AuIconSize'],
+  },
+  skeleton: {
+    intro: [
+      'Placeholders de carga: líneas, círculos (avatar), bloques y barra de botón.',
+      'Animación pulse o wave; el padre debe marcar `aria-busy` mientras carga.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Estados de carga en tarjetas o listas.', 'Cabecera de perfil provisional.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Spinner en botón → `au-icon` spinner.', 'Estado vacío → texto visible.'],
+    },
+    anatomy: [{ region: 'Host', detail: '`role="presentation"`; tamaño por variant + `size`.' }],
+    accessibility: ['Solo decorativo; combina con `aria-busy` en la región de carga.'],
+  },
+  steps: {
+    intro: [
+      'Navegación horizontal por secciones: `button[auStep]` + `[auStepPanel]`.',
+      '`layout="tabs"` muestra un panel; `layout="sections"` hace scroll a secciones visibles.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: ['Sitios de documentación (Overview / API / Examples).', 'Páginas largas con claves de sección.'],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Nav principal de app → `au-tabs`.', 'Wizard estricto con pasos completados → stepper dedicado.'],
+    },
+    anatomy: [
+      { region: 'Lista de pasos', detail: 'Botones horizontales con indicador activo.' },
+      { region: 'Paneles', detail: 'Tab panels o regiones siempre visibles.' },
+    ],
+    accessibility: [
+      'Layout tabs: tablist + tab + tabpanel.',
+      'Layout sections: `aria-current` en el paso activo.',
+    ],
+    keyboard: ['Flechas, Home y End entre pasos habilitados.'],
+    relatedExports: ['AuStep', 'AuStepPanel', 'AuStepsLayout'],
   },
   divider: {
     intro: [

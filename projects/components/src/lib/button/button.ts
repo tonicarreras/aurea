@@ -10,6 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import type { AuSize } from '../au-size';
+import { AuIcon } from '../icon/icon';
 import { tabFocusState } from '../au-tab-focus-state';
 
 export type AuButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
@@ -36,6 +37,7 @@ export type AuButtonType = 'button' | 'submit' | 'reset';
  */
 @Component({
   selector: 'au-button',
+  imports: [AuIcon],
   templateUrl: './button.html',
   styleUrl: './button.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

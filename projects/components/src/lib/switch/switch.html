@@ -1,7 +1,7 @@
 <div class="au-switch__field">
   @if (label()) {
     <div class="au-switch__label-host">
-      <label class="au-switch__label" [attr.for]="resolvedId()">
+      <label class="au-switch__label" [attr.for]="controlId()">
         {{ label() }}
         @if (required() && showRequired()) {
           <span class="au-switch__required" aria-hidden="true" title="Required">*</span>
@@ -22,12 +22,12 @@
       class="au-switch__element"
       type="checkbox"
       role="switch"
-      [id]="resolvedId()"
+      [id]="controlId()"
       [attr.name]="name() || null"
       [checked]="checked()"
       [attr.aria-checked]="checked() ? 'true' : 'false'"
       [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
-      [attr.aria-errormessage]="isInvalid() ? errorId() : null"
+      [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
       [attr.aria-describedby]="ariaDescribedBy() ?? null"
       [attr.aria-required]="required() ? 'true' : null"
       [disabled]="disabled()"
@@ -36,15 +36,4 @@
       (blur)="onBlurHost()"
     />
   </div>
-
-  @if (hint().trim()) {
-    <p [id]="hintId()" class="au-switch__hint">{{ hint() }}</p>
-  }
-
-  @if (isInvalid()) {
-    <div [id]="errorId()" class="au-field-error" role="alert">
-      <span class="au-field-error__glyph" aria-hidden="true">×</span>
-      <span class="au-field-error__text">{{ displayError() }}</span>
-    </div>
-  }
 </div>

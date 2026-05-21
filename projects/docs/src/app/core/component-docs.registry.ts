@@ -8,7 +8,14 @@ import {
   ButtonDemo,
   CardDemo,
   CheckboxDemo,
+  FormFieldDemo,
   ChipDemo,
+  ChipGroupDemo,
+  ListDemo,
+  MessageDemo,
+  IconDemo,
+  SkeletonDemo,
+  StepsDemo,
   DialogDemo,
   DividerDemo,
   InputDateDemo,
@@ -100,15 +107,32 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
 export class Example {}`,
   },
   {
+    slug: 'form-field',
+    title: 'Form field',
+    exportName: 'AuFormField',
+    selector: 'au-form-field',
+    summary:
+      'Cromado de etiqueta, hint y error alrededor del control proyectado; comparte `controlId` con el hijo vía DI.',
+    demoComponent: FormFieldDemo,
+    snippet: `import { AuFormField, AuInputText } from '@aurea-design-system/components';
+
+<au-form-field label="Email" hint="Work address" [required]="true">
+  <au-input-text type="email" placeholder="you@company.com" />
+</au-form-field>`,
+  },
+  {
     slug: 'input-text',
     title: 'Input text',
     exportName: 'AuInputText',
     selector: 'au-input-text',
-    summary: 'Campo de una línea con etiqueta, hint, error y soporte para signal forms (`formField`).',
+    summary:
+      'Control de una línea; envuelve en `au-form-field` para label, hint y error. Signal forms con `formField`.',
     demoComponent: InputTextDemo,
-    snippet: `import { AuInputText } from '@aurea-design-system/components';
+    snippet: `import { AuFormField, AuInputText } from '@aurea-design-system/components';
 
-<au-input-text label="Email" placeholder="tu@correo.com" />`,
+<au-form-field label="Email">
+  <au-input-text type="email" placeholder="you@company.com" />
+</au-form-field>`,
   },
   {
     slug: 'textarea',
@@ -117,9 +141,11 @@ export class Example {}`,
     selector: 'au-textarea',
     summary: 'Texto multilínea con la misma gramática visual que el resto de campos.',
     demoComponent: TextareaDemo,
-    snippet: `import { AuTextarea } from '@aurea-design-system/components';
+    snippet: `import { AuFormField, AuTextarea } from '@aurea-design-system/components';
 
-<au-textarea label="Notas" [rows]="4" />`,
+<au-form-field label="Notes">
+  <au-textarea [rows]="4" />
+</au-form-field>`,
   },
   {
     slug: 'checkbox',
@@ -139,9 +165,11 @@ export class Example {}`,
     selector: 'au-switch',
     summary: 'Alternar configuraciones on/off con rol de switch y etiqueta asociada.',
     demoComponent: SwitchDemo,
-    snippet: `import { AuSwitch } from '@aurea-design-system/components';
+    snippet: `import { AuFormField, AuSwitch } from '@aurea-design-system/components';
 
-<au-switch label="Notificaciones" />`,
+<au-form-field hint="You can change this in system settings.">
+  <au-switch label="Notifications" />
+</au-form-field>`,
   },
   {
     slug: 'select',
@@ -164,9 +192,11 @@ options: AuSelectOption[] = [
     selector: 'au-autocomplete',
     summary: 'Búsqueda con filtrado y misma superficie de campo que select.',
     demoComponent: AutocompleteDemo,
-    snippet: `import { AuAutocomplete } from '@aurea-design-system/components';
+    snippet: `import { AuAutocomplete, AuFormField } from '@aurea-design-system/components';
 
-<au-autocomplete label="Ciudad" [options]="cities" />`,
+<au-form-field label="City">
+  <au-autocomplete [options]="cities" />
+</au-form-field>`,
   },
   {
     slug: 'radio-group',
@@ -175,9 +205,11 @@ options: AuSelectOption[] = [
     selector: 'au-radio-group',
     summary: 'Elección única entre opciones relacionadas.',
     demoComponent: RadioGroupDemo,
-    snippet: `import { AuRadioGroup } from '@aurea-design-system/components';
+    snippet: `import { AuFormField, AuRadioGroup } from '@aurea-design-system/components';
 
-<au-radio-group label="Plan" [options]="plans" />`,
+<au-form-field label="Plan">
+  <au-radio-group [options]="plans" />
+</au-form-field>`,
   },
   {
     slug: 'input-number',
@@ -186,9 +218,11 @@ options: AuSelectOption[] = [
     selector: 'au-input-number',
     summary: 'Valor numérico con incremento/decremento y límites opcionales.',
     demoComponent: InputNumberDemo,
-    snippet: `import { AuInputNumber } from '@aurea-design-system/components';
+    snippet: `import { AuFormField, AuInputNumber } from '@aurea-design-system/components';
 
-<au-input-number label="Cantidad" [min]="0" [max]="99" />`,
+<au-form-field label="Quantity">
+  <au-input-number [min]="0" [max]="99" />
+</au-form-field>`,
   },
   {
     slug: 'input-date',
@@ -197,9 +231,11 @@ options: AuSelectOption[] = [
     selector: 'au-input-date',
     summary: 'Selector de fecha nativo estilizado con tokens Aurea.',
     demoComponent: InputDateDemo,
-    snippet: `import { AuInputDate } from '@aurea-design-system/components';
+    snippet: `import { AuFormField, AuInputDate } from '@aurea-design-system/components';
 
-<au-input-date label="Fecha" />`,
+<au-form-field label="Date">
+  <au-input-date />
+</au-form-field>`,
   },
   {
     slug: 'dialog',
@@ -247,6 +283,22 @@ options: AuSelectOption[] = [
 </au-tabs>`,
   },
   {
+    slug: 'steps',
+    title: 'Steps',
+    exportName: 'AuSteps',
+    selector: 'au-steps',
+    summary: 'Navegación por secciones con `auStep`, `auStepPanel` y layouts tabs/sections.',
+    demoComponent: StepsDemo,
+    snippet: `import { AuStep, AuStepPanel, AuSteps } from '@aurea-design-system/components';
+
+<au-steps [(value)]="section" ariaLabel="Documentation">
+  <button type="button" auStep="overview">Overview</button>
+  <button type="button" auStep="api">API</button>
+  <div auStepPanel="overview">…</div>
+  <div auStepPanel="api">…</div>
+</au-steps>`,
+  },
+  {
     slug: 'chip',
     title: 'Chip',
     exportName: 'AuChip',
@@ -258,6 +310,34 @@ options: AuSelectOption[] = [
 <au-chip label="Angular" [removable]="true" />`,
   },
   {
+    slug: 'chip-group',
+    title: 'Chip group',
+    exportName: 'AuChipGroup',
+    selector: 'au-chip-group',
+    summary: 'Contenedor accesible (`role="group"`) para chips de filtro seleccionables.',
+    demoComponent: ChipGroupDemo,
+    snippet: `import { AuChip, AuChipGroup } from '@aurea-design-system/components';
+
+<au-chip-group ariaLabel="Status filters">
+  <au-chip label="Draft" [selectable]="true" />
+  <au-chip label="Published" [selectable]="true" [(selected)]="publishedOnly" variant="accent" />
+</au-chip-group>`,
+  },
+  {
+    slug: 'list',
+    title: 'List',
+    exportName: 'AuList',
+    selector: 'au-list',
+    summary: 'Lista accesible (`role="list"`) para etiquetas removibles o ítems con `auListItem`.',
+    demoComponent: ListDemo,
+    snippet: `import { AuChip, AuList } from '@aurea-design-system/components';
+
+<au-list ariaLabel="Selected tags">
+  <au-chip label="Angular" [removable]="true" />
+  <au-chip label="TypeScript" [removable]="true" />
+</au-list>`,
+  },
+  {
     slug: 'snackbar',
     title: 'Snackbar',
     exportName: 'AuSnackbar',
@@ -267,6 +347,46 @@ options: AuSelectOption[] = [
     snippet: `import { AuSnackbar } from '@aurea-design-system/components';
 
 <au-snackbar [(open)]="saved" message="Guardado" variant="success" />`,
+  },
+  {
+    slug: 'message',
+    title: 'Message',
+    exportName: 'AuMessage',
+    selector: 'au-message',
+    summary: 'Aviso inline con variantes semánticas, icono opcional y cierre.',
+    demoComponent: MessageDemo,
+    snippet: `import { AuMessage } from '@aurea-design-system/components';
+
+<au-message
+  variant="success"
+  title="Saved"
+  message="Your changes were stored."
+/>`,
+  },
+  {
+    slug: 'icon',
+    title: 'Icon',
+    exportName: 'AuIcon',
+    selector: 'au-icon',
+    summary: 'Glifos SVG compartidos (decorativos); usados en message, chips y controles.',
+    demoComponent: IconDemo,
+    snippet: `import { AuIcon } from '@aurea-design-system/components';
+
+<au-icon name="info" size="md" />`,
+  },
+  {
+    slug: 'skeleton',
+    title: 'Skeleton',
+    exportName: 'AuSkeleton',
+    selector: 'au-skeleton',
+    summary: 'Placeholders de carga con variantes text, circular, button y animación pulse/wave.',
+    demoComponent: SkeletonDemo,
+    snippet: `import { AuSkeleton } from '@aurea-design-system/components';
+
+<div aria-busy="true">
+  <au-skeleton variant="circular" size="lg" />
+  <au-skeleton variant="text" width="40%" />
+</div>`,
   },
   {
     slug: 'divider',

@@ -149,10 +149,8 @@ button.au-chip__surface:disabled {
   height: 1.25rem;
 }
 
-.au-chip__remove-glyph {
-  font-size: 1rem;
-  line-height: 1;
-  font-weight: var(--au-weight-semibold);
+.au-chip__remove au-icon {
+  display: block;
 }
 
 .au-chip__remove:hover:not(:disabled) {

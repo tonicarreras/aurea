@@ -178,6 +178,9 @@
   --au-color-surface-elevated: #f8f9fa;
   --au-color-surface-sunken: #e9ebef;
   --au-color-surface-inverted: #101418;
+  /* Skeleton: tuned for `surface-raised` panels (not sunken/elevated alone) */
+  --au-color-skeleton-base: color-mix(in srgb, var(--au-color-text-primary) 11%, var(--au-color-surface-raised));
+  --au-color-skeleton-shimmer: color-mix(in srgb, var(--au-color-text-primary) 5%, var(--au-color-surface-raised));
   /* Text: primary, secondary, tertiary, on solid */
   --au-color-text-primary: #101418;
   --au-color-text-secondary: #3d4a5c;
@@ -281,6 +284,9 @@
   --au-color-surface-elevated: #181b22;
   --au-color-surface-sunken: #0a0c0f;
   --au-color-surface-inverted: #f0f2f4;
+  /* Skeleton: lighter shimmer on dark raised surfaces */
+  --au-color-skeleton-base: color-mix(in srgb, var(--au-color-text-primary) 10%, var(--au-color-surface-raised));
+  --au-color-skeleton-shimmer: color-mix(in srgb, var(--au-color-text-primary) 20%, var(--au-color-surface-raised));
   /* Text */
   --au-color-text-primary: #eef1f4;
   --au-color-text-secondary: #a8b2bd;
