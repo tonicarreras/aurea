@@ -1680,21 +1680,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic checkbox with label. The **play** function clicks the checkbox.',\n      },\n    },\n  },\n  args: {\n    label: 'Accept terms',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const checkbox = el.getByRole('checkbox');\n    await userEvent.click(checkbox);\n    await expect(checkbox).toBeChecked();\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic checkbox with label. The **play** function clicks the checkbox.',\n      },\n    },\n  },\n  args: {\n    label: 'Accept terms',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const checkbox = el.getByRole('checkbox');\n    await userEvent.click(checkbox);\n    await expect(checkbox).toBeChecked();\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1860,21 +1860,21 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled checkbox — muted, non-interactive, still focusable by AT.',\n      },\n    },\n  },\n  args: {\n    label: 'Disabled option',\n    disabled: true,\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "Disabled",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled checkbox — muted, non-interactive, still focusable by AT.',\n      },\n    },\n  },\n  args: {\n    label: 'Disabled option',\n    disabled: true,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "Disabled",
@@ -2230,6 +2230,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuChip>",
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role=\"group\"` for selectable filters.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2245,16 +2255,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuChipGroup>",
                 "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Accessible group (`role=\"group\"`) for selectable filter chips. Use `au-list` for static/removable tags.',\n      },\n    },\n  },\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuChip>",
-                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role=\"group\"` for selectable filters.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2742,21 +2742,21 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
-            },
-            {
-                "name": "SmallSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
             },
             {
                 "name": "SmallSize",
@@ -3601,6 +3601,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuChip>",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<CheckboxStoryArgs>",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
@@ -3614,17 +3625,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuChipGroup>",
                 "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuChip>",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6067,6 +6067,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/chip/chip.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuChip>",
+                    "file": "projects/components/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Story",
@@ -6087,19 +6100,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuChipGroup>",
                     "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/chip/chip.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuChip>",
-                    "file": "projects/components/src/lib/chip/chip.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
