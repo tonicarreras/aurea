@@ -33,8 +33,8 @@ jobs:
       - name: Unit tests with coverage
         run: bun run test:coverage
 
-      - name: Install Playwright (Storybook test-runner)
-        run: bunx playwright install --with-deps chromium
+      - name: Install Playwright browsers (Storybook test-runner)
+        run: node node_modules/playwright/cli.js install --with-deps chromium chromium-headless-shell
 
       - name: Storybook test-runner (play + a11y)
         run: bun run test-storybook:ci
