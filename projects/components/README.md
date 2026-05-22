@@ -51,15 +51,31 @@ Optional (form/listbox overlays):
 @import '@aurea-design-system/components/styles/au-field-listbox.css';
 ```
 
-### 2. Dark mode (optional)
+### 2. Schematic (optional)
+
+```bash
+ng add @aurea-design-system/components
+```
+
+Adds global styles to `angular.json` and prints next steps.
+
+### 3. Dark mode (optional)
 
 ```html
 <html data-au-theme="dark"></html>
 ```
 
-Or use the `auTheme` directive from the same package.
+Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast` experimental).
 
-### 3. Components
+### 4. Density (optional)
+
+```html
+<body data-au-density="compact"></body>
+```
+
+Or `[auDensity]="'spacious'"` on your shell.
+
+### 5. Components
 
 ```ts
 import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system/components';
@@ -160,7 +176,16 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuSnackbar`     | `<au-snackbar>`     |                                                |
 | `AuDivider`      | `<au-divider>`      | Horizontal / vertical                          |
 | `AuTooltip`      | `[auTooltip]`       | Directive on the trigger                       |
-| `AuTheme`        | `[auTheme]`         | `light` / `dark` / `system`                    |
+| `AuTheme`        | `[auTheme]`         | `light` / `dark` / `system` / `high-contrast`  |
+| `AuDensityDirective` | `[auDensity]`   | `compact` / `comfortable` / `spacious`         |
+
+---
+
+## Governance & maturity
+
+- [CHANGELOG](../../CHANGELOG.md) · [VERSIONING](../../VERSIONING.md) · [CONTRIBUTING](../../CONTRIBUTING.md)
+- [Component Definition of Done](./COMPONENT_DONE.md) · [A11y audit](./A11Y_AUDIT.md) · [Bundle guide](./BUNDLE.md)
+- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`)
 
 ---
 

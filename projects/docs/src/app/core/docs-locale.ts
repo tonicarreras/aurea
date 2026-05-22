@@ -25,6 +25,11 @@ export const DOCS_ROUTES = {
   getStarted: 'get-started',
   themes: 'themes',
   components: 'components',
+  guidesAdoption: 'guides/adoption',
+  guidesSignalForms: 'guides/signal-forms',
+  guidesPatterns: 'guides/patterns',
+  guidesTroubleshooting: 'guides/troubleshooting',
+  guidesBundle: 'guides/bundle',
 } as const;
 
 export function docsPath(locale: DocsLocale, ...segments: string[]): string[] {

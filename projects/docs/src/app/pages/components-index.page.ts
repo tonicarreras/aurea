@@ -2,20 +2,24 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { RouterLink } from '@angular/router';
 import { AuCard } from '@aurea-design-system/components';
 
+import { getDocsComponentMaturity } from '../core/docs-component-maturity';
+
 import { COMPONENT_DOCS, componentDocSummary } from '../core/component-docs.registry';
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocPage } from '../shared/doc-page';
 import { DocsInlineText } from '../shared/docs-inline-text';
+import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, RouterLink, AuCard, DocsInlineText],
+  imports: [DocPage, RouterLink, AuCard, DocsInlineText, DocsMaturityBadge],
   template: `
     <docs-page
       [title]="i18n.messages().componentsIndex.title"
       [lead]="i18n.messages().componentsIndex.lead"
     >
+      <p class="docs-components-index__legend">{{ i18n.messages().componentsIndex.maturityLegend }}</p>
       <ul class="docs-components-index">
         @for (doc of docs(); track doc.slug; let i = $index) {
           <li
@@ -31,12 +35,13 @@ import { DocsInlineText } from '../shared/docs-inline-text';
                 size="lg"
                 class="docs-components-index__card"
               >
-                <h3
+                <div
                   auCardHeader
-                  class="docs-components-index__name"
+                  class="docs-components-index__header"
                 >
-                  {{ doc.title }}
-                </h3>
+                  <h3 class="docs-components-index__name">{{ doc.title }}</h3>
+                  <docs-maturity-badge [level]="doc.maturity.level" />
+                </div>
                 <p
                   auCardBody
                   class="docs-components-index__body"
@@ -112,9 +117,24 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         box-shadow var(--au-duration-short) var(--au-ease-in-out);
     }
 
+    .docs-components-index__legend {
+      margin: 0 0 var(--au-space-5);
+      max-width: min(52rem, 100%);
+      font-size: var(--au-text-sm);
+      color: var(--au-color-text-secondary);
+      line-height: var(--au-leading-relaxed);
+    }
+
+    .docs-components-index__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--au-space-2) var(--au-space-3);
+      padding-right: var(--au-space-8);
+    }
+
     .docs-components-index__name {
       margin: 0;
-      padding-right: var(--au-space-8);
       font-size: var(--au-text-md);
       font-weight: var(--au-weight-semibold);
       color: var(--au-color-text-primary);
@@ -187,6 +207,7 @@ export class ComponentsIndexPage {
     COMPONENT_DOCS.map((doc) => ({
       ...doc,
       summary: componentDocSummary(doc, this.i18n.locale()),
+      maturity: getDocsComponentMaturity(doc.slug),
     })),
   );
 

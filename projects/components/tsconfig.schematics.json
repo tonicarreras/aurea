@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2022",
+    "rootDir": "./schematics",
+    "outDir": "../../dist/components/schematics",
+    "declaration": false,
+    "sourceMap": false,
+    "types": ["node"]
+  },
+  "include": ["schematics/**/*.ts"],
+  "exclude": ["schematics/**/schema.ts"]
+}

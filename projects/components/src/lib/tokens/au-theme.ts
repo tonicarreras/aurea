@@ -4,7 +4,7 @@ import { computed, DestroyRef, Directive, inject, input, signal } from '@angular
  * Applies Aurea semantic colors by setting `data-au-theme` on the host element
  * (see `au-tokens.css`). Use on a layout root (`<body>`, shell div) or `document.documentElement`.
  *
- * - `light` / `dark`: fixed palette.
+ * - `light` / `dark` / `high-contrast`: fixed palette.
  * - `system`: follows `prefers-color-scheme` and updates when the OS preference changes.
  */
 @Directive({
@@ -16,13 +16,13 @@ import { computed, DestroyRef, Directive, inject, input, signal } from '@angular
 export class AuTheme {
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly auTheme = input<'light' | 'dark' | 'system'>('system');
+  readonly auTheme = input<'light' | 'dark' | 'system' | 'high-contrast'>('system');
 
   private readonly prefersDark = signal(false);
 
   readonly resolved = computed(() => {
     const mode = this.auTheme();
-    if (mode === 'light' || mode === 'dark') {
+    if (mode === 'light' || mode === 'dark' || mode === 'high-contrast') {
       return mode;
     }
     return this.prefersDark() ? 'dark' : 'light';

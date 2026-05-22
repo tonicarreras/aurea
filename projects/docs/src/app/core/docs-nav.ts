@@ -49,6 +49,11 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
           items: [
             { path: '', label: 'Design overview', exact: true },
             { path: DOCS_ROUTES.getStarted, label: 'Get started' },
+            { path: DOCS_ROUTES.guidesAdoption, label: 'Adoption guide' },
+            { path: DOCS_ROUTES.guidesSignalForms, label: 'Signal forms' },
+            { path: DOCS_ROUTES.guidesPatterns, label: 'UI patterns' },
+            { path: DOCS_ROUTES.guidesTroubleshooting, label: 'Troubleshooting' },
+            { path: DOCS_ROUTES.guidesBundle, label: 'Bundle size' },
             { path: DOCS_ROUTES.themes, label: 'Themes & tokens' },
           ],
         }
@@ -57,6 +62,11 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
           items: [
             { path: '', label: 'Visión de diseño', exact: true },
             { path: DOCS_ROUTES.getStarted, label: 'Empezar' },
+            { path: DOCS_ROUTES.guidesAdoption, label: 'Guía de adopción' },
+            { path: DOCS_ROUTES.guidesSignalForms, label: 'Signal forms' },
+            { path: DOCS_ROUTES.guidesPatterns, label: 'Patrones de UI' },
+            { path: DOCS_ROUTES.guidesTroubleshooting, label: 'Problemas frecuentes' },
+            { path: DOCS_ROUTES.guidesBundle, label: 'Tamaño del bundle' },
             { path: DOCS_ROUTES.themes, label: 'Temas y tokens' },
           ],
         };

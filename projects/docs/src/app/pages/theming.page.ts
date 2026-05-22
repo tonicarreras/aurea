@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuButton, AuCard, AuTheme } from '@aurea-design-system/components';
+import { AuButton, AuCard, AuDensityDirective, AuTheme } from '@aurea-design-system/components';
 
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
@@ -19,6 +19,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
     AuButton,
     AuCard,
     AuTheme,
+    AuDensityDirective,
     RouterLink,
     DocsInlineText,
   ],
@@ -47,11 +48,32 @@ import { DocsTokenList } from '../shared/docs-token-list';
         [expandLabel]="i18n.messages().themes.directiveExpand"
       />
 
+      <h2>{{ i18n.messages().themes.densityHeading }}</h2>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.densityBody" />
+      </p>
+      <docs-code-block
+        [code]="densitySnippet"
+        language="html"
+        [expandLabel]="i18n.messages().themes.densityExpand"
+      />
+
+      <h2>{{ i18n.messages().themes.highContrastHeading }}</h2>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.highContrastBody" />
+      </p>
+      <docs-code-block
+        [code]="highContrastSnippet"
+        language="html"
+        [expandLabel]="i18n.messages().themes.highContrastExpand"
+      />
+
       <h2>{{ i18n.messages().themes.previewHeading }}</h2>
       <div
         class="docs-theme-preview"
         [class.docs-theme-preview--dark]="previewTheme() === 'dark'"
         [auTheme]="previewTheme()"
+        [auDensity]="previewDensity()"
       >
         <au-card variant="outlined">
           <h3 auCardHeader>{{ i18n.messages().themes.previewCardTitle }}</h3>
@@ -83,6 +105,40 @@ import { DocsTokenList } from '../shared/docs-token-list';
               (click)="previewTheme.set('dark')"
             >
               {{ i18n.messages().themes.previewDark }}
+            </au-button>
+            <au-button
+              size="sm"
+              [variant]="previewTheme() === 'high-contrast' ? 'primary' : 'outline'"
+              type="button"
+              (click)="previewTheme.set('high-contrast')"
+            >
+              {{ i18n.messages().themes.previewHighContrast }}
+            </au-button>
+          </div>
+          <div class="docs-theme-preview__actions docs-theme-preview__actions--density">
+            <au-button
+              size="sm"
+              [variant]="previewDensity() === 'compact' ? 'primary' : 'outline'"
+              type="button"
+              (click)="previewDensity.set('compact')"
+            >
+              Compact
+            </au-button>
+            <au-button
+              size="sm"
+              [variant]="previewDensity() === 'comfortable' ? 'primary' : 'outline'"
+              type="button"
+              (click)="previewDensity.set('comfortable')"
+            >
+              Comfortable
+            </au-button>
+            <au-button
+              size="sm"
+              [variant]="previewDensity() === 'spacious' ? 'primary' : 'outline'"
+              type="button"
+              (click)="previewDensity.set('spacious')"
+            >
+              Spacious
             </au-button>
           </div>
         </au-card>
@@ -155,8 +211,13 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
     .docs-theme-preview__actions {
       display: flex;
+      flex-wrap: wrap;
       gap: var(--au-space-2);
       margin-top: var(--au-space-4);
+    }
+
+    .docs-theme-preview__actions--density {
+      margin-top: var(--au-space-3);
     }
 
     .docs-theme-group {
@@ -181,7 +242,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
 export class ThemingPage {
   readonly i18n = inject(DocsLocaleService);
   readonly DOCS_ROUTES = DOCS_ROUTES;
-  readonly previewTheme = signal<'light' | 'dark'>('light');
+  readonly previewTheme = signal<'light' | 'dark' | 'high-contrast'>('light');
+  readonly previewDensity = signal<'compact' | 'comfortable' | 'spacious'>('comfortable');
 
   readonly tokenGroups = computed(() => themeTokenGroups(this.i18n.locale()));
 
@@ -199,4 +261,12 @@ export class ThemingPage {
   readonly directiveSnippet = `<div class="app-shell" [auTheme]="'system'">
   ...
 </div>`;
+
+  readonly densitySnippet = `<main data-au-density="compact" [auDensity]="density()">
+  ...
+</main>`;
+
+  readonly highContrastSnippet = `<html data-au-theme="high-contrast">
+  <!-- experimental WCAG-oriented palette -->
+</html>`;
 }

@@ -18,6 +18,31 @@ export const SEO_EN: DocsSeoMessages = {
     description:
       'Requirements, npm install for @aurea-design-system/components, global tokens, and your first au-button example.',
   },
+  guidesAdoption: {
+    title: 'Adoption guide — Aurea Design System',
+    description:
+      'Roadmap from install to signal forms, UI patterns, troubleshooting, bundle size, and themes.',
+  },
+  guidesSignalForms: {
+    title: 'Signal forms with Aurea — Angular 21',
+    description:
+      'Bind au-form-field and controls with FormField, form(), validators, and submit guards.',
+  },
+  guidesPatterns: {
+    title: 'UI patterns — Aurea Design System',
+    description:
+      'Validated forms, destructive confirm dialogs, and snackbar feedback composed from Aurea primitives.',
+  },
+  guidesTroubleshooting: {
+    title: 'Troubleshooting Aurea — common fixes',
+    description:
+      'Unstyled components, missing listbox CSS, validation messages, theme attributes, and bundle imports.',
+  },
+  guidesBundle: {
+    title: 'Bundle size & tree-shaking — Aurea',
+    description:
+      'Per-symbol imports, global CSS footprint, production stats-json, and lazy routes.',
+  },
   themes: {
     title: 'Themes & design tokens — Aurea Design System',
     description:

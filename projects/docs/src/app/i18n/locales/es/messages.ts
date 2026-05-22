@@ -1,4 +1,5 @@
 import type { DocsMessages } from '../../types/messages';
+import { GUIDES_ES } from './guides';
 
 export const MESSAGES_ES: DocsMessages = {
   shell: {
@@ -89,8 +90,18 @@ export const MESSAGES_ES: DocsMessages = {
         expand: 'Ver imports CSS',
       },
       firstComponent: { title: 'Primer componente', expand: 'Ver ejemplo Angular' },
+      ngAdd: {
+        title: 'Schematic (recomendado)',
+        intro: 'Añade los estilos globales a angular.json automáticamente:',
+        expand: 'Ver comando ng add',
+      },
+      nextGuides: {
+        title: 'Siguiente paso',
+        intro: 'Sigue la guía de adopción: signal forms, patrones, troubleshooting y bundle.',
+      },
     },
   },
+  guides: GUIDES_ES,
   themes: {
     title: 'Temas y tokens',
     lead: 'Variables globales --au-* definidas en au-tokens.css. Cada componente documenta solo los tokens que consume en su pestaña Styling.',
@@ -107,6 +118,15 @@ export const MESSAGES_ES: DocsMessages = {
     previewCardBody: 'Los colores siguen el tema del contenedor.',
     previewLight: 'Claro',
     previewDark: 'Oscuro',
+    previewHighContrast: 'Alto contraste',
+    densityHeading: 'Densidad (v2)',
+    densityBody:
+      'Define <code>data-au-density</code> en el shell: <code>compact</code>, <code>comfortable</code> (por defecto) o <code>spacious</code>. Usa la directiva <code>auDensity</code> para enlazarlo de forma reactiva.',
+    densityExpand: 'Ver HTML de densidad',
+    highContrastHeading: 'Alto contraste (experimental)',
+    highContrastBody:
+      'Paleta fija con bordes y foco más marcados: <code>data-au-theme="high-contrast"</code> o <code>[auTheme]="\'high-contrast\'"</code>. Valídalo con tu checklist de QA.',
+    highContrastExpand: 'Ver HTML alto contraste',
     globalHeading: 'Tokens globales',
     globalBody:
       'Sobrescribe en <code>:root</code> o <code>[data-au-theme]</code>. Los tokens de un componente concreto (p. ej. <code>--au-card-padding</code>) se listan en la página de ese componente —',
@@ -117,7 +137,11 @@ export const MESSAGES_ES: DocsMessages = {
   },
   componentsIndex: {
     title: 'Componentes',
-    lead: 'Catálogo de primitivos del design system. Cada página incluye vista previa y ejemplo de importación.',
+    lead: 'Catálogo de primitivos. Cada página incluye vista previa, badge de madurez y ejemplo de importación.',
+    maturityLegend: 'Madurez: stable = listo para producción; beta = usable con casos límite documentados; experimental = puede cambiar.',
+    maturityStable: 'Estable',
+    maturityBeta: 'Beta',
+    maturityExperimental: 'Experimental',
   },
   componentDoc: {
     sectionsAria: (title) => `Secciones de ${title}`,

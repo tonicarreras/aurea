@@ -319,6 +319,47 @@
   --au-size-field-text-md: 0.9375rem;
   --au-size-field-text-lg: 1rem;
   --au-scroll-smooth: smooth;
+  /* Density v2 — comfortable default; override with [data-au-density] */
+  --au-density-space-scale: 1;
+  --au-density-radius-scale: 1;
+}
+
+/* ==========================================================================
+   Density (v2) — compact | comfortable (default) | spacious
+   ========================================================================== */
+
+[data-au-density='compact'] {
+  --au-density-space-scale: 0.875;
+  --au-density-radius-scale: 0.92;
+  --au-space-1: calc(0.2rem * var(--au-density-space-scale));
+  --au-space-2: calc(0.4rem * var(--au-density-space-scale));
+  --au-space-3: calc(0.6rem * var(--au-density-space-scale));
+  --au-space-4: calc(0.8rem * var(--au-density-space-scale));
+  --au-space-5: calc(1rem * var(--au-density-space-scale));
+  --au-space-6: calc(1.2rem * var(--au-density-space-scale));
+  --au-size-field-h-sm: 1.75rem;
+  --au-size-field-h-md: 2rem;
+  --au-size-field-h-lg: 2.375rem;
+  --au-size-field-px-sm: 0.5rem;
+  --au-size-field-px-md: 0.625rem;
+  --au-size-field-px-lg: 0.75rem;
+}
+
+[data-au-density='spacious'] {
+  --au-density-space-scale: 1.125;
+  --au-density-radius-scale: 1.06;
+  --au-space-1: calc(0.3rem * var(--au-density-space-scale));
+  --au-space-2: calc(0.5rem * var(--au-density-space-scale));
+  --au-space-3: calc(0.75rem * var(--au-density-space-scale));
+  --au-space-4: calc(1rem * var(--au-density-space-scale));
+  --au-space-5: calc(1.25rem * var(--au-density-space-scale));
+  --au-space-6: calc(1.5rem * var(--au-density-space-scale));
+  --au-size-field-h-sm: 2.25rem;
+  --au-size-field-h-md: 2.5rem;
+  --au-size-field-h-lg: 2.875rem;
+  --au-size-field-px-sm: 0.75rem;
+  --au-size-field-px-md: 0.875rem;
+  --au-size-field-px-lg: 1rem;
 }
 
 ::selection {
@@ -469,11 +510,56 @@
   --au-scroll-smooth: smooth;
 }
 
+/* ==========================================================================
+   Theme: high contrast (experimental) — WCAG-friendly palette
+   ========================================================================== */
+
+[data-au-theme='high-contrast'] {
+  color-scheme: light;
+  --au-color-surface-canvas: #ffffff;
+  --au-color-surface-raised: #ffffff;
+  --au-color-surface-elevated: #f5f5f5;
+  --au-color-surface-sunken: #ebebeb;
+  --au-color-surface-inverted: #000000;
+  --au-color-text-primary: #000000;
+  --au-color-text-secondary: #1a1a1a;
+  --au-color-text-tertiary: #333333;
+  --au-color-text-placeholder: #4d4d4d;
+  --au-color-text-disabled: #666666;
+  --au-color-text-label: #000000;
+  --au-color-text-on-solid: #ffffff;
+  --au-color-border-subtle: #000000;
+  --au-color-border-default: #000000;
+  --au-color-border-strong: #000000;
+  --au-color-action-primary: #0000ee;
+  --au-color-action-primary-hover: #0000cc;
+  --au-color-action-primary-pressed: #000099;
+  --au-color-link: #0000ee;
+  --au-color-link-hover: #0000cc;
+  --au-color-focus-ring: #000000;
+  --au-color-focus-inner: #ffffff;
+  --au-focus-ring-width: 3px;
+  --au-color-semantic-error: #b00020;
+  --au-color-semantic-error-contrast: #ffffff;
+  --au-color-semantic-error-surface: #ffe5e8;
+  --au-color-semantic-success: #006400;
+  --au-color-semantic-success-surface: #e6f4e6;
+  --au-color-semantic-warning: #5c4a00;
+  --au-color-semantic-warning-surface: #fff4cc;
+  --au-color-semantic-info: #003d6b;
+  --au-color-semantic-info-surface: #e6f2fa;
+  --au-color-form-border: #000000;
+  --au-color-form-border-hover: #000000;
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+}
+
 /* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */
 @media (prefers-reduced-motion: reduce) {
   :root,
   [data-au-theme='light'],
-  [data-au-theme='dark'] {
+  [data-au-theme='dark'],
+  [data-au-theme='high-contrast'] {
     --au-scroll-smooth: auto;
   }
 }

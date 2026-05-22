@@ -1,3 +1,5 @@
+import type { GuidesMessages } from './guides';
+
 export interface DocsMessages {
   shell: {
     skipToContent: string;
@@ -55,6 +57,8 @@ export interface DocsMessages {
       install: { title: string; expand: string };
       tokens: { title: string; intro: string; expand: string };
       firstComponent: { title: string; expand: string };
+      ngAdd: { title: string; intro: string; expand: string };
+      nextGuides: { title: string; intro: string };
     };
   };
   themes: {
@@ -71,15 +75,27 @@ export interface DocsMessages {
     previewCardBody: string;
     previewLight: string;
     previewDark: string;
+    previewHighContrast: string;
+    densityHeading: string;
+    densityBody: string;
+    densityExpand: string;
+    highContrastHeading: string;
+    highContrastBody: string;
+    highContrastExpand: string;
     globalHeading: string;
     globalBody: string;
     globalLink: string;
     ruleHeading: string;
     ruleBody: string;
   };
+  guides: GuidesMessages;
   componentsIndex: {
     title: string;
     lead: string;
+    maturityLegend: string;
+    maturityStable: string;
+    maturityBeta: string;
+    maturityExperimental: string;
   };
   componentDoc: {
     sectionsAria: (title: string) => string;

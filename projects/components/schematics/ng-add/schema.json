@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "AureaNgAdd",
+  "title": "Aurea ng-add Options",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Angular project name (defaults to defaultProject or first app)"
+    },
+    "includeListboxStyles": {
+      "type": "boolean",
+      "description": "Also add au-field-listbox.css for select/autocomplete",
+      "default": true
+    }
+  }
+}

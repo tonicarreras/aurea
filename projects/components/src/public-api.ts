@@ -1,6 +1,13 @@
 /*
  * Public API surface of the Aurea library
  */
+export {
+  COMPONENT_MATURITY,
+  COMPONENT_MATURITY_LEVELS,
+  getComponentMaturity,
+  type ComponentMaturityLevel,
+  type ComponentMaturityMeta,
+} from './lib/component-maturity';
 export type { AuSize } from './lib/au-size';
 export type { AuFieldOption } from './lib/field-option';
 export * from './lib/autocomplete';

@@ -1,4 +1,5 @@
 import type { DocsMessages } from '../../types/messages';
+import { GUIDES_EN } from './guides';
 
 export const MESSAGES_EN: DocsMessages = {
   shell: {
@@ -90,8 +91,18 @@ export const MESSAGES_EN: DocsMessages = {
         expand: 'Show CSS imports',
       },
       firstComponent: { title: 'First component', expand: 'Show Angular example' },
+      ngAdd: {
+        title: 'Schematic (recommended)',
+        intro: 'Adds global styles to angular.json automatically:',
+        expand: 'Show ng add command',
+      },
+      nextGuides: {
+        title: 'Go deeper',
+        intro: 'Follow the adoption guide for signal forms, patterns, troubleshooting, and bundle tips.',
+      },
     },
   },
+  guides: GUIDES_EN,
   themes: {
     title: 'Themes & tokens',
     lead: 'Global --au-* variables defined in au-tokens.css. Each component page lists only the tokens it consumes under Styling.',
@@ -108,6 +119,15 @@ export const MESSAGES_EN: DocsMessages = {
     previewCardBody: 'Colors follow the container theme.',
     previewLight: 'Light',
     previewDark: 'Dark',
+    previewHighContrast: 'High contrast',
+    densityHeading: 'Density (v2)',
+    densityBody:
+      'Set <code>data-au-density</code> on the shell: <code>compact</code>, <code>comfortable</code> (default), or <code>spacious</code>. Use the <code>auDensity</code> directive for reactive binding.',
+    densityExpand: 'Show density HTML',
+    highContrastHeading: 'High contrast (experimental)',
+    highContrastBody:
+      'Fixed palette for stronger borders and focus: <code>data-au-theme="high-contrast"</code> or <code>[auTheme]="\'high-contrast\'"</code>. Validate with your QA checklist.',
+    highContrastExpand: 'Show high-contrast HTML',
     globalHeading: 'Global tokens',
     globalBody:
       'Override on <code>:root</code> or <code>[data-au-theme]</code>. Per-component tokens (e.g. <code>--au-card-padding</code>) are listed on that component’s page —',
@@ -118,7 +138,11 @@ export const MESSAGES_EN: DocsMessages = {
   },
   componentsIndex: {
     title: 'Components',
-    lead: 'Design system primitives. Each page includes a live preview and import example.',
+    lead: 'Design system primitives. Each page includes a live preview, maturity badge, and import example.',
+    maturityLegend: 'Maturity: stable = production-ready; beta = usable with noted edge cases; experimental = may change.',
+    maturityStable: 'Stable',
+    maturityBeta: 'Beta',
+    maturityExperimental: 'Experimental',
   },
   componentDoc: {
     sectionsAria: (title) => `${title} sections`,

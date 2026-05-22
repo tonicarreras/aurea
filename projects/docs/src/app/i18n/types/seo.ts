@@ -12,6 +12,11 @@ export interface DocsSeoMessages {
   breadcrumbComponents: string;
   home: DocsPageSeo;
   getStarted: DocsPageSeo;
+  guidesAdoption: DocsPageSeo;
+  guidesSignalForms: DocsPageSeo;
+  guidesPatterns: DocsPageSeo;
+  guidesTroubleshooting: DocsPageSeo;
+  guidesBundle: DocsPageSeo;
   themes: DocsPageSeo;
   componentsIndex: DocsPageSeo;
   componentTitle: (name: string, exportName: string) => string;

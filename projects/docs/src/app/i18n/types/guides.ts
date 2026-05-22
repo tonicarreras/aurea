@@ -1,0 +1,42 @@
+export interface GuideLinkCard {
+  title: string;
+  description: string;
+  /** Route segments without locale, e.g. guides/signal-forms */
+  path: string;
+}
+
+export interface GuideSection {
+  heading: string;
+  body: string;
+  code?: string;
+  codeLanguage?: 'typescript' | 'html' | 'css' | 'bash';
+  expandLabel?: string;
+}
+
+export interface GuidesMessages {
+  adoption: {
+    title: string;
+    lead: string;
+    cards: GuideLinkCard[];
+  };
+  signalForms: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
+  patterns: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
+  troubleshooting: {
+    title: string;
+    lead: string;
+    items: { problem: string; cause: string; fix: string }[];
+  };
+  bundle: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
+}

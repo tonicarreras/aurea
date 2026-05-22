@@ -1740,21 +1740,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2240,21 +2240,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuChipGroup>",
-                "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Accessible group (`role=\"group\"`) for selectable filter chips. Use `au-list` for static/removable tags.',\n      },\n    },\n  },\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuChip>",
                 "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role=\"group\"` for selectable filters.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuChipGroup>",
+                "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Accessible group (`role=\"group\"`) for selectable filter chips. Use `au-list` for static/removable tags.',\n      },\n    },\n  },\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2310,21 +2310,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputTextStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: docsOverview,\n      },\n    },\n  },\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  } as Meta<InputTextStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    type: 'text',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    showPasswordToggle: true,\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputText],\n      args,\n      `<au-input-text\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [type]=\"type\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [showPasswordToggle]=\"showPasswordToggle\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputNumberStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<InputTextStoryArgs>",
+                "defaultValue": "{\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      description: {\n        component: docsOverview,\n      },\n    },\n  },\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'HTML input type; password enables optional visibility toggle.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n    showPasswordToggle: {\n      control: 'boolean',\n      description: 'Only applies when `type` is `password`.',\n      table: { category: 'Password' },\n    },\n  } as Meta<InputTextStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    type: 'text',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    showPasswordToggle: true,\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputText],\n      args,\n      `<au-input-text\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [type]=\"type\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [showPasswordToggle]=\"showPasswordToggle\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -3612,8 +3612,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuChipGroup>",
-                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
+                "rawtype": "StoryObj<AuChip>",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3623,8 +3623,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuChip>",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "rawtype": "StoryObj<AuChipGroup>",
+                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3689,8 +3689,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputTextStoryArgs>",
-                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
+                "rawtype": "StoryObj<InputNumberStoryArgs>",
+                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3700,8 +3700,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<InputNumberStoryArgs>",
-                "file": "projects/components/src/lib/input-number/input-number.stories.ts",
+                "rawtype": "StoryObj<InputTextStoryArgs>",
+                "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6080,19 +6080,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/chip-group/chip-group.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuChipGroup>",
-                    "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/chip/chip.stories.ts": [
                 {
                     "name": "Story",
@@ -6100,6 +6087,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuChip>",
                     "file": "projects/components/src/lib/chip/chip.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/chip-group/chip-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuChipGroup>",
+                    "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

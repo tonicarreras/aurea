@@ -76,6 +76,13 @@ export class DocsSeoService {
     if (first === DOCS_ROUTES.getStarted) {
       return seo.getStarted;
     }
+    if (first === 'guides') {
+      if (second === 'adoption') return seo.guidesAdoption;
+      if (second === 'signal-forms') return seo.guidesSignalForms;
+      if (second === 'patterns') return seo.guidesPatterns;
+      if (second === 'troubleshooting') return seo.guidesTroubleshooting;
+      if (second === 'bundle') return seo.guidesBundle;
+    }
     if (first === DOCS_ROUTES.themes) {
       return seo.themes;
     }
