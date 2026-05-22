@@ -56,16 +56,18 @@ export const Default: Story = {
     props: args,
     moduleMetadata: storyImports,
     template: `
-      <au-button
-        variant="outline"
-        [auTooltip]="text"
-        [auTooltipPlacement]="placement"
-        [auTooltipShowDelay]="showDelay"
-        [auTooltipHideDelay]="hideDelay"
-        [auTooltipDisabled]="disabled"
-      >
-        Hover or focus me
-      </au-button>
+      <div class="au-story-stage">
+        <au-button
+          variant="outline"
+          [auTooltip]="text"
+          [auTooltipPlacement]="placement"
+          [auTooltipShowDelay]="showDelay"
+          [auTooltipHideDelay]="hideDelay"
+          [auTooltipDisabled]="disabled"
+        >
+          Hover or focus me
+        </au-button>
+      </div>
     `,
   }),
   play: async ({ canvasElement }) => {

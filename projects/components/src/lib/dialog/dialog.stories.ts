@@ -64,8 +64,9 @@ function dialogStory(config: {
       },
       moduleMetadata: { imports: [AuDialog, AuButton, AuDialogFooter] },
       template: `
-        <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
-        <au-dialog
+        <div class="au-story-stage">
+          <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
+          <au-dialog
           [(open)]="open"
           [title]="title"
           [size]="size"
@@ -78,6 +79,7 @@ function dialogStory(config: {
           ${config.body}
           ${footerBlock}
         </au-dialog>
+        </div>
       `,
     }),
   };

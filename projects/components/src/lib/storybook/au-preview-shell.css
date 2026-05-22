@@ -47,6 +47,13 @@ body,
   overflow: visible !important;
 }
 
+/* Altura mínima del canvas para stories con overlays portaled (snackbar, dialog, tooltip). */
+.au-story-stage {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 10rem;
+}
+
 /* Open combobox hosts above sibling fields / docs preview chrome */
 au-select[data-au-listbox-open],
 au-autocomplete[data-au-listbox-open] {

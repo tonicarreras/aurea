@@ -10,7 +10,7 @@ const meta: Meta<AuSnackbar> = {
   component: AuSnackbar,
   tags: ['autodocs', 'au'],
   parameters: {
-    layout: 'fullscreen',
+    layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
       description: {
@@ -42,6 +42,7 @@ const meta: Meta<AuSnackbar> = {
     durationMs: { control: 'number', table: { category: 'Behavior' } },
     actionLabel: { control: 'text', table: { category: 'Content' } },
     showCloseButton: { control: 'boolean', table: { category: 'Content' } },
+    showIcon: { control: 'boolean', table: { category: 'Appearance' } },
     dismiss: { table: { category: 'Events' } },
     action: { table: { category: 'Events' } },
   },
@@ -53,6 +54,7 @@ const meta: Meta<AuSnackbar> = {
     durationMs: 5000,
     actionLabel: '',
     showCloseButton: true,
+    showIcon: true,
     dismiss: fn(),
     action: fn(),
   },
@@ -71,18 +73,21 @@ function snackbarStory(triggerLabel?: string): Story {
       },
       moduleMetadata: { imports: [AuSnackbar, AuButton] },
       template: `
-        <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
-        <au-snackbar
-          [(open)]="open"
-          [message]="message"
-          [variant]="variant"
-          [position]="position"
-          [durationMs]="durationMs"
-          [actionLabel]="actionLabel"
-          [showCloseButton]="showCloseButton"
-          (dismiss)="open.set(false); dismiss()"
-          (action)="open.set(false); action()"
-        />
+        <div class="au-story-stage">
+          <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
+          <au-snackbar
+            [(open)]="open"
+            [message]="message"
+            [variant]="variant"
+            [position]="position"
+            [durationMs]="durationMs"
+            [actionLabel]="actionLabel"
+            [showCloseButton]="showCloseButton"
+            [showIcon]="showIcon"
+            (dismiss)="open.set(false); dismiss()"
+            (action)="open.set(false); action()"
+          />
+        </div>
       `,
     }),
   };
@@ -136,5 +141,55 @@ export const TopEnd: Story = {
     message: 'Nuevo mensaje recibido.',
     variant: 'info',
     position: 'top-end',
+  },
+};
+
+export const Stacked: Story = {
+  render: () => ({
+    props: {
+      openA: signal(false),
+      openB: signal(false),
+      openC: signal(false),
+      dismiss: fn(),
+    },
+    moduleMetadata: { imports: [AuSnackbar, AuButton] },
+    template: `
+      <div class="au-story-stage">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+          <au-button type="button" (click)="openA.set(true)">Toast A</au-button>
+          <au-button type="button" (click)="openB.set(true)">Toast B</au-button>
+          <au-button type="button" (click)="openC.set(true)">Toast C</au-button>
+        </div>
+        <au-snackbar
+        [(open)]="openA"
+        message="Primero (queda debajo)"
+        variant="default"
+        [durationMs]="0"
+        (dismiss)="openA.set(false); dismiss()"
+      />
+      <au-snackbar
+        [(open)]="openB"
+        message="Segundo"
+        variant="success"
+        [durationMs]="0"
+        (dismiss)="openB.set(false); dismiss()"
+      />
+      <au-snackbar
+        [(open)]="openC"
+        message="Tercero (encima)"
+        variant="info"
+        [durationMs]="0"
+        (dismiss)="openC.set(false); dismiss()"
+        />
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Varios `<au-snackbar>` con la misma `position` se apilan: el más reciente en el borde; los anteriores suben. Escape cierra solo el de arriba.',
+      },
+    },
   },
 };

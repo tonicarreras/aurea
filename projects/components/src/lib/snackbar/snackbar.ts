@@ -15,6 +15,14 @@ import {
   output,
 } from '@angular/core';
 
+import { AuIcon, type AuIconName } from '../icon/icon';
+import {
+  isTopmostSnackbarStackEntry,
+  registerSnackbarStackEntry,
+  setSnackbarStackSurface,
+  unregisterSnackbarStackEntry,
+} from './snackbar-stack';
+
 export type AuSnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 export type AuSnackbarPosition =
   | 'bottom-center'
@@ -30,6 +38,9 @@ export type AuSnackbarPosition =
  * @remarks
  * - **Visibility:** `[(open)]` toggles the toast; `durationMs` auto-closes (0 = manual dismiss only).
  * - **Content:** `message` input or projected default slot (slot used when `message` is empty).
+ * - **Icons:** {@link AuIcon} per semantic variant; `default` has none; disable with `showIcon`.
+ * - **Stacking:** multiple open instances with the same `position` stack; newest sits on the edge,
+ *   older toasts shift upward (bottom) or downward (top). Escape dismisses only the topmost toast.
  * - **Accessibility:** `role="status"` (default/success/info) or `role="alert"` (warning/error);
  *   matching `aria-live`; close button with accessible name.
  *
@@ -45,6 +56,7 @@ export type AuSnackbarPosition =
  */
 @Component({
   selector: 'au-snackbar',
+  imports: [AuIcon],
   templateUrl: './snackbar.html',
   styleUrl: './snackbar.css',
   encapsulation: ViewEncapsulation.None,
@@ -66,6 +78,8 @@ export class AuSnackbar {
 
   private dismissTimer: ReturnType<typeof setTimeout> | undefined;
   private bodyAnchor: Comment | null = null;
+  private stackId: number | null = null;
+  private stackResizeObserver: ResizeObserver | null = null;
 
   /** Whether the snackbar is visible. */
   readonly open = model<boolean>(false);
@@ -83,8 +97,27 @@ export class AuSnackbar {
   /** Label for the optional action button. */
   readonly actionLabel = input<string>('');
   readonly showCloseButton = input<boolean>(true);
+  /** Shows the semantic variant icon (none for `default`). */
+  readonly showIcon = input<boolean>(true);
   /** Accessible name for the close control. */
   readonly closeAriaLabel = input<string>('Dismiss notification');
+
+  readonly showVariantIcon = computed(() => this.showIcon() && this.variant() !== 'default');
+
+  readonly variantIcon = computed((): AuIconName | null => {
+    switch (this.variant()) {
+      case 'success':
+        return 'check-circle';
+      case 'warning':
+        return 'warning';
+      case 'error':
+        return 'error';
+      case 'info':
+        return 'info';
+      default:
+        return null;
+    }
+  });
 
   readonly liveRole = computed(() =>
     this.variant() === 'error' || this.variant() === 'warning' ? 'alert' : 'status',
@@ -105,12 +138,16 @@ export class AuSnackbar {
     }
     if (isOpen) {
       this.attachToBody();
+      this.syncStack();
+    } else {
+      this.teardownStack();
     }
   });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.clearDismissTimer();
+      this.teardownStack();
       this.restoreFromBody();
     });
   }
@@ -128,6 +165,9 @@ export class AuSnackbar {
     if (event.key !== 'Escape' || !this.open()) {
       return;
     }
+    if (this.stackId !== null && !isTopmostSnackbarStackEntry(this.stackId)) {
+      return;
+    }
     event.preventDefault();
     this.close();
   }
@@ -137,6 +177,7 @@ export class AuSnackbar {
       return;
     }
     this.clearDismissTimer();
+    this.teardownStack();
     this.open.set(false);
     this.dismiss.emit();
   }
@@ -163,6 +204,45 @@ export class AuSnackbar {
       parent.insertBefore(this.bodyAnchor, host);
     }
     this.renderer.appendChild(this.document.body, host);
+  }
+
+  private syncStack(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    const host = this.host.nativeElement as HTMLElement;
+    const surface = host.querySelector<HTMLElement>('.au-snackbar__surface');
+
+    if (this.stackId === null) {
+      this.stackId = registerSnackbarStackEntry(host, this.position());
+    }
+    setSnackbarStackSurface(this.stackId, surface);
+    this.observeStackResize(surface);
+  }
+
+  private teardownStack(): void {
+    if (this.stackId !== null) {
+      unregisterSnackbarStackEntry(this.stackId);
+      this.stackId = null;
+    }
+    this.stackResizeObserver?.disconnect();
+    this.stackResizeObserver = null;
+  }
+
+  private observeStackResize(surface: HTMLElement | null): void {
+    if (!isPlatformBrowser(this.platformId) || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    this.stackResizeObserver?.disconnect();
+    if (!surface || this.stackId === null) {
+      return;
+    }
+    this.stackResizeObserver = new ResizeObserver(() => {
+      if (this.stackId !== null) {
+        setSnackbarStackSurface(this.stackId, surface);
+      }
+    });
+    this.stackResizeObserver.observe(surface);
   }
 
   private restoreFromBody(): void {

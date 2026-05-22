@@ -104,29 +104,29 @@
 }
 
 :host([data-au-variant='success']) .au-message__surface {
-  --au-message-bg: var(--au-color-semantic-success-surface);
-  --au-message-border: color-mix(in srgb, var(--au-color-semantic-success) 28%, transparent);
+  --au-message-bg: var(--au-color-feedback-success-bg);
+  --au-message-border: var(--au-color-feedback-success-border);
   --au-message-accent: var(--au-color-semantic-success);
   --au-message-title: var(--au-color-semantic-success);
 }
 
 :host([data-au-variant='warning']) .au-message__surface {
-  --au-message-bg: var(--au-color-semantic-warning-surface);
-  --au-message-border: color-mix(in srgb, var(--au-color-semantic-warning) 32%, transparent);
+  --au-message-bg: var(--au-color-feedback-warning-bg);
+  --au-message-border: var(--au-color-feedback-warning-border);
   --au-message-accent: var(--au-color-semantic-warning);
   --au-message-title: var(--au-color-semantic-warning);
 }
 
 :host([data-au-variant='error']) .au-message__surface {
-  --au-message-bg: var(--au-color-semantic-error-surface);
-  --au-message-border: color-mix(in srgb, var(--au-color-semantic-error) 32%, transparent);
+  --au-message-bg: var(--au-color-feedback-error-bg);
+  --au-message-border: var(--au-color-feedback-error-border);
   --au-message-accent: var(--au-color-semantic-error);
   --au-message-title: var(--au-color-semantic-error-contrast, var(--au-color-semantic-error));
 }
 
 :host([data-au-variant='info']) .au-message__surface {
-  --au-message-bg: var(--au-color-semantic-info-surface);
-  --au-message-border: color-mix(in srgb, var(--au-color-semantic-info) 28%, transparent);
+  --au-message-bg: var(--au-color-feedback-info-bg);
+  --au-message-border: var(--au-color-feedback-info-border);
   --au-message-accent: var(--au-color-semantic-info);
   --au-message-title: var(--au-color-semantic-info);
 }

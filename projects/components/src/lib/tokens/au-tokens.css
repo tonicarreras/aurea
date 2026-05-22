@@ -203,7 +203,7 @@
   /* Focus: ring color (action, not error) */
   --au-color-focus-ring: #1059c8;
   --au-color-focus-inner: #0a3a85;
-  /* States (foreground + soft surface for messages) */
+  /* States (foreground + soft field surfaces; feedback tokens for message/snackbar) */
   --au-color-semantic-error: #b42318;
   --au-color-semantic-error-contrast: #5c0f0a;
   --au-color-semantic-error-surface: #fff4f2;
@@ -213,6 +213,46 @@
   --au-color-semantic-warning-surface: #fffbeb;
   --au-color-semantic-info: #0369a1;
   --au-color-semantic-info-surface: #f0f9ff;
+  --au-color-feedback-success-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 28%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 44%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-warning-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 30%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 46%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-error-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 26%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 44%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-info-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 28%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 44%,
+    var(--au-color-border-default)
+  );
   /* Text selection */
   --au-color-selection: rgba(16, 89, 200, 0.2);
   --au-color-selection-text: inherit;
@@ -318,6 +358,46 @@
   --au-color-semantic-warning-surface: rgba(120, 80, 10, 0.2);
   --au-color-semantic-info: #38bdf8;
   --au-color-semantic-info-surface: rgba(15, 80, 120, 0.22);
+  --au-color-feedback-success-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 24%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 50%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-warning-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 26%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 52%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-error-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 24%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 50%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-info-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 24%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 50%,
+    var(--au-color-border-default)
+  );
   /* Selection */
   --au-color-selection: rgba(110, 180, 255, 0.28);
   /* Form */

@@ -459,6 +459,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('durationMs', 'number', 'Auto-cierre en ms; `0` desactiva timer.', '5000'),
           i('actionLabel', 'string', 'Etiqueta del botón de acción opcional.', "''"),
           i('showCloseButton', 'boolean', 'Botón cerrar.', 'true'),
+          i('showIcon', 'boolean', 'Icono de variante semántica (no en default).', 'true'),
           i('closeAriaLabel', 'string', 'Nombre accesible del cerrar.', "'Dismiss notification'"),
           o('dismiss', 'void', 'Al cerrar (timer, Escape, cerrar).'),
           o('action', 'void', 'Al pulsar la acción opcional.'),

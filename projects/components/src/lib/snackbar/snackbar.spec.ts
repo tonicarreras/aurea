@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { resetSnackbarStackForTests } from './snackbar-stack';
 import { AuSnackbar } from './snackbar';
 
 describe('AuSnackbar', () => {
@@ -9,6 +10,10 @@ describe('AuSnackbar', () => {
     await TestBed.configureTestingModule({
       imports: [AuSnackbar],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    resetSnackbarStackForTests();
   });
 
   function querySurface(fixture: ComponentFixture<AuSnackbar>) {
@@ -37,6 +42,42 @@ describe('AuSnackbar', () => {
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('default');
     expect(host.getAttribute('data-au-position')).toBe('bottom-center');
+  });
+
+  it('does not render an icon for the default variant', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'default');
+    fix.componentRef.setInput('showIcon', true);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__icon')).toBeNull();
+  });
+
+  it('renders a semantic icon when variant is not default', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'success');
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__icon')).not.toBeNull();
+  });
+
+  it('hides icon when showIcon is false', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'error');
+    fix.componentRef.setInput('showIcon', false);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__icon')).toBeNull();
+  });
+
+  it('maps variant to icon names', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('variant', 'info');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBe('info');
+    fix.componentRef.setInput('variant', 'warning');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBe('warning');
   });
 
   it('applies variant and position attributes', () => {
@@ -151,6 +192,50 @@ describe('AuSnackbar', () => {
     expect(fix.componentInstance.open()).toBe(true);
     expect(querySurface(fix)).not.toBeNull();
     vi.useRealTimers();
+  });
+
+  it('stacks newer snackbars on the edge and offsets older ones', () => {
+    const first = TestBed.createComponent(AuSnackbar);
+    first.componentRef.setInput('open', true);
+    first.componentRef.setInput('message', 'Primero');
+    first.detectChanges();
+
+    const second = TestBed.createComponent(AuSnackbar);
+    second.componentRef.setInput('open', true);
+    second.componentRef.setInput('message', 'Segundo');
+    second.detectChanges();
+
+    expect(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset')).toBe('0px');
+    expect(Number.parseFloat(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset'))).toBeGreaterThan(
+      0,
+    );
+    expect(Number(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer'))).toBeGreaterThan(
+      Number(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer')),
+    );
+  });
+
+  it('Escape dismisses only the topmost snackbar in the stack', () => {
+    const first = TestBed.createComponent(AuSnackbar);
+    const firstDismiss = vi.fn();
+    first.componentInstance.dismiss.subscribe(firstDismiss);
+    first.componentRef.setInput('open', true);
+    first.componentRef.setInput('message', 'Primero');
+    first.componentRef.setInput('durationMs', 0);
+    first.detectChanges();
+
+    const second = TestBed.createComponent(AuSnackbar);
+    second.componentRef.setInput('open', true);
+    second.componentRef.setInput('message', 'Segundo');
+    second.componentRef.setInput('durationMs', 0);
+    second.detectChanges();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    second.detectChanges();
+    first.detectChanges();
+
+    expect(second.componentInstance.open()).toBe(false);
+    expect(first.componentInstance.open()).toBe(true);
+    expect(firstDismiss).not.toHaveBeenCalled();
   });
 
   it('closes on Escape via document keydown', () => {
