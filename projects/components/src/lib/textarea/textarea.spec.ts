@@ -18,7 +18,8 @@ describe('AuTextarea', () => {
   }
 
   function queryTextarea(fixture: ComponentFixture<AuTextareaTestHost>): HTMLTextAreaElement {
-    return fixture.debugElement.query(By.css('.au-textarea__input'))!.nativeElement as HTMLTextAreaElement;
+    return fixture.debugElement.query(By.css('.au-textarea__input'))!
+      .nativeElement as HTMLTextAreaElement;
   }
 
   beforeEach(async () => {
@@ -40,8 +41,8 @@ describe('AuTextarea', () => {
 
   it('sets null when cleared', () => {
     const fix = createFieldFixture(AuTextareaTestHost, { label: 'Notes' }, (f) => {
-    f.componentInstance.value = 'text';
-});
+      f.componentInstance.value = 'text';
+    });
     const el = queryTextarea(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
@@ -51,7 +52,7 @@ describe('AuTextarea', () => {
 
   it('inputDisplay is empty when value is null', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { label: 'x' });
+      applyFieldHarnessInputs(f, { label: 'x' });
     });
     expect(CONTROL(fix).inputDisplay()).toBe('');
   });
@@ -73,8 +74,8 @@ describe('AuTextarea', () => {
 
   it('shows error, aria-errormessage, and invalid on the textarea', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { controlId: 'f-bio' });
-    applyFieldHarnessInputs(f, { errorMessage: 'Too short' });
+      applyFieldHarnessInputs(f, { controlId: 'f-bio' });
+      applyFieldHarnessInputs(f, { errorMessage: 'Too short' });
     });
     const ta = queryTextarea(fix);
     expect(ta.getAttribute('aria-invalid')).toBe('true');
@@ -109,7 +110,7 @@ describe('AuTextarea', () => {
 
   it('sets hint and aria-describedby', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { hint: 'Max 500 chars' });
+      applyFieldHarnessInputs(f, { hint: 'Max 500 chars' });
     });
     const ta = queryTextarea(fix);
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
@@ -118,17 +119,17 @@ describe('AuTextarea', () => {
 
   it('shows required marker when required and showRequired', () => {
     const fix = createFieldFixture(AuTextareaTestHost, { label: 'Bio' }, (f) => {
-    f.componentInstance.required = true;
-});
+      f.componentInstance.required = true;
+    });
     const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
     expect(label.textContent?.replace(/\s+/g, ' ').trim()).toContain('*');
   });
 
   it('hides required marker when showRequired false', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { label: 'Bio' });
-    f.componentInstance.required = true;
-    f.componentRef.setInput("ffShowRequired", false);
+      applyFieldHarnessInputs(f, { label: 'Bio' });
+      f.componentInstance.required = true;
+      f.componentRef.setInput('ffShowRequired', false);
     });
     const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
     expect(label.textContent).not.toContain('*');
@@ -136,8 +137,8 @@ describe('AuTextarea', () => {
 
   it('sets wrap hard attribute', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.wrap = 'hard';
-});
+      f.componentInstance.wrap = 'hard';
+    });
     expect(queryTextarea(fix).getAttribute('wrap')).toBe('hard');
   });
 
@@ -159,16 +160,16 @@ describe('AuTextarea', () => {
 
   it('binds resize style', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.resize = 'none';
-});
+      f.componentInstance.resize = 'none';
+    });
     expect(queryTextarea(fix).style.resize).toBe('none');
   });
 
   it('sets rows and cols', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.rows = 6;
-    f.componentInstance.cols = 40;
-});
+      f.componentInstance.rows = 6;
+      f.componentInstance.cols = 40;
+    });
     const ta = queryTextarea(fix);
     expect(ta.getAttribute('rows')).toBe('6');
     expect(ta.getAttribute('cols')).toBe('40');
@@ -176,14 +177,14 @@ describe('AuTextarea', () => {
 
   it('sets readOnly', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.readOnly = true;
-});
+      f.componentInstance.readOnly = true;
+    });
     expect(queryTextarea(fix).readOnly).toBe(true);
   });
 
   it('shows error from errors when no manual message', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ kind: 'maxLength', message: 'Too long' }] as any;
+      f.componentInstance.errors = [{ kind: 'maxLength', message: 'Too long' }] as any;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too long');
@@ -191,7 +192,7 @@ describe('AuTextarea', () => {
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ kind: 'required' }] as any;
+      f.componentInstance.errors = [{ kind: 'required' }] as any;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('required');
@@ -199,19 +200,21 @@ describe('AuTextarea', () => {
 
   it('marks aria-invalid when invalid without message', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.invalid = true;
-});
+      f.componentInstance.invalid = true;
+    });
     expect(queryTextarea(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
   it('does not emit when disabled', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.disabled = true;
+      f.componentInstance.disabled = true;
     });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.valueChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.valueChange).subscribe(() => n++),
+    );
     fix.detectChanges();
     const el = queryTextarea(fix);
     el.value = 'x';
@@ -244,10 +247,12 @@ describe('AuTextarea', () => {
 
   it('prefers manual errorMessage over errors', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { errorMessage: 'Manual' });
-    f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
+      applyFieldHarnessInputs(f, { errorMessage: 'Manual' });
+      f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
     });
-    expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+    expect(
+      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
+    ).toBe('Manual');
   });
 
   it('applies and clears from-tab on control row', () => {
@@ -255,7 +260,9 @@ describe('AuTextarea', () => {
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-textarea__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fix.debugElement.query(By.css('.au-textarea__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.debugElement
+      .query(By.css('.au-textarea__control-row'))!
+      .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-textarea__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
@@ -267,15 +274,15 @@ describe('AuTextarea', () => {
 
   it('displayError returns empty when first error has no usable message or kind', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ message: '', kind: '' }];
-});
+      f.componentInstance.errors = [{ message: '', kind: '' }];
+    });
     expect(CONTROL(fix).displayError()).toBe('');
   });
 
   it('placeholder transform passes through non-null strings', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
-    f.componentInstance.placeholder = 'Type here';
-});
+      f.componentInstance.placeholder = 'Type here';
+    });
     expect(CONTROL(fix).placeholder()).toBe('Type here');
   });
 

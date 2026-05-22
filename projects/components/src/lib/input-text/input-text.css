@@ -222,8 +222,7 @@
   line-height: 1;
   cursor: pointer;
   user-select: none;
-  transition:
-    var(--au-transition-glyph), var(--au-transition-background);
+  transition: var(--au-transition-glyph), var(--au-transition-background);
 }
 
 .au-input-text__reveal:hover:not(:disabled) {

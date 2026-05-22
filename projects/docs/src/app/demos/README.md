@@ -2,11 +2,11 @@
 
 Live Angular components for the documentation app. Split by responsibility:
 
-| Folder | Role |
-|--------|------|
-| `previews/` | One component per file — overview tab preview (`docs-preview-*`). |
+| Folder      | Role                                                                    |
+| ----------- | ----------------------------------------------------------------------- |
+| `previews/` | One component per file — overview tab preview (`docs-preview-*`).       |
 | `examples/` | One file per DS component — examples tab live demos (`docs-example-*`). |
-| `shared/` | Reusable layout styles and option fixtures. |
+| `shared/`   | Reusable layout styles and option fixtures.                             |
 
 Example **metadata** (title, description, code snippet) lives in `i18n/locales/{es,en}/examples/` and only imports demo classes from here.
 

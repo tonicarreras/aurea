@@ -9,9 +9,20 @@ import { DEMO_ROW_TIGHT } from '../shared/demo-layout';
   template: `
     <au-chip-group ariaLabel="Filtros de estado">
       <div class="docs-demo-row">
-        <au-chip label="Borrador" [selectable]="true" />
-        <au-chip label="Publicado" [selectable]="true" [selected]="true" variant="accent" />
-        <au-chip label="Archivado" [selectable]="true" />
+        <au-chip
+          label="Borrador"
+          [selectable]="true"
+        />
+        <au-chip
+          label="Publicado"
+          [selectable]="true"
+          [selected]="true"
+          variant="accent"
+        />
+        <au-chip
+          label="Archivado"
+          [selectable]="true"
+        />
       </div>
     </au-chip-group>
   `,

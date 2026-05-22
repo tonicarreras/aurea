@@ -16,7 +16,9 @@
     "build-storybook": "ng run components:build-storybook",
     "test-storybook": "test-storybook --config-dir projects/components/.storybook --url http://127.0.0.1:6006",
     "test-storybook:ci": "bun run build-storybook && start-server-and-test 'npx --yes http-server storybook-static -a 127.0.0.1 -p 6010 -s' http://127.0.0.1:6010 'test-storybook --config-dir projects/components/.storybook --url http://127.0.0.1:6010'",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "format": "prettier --cache --write .",
+    "format:check": "prettier --cache --check ."
   },
   "private": true,
   "packageManager": "bun@1.3.11",
@@ -58,6 +60,7 @@
     "@vitest/coverage-v8": "^4.1.7",
     "angular-eslint": "21.4.0",
     "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
     "jsdom": "^28.1.0",
     "ng-packagr": "^21.2.3",
     "playwright": "^1.60.0",

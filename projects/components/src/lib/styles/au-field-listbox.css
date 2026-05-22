@@ -88,12 +88,16 @@
   background: var(--au-color-select-option-selected-marker);
 }
 
-.au-field-listbox__option--selected.au-field-listbox__option--active:not(.au-field-listbox__option--disabled) {
+.au-field-listbox__option--selected.au-field-listbox__option--active:not(
+    .au-field-listbox__option--disabled
+  ) {
   background: var(--au-color-select-option-selected-bg);
   color: var(--au-color-select-option-selected-text);
 }
 
-.au-field-listbox__option--selected.au-field-listbox__option--active:not(.au-field-listbox__option--disabled)::before {
+.au-field-listbox__option--selected.au-field-listbox__option--active:not(
+    .au-field-listbox__option--disabled
+  )::before {
   background: var(--au-color-select-option-selected-marker);
 }
 
@@ -103,13 +107,17 @@
 }
 
 @media (hover: hover) {
-  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(.au-field-listbox__option--selected) {
+  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
+      .au-field-listbox__option--selected
+    ) {
     background: var(--au-color-select-option-highlight-bg);
     color: var(--au-color-select-option-highlight-text);
     font-weight: var(--au-weight-medium);
   }
 
-  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(.au-field-listbox__option--selected)::before {
+  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
+      .au-field-listbox__option--selected
+    )::before {
     background: var(--au-color-select-option-highlight-marker);
   }
 

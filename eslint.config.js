@@ -3,14 +3,23 @@ const eslint = require('@eslint/js');
 const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 module.exports = defineConfig([
+  {
+    ignores: [
+      '**/dist/**',
+      '**/coverage/**',
+      '**/node_modules/**',
+      'storybook-static/**',
+      'projects/components/documentation.json',
+    ],
+  },
   {
     files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
-      tseslint.configs.stylistic,
       angular.configs.tsRecommended,
     ],
     languageOptions: {
@@ -84,4 +93,6 @@ module.exports = defineConfig([
       '@angular-eslint/template/interactive-supports-focus': 'off',
     },
   },
+  // Disable ESLint stylistic rules that conflict with Prettier (must be last).
+  eslintConfigPrettier,
 ]);

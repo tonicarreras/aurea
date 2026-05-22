@@ -151,7 +151,8 @@
 }
 
 /* Inset ring on focus (click / pointer) */
-.au-checkbox__wrapper:focus-within:not(.au-checkbox__wrapper--from-tab) .au-checkbox__element:not(:disabled) {
+.au-checkbox__wrapper:focus-within:not(.au-checkbox__wrapper--from-tab)
+  .au-checkbox__element:not(:disabled) {
   border-color: var(--au-color-focus-ring);
   box-shadow: 0 0 0 1px var(--au-color-focus-ring);
 }

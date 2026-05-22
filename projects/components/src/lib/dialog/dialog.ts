@@ -14,10 +14,7 @@ import {
 } from '@angular/core';
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from './dialog-footer.directive';
-import {
-  focusInitialInDialogPanel,
-  handleDialogTabKeydown,
-} from './dialog-focus-trap';
+import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
 
 /**
  * Design-system **dialog**: native `<dialog>` overlay for focused interactions.

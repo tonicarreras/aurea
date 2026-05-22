@@ -6,9 +6,23 @@ import { AuTab, AuTabPanel, AuTabs } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs [(value)]="tab" ariaLabel="Cuenta" style="max-width: 26rem">
-      <button type="button" auTab="perfil">Perfil</button>
-      <button type="button" auTab="seguridad">Seguridad</button>
+    <au-tabs
+      [(value)]="tab"
+      ariaLabel="Cuenta"
+      style="max-width: 26rem"
+    >
+      <button
+        type="button"
+        auTab="perfil"
+      >
+        Perfil
+      </button>
+      <button
+        type="button"
+        auTab="seguridad"
+      >
+        Seguridad
+      </button>
       <div auTabPanel="perfil"><p>Nombre, avatar y preferencias.</p></div>
       <div auTabPanel="seguridad"><p>Contraseña y 2FA.</p></div>
     </au-tabs>

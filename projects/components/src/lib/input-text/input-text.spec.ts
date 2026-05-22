@@ -14,7 +14,8 @@ import { AuInputText } from './input-text';
 
 describe('AuInputText', () => {
   function queryInput(fixture: ComponentFixture<AuInputTextTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-text__input'))!.nativeElement as HTMLInputElement;
+    return fixture.debugElement.query(By.css('.au-input-text__input'))!
+      .nativeElement as HTMLInputElement;
   }
 
   function control(fixture: ComponentFixture<AuInputTextTestHost>): AuInputText {
@@ -29,8 +30,8 @@ describe('AuInputText', () => {
 
   it('sets null when cleared', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.value = 'abc';
-});
+      f.componentInstance.value = 'abc';
+    });
     const el = queryInput(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
@@ -85,12 +86,14 @@ describe('AuInputText', () => {
 
   it('does not emit when disabled and typing', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.disabled = true;
-});
+      f.componentInstance.disabled = true;
+    });
     const comp = control(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.valueChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.valueChange).subscribe(() => n++),
+    );
     const el = queryInput(fix);
     el.value = 'x';
     el.dispatchEvent(new Event('input'));
@@ -144,15 +147,19 @@ describe('AuInputText', () => {
   });
 
   it('hides required marker when showRequired false', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, { label: 'Email', required: true, showRequired: false });
+    const fix = createFieldFixture(AuInputTextTestHost, {
+      label: 'Email',
+      required: true,
+      showRequired: false,
+    });
     const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
     expect(label.textContent).not.toContain('*');
   });
 
   it('toggles password visibility', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.type = 'password';
-});
+      f.componentInstance.type = 'password';
+    });
     const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
     const input = queryInput(fix);
     expect(input.getAttribute('type')).toBe('password');
@@ -168,23 +175,23 @@ describe('AuInputText', () => {
 
   it('does not render password toggle when showPasswordToggle is false', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.type = 'password';
-    f.componentInstance.showPasswordToggle = false;
-});
+      f.componentInstance.type = 'password';
+      f.componentInstance.showPasswordToggle = false;
+    });
     expect(fix.debugElement.query(By.css('.au-input-text__reveal'))).toBeNull();
   });
 
   it('keeps non-password type from effectiveInputType', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.type = 'email';
-});
+      f.componentInstance.type = 'email';
+    });
     expect(queryInput(fix).getAttribute('type')).toBe('email');
   });
 
   it('sets readOnly on the input', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.readOnly = true;
-});
+      f.componentInstance.readOnly = true;
+    });
     expect(queryInput(fix).readOnly).toBe(true);
   });
 
@@ -203,29 +210,31 @@ describe('AuInputText', () => {
     expect(el.getAttribute('autocomplete')).toBe('username');
     expect(el.getAttribute('minlength')).toBe('2');
     expect(el.getAttribute('maxlength')).toBe('10');
-    expect(fix.debugElement.query(By.css('au-input-text')).nativeElement.getAttribute('data-au-size')).toBe('lg');
+    expect(
+      fix.debugElement.query(By.css('au-input-text')).nativeElement.getAttribute('data-au-size'),
+    ).toBe('lg');
   });
 
   it('shows error from errors when no manual message', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ kind: 'minLength', message: 'Too short' }];
-});
+      f.componentInstance.errors = [{ kind: 'minLength', message: 'Too short' }];
+    });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too short');
   });
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ kind: 'pattern' }];
-});
+      f.componentInstance.errors = [{ kind: 'pattern' }];
+    });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
   });
 
   it('marks aria-invalid when invalid without message', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.invalid = true;
-});
+      f.componentInstance.invalid = true;
+    });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
@@ -247,7 +256,9 @@ describe('AuInputText', () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fix.debugElement.query(By.css('.au-input-text__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.debugElement
+      .query(By.css('.au-input-text__control-row'))!
+      .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-input-text__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
@@ -259,17 +270,19 @@ describe('AuInputText', () => {
 
   it('adds password control row class when toggle shown', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.type = 'password';
-});
+      f.componentInstance.type = 'password';
+    });
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
     expect(row.classList.contains('au-input-text__control-row--password')).toBe(true);
   });
 
   it('prefers manual errorMessage over errors', () => {
     const fix = createFieldFixture(AuInputTextTestHost, { errorMessage: 'Manual' }, (f) => {
-    f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }];
-});
-    expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+      f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }];
+    });
+    expect(
+      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
+    ).toBe('Manual');
   });
 
   it('onControlRowFocusout ignores non-HTMLElement', () => {
@@ -279,8 +292,8 @@ describe('AuInputText', () => {
 
   it('onControlRowFocusout returns when focus stays inside row', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.type = 'password';
-});
+      f.componentInstance.type = 'password';
+    });
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
     const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: reveal });
@@ -297,22 +310,22 @@ describe('AuInputText', () => {
 
   it('normalizes nullish placeholder transform', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.placeholder = undefined as unknown as string;
-});
+      f.componentInstance.placeholder = undefined as unknown as string;
+    });
     expect(control(fix).placeholder()).toBe('');
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ message: '', kind: '' }];
-});
+      f.componentInstance.errors = [{ message: '', kind: '' }];
+    });
     expect(control(fix).displayError()).toBe('');
   });
 
   it('togglePasswordVisibility toggles type without using the reveal button', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-    f.componentInstance.type = 'password';
-});
+      f.componentInstance.type = 'password';
+    });
     const comp = control(fix);
     comp.togglePasswordVisibility();
     fix.detectChanges();

@@ -41,7 +41,9 @@ import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 })
 export class AuTooltip {
   /** Tooltip copy (ignored when empty). */
-  readonly auTooltip = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly auTooltip = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
 
   /** Preferred placement; flips when there is not enough viewport space. */
   readonly auTooltipPlacement = input<AuTooltipPlacement>('top');

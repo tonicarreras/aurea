@@ -11,7 +11,8 @@ import {
 
 describe('AuDialog', () => {
   function queryNativeDialog(fixture: ComponentFixture<AuDialog>): HTMLDialogElement {
-    return fixture.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    return fixture.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
   }
 
   function isDialogOpen(dialog: HTMLDialogElement): boolean {
@@ -309,7 +310,8 @@ describe('AuDialog', () => {
   it('uses native showModal/close when present on the element', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     const showSpy = vi.fn(function (this: HTMLDialogElement) {
       this.setAttribute('open', '');
     });
@@ -336,7 +338,8 @@ describe('AuDialog', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     try {
       Object.defineProperty(el, 'close', { value: undefined, configurable: true });
       fix.componentRef.setInput('open', false);
@@ -377,7 +380,8 @@ describe('AuDialog', () => {
   it('title change alone does not rerun dialog open sync', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     const openSpy = vi.fn(function (this: HTMLDialogElement) {
       this.setAttribute('open', '');
     });
@@ -399,7 +403,8 @@ describe('AuDialog', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     Object.defineProperty(el, 'close', { value: undefined, configurable: true });
     fix.componentInstance.onCloseButtonClick();
     delete (el as unknown as { close?: unknown }).close;
@@ -624,7 +629,12 @@ class TestDialogComponent {}
   template: `
     <au-dialog [open]="true">
       <p>Dialog body</p>
-      <button type="button" auDialogFooter>Footer action</button>
+      <button
+        type="button"
+        auDialogFooter
+      >
+        Footer action
+      </button>
     </au-dialog>
   `,
 })
@@ -634,9 +644,23 @@ class TestDialogWithFooterComponent {}
   selector: 'test-dialog-focus-trap',
   imports: [AuDialog],
   template: `
-    <au-dialog [open]="true" title="Trap" [showCloseButton]="false">
-      <button type="button" id="trap-first">First</button>
-      <button type="button" id="trap-last">Last</button>
+    <au-dialog
+      [open]="true"
+      title="Trap"
+      [showCloseButton]="false"
+    >
+      <button
+        type="button"
+        id="trap-first"
+      >
+        First
+      </button>
+      <button
+        type="button"
+        id="trap-last"
+      >
+        Last
+      </button>
     </au-dialog>
   `,
 })

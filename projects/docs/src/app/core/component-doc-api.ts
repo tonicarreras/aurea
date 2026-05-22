@@ -11,10 +11,7 @@ export type { ResolvedComponentApi } from './component-docs.registry';
 
 const API_FALLBACK_CACHE = new Map<string, ResolvedComponentApi>();
 
-export function resolveComponentApi(
-  doc: ComponentDoc,
-  locale: DocsLocale,
-): ResolvedComponentApi {
+export function resolveComponentApi(doc: ComponentDoc, locale: DocsLocale): ResolvedComponentApi {
   const map = locale === 'en' ? COMPONENT_DOC_API_EN : COMPONENT_DOC_API_ES;
   const resolved = map[doc.slug];
   if (resolved) {

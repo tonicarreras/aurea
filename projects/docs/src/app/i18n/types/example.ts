@@ -8,4 +8,3 @@ export interface ComponentDocExample {
   code: string;
   language?: CodeLanguage;
 }
-

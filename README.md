@@ -32,11 +32,11 @@
 
 Aurea is built on three pillars:
 
-| Pillar | Description |
-|--------|-------------|
-| **Semantic Design** | Single source of truth for state; design tokens map to meaning, not implementation |
-| **Accessibility First** | WCAG 2.2 AA on primary flows; visible focus, `aria-*`, `prefers-reduced-motion` |
-| **Angular 21 Native** | Signals, `model()`, `FieldTree` / `formField` for reactive forms |
+| Pillar                  | Description                                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------- |
+| **Semantic Design**     | Single source of truth for state; design tokens map to meaning, not implementation |
+| **Accessibility First** | WCAG 2.2 AA on primary flows; visible focus, `aria-*`, `prefers-reduced-motion`    |
+| **Angular 21 Native**   | Signals, `model()`, `FieldTree` / `formField` for reactive forms                   |
 
 ---
 
@@ -56,10 +56,10 @@ Aurea is built on three pillars:
 
 Monorepo **aurea** with two Angular projects:
 
-| Project | Path | Role |
-|---------|------|------|
+| Project        | Path                                         | Role                                                           |
+| -------------- | -------------------------------------------- | -------------------------------------------------------------- |
 | **components** | [`projects/components`](projects/components) | Design system library (npm: `@aurea-design-system/components`) |
-| **docs** | [`projects/docs`](projects/docs) | Official documentation site |
+| **docs**       | [`projects/docs`](projects/docs)             | Official documentation site                                    |
 
 ### Develop this repo
 
@@ -81,13 +81,13 @@ Install and usage docs for consumers: **[`projects/components/README.md`](projec
 
 ## 🧩 Components
 
-| Component | Description | Status |
-|-----------|-------------|--------|
-| `au-button` | Primary, secondary, ghost variants with focus states | ✅ |
-| `au-input-text` | Text input with label, hint, error, and signal support | ✅ |
-| `au-textarea` | Multi-line text area with resize control | ✅ |
-| `au-checkbox` | Accessible checkbox with custom styling | ✅ |
-| `au-select` | Dropdown select with keyboard navigation | ✅ |
+| Component       | Description                                            | Status |
+| --------------- | ------------------------------------------------------ | ------ |
+| `au-button`     | Primary, secondary, ghost variants with focus states   | ✅     |
+| `au-input-text` | Text input with label, hint, error, and signal support | ✅     |
+| `au-textarea`   | Multi-line text area with resize control               | ✅     |
+| `au-checkbox`   | Accessible checkbox with custom styling                | ✅     |
+| `au-select`     | Dropdown select with keyboard navigation               | ✅     |
 
 ---
 
@@ -134,19 +134,19 @@ bun run test-storybook:ci
 Unit tests run with **Vitest** (via `ng test`). Coverage is collected with **v8** and enforced in CI at
 **100%** for statements, branches, functions, and lines (`angular.json` → `coverageThresholds`).
 
-| Metric | Threshold | Enforced in CI |
-|--------|-----------|----------------|
-| Statements | 100% | ✅ |
-| Branches | 100% | ✅ |
-| Functions | 100% | ✅ |
-| Lines | 100% | ✅ |
+| Metric     | Threshold | Enforced in CI |
+| ---------- | --------- | -------------- |
+| Statements | 100%      | ✅             |
+| Branches   | 100%      | ✅             |
+| Functions  | 100%      | ✅             |
+| Lines      | 100%      | ✅             |
 
 Run `bun run test:coverage` locally to see the current file-level report and totals.
 
 ### Scope
 
-| Included | Excluded |
-|----------|----------|
+| Included                              | Excluded                          |
+| ------------------------------------- | --------------------------------- |
 | `projects/components/src/lib/**/*.ts` | `*.stories.ts`, `*-story-host.ts` |
 
 ### Commands
@@ -163,10 +163,10 @@ After `test:coverage`, open the HTML report at `coverage/components/index.html`.
 
 ### CI
 
-| Workflow | What it runs |
-|----------|----------------|
-| [Test](.github/workflows/test.yml) | `bun run test:coverage` on push/PR to `main` and `develop` |
-| Storybook (local/CI) | `bun run test-storybook:ci` — interaction tests, separate from unit coverage |
+| Workflow                           | What it runs                                                                 |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| [Test](.github/workflows/test.yml) | `bun run test:coverage` on push/PR to `main` and `develop`                   |
+| Storybook (local/CI)               | `bun run test-storybook:ci` — interaction tests, separate from unit coverage |
 
 ---
 
@@ -174,13 +174,13 @@ After `test:coverage`, open the HTML report at `coverage/components/index.html`.
 
 Aurea uses semantic tokens organized by category:
 
-| Category | Examples |
-|----------|----------|
+| Category       | Examples                                               |
+| -------------- | ------------------------------------------------------ |
 | **Typography** | `--au-font-sans`, `--au-text-sm`, `--au-weight-medium` |
-| **Spacing** | `--au-space-1` … `--au-space-12` |
-| **Colors** | `--au-color-surface-canvas`, `--au-color-text-primary` |
-| **Focus** | `--au-shadow-focus-ring`, `--au-focus-ring-width` |
-| **Form** | `--au-color-form-border`, `--au-color-form-error` |
+| **Spacing**    | `--au-space-1` … `--au-space-12`                       |
+| **Colors**     | `--au-color-surface-canvas`, `--au-color-text-primary` |
+| **Focus**      | `--au-shadow-focus-ring`, `--au-focus-ring-width`      |
+| **Form**       | `--au-color-form-border`, `--au-color-form-error`      |
 
 ### Dark Mode
 
@@ -210,11 +210,11 @@ The published package **`@aurea-design-system/components`** is [MIT](LICENSE). Y
 
 The monorepo root stays `"private": true` so only the library is published to npm; the repo is open source for transparency and contributions.
 
-| Artifact | Visibility |
-|----------|------------|
-| GitHub repo | Public — [`tonicarreras/aurea`](https://github.com/tonicarreras/aurea) |
+| Artifact    | Visibility                                                                                                  |
+| ----------- | ----------------------------------------------------------------------------------------------------------- |
+| GitHub repo | Public — [`tonicarreras/aurea`](https://github.com/tonicarreras/aurea)                                      |
 | npm package | Public — [`@aurea-design-system/components`](https://www.npmjs.com/package/@aurea-design-system/components) |
-| License | MIT — [LICENSE](LICENSE) |
+| License     | MIT — [LICENSE](LICENSE)                                                                                    |
 
 ---
 

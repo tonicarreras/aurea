@@ -128,7 +128,6 @@ describe('AuMessage', () => {
     expect(component.hasTitle()).toBe(false);
     expect(component.showInputMessage()).toBe(false);
   });
-
 });
 
 @Component({

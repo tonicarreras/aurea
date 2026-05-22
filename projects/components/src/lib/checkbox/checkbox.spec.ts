@@ -37,7 +37,8 @@ describe('AuCheckbox', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuCheckboxTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-checkbox__element'))!.nativeElement as HTMLInputElement;
+    return fixture.debugElement.query(By.css('.au-checkbox__element'))!
+      .nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
@@ -98,8 +99,8 @@ describe('AuCheckbox', () => {
 
   it('sets native indeterminate for indeterminate state', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.indeterminate = true;
-});
+      f.componentInstance.indeterminate = true;
+    });
     const input = queryInput(fix);
     expect(input.indeterminate).toBe(true);
     expect(input.getAttribute('aria-checked')).toBeNull();
@@ -107,9 +108,9 @@ describe('AuCheckbox', () => {
 
   it('hides required marker when showRequired is false', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Accept terms';
-    f.componentInstance.required = true;
-    f.componentInstance.showRequired = false;
+      f.componentInstance.label = 'Accept terms';
+      f.componentInstance.required = true;
+      f.componentInstance.showRequired = false;
     });
     const label = fix.debugElement.query(By.css('.au-checkbox__label'));
     expect(label?.nativeElement.textContent?.trim()).toBe('Accept terms');
@@ -118,25 +119,25 @@ describe('AuCheckbox', () => {
 
   it('shows signal-form error message when errorMessage is empty', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    f.componentInstance.errors = [{ message: 'Required', kind: 'required' }];
+      f.componentInstance.label = 'Agree';
+      f.componentInstance.errors = [{ message: 'Required', kind: 'required' }];
     });
     expect(CONTROL(fix).displayError()).toBe('Required');
   });
 
   it('falls back to error kind when message is missing', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    f.componentInstance.errors = [{ kind: 'required' }];
+      f.componentInstance.label = 'Agree';
+      f.componentInstance.errors = [{ kind: 'required' }];
     });
     expect(CONTROL(fix).displayError()).toBe('required');
   });
 
   it('shows description with aria-describedby', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Subscribe';
-    f.componentInstance.description = 'Weekly updates';
-});
+      f.componentInstance.label = 'Subscribe';
+      f.componentInstance.description = 'Weekly updates';
+    });
     const input = queryInput(fix);
     const desc = fix.debugElement.query(By.css('.au-checkbox__description'));
     expect(desc?.nativeElement.id.length).toBeGreaterThan(0);
@@ -146,23 +147,25 @@ describe('AuCheckbox', () => {
 
   it('shows manual errorMessage, aria-invalid, and aria-errormessage', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    applyFieldHarnessInputs(f, { errorMessage: 'You must accept.' });
+      f.componentInstance.label = 'Agree';
+      applyFieldHarnessInputs(f, { errorMessage: 'You must accept.' });
     });
     const input = queryInput(fix);
     const err = fix.debugElement.query(By.css('.au-field-error'));
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-errormessage')).toBe(err?.nativeElement.id);
     expect(err?.nativeElement.getAttribute('role')).toBe('alert');
-    expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('You must accept.');
+    expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain(
+      'You must accept.',
+    );
     const wrap = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
     expect(wrap.classList.contains('au-checkbox__wrapper--invalid')).toBe(true);
   });
 
   it('uses first signal-form errors entry when errorMessage is empty', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    f.componentInstance.errors = [{ kind: 'required', message: 'Required field' }];
+      f.componentInstance.label = 'Agree';
+      f.componentInstance.errors = [{ kind: 'required', message: 'Required field' }];
     });
     const err = fix.debugElement.query(By.css('.au-field-error'));
     expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Required field');
@@ -170,8 +173,8 @@ describe('AuCheckbox', () => {
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    f.componentInstance.errors = [{ kind: 'pattern' }] as any;
+      f.componentInstance.label = 'Agree';
+      f.componentInstance.errors = [{ kind: 'pattern' }] as any;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
@@ -179,17 +182,17 @@ describe('AuCheckbox', () => {
 
   it('displayError returns empty when first error has no usable message or kind', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    f.componentInstance.errors = [{ message: '', kind: '' }] as any;
+      f.componentInstance.label = 'Agree';
+      f.componentInstance.errors = [{ message: '', kind: '' }] as any;
     });
     expect(CONTROL(fix).displayError()).toBe('');
   });
 
   it('sets aria-invalid from invalid input without visible error text', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Agree';
-    f.componentInstance.invalid = true;
-});
+      f.componentInstance.label = 'Agree';
+      f.componentInstance.invalid = true;
+    });
     const input = queryInput(fix);
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(fix.debugElement.query(By.css('.au-field-error'))).toBeNull();
@@ -224,12 +227,14 @@ describe('AuCheckbox', () => {
 
   it('does not emit when disabled', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.disabled = true;
+      f.componentInstance.disabled = true;
     });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.checkedChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.checkedChange).subscribe(() => n++),
+    );
     fix.detectChanges();
     const el = queryInput(fix);
     el.checked = true;
@@ -240,11 +245,13 @@ describe('AuCheckbox', () => {
 
   it('sets name and size on host and input', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.name = 'agree';
-    f.componentInstance.size = 'sm';
-});
+      f.componentInstance.name = 'agree';
+      f.componentInstance.size = 'sm';
+    });
     expect(queryInput(fix).getAttribute('name')).toBe('agree');
-    expect(fix.debugElement.query(By.css('au-checkbox'))!.nativeElement.getAttribute('data-au-size')).toBe('sm');
+    expect(
+      fix.debugElement.query(By.css('au-checkbox'))!.nativeElement.getAttribute('data-au-size'),
+    ).toBe('sm');
   });
 
   it('focus() focuses the native input', () => {
@@ -265,14 +272,16 @@ describe('AuCheckbox', () => {
 
   it('sets native checked when checked', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.checked = true;
-});
+      f.componentInstance.checked = true;
+    });
     expect(queryInput(fix).checked).toBe(true);
     expect(queryInput(fix).getAttribute('aria-checked')).toBeNull();
   });
 
   it('does not set aria-describedby without description', () => {
-    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => { f.componentInstance.label = 'Only'; });
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.label = 'Only';
+    });
     expect(queryInput(fix).getAttribute('aria-describedby')).toBeNull();
   });
 
@@ -294,7 +303,9 @@ describe('AuCheckbox', () => {
   });
 
   it('onControlFocusout returns when focus stays inside wrapper', () => {
-    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => { f.componentInstance.label = 'X'; });
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.label = 'X';
+    });
     const wrapper = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
     const label = fix.debugElement.query(By.css('.au-checkbox__label'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: label });
@@ -304,13 +315,15 @@ describe('AuCheckbox', () => {
 
   it('sets aria-required when required', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.required = true;
-});
+      f.componentInstance.required = true;
+    });
     expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
   });
 
   it('clears focus-by-tab when focus leaves wrapper', () => {
-    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => { f.componentInstance.label = 'X'; });
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.label = 'X';
+    });
     const wrapDe = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!;
     const wrap = wrapDe.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -326,9 +339,9 @@ describe('AuCheckbox', () => {
 
   it('stringifies non-null label and description', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-    f.componentInstance.label = 'A';
-    f.componentInstance.description = 'B';
-});
+      f.componentInstance.label = 'A';
+      f.componentInstance.description = 'B';
+    });
     expect(CONTROL(fix).label()).toBe('A');
     expect(CONTROL(fix).description()).toBe('B');
   });

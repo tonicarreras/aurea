@@ -11,11 +11,7 @@ const config: StorybookConfig = {
     { from: '../src/lib/tokens', to: '/au-tokens' },
     { from: '../src/lib/storybook', to: '/au-storybook' },
   ],
-  addons: [
-    '@storybook/addon-a11y',
-    '@storybook/addon-docs',
-    '@storybook/addon-onboarding',
-  ],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],
   framework: '@storybook/angular',
 };
 export default config;

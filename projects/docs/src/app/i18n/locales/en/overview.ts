@@ -30,7 +30,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       '`loading` sets `aria-busy` and blocks click.',
       'Size `lg` respects `--au-touch-target-min` (44px).',
     ],
-    keyboard: ['Enter and Space activate the native button.', 'Tab focuses the control; focus restored after closing dialogs.'],
+    keyboard: [
+      'Enter and Space activate the native button.',
+      'Tab focuses the control; focus restored after closing dialogs.',
+    ],
   },
   'form-field': {
     intro: [
@@ -79,13 +82,22 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Multi-line text → `au-textarea`.', 'Pick from a list → `au-select` or `au-autocomplete`.'],
+      items: [
+        'Multi-line text → `au-textarea`.',
+        'Pick from a list → `au-select` or `au-autocomplete`.',
+      ],
     },
     anatomy: [
       { region: '`au-form-field`', detail: 'Label, hint, and error outside the control.' },
       { region: 'Shell', detail: 'Border, background, and focus/error rings on the input row.' },
-      { region: 'Native input', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` via context.' },
-      { region: 'Password toggle', detail: 'Only with `type="password"` and `showPasswordToggle`.' },
+      {
+        region: 'Native input',
+        detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` via context.',
+      },
+      {
+        region: 'Password toggle',
+        detail: 'Only with `type="password"` and `showPasswordToggle`.',
+      },
     ],
     accessibility: [
       'Accessible name via visible label or external `aria-label`.',
@@ -133,7 +145,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Single on/off preference → `au-switch`.', 'Single choice in a list → `au-radio-group`.'],
+      items: [
+        'Single on/off preference → `au-switch`.',
+        'Single choice in a list → `au-radio-group`.',
+      ],
     },
     anatomy: [
       { region: 'Native input', detail: 'Real checkbox; native indeterminate state.' },
@@ -152,11 +167,17 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Immediate preferences (notifications, dark mode).', 'Enable/disable a system feature.'],
+      items: [
+        'Immediate preferences (notifications, dark mode).',
+        'Enable/disable a system feature.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Mutually exclusive options → `au-radio-group`.', 'Legal acceptance → `au-checkbox`.'],
+      items: [
+        'Mutually exclusive options → `au-radio-group`.',
+        'Legal acceptance → `au-checkbox`.',
+      ],
     },
     anatomy: [
       { region: 'Track and thumb', detail: 'Tokens `--au-color-switch-track-*` and thumb.' },
@@ -181,7 +202,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Search with filtering → `au-autocomplete`.', 'Only 2–3 visible options → `au-radio-group`.'],
+      items: [
+        'Search with filtering → `au-autocomplete`.',
+        'Only 2–3 visible options → `au-radio-group`.',
+      ],
     },
     anatomy: [
       { region: 'Trigger', detail: 'Shows the selected option label.' },
@@ -191,9 +215,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'ARIA combobox pattern (`aria-expanded`, `aria-controls`, `listbox`/`option`).',
       'Disabled options respect `disabled` on `AuSelectOption`.',
     ],
-    keyboard: [
-      'Space/Enter opens; arrows move highlight; Enter selects; Escape closes.',
-    ],
+    keyboard: ['Space/Enter opens; arrows move highlight; Enter selects; Escape closes.'],
     relatedExports: ['AuSelectOption'],
   },
   autocomplete: {
@@ -203,7 +225,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Large catalogs (cities, users, SKUs).', 'When the user knows part of the text to find.'],
+      items: [
+        'Large catalogs (cities, users, SKUs).',
+        'When the user knows part of the text to find.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
@@ -224,7 +249,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['2–5 mutually exclusive options visible without a dropdown.', 'Plans, payment methods, account type.'],
+      items: [
+        '2–5 mutually exclusive options visible without a dropdown.',
+        'Plans, payment methods, account type.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
@@ -248,7 +276,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Currency mask → domain layer on input-text.', 'Continuous range → dedicated slider.'],
+      items: [
+        'Currency mask → domain layer on input-text.',
+        'Continuous range → dedicated slider.',
+      ],
     },
     anatomy: [
       { region: 'Input `type="number"`', detail: 'Parses to a finite number or `null`.' },
@@ -288,7 +319,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Light confirmation → `au-snackbar` with action.', 'Persistent side panel → your own layout.'],
+      items: [
+        'Light confirmation → `au-snackbar` with action.',
+        'Persistent side panel → your own layout.',
+      ],
     },
     anatomy: [
       { region: 'Backdrop', detail: 'Mixes `--au-color-surface-inverted`.' },
@@ -313,11 +347,17 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Only separate content → `au-divider` or spacing.', 'Blocking overlay → `au-dialog`.'],
+      items: [
+        'Only separate content → `au-divider` or spacing.',
+        'Blocking overlay → `au-dialog`.',
+      ],
     },
     anatomy: [
       { region: 'auCardMedia', detail: 'Bleed, outside inner padding.' },
-      { region: 'auCardHeader / auCardBody', detail: 'Title and content with `--au-card-main-gap`.' },
+      {
+        region: 'auCardHeader / auCardBody',
+        detail: 'Title and content with `--au-card-main-gap`.',
+      },
       { region: 'auCardFooter', detail: 'Actions aligned below top border.' },
     ],
     accessibility: [
@@ -340,7 +380,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['App-wide navigation → router and menu.', 'Sequential steps with validation → `au-steps`.'],
+      items: [
+        'App-wide navigation → router and menu.',
+        'Sequential steps with validation → `au-steps`.',
+      ],
     },
     anatomy: [
       { region: 'button[auTab]', detail: 'Triggeres en el tablist.' },
@@ -415,7 +458,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Toolbar filters (status, category).', 'Multi-toggle filters where each chip is independent.'],
+      items: [
+        'Toolbar filters (status, category).',
+        'Multi-toggle filters where each chip is independent.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
@@ -431,7 +477,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Selected tags the user can remove.', 'Horizontal rows of peer items with list semantics.'],
+      items: [
+        'Selected tags the user can remove.',
+        'Horizontal rows of peer items with list semantics.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
@@ -477,11 +526,17 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Inside `au-message`, removable chips, loading buttons.', 'Consistent stroke icons across the DS.'],
+      items: [
+        'Inside `au-message`, removable chips, loading buttons.',
+        'Consistent stroke icons across the DS.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Custom brand icons → your own SVG.', 'Icon-only button → set `label` on `au-button`.'],
+      items: [
+        'Custom brand icons → your own SVG.',
+        'Icon-only button → set `label` on `au-button`.',
+      ],
     },
     anatomy: [{ region: 'SVG', detail: '`data-au-icon` + `data-au-size` on host.' }],
     accessibility: ['Host is `aria-hidden="true"`.'],
@@ -498,7 +553,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Spinner on a button → `au-icon` spinner.', 'Empty state → visible copy, not skeleton.'],
+      items: [
+        'Spinner on a button → `au-icon` spinner.',
+        'Empty state → visible copy, not skeleton.',
+      ],
     },
     anatomy: [{ region: 'Host', detail: '`role="presentation"`; size from variant + `size`.' }],
     accessibility: ['Decorative only; pair with `aria-busy` on the loading region.'],
@@ -510,7 +568,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Documentation sites (Overview / API / Examples).', 'Multi-section pages with stable keys.'],
+      items: [
+        'Documentation sites (Overview / API / Examples).',
+        'Multi-section pages with stable keys.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',

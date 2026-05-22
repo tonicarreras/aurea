@@ -36,9 +36,17 @@
       (click)="togglePasswordVisibility()"
     >
       @if (passwordRevealed()) {
-        <span class="au-input-text__reveal-text" aria-hidden="true">Hide</span>
+        <span
+          class="au-input-text__reveal-text"
+          aria-hidden="true"
+          >Hide</span
+        >
       } @else {
-        <span class="au-input-text__reveal-text" aria-hidden="true">Show</span>
+        <span
+          class="au-input-text__reveal-text"
+          aria-hidden="true"
+          >Show</span
+        >
       }
     </button>
   }

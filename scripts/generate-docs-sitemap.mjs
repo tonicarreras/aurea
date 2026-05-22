@@ -8,10 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const registryPath = join(
-  root,
-  'projects/docs/src/app/core/component-docs.registry.ts',
-);
+const registryPath = join(root, 'projects/docs/src/app/core/component-docs.registry.ts');
 const outPath = join(root, 'projects/docs/public/sitemap.xml');
 
 const SITE = 'https://aurea-ds.netlify.app';
@@ -25,9 +22,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 function loc(locale, ...segments) {
   const parts = segments.filter(Boolean);
-  return parts.length
-    ? `${SITE}/${locale}/${parts.join('/')}`
-    : `${SITE}/${locale}`;
+  return parts.length ? `${SITE}/${locale}/${parts.join('/')}` : `${SITE}/${locale}`;
 }
 
 const urls = [];
@@ -54,8 +49,7 @@ ${urls
   .map((entry) => {
     const [, locale, ...rest] = entry.loc.replace(SITE + '/', '').split('/');
     const altLinks = LOCALES.map(
-      (alt) =>
-        `    <xhtml:link rel="alternate" hreflang="${alt}" href="${loc(alt, ...rest)}"/>`,
+      (alt) => `    <xhtml:link rel="alternate" hreflang="${alt}" href="${loc(alt, ...rest)}"/>`,
     ).join('\n');
     const xDefault = `    <xhtml:link rel="alternate" hreflang="x-default" href="${loc('es', ...rest)}"/>`;
     return `  <url>

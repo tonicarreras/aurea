@@ -1,12 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-export type AuIconName =
-  | 'check-circle'
-  | 'warning'
-  | 'error'
-  | 'info'
-  | 'close'
-  | 'spinner';
+export type AuIconName = 'check-circle' | 'warning' | 'error' | 'info' | 'close' | 'spinner';
 
 export type AuIconSize = 'sm' | 'md' | 'lg';
 

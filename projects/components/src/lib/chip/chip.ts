@@ -81,7 +81,9 @@ export class AuChip {
   readonly selected = model(false);
 
   /** Overrides the default remove button accessible name (`Remove {label}`). */
-  readonly removeLabel = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly removeLabel = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
 
   /** Emits when the remove control is activated. */
   readonly removed = output<void>();

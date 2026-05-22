@@ -468,6 +468,9 @@ export function createFieldFixture<T>(
   return fix;
 }
 
-export function queryControl<C>(fixture: ComponentFixture<unknown>, directive: new (...args: unknown[]) => C): C {
+export function queryControl<C>(
+  fixture: ComponentFixture<unknown>,
+  directive: new (...args: unknown[]) => C,
+): C {
   return fixture.debugElement.query(By.directive(directive))!.componentInstance as C;
 }

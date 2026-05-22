@@ -88,5 +88,4 @@ describe('snackbar-stack', () => {
     expect(() => setSnackbarStackSurface(99_999, null)).not.toThrow();
     expect(() => unregisterSnackbarStackEntry(99_999)).not.toThrow();
   });
-
 });

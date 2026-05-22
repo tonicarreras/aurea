@@ -19,7 +19,11 @@ export class ExampleSwitchBasicDemo {}
   imports: [AuFormField, AuSwitch],
   template: `
     <au-form-field>
-      <au-switch label="Modo avión" [checked]="true" [disabled]="true" />
+      <au-switch
+        label="Modo avión"
+        [checked]="true"
+        [disabled]="true"
+      />
     </au-form-field>
   `,
 })

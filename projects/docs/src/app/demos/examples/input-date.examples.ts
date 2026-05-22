@@ -34,7 +34,10 @@ export class ExampleInputDateErrorDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputDate],
   template: `
-    <au-form-field label="Fecha de entrega" hint="Solo entregas en 2026.">
+    <au-form-field
+      label="Fecha de entrega"
+      hint="Solo entregas en 2026."
+    >
       <au-input-date
         minDate="2026-01-01"
         maxDate="2026-12-31"

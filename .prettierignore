@@ -1,0 +1,24 @@
+# Dependencies & tooling
+node_modules/
+.bun/
+dist/
+coverage/
+storybook-static/
+.angular/
+
+# Lockfiles & generated artifacts
+bun.lock
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+projects/components/documentation.json
+
+# Build / cache
+*.min.js
+*.min.css
+
+# Prettier cache (CLI --cache)
+.prettier-cache
+
+# Misc
+.DS_Store

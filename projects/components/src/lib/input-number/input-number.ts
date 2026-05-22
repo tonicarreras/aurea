@@ -38,7 +38,9 @@ export class AuInputNumber implements FormValueControl<number | null> {
   readonly readOnly = input(false);
   readonly required = input(false);
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   readonly autocomplete = input<string | undefined>(undefined);
   readonly min = input<number | undefined>(undefined);
   readonly max = input<number | undefined>(undefined);

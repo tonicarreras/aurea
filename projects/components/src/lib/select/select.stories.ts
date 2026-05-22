@@ -172,7 +172,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Basic select with label, placeholder, and options. The **play** function selects an option.',
+        story:
+          'Basic select with label, placeholder, and options. The **play** function selects an option.',
       },
     },
   },

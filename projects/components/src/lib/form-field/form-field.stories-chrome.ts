@@ -38,7 +38,8 @@ export const fieldChromeArgTypes = {
   },
   controlIdInput: {
     control: 'text' as const,
-    description: 'Stable id on `au-form-field` (`controlIdInput`); shared with the projected control.',
+    description:
+      'Stable id on `au-form-field` (`controlIdInput`); shared with the projected control.',
     table: { category: 'Accessibility' },
   },
   showRequired: {

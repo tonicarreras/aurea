@@ -18,7 +18,8 @@ describe('AuInputDate', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputDateTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-date__input'))!.nativeElement as HTMLInputElement;
+    return fixture.debugElement.query(By.css('.au-input-date__input'))!
+      .nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
@@ -36,15 +37,15 @@ describe('AuInputDate', () => {
 
   it('normalizes placeholder input', () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
-    f.componentInstance.placeholder = null as unknown as string;
-});
+      f.componentInstance.placeholder = null as unknown as string;
+    });
     expect(CONTROL(fix).placeholder()).toBe('');
   });
 
   it('preserves non-empty placeholder string', () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
-    f.componentInstance.placeholder = 'Pick a date';
-});
+      f.componentInstance.placeholder = 'Pick a date';
+    });
     expect(CONTROL(fix).placeholder()).toBe('Pick a date');
   });
 
@@ -61,8 +62,8 @@ describe('AuInputDate', () => {
 
   it('sets null when cleared', () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'Start' }, (f) => {
-    f.componentInstance.value = '2026-01-01';
-});
+      f.componentInstance.value = '2026-01-01';
+    });
     const el = queryInput(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
@@ -106,7 +107,9 @@ describe('AuInputDate', () => {
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.valueChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.valueChange).subscribe(() => n++),
+    );
     fix.detectChanges();
     const el = queryInput(fix);
     el.value = '2026-03-01';
@@ -117,9 +120,9 @@ describe('AuInputDate', () => {
 
   it('does not update model when readOnly', () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
-    f.componentInstance.value = '2026-01-01';
-    f.componentInstance.readOnly = true;
-});
+      f.componentInstance.value = '2026-01-01';
+      f.componentInstance.readOnly = true;
+    });
     const el = queryInput(fix);
     el.value = '2026-12-31';
     el.dispatchEvent(new Event('input'));
@@ -183,7 +186,9 @@ describe('AuInputDate', () => {
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-date__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fix.debugElement.query(By.css('.au-input-date__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.debugElement
+      .query(By.css('.au-input-date__control-row'))!
+      .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-input-date__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
@@ -251,8 +256,8 @@ describe('AuInputDate', () => {
 
   it('effectiveInvalid from invalid input without message', () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
-    f.componentInstance.invalid = true;
-});
+      f.componentInstance.invalid = true;
+    });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 });

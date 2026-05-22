@@ -2,10 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
-import {
-  fieldChromeHintOnlyArgTypes,
-  formFieldHintOnlyRender,
-} from '../form-field';
+import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
 import { AuSwitch } from './switch';
 
 interface SwitchStoryArgs {

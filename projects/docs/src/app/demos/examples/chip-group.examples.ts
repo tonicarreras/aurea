@@ -7,9 +7,20 @@ import { AuChip, AuChipGroup } from '@aurea-design-system/components';
   imports: [AuChipGroup, AuChip],
   template: `
     <au-chip-group ariaLabel="Status filters">
-      <au-chip label="Draft" [selectable]="true" />
-      <au-chip label="Published" [selectable]="true" [selected]="true" variant="accent" />
-      <au-chip label="Archived" [selectable]="true" />
+      <au-chip
+        label="Draft"
+        [selectable]="true"
+      />
+      <au-chip
+        label="Published"
+        [selectable]="true"
+        [selected]="true"
+        variant="accent"
+      />
+      <au-chip
+        label="Archived"
+        [selectable]="true"
+      />
     </au-chip-group>
   `,
 })

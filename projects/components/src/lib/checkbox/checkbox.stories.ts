@@ -2,10 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
-import {
-  fieldChromeHintOnlyArgTypes,
-  formFieldHintOnlyRender,
-} from '../form-field';
+import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
 import { AuCheckbox } from './checkbox';
 
 interface CheckboxStoryArgs {
@@ -37,7 +34,8 @@ const meta: Meta<CheckboxStoryArgs> = {
     ...fieldChromeHintOnlyArgTypes,
     checked: {
       control: 'boolean',
-      description: 'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',
+      description:
+        'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',
       table: { category: 'Value' },
     },
     checkedChange: {
@@ -174,7 +172,8 @@ export const Indeterminate: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Indeterminate state (partial selection) via the native `indeterminate` property — common for "select all" patterns.',
+        story:
+          'Indeterminate state (partial selection) via the native `indeterminate` property — common for "select all" patterns.',
       },
     },
   },
@@ -221,7 +220,8 @@ export const Required: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'When **`required`** is true, the native attribute and **`aria-required`** are set; the label shows a decorative asterisk.',
+        story:
+          'When **`required`** is true, the native attribute and **`aria-required`** are set; the label shows a decorative asterisk.',
       },
     },
   },
@@ -282,7 +282,8 @@ export const FocusRing: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Tab into the checkbox to see the **outer focus ring**; click to see the **inset ring**. Both use `--au-color-focus-ring`.',
+        story:
+          'Tab into the checkbox to see the **outer focus ring**; click to see the **inset ring**. Both use `--au-color-focus-ring`.',
       },
     },
   },

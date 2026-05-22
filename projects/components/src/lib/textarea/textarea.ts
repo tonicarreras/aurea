@@ -40,7 +40,9 @@ export class AuTextarea implements FormValueControl<string | null> {
   readonly readOnly = input(false);
   readonly required = input(false);
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   readonly autocomplete = input<string | undefined>(undefined);
   readonly minLength = input<number | undefined>(undefined);
   readonly maxLength = input<number | undefined>(undefined);

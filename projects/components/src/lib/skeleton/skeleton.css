@@ -111,10 +111,6 @@
   }
 
   :host([data-au-animation='pulse']) {
-    background-color: color-mix(
-      in srgb,
-      var(--au-skeleton-base) 65%,
-      var(--au-skeleton-highlight)
-    );
+    background-color: color-mix(in srgb, var(--au-skeleton-base) 65%, var(--au-skeleton-highlight));
   }
 }

@@ -5,7 +5,11 @@ import { Renderer2 } from '@angular/core';
 import { computeTooltipPosition, type AuTooltipPlacement } from './tooltip-position';
 
 /** Resolves a length custom property to pixels (handles `var()` chains). */
-export function readCssLengthPx(document: Document, customProp: string, fallbackPx: number): number {
+export function readCssLengthPx(
+  document: Document,
+  customProp: string,
+  fallbackPx: number,
+): number {
   const probe = document.createElement('div');
   probe.style.cssText =
     'position:absolute;visibility:hidden;pointer-events:none;margin:0;padding:0;border:0;height:0;width:0;';

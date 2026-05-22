@@ -59,7 +59,9 @@ export class AuSelect implements FormValueControl<string | null> {
   readonly required = input(false);
 
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   readonly autocomplete = input<string | undefined>(undefined);
   readonly size = input<AuSize>('md');
 

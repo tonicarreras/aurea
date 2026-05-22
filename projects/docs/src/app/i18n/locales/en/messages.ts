@@ -98,8 +98,7 @@ export const MESSAGES_EN: DocsMessages = {
     examples: 'Examples',
     export: 'Export',
     selector: 'Selector',
-    apiLead: (exportName) =>
-      `API for <code>${exportName}</code>. Inputs use Angular signals`,
+    apiLead: (exportName) => `API for <code>${exportName}</code>. Inputs use Angular signals`,
     signalApiHint: ' (`input()`, `model()`, `output()`).',
     importExpand: 'Import',
     importCollapse: 'Hide import',
@@ -127,4 +126,3 @@ export const MESSAGES_EN: DocsMessages = {
     copied: 'Copied',
   },
 };
-

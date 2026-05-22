@@ -93,7 +93,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     title: 'Button',
     exportName: 'AuButton',
     selector: 'au-button',
-    summary: 'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
+    summary:
+      'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
     demoComponent: ButtonDemo,
     snippet: `import { AuButton } from '@aurea-design-system/components';
 

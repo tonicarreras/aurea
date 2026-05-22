@@ -276,7 +276,8 @@ export const ReadOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',
+        story:
+          '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',
       },
     },
   },

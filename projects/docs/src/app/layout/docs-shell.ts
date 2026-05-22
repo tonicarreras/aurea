@@ -1,20 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocsSeoService } from '../core/docs-seo.service';
 import { AngularLogo } from '../shared/angular-logo';
 import { DocsShellMobileMenu } from './docs-shell-mobile-menu';
-import {
-  DocsShellToolbar,
-  type DocsThemeMode,
-} from './docs-shell-toolbar';
+import { DocsShellToolbar, type DocsThemeMode } from './docs-shell-toolbar';
 
 @Component({
   selector: 'docs-shell',
@@ -33,17 +24,27 @@ import {
     '[attr.lang]': 'locale.locale()',
   },
   template: `
-    <div class="docs-atmosphere" aria-hidden="true">
+    <div
+      class="docs-atmosphere"
+      aria-hidden="true"
+    >
       <div class="docs-atmosphere__orb docs-atmosphere__orb--1"></div>
       <div class="docs-atmosphere__orb docs-atmosphere__orb--2"></div>
       <div class="docs-atmosphere__orb docs-atmosphere__orb--3"></div>
     </div>
 
-    <a class="docs-skip" href="#docs-main">{{ locale.messages().shell.skipToContent }}</a>
+    <a
+      class="docs-skip"
+      href="#docs-main"
+      >{{ locale.messages().shell.skipToContent }}</a
+    >
 
     <header class="docs-header">
       <div class="docs-header__brand">
-        <a [routerLink]="locale.link()" class="docs-header__logo">
+        <a
+          [routerLink]="locale.link()"
+          class="docs-header__logo"
+        >
           <docs-angular-logo />
           <span class="docs-header__logo-text">
             <span class="docs-header__name">Aurea</span>
@@ -63,7 +64,10 @@ import {
     />
 
     <div class="docs-layout">
-      <nav class="docs-nav" [attr.aria-label]="locale.messages().shell.navAria">
+      <nav
+        class="docs-nav"
+        [attr.aria-label]="locale.messages().shell.navAria"
+      >
         @for (section of locale.nav(); track section.title) {
           <section class="docs-nav__section">
             <h2 class="docs-nav__heading">{{ section.title }}</h2>
@@ -87,7 +91,10 @@ import {
         }
       </nav>
 
-      <main id="docs-main" class="docs-main">
+      <main
+        id="docs-main"
+        class="docs-main"
+      >
         <router-outlet />
       </main>
     </div>

@@ -54,7 +54,7 @@ Optional (form/listbox overlays):
 ### 2. Dark mode (optional)
 
 ```html
-<html data-au-theme="dark">
+<html data-au-theme="dark"></html>
 ```
 
 Or use the `auTheme` directive from the same package.
@@ -68,7 +68,11 @@ import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system
   imports: [AuButton, AuCheckbox, AuDivider, AuTooltip],
   template: `
     <au-button variant="primary">Save</au-button>
-    <au-button variant="outline" auTooltip="Extra help">?</au-button>
+    <au-button
+      variant="outline"
+      auTooltip="Extra help"
+      >?</au-button
+    >
     <au-divider />
     <au-checkbox label="Remember me" />
   `,
@@ -120,43 +124,43 @@ export class ProfileEmailComponent {
 
 ### Controls with `[formField]`
 
-| Component | Value type | Notes |
-|-----------|------------|--------|
-| `AuInputText`, `AuTextarea` | `string \| null` | Empty field → `null` |
-| `AuInputNumber`, `AuInputDate` | `string \| null` | Same empty semantics |
-| `AuSelect`, `AuAutocomplete` | `string \| null` | Option `value` |
-| `AuCheckbox`, `AuSwitch` | `boolean` | |
-| `AuRadioGroup` | `string \| null` | Selected option value |
+| Component                      | Value type       | Notes                 |
+| ------------------------------ | ---------------- | --------------------- |
+| `AuInputText`, `AuTextarea`    | `string \| null` | Empty field → `null`  |
+| `AuInputNumber`, `AuInputDate` | `string \| null` | Same empty semantics  |
+| `AuSelect`, `AuAutocomplete`   | `string \| null` | Option `value`        |
+| `AuCheckbox`, `AuSwitch`       | `boolean`        |                       |
+| `AuRadioGroup`                 | `string \| null` | Selected option value |
 
 ### Manual validation (no `form()`)
 
-Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → *With error* and **Aurea/Form field**.
+Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → _With error_ and **Aurea/Form field**.
 
 ---
 
 ## Components
 
-| Export | Selector / API | Notes |
-|--------|----------------|-------|
-| `AuButton` | `<au-button>` | Variants, loading, focus ring |
-| `AuInputText` | `<au-input-text>` | `[formField]` or `[(value)]` + `au-form-field` |
-| `AuTextarea` | `<au-textarea>` | Same as input-text |
-| `AuFormField` | `<au-form-field>` | Label / hint / error wrapper |
-| `AuCheckbox` | `<au-checkbox>` | |
-| `AuSelect` | `<au-select>` | Portaled listbox |
-| `AuAutocomplete` | `<au-autocomplete>` | |
-| `AuSwitch` | `<au-switch>` | |
-| `AuRadioGroup` | `<au-radio-group>` | |
-| `AuInputNumber` | `<au-input-number>` | |
-| `AuInputDate` | `<au-input-date>` | |
-| `AuDialog` | `<au-dialog>` | Native `<dialog>` |
-| `AuCard` | `<au-card>` | `AuCardFooter` directive |
-| `AuTabs` | `<au-tabs>` | `AuTab`, `AuTabPanel` |
-| `AuChip` | `<au-chip>` | Removable / selectable |
-| `AuSnackbar` | `<au-snackbar>` | |
-| `AuDivider` | `<au-divider>` | Horizontal / vertical |
-| `AuTooltip` | `[auTooltip]` | Directive on the trigger |
-| `AuTheme` | `[auTheme]` | `light` / `dark` / `system` |
+| Export           | Selector / API      | Notes                                          |
+| ---------------- | ------------------- | ---------------------------------------------- |
+| `AuButton`       | `<au-button>`       | Variants, loading, focus ring                  |
+| `AuInputText`    | `<au-input-text>`   | `[formField]` or `[(value)]` + `au-form-field` |
+| `AuTextarea`     | `<au-textarea>`     | Same as input-text                             |
+| `AuFormField`    | `<au-form-field>`   | Label / hint / error wrapper                   |
+| `AuCheckbox`     | `<au-checkbox>`     |                                                |
+| `AuSelect`       | `<au-select>`       | Portaled listbox                               |
+| `AuAutocomplete` | `<au-autocomplete>` |                                                |
+| `AuSwitch`       | `<au-switch>`       |                                                |
+| `AuRadioGroup`   | `<au-radio-group>`  |                                                |
+| `AuInputNumber`  | `<au-input-number>` |                                                |
+| `AuInputDate`    | `<au-input-date>`   |                                                |
+| `AuDialog`       | `<au-dialog>`       | Native `<dialog>`                              |
+| `AuCard`         | `<au-card>`         | `AuCardFooter` directive                       |
+| `AuTabs`         | `<au-tabs>`         | `AuTab`, `AuTabPanel`                          |
+| `AuChip`         | `<au-chip>`         | Removable / selectable                         |
+| `AuSnackbar`     | `<au-snackbar>`     |                                                |
+| `AuDivider`      | `<au-divider>`      | Horizontal / vertical                          |
+| `AuTooltip`      | `[auTooltip]`       | Directive on the trigger                       |
+| `AuTheme`        | `[auTheme]`         | `light` / `dark` / `system`                    |
 
 ---
 

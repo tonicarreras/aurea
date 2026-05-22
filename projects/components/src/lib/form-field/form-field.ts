@@ -125,10 +125,7 @@ export function createStandaloneAuFormFieldContext(): AuFormFieldContext {
   });
 
   const isInvalid = computed(
-    () =>
-      invalid() ||
-      (controlState()?.effectiveInvalid ?? false) ||
-      displayError().length > 0,
+    () => invalid() || (controlState()?.effectiveInvalid ?? false) || displayError().length > 0,
   );
 
   return {
@@ -193,7 +190,9 @@ export class AuFormField implements AuFormFieldContext {
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   /** Manual error when not using signal forms on the child. */
-  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly errorMessage = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   readonly invalid = input(false);
   readonly required = input(false);
   readonly showRequired = input(true);
@@ -231,7 +230,10 @@ export class AuFormField implements AuFormFieldContext {
   });
 
   readonly isInvalid = computed(
-    () => this.invalid() || (this.controlState()?.effectiveInvalid ?? false) || this.displayError().length > 0,
+    () =>
+      this.invalid() ||
+      (this.controlState()?.effectiveInvalid ?? false) ||
+      this.displayError().length > 0,
   );
 
   updateControlState(state: AuFormFieldControlState): void {

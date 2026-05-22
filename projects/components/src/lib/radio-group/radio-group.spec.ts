@@ -46,8 +46,8 @@ describe('AuRadioGroup', () => {
 
   it('updates value when a radio is selected', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     const radios = queryRadios(fix);
     radios[1]!.checked = true;
@@ -58,8 +58,8 @@ describe('AuRadioGroup', () => {
 
   it('emits valueChange', async () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
@@ -75,14 +75,16 @@ describe('AuRadioGroup', () => {
 
   it('does not emit when disabled', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.disabled = true;
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.disabled = true;
     });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.valueChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.valueChange).subscribe(() => n++),
+    );
     fix.detectChanges();
     const radios = queryRadios(fix);
     radios[1]!.dispatchEvent(new Event('change'));
@@ -92,19 +94,19 @@ describe('AuRadioGroup', () => {
 
   it('uses custom name when provided', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.name = 'choice';
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.name = 'choice';
     });
     expect(queryRadios(fix)[0]!.getAttribute('name')).toBe('choice');
   });
 
   it('shows error and aria-errormessage on radios', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    applyFieldHarnessInputs(f, { controlId: 'rg1' });
-    applyFieldHarnessInputs(f, { errorMessage: 'Choose one' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      applyFieldHarnessInputs(f, { controlId: 'rg1' });
+      applyFieldHarnessInputs(f, { errorMessage: 'Choose one' });
     });
     const r = queryRadios(fix)[0]!;
     expect(r.getAttribute('aria-invalid')).toBe('true');
@@ -113,9 +115,9 @@ describe('AuRadioGroup', () => {
 
   it('sets required only on first radio', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.required = true;
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.required = true;
     });
     const radios = queryRadios(fix);
     expect(radios[0]!.hasAttribute('required')).toBe(true);
@@ -128,16 +130,16 @@ describe('AuRadioGroup', () => {
       { value: 'b', label: 'B', disabled: true },
     ];
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = withDis;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.options = withDis;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     expect(queryRadios(fix)[1]!.disabled).toBe(true);
   });
 
   it('focus() focuses first enabled radio', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     const first = queryRadios(fix)[0]!;
     const spy = vi.spyOn(first, 'focus');
@@ -148,7 +150,7 @@ describe('AuRadioGroup', () => {
 
   it('optionInputId escapes special characters', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { controlId: 'rg' });
+      applyFieldHarnessInputs(f, { controlId: 'rg' });
     });
     expect(CONTROL(fix).optionInputId('a/b')).toContain('rg');
     expect(CONTROL(fix).optionInputId('a/b')).toContain('a-b');
@@ -174,8 +176,8 @@ describe('AuRadioGroup', () => {
 
   it('emits blur when focus leaves shell', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
@@ -195,8 +197,8 @@ describe('AuRadioGroup', () => {
 
   it('onShellFocusout returns when focus stays inside shell', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
@@ -214,16 +216,18 @@ describe('AuRadioGroup', () => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: '' });
     });
-    const legend = fix.debugElement.query(By.css('.au-radio-group__fieldset legend'))!.nativeElement;
+    const legend = fix.debugElement.query(
+      By.css('.au-radio-group__fieldset legend'),
+    )!.nativeElement;
     expect(legend.textContent?.trim().length).toBeGreaterThan(0);
     expect(legend.classList.contains('au-sr-only')).toBe(true);
   });
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.errors = [{ kind: 'required' }] as any;
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.errors = [{ kind: 'required' }] as any;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('required');
@@ -231,9 +235,9 @@ describe('AuRadioGroup', () => {
 
   it('uses explicit id for option ids', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    applyFieldHarnessInputs(f, { controlId: 'rg99' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      applyFieldHarnessInputs(f, { controlId: 'rg99' });
     });
     expect(queryRadios(fix)[0]!.id.startsWith('rg99')).toBe(true);
   });
@@ -244,16 +248,18 @@ describe('AuRadioGroup', () => {
       f.componentInstance.name = 'channel';
       applyFieldHarnessInputs(f, { label: '' });
     });
-    const legend = fix.debugElement.query(By.css('.au-radio-group__fieldset legend'))!.nativeElement;
+    const legend = fix.debugElement.query(
+      By.css('.au-radio-group__fieldset legend'),
+    )!.nativeElement;
     expect(legend.textContent?.trim()).toBe('channel');
     expect(legend.classList.contains('au-sr-only')).toBe(true);
   });
 
   it('ignores radio change when target not checked', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.value = 'b';
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.value = 'b';
     });
     CONTROL(fix).onRadioChange({ target: { checked: false, value: 'a' } } as unknown as Event);
     expect(CONTROL(fix).value()).toBe('b');
@@ -261,44 +267,46 @@ describe('AuRadioGroup', () => {
 
   it('optionInputId falls back to opt when value is only symbols', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    applyFieldHarnessInputs(f, { controlId: 'rg' });
+      applyFieldHarnessInputs(f, { controlId: 'rg' });
     });
     expect(CONTROL(fix).optionInputId('---')).toMatch(/rg-opt$/);
   });
 
   it('prefers manual errorMessage over errors', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    applyFieldHarnessInputs(f, { errorMessage: 'Manual' });
-    f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      applyFieldHarnessInputs(f, { errorMessage: 'Manual' });
+      f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
     });
-    expect(fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim()).toBe('Manual');
+    expect(
+      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
+    ).toBe('Manual');
   });
 
   it('displayError empty when first error has no usable text', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.errors = [{ message: '', kind: '' }] as any;
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.errors = [{ message: '', kind: '' }] as any;
     });
     expect(CONTROL(fix).displayError()).toBe('');
   });
 
   it('sets aria-invalid from invalid without visible error', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    f.componentInstance.invalid = true;
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.invalid = true;
     });
     expect(queryRadios(fix)[0]!.getAttribute('aria-invalid')).toBe('true');
   });
 
   it('sets hint and aria-describedby on radios', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: 'Pick' });
-    applyFieldHarnessInputs(f, { hint: 'Choose one option' });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      applyFieldHarnessInputs(f, { hint: 'Choose one option' });
     });
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
     expect(queryRadios(fix)[0]!.getAttribute('aria-describedby')).toBe(hint.id);
@@ -306,10 +314,10 @@ describe('AuRadioGroup', () => {
 
   it('normalizes nullish field harness strings', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
-    f.componentInstance.options = opts;
-    applyFieldHarnessInputs(f, { label: null as unknown as string });
-    applyFieldHarnessInputs(f, { hint: undefined as unknown as string });
-    applyFieldHarnessInputs(f, { errorMessage: null as unknown as string });
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: null as unknown as string });
+      applyFieldHarnessInputs(f, { hint: undefined as unknown as string });
+      applyFieldHarnessInputs(f, { errorMessage: null as unknown as string });
     });
     expect(fix.componentInstance.ffLabel()).toBe('');
     expect(fix.componentInstance.ffHint()).toBe('');

@@ -119,12 +119,7 @@ describe('TooltipOverlay', () => {
   });
 
   function createOverlay(platformId: object = 'browser' as unknown as object) {
-    return new TooltipOverlay(
-      TestBed.inject(DOCUMENT),
-      host.renderer,
-      platformId,
-      host.destroyRef,
-    );
+    return new TooltipOverlay(TestBed.inject(DOCUMENT), host.renderer, platformId, host.destroyRef);
   }
 
   it('sync is noop outside the browser platform', () => {
@@ -260,7 +255,6 @@ describe('TooltipOverlay', () => {
     bubble.remove();
   });
 });
-
 
 describe('focusLeftFieldControl', () => {
   it('returns true when currentTarget is not an HTMLElement', () => {

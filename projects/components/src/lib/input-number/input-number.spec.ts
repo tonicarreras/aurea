@@ -18,7 +18,8 @@ describe('AuInputNumber', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputNumberTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-number__input'))!.nativeElement as HTMLInputElement;
+    return fixture.debugElement.query(By.css('.au-input-number__input'))!
+      .nativeElement as HTMLInputElement;
   }
 
   beforeEach(async () => {
@@ -40,8 +41,8 @@ describe('AuInputNumber', () => {
 
   it('sets null when cleared', () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'Amount' }, (f) => {
-    f.componentInstance.value = 5;
-});
+      f.componentInstance.value = 5;
+    });
     const el = queryInput(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
@@ -86,7 +87,9 @@ describe('AuInputNumber', () => {
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.valueChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.valueChange).subscribe(() => n++),
+    );
     fix.detectChanges();
     const el = queryInput(fix);
     el.value = '9';
@@ -97,9 +100,9 @@ describe('AuInputNumber', () => {
 
   it('does not update model when readOnly', () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
-    f.componentInstance.value = 1;
-    f.componentInstance.readOnly = true;
-});
+      f.componentInstance.value = 1;
+      f.componentInstance.readOnly = true;
+    });
     const el = queryInput(fix);
     el.value = '99';
     el.dispatchEvent(new Event('input'));
@@ -109,8 +112,8 @@ describe('AuInputNumber', () => {
 
   it('does not update model when parsed number is not finite', () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
-    f.componentInstance.value = 2;
-});
+      f.componentInstance.value = 2;
+    });
     CONTROL(fix).onInput({ target: { value: 'Infinity' } } as unknown as Event);
     fix.detectChanges();
     expect(CONTROL(fix).value()).toBe(2);
@@ -118,10 +121,10 @@ describe('AuInputNumber', () => {
 
   it('sets min max and step attributes', () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
-    f.componentInstance.min = 0;
-    f.componentInstance.max = 10;
-    f.componentInstance.step = 0.5;
-});
+      f.componentInstance.min = 0;
+      f.componentInstance.max = 10;
+      f.componentInstance.step = 0.5;
+    });
     const el = queryInput(fix);
     expect(el.getAttribute('min')).toBe('0');
     expect(el.getAttribute('max')).toBe('10');
@@ -130,8 +133,8 @@ describe('AuInputNumber', () => {
 
   it('sets step any', () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
-    f.componentInstance.step = 'any';
-});
+      f.componentInstance.step = 'any';
+    });
     expect(queryInput(fix).getAttribute('step')).toBe('any');
   });
 
@@ -180,7 +183,9 @@ describe('AuInputNumber', () => {
     fix.detectChanges();
     const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fix.debugElement.query(By.css('.au-input-number__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.debugElement
+      .query(By.css('.au-input-number__control-row'))!
+      .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-input-number__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
@@ -215,8 +220,8 @@ describe('AuInputNumber', () => {
 
   it('stringifies placeholder input', () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
-    f.componentInstance.placeholder = 'e.g. 42';
-});
+      f.componentInstance.placeholder = 'e.g. 42';
+    });
     expect(CONTROL(fix).placeholder()).toBe('e.g. 42');
   });
 

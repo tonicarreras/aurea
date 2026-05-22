@@ -89,9 +89,15 @@ describe('AuChip', () => {
     let n = 0;
     component.removed.subscribe(() => n++);
     const removeDe = fixture.debugElement.query(By.css('.au-chip__remove'))!;
-    removeDe.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    removeDe.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    );
     expect(n).toBe(1);
-    removeDe.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+    removeDe.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true }),
+    );
     expect(n).toBe(2);
   });
 
@@ -102,7 +108,10 @@ describe('AuChip', () => {
     component.removed.subscribe(() => n++);
     fixture.debugElement
       .query(By.css('.au-chip__remove'))!
-      .triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      .triggerEventHandler(
+        'keydown',
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      );
     expect(n).toBe(0);
   });
 
@@ -211,7 +220,10 @@ describe('AuChip', () => {
     component.removed.subscribe(() => n++);
     fixture.debugElement
       .query(By.css('.au-chip__remove'))!
-      .triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      .triggerEventHandler(
+        'keydown',
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+      );
     expect(n).toBe(0);
   });
 
@@ -230,7 +242,10 @@ describe('AuChip', () => {
   imports: [AuList, AuChip],
   template: `
     <au-list>
-      <au-chip label="Angular" [removable]="true" />
+      <au-chip
+        label="Angular"
+        [removable]="true"
+      />
     </au-list>
   `,
 })
@@ -246,7 +261,11 @@ describe('AuChip with AuList', () => {
   it('omits listitem when selectable inside au-list', () => {
     @Component({
       imports: [AuList, AuChip],
-      template: `<au-list><au-chip label="Filter" [selectable]="true" /></au-list>`,
+      template: `<au-list
+        ><au-chip
+          label="Filter"
+          [selectable]="true"
+      /></au-list>`,
     })
     class SelectableInListHost {}
 

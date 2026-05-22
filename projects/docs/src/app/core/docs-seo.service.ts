@@ -7,21 +7,9 @@ import { filter, startWith } from 'rxjs';
 import { SEO_EN } from '../i18n/locales/en/seo';
 import { SEO_ES } from '../i18n/locales/es/seo';
 import type { DocsPageSeo, DocsSeoMessages } from '../i18n/types/seo';
-import {
-  COMPONENT_DOCS_BY_SLUG,
-  componentDocSummary,
-} from './component-docs.registry';
-import {
-  DOCS_OG_IMAGE_URL,
-  DOCS_SEO_BRAND,
-  DOCS_SITE_ORIGIN,
-} from './docs-seo.config';
-import {
-  DOCS_ROUTES,
-  type DocsLocale,
-  DEFAULT_DOCS_LOCALE,
-  isDocsLocale,
-} from './docs-locale';
+import { COMPONENT_DOCS_BY_SLUG, componentDocSummary } from './component-docs.registry';
+import { DOCS_OG_IMAGE_URL, DOCS_SEO_BRAND, DOCS_SITE_ORIGIN } from './docs-seo.config';
+import { DOCS_ROUTES, type DocsLocale, DEFAULT_DOCS_LOCALE, isDocsLocale } from './docs-locale';
 
 const SEO_MESSAGES: Record<DocsLocale, DocsSeoMessages> = {
   en: SEO_EN,
@@ -304,5 +292,4 @@ export class DocsSeoService {
       el.setAttribute(key, value);
     }
   }
-
 }

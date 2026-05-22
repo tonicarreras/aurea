@@ -8,7 +8,11 @@ import { selectOptions } from '../shared/demo-fixtures';
   imports: [AuFormField, AuSelect],
   template: `
     <au-form-field label="País">
-      <au-select placeholder="Elige un país" [options]="options" style="max-width: 16rem" />
+      <au-select
+        placeholder="Elige un país"
+        [options]="options"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })

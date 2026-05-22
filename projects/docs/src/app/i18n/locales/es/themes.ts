@@ -19,7 +19,10 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
       { token: '--au-color-text-secondary', description: 'Texto de apoyo y pestañas inactivas.' },
       { token: '--au-color-text-tertiary', description: 'Hints y metadatos (contraste AA).' },
       { token: '--au-color-text-label', description: 'Etiquetas de formulario.' },
-      { token: '--au-color-text-on-solid', description: 'Texto sobre botones y superficies invertidas.' },
+      {
+        token: '--au-color-text-on-solid',
+        description: 'Texto sobre botones y superficies invertidas.',
+      },
       { token: '--au-color-text-disabled', description: 'Controles deshabilitados.' },
     ],
   },
@@ -48,7 +51,10 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
       { token: '--au-color-form-error-bg', description: 'Fondo del shell inválido.' },
       { token: '--au-color-form-disabled-surface', description: 'Fondo deshabilitado.' },
       { token: '--au-radius-field', description: 'Radio de campos (2px por defecto).' },
-      { token: '--au-size-field-h-sm / md / lg', description: 'Alturas de controles de formulario.' },
+      {
+        token: '--au-size-field-h-sm / md / lg',
+        description: 'Alturas de controles de formulario.',
+      },
       { token: '--au-shadow-focus-ring', description: 'Sombra de foco en campos.' },
     ],
   },
@@ -59,7 +65,10 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
       { token: '--au-color-semantic-error', description: 'Error crítico.' },
       { token: '--au-color-semantic-warning', description: 'Advertencia.' },
       { token: '--au-color-semantic-info', description: 'Información.' },
-      { token: '--au-color-semantic-*-surface', description: 'Fondos suaves emparejados a cada semántico.' },
+      {
+        token: '--au-color-semantic-*-surface',
+        description: 'Fondos suaves emparejados a cada semántico.',
+      },
     ],
   },
   {

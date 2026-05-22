@@ -6,8 +6,15 @@ import { AuFormField, AuInputText } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field label="Email" [required]="true">
-      <au-input-text type="email" placeholder="tu@correo.com" style="max-width: 20rem" />
+    <au-form-field
+      label="Email"
+      [required]="true"
+    >
+      <au-input-text
+        type="email"
+        placeholder="tu@correo.com"
+        style="max-width: 20rem"
+      />
     </au-form-field>
   `,
 })
@@ -18,8 +25,14 @@ export class ExampleFormFieldBasicDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field label="Usuario" hint="Entre 3 y 20 caracteres.">
-      <au-input-text placeholder="nombre" style="max-width: 20rem" />
+    <au-form-field
+      label="Usuario"
+      hint="Entre 3 y 20 caracteres."
+    >
+      <au-input-text
+        placeholder="nombre"
+        style="max-width: 20rem"
+      />
     </au-form-field>
   `,
 })
@@ -35,7 +48,11 @@ export class ExampleFormFieldHintDemo {}
       errorMessage="Introduce un correo válido."
       [invalid]="true"
     >
-      <au-input-text type="email" placeholder="correo" style="max-width: 20rem" />
+      <au-input-text
+        type="email"
+        placeholder="correo"
+        style="max-width: 20rem"
+      />
     </au-form-field>
   `,
 })

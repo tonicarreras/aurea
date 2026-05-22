@@ -1,7 +1,13 @@
-<div class="au-message__surface" [attr.role]="liveRole()">
+<div
+  class="au-message__surface"
+  [attr.role]="liveRole()"
+>
   @if (showVariantIcon() && variantIcon(); as iconName) {
     <span class="au-message__icon">
-      <au-icon [name]="iconName" size="md" />
+      <au-icon
+        [name]="iconName"
+        size="md"
+      />
     </span>
   }
 
@@ -25,7 +31,10 @@
       [attr.aria-label]="closeAriaLabel()"
       (click)="onDismissClick()"
     >
-      <au-icon name="close" size="sm" />
+      <au-icon
+        name="close"
+        size="sm"
+      />
     </button>
   }
 </div>

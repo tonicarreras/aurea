@@ -20,7 +20,10 @@ export class ExampleMessageSuccessDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuMessage],
   template: `
-    <au-message variant="error" message="Please fix the highlighted fields." />
+    <au-message
+      variant="error"
+      message="Please fix the highlighted fields."
+    />
   `,
 })
 export class ExampleMessageErrorDemo {}

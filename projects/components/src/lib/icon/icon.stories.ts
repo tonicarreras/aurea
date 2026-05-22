@@ -13,7 +13,8 @@ const meta: Meta<AuIcon> = {
     docs: {
       extractArgTypes: () => ({}),
       description: {
-        component: 'Shared SVG glyphs for alerts, dialogs, buttons, and chips. Decorative (`aria-hidden`).',
+        component:
+          'Shared SVG glyphs for alerts, dialogs, buttons, and chips. Decorative (`aria-hidden`).',
       },
     },
   },

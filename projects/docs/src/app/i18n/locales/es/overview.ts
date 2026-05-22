@@ -30,7 +30,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       '`loading` activa `aria-busy` y bloquea el click.',
       'Tamaño `lg` respeta `--au-touch-target-min` (44px).',
     ],
-    keyboard: ['Enter y Space activan el botón nativo.', 'Tab enfoca el control; foco restaurado tras cerrar diálogos.'],
+    keyboard: [
+      'Enter y Space activan el botón nativo.',
+      'Tab enfoca el control; foco restaurado tras cerrar diálogos.',
+    ],
   },
   'form-field': {
     intro: [
@@ -56,7 +59,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     anatomy: [
       { region: 'Etiqueta', detail: '`<label for>` enlazado al `controlId` del hijo.' },
       { region: 'Control proyectado', detail: 'Un solo control enfocable en el slot por defecto.' },
-      { region: 'Hint / error', detail: 'Hint en `<p>`; error `role="alert"` con estilos compartidos.' },
+      {
+        region: 'Hint / error',
+        detail: 'Hint en `<p>`; error `role="alert"` con estilos compartidos.',
+      },
     ],
     accessibility: [
       'El hijo recibe `aria-describedby` / `aria-errormessage` desde los ids del contexto.',
@@ -79,12 +85,18 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Texto multilínea → `au-textarea`.', 'Elección en lista → `au-select` o `au-autocomplete`.'],
+      items: [
+        'Texto multilínea → `au-textarea`.',
+        'Elección en lista → `au-select` o `au-autocomplete`.',
+      ],
     },
     anatomy: [
       { region: '`au-form-field`', detail: 'Etiqueta, hint y error fuera del control.' },
       { region: 'Shell', detail: 'Borde, fondo y anillos de foco/error en la fila del input.' },
-      { region: 'Input nativo', detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` vía contexto.' },
+      {
+        region: 'Input nativo',
+        detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` vía contexto.',
+      },
       { region: 'Toggle contraseña', detail: 'Solo con `type="password"` y `showPasswordToggle`.' },
     ],
     accessibility: [
@@ -104,7 +116,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Comentarios, descripciones largas, notas.', 'Contenido que no cabe en una sola línea.'],
+      items: [
+        'Comentarios, descripciones largas, notas.',
+        'Contenido que no cabe en una sola línea.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -133,7 +148,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Un solo on/off de configuración → `au-switch`.', 'Elección única en lista → `au-radio-group`.'],
+      items: [
+        'Un solo on/off de configuración → `au-switch`.',
+        'Elección única en lista → `au-radio-group`.',
+      ],
     },
     anatomy: [
       { region: 'Input nativo', detail: 'Checkbox real; estado indeterminado nativo.' },
@@ -152,7 +170,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Preferencias inmediatas (notificaciones, modo oscuro).', 'Activar/desactivar una función del sistema.'],
+      items: [
+        'Preferencias inmediatas (notificaciones, modo oscuro).',
+        'Activar/desactivar una función del sistema.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -181,7 +202,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Búsqueda con filtrado → `au-autocomplete`.', 'Solo 2–3 opciones visibles → `au-radio-group`.'],
+      items: [
+        'Búsqueda con filtrado → `au-autocomplete`.',
+        'Solo 2–3 opciones visibles → `au-radio-group`.',
+      ],
     },
     anatomy: [
       { region: 'Trigger', detail: 'Muestra label de la opción seleccionada.' },
@@ -191,9 +215,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Patrón combobox ARIA (`aria-expanded`, `aria-controls`, `listbox`/`option`).',
       'Opciones deshabilitadas respetan `disabled` en `AuSelectOption`.',
     ],
-    keyboard: [
-      'Space/Enter abre; flechas mueven highlight; Enter selecciona; Escape cierra.',
-    ],
+    keyboard: ['Space/Enter abre; flechas mueven highlight; Enter selecciona; Escape cierra.'],
     relatedExports: ['AuSelectOption'],
   },
   autocomplete: {
@@ -203,7 +225,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Catálogos largos (ciudades, usuarios, SKU).', 'Cuando el usuario conoce parte del texto a buscar.'],
+      items: [
+        'Catálogos largos (ciudades, usuarios, SKU).',
+        'Cuando el usuario conoce parte del texto a buscar.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -224,7 +249,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['2–5 opciones mutuamente excluyentes visibles sin desplegar.', 'Planes, métodos de pago, tipo de cuenta.'],
+      items: [
+        '2–5 opciones mutuamente excluyentes visibles sin desplegar.',
+        'Planes, métodos de pago, tipo de cuenta.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -248,7 +276,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Formato moneda con máscara → capa de dominio sobre input-text.', 'Rango continuo → slider dedicado.'],
+      items: [
+        'Formato moneda con máscara → capa de dominio sobre input-text.',
+        'Rango continuo → slider dedicado.',
+      ],
     },
     anatomy: [
       { region: 'Input `type="number"`', detail: 'Parsing a número finito o `null`.' },
@@ -263,7 +294,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Fechas de calendario con picker del sistema operativo.', 'Filtros de rango con `minDate` / `maxDate`.'],
+      items: [
+        'Fechas de calendario con picker del sistema operativo.',
+        'Filtros de rango con `minDate` / `maxDate`.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -272,7 +306,9 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     anatomy: [
       { region: 'Input nativo', detail: 'Tokens `--au-color-date-picker-*` para icono y acento.' },
     ],
-    accessibility: ['Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.'],
+    accessibility: [
+      'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
+    ],
   },
   dialog: {
     intro: [
@@ -288,7 +324,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Confirmación ligera → `au-snackbar` con acción.', 'Panel lateral persistente → layout propio.'],
+      items: [
+        'Confirmación ligera → `au-snackbar` con acción.',
+        'Panel lateral persistente → layout propio.',
+      ],
     },
     anatomy: [
       { region: 'Backdrop', detail: 'Mezcla `--au-color-surface-inverted`.' },
@@ -313,11 +352,17 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Solo separar contenido → `au-divider` o espaciado.', 'Overlay bloqueante → `au-dialog`.'],
+      items: [
+        'Solo separar contenido → `au-divider` o espaciado.',
+        'Overlay bloqueante → `au-dialog`.',
+      ],
     },
     anatomy: [
       { region: 'auCardMedia', detail: 'A sangre, fuera del padding interior.' },
-      { region: 'auCardHeader / auCardBody', detail: 'Título y contenido con gap `--au-card-main-gap`.' },
+      {
+        region: 'auCardHeader / auCardBody',
+        detail: 'Título y contenido con gap `--au-card-main-gap`.',
+      },
       { region: 'auCardFooter', detail: 'Acciones alineadas tras borde superior.' },
     ],
     accessibility: [
@@ -340,7 +385,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Navegación global de la app → router y menú.', 'Pasos secuenciales con validación → `au-steps`.'],
+      items: [
+        'Navegación global de la app → router y menú.',
+        'Pasos secuenciales con validación → `au-steps`.',
+      ],
     },
     anatomy: [
       { region: 'button[auTab]', detail: 'Disparadores en el tablist.' },
@@ -363,7 +411,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Tags, filtros activos, metadatos de ítem.', 'Selección múltiple de categorías en toolbar.'],
+      items: [
+        'Tags, filtros activos, metadatos de ítem.',
+        'Selección múltiple de categorías en toolbar.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -397,7 +448,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Decisión obligatoria → `au-dialog`.', 'Error de formulario en campo → `errorMessage` del campo.'],
+      items: [
+        'Decisión obligatoria → `au-dialog`.',
+        'Error de formulario en campo → `errorMessage` del campo.',
+      ],
     },
     anatomy: [
       { region: 'Mensaje', detail: 'Input `message` o contenido proyectado.' },
@@ -419,7 +473,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Tags removibles → `au-list` + chips `removable`.', 'Un solo chip → `au-chip` suelto.'],
+      items: [
+        'Tags removibles → `au-list` + chips `removable`.',
+        'Un solo chip → `au-chip` suelto.',
+      ],
     },
     anatomy: [{ region: 'Grupo', detail: 'Requiere `ariaLabel` o `ariaLabelledBy`.' }],
     accessibility: ['Grupo nombrado; chips con `aria-pressed` si son seleccionables.'],
@@ -431,7 +488,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Tags seleccionados que el usuario puede quitar.', 'Filas horizontales con semántica de lista.'],
+      items: [
+        'Tags seleccionados que el usuario puede quitar.',
+        'Filas horizontales con semántica de lista.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -474,7 +534,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Dentro de `au-message`, chips removibles, botones en carga.', 'Iconografía coherente en el DS.'],
+      items: [
+        'Dentro de `au-message`, chips removibles, botones en carga.',
+        'Iconografía coherente en el DS.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -507,11 +570,17 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Sitios de documentación (Overview / API / Examples).', 'Páginas largas con claves de sección.'],
+      items: [
+        'Sitios de documentación (Overview / API / Examples).',
+        'Páginas largas con claves de sección.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Nav principal de app → `au-tabs`.', 'Wizard estricto con pasos completados → stepper dedicado.'],
+      items: [
+        'Nav principal de app → `au-tabs`.',
+        'Wizard estricto con pasos completados → stepper dedicado.',
+      ],
     },
     anatomy: [
       { region: 'Lista de pasos', detail: 'Botones horizontales con indicador activo.' },

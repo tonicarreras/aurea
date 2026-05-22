@@ -1,10 +1,18 @@
 <div class="au-switch__field">
   @if (label()) {
     <div class="au-switch__label-host">
-      <label class="au-switch__label" [attr.for]="controlId()">
+      <label
+        class="au-switch__label"
+        [attr.for]="controlId()"
+      >
         {{ label() }}
         @if (required() && showRequired()) {
-          <span class="au-switch__required" aria-hidden="true" title="Required">*</span>
+          <span
+            class="au-switch__required"
+            aria-hidden="true"
+            title="Required"
+            >*</span
+          >
           <span class="au-sr-only">(required)</span>
         }
       </label>

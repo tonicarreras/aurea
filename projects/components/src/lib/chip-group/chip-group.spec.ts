@@ -54,7 +54,10 @@ describe('AuChipGroup', () => {
   imports: [AuChipGroup, AuChip],
   template: `
     <au-chip-group ariaLabel="Status">
-      <au-chip label="Draft" [selectable]="true" />
+      <au-chip
+        label="Draft"
+        [selectable]="true"
+      />
     </au-chip-group>
   `,
 })

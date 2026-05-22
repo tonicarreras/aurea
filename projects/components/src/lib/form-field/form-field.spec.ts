@@ -135,7 +135,8 @@ describe('AuFormField AU_FORM_FIELD provider', () => {
   it('provides AU_FORM_FIELD to projected children via forwardRef', () => {
     const hostFix = TestBed.createComponent(FormFieldProviderHost);
     hostFix.detectChanges();
-    const field = hostFix.debugElement.query(By.directive(AuFormField))!.componentInstance as AuFormField;
+    const field = hostFix.debugElement.query(By.directive(AuFormField))!
+      .componentInstance as AuFormField;
     const probe = hostFix.debugElement.query(By.directive(FormFieldChildProbe))!
       .componentInstance as FormFieldChildProbe;
     expect(probe.ctx).toBe(field);
@@ -158,9 +159,13 @@ describe('AuFormField with projected control', () => {
   });
 
   it('shows required marker from linked control required state', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, { label: 'Email', required: false }, (f) => {
-      f.componentInstance.required = true;
-    });
+    const fix = createFieldFixture(
+      AuInputTextTestHost,
+      { label: 'Email', required: false },
+      (f) => {
+        f.componentInstance.required = true;
+      },
+    );
     expect(fix.nativeElement.textContent).toContain('*');
   });
 
@@ -213,7 +218,10 @@ describe('queryFieldNative', () => {
   it('returns the element matching the selector inside the host', () => {
     const fixture = TestBed.createComponent(ProbeHost);
     fixture.detectChanges();
-    const input = queryFieldNative<HTMLInputElement>(fixture.componentInstance.host, '.probe-input');
+    const input = queryFieldNative<HTMLInputElement>(
+      fixture.componentInstance.host,
+      '.probe-input',
+    );
     expect(input.tagName).toBe('INPUT');
     expect(input.classList.contains('probe-input')).toBe(true);
   });

@@ -5,12 +5,7 @@ import { filter, map, startWith } from 'rxjs';
 
 import { DOCS_MESSAGES } from '../i18n';
 import { getDocsNav } from './docs-nav';
-import {
-  DEFAULT_DOCS_LOCALE,
-  type DocsLocale,
-  docsPath,
-  isDocsLocale,
-} from './docs-locale';
+import { DEFAULT_DOCS_LOCALE, type DocsLocale, docsPath, isDocsLocale } from './docs-locale';
 
 @Injectable({ providedIn: 'root' })
 export class DocsLocaleService {

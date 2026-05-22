@@ -8,9 +8,9 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 2. **Single source of truth (state)**: in forms, Angular’s reactive model is the truth; the UI does not duplicate validation logic already in `FieldTree`.
 3. **Accessibility by default**: **visible, consistent** focus (ring tokens), regions and `aria-*` wired to controls, `prefers-reduced-motion` respected on interactive pieces.
 4. **Design layers**:
-   - *Primitives* (not used in product stylesheets) — base palette, reference or design files only.
-   - *Semantic* — `au-tokens.css` (`--au-*`): surfaces, action, borders, form, states, z-index, motion.
-   - *Component* — maps semantics to pieces (label, box, hint, error); add only what is necessary.
+   - _Primitives_ (not used in product stylesheets) — base palette, reference or design files only.
+   - _Semantic_ — `au-tokens.css` (`--au-*`): surfaces, action, borders, form, states, z-index, motion.
+   - _Component_ — maps semantics to pieces (label, box, hint, error); add only what is necessary.
 5. **Color coherence**: slate neutrals, one accent, error/success/warning **independent** of brand blue; dark mode = same semantic structure, not a hand-crafted alternate theme.
 6. **Adaptive density**: control size `md` balances reading and density; `--au-touch-target-min` (44px) guides touch targets (`lg`, buttons, icons) without bloating desktop UI.
 
@@ -22,22 +22,22 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 
 ## Categories (reference)
 
-| Category | Variables (examples) | Use |
-|----------|----------------------|-----|
-| Typography | `--au-font-sans`, `--au-text-sm`, `--au-leading-tight`, `--au-tracking-ui`, `--au-weight-medium` | Body, labels, reading density |
-| Spacing | `--au-space-1` … `--au-space-12`, `--au-content-max` | Margins, grids, form columns |
-| Shape | `--au-radius-field`, `--au-radius-sm` … `--au-radius-pill` | Fields, cards, pills (avoid pill fields for a tool-like feel) |
-| Color — surfaces | `surface-canvas`, `surface-raised`, `surface-elevated`, `surface-sunken`, `surface-inverted` | Page, cards, inset, inverted contrast |
-| Color — text | `text-primary` … `text-tertiary`, `text-label`, `text-disabled` | Headings, body, hint, disabled, form label |
-| Color — borders | `border-subtle` … `border-strong` | Separation without noise |
-| Interaction | `action-primary`, `link`, `action-*-hover|pressed` | CTAs, links, supporting actions |
-| Focus | `--au-focus-ring-width`, `--au-shadow-focus-ring`, `--au-shadow-focus-ring-error` | Rings; **same width and offset** product-wide |
-| Form | `form-border`, `form-error`, `form-error-bg`, `form-placeholder`, field sizes | Controls and messages tied to surfaces |
-| States (semantic) | `semantic-error|success|warning|info` (+ *surface) | Banners, alerts, future badges |
-| Elevation | `shadow-raised`, `shadow-overlay` | Light elevation, no forced neumorphism |
-| Stacking | `--au-z-sticky` … `--au-z-toast` | No arbitrary `z-index` in feature modules |
-| Motion | `duration-*`, `ease-*`, `transition-control`, `transition-glyph` | Color/border/shadow vs. color-only on glyphs |
-| Theme | `data-au-theme="dark"` or `light` (default `:root`) + `color-scheme` in dark | App body or shell |
+| Category          | Variables (examples)                                                                             | Use                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------- | ------------------- | ------------------------------ |
+| Typography        | `--au-font-sans`, `--au-text-sm`, `--au-leading-tight`, `--au-tracking-ui`, `--au-weight-medium` | Body, labels, reading density                                 |
+| Spacing           | `--au-space-1` … `--au-space-12`, `--au-content-max`                                             | Margins, grids, form columns                                  |
+| Shape             | `--au-radius-field`, `--au-radius-sm` … `--au-radius-pill`                                       | Fields, cards, pills (avoid pill fields for a tool-like feel) |
+| Color — surfaces  | `surface-canvas`, `surface-raised`, `surface-elevated`, `surface-sunken`, `surface-inverted`     | Page, cards, inset, inverted contrast                         |
+| Color — text      | `text-primary` … `text-tertiary`, `text-label`, `text-disabled`                                  | Headings, body, hint, disabled, form label                    |
+| Color — borders   | `border-subtle` … `border-strong`                                                                | Separation without noise                                      |
+| Interaction       | `action-primary`, `link`, `action-\*-hover                                                       | pressed`                                                      | CTAs, links, supporting actions |
+| Focus             | `--au-focus-ring-width`, `--au-shadow-focus-ring`, `--au-shadow-focus-ring-error`                | Rings; **same width and offset** product-wide                 |
+| Form              | `form-border`, `form-error`, `form-error-bg`, `form-placeholder`, field sizes                    | Controls and messages tied to surfaces                        |
+| States (semantic) | `semantic-error                                                                                  | success                                                       | warning                         | info` (+ \*surface) | Banners, alerts, future badges |
+| Elevation         | `shadow-raised`, `shadow-overlay`                                                                | Light elevation, no forced neumorphism                        |
+| Stacking          | `--au-z-sticky` … `--au-z-toast`                                                                 | No arbitrary `z-index` in feature modules                     |
+| Motion            | `duration-*`, `ease-*`, `transition-control`, `transition-glyph`                                 | Color/border/shadow vs. color-only on glyphs                  |
+| Theme             | `data-au-theme="dark"` or `light` (default `:root`) + `color-scheme` in dark                     | App body or shell                                             |
 
 ## Theme and selection
 

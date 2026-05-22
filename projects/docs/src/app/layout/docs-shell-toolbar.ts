@@ -9,11 +9,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import {
-  AuFormField,
-  AuSelect,
-  type AuSelectOption,
-} from '@aurea-design-system/components';
+import { AuFormField, AuSelect, type AuSelectOption } from '@aurea-design-system/components';
 
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
 import { isDocsLocale } from '../core/docs-locale';
@@ -54,7 +50,10 @@ const MOBILE_TOOLBAR_MQ = '(max-width: 56rem)';
     }
 
     <ng-template #settingsFields>
-      <au-form-field [label]="locale.messages().shell.lang" class="docs-toolbar__field">
+      <au-form-field
+        [label]="locale.messages().shell.lang"
+        class="docs-toolbar__field"
+      >
         <au-select
           size="sm"
           [options]="localeOptions()"
@@ -63,7 +62,10 @@ const MOBILE_TOOLBAR_MQ = '(max-width: 56rem)';
         />
       </au-form-field>
 
-      <au-form-field [label]="locale.messages().shell.theme" class="docs-toolbar__field">
+      <au-form-field
+        [label]="locale.messages().shell.theme"
+        class="docs-toolbar__field"
+      >
         <au-select
           size="sm"
           [options]="themeOptions()"

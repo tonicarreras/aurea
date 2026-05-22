@@ -13,7 +13,8 @@ import { AuSwitch } from './switch';
 
 describe('AuSwitch', () => {
   function queryInput(fixture: ComponentFixture<AuSwitchTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-switch__element'))!.nativeElement as HTMLInputElement;
+    return fixture.debugElement.query(By.css('.au-switch__element'))!
+      .nativeElement as HTMLInputElement;
   }
 
   function control(fixture: ComponentFixture<AuSwitchTestHost>): AuSwitch {
@@ -28,8 +29,8 @@ describe('AuSwitch', () => {
 
   it('binds checked on change', () => {
     const fix = createFieldFixture(AuSwitchTestHost, { label: 'Enable' }, (f) => {
-    f.componentInstance.label = 'Enable';
-});
+      f.componentInstance.label = 'Enable';
+    });
     const el = queryInput(fix);
     el.checked = true;
     el.dispatchEvent(new Event('change'));
@@ -52,12 +53,14 @@ describe('AuSwitch', () => {
 
   it('does not emit when disabled', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
-    f.componentInstance.disabled = true;
-});
+      f.componentInstance.disabled = true;
+    });
     const comp = control(fix);
     const inj = TestBed.inject(Injector);
     let n = 0;
-    const sub = runInInjectionContext(inj, () => outputToObservable(comp.checkedChange).subscribe(() => n++));
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.checkedChange).subscribe(() => n++),
+    );
     const el = queryInput(fix);
     el.checked = true;
     el.dispatchEvent(new Event('change'));
@@ -67,16 +70,19 @@ describe('AuSwitch', () => {
 
   it('sets role switch and aria-checked', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
-    f.componentInstance.label = 'Notifications';
-    f.componentInstance.checked = true;
-});
+      f.componentInstance.label = 'Notifications';
+      f.componentInstance.checked = true;
+    });
     const el = queryInput(fix);
     expect(el.getAttribute('role')).toBe('switch');
     expect(el.getAttribute('aria-checked')).toBe('true');
   });
 
   it('shows error and aria-invalid', () => {
-    const fix = createFieldFixture(AuSwitchTestHost, { controlId: 'sw1', errorMessage: 'Required' });
+    const fix = createFieldFixture(AuSwitchTestHost, {
+      controlId: 'sw1',
+      errorMessage: 'Required',
+    });
     const el = queryInput(fix);
     expect(el.getAttribute('aria-invalid')).toBe('true');
     expect(el.getAttribute('aria-errormessage')).toBe('sw1-error');
@@ -84,8 +90,8 @@ describe('AuSwitch', () => {
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ kind: 'pattern' }];
-});
+      f.componentInstance.errors = [{ kind: 'pattern' }];
+    });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
   });
@@ -110,7 +116,9 @@ describe('AuSwitch', () => {
     const fix = createFieldFixture(AuSwitchTestHost);
     const row = fix.debugElement.query(By.css('.au-switch__control-row'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fix.debugElement.query(By.css('.au-switch__control-row'))!.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    fix.debugElement
+      .query(By.css('.au-switch__control-row'))!
+      .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-switch__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
@@ -148,22 +156,22 @@ describe('AuSwitch', () => {
 
   it('normalizes nullish inline label transform', () => {
     const fix = createFieldFixture(AuSwitchTestHost, { label: null as unknown as string }, (f) => {
-    f.componentInstance.label = null as unknown as string;
-});
+      f.componentInstance.label = null as unknown as string;
+    });
     expect(control(fix).label()).toBe('');
   });
 
   it('displayError empty when first error has no usable message or kind', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
-    f.componentInstance.errors = [{ message: '', kind: '' }];
-});
+      f.componentInstance.errors = [{ message: '', kind: '' }];
+    });
     expect(control(fix).displayError()).toBe('');
   });
 
   it('sets aria-invalid from invalid without visible error', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
-    f.componentInstance.invalid = true;
-});
+      f.componentInstance.invalid = true;
+    });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 

@@ -9,9 +9,18 @@ import { DEMO_ROW_TIGHT } from '../shared/demo-layout';
   template: `
     <au-list ariaLabel="Tecnologías seleccionadas">
       <div class="docs-demo-row">
-        <au-chip label="Angular" [removable]="true" />
-        <au-chip label="TypeScript" [removable]="true" />
-        <au-chip label="Vitest" [removable]="true" />
+        <au-chip
+          label="Angular"
+          [removable]="true"
+        />
+        <au-chip
+          label="TypeScript"
+          [removable]="true"
+        />
+        <au-chip
+          label="Vitest"
+          [removable]="true"
+        />
       </div>
     </au-list>
   `,

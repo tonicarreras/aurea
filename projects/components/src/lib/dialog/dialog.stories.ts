@@ -49,11 +49,7 @@ const meta: Meta<AuDialog> = {
 export default meta;
 type Story = StoryObj<AuDialog>;
 
-function dialogStory(config: {
-  triggerLabel?: string;
-  body: string;
-  footer?: string;
-}): Story {
+function dialogStory(config: { triggerLabel?: string; body: string; footer?: string }): Story {
   const footerBlock = config.footer ?? '';
   return {
     render: (args) => ({

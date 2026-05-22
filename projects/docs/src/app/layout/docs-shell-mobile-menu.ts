@@ -52,12 +52,18 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
             [attr.aria-label]="locale.messages().shell.menuCloseAria"
             (click)="menu.close()"
           >
-            <au-icon name="close" size="sm" />
+            <au-icon
+              name="close"
+              size="sm"
+            />
           </au-button>
         </header>
 
         <div class="docs-mobile-menu__body">
-          <au-form-field [label]="locale.messages().shell.lang" class="docs-mobile-menu__field">
+          <au-form-field
+            [label]="locale.messages().shell.lang"
+            class="docs-mobile-menu__field"
+          >
             <au-select
               size="sm"
               [options]="localeOptions()"
@@ -66,7 +72,10 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
             />
           </au-form-field>
 
-          <au-form-field [label]="locale.messages().shell.theme" class="docs-mobile-menu__field">
+          <au-form-field
+            [label]="locale.messages().shell.theme"
+            class="docs-mobile-menu__field"
+          >
             <au-select
               size="sm"
               [options]="themeOptions()"
@@ -78,13 +87,28 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
           <au-divider />
 
           <div class="docs-mobile-menu__links">
-            <au-button variant="outline" size="sm" type="button" (click)="openExternal(links.github)">
+            <au-button
+              variant="outline"
+              size="sm"
+              type="button"
+              (click)="openExternal(links.github)"
+            >
               {{ locale.messages().shell.githubLabel }}
             </au-button>
-            <au-button variant="outline" size="sm" type="button" (click)="openExternal(links.npm)">
+            <au-button
+              variant="outline"
+              size="sm"
+              type="button"
+              (click)="openExternal(links.npm)"
+            >
               {{ locale.messages().shell.npmLabel }}
             </au-button>
-            <au-button variant="outline" size="sm" type="button" (click)="openExternal(links.storybook)">
+            <au-button
+              variant="outline"
+              size="sm"
+              type="button"
+              (click)="openExternal(links.storybook)"
+            >
               {{ locale.messages().shell.storybookLabel }}
             </au-button>
           </div>

@@ -48,7 +48,14 @@ export class FieldListboxOverlay {
       return;
     }
     this.renderer.removeClass(listbox, 'au-field-listbox--overlay');
-    for (const prop of ['position', 'top', 'left', 'width', 'inset-inline-start', 'inset-inline-end']) {
+    for (const prop of [
+      'position',
+      'top',
+      'left',
+      'width',
+      'inset-inline-start',
+      'inset-inline-end',
+    ]) {
       listbox.style.removeProperty(prop);
     }
     if (this.anchor?.parentNode && listbox.isConnected) {

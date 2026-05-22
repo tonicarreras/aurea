@@ -1,4 +1,7 @@
-import type { ComponentApiEntry, ResolvedComponentApi } from '../../../core/component-docs.registry';
+import type {
+  ComponentApiEntry,
+  ResolvedComponentApi,
+} from '../../../core/component-docs.registry';
 
 const i = (
   name: string,
@@ -52,7 +55,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuButton',
         rows: [
-          i('variant', "'primary' | 'secondary' | 'outline' | 'ghost'", 'Visual style.', "'primary'"),
+          i(
+            'variant',
+            "'primary' | 'secondary' | 'outline' | 'ghost'",
+            'Visual style.',
+            "'primary'",
+          ),
           i('size', "'sm' | 'md' | 'lg'", 'Altura y padding; `lg` ≥ 44px.', "'md'"),
           i('disabled', 'boolean', 'Disables the button.', 'false'),
           i('loading', 'boolean', 'Spinner and `aria-busy`; blocks click.', 'false'),
@@ -98,7 +106,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuTextarea',
-        description: 'Project inside `au-form-field`. Implements `FormValueControl<string | null>`.',
+        description:
+          'Project inside `au-form-field`. Implements `FormValueControl<string | null>`.',
         rows: [
           ...VALUE_FIELD_BASE,
           i('rows', 'number', 'Filas visibles del `<textarea>`.', '4'),
@@ -164,7 +173,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuSelect',
-        description: 'Project inside `au-form-field`. Portaled combobox listbox. `FormValueControl<string | null>`.',
+        description:
+          'Project inside `au-form-field`. Portaled combobox listbox. `FormValueControl<string | null>`.',
         rows: [
           m('value', 'ModelSignal<string | null>', 'Selected option `value`.'),
           i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
@@ -228,7 +238,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuInputNumber',
-        description: 'Project inside `au-form-field`. Empty ↔ `null`. `FormValueControl<number | null>`.',
+        description:
+          'Project inside `au-form-field`. Empty ↔ `null`. `FormValueControl<number | null>`.',
         rows: [
           m('value', 'ModelSignal<number | null>', 'Numeric value.'),
           i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
@@ -252,7 +263,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuInputDate',
-        description: 'Project inside `au-form-field`. Native `type="date"`; ISO `YYYY-MM-DD` or `null`.',
+        description:
+          'Project inside `au-form-field`. Native `type="date"`; ISO `YYYY-MM-DD` or `null`.',
         rows: [
           m('value', 'ModelSignal<string | null>', 'Date as ISO string.'),
           i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
@@ -289,7 +301,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
       {
         title: 'AuDialogFooter',
-        description: 'Directiva de marcado: `import { AuDialogFooter }` y proyecta `<div auDialogFooter>`.',
+        description:
+          'Directiva de marcado: `import { AuDialogFooter }` y proyecta `<div auDialogFooter>`.',
         rows: [
           {
             name: 'auDialogFooter',
@@ -320,10 +333,22 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'Proyección de contenido',
         description: 'Atributos en el contenido proyectado (no son inputs del componente).',
         rows: [
-          { name: 'auCardHeader', type: 'atributo', description: 'Cabecera (usa un heading semántico).' },
+          {
+            name: 'auCardHeader',
+            type: 'atributo',
+            description: 'Cabecera (usa un heading semántico).',
+          },
           { name: 'auCardBody', type: 'atributo', description: 'Cuerpo principal.' },
-          { name: 'auCardMedia', type: 'atributo', description: 'Imagen o vídeo a sangre en la parte superior.' },
-          { name: 'auCardFooter', type: 'atributo', description: 'Pie con acciones; requiere `AuCardFooter` en imports.' },
+          {
+            name: 'auCardMedia',
+            type: 'atributo',
+            description: 'Imagen o vídeo a sangre en la parte superior.',
+          },
+          {
+            name: 'auCardFooter',
+            type: 'atributo',
+            description: 'Pie con acciones; requiere `AuCardFooter` en imports.',
+          },
         ],
       },
     ],
@@ -347,7 +372,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuTab',
         description: 'En `<button type="button" auTab="clave">`.',
         rows: [
-          { name: 'auTab', type: 'string (requerido)', description: 'Identificador; coincide con `auTabPanel`.' },
+          {
+            name: 'auTab',
+            type: 'string (requerido)',
+            description: 'Identificador; coincide con `auTabPanel`.',
+          },
           i('auTabDisabled', 'boolean', 'Desactiva la pestaña.', 'false'),
         ],
       },
@@ -355,7 +384,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuTabPanel',
         description: 'En `<div auTabPanel="clave">`.',
         rows: [
-          { name: 'auTabPanel', type: 'string (requerido)', description: 'Clave del panel emparejada con `auTab`.' },
+          {
+            name: 'auTabPanel',
+            type: 'string (requerido)',
+            description: 'Clave del panel emparejada con `auTab`.',
+          },
         ],
       },
     ],
@@ -390,7 +423,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         rows: [
           m('open', 'ModelSignal<boolean>', 'Visibilidad.'),
           i('message', 'string', 'Texto principal (o slot proyectado).', "''"),
-          i('variant', "'default' | 'success' | 'warning' | 'error' | 'info'", 'Semántica visual.', "'default'"),
+          i(
+            'variant',
+            "'default' | 'success' | 'warning' | 'error' | 'info'",
+            'Semántica visual.',
+            "'default'",
+          ),
           i('position', 'AuSnackbarPosition', 'Esquina de la pantalla.', "'bottom-center'"),
           i('durationMs', 'number', 'Auto-cierre en ms; `0` desactiva timer.', '5000'),
           i('actionLabel', 'string', 'Etiqueta del botón de acción opcional.', "''"),
@@ -421,7 +459,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuChipGroup',
-        description: '`role="group"` for selectable filter chips. Use `au-list` for removable/static tags.',
+        description:
+          '`role="group"` for selectable filter chips. Use `au-list` for removable/static tags.',
         rows: [
           i('ariaLabel', 'string', 'Accessible name when there is no visible caption.', "''"),
           i('ariaLabelledBy', 'string', 'ID of labelling element.', "''"),
@@ -444,7 +483,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuListItem',
         description: 'On custom hosts inside `au-list`: `<div auListItem>`.',
         rows: [
-          i('auListItemDisabled', 'boolean', 'Suppresses `listitem` (chips use this when `selectable`).', 'false'),
+          i(
+            'auListItemDisabled',
+            'boolean',
+            'Suppresses `listitem` (chips use this when `selectable`).',
+            'false',
+          ),
         ],
       },
     ],
@@ -456,7 +500,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuMessage',
         description: 'Inline callout; error/warning use `role="alert"`.',
         rows: [
-          i('variant', "'default' | 'success' | 'warning' | 'error' | 'info'", 'Semantic surface.', "'default'"),
+          i(
+            'variant',
+            "'default' | 'success' | 'warning' | 'error' | 'info'",
+            'Semantic surface.',
+            "'default'",
+          ),
           i('title', 'string', 'Optional heading.', "''"),
           i('message', 'string', 'Body text (or default slot).', "''"),
           i('dismissible', 'boolean', 'Close button.', 'false'),
@@ -488,7 +537,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuSkeleton',
         description: 'Decorative placeholder; set `aria-busy` on a parent region.',
         rows: [
-          i('variant', "'text' | 'circular' | 'rectangular' | 'rounded' | 'button'", 'Shape preset.', "'text'"),
+          i(
+            'variant',
+            "'text' | 'circular' | 'rectangular' | 'rounded' | 'button'",
+            'Shape preset.',
+            "'text'",
+          ),
           i('animation', "'pulse' | 'wave' | 'none'", 'Motion.', "'pulse'"),
           i('size', "'sm' | 'md' | 'lg'", 'Density for circular/button/text line.', "'md'"),
           i('width', 'string', 'CSS width override.'),
@@ -516,7 +570,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuStep',
         description: 'On `<button type="button" auStep="key">`.',
         rows: [
-          { name: 'auStep', type: 'string (required)', description: 'Step key; matches `auStepPanel`.' },
+          {
+            name: 'auStep',
+            type: 'string (required)',
+            description: 'Step key; matches `auStepPanel`.',
+          },
           i('auStepDisabled', 'boolean', 'Disables the step.', 'false'),
         ],
       },
@@ -524,7 +582,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuStepPanel',
         description: 'On `<div auStepPanel="key">`.',
         rows: [
-          { name: 'auStepPanel', type: 'string (required)', description: 'Panel key paired with `auStep`.' },
+          {
+            name: 'auStepPanel',
+            type: 'string (required)',
+            description: 'Panel key paired with `auStep`.',
+          },
         ],
       },
     ],
@@ -537,7 +599,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         description: 'Directiva en el disparador enfocable (`button`, `a`, etc.).',
         rows: [
           i('auTooltip', 'string', 'Texto del globo (vacío = sin tooltip).', "''"),
-          i('auTooltipPlacement', 'AuTooltipPlacement', 'Posición preferida; voltea si no cabe.', "'top'"),
+          i(
+            'auTooltipPlacement',
+            'AuTooltipPlacement',
+            'Posición preferida; voltea si no cabe.',
+            "'top'",
+          ),
           i('auTooltipShowDelay', 'number', 'Retardo al mostrar (ms).', '200'),
           i('auTooltipHideDelay', 'number', 'Retardo al ocultar (ms).', '100'),
           i('auTooltipDisabled', 'boolean', 'Suprime el tooltip.', 'false'),

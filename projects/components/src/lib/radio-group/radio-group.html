@@ -14,7 +14,12 @@
     >
       {{ legendText() }}
       @if (required() && formField.showRequired() && formField.label().trim().length > 0) {
-        <span class="au-radio-group__required" aria-hidden="true" title="Required">*</span>
+        <span
+          class="au-radio-group__required"
+          aria-hidden="true"
+          title="Required"
+          >*</span
+        >
         <span class="au-sr-only">(required)</span>
       }
     </legend>
@@ -37,9 +42,11 @@
             [attr.required]="required() && i === 0 ? true : null"
             (change)="onRadioChange($event)"
           />
-          <label class="au-radio-group__option-label" [attr.for]="optionInputId(opt.value)">{{
-            opt.label
-          }}</label>
+          <label
+            class="au-radio-group__option-label"
+            [attr.for]="optionInputId(opt.value)"
+            >{{ opt.label }}</label
+          >
         </div>
       }
     </div>

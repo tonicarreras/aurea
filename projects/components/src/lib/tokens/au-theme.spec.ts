@@ -4,19 +4,28 @@ import { AuTheme } from './au-theme';
 
 @Component({
   imports: [AuTheme],
-  template: `<div auTheme="dark" id="host"></div>`,
+  template: `<div
+    auTheme="dark"
+    id="host"
+  ></div>`,
 })
 class ThemeHost {}
 
 @Component({
   imports: [AuTheme],
-  template: `<div [auTheme]="'light'" id="host2"></div>`,
+  template: `<div
+    [auTheme]="'light'"
+    id="host2"
+  ></div>`,
 })
 class ThemeHostLight {}
 
 @Component({
   imports: [AuTheme],
-  template: `<div [auTheme]="mode()" id="sys"></div>`,
+  template: `<div
+    [auTheme]="mode()"
+    id="sys"
+  ></div>`,
 })
 class ThemeHostSystem {
   readonly mode = signal<'light' | 'dark' | 'system'>('system');
@@ -47,7 +56,10 @@ describe('AuTheme', () => {
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
     };
-    vi.stubGlobal('matchMedia', vi.fn(() => mq as unknown as MediaQueryList));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mq as unknown as MediaQueryList),
+    );
     const fix = TestBed.createComponent(ThemeHostSystem);
     fix.detectChanges();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
@@ -61,7 +73,10 @@ describe('AuTheme', () => {
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
     };
-    vi.stubGlobal('matchMedia', vi.fn(() => mq as unknown as MediaQueryList));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mq as unknown as MediaQueryList),
+    );
     const fix = TestBed.createComponent(ThemeHostSystem);
     fix.detectChanges();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
@@ -80,7 +95,10 @@ describe('AuTheme', () => {
       },
       removeEventListener: vi.fn(),
     };
-    vi.stubGlobal('matchMedia', vi.fn(() => mq as unknown as MediaQueryList));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mq as unknown as MediaQueryList),
+    );
     const fix = TestBed.createComponent(ThemeHostSystem);
     fix.detectChanges();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
@@ -106,7 +124,10 @@ describe('AuTheme', () => {
       addEventListener: vi.fn(),
       removeEventListener: remove,
     };
-    vi.stubGlobal('matchMedia', vi.fn(() => mq as unknown as MediaQueryList));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mq as unknown as MediaQueryList),
+    );
     const fix = TestBed.createComponent(ThemeHostSystem);
     fix.detectChanges();
     fix.destroy();

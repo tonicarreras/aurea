@@ -12,14 +12,30 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, CodeBlock, DocsTokenList, AuButton, AuCard, AuTheme, RouterLink, DocsInlineText],
+  imports: [
+    DocPage,
+    CodeBlock,
+    DocsTokenList,
+    AuButton,
+    AuCard,
+    AuTheme,
+    RouterLink,
+    DocsInlineText,
+  ],
   template: `
-    <docs-page [title]="i18n.messages().themes.title" [lead]="i18n.messages().themes.lead">
+    <docs-page
+      [title]="i18n.messages().themes.title"
+      [lead]="i18n.messages().themes.lead"
+    >
       <h2>{{ i18n.messages().themes.attrHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.attrBody" />
       </p>
-      <docs-code-block [code]="htmlSnippet" language="html" [expandLabel]="i18n.messages().themes.attrExpand" />
+      <docs-code-block
+        [code]="htmlSnippet"
+        language="html"
+        [expandLabel]="i18n.messages().themes.attrExpand"
+      />
 
       <h2>{{ i18n.messages().themes.directiveHeading }}</h2>
       <p>
@@ -40,9 +56,15 @@ import { DocsTokenList } from '../shared/docs-token-list';
         <au-card variant="outlined">
           <h3 auCardHeader>{{ i18n.messages().themes.previewCardTitle }}</h3>
           <p>{{ i18n.messages().themes.previewCardBody }}</p>
-          <div class="docs-theme-preview__swatches" aria-hidden="true">
+          <div
+            class="docs-theme-preview__swatches"
+            aria-hidden="true"
+          >
             @for (swatch of swatches; track $index) {
-              <span class="docs-theme-preview__swatch" [style.background]="swatch"></span>
+              <span
+                class="docs-theme-preview__swatch"
+                [style.background]="swatch"
+              ></span>
             }
           </div>
           <div class="docs-theme-preview__actions">
@@ -69,7 +91,10 @@ import { DocsTokenList } from '../shared/docs-token-list';
       <h2>{{ i18n.messages().themes.globalHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.globalBody" />
-        <a [routerLink]="i18n.link(DOCS_ROUTES.components)">{{ i18n.messages().themes.globalLink }}</a>.
+        <a [routerLink]="i18n.link(DOCS_ROUTES.components)">{{
+          i18n.messages().themes.globalLink
+        }}</a
+        >.
       </p>
 
       @for (group of tokenGroups(); track group.title) {
@@ -90,68 +115,68 @@ import { DocsTokenList } from '../shared/docs-token-list';
     </docs-page>
   `,
   styles: `
-      .docs-theme-preview {
-        padding: var(--au-space-6);
-        border-radius: var(--au-radius-lg);
-        border: 1px solid var(--au-color-border-subtle);
-        background: var(--au-color-surface-canvas);
-        transition:
-          background-color var(--au-duration-slow) var(--au-ease-in-out),
-          border-color var(--au-duration-slow) var(--au-ease-in-out),
-          box-shadow var(--au-duration-slow) var(--au-ease-in-out);
-      }
+    .docs-theme-preview {
+      padding: var(--au-space-6);
+      border-radius: var(--au-radius-lg);
+      border: 1px solid var(--au-color-border-subtle);
+      background: var(--au-color-surface-canvas);
+      transition:
+        background-color var(--au-duration-slow) var(--au-ease-in-out),
+        border-color var(--au-duration-slow) var(--au-ease-in-out),
+        box-shadow var(--au-duration-slow) var(--au-ease-in-out);
+    }
 
-      :host-context([data-au-theme='dark']) .docs-theme-preview {
-        border-color: var(--docs-border-fine);
-        background: var(--au-color-surface-raised);
-      }
+    :host-context([data-au-theme='dark']) .docs-theme-preview {
+      border-color: var(--docs-border-fine);
+      background: var(--au-color-surface-raised);
+    }
 
-      .docs-theme-preview--dark {
-        box-shadow: none;
-      }
+    .docs-theme-preview--dark {
+      box-shadow: none;
+    }
 
-      .docs-theme-preview__swatches {
-        display: flex;
-        gap: var(--au-space-2);
-        margin: var(--au-space-4) 0 0;
-      }
+    .docs-theme-preview__swatches {
+      display: flex;
+      gap: var(--au-space-2);
+      margin: var(--au-space-4) 0 0;
+    }
 
-      .docs-theme-preview__swatch {
-        width: 2rem;
-        height: 2rem;
-        border-radius: var(--au-radius-sm);
-        border: 1px solid var(--au-color-border-subtle);
-        transition: transform var(--au-duration-short) var(--au-ease-emph);
-      }
+    .docs-theme-preview__swatch {
+      width: 2rem;
+      height: 2rem;
+      border-radius: var(--au-radius-sm);
+      border: 1px solid var(--au-color-border-subtle);
+      transition: transform var(--au-duration-short) var(--au-ease-emph);
+    }
 
-      .docs-theme-preview__swatch:hover {
-        transform: scale(1.12);
-      }
+    .docs-theme-preview__swatch:hover {
+      transform: scale(1.12);
+    }
 
-      .docs-theme-preview__actions {
-        display: flex;
-        gap: var(--au-space-2);
-        margin-top: var(--au-space-4);
-      }
+    .docs-theme-preview__actions {
+      display: flex;
+      gap: var(--au-space-2);
+      margin-top: var(--au-space-4);
+    }
 
-      .docs-theme-group {
-        margin-top: var(--au-space-8);
-      }
+    .docs-theme-group {
+      margin-top: var(--au-space-8);
+    }
 
-      .docs-theme-group__title {
-        margin: 0 0 var(--au-space-2);
-        font-size: var(--au-text-lg);
-        font-weight: var(--au-weight-semibold);
-      }
+    .docs-theme-group__title {
+      margin: 0 0 var(--au-space-2);
+      font-size: var(--au-text-lg);
+      font-weight: var(--au-weight-semibold);
+    }
 
-      .docs-theme-group__lead {
-        margin: 0 0 var(--au-space-4);
-        max-width: min(62rem, 100%);
-        color: var(--au-color-text-secondary);
-        font-size: var(--au-text-sm);
-        line-height: var(--au-leading-relaxed);
-      }
-    `,
+    .docs-theme-group__lead {
+      margin: 0 0 var(--au-space-4);
+      max-width: min(62rem, 100%);
+      color: var(--au-color-text-secondary);
+      font-size: var(--au-text-sm);
+      line-height: var(--au-leading-relaxed);
+    }
+  `,
 })
 export class ThemingPage {
   readonly i18n = inject(DocsLocaleService);

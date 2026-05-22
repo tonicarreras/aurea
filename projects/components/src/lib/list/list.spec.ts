@@ -56,7 +56,12 @@ describe('AuList', () => {
   template: `
     <au-list ariaLabel="Items">
       <div auListItem>One</div>
-      <div auListItem [auListItemDisabled]="skip">Two</div>
+      <div
+        auListItem
+        [auListItemDisabled]="skip"
+      >
+        Two
+      </div>
     </au-list>
   `,
 })

@@ -39,7 +39,10 @@ export class ExampleRadioGroupErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-form-field label="Plan" hint="La opción Pro estará disponible pronto.">
+    <au-form-field
+      label="Plan"
+      hint="La opción Pro estará disponible pronto."
+    >
       <au-radio-group [options]="options" />
     </au-form-field>
   `,

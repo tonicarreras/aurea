@@ -5,7 +5,10 @@ import { AuIcon } from '@aurea-design-system/components';
   selector: 'docs-example-icon-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuIcon],
-  template: `<au-icon name="info" size="md" />`,
+  template: `<au-icon
+    name="info"
+    size="md"
+  />`,
 })
 export class ExampleIconBasicDemo {}
 
@@ -15,9 +18,18 @@ export class ExampleIconBasicDemo {}
   imports: [AuIcon],
   template: `
     <div style="display: flex; gap: 1rem; align-items: center; color: var(--au-color-text-primary)">
-      <au-icon name="check-circle" size="sm" />
-      <au-icon name="check-circle" size="md" />
-      <au-icon name="check-circle" size="lg" />
+      <au-icon
+        name="check-circle"
+        size="sm"
+      />
+      <au-icon
+        name="check-circle"
+        size="md"
+      />
+      <au-icon
+        name="check-circle"
+        size="lg"
+      />
     </div>
   `,
 })

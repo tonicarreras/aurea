@@ -93,7 +93,11 @@
 
 [data-au-theme='dark'] .docs-header {
   border-bottom-color: var(--docs-border-fine);
-  background: color-mix(in srgb, var(--au-color-surface-raised) 88%, var(--au-color-surface-canvas));
+  background: color-mix(
+    in srgb,
+    var(--au-color-surface-raised) 88%,
+    var(--au-color-surface-canvas)
+  );
   backdrop-filter: blur(12px);
 }
 

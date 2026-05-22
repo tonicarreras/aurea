@@ -136,7 +136,8 @@ describe('AuSnackbar', () => {
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Hi');
     fix.detectChanges();
-    const closeBtn = fix.debugElement.query(By.css('.au-snackbar__close'))!.nativeElement as HTMLButtonElement;
+    const closeBtn = fix.debugElement.query(By.css('.au-snackbar__close'))!
+      .nativeElement as HTMLButtonElement;
     closeBtn.click();
     fix.detectChanges();
     expect(fix.componentInstance.open()).toBe(false);
@@ -171,7 +172,8 @@ describe('AuSnackbar', () => {
     fix.componentRef.setInput('message', 'Undo?');
     fix.componentRef.setInput('actionLabel', 'Undo');
     fix.detectChanges();
-    const actionBtn = fix.debugElement.query(By.css('.au-snackbar__action'))!.nativeElement as HTMLButtonElement;
+    const actionBtn = fix.debugElement.query(By.css('.au-snackbar__action'))!
+      .nativeElement as HTMLButtonElement;
     actionBtn.click();
     fix.detectChanges();
     expect(action).toHaveBeenCalledTimes(1);
@@ -222,10 +224,12 @@ describe('AuSnackbar', () => {
     second.detectChanges();
 
     expect(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset')).toBe('0px');
-    expect(Number.parseFloat(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset'))).toBeGreaterThan(
-      0,
-    );
-    expect(Number(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer'))).toBeGreaterThan(
+    expect(
+      Number.parseFloat(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset')),
+    ).toBeGreaterThan(0);
+    expect(
+      Number(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer')),
+    ).toBeGreaterThan(
       Number(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer')),
     );
   });
@@ -375,7 +379,10 @@ describe('AuSnackbar', () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
-    const inst = fix.componentInstance as unknown as { syncStack: () => void; stackId: number | null };
+    const inst = fix.componentInstance as unknown as {
+      syncStack: () => void;
+      stackId: number | null;
+    };
     const stackId = inst.stackId;
     inst.syncStack();
     expect(inst.stackId).toBe(stackId);
@@ -396,7 +403,10 @@ describe('AuSnackbar', () => {
     const callbacks: ResizeObserverCallback[] = [];
     const observe = vi.fn();
     const disconnect = vi.fn();
-    const ResizeObserverMock = vi.fn(function (this: ResizeObserver, callback: ResizeObserverCallback) {
+    const ResizeObserverMock = vi.fn(function (
+      this: ResizeObserver,
+      callback: ResizeObserverCallback,
+    ) {
       callbacks.push(callback);
       return Object.assign(this, { observe, disconnect, unobserve: vi.fn() });
     });
@@ -498,7 +508,10 @@ describe('AuSnackbar', () => {
       providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
     }).compileComponents();
     const fix = TestBed.createComponent(AuSnackbar);
-    const inst = fix.componentInstance as unknown as { syncStack: () => void; stackId: number | null };
+    const inst = fix.componentInstance as unknown as {
+      syncStack: () => void;
+      stackId: number | null;
+    };
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     expect(inst.stackId).toBeNull();
@@ -517,7 +530,10 @@ describe('AuSnackbar', () => {
 @Component({
   imports: [AuSnackbar],
   template: `
-    <au-snackbar [open]="true" message="">
+    <au-snackbar
+      [open]="true"
+      message=""
+    >
       <span class="snackbar-slot-custom">Custom body</span>
     </au-snackbar>
   `,

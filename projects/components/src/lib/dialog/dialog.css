@@ -113,9 +113,7 @@ au-dialog .au-dialog__close {
   color: var(--au-color-text-secondary);
   cursor: pointer;
   transition:
-    var(--au-transition-background),
-    var(--au-transition-border),
-    var(--au-transition-color),
+    var(--au-transition-background), var(--au-transition-border), var(--au-transition-color),
     var(--au-transition-shadow);
 }
 

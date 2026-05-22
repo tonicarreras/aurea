@@ -13,7 +13,10 @@ import { DEMO_STACK } from '../shared/demo-layout';
         title="Perfil actualizado"
         message="Los cambios se guardaron correctamente."
       />
-      <au-message variant="info" message="La sesión caduca en 10 minutos." />
+      <au-message
+        variant="info"
+        message="La sesión caduca en 10 minutos."
+      />
     </div>
   `,
   styles: [DEMO_STACK],

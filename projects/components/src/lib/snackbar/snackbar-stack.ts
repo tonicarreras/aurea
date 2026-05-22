@@ -6,12 +6,12 @@ const STACK_GAP_PX = 8;
 /** Fallback height before the surface is measured. */
 const STACK_FALLBACK_HEIGHT_PX = 56;
 
-type StackEntry = {
+interface StackEntry {
   id: number;
   host: HTMLElement;
   position: AuSnackbarPosition;
   surface: HTMLElement | null;
-};
+}
 
 let nextId = 0;
 const entries = new Map<number, StackEntry>();
@@ -36,7 +36,10 @@ function layout(position: AuSnackbarPosition): void {
   let offsetPx = 0;
 
   for (let index = group.length - 1; index >= 0; index--) {
-    const entry = group[index]!;
+    const entry = group[index];
+    if (!entry) {
+      continue;
+    }
     entry.host.style.setProperty('--au-snackbar-stack-offset', `${offsetPx}px`);
     entry.host.style.setProperty('--au-snackbar-stack-layer', String(index));
     if (index > 0) {
@@ -90,7 +93,8 @@ export function isTopmostSnackbarStackEntry(id: number): boolean {
     return false;
   }
   const group = groupFor(entry.position);
-  return group.length > 0 && group[group.length - 1]!.id === id;
+  const top = group[group.length - 1];
+  return top !== undefined && top.id === id;
 }
 
 /** @internal Resets registry between tests. */

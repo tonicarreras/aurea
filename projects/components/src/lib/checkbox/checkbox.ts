@@ -15,10 +15,7 @@ import type { AuSize } from '../au-size';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { AU_FORM_FIELD } from '../form-field/form-field';
-import {
-  createStandaloneAuFormFieldContext,
-  injectAuFormField,
-} from '../form-field/form-field';
+import { createStandaloneAuFormFieldContext, injectAuFormField } from '../form-field/form-field';
 import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
@@ -38,7 +35,9 @@ export class AuCheckbox implements FormCheckboxControl {
   readonly checked = model<boolean>(false);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly description = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly description = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
 
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);

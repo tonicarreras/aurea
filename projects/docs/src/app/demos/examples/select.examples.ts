@@ -8,7 +8,11 @@ import { selectOptions } from '../shared/demo-fixtures';
   imports: [AuFormField, AuSelect],
   template: `
     <au-form-field label="País">
-      <au-select placeholder="Elige…" [options]="options" style="max-width: 16rem" />
+      <au-select
+        placeholder="Elige…"
+        [options]="options"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })
@@ -26,7 +30,11 @@ export class ExampleSelectBasicDemo {
       errorMessage="Selecciona un país."
       [invalid]="true"
     >
-      <au-select placeholder="Elige…" [options]="options" style="max-width: 16rem" />
+      <au-select
+        placeholder="Elige…"
+        [options]="options"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })
@@ -39,8 +47,15 @@ export class ExampleSelectErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuSelect],
   template: `
-    <au-form-field label="País de residencia" hint="Usado para facturación y envíos.">
-      <au-select placeholder="Elige…" [options]="options" style="max-width: 16rem" />
+    <au-form-field
+      label="País de residencia"
+      hint="Usado para facturación y envíos."
+    >
+      <au-select
+        placeholder="Elige…"
+        [options]="options"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })

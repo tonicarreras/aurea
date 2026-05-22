@@ -287,7 +287,8 @@ export const Disabled: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Disabled fields keep focus rules platform-dependent; **no** `valueChange` while disabled.',
+        story:
+          'Disabled fields keep focus rules platform-dependent; **no** `valueChange` while disabled.',
       },
     },
   },

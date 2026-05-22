@@ -62,7 +62,9 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly required = input(false);
 
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   /** Native `autocomplete` on the text input (defaults to `off` to avoid clashing with the listbox). */
   readonly autocomplete = input<string | undefined>('off');
   readonly size = input<AuSize>('md');

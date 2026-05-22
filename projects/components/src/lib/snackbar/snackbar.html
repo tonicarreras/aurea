@@ -7,7 +7,10 @@
   >
     @if (showVariantIcon() && variantIcon(); as iconName) {
       <span class="au-snackbar__icon">
-        <au-icon [name]="iconName" size="md" />
+        <au-icon
+          [name]="iconName"
+          size="md"
+        />
       </span>
     }
 
@@ -24,7 +27,11 @@
     @if (actionLabel().trim() || showCloseButton()) {
       <div class="au-snackbar__actions">
         @if (actionLabel().trim()) {
-          <button type="button" class="au-snackbar__action" (click)="onActionClick()">
+          <button
+            type="button"
+            class="au-snackbar__action"
+            (click)="onActionClick()"
+          >
             {{ actionLabel() }}
           </button>
         }
@@ -35,7 +42,10 @@
             [attr.aria-label]="closeAriaLabel()"
             (click)="onCloseClick()"
           >
-            <au-icon name="close" size="sm" />
+            <au-icon
+              name="close"
+              size="sm"
+            />
           </button>
         }
       </div>

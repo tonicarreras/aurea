@@ -47,7 +47,10 @@ export class ExampleAutocompleteErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-form-field label="Ciudad" hint="Escribe para filtrar; elige con Enter o clic.">
+    <au-form-field
+      label="Ciudad"
+      hint="Escribe para filtrar; elige con Enter o clic."
+    >
       <au-autocomplete
         placeholder="Buscar…"
         [options]="options"

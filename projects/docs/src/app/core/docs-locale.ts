@@ -28,8 +28,6 @@ export const DOCS_ROUTES = {
 } as const;
 
 export function docsPath(locale: DocsLocale, ...segments: string[]): string[] {
-  const parts = segments
-    .flatMap((segment) => segment.split('/'))
-    .filter((part) => part.length > 0);
+  const parts = segments.flatMap((segment) => segment.split('/')).filter((part) => part.length > 0);
   return ['/', locale, ...parts];
 }
