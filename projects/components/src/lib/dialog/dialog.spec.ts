@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AuDialogFooter } from './dialog-footer.directive';
 import { AuDialog } from './dialog';
+import { AuDialogFooter } from './dialog-footer.directive';
+import {
+  focusInitialInDialogPanel,
+  getDialogFocusableElements,
+  handleDialogTabKeydown,
+} from './dialog-focus-trap';
 
 describe('AuDialog', () => {
   function queryNativeDialog(fixture: ComponentFixture<AuDialog>): HTMLDialogElement {
-    return fixture.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    return fixture.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
   }
 
   function isDialogOpen(dialog: HTMLDialogElement): boolean {
@@ -81,7 +87,7 @@ describe('AuDialog', () => {
     fix.componentRef.setInput('title', 'Confirm Action');
     fix.detectChanges();
     const titleEl = fix.debugElement.query(By.css('.au-dialog__title'));
-    expect(titleEl?.nativeElement.textContent).toBe('Confirm Action');
+    expect(titleEl?.nativeElement.textContent.trim()).toBe('Confirm Action');
   });
 
   it('renders close button by default', () => {
@@ -304,7 +310,8 @@ describe('AuDialog', () => {
   it('uses native showModal/close when present on the element', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     const showSpy = vi.fn(function (this: HTMLDialogElement) {
       this.setAttribute('open', '');
     });
@@ -331,7 +338,8 @@ describe('AuDialog', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     try {
       Object.defineProperty(el, 'close', { value: undefined, configurable: true });
       fix.componentRef.setInput('open', false);
@@ -372,7 +380,8 @@ describe('AuDialog', () => {
   it('title change alone does not rerun dialog open sync', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     const openSpy = vi.fn(function (this: HTMLDialogElement) {
       this.setAttribute('open', '');
     });
@@ -394,7 +403,8 @@ describe('AuDialog', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
-    const el = fix.debugElement.query(By.css('.au-dialog__native'))!.nativeElement as HTMLDialogElement;
+    const el = fix.debugElement.query(By.css('.au-dialog__native'))!
+      .nativeElement as HTMLDialogElement;
     Object.defineProperty(el, 'close', { value: undefined, configurable: true });
     fix.componentInstance.onCloseButtonClick();
     delete (el as unknown as { close?: unknown }).close;
@@ -619,7 +629,12 @@ class TestDialogComponent {}
   template: `
     <au-dialog [open]="true">
       <p>Dialog body</p>
-      <button type="button" auDialogFooter>Footer action</button>
+      <button
+        type="button"
+        auDialogFooter
+      >
+        Footer action
+      </button>
     </au-dialog>
   `,
 })
@@ -629,10 +644,197 @@ class TestDialogWithFooterComponent {}
   selector: 'test-dialog-focus-trap',
   imports: [AuDialog],
   template: `
-    <au-dialog [open]="true" title="Trap" [showCloseButton]="false">
-      <button type="button" id="trap-first">First</button>
-      <button type="button" id="trap-last">Last</button>
+    <au-dialog
+      [open]="true"
+      title="Trap"
+      [showCloseButton]="false"
+    >
+      <button
+        type="button"
+        id="trap-first"
+      >
+        First
+      </button>
+      <button
+        type="button"
+        id="trap-last"
+      >
+        Last
+      </button>
     </au-dialog>
   `,
 })
 class TestDialogFocusTrapComponent {}
+
+describe('dialog-focus-trap', () => {
+  function panelWith(...html: string[]): HTMLElement {
+    const panel = document.createElement('div');
+    panel.className = 'au-dialog__panel';
+    panel.innerHTML = html.join('');
+    document.body.append(panel);
+    return panel;
+  }
+
+  afterEach(() => {
+    document.body.replaceChildren();
+  });
+
+  it('lists focusable elements in order', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<input id="b" />',
+      '<button type="button" disabled id="c">C</button>',
+    );
+    const ids = getDialogFocusableElements(panel).map((el) => el.id);
+    expect(ids).toEqual(['a', 'b']);
+  });
+
+  it('excludes hidden and aria-hidden elements', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" hidden id="h">H</button>',
+      '<button type="button" aria-hidden="true" id="ah">AH</button>',
+    );
+    expect(getDialogFocusableElements(panel).map((el) => el.id)).toEqual(['a']);
+  });
+
+  it('does not trap Tab from a middle focusable', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+      '<button type="button" id="c">C</button>',
+    );
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    b.focus();
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('does not trap Shift+Tab from a middle focusable', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+      '<button type="button" id="c">C</button>',
+    );
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    b.focus();
+    const ev = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('wraps Tab from last to first', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+    );
+    const a = panel.querySelector('#a') as HTMLButtonElement;
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    b.focus();
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(a);
+  });
+
+  it('wraps Shift+Tab from first to last', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+    );
+    const a = panel.querySelector('#a') as HTMLButtonElement;
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    a.focus();
+    const ev = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(b);
+  });
+
+  it('wraps Shift+Tab from outside to last focusable', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+    );
+    const b = panel.querySelector('#b') as HTMLButtonElement;
+    const outside = document.createElement('button');
+    outside.type = 'button';
+    document.body.append(outside);
+    outside.focus();
+    const ev = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(b);
+  });
+
+  it('pulls focus into the panel when Tab escapes outside', () => {
+    const panel = panelWith('<button type="button" id="a">A</button>');
+    const outside = document.createElement('button');
+    outside.type = 'button';
+    document.body.append(outside);
+    outside.focus();
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    handleDialogTabKeydown(ev, panel);
+    expect(document.activeElement).toBe(panel.querySelector('#a'));
+  });
+
+  it('does nothing when the panel has no focusable elements', () => {
+    const panel = panelWith('<p>Text only</p>');
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('ignores non-Tab keys', () => {
+    const panel = panelWith('<button type="button">A</button>');
+    const ev = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true });
+    handleDialogTabKeydown(ev, panel);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('focusInitialInDialogPanel focuses first control', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" id="b">B</button>',
+    );
+    focusInitialInDialogPanel(panel);
+    expect(document.activeElement?.id).toBe('a');
+  });
+
+  it('focusInitialInDialogPanel focuses panel when empty', () => {
+    const panel = panelWith('<p>Text only</p>');
+    focusInitialInDialogPanel(panel);
+    expect(document.activeElement).toBe(panel);
+    expect(panel.tabIndex).toBe(-1);
+  });
+
+  it('focusInitialInDialogPanel does not override an existing tabindex', () => {
+    const panel = panelWith('<p>Text only</p>');
+    panel.tabIndex = 0;
+    focusInitialInDialogPanel(panel);
+    expect(document.activeElement).toBe(panel);
+    expect(panel.tabIndex).toBe(0);
+  });
+});
+
+describe('AuDialogFooter', () => {
+  it('is a directive class', () => {
+    expect(AuDialogFooter).toBeDefined();
+  });
+});

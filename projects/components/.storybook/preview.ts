@@ -48,6 +48,8 @@ const preview: Preview = {
       extractComponentDescription: () => null,
     },
     a11y: {
+      /* Fail test-runner / CI when axe finds violations (full report in logs). */
+      test: 'error',
       /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */
       manual: true,
       config: {

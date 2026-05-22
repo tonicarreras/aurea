@@ -6,7 +6,6 @@ import {
   ElementRef,
   PLATFORM_ID,
   Renderer2,
-  ViewChild,
   afterRenderEffect,
   computed,
   inject,
@@ -16,16 +15,16 @@ import {
   signal,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
+import { AU_FORM_FIELD } from '../form-field/form-field';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
+import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
-import { FieldListboxOverlay, focusLeftFieldControl } from '../theme/field-listbox-overlay';
+import type { AuFieldOption } from '../field-option';
+import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
 
-type AuSize = 'sm' | 'md' | 'lg';
-
-export interface AutocompleteOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
+export type AuAutocompleteOption = AuFieldOption;
 
 /**
  * Design-system **autocomplete** field: combobox (`input` + `listbox`) with filter-as-you-type.
@@ -54,21 +53,18 @@ export interface AutocompleteOption {
 export class AuAutocomplete implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
-  readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
-  readonly options = input<AutocompleteOption[]>([]);
+  readonly options = input<AuAutocompleteOption[]>([]);
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
-  readonly showRequired = input(true);
 
-  readonly id = input<string>('');
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   /** Native `autocomplete` on the text input (defaults to `off` to avoid clashing with the listbox). */
   readonly autocomplete = input<string | undefined>('off');
   readonly size = input<AuSize>('md');
@@ -85,57 +81,52 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
 
-  private static idCounter = 0;
-
+  protected readonly formField = inject(AU_FORM_FIELD);
+  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly query = signal('');
   protected readonly highlightedIndex = signal(-1);
 
-  @ViewChild('listboxEl', { read: ElementRef })
-  private listboxRef?: ElementRef<HTMLUListElement>;
-
-  @ViewChild('inputEl', { read: ElementRef })
-  private inputRef?: ElementRef<HTMLInputElement>;
+  private readonly document = inject(DOCUMENT);
 
   private readonly listboxOverlay = new FieldListboxOverlay(
-    inject(DOCUMENT),
+    this.document,
     inject(Renderer2),
     inject(PLATFORM_ID),
     inject(DestroyRef),
   );
 
-  readonly resolvedId = computed(() => {
-    const v = this.id();
-    if (v) {
-      return v;
-    }
-    return `au-autocomplete-${++AuAutocomplete.idCounter}`;
-  });
+  readonly controlId = computed(() => this.formField.controlId());
+  readonly listboxId = computed(() => `${this.controlId()}-listbox`);
 
-  readonly hintId = computed(() => `${this.resolvedId()}-hint`);
-  readonly errorId = computed(() => `${this.resolvedId()}-error`);
-  readonly listboxId = computed(() => `${this.resolvedId()}-listbox`);
-
-  readonly displayError = computed(() => {
-    const manual = this.errorMessage().trim();
-    if (manual.length > 0) {
-      return manual;
-    }
-    const list = this.errors();
-    if (list.length === 0) {
-      return '';
-    }
-    const first = list[0]!;
-    return (first.message ?? first.kind) || '';
-  });
-
+  readonly displayError = displayErrorFromErrors(this.errors);
   readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
+  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+    invalid: () => this.invalid(),
+    isInvalid: () => this.isInvalid(),
+  });
 
-  readonly ariaDescribedBy = computed((): string | null =>
-    this.hint().trim().length > 0 ? this.hintId() : null,
-  );
+  readonly ariaDescribedBy = computed((): string | null => {
+    const ids: string[] = [];
+    if (this.formField.hint().trim().length > 0) {
+      ids.push(this.formField.hintId());
+    }
+    if (this.effectiveInvalid()) {
+      ids.push(this.formField.errorId());
+    }
+    return ids.length > 0 ? ids.join(' ') : null;
+  });
+
+  constructor() {
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
+  }
 
   readonly selectedOption = computed(() => {
     const v = this.value();
@@ -201,16 +192,17 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     return this.optionId(i);
   });
 
-  constructor() {
-    afterRenderEffect(() => {
-      const input = this.inputNativeElement();
-      const anchor = input.closest('.au-autocomplete__control-row')! as HTMLElement;
-      this.listboxOverlay.sync(this.listboxRef?.nativeElement, anchor, this.listboxVisible());
-    });
-  }
+  private readonly syncListboxOverlay = afterRenderEffect(() => {
+    const input = this.inputNativeElement();
+    const anchor = input.closest('.au-autocomplete__control-row');
+    if (!(anchor instanceof HTMLElement)) {
+      return;
+    }
+    this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
+  });
 
   optionId(index: number): string {
-    return `${this.resolvedId()}-option-${index}`;
+    return `${this.controlId()}-option-${index}`;
   }
 
   onInput(event: Event): void {
@@ -279,7 +271,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
         event.preventDefault();
         const i = this.highlightedIndex();
         if (i >= 0 && i < opts.length) {
-          this.selectOption(opts[i]!);
+          this.selectOption(opts[i]);
         }
         return;
       }
@@ -296,14 +288,14 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     }
   }
 
-  onOptionPointerEnter(index: number, option: AutocompleteOption): void {
+  onOptionPointerEnter(index: number, option: AuAutocompleteOption): void {
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
     }
     this.highlightedIndex.set(index);
   }
 
-  onOptionPointerDown(event: Event, option: AutocompleteOption): void {
+  onOptionPointerDown(event: Event, option: AuAutocompleteOption): void {
     event.preventDefault();
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
@@ -311,7 +303,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     this.selectOption(option);
   }
 
-  selectOption(option: AutocompleteOption): void {
+  selectOption(option: AuAutocompleteOption): void {
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
     }
@@ -348,7 +340,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!focusLeftFieldControl(event, this.listboxRef?.nativeElement)) {
+    if (!focusLeftFieldControl(event, this.listboxNative())) {
       return;
     }
     this.fieldFocusByTab.set(false);
@@ -361,7 +353,14 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   }
 
   private inputNativeElement(): HTMLInputElement {
-    return this.inputRef!.nativeElement;
+    return queryFieldNative<HTMLInputElement>(this.host, '.au-autocomplete__input');
+  }
+
+  private listboxNative(): HTMLUListElement | undefined {
+    if (!this.listboxVisible()) {
+      return undefined;
+    }
+    return (this.document.getElementById(this.listboxId()) as HTMLUListElement | null) ?? undefined;
   }
 
   private openPanel(): void {
@@ -415,7 +414,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     this.valueChange.emit(next);
   }
 
-  private findOptionByLabel(label: string): AutocompleteOption | undefined {
+  private findOptionByLabel(label: string): AuAutocompleteOption | undefined {
     const needle = this.caseSensitive() ? label : label.toLowerCase();
     return this.options().find((o) => {
       const hay = this.caseSensitive() ? o.label : o.label.toLowerCase();
@@ -423,7 +422,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     });
   }
 
-  private findOptionByValue(val: string): AutocompleteOption | undefined {
+  private findOptionByValue(val: string): AuAutocompleteOption | undefined {
     return this.options().find((o) => o.value === val);
   }
 
@@ -432,9 +431,9 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     return opts.findIndex((o) => !o.disabled);
   }
 
-  private lastHighlightableIndex(opts: AutocompleteOption[]): number {
+  private lastHighlightableIndex(opts: AuAutocompleteOption[]): number {
     for (let i = opts.length - 1; i >= 0; i--) {
-      if (!opts[i]!.disabled) {
+      if (!opts[i].disabled) {
         return i;
       }
     }
@@ -443,7 +442,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   private nextHighlightableIndex(
     current: number,
-    opts: AutocompleteOption[],
+    opts: AuAutocompleteOption[],
     delta: 1 | -1,
   ): number {
     if (opts.length === 0) {
@@ -459,7 +458,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
       if (i >= opts.length) {
         i = 0;
       }
-      if (!opts[i]!.disabled) {
+      if (!opts[i].disabled) {
         return i;
       }
     }

@@ -71,7 +71,9 @@ describe('AuTabs', () => {
   it('switches panel on tab click', () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     fix.detectChanges();
-    const billingTab = fix.nativeElement.querySelector('button[auTab="billing"]') as HTMLButtonElement;
+    const billingTab = fix.nativeElement.querySelector(
+      'button[auTab="billing"]',
+    ) as HTMLButtonElement;
     billingTab.click();
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('billing');
@@ -86,7 +88,9 @@ describe('AuTabs', () => {
     fix.debugElement
       .query(By.directive(AuTabs))!
       .componentInstance.valueChange.subscribe((v: string) => (next = v));
-    const billingTab = fix.nativeElement.querySelector('button[auTab="billing"]') as HTMLButtonElement;
+    const billingTab = fix.nativeElement.querySelector(
+      'button[auTab="billing"]',
+    ) as HTMLButtonElement;
     billingTab.click();
     expect(next).toBe('billing');
   });
@@ -131,7 +135,10 @@ describe('AuTabs', () => {
     fix.detectChanges();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('b');
   });
@@ -142,7 +149,10 @@ describe('AuTabs', () => {
     fix.detectChanges();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('a');
   });
@@ -155,7 +165,10 @@ describe('AuTabs', () => {
     fix.componentInstance.active = 'missing';
     fix.detectChanges();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('b');
   });
@@ -169,7 +182,10 @@ describe('AuTabs', () => {
     fix.componentInstance.active = 'missing';
     fix.detectChanges();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('c');
   });
@@ -180,10 +196,16 @@ describe('AuTabs', () => {
     fix.detectChanges();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'End', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('c');
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'Home', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('a');
   });
@@ -194,7 +216,10 @@ describe('AuTabs', () => {
     fix.detectChanges();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('b');
   });
@@ -214,7 +239,10 @@ describe('AuTabs', () => {
     fix.detectChanges();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('c');
   });
@@ -284,9 +312,22 @@ describe('AuTabs', () => {
   selector: 'test-tabs',
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs [(value)]="active" ariaLabel="Demo tabs">
-      <button type="button" auTab="profile">Profile</button>
-      <button type="button" auTab="billing">Billing</button>
+    <au-tabs
+      [(value)]="active"
+      ariaLabel="Demo tabs"
+    >
+      <button
+        type="button"
+        auTab="profile"
+      >
+        Profile
+      </button>
+      <button
+        type="button"
+        auTab="billing"
+      >
+        Billing
+      </button>
       <div auTabPanel="profile">Profile body</div>
       <div auTabPanel="billing">Billing body</div>
     </au-tabs>
@@ -300,9 +341,23 @@ class TestTabsComponent {
   selector: 'test-tabs-id',
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs [(value)]="active" id="settings" ariaLabel="Demo tabs">
-      <button type="button" auTab="profile">Profile</button>
-      <button type="button" auTab="billing">Billing</button>
+    <au-tabs
+      [(value)]="active"
+      id="settings"
+      ariaLabel="Demo tabs"
+    >
+      <button
+        type="button"
+        auTab="profile"
+      >
+        Profile
+      </button>
+      <button
+        type="button"
+        auTab="billing"
+      >
+        Billing
+      </button>
       <div auTabPanel="profile">Profile body</div>
       <div auTabPanel="billing">Billing body</div>
     </au-tabs>
@@ -316,10 +371,29 @@ class TestTabsWithIdComponent {
   selector: 'test-three-tabs',
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs [(value)]="active" [orientation]="orientation" ariaLabel="Three">
-      <button type="button" auTab="a">A</button>
-      <button type="button" auTab="b">B</button>
-      <button type="button" auTab="c">C</button>
+    <au-tabs
+      [(value)]="active"
+      [orientation]="orientation"
+      ariaLabel="Three"
+    >
+      <button
+        type="button"
+        auTab="a"
+      >
+        A
+      </button>
+      <button
+        type="button"
+        auTab="b"
+      >
+        B
+      </button>
+      <button
+        type="button"
+        auTab="c"
+      >
+        C
+      </button>
       <div auTabPanel="a">A</div>
       <div auTabPanel="b">B</div>
       <div auTabPanel="c">C</div>
@@ -335,10 +409,29 @@ class TestThreeTabsComponent {
   selector: 'test-tabs-disabled',
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs [(value)]="active" ariaLabel="Disabled">
-      <button type="button" auTab="a">A</button>
-      <button type="button" auTab="b" [auTabDisabled]="true">B</button>
-      <button type="button" auTab="c">C</button>
+    <au-tabs
+      [(value)]="active"
+      ariaLabel="Disabled"
+    >
+      <button
+        type="button"
+        auTab="a"
+      >
+        A
+      </button>
+      <button
+        type="button"
+        auTab="b"
+        [auTabDisabled]="true"
+      >
+        B
+      </button>
+      <button
+        type="button"
+        auTab="c"
+      >
+        C
+      </button>
       <div auTabPanel="a">A</div>
       <div auTabPanel="b">B</div>
       <div auTabPanel="c">C</div>
@@ -353,9 +446,22 @@ class TestTabsWithDisabledComponent {
   selector: 'test-tabs-unknown-value',
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs [(value)]="active" ariaLabel="Unknown value">
-      <button type="button" auTab="a">A</button>
-      <button type="button" auTab="b">B</button>
+    <au-tabs
+      [(value)]="active"
+      ariaLabel="Unknown value"
+    >
+      <button
+        type="button"
+        auTab="a"
+      >
+        A
+      </button>
+      <button
+        type="button"
+        auTab="b"
+      >
+        B
+      </button>
       <div auTabPanel="a">A</div>
       <div auTabPanel="b">B</div>
     </au-tabs>

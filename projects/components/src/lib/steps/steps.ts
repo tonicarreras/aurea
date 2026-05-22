@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { AuStep } from './au-step.directive';
 
-export type StepsLayout = 'tabs' | 'sections';
+export type AuStepsLayout = 'tabs' | 'sections';
 
 /**
  * Design-system **steps**: horizontal section navigation for docs and wizards.
@@ -51,7 +51,7 @@ export class AuSteps {
   readonly ariaLabel = input<string>('');
   readonly size = input<'sm' | 'md'>('md');
   /** `tabs`: un panel; `sections`: todos visibles y scroll al pulsar (documentación). */
-  readonly layout = input<StepsLayout>('tabs');
+  readonly layout = input<AuStepsLayout>('tabs');
 
   readonly valueChange = output<string>();
   readonly id = input<string>('');
@@ -140,7 +140,7 @@ export class AuSteps {
         break;
     }
 
-    const target = enabled[targetIndex]!;
+    const target = enabled[targetIndex];
     this.selectStep(target.auStep());
     target.focus();
   }
@@ -154,6 +154,6 @@ export class AuSteps {
     if (current && enabled.some((s) => s.auStep() === current)) {
       return;
     }
-    this.selectStep(enabled[0]!.auStep());
+    this.selectStep(enabled[0].auStep());
   }
 }

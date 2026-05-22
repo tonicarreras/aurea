@@ -39,4 +39,6 @@ for (const file of files) {
   }
 }
 
-console.log(`Removed ${removedMaps} .map file(s), stripped ${strippedRefs} sourceMappingURL reference(s).`);
+console.log(
+  `Removed ${removedMaps} .map file(s), stripped ${strippedRefs} sourceMappingURL reference(s).`,
+);

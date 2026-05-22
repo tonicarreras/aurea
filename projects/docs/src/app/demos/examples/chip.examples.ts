@@ -13,7 +13,10 @@ export class ExampleChipFilledDemo {}
   selector: 'docs-example-chip-outline',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
-  template: `<au-chip label="TypeScript" variant="outline" />`,
+  template: `<au-chip
+    label="TypeScript"
+    variant="outline"
+  />`,
 })
 export class ExampleChipOutlineDemo {}
 
@@ -21,8 +24,10 @@ export class ExampleChipOutlineDemo {}
   selector: 'docs-example-chip-removable',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
-  template: `<au-chip label="Filtro activo" variant="accent" [removable]="true" />`,
+  template: `<au-chip
+    label="Filtro activo"
+    variant="accent"
+    [removable]="true"
+  />`,
 })
 export class ExampleChipRemovableDemo {}
-
-// —— Snackbar ——

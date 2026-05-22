@@ -6,7 +6,10 @@ import { AuButton, AuCard, AuCardFooter } from '@aurea-design-system/components'
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard],
   template: `
-    <au-card variant="elevated" style="max-width: 20rem">
+    <au-card
+      variant="elevated"
+      style="max-width: 20rem"
+    >
       <h3 auCardHeader>Elevada</h3>
       <p>Sombra sutil para destacar sobre el canvas.</p>
     </au-card>
@@ -19,7 +22,10 @@ export class ExampleCardElevatedDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard],
   template: `
-    <au-card variant="outlined" style="max-width: 20rem">
+    <au-card
+      variant="outlined"
+      style="max-width: 20rem"
+    >
       <h3 auCardHeader>Contorno</h3>
       <p>Borde visible sin sombra pronunciada.</p>
     </au-card>
@@ -32,7 +38,10 @@ export class ExampleCardOutlinedDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard, AuCardFooter, AuButton],
   template: `
-    <au-card variant="filled" style="max-width: 20rem">
+    <au-card
+      variant="filled"
+      style="max-width: 20rem"
+    >
       <h3 auCardHeader>Con pie</h3>
       <p>Superficie rellena con acciones en el footer.</p>
       <div auCardFooter>

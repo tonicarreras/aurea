@@ -2,16 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
+  computed,
   input,
   output,
   signal,
   viewChild,
 } from '@angular/core';
+import type { AuSize } from '../au-size';
+import { AuIcon } from '../icon/icon';
 import { tabFocusState } from '../au-tab-focus-state';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
-export type ButtonSize = 'sm' | 'md' | 'lg';
-export type ButtonType = 'button' | 'submit' | 'reset';
+export type AuButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+export type AuButtonSize = AuSize;
+export type AuButtonType = 'button' | 'submit' | 'reset';
 
 /**
  * Aurea design system Button component.
@@ -33,6 +37,7 @@ export type ButtonType = 'button' | 'submit' | 'reset';
  */
 @Component({
   selector: 'au-button',
+  imports: [AuIcon],
   templateUrl: './button.html',
   styleUrl: './button.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,15 +49,15 @@ export type ButtonType = 'button' | 'submit' | 'reset';
 })
 export class AuButton {
   /** Visual style: primary (solid), secondary (filled), outline (border), ghost (text-only). */
-  readonly variant = input<ButtonVariant>('primary');
+  readonly variant = input<AuButtonVariant>('primary');
   /** Density: sm (compact), md (default), lg (prominent/touch-friendly). */
-  readonly size = input<ButtonSize>('md');
+  readonly size = input<AuButtonSize>('md');
   /** Disables interaction and suppresses click events; inherits native `disabled` behavior. */
   readonly disabled = input(false);
   /** Shows a spinner and suppresses clicks; communicates async processing. */
   readonly loading = input(false);
   /** Native HTML type: 'button', 'submit', 'reset'. */
-  readonly type = input<ButtonType>('button');
+  readonly type = input<AuButtonType>('button');
   /** Native `name` attribute for form submission. */
   readonly name = input<string>('');
   /** Visible label (can be overridden for icons only). */
@@ -65,6 +70,32 @@ export class AuButton {
   protected readonly focusByTab = signal(false);
 
   readonly buttonEl = viewChild.required<ElementRef<HTMLButtonElement>>('buttonEl');
+
+  /** Projected label captured once when loading hides visible text. */
+  private readonly projectedLabel = signal<string | null>(null);
+
+  private readonly syncProjectedLabel = afterRenderEffect(() => {
+    if (!this.loading() || this.label().trim()) {
+      this.projectedLabel.set(null);
+      return;
+    }
+    const text = this.buttonEl()
+      .nativeElement.querySelector('.au-button__content')
+      ?.textContent?.trim();
+    this.projectedLabel.set(text || null);
+  });
+
+  /** Accessible name: explicit `label`, projected text while loading, or native content otherwise. */
+  protected readonly effectiveAriaLabel = computed((): string | null => {
+    const explicit = this.label().trim();
+    if (explicit) {
+      return explicit;
+    }
+    if (this.loading()) {
+      return this.projectedLabel();
+    }
+    return null;
+  });
 
   protected onFocusin(): void {
     tabFocusState.attach();

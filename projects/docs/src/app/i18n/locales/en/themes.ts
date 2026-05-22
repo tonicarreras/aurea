@@ -8,7 +8,10 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       { token: '--au-color-surface-canvas', description: 'Page and app shell background.' },
       { token: '--au-color-surface-raised', description: 'Panels, fields, and raised cards.' },
       { token: '--au-color-surface-elevated', description: 'Hover and slightly higher layers.' },
-      { token: '--au-color-surface-sunken', description: 'Rails, inset backgrounds, contained tabs.' },
+      {
+        token: '--au-color-surface-sunken',
+        description: 'Rails, inset backgrounds, contained tabs.',
+      },
       { token: '--au-color-surface-inverted', description: 'Tooltips, dialog backdrop.' },
     ],
   },
@@ -59,7 +62,10 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       { token: '--au-color-semantic-error', description: 'Critical error.' },
       { token: '--au-color-semantic-warning', description: 'Warning.' },
       { token: '--au-color-semantic-info', description: 'Information.' },
-      { token: '--au-color-semantic-*-surface', description: 'Soft backgrounds paired to each semantic.' },
+      {
+        token: '--au-color-semantic-*-surface',
+        description: 'Soft backgrounds paired to each semantic.',
+      },
     ],
   },
   {

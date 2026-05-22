@@ -1,5 +1,7 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AuList } from '../list/list';
 import { AuChip } from './chip';
 
 describe('AuChip', () => {
@@ -25,8 +27,8 @@ describe('AuChip', () => {
     expect(fixture.nativeElement.textContent).toContain('TypeScript');
   });
 
-  it('uses listitem role on host for static chips', () => {
-    expect(fixture.nativeElement.getAttribute('role')).toBe('listitem');
+  it('omits listitem role on host by default', () => {
+    expect(fixture.nativeElement.getAttribute('role')).toBeNull();
   });
 
   it('applies default variant and size on host', () => {
@@ -87,9 +89,15 @@ describe('AuChip', () => {
     let n = 0;
     component.removed.subscribe(() => n++);
     const removeDe = fixture.debugElement.query(By.css('.au-chip__remove'))!;
-    removeDe.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    removeDe.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    );
     expect(n).toBe(1);
-    removeDe.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+    removeDe.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true }),
+    );
     expect(n).toBe(2);
   });
 
@@ -100,8 +108,21 @@ describe('AuChip', () => {
     component.removed.subscribe(() => n++);
     fixture.debugElement
       .query(By.css('.au-chip__remove'))!
-      .triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      .triggerEventHandler(
+        'keydown',
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      );
     expect(n).toBe(0);
+  });
+
+  it('ignores both selectable and removable when set together', () => {
+    fixture.componentRef.setInput('selectable', true);
+    fixture.componentRef.setInput('removable', true);
+    fixture.detectChanges();
+    expect(component.isSelectable()).toBe(false);
+    expect(component.isRemovable()).toBe(false);
+    expect(fixture.nativeElement.querySelector('.au-chip__remove')).toBeNull();
+    expect(fixture.nativeElement.querySelector('button.au-chip__surface')).toBeNull();
   });
 
   it('selectable chip toggles selected and emits', () => {
@@ -199,7 +220,10 @@ describe('AuChip', () => {
     component.removed.subscribe(() => n++);
     fixture.debugElement
       .query(By.css('.au-chip__remove'))!
-      .triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      .triggerEventHandler(
+        'keydown',
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+      );
     expect(n).toBe(0);
   });
 
@@ -211,5 +235,42 @@ describe('AuChip', () => {
     removeDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
     fixture.detectChanges();
     expect(removeDe.nativeElement.classList.contains('au-chip__remove--from-tab')).toBe(true);
+  });
+});
+
+@Component({
+  imports: [AuList, AuChip],
+  template: `
+    <au-list>
+      <au-chip
+        label="Angular"
+        [removable]="true"
+      />
+    </au-list>
+  `,
+})
+class ChipInListHost {}
+
+describe('AuChip with AuList', () => {
+  it('uses listitem when projected inside au-list', () => {
+    const fix = TestBed.createComponent(ChipInListHost);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('au-chip')?.getAttribute('role')).toBe('listitem');
+  });
+
+  it('omits listitem when selectable inside au-list', () => {
+    @Component({
+      imports: [AuList, AuChip],
+      template: `<au-list
+        ><au-chip
+          label="Filter"
+          [selectable]="true"
+      /></au-list>`,
+    })
+    class SelectableInListHost {}
+
+    const fix = TestBed.createComponent(SelectableInListHost);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('au-chip')?.getAttribute('role')).toBeNull();
   });
 });

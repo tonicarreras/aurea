@@ -57,7 +57,7 @@ export class AuStep {
   });
 
   focus(): void {
-    this.host.nativeElement.focus();
+    (this.host.nativeElement as HTMLElement).focus();
   }
 
   protected onClick(event: MouseEvent): void {

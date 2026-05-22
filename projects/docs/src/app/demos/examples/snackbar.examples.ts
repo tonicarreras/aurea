@@ -6,8 +6,17 @@ import { AuButton, AuSnackbar } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <au-button type="button" (click)="open.set(true)">Mostrar éxito</au-button>
-    <au-snackbar [(open)]="open" message="Cambios guardados" variant="success" [durationMs]="3000" />
+    <au-button
+      type="button"
+      (click)="open.set(true)"
+      >Mostrar éxito</au-button
+    >
+    <au-snackbar
+      [(open)]="open"
+      message="Cambios guardados"
+      variant="success"
+      [durationMs]="3000"
+    />
   `,
 })
 export class ExampleSnackbarSuccessDemo {
@@ -19,8 +28,18 @@ export class ExampleSnackbarSuccessDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <au-button variant="outline" type="button" (click)="open.set(true)">Mostrar error</au-button>
-    <au-snackbar [(open)]="open" message="No se pudo guardar" variant="error" [durationMs]="4000" />
+    <au-button
+      variant="outline"
+      type="button"
+      (click)="open.set(true)"
+      >Mostrar error</au-button
+    >
+    <au-snackbar
+      [(open)]="open"
+      message="No se pudo guardar"
+      variant="error"
+      [durationMs]="4000"
+    />
   `,
 })
 export class ExampleSnackbarErrorDemo {

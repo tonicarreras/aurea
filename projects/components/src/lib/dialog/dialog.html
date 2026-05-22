@@ -8,11 +8,19 @@
   (click)="onDialogClick($event)"
   (keydown)="onDialogKeydown($event)"
 >
-  <div class="au-dialog__panel" (click)="$event.stopPropagation()">
+  <div
+    class="au-dialog__panel"
+    (click)="$event.stopPropagation()"
+  >
     @if (title() || showCloseButton()) {
       <header class="au-dialog__header">
         @if (title()) {
-          <h2 [id]="titleHeadingId()" class="au-dialog__title">{{ title() }}</h2>
+          <h2
+            [id]="titleHeadingId()"
+            class="au-dialog__title"
+          >
+            {{ title() }}
+          </h2>
         }
         @if (showCloseButton()) {
           <button
@@ -21,9 +29,10 @@
             aria-label="Close dialog"
             (click)="onCloseButtonClick()"
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
+            <au-icon
+              name="close"
+              size="lg"
+            />
           </button>
         }
       </header>

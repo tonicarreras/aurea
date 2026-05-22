@@ -1,0 +1,116 @@
+/**
+ * Aurea Skeleton — loading placeholders (pulse / wave).
+ * Variant: `data-au-variant` (text | circular | rectangular | rounded | button).
+ * Animation: `data-au-animation` (pulse | wave | none).
+ */
+@import url('../tokens/au-tokens.css');
+
+:host {
+  --au-skeleton-base: var(--au-color-skeleton-base);
+  --au-skeleton-highlight: var(--au-color-skeleton-shimmer);
+
+  display: block;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background-color: var(--au-skeleton-base);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--au-color-text-primary) 6%, transparent);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Variant defaults (width/height mostly from host bindings) */
+/* -------------------------------------------------------------------------- */
+
+:host([data-au-variant='circular']) {
+  width: var(--au-skeleton-circular-size, 2.5rem);
+  aspect-ratio: 1;
+}
+
+:host([data-au-variant='circular'][data-au-size='sm']) {
+  --au-skeleton-circular-size: 2rem;
+}
+
+:host([data-au-variant='circular'][data-au-size='lg']) {
+  --au-skeleton-circular-size: 3rem;
+}
+
+:host([data-au-variant='button']) {
+  width: 6.5rem;
+  max-width: 100%;
+}
+
+:host([data-au-variant='button'][data-au-size='sm']) {
+  width: 5rem;
+}
+
+:host([data-au-variant='button'][data-au-size='lg']) {
+  width: 8rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animation: pulse */
+/* -------------------------------------------------------------------------- */
+
+:host([data-au-animation='pulse']) {
+  animation: au-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes au-skeleton-pulse {
+  0%,
+  100% {
+    background-color: var(--au-skeleton-base);
+  }
+
+  50% {
+    background-color: var(--au-skeleton-highlight);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animation: wave */
+/* -------------------------------------------------------------------------- */
+
+:host([data-au-animation='wave'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  opacity: 0.85;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--au-skeleton-highlight) 55%, transparent) 42%,
+    var(--au-skeleton-highlight) 50%,
+    color-mix(in srgb, var(--au-skeleton-highlight) 55%, transparent) 58%,
+    transparent 100%
+  );
+  animation: au-skeleton-wave 1.35s ease-in-out infinite;
+}
+
+@keyframes au-skeleton-wave {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  :host([data-au-animation='pulse']),
+  :host([data-au-animation='wave'])::after {
+    animation: none;
+  }
+
+  :host([data-au-animation='wave'])::after {
+    opacity: 0;
+  }
+
+  :host([data-au-animation='pulse']) {
+    background-color: color-mix(in srgb, var(--au-skeleton-base) 65%, var(--au-skeleton-highlight));
+  }
+}

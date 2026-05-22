@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
+import { AuChipGroup } from '../chip-group/chip-group';
+import { AuList } from '../list/list';
 import { AuChip } from './chip';
 
 const meta: Meta<AuChip> = {
@@ -13,7 +15,7 @@ const meta: Meta<AuChip> = {
       extractArgTypes: () => ({}),
       description: {
         component:
-          'Compact chip for filters, tags, or selections. Filled, outline, or accent variants; optional remove button and selectable toggle.',
+          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role="group"` for selectable filters.',
       },
     },
   },
@@ -136,24 +138,43 @@ export const SmallSize: Story = {
   },
 };
 
+export const ChipGroupFilters: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Selectable filter chips inside `au-chip-group` (`role="group"`).',
+      },
+    },
+  },
+  render: () => ({
+    moduleMetadata: { imports: [AuChipGroup, AuChip] },
+    template: `
+      <au-chip-group ariaLabel="Status filters">
+        <au-chip label="Draft" [selectable]="true" />
+        <au-chip label="Published" [selectable]="true" [selected]="true" variant="accent" />
+      </au-chip-group>
+    `,
+  }),
+};
+
 export const ChipGroup: Story = {
   parameters: {
     docs: {
       description: {
         story:
-          'Wrap related chips in a list (`role="list"`) for static/removable tags, or a `role="group"` with `aria-label` for filter chips.',
+          'Wrap static/removable chips in `au-list`. Use `role="group"` with `aria-label` for selectable filter chips.',
       },
     },
   },
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [AuChip] },
+    moduleMetadata: { imports: [AuList, AuChip] },
     template: `
-      <div role="list" style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+      <au-list ariaLabel="Technologies">
         <au-chip label="Angular" removable />
         <au-chip label="TypeScript" removable />
         <au-chip label="Vitest" removable />
-      </div>
+      </au-list>
     `,
   }),
 };

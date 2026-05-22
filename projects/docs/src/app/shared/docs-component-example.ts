@@ -31,36 +31,34 @@ import { DemoPanel } from './demo-panel';
       />
     </article>
   `,
-  styles: [
-    `
-      .docs-example {
-        display: flex;
-        flex-direction: column;
-        gap: var(--au-space-4);
-      }
+  styles: `
+    .docs-example {
+      display: flex;
+      flex-direction: column;
+      gap: var(--au-space-4);
+    }
 
-      .docs-example__header {
-        display: flex;
-        flex-direction: column;
-        gap: var(--au-space-1);
-      }
+    .docs-example__header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--au-space-1);
+    }
 
-      .docs-example__title {
-        margin: 0;
-        font-size: var(--au-text-base);
-        font-weight: var(--au-weight-semibold);
-        letter-spacing: var(--au-tracking-tight);
-      }
+    .docs-example__title {
+      margin: 0;
+      font-size: var(--au-text-base);
+      font-weight: var(--au-weight-semibold);
+      letter-spacing: var(--au-tracking-tight);
+    }
 
-      .docs-example__desc {
-        margin: 0;
-        max-width: min(62rem, 100%);
-        color: var(--au-color-text-secondary);
-        font-size: var(--au-text-sm);
-        line-height: var(--au-leading-relaxed);
-      }
-    `,
-  ],
+    .docs-example__desc {
+      margin: 0;
+      max-width: min(62rem, 100%);
+      color: var(--au-color-text-secondary);
+      font-size: var(--au-text-sm);
+      line-height: var(--au-leading-relaxed);
+    }
+  `,
 })
 export class DocsComponentExample {
   readonly title = input.required<string>();

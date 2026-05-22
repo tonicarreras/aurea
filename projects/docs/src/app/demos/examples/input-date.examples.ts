@@ -1,42 +1,49 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuInputDate } from '@aurea-design-system/components';
+import { AuFormField, AuInputDate } from '@aurea-design-system/components';
 
 @Component({
   selector: 'docs-example-input-date-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuInputDate],
-  template: `<au-input-date label="Fecha de entrega" style="max-width: 14rem" />`,
+  imports: [AuFormField, AuInputDate],
+  template: `
+    <au-form-field label="Fecha de entrega">
+      <au-input-date style="max-width: 14rem" />
+    </au-form-field>
+  `,
 })
 export class ExampleInputDateBasicDemo {}
 
 @Component({
   selector: 'docs-example-input-date-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuInputDate],
+  imports: [AuFormField, AuInputDate],
   template: `
-    <au-input-date
+    <au-form-field
       label="Fecha de entrega"
       errorMessage="Selecciona una fecha válida."
-      style="max-width: 14rem"
-    />
+      [invalid]="true"
+    >
+      <au-input-date style="max-width: 14rem" />
+    </au-form-field>
   `,
 })
 export class ExampleInputDateErrorDemo {}
 
 @Component({
-  selector: 'docs-example-input-date-range',
+  selector: 'docs-example-input-date-hint',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuInputDate],
+  imports: [AuFormField, AuInputDate],
   template: `
-    <au-input-date
+    <au-form-field
       label="Fecha de entrega"
-      minDate="2026-01-01"
-      maxDate="2026-12-31"
       hint="Solo entregas en 2026."
-      style="max-width: 14rem"
-    />
+    >
+      <au-input-date
+        minDate="2026-01-01"
+        maxDate="2026-12-31"
+        style="max-width: 14rem"
+      />
+    </au-form-field>
   `,
 })
-export class ExampleInputDateRangeDemo {}
-
-// —— Dialog ——
+export class ExampleInputDateHintDemo {}

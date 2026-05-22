@@ -6,7 +6,11 @@ import { AuButton, AuSnackbar } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <au-button type="button" (click)="open.set(true)">Mostrar snackbar</au-button>
+    <au-button
+      type="button"
+      (click)="open.set(true)"
+      >Mostrar snackbar</au-button
+    >
     <au-snackbar
       [(open)]="open"
       message="Cambios guardados"

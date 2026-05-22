@@ -12,4 +12,4 @@ export { COMPONENT_SUMMARIES } from './summaries';
 export const DOCS_MESSAGES = {
   en: MESSAGES_EN,
   es: MESSAGES_ES,
-} as const satisfies Record<DocsLocale, (typeof MESSAGES_EN)>;
+} as const satisfies Record<DocsLocale, typeof MESSAGES_EN>;

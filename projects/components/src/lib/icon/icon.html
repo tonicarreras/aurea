@@ -1,0 +1,138 @@
+@switch (name()) {
+  @case ('check-circle') {
+    <svg
+      class="au-icon__svg"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        stroke="currentColor"
+        stroke-width="1.75"
+      />
+      <path
+        d="M8.5 12.5 11 15 16 9"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  }
+  @case ('warning') {
+    <svg
+      class="au-icon__svg"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <g [attr.transform]="warningTransform()">
+        <path
+          d="M12 5.25 19.75 19.25H4.25L12 5.25Z"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linejoin="round"
+        />
+      </g>
+      <path
+        d="M12 10.75v3"
+        stroke="currentColor"
+        stroke-width="2.25"
+        stroke-linecap="round"
+      />
+      <circle
+        cx="12"
+        cy="16.75"
+        r="1.5"
+        fill="currentColor"
+      />
+    </svg>
+  }
+  @case ('error') {
+    <svg
+      class="au-icon__svg"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        stroke="currentColor"
+        stroke-width="1.75"
+      />
+      <path
+        d="M12 8.25v3.5"
+        stroke="currentColor"
+        stroke-width="2.25"
+        stroke-linecap="round"
+      />
+      <circle
+        cx="12"
+        cy="16.75"
+        r="1.5"
+        fill="currentColor"
+      />
+    </svg>
+  }
+  @case ('info') {
+    <svg
+      class="au-icon__svg"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        stroke="currentColor"
+        stroke-width="1.75"
+      />
+      <circle
+        cx="12"
+        cy="8"
+        r="1.25"
+        fill="currentColor"
+      />
+      <path
+        d="M12 11v6"
+        stroke="currentColor"
+        stroke-width="2.25"
+        stroke-linecap="round"
+      />
+    </svg>
+  }
+  @case ('close') {
+    <svg
+      class="au-icon__svg"
+      viewBox="0 0 16 16"
+      fill="none"
+    >
+      <path
+        d="M4 4 12 12M12 4 4 12"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+    </svg>
+  }
+  @case ('spinner') {
+    <svg
+      class="au-icon__svg au-icon__svg--spinner"
+      viewBox="0 0 16 16"
+      fill="none"
+    >
+      <circle
+        cx="8"
+        cy="8"
+        r="6"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-dasharray="32"
+        stroke-dashoffset="12"
+      />
+    </svg>
+  }
+}

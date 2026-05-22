@@ -6,24 +6,30 @@ import {
 import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
-{
-      title: 'Textarea básico',
-      demoComponent: ExampleTextareaBasicDemo,
-      code: `<au-textarea label="Comentario" [rows]="3" placeholder="Escribe aquí…" />`,
-    },
-    {
-      title: 'With hint',
-      demoComponent: ExampleTextareaHintDemo,
-      code: `<au-textarea label="Bio" [rows]="4" hint="Maximum 280 characters." />`,
-    },
-    {
-      title: 'With error',
-      description: 'Invalid state via `errorMessage`; sets `aria-invalid` and `aria-errormessage`.',
-      demoComponent: ExampleTextareaErrorDemo,
-      code: `<au-textarea
+  {
+    title: 'Basic textarea',
+    demoComponent: ExampleTextareaBasicDemo,
+    code: `<au-form-field label="Comment">
+  <au-textarea [rows]="3" placeholder="Write here…" />
+</au-form-field>`,
+  },
+  {
+    title: 'With hint',
+    demoComponent: ExampleTextareaHintDemo,
+    code: `<au-form-field label="Bio" hint="Maximum 280 characters.">
+  <au-textarea [rows]="4" />
+</au-form-field>`,
+  },
+  {
+    title: 'With error',
+    description: 'Invalid state via `errorMessage` on `au-form-field`.',
+    demoComponent: ExampleTextareaErrorDemo,
+    code: `<au-form-field
   label="Comment"
-  [rows]="3"
   errorMessage="Add at least one sentence."
-/>`,
-    },
+  [invalid]="true"
+>
+  <au-textarea [rows]="3" />
+</au-form-field>`,
+  },
 ];

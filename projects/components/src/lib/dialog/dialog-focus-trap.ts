@@ -21,8 +21,8 @@ export function handleDialogTabKeydown(event: KeyboardEvent, panel: HTMLElement)
   if (focusables.length === 0) {
     return;
   }
-  const first = focusables[0]!;
-  const last = focusables[focusables.length - 1]!;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
   const active = document.activeElement;
   const focusLeftPanel = !(active instanceof Node && panel.contains(active));
 

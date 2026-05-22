@@ -1,6 +1,6 @@
-@import '../../components/src/lib/theme/au-tokens.css';
-@import '../../components/src/lib/theme/au-field-error.css';
-@import '../../components/src/lib/theme/au-field-listbox.css';
+@import '../../components/src/lib/tokens/au-tokens.css';
+@import '../../components/src/lib/styles/au-field-error.css';
+@import '../../components/src/lib/styles/au-field-listbox.css';
 
 /* Docs-only aliases (nav / links used legacy accent names) */
 :root {
@@ -17,7 +17,8 @@
   --docs-sidebar-breakpoint: 68rem;
   --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 65%, transparent);
   --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 35%, transparent);
-  --docs-elevated-shadow: 0 4px 24px color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
+  --docs-elevated-shadow: 0 4px 24px
+    color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
   --docs-code-bg: #f4f6f9;
   --docs-code-fg: #1a2332;
   --docs-token-comment: #64748b;

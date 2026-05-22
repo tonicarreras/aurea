@@ -27,7 +27,8 @@ const meta: Meta<AuButton> = {
     variant: {
       control: 'select',
       options: ['primary', 'secondary', 'outline', 'ghost'],
-      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',
+      description:
+        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',
       table: { category: 'Appearance' },
     },
     size: {
@@ -98,7 +99,8 @@ export const Secondary: Story = {
   parameters: {
     docs: {
       description: {
-        story: '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',
+        story:
+          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',
       },
     },
   },
@@ -117,7 +119,8 @@ export const Outline: Story = {
   parameters: {
     docs: {
       description: {
-        story: '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',
+        story:
+          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',
       },
     },
   },
@@ -155,7 +158,8 @@ export const Disabled: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',
+        story:
+          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',
       },
     },
   },
@@ -174,7 +178,8 @@ export const Loading: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Loading state shows a spinner with **`aria-busy="true"`**. Click events are suppressed while loading.',
+        story:
+          'Loading state shows a spinner with **`aria-busy="true"`**. Click events are suppressed while loading.',
       },
     },
   },
@@ -203,14 +208,18 @@ export const Small: Story = {
     size: 'sm',
   },
   render: (args) =>
-    buttonRender(args, `<au-button [variant]="variant" [size]="size" (click)="click">Small</au-button>`),
+    buttonRender(
+      args,
+      `<au-button [variant]="variant" [size]="size" (click)="click">Small</au-button>`,
+    ),
 };
 
 export const Large: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Large size (**`size="lg"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',
+        story:
+          'Large size (**`size="lg"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',
       },
     },
   },
@@ -229,7 +238,8 @@ export const FocusRing: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',
+        story:
+          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',
       },
     },
   },
@@ -248,7 +258,7 @@ export const FocusRing: Story = {
     ),
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('au-button') as HTMLElement;
-    const firstButton = button?.shadowRoot?.querySelector('button') as HTMLButtonElement;
+    const firstButton = button?.querySelector('button') as HTMLButtonElement;
     if (firstButton) {
       firstButton.focus();
       await expect(firstButton).toHaveFocus();

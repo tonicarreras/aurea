@@ -6,7 +6,11 @@ import { AuButton, AuTooltip } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button variant="outline" auTooltip="Texto de ayuda contextual" auTooltipPlacement="top">
+    <au-button
+      variant="outline"
+      auTooltip="Texto de ayuda contextual"
+      auTooltipPlacement="top"
+    >
       Pasar el cursor
     </au-button>
   `,

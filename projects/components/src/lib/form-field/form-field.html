@@ -1,0 +1,49 @@
+<div class="au-form-field__stack">
+  @if (showsLabel()) {
+    <div class="au-form-field__label-host">
+      <label
+        class="au-form-field__label"
+        [attr.for]="controlId()"
+      >
+        {{ label() }}
+        @if (effectiveRequired() && showRequired()) {
+          <span
+            class="au-form-field__required"
+            aria-hidden="true"
+            title="Required"
+            >*</span
+          >
+          <span class="au-sr-only">(required)</span>
+        }
+      </label>
+    </div>
+  }
+
+  <div class="au-form-field__control">
+    <ng-content />
+  </div>
+
+  @if (hasHint()) {
+    <p
+      [id]="hintId()"
+      class="au-form-field__hint"
+    >
+      {{ hint() }}
+    </p>
+  }
+
+  @if (isInvalid() && displayError().length > 0) {
+    <div
+      [id]="errorId()"
+      class="au-field-error"
+      role="alert"
+    >
+      <span
+        class="au-field-error__glyph"
+        aria-hidden="true"
+        >×</span
+      >
+      <span class="au-field-error__text">{{ displayError() }}</span>
+    </div>
+  }
+</div>

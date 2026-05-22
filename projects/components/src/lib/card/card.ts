@@ -6,9 +6,10 @@ import {
   input,
   signal,
 } from '@angular/core';
+import type { AuSize } from '../au-size';
 import { AuCardFooter } from './card-footer.directive';
 
-export type CardVariant = 'elevated' | 'outlined' | 'filled';
+export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
 
 /**
  * Design-system **card**: container for grouping related content with visual hierarchy.
@@ -45,9 +46,9 @@ export type CardVariant = 'elevated' | 'outlined' | 'filled';
 })
 export class AuCard {
   /** Visual style: elevated (shadow), outlined (border), filled (background). */
-  readonly variant = input<CardVariant>('elevated');
+  readonly variant = input<AuCardVariant>('elevated');
   /** Density: sm (compact), md (default), lg (spacious). */
-  readonly size = input<'sm' | 'md' | 'lg'>('md');
+  readonly size = input<AuSize>('md');
 
   private readonly footerPresent = signal(false);
 

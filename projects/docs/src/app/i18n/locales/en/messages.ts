@@ -3,6 +3,7 @@ import type { DocsMessages } from '../../types/messages';
 export const MESSAGES_EN: DocsMessages = {
   shell: {
     skipToContent: 'Skip to content',
+    theme: 'Theme',
     themeSystem: 'System',
     themeLight: 'Light',
     themeDark: 'Dark',
@@ -13,6 +14,12 @@ export const MESSAGES_EN: DocsMessages = {
     lang: 'Language',
     langEn: 'English',
     langEs: 'Español',
+    menuLabel: 'Menu',
+    menuCloseAria: 'Close menu',
+    settingsMenuAria: 'Site settings',
+    githubLabel: 'GitHub',
+    npmLabel: 'npm',
+    storybookLabel: 'Storybook',
     navAria: 'Documentation',
     githubAria: 'GitHub repository',
     npmAria: 'npm package',
@@ -91,8 +98,7 @@ export const MESSAGES_EN: DocsMessages = {
     examples: 'Examples',
     export: 'Export',
     selector: 'Selector',
-    apiLead: (exportName) =>
-      `API for <code>${exportName}</code>. Inputs use Angular signals`,
+    apiLead: (exportName) => `API for <code>${exportName}</code>. Inputs use Angular signals`,
     signalApiHint: ' (`input()`, `model()`, `output()`).',
     importExpand: 'Import',
     importCollapse: 'Hide import',
@@ -120,4 +126,3 @@ export const MESSAGES_EN: DocsMessages = {
     copied: 'Copied',
   },
 };
-

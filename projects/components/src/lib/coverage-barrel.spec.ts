@@ -3,19 +3,25 @@ import * as button from './button/index';
 import * as card from './card/index';
 import * as checkbox from './checkbox/index';
 import * as chip from './chip/index';
+import * as chipGroup from './chip-group/index';
 import * as inputDate from './input-date/index';
 import * as inputNumber from './input-number/index';
 import * as inputText from './input-text/index';
+import * as list from './list/index';
+import * as message from './message/index';
 import * as dialog from './dialog/index';
 import * as divider from './divider/index';
+import * as formField from './form-field/index';
+import * as icon from './icon/index';
 import * as radioGroup from './radio-group/index';
 import * as select from './select/index';
+import * as skeleton from './skeleton/index';
 import * as snackbar from './snackbar/index';
 import * as switchMod from './switch/index';
 import * as tabs from './tabs/index';
 import * as textarea from './textarea/index';
 import * as tooltip from './tooltip/index';
-import * as theme from './theme/index';
+import * as tokens from './tokens/index';
 
 describe('library barrel exports', () => {
   it('re-exports all public components', () => {
@@ -25,14 +31,21 @@ describe('library barrel exports', () => {
     expect(card.AuCardFooter).toBeDefined();
     expect(checkbox.AuCheckbox).toBeDefined();
     expect(chip.AuChip).toBeDefined();
+    expect(chipGroup.AuChipGroup).toBeDefined();
     expect(inputDate.AuInputDate).toBeDefined();
     expect(inputNumber.AuInputNumber).toBeDefined();
     expect(inputText.AuInputText).toBeDefined();
+    expect(list.AuList).toBeDefined();
+    expect(list.AuListItem).toBeDefined();
+    expect(message.AuMessage).toBeDefined();
     expect(dialog.AuDialog).toBeDefined();
     expect(divider.AuDivider).toBeDefined();
+    expect(formField.AuFormField).toBeDefined();
+    expect(icon.AuIcon).toBeDefined();
     expect(dialog.AuDialogFooter).toBeDefined();
     expect(radioGroup.AuRadioGroup).toBeDefined();
     expect(select.AuSelect).toBeDefined();
+    expect(skeleton.AuSkeleton).toBeDefined();
     expect(snackbar.AuSnackbar).toBeDefined();
     expect(switchMod.AuSwitch).toBeDefined();
     expect(tabs.AuTabs).toBeDefined();
@@ -40,6 +53,6 @@ describe('library barrel exports', () => {
     expect(tabs.AuTabPanel).toBeDefined();
     expect(textarea.AuTextarea).toBeDefined();
     expect(tooltip.AuTooltip).toBeDefined();
-    expect(theme.AuTheme).toBeDefined();
+    expect(tokens.AuTheme).toBeDefined();
   });
 });

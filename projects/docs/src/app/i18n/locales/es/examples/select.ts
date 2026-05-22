@@ -6,38 +6,41 @@ import {
 import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
-{
-      title: 'Select con opciones',
-      demoComponent: ExampleSelectBasicDemo,
-      code: `options: SelectOption[] = [
+  {
+    title: 'Select con opciones',
+    demoComponent: ExampleSelectBasicDemo,
+    code: `options: AuSelectOption[] = [
   { value: 'es', label: 'España' },
   { value: 'mx', label: 'México' },
 ];
 
-<au-select label="País" placeholder="Elige…" [options]="options" />`,
-      language: 'typescript',
-    },
-    {
-      title: 'Obligatorio con error',
-      demoComponent: ExampleSelectErrorDemo,
-      code: `<au-select
+<au-form-field label="País">
+  <au-select placeholder="Elige…" [options]="options" />
+</au-form-field>`,
+    language: 'typescript',
+  },
+  {
+    title: 'Obligatorio con error',
+    demoComponent: ExampleSelectErrorDemo,
+    code: `<au-form-field
   label="País"
-  placeholder="Elige…"
-  [options]="options"
   [required]="true"
   errorMessage="Selecciona un país."
-/>`,
-      language: 'typescript',
-    },
-    {
-      title: 'Con hint',
-      demoComponent: ExampleSelectHintDemo,
-      code: `<au-select
+  [invalid]="true"
+>
+  <au-select placeholder="Elige…" [options]="options" />
+</au-form-field>`,
+    language: 'typescript',
+  },
+  {
+    title: 'Con hint',
+    demoComponent: ExampleSelectHintDemo,
+    code: `<au-form-field
   label="País de residencia"
-  placeholder="Elige…"
-  [options]="options"
-  hint="Usado para facturación y envíos."
-/>`,
-      language: 'typescript',
-    },
+  hint="Se usa en facturación y envío."
+>
+  <au-select placeholder="Elige…" [options]="options" />
+</au-form-field>`,
+    language: 'typescript',
+  },
 ];

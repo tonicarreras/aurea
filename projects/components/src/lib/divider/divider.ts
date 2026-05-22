@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-export type DividerOrientation = 'horizontal' | 'vertical';
+export type AuDividerOrientation = 'horizontal' | 'vertical';
 
 /**
  * Design-system **divider**: visual separator between sections or list items.
@@ -39,7 +39,7 @@ export type DividerOrientation = 'horizontal' | 'vertical';
 })
 export class AuDivider {
   /** Rule direction: horizontal (default) or vertical. */
-  readonly orientation = input<DividerOrientation>('horizontal');
+  readonly orientation = input<AuDividerOrientation>('horizontal');
 
   /**
    * Indents the start edge of a horizontal divider (list/menu sections).

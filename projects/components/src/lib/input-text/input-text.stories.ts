@@ -1,10 +1,110 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { INPUT_TEXT_DOCS_OVERVIEW } from './input-text.docs-overview';
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field';
 import { AuInputText } from './input-text';
 
-const meta: Meta<AuInputText> = {
+const docsOverview = `
+## Overview
+
+\`au-input-text\` is a single-line text control. It implements Angular **signal forms** \`FormValueControl<string | null>\` (\`[formField]\`) or classic \`[(value)]\`. For label, hint, and errors, wrap it in **\`au-form-field\`** (see package **README** → *Signal forms*).
+
+## When to use
+
+| Use \`au-input-text\` | Prefer something else |
+|----------------------|-------------------------|
+| Single-line text, email, URL, search, password | Multi-line content → **\`au-textarea\`** |
+| Same visual grammar as the rest of Aurea | Native input only when you do not need label/hint/error chrome |
+
+## Anatomy
+
+| Region | Element / role | Notes |
+|--------|----------------|-------|
+| Label host | Wrapper for stacking | Keeps label painting above the control shell for reliable contrast checks |
+| Label | \`<label for>\` | Optional; associates visible text with the input \`id\` |
+| Required | \`*\` + \`(required)\` for SR | \`showRequired\` can hide the asterisk; \`required\` still sets the HTML attribute when true |
+| Control row | Border, background, focus ring | One surface; invalid state changes border/background |
+| Input | \`<input>\` | \`aria-invalid\`, \`aria-errormessage\`, \`aria-describedby\` wired from inputs |
+| Password toggle | \`<button type="button">\` | \`aria-pressed\`, \`aria-label\`; only when \`type="password"\` and \`showPasswordToggle\` |
+| Hint | \`<p id="…-hint">\` | Tertiary text; not the error channel |
+| Error | \`<div role="alert" id="…-error">\` | Shown when \`errorMessage\` or \`errors\` yields text |
+
+## Keyboard and focus
+
+| Interaction | Behavior |
+|-------------|----------|
+| **Tab** into the field | Outer **outline** focus ring (WCAG-friendly), class \`--from-tab\` on the control row |
+| **Click** / pointer focus | **Inset** ring (\`box-shadow\`) so pointer users are not surprised by a large outer ring |
+| **Space** in password toggle | Activates the button (native button behavior) |
+| **Disabled** | No \`valueChange\`; input is not editable |
+
+Focus modality is shared via \`tabFocusState\` (\`au-tab-focus-state.ts\`): \`pointerdown\` clears the “next focus is from Tab” flag before \`focusin\`.
+
+## Accessibility
+
+| Topic | Implementation |
+|-------|----------------|
+| Name | Visible \`<label>\` + \`for\` / \`id\`, or your own label elsewhere |
+| Required | \`aria-required\` on the input when \`required\` is true |
+| Invalid | \`aria-invalid="true"\` when there is a displayed error |
+| Error message | \`aria-errormessage\` points to the error region \`id\` |
+| Hint | \`aria-describedby\` references the hint \`id\` when hint text is non-empty |
+| Password | Toggle exposes \`aria-pressed\` and a clear **Show password** / **Hide password** label |
+| Contrast | Uses semantic tokens (\`--au-color-text-label\`, \`--au-color-text-tertiary\`, etc.) tuned for **WCAG 2.2 AA** on \`surface-canvas\` / \`surface-raised\` |
+
+### Manual checks (Storybook **Accessibility** addon)
+
+1. Run **Accessibility** → **Run** on each story (axe is manual in this project to avoid noise on every keystroke).
+2. Tab through **Password** and confirm the focus ring matches keyboard vs mouse behavior.
+3. **With error**: screen reader should hear the error associated with the field (\`aria-errormessage\`).
+
+## Signal forms vs manual
+
+| Mode | Where | Validation |
+|------|--------|------------|
+| Signal forms | \`[formField]\` on \`au-input-text\`; \`form()\` in your component | Schema drives \`errors\` / \`invalid\`; \`au-form-field\` shows the message |
+| Manual | \`[(value)]\` + \`au-form-field\` \`errorMessage\` / \`invalid\` | Parent sets chrome (see **With error** story) |
+
+Full \`form()\` example: **\`@aurea-design-system/components\` README** → *Signal forms*.
+
+## Design tokens (reference)
+
+| Concern | Token examples |
+|---------|----------------|
+| Field border | \`--au-color-form-border\`, hover \`--au-color-form-border-hover\` |
+| Field surface | \`--au-color-surface-raised\`, error \`--au-color-form-error-bg\` |
+| Label / hint | \`--au-color-text-label\`, \`--au-color-text-tertiary\` |
+| Focus | \`--au-color-focus-ring\`, \`--au-shadow-focus-ring\` |
+
+See **DESIGN.md** at the repo root for the full token model.
+`.trim();
+
+type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
+
+interface InputTextStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  type: InputTextType;
+  disabled: boolean;
+  readOnly: boolean;
+  name: string;
+  autocomplete: string | undefined;
+  minLength: number | undefined;
+  maxLength: number | undefined;
+  size: 'sm' | 'md' | 'lg';
+  showPasswordToggle: boolean;
+  errors: readonly unknown[];
+}
+
+const meta: Meta<InputTextStoryArgs> = {
   title: 'Aurea/InputText',
   component: AuInputText,
   tags: ['autodocs', 'au'],
@@ -12,11 +112,12 @@ const meta: Meta<AuInputText> = {
     layout: 'padded',
     docs: {
       description: {
-        component: INPUT_TEXT_DOCS_OVERVIEW,
+        component: docsOverview,
       },
     },
   },
   argTypes: {
+    ...fieldChromeArgTypes,
     value: {
       control: 'text',
       description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',
@@ -30,43 +131,13 @@ const meta: Meta<AuInputText> = {
       description: 'Emits when the input loses focus.',
       table: { category: 'Events' },
     },
-    label: {
-      control: 'text',
-      description: 'Visible label; linked with `for` / `id`.',
-      table: { category: 'Chrome' },
-    },
-    hint: {
-      control: 'text',
-      description: 'Helper copy; `aria-describedby` when non-empty.',
-      table: { category: 'Chrome' },
-    },
     placeholder: {
       control: 'text',
       description: 'Native placeholder; use hint for longer guidance.',
-      table: { category: 'Chrome' },
-    },
-    showRequired: {
-      control: 'boolean',
-      description: 'When `true` and `required`, shows `*` and screen-reader “(required)”.',
-      table: { category: 'Chrome' },
-    },
-    errorMessage: {
-      control: 'text',
-      description: 'Manual error string; takes precedence over `errors` for display.',
-      table: { category: 'Validation' },
+      table: { category: 'Field' },
     },
     errors: {
       description: 'Populated by `formField` from signal forms.',
-      table: { category: 'Validation' },
-    },
-    invalid: {
-      control: 'boolean',
-      description: 'External invalid flag (e.g. from `formField`).',
-      table: { category: 'Validation' },
-    },
-    required: {
-      control: 'boolean',
-      description: 'Sets native `required` and `aria-required`.',
       table: { category: 'Validation' },
     },
     minLength: {
@@ -101,11 +172,6 @@ const meta: Meta<AuInputText> = {
       description: 'Density token on `data-au-size`.',
       table: { category: 'Field' },
     },
-    id: {
-      control: 'text',
-      description: 'Explicit `id`; auto-generated when empty.',
-      table: { category: 'Field' },
-    },
     name: {
       control: 'text',
       description: 'Native `name` for form posts.',
@@ -121,16 +187,49 @@ const meta: Meta<AuInputText> = {
       description: 'Only applies when `type` is `password`.',
       table: { category: 'Password' },
     },
-  },
+  } as Meta<InputTextStoryArgs>['argTypes'],
   args: {
+    ...defaultFieldChromeArgs,
     value: '',
     valueChange: fn(),
     blur: fn(),
+    placeholder: '',
+    type: 'text',
+    disabled: false,
+    readOnly: false,
+    name: '',
+    autocomplete: undefined,
+    minLength: undefined,
+    maxLength: undefined,
+    size: 'md',
+    showPasswordToggle: true,
+    errors: [],
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuInputText],
+      args,
+      `<au-input-text
+  [(value)]="value"
+  [placeholder]="placeholder"
+  [type]="type"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [name]="name"
+  [autocomplete]="autocomplete"
+  [minLength]="minLength"
+  [maxLength]="maxLength"
+  [size]="size"
+  [showPasswordToggle]="showPasswordToggle"
+  [invalid]="invalid"
+  [errors]="$any(errors)"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuInputText>;
+type Story = StoryObj<InputTextStoryArgs>;
 
 export const Default: Story = {
   parameters: {
@@ -169,6 +268,7 @@ export const WithError: Story = {
     placeholder: 'you@example.com',
     type: 'email',
     errorMessage: 'Enter a valid email address.',
+    invalid: true,
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
@@ -187,7 +287,8 @@ export const Disabled: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Disabled fields keep focus rules platform-dependent; **no** `valueChange` while disabled.',
+        story:
+          'Disabled fields keep focus rules platform-dependent; **no** `valueChange` while disabled.',
       },
     },
   },

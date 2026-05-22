@@ -11,8 +11,8 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { TooltipOverlay } from '../theme/tooltip-overlay';
-import type { TooltipPlacement } from '../theme/tooltip-position';
+import { TooltipOverlay } from '../overlay/tooltip-overlay';
+import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
 /**
  * Design-system **tooltip**: supplementary label on hover or keyboard focus.
@@ -41,10 +41,12 @@ import type { TooltipPlacement } from '../theme/tooltip-position';
 })
 export class AuTooltip {
   /** Tooltip copy (ignored when empty). */
-  readonly auTooltip = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly auTooltip = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
 
   /** Preferred placement; flips when there is not enough viewport space. */
-  readonly auTooltipPlacement = input<TooltipPlacement>('top');
+  readonly auTooltipPlacement = input<AuTooltipPlacement>('top');
 
   /** Milliseconds before showing after hover/focus. */
   readonly auTooltipShowDelay = input(200);
@@ -79,18 +81,16 @@ export class AuTooltip {
     this.visible() && this.hasText() ? this.tooltipId : null,
   );
 
-  constructor() {
-    afterRenderEffect(() => {
-      if (!this.visible() || !this.hasText()) {
-        this.overlay.detach();
-        this.removeBubble();
-        return;
-      }
-      const bubble = this.ensureBubble();
-      this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
-      this.overlay.sync(bubble, this.host.nativeElement, this.auTooltipPlacement());
-    });
-  }
+  private readonly syncTooltipOverlay = afterRenderEffect(() => {
+    if (!this.visible() || !this.hasText()) {
+      this.overlay.detach();
+      this.removeBubble();
+      return;
+    }
+    const bubble = this.ensureBubble();
+    this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
+    this.overlay.sync(bubble, this.host.nativeElement as HTMLElement, this.auTooltipPlacement());
+  });
 
   protected onPointerEnter(): void {
     this.scheduleShow();
@@ -106,7 +106,7 @@ export class AuTooltip {
 
   protected onFocusOut(event: FocusEvent): void {
     const next = event.relatedTarget;
-    const anchor = this.host.nativeElement;
+    const anchor = this.host.nativeElement as HTMLElement;
     if (next instanceof Node && anchor.contains(next)) {
       return;
     }
@@ -169,7 +169,7 @@ export class AuTooltip {
     if (this.bubble) {
       return this.bubble;
     }
-    const bubble = this.renderer.createElement('div');
+    const bubble = this.renderer.createElement('div') as HTMLElement;
     this.renderer.addClass(bubble, 'au-tooltip__bubble');
     this.renderer.setAttribute(bubble, 'role', 'tooltip');
     this.renderer.setAttribute(bubble, 'id', this.tooltipId);

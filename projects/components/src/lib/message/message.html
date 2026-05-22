@@ -1,0 +1,40 @@
+<div
+  class="au-message__surface"
+  [attr.role]="liveRole()"
+>
+  @if (showVariantIcon() && variantIcon(); as iconName) {
+    <span class="au-message__icon">
+      <au-icon
+        [name]="iconName"
+        size="md"
+      />
+    </span>
+  }
+
+  <div class="au-message__body">
+    @if (hasTitle()) {
+      <p class="au-message__title">{{ resolvedTitle() }}</p>
+    }
+    @if (showInputMessage()) {
+      <p class="au-message__text">{{ resolvedMessage() }}</p>
+    } @else {
+      <div class="au-message__text">
+        <ng-content></ng-content>
+      </div>
+    }
+  </div>
+
+  @if (dismissible()) {
+    <button
+      type="button"
+      class="au-message__close"
+      [attr.aria-label]="closeAriaLabel()"
+      (click)="onDismissClick()"
+    >
+      <au-icon
+        name="close"
+        size="sm"
+      />
+    </button>
+  }
+</div>

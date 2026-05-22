@@ -3,6 +3,7 @@ import type { DocsMessages } from '../../types/messages';
 export const MESSAGES_ES: DocsMessages = {
   shell: {
     skipToContent: 'Saltar al contenido',
+    theme: 'Tema',
     themeSystem: 'Sistema',
     themeLight: 'Claro',
     themeDark: 'Oscuro',
@@ -13,6 +14,12 @@ export const MESSAGES_ES: DocsMessages = {
     lang: 'Idioma',
     langEn: 'English',
     langEs: 'Español',
+    menuLabel: 'Menú',
+    menuCloseAria: 'Cerrar menú',
+    settingsMenuAria: 'Ajustes del sitio',
+    githubLabel: 'GitHub',
+    npmLabel: 'npm',
+    storybookLabel: 'Storybook',
     navAria: 'Documentación',
     githubAria: 'Repositorio en GitHub',
     npmAria: 'Paquete en npm',

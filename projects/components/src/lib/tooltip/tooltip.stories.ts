@@ -3,13 +3,13 @@ import { expect, userEvent, within } from 'storybook/test';
 
 import { AuButton } from '../button/button';
 import { AuTooltip } from './au-tooltip.directive';
-import type { TooltipPlacement } from '../theme/tooltip-position';
+import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
 const storyImports = { imports: [AuTooltip, AuButton] };
 
 interface TooltipStoryArgs {
   text: string;
-  placement: TooltipPlacement;
+  placement: AuTooltipPlacement;
   showDelay: number;
   hideDelay: number;
   disabled: boolean;
@@ -56,16 +56,18 @@ export const Default: Story = {
     props: args,
     moduleMetadata: storyImports,
     template: `
-      <au-button
-        variant="outline"
-        [auTooltip]="text"
-        [auTooltipPlacement]="placement"
-        [auTooltipShowDelay]="showDelay"
-        [auTooltipHideDelay]="hideDelay"
-        [auTooltipDisabled]="disabled"
-      >
-        Hover or focus me
-      </au-button>
+      <div class="au-story-stage">
+        <au-button
+          variant="outline"
+          [auTooltip]="text"
+          [auTooltipPlacement]="placement"
+          [auTooltipShowDelay]="showDelay"
+          [auTooltipHideDelay]="hideDelay"
+          [auTooltipDisabled]="disabled"
+        >
+          Hover or focus me
+        </au-button>
+      </div>
     `,
   }),
   play: async ({ canvasElement }) => {

@@ -1,3 +1,3 @@
 export * from './button';
 
-export type { ButtonVariant, ButtonSize, ButtonType } from './button';
+export type { AuButtonVariant, AuButtonSize, AuButtonType } from './button';

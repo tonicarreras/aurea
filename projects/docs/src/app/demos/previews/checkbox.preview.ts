@@ -9,7 +9,10 @@ import { DEMO_STACK } from '../shared/demo-layout';
   template: `
     <div class="docs-demo-stack">
       <au-checkbox label="Acepto los términos" />
-      <au-checkbox label="Newsletter" [checked]="true" />
+      <au-checkbox
+        label="Newsletter"
+        [checked]="true"
+      />
     </div>
   `,
   styles: [DEMO_STACK],

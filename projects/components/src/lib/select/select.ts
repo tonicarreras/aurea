@@ -6,7 +6,6 @@ import {
   ElementRef,
   PLATFORM_ID,
   Renderer2,
-  ViewChild,
   afterRenderEffect,
   computed,
   inject,
@@ -16,16 +15,16 @@ import {
   signal,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
+import { AU_FORM_FIELD } from '../form-field/form-field';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
+import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
-import { FieldListboxOverlay, focusLeftFieldControl } from '../theme/field-listbox-overlay';
+import type { AuFieldOption } from '../field-option';
+import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
 
-type AuSize = 'sm' | 'md' | 'lg';
-
-export interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
+export type AuSelectOption = AuFieldOption;
 
 /**
  * Design-system **select** field: combobox (`button` + `listbox`) with the same dropdown chrome as `au-autocomplete`.
@@ -51,85 +50,78 @@ export interface SelectOption {
 export class AuSelect implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
-  readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
-  readonly options = input<SelectOption[]>([]);
+  readonly options = input<AuSelectOption[]>([]);
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
-  readonly showRequired = input(true);
 
-  readonly id = input<string>('');
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   readonly autocomplete = input<string | undefined>(undefined);
   readonly size = input<AuSize>('md');
 
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
 
-  private static idCounter = 0;
-
+  protected readonly formField = inject(AU_FORM_FIELD);
+  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly highlightedIndex = signal(-1);
 
-  @ViewChild('listboxEl', { read: ElementRef })
-  private listboxRef?: ElementRef<HTMLUListElement>;
-
-  @ViewChild('triggerEl', { read: ElementRef })
-  private triggerRef?: ElementRef<HTMLButtonElement>;
+  private readonly document = inject(DOCUMENT);
 
   private readonly listboxOverlay = new FieldListboxOverlay(
-    inject(DOCUMENT),
+    this.document,
     inject(Renderer2),
     inject(PLATFORM_ID),
     inject(DestroyRef),
   );
 
-  constructor() {
-    afterRenderEffect(() => {
-      const trigger = this.triggerNativeElement();
-      const anchor = trigger.closest('.au-select__control-row')! as HTMLElement;
-      this.listboxOverlay.sync(this.listboxRef?.nativeElement, anchor, this.listboxVisible());
-    });
-  }
-
-  readonly resolvedId = computed(() => {
-    const v = this.id();
-    if (v) {
-      return v;
+  private readonly syncListboxOverlay = afterRenderEffect(() => {
+    const trigger = this.triggerNativeElement();
+    const anchor = trigger.closest('.au-select__control-row');
+    if (!(anchor instanceof HTMLElement)) {
+      return;
     }
-    return `au-select-${++AuSelect.idCounter}`;
+    this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
   });
 
-  readonly hintId = computed(() => `${this.resolvedId()}-hint`);
-  readonly errorId = computed(() => `${this.resolvedId()}-error`);
-  readonly listboxId = computed(() => `${this.resolvedId()}-listbox`);
+  readonly controlId = computed(() => this.formField.controlId());
+  readonly listboxId = computed(() => `${this.controlId()}-listbox`);
 
-  readonly displayError = computed(() => {
-    const manual = this.errorMessage().trim();
-    if (manual.length > 0) {
-      return manual;
-    }
-    const list = this.errors();
-    if (list.length === 0) {
-      return '';
-    }
-    const first = list[0]!;
-    return (first.message ?? first.kind) || '';
-  });
-
+  readonly displayError = displayErrorFromErrors(this.errors);
   readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
+  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+    invalid: () => this.invalid(),
+    isInvalid: () => this.isInvalid(),
+  });
 
-  readonly ariaDescribedBy = computed((): string | null =>
-    this.hint().trim().length > 0 ? this.hintId() : null,
-  );
+  readonly ariaDescribedBy = computed((): string | null => {
+    const ids: string[] = [];
+    if (this.formField.hint().trim().length > 0) {
+      ids.push(this.formField.hintId());
+    }
+    if (this.effectiveInvalid()) {
+      ids.push(this.formField.errorId());
+    }
+    return ids.length > 0 ? ids.join(' ') : null;
+  });
+
+  constructor() {
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
+  }
 
   readonly hasPlaceholder = computed(() => this.placeholder().trim().length > 0);
 
@@ -177,7 +169,7 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   placeholderOptionId(): string {
-    return `${this.resolvedId()}-option-placeholder`;
+    return `${this.controlId()}-option-placeholder`;
   }
 
   optionListIndex(optionIndex: number): number {
@@ -185,7 +177,7 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   optionId(index: number): string {
-    return `${this.resolvedId()}-option-${index}`;
+    return `${this.controlId()}-option-${index}`;
   }
 
   onTriggerClick(): void {
@@ -264,7 +256,7 @@ export class AuSelect implements FormValueControl<string | null> {
     }
   }
 
-  onOptionPointerEnter(index: number, option?: SelectOption): void {
+  onOptionPointerEnter(index: number, option?: AuSelectOption): void {
     if (this.disabled() || this.readOnly()) {
       return;
     }
@@ -274,7 +266,7 @@ export class AuSelect implements FormValueControl<string | null> {
     this.highlightedIndex.set(index);
   }
 
-  onOptionPointerDown(event: Event, option: SelectOption): void {
+  onOptionPointerDown(event: Event, option: AuSelectOption): void {
     event.preventDefault();
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
@@ -292,7 +284,7 @@ export class AuSelect implements FormValueControl<string | null> {
     this.triggerNativeElement().focus();
   }
 
-  selectOption(option: SelectOption): void {
+  selectOption(option: AuSelectOption): void {
     if (option.disabled || this.disabled() || this.readOnly()) {
       return;
     }
@@ -311,7 +303,7 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!focusLeftFieldControl(event, this.listboxRef?.nativeElement)) {
+    if (!focusLeftFieldControl(event, this.listboxNative())) {
       return;
     }
     this.fieldFocusByTab.set(false);
@@ -323,7 +315,14 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   private triggerNativeElement(): HTMLButtonElement {
-    return this.triggerRef!.nativeElement;
+    return queryFieldNative<HTMLButtonElement>(this.host, '.au-select__trigger');
+  }
+
+  private listboxNative(): HTMLUListElement | undefined {
+    if (!this.listboxVisible()) {
+      return undefined;
+    }
+    return (this.document.getElementById(this.listboxId()) as HTMLUListElement | null) ?? undefined;
   }
 
   private openPanel(): void {
@@ -381,7 +380,7 @@ export class AuSelect implements FormValueControl<string | null> {
     }
     const opts = this.options();
     for (let i = 0; i < opts.length; i++) {
-      if (!opts[i]!.disabled) {
+      if (!opts[i].disabled) {
         return this.optionListIndex(i);
       }
     }
