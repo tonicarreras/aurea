@@ -189,6 +189,26 @@ describe('syncFormFieldControlState', () => {
   });
 });
 
+describe('AuFormField showsLabel', () => {
+  it('hides the wrapper label when the control reports usesLegend', async () => {
+    await TestBed.configureTestingModule({ imports: [AuFormField] }).compileComponents();
+    const fixture = TestBed.createComponent(AuFormField);
+    fixture.componentRef.setInput('label', 'Pick');
+    fixture.detectChanges();
+    expect(fixture.componentInstance.showsLabel()).toBe(true);
+
+    fixture.componentInstance.updateControlState({
+      displayError: '',
+      effectiveInvalid: false,
+      required: false,
+      usesLegend: true,
+    });
+    fixture.detectChanges();
+    expect(fixture.componentInstance.showsLabel()).toBe(false);
+    expect(fixture.nativeElement.querySelector('.au-form-field__label')).toBeNull();
+  });
+});
+
 describe('queryFieldNative', () => {
   it('returns the element matching the selector inside the host', () => {
     const fixture = TestBed.createComponent(ProbeHost);

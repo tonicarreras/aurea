@@ -96,6 +96,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),
         required: () => this.required(),
+        usesLegend: () => true,
       }),
     );
   }

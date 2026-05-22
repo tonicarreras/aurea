@@ -1,5 +1,5 @@
 <div class="au-form-field__stack">
-  @if (hasLabel()) {
+  @if (showsLabel()) {
     <div class="au-form-field__label-host">
       <label class="au-form-field__label" [attr.for]="controlId()">
         {{ label() }}

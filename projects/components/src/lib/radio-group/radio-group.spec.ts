@@ -34,6 +34,16 @@ describe('AuRadioGroup', () => {
     }).compileComponents();
   });
 
+  it('does not duplicate the form-field label in the legend', () => {
+    const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+    });
+    expect(fix.debugElement.query(By.css('.au-form-field__label'))).toBeFalsy();
+    const legend = fix.debugElement.query(By.css('.au-radio-group__legend'))!.nativeElement;
+    expect(legend.textContent).toContain('Pick');
+  });
+
   it('updates value when a radio is selected', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
     f.componentInstance.options = opts;

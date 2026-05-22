@@ -17,6 +17,8 @@ export interface AuFormFieldControlState {
   displayError: string;
   effectiveInvalid: boolean;
   required: boolean;
+  /** When true, the group renders its own `<legend>`; suppress the wrapper label. */
+  usesLegend?: boolean;
 }
 
 /** Context provided by {@link AuFormField} to projected controls. */
@@ -68,6 +70,7 @@ export interface FormFieldControlSyncState {
   displayError: () => string;
   effectiveInvalid: () => boolean;
   required: () => boolean;
+  usesLegend?: () => boolean;
 }
 
 /** Callback for `afterRenderEffect` in the control constructor (must run in injection context). */
@@ -80,6 +83,7 @@ export function syncFormFieldControlState(
       displayError: state.displayError(),
       effectiveInvalid: state.effectiveInvalid(),
       required: state.required(),
+      usesLegend: state.usesLegend?.(),
     });
   };
 }
@@ -208,6 +212,10 @@ export class AuFormField implements AuFormFieldContext {
   readonly errorId = computed(() => `${this.controlId()}-error`);
 
   readonly hasLabel = computed(() => this.label().trim().length > 0);
+  /** Visible wrapper label (hidden when the control owns a `<legend>`, e.g. radio group). */
+  readonly showsLabel = computed(
+    () => this.hasLabel() && !(this.controlState()?.usesLegend ?? false),
+  );
   readonly hasHint = computed(() => this.hint().trim().length > 0);
 
   readonly effectiveRequired = computed(
