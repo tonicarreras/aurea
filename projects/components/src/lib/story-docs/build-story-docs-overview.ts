@@ -37,12 +37,8 @@ export interface StoryDocsOverviewInput {
 export function buildStoryDocsOverview(input: StoryDocsOverviewInput): string {
   const useRows = input.whenToUse.use.map((u) => `| ${u} | |`).join('\n');
   const avoidRows = input.whenToUse.avoid.map((a) => `| | ${a} |`).join('\n');
-  const anatomyRows = input.anatomy
-    .map((r) => `| ${r.region} | ${r.notes} |`)
-    .join('\n');
-  const a11yRows = input.accessibility
-    .map((a) => `| ${a.topic} | ${a.detail} |`)
-    .join('\n');
+  const anatomyRows = input.anatomy.map((r) => `| ${r.region} | ${r.notes} |`).join('\n');
+  const a11yRows = input.accessibility.map((a) => `| ${a.topic} | ${a.detail} |`).join('\n');
 
   let md = `## Overview
 

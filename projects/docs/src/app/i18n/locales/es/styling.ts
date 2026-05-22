@@ -257,7 +257,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-pill', description: 'Forma pill del host.' },
     { token: '--au-text-xs', description: 'Tipografía de la etiqueta.' },
     { token: '--au-color-surface-sunken', description: 'Fondo de la variante default.' },
-    { token: '--au-color-semantic-success-surface', description: 'Superficies success/warning/error/info.' },
+    {
+      token: '--au-color-semantic-success-surface',
+      description: 'Superficies success/warning/error/info.',
+    },
   ],
   breadcrumb: [
     { token: '--au-text-sm', description: 'Tipografía de la ruta.' },
@@ -272,7 +275,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-duration-short', description: 'Transición de color.' },
   ],
   menu: [
-    { token: '--au-color-surface-elevated', description: 'Panel en portal (`.au-floating-panel`).' },
+    {
+      token: '--au-color-surface-elevated',
+      description: 'Panel en portal (`.au-floating-panel`).',
+    },
     { token: '--au-shadow-overlay', description: 'Elevación del panel.' },
     { token: '--au-z-dropdown', description: 'Apilamiento sobre el contenido.' },
     { token: '--au-space-2', description: 'Padding de ítems.' },

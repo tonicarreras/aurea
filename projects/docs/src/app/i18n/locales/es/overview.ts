@@ -669,7 +669,9 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Landmark `navigation` con `aria-label` por defecto.',
       'La página actual es texto, no enlace — evita auto-enlace redundante.',
     ],
-    keyboard: ['Tab recorre segmentos enlazados; la página actual no está en el orden de tabulación.'],
+    keyboard: [
+      'Tab recorre segmentos enlazados; la página actual no está en el orden de tabulación.',
+    ],
   },
   link: {
     intro: [
@@ -720,7 +722,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Disparador', detail: '`auMenuTrigger`; `aria-haspopup="menu"` y `aria-expanded`.' },
+      {
+        region: 'Disparador',
+        detail: '`auMenuTrigger`; `aria-haspopup="menu"` y `aria-expanded`.',
+      },
       { region: 'Panel', detail: '`.au-floating-panel` en portal; posicionado por overlay.' },
       { region: 'Ítems', detail: 'Botones `au-menu-item`; `select` cierra el menú.' },
     ],

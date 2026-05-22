@@ -6,11 +6,11 @@ import { AuLink } from './link';
 @Component({
   imports: [AuLink],
   template: `<a
-      auLink
-      [href]="href"
-      [external]="external"
-      >Docs</a
-    >`,
+    auLink
+    [href]="href"
+    [external]="external"
+    >Docs</a
+  >`,
 })
 class AnchorHost {
   href = '/docs';

@@ -4,10 +4,10 @@ How we retire public APIs in `@aurea-design-system/components` without surprisin
 
 ## Timeline
 
-| Step        | When                                        | Action                                                               |
-| ----------- | ------------------------------------------- | -------------------------------------------------------------------- |
-| 1. Announce | First **minor** that introduces replacement | `@deprecated` JSDoc + [CHANGELOG.md](../CHANGELOG.md) + docs note    |
-| 2. Warn     | Next **minor** (≥ 2 minors before removal)  | Runtime `console.warn` in dev mode only (optional)                   |
+| Step        | When                                        | Action                                                                                |
+| ----------- | ------------------------------------------- | ------------------------------------------------------------------------------------- |
+| 1. Announce | First **minor** that introduces replacement | `@deprecated` JSDoc + [CHANGELOG.md](../CHANGELOG.md) + docs note                     |
+| 2. Warn     | Next **minor** (≥ 2 minors before removal)  | Runtime `console.warn` in dev mode only (optional)                                    |
 | 3. Remove   | **Major** only                              | Delete export, selector, or token; migration guide in [CHANGELOG.md](../CHANGELOG.md) |
 
 Minimum notice: **two MINOR releases** (or ~2 months on `0.x`) between announcement and removal, whichever is longer.

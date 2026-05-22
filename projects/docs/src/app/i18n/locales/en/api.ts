@@ -723,7 +723,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         description: 'On `<th auTableSortHeader>`.',
         rows: [
           i('sortDirection', "'asc' | 'desc' | null", 'Current sort direction.', 'null'),
-          o('sort', "AuTableSortDirection", 'Cycles none → asc → desc on activate.'),
+          o('sort', 'AuTableSortDirection', 'Cycles none → asc → desc on activate.'),
         ],
       },
     ],

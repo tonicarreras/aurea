@@ -257,7 +257,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-pill', description: 'Pill shape for the badge host.' },
     { token: '--au-text-xs', description: 'Label typography.' },
     { token: '--au-color-surface-sunken', description: 'Default variant background.' },
-    { token: '--au-color-semantic-success-surface', description: 'Success/warning/error/info surfaces.' },
+    {
+      token: '--au-color-semantic-success-surface',
+      description: 'Success/warning/error/info surfaces.',
+    },
   ],
   breadcrumb: [
     { token: '--au-text-sm', description: 'Trail typography.' },

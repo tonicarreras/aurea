@@ -34,7 +34,6 @@ describe('AuMenu provider', () => {
     expect(auMenuSelfRef()).toBe(AuMenu);
     expect(forwardRef(auMenuSelfRef)).toBeDefined();
   });
-
 });
 
 describe('AuMenu', () => {
@@ -148,7 +147,8 @@ describe('AuMenu', () => {
     fixture.componentInstance.open = true;
     fixture.detectChanges();
     const menu = menuInstance(fixture);
-    const handler = (menu as unknown as { onDocumentClick: (e: MouseEvent) => void }).onDocumentClick;
+    const handler = (menu as unknown as { onDocumentClick: (e: MouseEvent) => void })
+      .onDocumentClick;
     handler.call(menu, { target: null } as unknown as MouseEvent);
     expect(fixture.componentInstance.open).toBe(true);
   });

@@ -35,25 +35,25 @@ Last review: 2025-05 (Fase 0).
 
 ### Phase 2 (0.9 stable)
 
-| Component       | Status | Notes                                                          |
-| --------------- | ------ | -------------------------------------------------------------- |
+| Component       | Status | Notes                                                              |
+| --------------- | ------ | ------------------------------------------------------------------ |
 | `au-menu`       | Stable | Escape closes; roving tabindex / typeahead planned 0.10 (A11Y-004) |
-| `au-popover`    | Stable | `role="dialog"` non-modal; focus return on close               |
-| `au-pagination` | Stable | `aria-current="page"` on active page button                    |
-| `au-table`      | Stable | Native table semantics; sort header exposes `aria-sort`        |
-| `au-breadcrumb` | Stable | `nav` + `aria-current="page"` on last item                     |
-| `au-badge`      | Stable | Decorative when dot-only; pair with visible text when possible |
-| `au-progress`   | Stable | `progressbar` + valuemin/max/now                               |
-| `au-link`       | Stable | Focus ring; external links get `rel="noopener"`                |
+| `au-popover`    | Stable | `role="dialog"` non-modal; focus return on close                   |
+| `au-pagination` | Stable | `aria-current="page"` on active page button                        |
+| `au-table`      | Stable | Native table semantics; sort header exposes `aria-sort`            |
+| `au-breadcrumb` | Stable | `nav` + `aria-current="page"` on last item                         |
+| `au-badge`      | Stable | Decorative when dot-only; pair with visible text when possible     |
+| `au-progress`   | Stable | `progressbar` + valuemin/max/now                                   |
+| `au-link`       | Stable | Focus ring; external links get `rel="noopener"`                    |
 
 ### Known debt (visible)
 
-| ID       | Component       | Issue                                                                 | Target     |
-| -------- | --------------- | --------------------------------------------------------------------- | ---------- |
-| A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                    | 0.5.0      |
-| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                                | 0.5.0      |
-| A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing      | —          |
-| A11Y-004 | `au-menu`       | Roving tabindex + typeahead                                           | 0.5.0      |
+| ID       | Component       | Issue                                                              | Target |
+| -------- | --------------- | ------------------------------------------------------------------ | ------ |
+| A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                 | 0.5.0  |
+| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                             | 0.5.0  |
+| A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing | —      |
+| A11Y-004 | `au-menu`       | Roving tabindex + typeahead                                        | 0.5.0  |
 
 ## Testing checklist (manual)
 

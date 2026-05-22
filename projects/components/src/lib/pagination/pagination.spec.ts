@@ -83,9 +83,11 @@ describe('AuPagination', () => {
     fixture.detectChanges();
     const ellipsis = fixture.nativeElement.querySelectorAll('.au-pagination__ellipsis');
     expect(ellipsis.length).toBeGreaterThan(0);
-    const showEllipsis = (component as unknown as {
-      showEllipsisBefore: (i: number, pages: number[]) => boolean;
-    }).showEllipsisBefore;
+    const showEllipsis = (
+      component as unknown as {
+        showEllipsisBefore: (i: number, pages: number[]) => boolean;
+      }
+    ).showEllipsisBefore;
     expect(showEllipsis(1, component.pageItems())).toBe(true);
     expect(showEllipsis(0, component.pageItems())).toBe(false);
   });

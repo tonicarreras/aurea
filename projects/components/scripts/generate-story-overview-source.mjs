@@ -8,10 +8,7 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 const overviewPath = join(root, 'projects/docs/src/app/i18n/locales/en/overview.ts');
-const outPath = join(
-  root,
-  'projects/components/src/lib/story-docs/story-overview-source.ts',
-);
+const outPath = join(root, 'projects/components/src/lib/story-docs/story-overview-source.ts');
 
 const raw = readFileSync(overviewPath, 'utf8');
 const start = raw.indexOf('export const OVERVIEWS_EN');
@@ -52,19 +49,21 @@ const lines = [
 ];
 
 for (const [slug, o] of Object.entries(OVERVIEWS_EN)) {
-  lines.push(`  ${JSON.stringify(slug)}: ${JSON.stringify(
-    {
-      intro: o.intro,
-      whenToUse: o.whenToUse.items,
-      whenNotToUse: o.whenNotToUse?.items ?? [],
-      anatomy: o.anatomy,
-      accessibility: o.accessibility,
-      keyboard: o.keyboard,
-      extra: extras[slug],
-    },
-    null,
-    2,
-  ).replaceAll('\n', '\n  ')},`);
+  lines.push(
+    `  ${JSON.stringify(slug)}: ${JSON.stringify(
+      {
+        intro: o.intro,
+        whenToUse: o.whenToUse.items,
+        whenNotToUse: o.whenNotToUse?.items ?? [],
+        anatomy: o.anatomy,
+        accessibility: o.accessibility,
+        keyboard: o.keyboard,
+        extra: extras[slug],
+      },
+      null,
+      2,
+    ).replaceAll('\n', '\n  ')},`,
+  );
 }
 
 lines.push('} satisfies Record<string, StoryOverviewSource>;', '');

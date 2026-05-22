@@ -393,11 +393,12 @@ export class LandingPage {
 
   /** V1: landing carousel shows **stable** components only (no beta/experimental). */
   readonly previewDocs = computed(() =>
-    COMPONENT_DOCS.filter((doc) => getDocsComponentMaturity(doc.slug).level === 'stable')
-      .map((doc) => ({
+    COMPONENT_DOCS.filter((doc) => getDocsComponentMaturity(doc.slug).level === 'stable').map(
+      (doc) => ({
         ...doc,
         summary: componentDocSummary(doc, this.i18n.locale()),
-      })),
+      }),
+    ),
   );
 
   readonly docLinkFn = (slug: string): string[] => this.i18n.link(DOCS_ROUTES.components, slug);

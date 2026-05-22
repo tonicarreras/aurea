@@ -33,8 +33,8 @@ Add `--provenance` to the publish workflow step when ready.
 
 ## Semver milestones
 
-| Version | Meaning |
-|---------|---------|
-| `0.4.x` | Phase 2 application core |
+| Version | Meaning                                             |
+| ------- | --------------------------------------------------- |
+| `0.4.x` | Phase 2 application core                            |
 | `0.9.0` | **API freeze candidate** — P0 overlays/table stable |
-| `1.0.0` | Stable core per [V1_CRITERIA.md](./V1_CRITERIA.md) |
+| `1.0.0` | Stable core per [V1_CRITERIA.md](./V1_CRITERIA.md)  |

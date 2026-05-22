@@ -616,9 +616,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuBreadcrumb',
-        rows: [
-          i('items', 'AuBreadcrumbItem[]', 'Segmentos (`label`, `href` opcional).', '[]'),
-        ],
+        rows: [i('items', 'AuBreadcrumbItem[]', 'Segmentos (`label`, `href` opcional).', '[]')],
       },
     ],
   },
@@ -725,7 +723,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
         description: 'En `<th auTableSortHeader>`.',
         rows: [
           i('sortDirection', "'asc' | 'desc' | null", 'Dirección de orden actual.', 'null'),
-          o('sort', "AuTableSortDirection", 'Ciclo none → asc → desc al activar.'),
+          o('sort', 'AuTableSortDirection', 'Ciclo none → asc → desc al activar.'),
         ],
       },
     ],

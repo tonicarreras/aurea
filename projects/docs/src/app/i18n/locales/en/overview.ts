@@ -775,10 +775,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: [
-        'Infinite scroll feeds → load-more pattern.',
-        'Very small lists → show all rows.',
-      ],
+      items: ['Infinite scroll feeds → load-more pattern.', 'Very small lists → show all rows.'],
     },
     anatomy: [
       { region: 'Nav', detail: '`role="navigation"` with `aria-label="Pagination"`.' },
@@ -839,7 +836,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Host `au-table`', detail: 'Wraps projected `<table>`; data attributes for modes.' },
+      {
+        region: 'Host `au-table`',
+        detail: 'Wraps projected `<table>`; data attributes for modes.',
+      },
       { region: 'Sort header', detail: 'Button in `<th>` with `aria-sort` and icon.' },
     ],
     accessibility: [
