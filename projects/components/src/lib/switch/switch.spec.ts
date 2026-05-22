@@ -8,7 +8,7 @@ import {
   AuSwitchTestHost,
   createFieldFixture,
   queryControl,
-} from '../form-field/form-field-test-support';
+} from '../form-field/form-field.spec-hosts';
 import { AuSwitch } from './switch';
 
 describe('AuSwitch', () => {

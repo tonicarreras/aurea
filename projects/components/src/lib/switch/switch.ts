@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
   computed,
   inject,
   input,
@@ -11,14 +12,14 @@ import {
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
-import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/field-errors';
-import { linkFormFieldControl } from '../form-field/link-form-field-control';
-import { AU_FORM_FIELD } from '../form-field/au-form-field.context';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
+import { AU_FORM_FIELD } from '../form-field/form-field';
 import {
   createStandaloneAuFormFieldContext,
   injectAuFormField,
-} from '../form-field/standalone-au-form-field';
-import { queryFieldNative } from '../form-field/query-field-native';
+} from '../form-field/form-field';
+import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
 /** Switch toggle; inline `label` on control; hint/error on {@link AuFormField}. */
@@ -76,11 +77,13 @@ export class AuSwitch implements FormCheckboxControl {
   });
 
   constructor() {
-    linkFormFieldControl({
-      displayError: () => this.displayError(),
-      effectiveInvalid: () => this.effectiveInvalid(),
-      required: () => this.required(),
-    });
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
   }
 
   onChange(event: Event): void {

@@ -21,7 +21,7 @@ import * as switchMod from './switch/index';
 import * as tabs from './tabs/index';
 import * as textarea from './textarea/index';
 import * as tooltip from './tooltip/index';
-import * as theme from './theme/index';
+import * as tokens from './tokens/index';
 
 describe('library barrel exports', () => {
   it('re-exports all public components', () => {
@@ -53,6 +53,6 @@ describe('library barrel exports', () => {
     expect(tabs.AuTabPanel).toBeDefined();
     expect(textarea.AuTextarea).toBeDefined();
     expect(tooltip.AuTooltip).toBeDefined();
-    expect(theme.AuTheme).toBeDefined();
+    expect(tokens.AuTheme).toBeDefined();
   });
 });

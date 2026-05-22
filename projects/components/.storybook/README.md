@@ -7,7 +7,8 @@
 
 ## Tema (claro / oscuro)
 
-- La barra de herramientas incluye **Tema** (globals `auTheme`). Aplica `data-au-theme` en `document.documentElement` para que tokens y canvas de Docs usen `au-tokens.css` (misma cascada que en la app con la directiva `AuTheme`).
+- The toolbar includes **Theme** (global `auTheme`). It applies `data-au-theme` to `document.documentElement` so that tokens and the Docs canvas use `au-tokens.css` (same cascade as in the app with the `AuTheme` directive).
+- `main.ts` serves static files from `src/lib/tokens` → `/au-tokens/` and `src/lib/storybook` → `/au-storybook/` (`preview-head.html`).
 
 ## Test runner (CI / headless)
 
@@ -19,4 +20,4 @@ Global Playwright/CLI tweaks: `test-runner.ts` in this folder (`@storybook/test-
 
 Stories with **custom `render`** (Button, Card, Divider, etc.): `preview.ts` disables Compodoc `extractArgTypes` / `extractComponentDescription` globally so static builds (Netlify, `build-storybook`) do not throw `Invalid component undefined` when class names are minified. Add `parameters.docs.description.component` on the story `Meta` when you want an Autodocs blurb.
 
-Signal-form hosts: same `extractArgTypes` override on the story `Meta` if needed. Export story names as ASCII in `export const` (e.g. `WithValidation` + `name: 'With validation'`) so URLs and the runner stay aligned.
+Signal forms: document in [`../README.md`](../README.md) with a host-component example; do not add separate Storybook “Signal form” story files (`form()` needs an app injection context).

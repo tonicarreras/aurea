@@ -7,7 +7,10 @@ import type { StorybookConfig } from '@storybook/angular';
  */
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  staticDirs: [{ from: '../src/lib/theme', to: '/au-tokens' }],
+  staticDirs: [
+    { from: '../src/lib/tokens', to: '/au-tokens' },
+    { from: '../src/lib/storybook', to: '/au-storybook' },
+  ],
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-docs',

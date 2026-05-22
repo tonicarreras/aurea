@@ -3,7 +3,7 @@
  * Size: `data-au-size` on host (sm | md | lg).
  * Variant: `data-au-variant` on host (primary | secondary | outline | ghost).
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host {
   display: inline-flex;

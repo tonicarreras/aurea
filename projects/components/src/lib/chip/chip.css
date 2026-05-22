@@ -3,7 +3,7 @@
  * Variant: `data-au-variant` (filled | outline | accent).
  * Size: `data-au-size` (sm | md).
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host {
   display: inline-flex;

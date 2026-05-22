@@ -3,8 +3,8 @@
  * Size: `data-au-size` on host (sm | md | lg).
  * Accessibility: WCAG 2.2 AA — focus rings, 24x24 target, 4.5:1 contrast.
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
 
 :host {
   display: inline-block;

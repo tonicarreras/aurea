@@ -7,7 +7,7 @@ import {
   fieldChromeArgTypes,
   formFieldControlRender,
   type FieldChromeStoryArgs,
-} from '../form-field/form-field-story-chrome';
+} from '../form-field';
 import { AuRadioGroup, type AuRadioOption } from './radio-group';
 
 const sample: AuRadioOption[] = [

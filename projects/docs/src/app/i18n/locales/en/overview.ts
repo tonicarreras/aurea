@@ -68,6 +68,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     intro: [
       'Single-line control projected inside `au-form-field` for label, hint, and error.',
       'Implements `FormValueControl<string | null>`: bind `[formField]` in signal forms or `[(value)]` manually. An empty field is `null`, not an empty string.',
+      'Full `form()` example: `@aurea-design-system/components` package README → *Signal forms* (not a separate Storybook page).',
     ],
     whenToUse: {
       title: 'When to use',

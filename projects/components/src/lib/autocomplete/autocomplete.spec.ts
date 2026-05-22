@@ -10,7 +10,7 @@ import {
   applyFieldHarnessInputs,
   createFieldFixture,
   queryControl,
-} from '../form-field/form-field-test-support';
+} from '../form-field/form-field.spec-hosts';
 
 describe('AuAutocomplete', () => {
   function CONTROL(fixture: ComponentFixture<AuAutocompleteTestHost>) {

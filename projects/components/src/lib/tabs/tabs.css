@@ -1,7 +1,7 @@
 /**
  * Tabs — WAI-ARIA tablist with line or contained triggers.
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 au-tabs {
   display: block;

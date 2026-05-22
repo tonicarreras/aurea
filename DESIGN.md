@@ -16,7 +16,7 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 
 ## Source of truth: tokens
 
-- **Package path:** `projects/components/src/lib/theme/au-tokens.css`
+- **Package path:** `projects/components/src/lib/tokens/au-tokens.css`
 - **App consumption:** import **once** at app level (e.g. `angular.json` → `styles` or entry stylesheet) so `var(--au-*)` resolves app-wide, **plus** library build if you ship embedded styles.
 - **Published components** may still `@import` the same theme for a predictable bundle.
 
@@ -65,7 +65,7 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 - Tokens load as `/au-tokens/au-tokens.css` (story project static dir).
 - Preview shell applies `surface-canvas` background and DS font stack via `au-preview-shell.css` (linked in `preview-head` after `au-tokens.css`).
 - **Dark mode:** the Storybook toolbar includes **Tema** (Claro / Oscuro); it sets `data-au-theme` on `document.documentElement` so every story and the Docs canvas follow `au-tokens.css`.
-- **Docs pages:** long-form Markdown (tables, a11y, keyboard) lives in `*.docs-overview.ts` next to stories and is injected via `parameters.docs.description.component`; per-story notes use `parameters.docs.description.story`. Docs **TOC** is enabled globally in `.storybook/preview.ts`.
+- **Docs pages:** long-form Markdown (tables, a11y, keyboard) lives in `*.stories.ts` as `docsOverview` and is injected via `parameters.docs.description.component`; per-story notes use `parameters.docs.description.story`. Docs **TOC** is enabled globally in `.storybook/preview.ts`.
 - **Interaction tests**: stories use `play` with `storybook/test` (`userEvent`, `expect`, `within`); the **Interactions** panel helps debug. For terminal/CI this repo uses **@storybook/test-runner** (works with Angular + Webpack; integrated Vitest addon does not apply here). Commands: `bun run test-storybook` (Storybook already running) and `bun run test-storybook:ci` (static build + runner). See `projects/components/.storybook/README.md`.
 
 ## Versioning and migrations

@@ -2,7 +2,7 @@
  * Aurea Message — inline callouts (default + semantic variants).
  * Variant: `data-au-variant` on host.
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host {
   display: block;

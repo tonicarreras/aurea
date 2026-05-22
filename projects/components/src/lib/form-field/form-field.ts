@@ -3,15 +3,153 @@ import {
   Component,
   computed,
   forwardRef,
+  inject,
   input,
   signal,
+  InjectionToken,
+  type ElementRef,
+  type Signal,
 } from '@angular/core';
+import type { ValidationError } from '@angular/forms/signals';
 
-import {
-  AU_FORM_FIELD,
-  type AuFormFieldContext,
-  type AuFormFieldControlState,
-} from './au-form-field.context';
+/** Validation state reported by a projected field control. */
+export interface AuFormFieldControlState {
+  displayError: string;
+  effectiveInvalid: boolean;
+  required: boolean;
+}
+
+/** Context provided by {@link AuFormField} to projected controls. */
+export interface AuFormFieldContext {
+  readonly label: Signal<string>;
+  readonly controlId: Signal<string>;
+  readonly hintId: Signal<string>;
+  readonly errorId: Signal<string>;
+  readonly hint: Signal<string>;
+  readonly errorMessage: Signal<string>;
+  readonly invalid: Signal<boolean>;
+  readonly showRequired: Signal<boolean>;
+  readonly required: Signal<boolean>;
+  readonly isInvalid: Signal<boolean>;
+  updateControlState(state: AuFormFieldControlState): void;
+}
+
+export const AU_FORM_FIELD = new InjectionToken<AuFormFieldContext>('AU_FORM_FIELD');
+
+/** First visible message from signal-form `errors` on a control. */
+export function displayErrorFromErrors(
+  errors: Signal<readonly ValidationError.WithOptionalFieldTree[]>,
+): Signal<string> {
+  return computed(() => {
+    const list = errors();
+    if (list.length === 0) {
+      return '';
+    }
+    const first = list[0]!;
+    return (first.message ?? first.kind) || '';
+  });
+}
+
+/** Control invalid state including manual errors on the wrapping {@link AuFormField}. */
+export function effectiveInvalidWithField(
+  formField: AuFormFieldContext,
+  state: { invalid: () => boolean; isInvalid: () => boolean },
+): Signal<boolean> {
+  return computed(
+    () =>
+      state.invalid() ||
+      state.isInvalid() ||
+      formField.invalid() ||
+      formField.errorMessage().trim().length > 0,
+  );
+}
+
+export interface FormFieldControlSyncState {
+  displayError: () => string;
+  effectiveInvalid: () => boolean;
+  required: () => boolean;
+}
+
+/** Callback for `afterRenderEffect` in the control constructor (must run in injection context). */
+export function syncFormFieldControlState(
+  formField: AuFormFieldContext,
+  state: FormFieldControlSyncState,
+): () => void {
+  return () => {
+    formField.updateControlState({
+      displayError: state.displayError(),
+      effectiveInvalid: state.effectiveInvalid(),
+      required: state.required(),
+    });
+  };
+}
+
+/** Primary native control inside a field component host (stable class selectors). */
+export function queryFieldNative<T extends HTMLElement>(
+  host: ElementRef<HTMLElement>,
+  selector: string,
+): T {
+  return host.nativeElement.querySelector<T>(selector)!;
+}
+
+let nextStandaloneFieldId = 0;
+
+/** Minimal {@link AuFormFieldContext} when checkbox/switch are not wrapped in `au-form-field`. */
+export function createStandaloneAuFormFieldContext(): AuFormFieldContext {
+  const autoId = `au-field-${++nextStandaloneFieldId}`;
+  const controlState = signal<AuFormFieldControlState | null>(null);
+
+  const label = signal('');
+  const hint = signal('');
+  const errorMessage = signal('');
+  const invalid = signal(false);
+  const required = signal(false);
+  const showRequired = signal(true);
+
+  const controlId = computed(() => autoId);
+  const hintId = computed(() => `${autoId}-hint`);
+  const errorId = computed(() => `${autoId}-error`);
+
+  const displayError = computed(() => {
+    const manual = errorMessage().trim();
+    if (manual.length > 0) {
+      return manual;
+    }
+    return controlState()?.displayError ?? '';
+  });
+
+  const isInvalid = computed(
+    () =>
+      invalid() ||
+      (controlState()?.effectiveInvalid ?? false) ||
+      displayError().length > 0,
+  );
+
+  return {
+    label,
+    controlId,
+    hintId,
+    errorId,
+    hint,
+    errorMessage,
+    invalid,
+    showRequired,
+    required,
+    isInvalid,
+    updateControlState(state: AuFormFieldControlState): void {
+      controlState.set(state);
+    },
+  };
+}
+
+/** Prefer parent `au-form-field`; otherwise use the host's standalone provider. */
+export function injectAuFormField(): AuFormFieldContext {
+  const ancestor = inject(AU_FORM_FIELD, { optional: true, skipSelf: true });
+  if (ancestor) {
+    return ancestor;
+  }
+  return inject(AU_FORM_FIELD);
+}
 
 let nextFieldId = 0;
 

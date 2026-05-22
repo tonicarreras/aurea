@@ -68,6 +68,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     intro: [
       'Control de una línea proyectado dentro de `au-form-field` para etiqueta, hint y error.',
       'Implementa `FormValueControl<string | null>`: enlaza `[formField]` en signal forms o `[(value)]` en modo manual. Un campo vacío se representa como `null`, no como cadena vacía.',
+      'Ejemplo completo con `form()`: README del paquete `@aurea-design-system/components` → *Signal forms* (no hay página aparte en Storybook).',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',

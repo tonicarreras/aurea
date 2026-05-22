@@ -1,9 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, type WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AU_FORM_FIELD } from './au-form-field.context';
-import { AuFormField, auFormFieldSelfRef } from './form-field';
-import { AuInputTextTestHost, createFieldFixture } from './form-field-test-support';
+
+import { AuInputText } from '../input-text/input-text';
+import {
+  AU_FORM_FIELD,
+  AuFormField,
+  auFormFieldSelfRef,
+  createStandaloneAuFormFieldContext,
+  injectAuFormField,
+  queryFieldNative,
+  syncFormFieldControlState,
+} from './form-field';
+import { AuInputTextTestHost, createFieldFixture } from './form-field.spec-hosts';
+import {
+  defaultFieldChromeArgs,
+  formFieldControlRender,
+  formFieldHintOnlyRender,
+} from './form-field.stories-chrome';
 
 @Component({
   selector: 'au-test-form-field-child',
@@ -18,6 +32,22 @@ class FormFieldChildProbe {
   template: '<au-form-field label="Probe"><au-test-form-field-child /></au-form-field>',
 })
 class FormFieldProviderHost {}
+
+@Component({
+  template: '<input class="probe-input" />',
+})
+class ProbeHost {
+  readonly host = inject(ElementRef<HTMLElement>);
+}
+
+type WritableFormFieldContext = ReturnType<typeof createStandaloneAuFormFieldContext> & {
+  label: WritableSignal<string>;
+  hint: WritableSignal<string>;
+  errorMessage: WritableSignal<string>;
+  invalid: WritableSignal<boolean>;
+  required: WritableSignal<boolean>;
+  showRequired: WritableSignal<boolean>;
+};
 
 describe('AuFormField', () => {
   let fixture: ComponentFixture<AuFormField>;
@@ -93,7 +123,6 @@ describe('AuFormField', () => {
     fixture.detectChanges();
     expect(fixture.componentInstance.controlId()).toMatch(/^au-field-\d+$/);
   });
-
 });
 
 describe('AuFormField AU_FORM_FIELD provider', () => {
@@ -107,7 +136,8 @@ describe('AuFormField AU_FORM_FIELD provider', () => {
     const hostFix = TestBed.createComponent(FormFieldProviderHost);
     hostFix.detectChanges();
     const field = hostFix.debugElement.query(By.directive(AuFormField))!.componentInstance as AuFormField;
-    const probe = hostFix.debugElement.query(By.directive(FormFieldChildProbe))!.componentInstance as FormFieldChildProbe;
+    const probe = hostFix.debugElement.query(By.directive(FormFieldChildProbe))!
+      .componentInstance as FormFieldChildProbe;
     expect(probe.ctx).toBe(field);
   });
 });
@@ -141,5 +171,176 @@ describe('AuFormField with projected control', () => {
     const ff = fix.debugElement.query(By.directive(AuFormField))!.componentInstance as AuFormField;
     expect(ff.isInvalid()).toBe(true);
     expect(ff.displayError()).toBe('');
+  });
+});
+
+describe('syncFormFieldControlState', () => {
+  it('pushes validation state into the form field context', () => {
+    const formField = createStandaloneAuFormFieldContext();
+    const sync = syncFormFieldControlState(formField, {
+      displayError: () => 'Invalid email',
+      effectiveInvalid: () => true,
+      required: () => true,
+    });
+
+    sync();
+
+    expect(formField.isInvalid()).toBe(true);
+  });
+});
+
+describe('queryFieldNative', () => {
+  it('returns the element matching the selector inside the host', () => {
+    const fixture = TestBed.createComponent(ProbeHost);
+    fixture.detectChanges();
+    const input = queryFieldNative<HTMLInputElement>(fixture.componentInstance.host, '.probe-input');
+    expect(input.tagName).toBe('INPUT');
+    expect(input.classList.contains('probe-input')).toBe(true);
+  });
+});
+
+describe('createStandaloneAuFormFieldContext', () => {
+  it('assigns unique control, hint, and error ids', () => {
+    const a = createStandaloneAuFormFieldContext();
+    const b = createStandaloneAuFormFieldContext();
+
+    expect(a.controlId()).toMatch(/^au-field-\d+$/);
+    expect(b.controlId()).not.toBe(a.controlId());
+    expect(a.hintId()).toBe(`${a.controlId()}-hint`);
+    expect(a.errorId()).toBe(`${a.controlId()}-error`);
+  });
+
+  it('reports invalid from the manual errorMessage signal', () => {
+    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    ctx.errorMessage.set('  Required field  ');
+    expect(ctx.isInvalid()).toBe(true);
+  });
+
+  it('prefers manual errorMessage over control displayError', () => {
+    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    ctx.errorMessage.set('Wrapper error');
+    ctx.updateControlState({
+      displayError: 'Control error',
+      effectiveInvalid: true,
+      required: false,
+    });
+    expect(ctx.isInvalid()).toBe(true);
+    ctx.errorMessage.set('');
+    expect(ctx.isInvalid()).toBe(true);
+  });
+
+  it('uses control displayError when manual errorMessage is empty', () => {
+    const ctx = createStandaloneAuFormFieldContext();
+    ctx.updateControlState({
+      displayError: 'Control error',
+      effectiveInvalid: false,
+      required: true,
+    });
+    expect(ctx.isInvalid()).toBe(true);
+  });
+
+  it('reports invalid from the invalid flag alone', () => {
+    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    ctx.invalid.set(true);
+    expect(ctx.isInvalid()).toBe(true);
+  });
+
+  it('reports invalid from control effectiveInvalid alone', () => {
+    const ctx = createStandaloneAuFormFieldContext();
+    ctx.updateControlState({
+      displayError: '',
+      effectiveInvalid: true,
+      required: false,
+    });
+    expect(ctx.isInvalid()).toBe(true);
+  });
+
+  it('is not invalid when all signals are clear', () => {
+    const ctx = createStandaloneAuFormFieldContext();
+    expect(ctx.isInvalid()).toBe(false);
+  });
+
+  it('syncs writable field metadata signals', () => {
+    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    ctx.label.set('Label');
+    ctx.hint.set('Hint');
+    ctx.required.set(true);
+    ctx.showRequired.set(false);
+    expect(ctx.label()).toBe('Label');
+    expect(ctx.hint()).toBe('Hint');
+    expect(ctx.required()).toBe(true);
+    expect(ctx.showRequired()).toBe(false);
+  });
+});
+
+describe('injectAuFormField', () => {
+  @Component({
+    selector: 'au-standalone-field-probe',
+    template: '',
+    providers: [{ provide: AU_FORM_FIELD, useFactory: createStandaloneAuFormFieldContext }],
+  })
+  class StandaloneFieldProbe {
+    readonly ctx = injectAuFormField();
+  }
+
+  @Component({
+    imports: [StandaloneFieldProbe],
+    template: '<au-standalone-field-probe />',
+  })
+  class BareStandaloneHost {}
+
+  @Component({
+    imports: [AuFormField, StandaloneFieldProbe],
+    template: '<au-form-field label="Parent"><au-standalone-field-probe /></au-form-field>',
+  })
+  class WrappedStandaloneHost {}
+
+  it('returns the host standalone context when no ancestor field exists', () => {
+    const fix = TestBed.createComponent(BareStandaloneHost);
+    fix.detectChanges();
+    const probeDe = fix.debugElement.query(By.directive(StandaloneFieldProbe))!;
+    const probe = probeDe.componentInstance as StandaloneFieldProbe;
+    expect(probe.ctx).toBe(probeDe.injector.get(AU_FORM_FIELD));
+  });
+
+  it('returns the ancestor au-form-field context when wrapped', () => {
+    const fix = TestBed.createComponent(WrappedStandaloneHost);
+    fix.detectChanges();
+    const parentField = fix.debugElement.query(By.directive(AuFormField))!
+      .componentInstance as AuFormField;
+    const probe = fix.debugElement.query(By.directive(StandaloneFieldProbe))!
+      .componentInstance as StandaloneFieldProbe;
+    expect(probe.ctx).toBe(parentField);
+    expect(probe.ctx.controlId()).toBe(parentField.controlId());
+  });
+});
+
+describe('formFieldControlRender', () => {
+  it('returns au-form-field template with chrome bindings', () => {
+    const args = { ...defaultFieldChromeArgs, label: 'Email' };
+    const result = formFieldControlRender([AuFormField, AuInputText], args, '<au-input-text />');
+
+    expect(result.props).toBe(args);
+    expect(result.moduleMetadata.imports).toEqual([AuFormField, AuInputText]);
+    expect(result.template).toContain('[label]="label"');
+    expect(result.template).toContain('[controlIdInput]="controlIdInput"');
+    expect(result.template).toContain('<au-input-text />');
+  });
+});
+
+describe('formFieldHintOnlyRender', () => {
+  it('omits label binding on au-form-field', () => {
+    const args = {
+      hint: 'Hint',
+      errorMessage: '',
+      invalid: false,
+      required: false,
+      controlIdInput: 'x',
+    };
+    const result = formFieldHintOnlyRender([AuFormField], args, '<au-switch />');
+
+    expect(result.template).not.toContain('[label]="label"');
+    expect(result.template).toContain('[hint]="hint"');
+    expect(result.template).toContain('<au-switch />');
   });
 });

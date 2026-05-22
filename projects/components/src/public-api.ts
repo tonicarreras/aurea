@@ -27,4 +27,4 @@ export * from './lib/switch';
 export * from './lib/tabs';
 export * from './lib/textarea';
 export * from './lib/tooltip';
-export * from './lib/theme';
+export * from './lib/tokens';

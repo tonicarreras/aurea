@@ -11,8 +11,8 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { TooltipOverlay } from '../theme/tooltip-overlay';
-import type { AuTooltipPlacement } from '../theme/tooltip-position';
+import { TooltipOverlay } from '../overlay/tooltip-overlay';
+import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
 /**
  * Design-system **tooltip**: supplementary label on hover or keyboard focus.

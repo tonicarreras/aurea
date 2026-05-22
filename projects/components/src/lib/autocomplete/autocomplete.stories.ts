@@ -7,7 +7,7 @@ import {
   fieldChromeArgTypes,
   formFieldControlRender,
   type FieldChromeStoryArgs,
-} from '../form-field/form-field-story-chrome';
+} from '../form-field';
 import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
 
 const cities: AuAutocompleteOption[] = [

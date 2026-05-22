@@ -3,7 +3,7 @@
  * Variant: `data-au-variant` (text | circular | rectangular | rounded | button).
  * Animation: `data-au-animation` (pulse | wave | none).
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host {
   --au-skeleton-base: var(--au-color-skeleton-base);

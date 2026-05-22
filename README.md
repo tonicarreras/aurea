@@ -147,7 +147,7 @@ Run `bun run test:coverage` locally to see the current file-level report and tot
 
 | Included | Excluded |
 |----------|----------|
-| `projects/components/src/lib/**/*.ts` | `*.stories.ts`, `*.docs-overview.ts`, `*-story-host.ts` |
+| `projects/components/src/lib/**/*.ts` | `*.stories.ts`, `*-story-host.ts` |
 
 ### Commands
 

@@ -1,3 +1,5 @@
+/** Shared Storybook chrome for field controls wrapped in `au-form-field`. */
+
 /** Chrome args for stories that wrap a control in `au-form-field`. */
 export interface FieldChromeStoryArgs {
   label: string;
@@ -19,7 +21,7 @@ export const fieldChromeArgTypes = {
   hint: {
     control: 'text' as const,
     description: 'Helper text on `au-form-field`.',
-    table: { category: 'Chrome' },
+    table: { category: 'Content' },
   },
   errorMessage: {
     control: 'text' as const,

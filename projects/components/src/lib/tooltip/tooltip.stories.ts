@@ -3,7 +3,7 @@ import { expect, userEvent, within } from 'storybook/test';
 
 import { AuButton } from '../button/button';
 import { AuTooltip } from './au-tooltip.directive';
-import type { AuTooltipPlacement } from '../theme/tooltip-position';
+import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
 const storyImports = { imports: [AuTooltip, AuButton] };
 

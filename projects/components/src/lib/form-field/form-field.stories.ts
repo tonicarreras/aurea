@@ -23,7 +23,7 @@ const meta: Meta<FormFieldStoryArgs> = {
       extractArgTypes: () => ({}),
       description: {
         component:
-          'Optional label, hint, and error chrome around a projected control. Leave `label` empty on the inner field when using this wrapper.',
+          'Optional label, hint, and error chrome around a projected control. Leave `label` empty on the inner control when using this wrapper. With signal forms, child `errors` / `invalid` from `[formField]` drive the error region — see the package README (*Signal forms*).',
       },
     },
   },

@@ -5,7 +5,7 @@
  * Hosts set `data-au-listbox-open` while the panel is visible so the whole
  * component stacks above sibling fields (not only the listbox node).
  */
-@import url('./au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host([data-au-listbox-open]) {
   position: relative;

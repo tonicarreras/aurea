@@ -85,7 +85,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
       <h2>{{ i18n.messages().themes.ruleHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.ruleBody" />
-        <code>projects/components/src/lib/theme/au-tokens.css</code>.
+        <code>projects/components/src/lib/tokens/au-tokens.css</code>.
       </p>
     </docs-page>
   `,

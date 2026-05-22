@@ -1,9 +1,9 @@
 /**
  * Autocomplete — combobox field chrome aligned with au-select / au-input-text.
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
-@import url('../theme/au-field-listbox.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
+@import url('../styles/au-field-listbox.css');
 
 :host {
   display: block;

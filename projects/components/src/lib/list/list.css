@@ -1,7 +1,7 @@
 /**
  * Aurea List — flex row of list items (chips, custom hosts with auListItem).
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host {
   display: flex;

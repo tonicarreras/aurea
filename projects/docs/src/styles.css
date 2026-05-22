@@ -1,6 +1,6 @@
-@import '../../components/src/lib/theme/au-tokens.css';
-@import '../../components/src/lib/theme/au-field-error.css';
-@import '../../components/src/lib/theme/au-field-listbox.css';
+@import '../../components/src/lib/tokens/au-tokens.css';
+@import '../../components/src/lib/styles/au-field-error.css';
+@import '../../components/src/lib/styles/au-field-listbox.css';
 
 /* Docs-only aliases (nav / links used legacy accent names) */
 :root {

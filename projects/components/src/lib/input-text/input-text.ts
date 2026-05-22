@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
   computed,
   inject,
   input,
@@ -11,10 +12,10 @@ import {
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
-import { AU_FORM_FIELD } from '../form-field/au-form-field.context';
-import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/field-errors';
-import { linkFormFieldControl } from '../form-field/link-form-field-control';
-import { queryFieldNative } from '../form-field/query-field-native';
+import { AU_FORM_FIELD } from '../form-field/form-field';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
+import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
 type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
@@ -101,11 +102,13 @@ export class AuInputText implements FormValueControl<string | null> {
   });
 
   constructor() {
-    linkFormFieldControl({
-      displayError: () => this.displayError(),
-      effectiveInvalid: () => this.effectiveInvalid(),
-      required: () => this.required(),
-    });
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
   }
 
   onInput(event: Event): void {
