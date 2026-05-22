@@ -20,24 +20,25 @@ export interface DocsMessages {
     npmAria: string;
     storybookAria: string;
   };
-  home: {
+  landing: {
     eyebrow: string;
     title: string;
+    titleAccent: string;
     lead: string;
-    statsAria: string;
-    statsComponents: string;
-    statsA11y: string;
-    statsForms: string;
-    exploreAria: string;
-    cardGetStartedTitle: string;
-    cardGetStartedText: string;
-    cardThemesTitle: string;
-    cardThemesText: string;
-    cardComponentsTitle: string;
-    cardComponentsText: string;
+    ctaDocs: string;
+    ctaStorybook: string;
+    overviewTitle: string;
+    overviewAria: string;
+    principles: { title: string; text: string; accent: string }[];
+    systemTitle: string;
+    systemLead: string;
+    systemPoints: string[];
+    themesLink: string;
+    previewsTitle: string;
+    previewsLead: string;
+    previewsAria: string;
+    previewOpenDoc: string;
     footer: string;
-    ctaComponents: string;
-    ctaInstall: string;
   };
   getStarted: {
     title: string;

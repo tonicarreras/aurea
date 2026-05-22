@@ -11,7 +11,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/home.page').then((m) => m.HomePage),
+        loadComponent: () => import('./pages/landing.page').then((m) => m.LandingPage),
+        data: { layout: 'landing' },
       },
       {
         path: 'get-started',

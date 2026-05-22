@@ -96,11 +96,21 @@ body {
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-primary);
   background-color: var(--au-color-surface-canvas);
-  background-image:
-    linear-gradient(var(--docs-grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--docs-grid-line) 1px, transparent 1px);
-  background-size: 2.5rem 2.5rem;
-  background-position: center top;
+  background-image: radial-gradient(
+    110% 85% at 50% -12%,
+    color-mix(in srgb, var(--au-color-action-primary) 7%, transparent),
+    transparent 58%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+[data-au-theme='dark'] body {
+  background-image: radial-gradient(
+    110% 85% at 50% -12%,
+    color-mix(in srgb, var(--au-color-action-primary) 10%, transparent),
+    transparent 62%
+  );
 }
 
 ::selection {

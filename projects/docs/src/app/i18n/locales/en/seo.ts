@@ -9,9 +9,9 @@ export const SEO_EN: DocsSeoMessages = {
   breadcrumbThemes: 'Themes & tokens',
   breadcrumbComponents: 'Components',
   home: {
-    title: 'Aurea Design System — Angular 21 Components & Tokens',
+    title: 'Aurea — Angular 21 design system focused on the task',
     description:
-      'Production-ready Angular 21 UI kit with WCAG 2.2 patterns, semantic tokens, signal forms, Storybook, and npm install guides.',
+      'Open MIT UI system: less visual noise, accessible components, semantic tokens, and live previews. Documentation for install and implementation.',
   },
   getStarted: {
     title: 'Get started — Install Aurea on Angular 21',

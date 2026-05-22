@@ -47,7 +47,7 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
       ? {
           title: 'Introduction',
           items: [
-            { path: '', label: 'Home', exact: true },
+            { path: '', label: 'Design overview', exact: true },
             { path: DOCS_ROUTES.getStarted, label: 'Get started' },
             { path: DOCS_ROUTES.themes, label: 'Themes & tokens' },
           ],
@@ -55,7 +55,7 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
       : {
           title: 'Introducción',
           items: [
-            { path: '', label: 'Inicio', exact: true },
+            { path: '', label: 'Visión de diseño', exact: true },
             { path: DOCS_ROUTES.getStarted, label: 'Empezar' },
             { path: DOCS_ROUTES.themes, label: 'Temas y tokens' },
           ],

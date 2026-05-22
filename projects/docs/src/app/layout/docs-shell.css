@@ -58,6 +58,27 @@
   display: none;
 }
 
+/* Landing: un solo fondo continuo (sin orbes animados que “reinician” el degradado) */
+:host.docs-shell--landing {
+  background:
+    radial-gradient(ellipse 90% 65% at 78% -8%, var(--docs-mesh-1), transparent 58%),
+    radial-gradient(ellipse 75% 55% at 4% 88%, var(--docs-mesh-2), transparent 55%),
+    var(--au-color-surface-canvas);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+:host.docs-shell--landing .docs-atmosphere {
+  display: none;
+}
+
+:host.docs-shell--landing[data-au-theme='dark'] {
+  background:
+    radial-gradient(ellipse 90% 65% at 78% -8%, var(--docs-mesh-1), transparent 62%),
+    radial-gradient(ellipse 75% 55% at 4% 88%, var(--docs-mesh-2), transparent 58%),
+    var(--au-color-surface-canvas);
+}
+
 .docs-skip {
   position: absolute;
   left: var(--docs-nav-inset);
@@ -238,6 +259,21 @@
   width: 100%;
   padding: 0;
   animation: docs-fade-up 0.55s var(--au-ease-out) 0.08s both;
+}
+
+.docs-main--landing {
+  max-width: min(88rem, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(var(--au-space-4), 4vw, var(--au-space-8))
+    var(--au-space-10);
+}
+
+.docs-shell--landing .docs-header {
+  border-bottom-color: transparent;
+}
+
+.docs-shell--landing .docs-layout {
+  display: none;
 }
 
 @media (max-width: 68rem) {

@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
+
+import { isDocsLocale } from '../core/docs-locale';
 
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocsSeoService } from '../core/docs-seo.service';
@@ -20,6 +24,7 @@ import { DocsShellToolbar, type DocsThemeMode } from './docs-shell-toolbar';
   ],
   host: {
     class: 'docs-shell',
+    '[class.docs-shell--landing]': 'isLanding()',
     '[attr.data-au-theme]': 'resolvedTheme()',
     '[attr.lang]': 'locale.locale()',
   },
@@ -63,41 +68,50 @@ import { DocsShellToolbar, type DocsThemeMode } from './docs-shell-toolbar';
       (themeChange)="onThemeChange($event)"
     />
 
-    <div class="docs-layout">
-      <nav
-        class="docs-nav"
-        [attr.aria-label]="locale.messages().shell.navAria"
-      >
-        @for (section of locale.nav(); track section.title) {
-          <section class="docs-nav__section">
-            <h2 class="docs-nav__heading">{{ section.title }}</h2>
-            <ul class="docs-nav__list">
-              @for (item of section.items; track item.path) {
-                <li>
-                  <a
-                    class="docs-nav__link"
-                    [routerLink]="locale.link(item.path)"
-                    routerLinkActive="docs-nav__link--active"
-                    [routerLinkActiveOptions]="{
-                      exact: item.exact === true || item.path === '',
-                    }"
-                  >
-                    {{ item.label }}
-                  </a>
-                </li>
-              }
-            </ul>
-          </section>
-        }
-      </nav>
-
+    @if (isLanding()) {
       <main
         id="docs-main"
-        class="docs-main"
+        class="docs-main docs-main--landing"
       >
         <router-outlet />
       </main>
-    </div>
+    } @else {
+      <div class="docs-layout">
+        <nav
+          class="docs-nav"
+          [attr.aria-label]="locale.messages().shell.navAria"
+        >
+          @for (section of locale.nav(); track section.title) {
+            <section class="docs-nav__section">
+              <h2 class="docs-nav__heading">{{ section.title }}</h2>
+              <ul class="docs-nav__list">
+                @for (item of section.items; track item.path) {
+                  <li>
+                    <a
+                      class="docs-nav__link"
+                      [routerLink]="locale.link(item.path)"
+                      routerLinkActive="docs-nav__link--active"
+                      [routerLinkActiveOptions]="{
+                        exact: item.exact === true,
+                      }"
+                    >
+                      {{ item.label }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+        </nav>
+
+        <main
+          id="docs-main"
+          class="docs-main"
+        >
+          <router-outlet />
+        </main>
+      </div>
+    }
   `,
   styleUrl: './docs-shell.css',
 })
@@ -105,8 +119,23 @@ export class DocsShell {
   readonly locale = inject(DocsLocaleService);
   /** Activates per-route title, meta, canonical, hreflang, and JSON-LD. */
   private readonly _seo = inject(DocsSeoService);
+  private readonly router = inject(Router);
   readonly theme = signal<DocsThemeMode>('system');
   readonly resolvedTheme = signal<'light' | 'dark'>('light');
+
+  private readonly url = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map(() => this.router.url.split('?')[0] ?? '/'),
+      startWith(this.router.url.split('?')[0] ?? '/'),
+    ),
+    { initialValue: '/' },
+  );
+
+  readonly isLanding = computed(() => {
+    const segments = this.url().split('/').filter(Boolean);
+    return segments.length === 1 && isDocsLocale(segments[0] ?? '');
+  });
 
   constructor() {
     this.syncResolvedTheme();
