@@ -192,7 +192,10 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   private readonly syncListboxOverlay = afterRenderEffect(() => {
     const input = this.inputNativeElement();
-    const anchor = input.closest('.au-autocomplete__control-row')! as HTMLElement;
+    const anchor = input.closest('.au-autocomplete__control-row');
+    if (!(anchor instanceof HTMLElement)) {
+      return;
+    }
     this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
   });
 
@@ -266,7 +269,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
         event.preventDefault();
         const i = this.highlightedIndex();
         if (i >= 0 && i < opts.length) {
-          this.selectOption(opts[i]!);
+          this.selectOption(opts[i]);
         }
         return;
       }
@@ -428,7 +431,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   private lastHighlightableIndex(opts: AuAutocompleteOption[]): number {
     for (let i = opts.length - 1; i >= 0; i--) {
-      if (!opts[i]!.disabled) {
+      if (!opts[i].disabled) {
         return i;
       }
     }
@@ -453,7 +456,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
       if (i >= opts.length) {
         i = 0;
       }
-      if (!opts[i]!.disabled) {
+      if (!opts[i].disabled) {
         return i;
       }
     }

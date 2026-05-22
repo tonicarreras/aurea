@@ -1,12 +1,12 @@
 # Shared library internals (`src/lib`)
 
-Component folders (`button/`, `input-text/`, …) own their public API. **`form-field/`** keeps runtime code in `form-field.ts`, stories in `form-field.stories.ts`, shared Storybook chrome in `form-field.stories-chrome.ts` (re-exported from `index.ts`; not `*.stories.ts` so Storybook does not index render helpers as stories), unit tests in `form-field.spec.ts`, and shared test hosts in `form-field.spec-hosts.ts`. Cross-cutting pieces live alongside them:
+Component folders (`button/`, `input-text/`, `dialog/`, …) own their public API. **Directives, services, and helpers** live in their own files when it helps. **Stories** stay in one `*.stories.ts` (hosts inline); **tests** in one `*.spec.ts`. `form-field` also has `*.stories-chrome.ts` (Storybook chrome, not `*.stories.ts`) and `*.spec-hosts.ts` (shared hosts for sibling specs). Cross-cutting pieces:
 
 | Folder | Contents |
 |--------|----------|
 | **`tokens/`** | `au-tokens.css`, `AuTheme` directive (`[auTheme]` → `data-au-theme`) |
 | **`styles/`** | Shared CSS: `au-field-error.css`, `au-field-listbox.css` (published under `styles/`) |
-| **`overlay/`** | Portal/position helpers for tooltip and select/autocomplete listbox (not exported from `public-api`) |
+| **`overlay/`** | `tooltip-position.ts`, `tooltip-overlay.ts`, `field-listbox-overlay.ts`; tests in `overlay.spec.ts` only — not exported from `public-api` |
 | **`storybook/`** | Storybook-only assets (`au-preview-shell.css`) |
 
 Consumers import tokens via `@aurea-design-system/components/styles/au-tokens.css` and `AuTheme` from the package entry.

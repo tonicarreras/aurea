@@ -45,7 +45,7 @@ export function displayErrorFromErrors(
     if (list.length === 0) {
       return '';
     }
-    const first = list[0]!;
+    const first = list[0];
     return (first.message ?? first.kind) || '';
   });
 }
@@ -85,11 +85,13 @@ export function syncFormFieldControlState(
 }
 
 /** Primary native control inside a field component host (stable class selectors). */
-export function queryFieldNative<T extends HTMLElement>(
-  host: ElementRef<HTMLElement>,
-  selector: string,
-): T {
-  return host.nativeElement.querySelector<T>(selector)!;
+export function queryFieldNative<T extends HTMLElement>(host: ElementRef, selector: string): T {
+  const root = host.nativeElement as HTMLElement;
+  const el = root.querySelector<T>(selector);
+  if (!el) {
+    throw new Error(`queryFieldNative: no element matches "${selector}"`);
+  }
+  return el;
 }
 
 let nextStandaloneFieldId = 0;

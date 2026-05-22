@@ -134,9 +134,9 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   }
 
   focus(): void {
-    const first = this.host.nativeElement.querySelector(
+    const first = (this.host.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
       'input[type="radio"]:not(:disabled)',
-    ) as HTMLInputElement | null;
+    );
     first?.focus();
   }
 }

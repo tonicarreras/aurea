@@ -25,8 +25,7 @@ import { DocsInlineText } from './docs-inline-text';
       </div>
     </article>
   `,
-  styles: [
-    `
+  styles: `
       .docs-page {
         width: 100%;
         max-width: 100%;
@@ -150,7 +149,6 @@ import { DocsInlineText } from './docs-inline-text';
         background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
       }
     `,
-  ],
 })
 export class DocPage {
   readonly title = input.required<string>();

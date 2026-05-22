@@ -68,8 +68,7 @@ export type GetStartedStep =
       </ol>
     </docs-page>
   `,
-  styles: [
-    `
+  styles: `
       .docs-steps {
         margin: 0;
         padding: 0;
@@ -164,7 +163,6 @@ export type GetStartedStep =
         white-space: nowrap;
       }
     `,
-  ],
 })
 export class GetStartedPage {
   readonly i18n = inject(DocsLocaleService);

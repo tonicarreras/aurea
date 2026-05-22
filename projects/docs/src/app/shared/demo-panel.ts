@@ -16,8 +16,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       </div>
     </section>
   `,
-  styles: [
-    `
+  styles: `
       .docs-demo {
         animation: docs-fade-up 0.5s var(--au-ease-out) both;
       }
@@ -77,7 +76,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
         }
       }
     `,
-  ],
 })
 export class DemoPanel {
   /** Oculta cabecera «Vista previa» (p. ej. en bloques de Examples). */

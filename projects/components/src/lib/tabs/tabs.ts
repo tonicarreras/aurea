@@ -138,7 +138,7 @@ export class AuTabs {
         break;
     }
 
-    const target = enabled[targetIndex]!;
+    const target = enabled[targetIndex];
     this.selectTab(target.auTab());
     target.focus();
   }
@@ -152,6 +152,6 @@ export class AuTabs {
     if (current && enabled.some((t) => t.auTab() === current)) {
       return;
     }
-    this.selectTab(enabled[0]!.auTab());
+    this.selectTab(enabled[0].auTab());
   }
 }

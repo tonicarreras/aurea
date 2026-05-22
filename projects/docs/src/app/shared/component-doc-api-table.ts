@@ -47,8 +47,7 @@ import { DocsInlineText } from './docs-inline-text';
       </table>
     </div>
   `,
-  styles: [
-    `
+  styles: `
       .docs-api-table-wrap {
         overflow-x: auto;
         margin: 0;
@@ -103,7 +102,6 @@ import { DocsInlineText } from './docs-inline-text';
         color: var(--au-color-text-tertiary);
       }
     `,
-  ],
 })
 export class ComponentDocApiTable {
   readonly rows = input.required<ComponentApiEntry[]>();

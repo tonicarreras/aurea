@@ -1,12 +1,13 @@
+import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
-import type { AuSnackbarPosition, AuSnackbarVariant } from './snackbar';
-import { AuSnackbarStoryHost } from './snackbar-story-host';
+import { AuButton } from '../button/button';
+import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './snackbar';
 
-const meta: Meta<AuSnackbarStoryHost> = {
+const meta: Meta<AuSnackbar> = {
   title: 'Aurea/Snackbar',
-  component: AuSnackbarStoryHost,
+  component: AuSnackbar,
   tags: ['autodocs', 'au'],
   parameters: {
     layout: 'fullscreen',
@@ -14,13 +15,11 @@ const meta: Meta<AuSnackbarStoryHost> = {
       extractArgTypes: () => ({}),
       description: {
         component:
-          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',
+          'Transient feedback toast with optional action and auto-dismiss. Control visibility with `[(open)]` on a writable signal; open from a trigger and listen to `dismiss` / `action`.',
       },
     },
   },
   argTypes: {
-    hint: { control: 'text', table: { category: 'Storybook' } },
-    triggerLabel: { control: 'text', table: { category: 'Storybook' } },
     open: { control: 'boolean', table: { category: 'State' } },
     message: { control: 'text', table: { category: 'Content' } },
     variant: {
@@ -43,14 +42,12 @@ const meta: Meta<AuSnackbarStoryHost> = {
     durationMs: { control: 'number', table: { category: 'Behavior' } },
     actionLabel: { control: 'text', table: { category: 'Content' } },
     showCloseButton: { control: 'boolean', table: { category: 'Content' } },
-    dismiss: { action: 'dismiss', table: { category: 'Events' } },
-    action: { action: 'action', table: { category: 'Events' } },
+    dismiss: { table: { category: 'Events' } },
+    action: { table: { category: 'Events' } },
   },
   args: {
-    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',
-    triggerLabel: 'Show snackbar',
     open: false,
-    message: 'Changes saved successfully.',
+    message: 'Cambios guardados correctamente.',
     variant: 'default',
     position: 'bottom-center',
     durationMs: 5000,
@@ -62,44 +59,81 @@ const meta: Meta<AuSnackbarStoryHost> = {
 };
 
 export default meta;
-type Story = StoryObj<AuSnackbarStoryHost>;
+type Story = StoryObj<AuSnackbar>;
 
-export const Default: Story = {};
+function snackbarStory(triggerLabel?: string): Story {
+  return {
+    render: (args) => ({
+      props: {
+        ...args,
+        open: signal(false),
+        triggerLabel: triggerLabel ?? 'Mostrar snackbar',
+      },
+      moduleMetadata: { imports: [AuSnackbar, AuButton] },
+      template: `
+        <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
+        <au-snackbar
+          [(open)]="open"
+          [message]="message"
+          [variant]="variant"
+          [position]="position"
+          [durationMs]="durationMs"
+          [actionLabel]="actionLabel"
+          [showCloseButton]="showCloseButton"
+          (dismiss)="open.set(false); dismiss()"
+          (action)="open.set(false); action()"
+        />
+      `,
+    }),
+  };
+}
+
+export const Default: Story = snackbarStory();
 
 export const Success: Story = {
+  ...snackbarStory('Mostrar éxito'),
   args: {
-    hint: 'Semantic success surface for positive feedback.',
-    triggerLabel: 'Show success',
-    message: 'Profile updated.',
+    message: 'Perfil actualizado.',
     variant: 'success',
   },
 };
 
 export const WithAction: Story = {
+  ...snackbarStory('Mostrar con acción'),
   args: {
-    hint: 'Optional action closes the snackbar and emits **action**.',
-    triggerLabel: 'Show with action',
-    message: 'Item removed.',
-    actionLabel: 'Undo',
+    message: 'Elemento eliminado.',
+    actionLabel: 'Deshacer',
     durationMs: 8000,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'La acción opcional cierra el snackbar y emite `action`.',
+      },
+    },
   },
 };
 
 export const ErrorPersistent: Story = {
+  ...snackbarStory('Mostrar error'),
   args: {
-    hint: 'Error uses role="alert"; **durationMs** 0 requires manual dismiss.',
-    triggerLabel: 'Show error',
-    message: 'Could not save changes. Try again.',
+    message: 'No se pudieron guardar los cambios. Inténtalo de nuevo.',
     variant: 'error',
     durationMs: 0,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Variante error con `role="alert"`; `durationMs` 0 exige cierre manual.',
+      },
+    },
   },
 };
 
 export const TopEnd: Story = {
+  ...snackbarStory('Mostrar arriba a la derecha'),
   args: {
-    hint: 'Placement via **position** = top-end.',
-    triggerLabel: 'Show top-end',
-    message: 'New message received.',
+    message: 'Nuevo mensaje recibido.',
     variant: 'info',
     position: 'top-end',
   },

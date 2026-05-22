@@ -65,8 +65,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
       </div>
     </section>
   `,
-  styles: [
-    `
+  styles: `
       .docs-code-panel {
         border: 1px solid var(--docs-border-fine);
         border-radius: var(--au-radius-lg);
@@ -180,7 +179,6 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
         font-size: inherit;
       }
     `,
-  ],
 })
 export class CodeBlock {
   private readonly sanitizer = inject(DomSanitizer);

@@ -15,8 +15,7 @@ import { AuSkeleton } from '@aurea-design-system/components';
       </div>
     </div>
   `,
-  styles: [
-    `
+  styles: `
       .docs-skeleton-profile {
         display: flex;
         gap: var(--au-space-4);
@@ -30,6 +29,5 @@ import { AuSkeleton } from '@aurea-design-system/components';
         gap: var(--au-space-2);
       }
     `,
-  ],
 })
 export class SkeletonDemo {}

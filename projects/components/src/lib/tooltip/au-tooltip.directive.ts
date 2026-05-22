@@ -87,7 +87,7 @@ export class AuTooltip {
     }
     const bubble = this.ensureBubble();
     this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
-    this.overlay.sync(bubble, this.host.nativeElement, this.auTooltipPlacement());
+    this.overlay.sync(bubble, this.host.nativeElement as HTMLElement, this.auTooltipPlacement());
   });
 
   protected onPointerEnter(): void {
@@ -104,7 +104,7 @@ export class AuTooltip {
 
   protected onFocusOut(event: FocusEvent): void {
     const next = event.relatedTarget;
-    const anchor = this.host.nativeElement;
+    const anchor = this.host.nativeElement as HTMLElement;
     if (next instanceof Node && anchor.contains(next)) {
       return;
     }
@@ -167,7 +167,7 @@ export class AuTooltip {
     if (this.bubble) {
       return this.bubble;
     }
-    const bubble = this.renderer.createElement('div');
+    const bubble = this.renderer.createElement('div') as HTMLElement;
     this.renderer.addClass(bubble, 'au-tooltip__bubble');
     this.renderer.setAttribute(bubble, 'role', 'tooltip');
     this.renderer.setAttribute(bubble, 'id', this.tooltipId);

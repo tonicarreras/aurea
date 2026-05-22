@@ -16,7 +16,7 @@ import {
 } from '@aurea-design-system/components';
 
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
-import { type DocsLocale, isDocsLocale } from '../core/docs-locale';
+import { isDocsLocale } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { GithubIcon, NpmIcon, StorybookIcon } from '../shared/brand-icons';
 import { DocsMobileMenuStore } from './docs-mobile-menu.store';
@@ -152,7 +152,7 @@ export class DocsShellToolbar {
 
   onLocaleChange(value: string | null): void {
     if (value && isDocsLocale(value)) {
-      this.locale.switchLocale(value as DocsLocale);
+      this.locale.switchLocale(value);
     }
   }
 

@@ -10,7 +10,7 @@ import { AuButton, AuDialog, AuDialogFooter } from '@aurea-design-system/compone
     <au-dialog [(open)]="open" title="Confirmar acción" size="sm">
       <p>Esta acción no se puede deshacer.</p>
       <div auDialogFooter>
-        <au-button variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>
+        <au-button style="margin-right: var(--au-space-2);" variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>
         <au-button type="button" (click)="open.set(false)">Confirmar</au-button>
       </div>
     </au-dialog>

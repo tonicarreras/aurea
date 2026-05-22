@@ -19,7 +19,7 @@ import {
 } from '@aurea-design-system/components';
 
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
-import { type DocsLocale, isDocsLocale } from '../core/docs-locale';
+import { isDocsLocale } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocsMobileMenuStore } from './docs-mobile-menu.store';
 import type { DocsThemeMode } from './docs-shell-toolbar';
@@ -144,7 +144,7 @@ export class DocsShellMobileMenu {
 
   onLocaleChange(value: string | null): void {
     if (value && isDocsLocale(value)) {
-      this.locale.switchLocale(value as DocsLocale);
+      this.locale.switchLocale(value);
     }
   }
 

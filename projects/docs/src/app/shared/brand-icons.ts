@@ -16,8 +16,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       />
     </svg>
   `,
-  styles: [
-    `
+  styles: `
       :host {
         display: block;
         line-height: 0;
@@ -29,7 +28,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         height: 1.25rem;
       }
     `,
-  ],
 })
 export class GithubIcon {}
 
@@ -43,8 +41,7 @@ export class GithubIcon {}
       />
     </svg>
   `,
-  styles: [
-    `
+  styles: `
       :host {
         display: block;
         line-height: 0;
@@ -56,7 +53,6 @@ export class GithubIcon {}
         height: 1.25rem;
       }
     `,
-  ],
 })
 export class NpmIcon {}
 
@@ -70,8 +66,7 @@ export class NpmIcon {}
       />
     </svg>
   `,
-  styles: [
-    `
+  styles: `
       :host {
         display: block;
         line-height: 0;
@@ -83,6 +78,5 @@ export class NpmIcon {}
         height: 1.25rem;
       }
     `,
-  ],
 })
 export class StorybookIcon {}

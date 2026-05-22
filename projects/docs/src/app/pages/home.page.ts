@@ -69,8 +69,7 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       </div>
     </docs-page>
   `,
-  styles: [
-    `
+  styles: `
       .docs-home-stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -233,7 +232,6 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         }
       }
     `,
-  ],
 })
 export class HomePage {
   readonly i18n = inject(DocsLocaleService);

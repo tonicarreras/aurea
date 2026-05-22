@@ -50,13 +50,11 @@ function pushSingle(text: string): InlineTextPart {
       }
     }
   `,
-  styles: [
-    `
+  styles: `
       :host {
         display: inline;
       }
     `,
-  ],
 })
 export class DocsInlineText {
   readonly text = input.required<string>();

@@ -7,7 +7,7 @@ import type { TestRunnerConfig } from '@storybook/test-runner';
  * @see https://storybook.js.org/docs/writing-tests/integrations/test-runner
  */
 const config: TestRunnerConfig = {
-  logLevel: process.env.CI ? 'warn' : 'info',
+  logLevel: process.env['CI'] ? 'warn' : 'info',
 };
 
 export default config;

@@ -17,8 +17,7 @@ import { DocsInlineText } from './docs-inline-text';
       }
     </ul>
   `,
-  styles: [
-    `
+  styles: `
       .docs-token-list {
         margin: 0;
         padding: 0;
@@ -51,7 +50,6 @@ import { DocsInlineText } from './docs-inline-text';
         }
       }
     `,
-  ],
 })
 export class DocsTokenList {
   readonly tokens = input.required<ComponentStylingToken[]>();

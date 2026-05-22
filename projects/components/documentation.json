@@ -1613,6 +1613,30 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Small size',\n    size: 'sm',\n    placeholder: 'Select...',\n    options: sampleOptions,\n  },\n}"
             },
             {
+                "name": "config",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/.storybook/main.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "StorybookConfig",
+                "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: [\n    '@storybook/addon-a11y',\n    '@storybook/addon-docs',\n    '@storybook/addon-onboarding',\n  ],\n  framework: '@storybook/angular',\n}",
+                "rawdescription": "In Storybook 10 the **Interactions** panel (debug `play`) lives in the manager by default;\nyou do not need `@storybook/addon-interactions` (still a separate v8/9 package on npm).",
+                "description": "<p>In Storybook 10 the <strong>Interactions</strong> panel (debug <code>play</code>) lives in the manager by default;\nyou do not need <code>@storybook/addon-interactions</code> (still a separate v8/9 package on npm).</p>\n"
+            },
+            {
+                "name": "config",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/.storybook/test-runner.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "TestRunnerConfig",
+                "defaultValue": "{\n  logLevel: process.env['CI'] ? 'warn' : 'info',\n}",
+                "rawdescription": "Test-runner: visit stories, run `play`, and fail on assertion, render, or a11y errors.\nAxe failures use `parameters.a11y.test: 'error'` from `preview.ts` (full violation report in CI logs).",
+                "description": "<p>Test-runner: visit stories, run <code>play</code>, and fail on assertion, render, or a11y errors.\nAxe failures use <code>parameters.a11y.test: &#39;error&#39;</code> from <code>preview.ts</code> (full violation report in CI logs).</p>\n"
+            },
+            {
                 "name": "Contained",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1656,16 +1680,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1676,11 +1690,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Eliminar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Eliminar proyecto',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1770,7 +1794,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{}"
+                "defaultValue": "snackbarStory()"
             },
             {
                 "name": "Default",
@@ -1836,21 +1860,21 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
-            },
-            {
-                "name": "Disabled",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Disabled checkbox — muted, non-interactive, still focusable by AT.',\n      },\n    },\n  },\n  args: {\n    label: 'Disabled option',\n    disabled: true,\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
             },
             {
                 "name": "Disabled",
@@ -1960,7 +1984,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n}"
+                "defaultValue": "{\n  ...snackbarStory('Mostrar error'),\n  args: {\n    message: 'No se pudieron guardar los cambios. Inténtalo de nuevo.',\n    variant: 'error',\n    durationMs: 0,\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Variante error con `role=\"alert\"`; `durationMs` 0 exige cierre manual.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Filled",
@@ -2010,7 +2034,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Fills the viewport with a 16px inset — for wizards, editors, or immersive flows.',\n  triggerLabel: 'Open full-screen dialog',\n  title: 'Full screen',\n  size: 'full',\n  showDemoFooter: true,\n  body: `\n    <p>The panel stretches to the viewport minus padding.</p>\n    <p>Scroll still works inside the body when content overflows.</p>\n  `,\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    triggerLabel: 'Abrir pantalla completa',\n    body: `\n          <p>El panel ocupa el viewport con un margen de 16px.</p>\n          <p>El scroll sigue funcionando dentro del cuerpo.</p>`,\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Confirmar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Pantalla completa',\n    size: 'full',\n  },\n}"
             },
             {
                 "name": "Ghost",
@@ -2130,7 +2154,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Wider panel (45rem) for forms or longer copy.',\n  title: 'Detailed view',\n  size: 'lg',\n  body: `\n    <p>This dialog can hold multiple paragraphs or form fields.</p>\n    <p>Body scrolls when content exceeds the viewport.</p>\n  `,\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: `\n          <p>Este diálogo admite varios párrafos o campos de formulario.</p>\n          <p>El cuerpo hace scroll si el contenido supera el viewport.</p>`,\n  }),\n  args: {\n    title: 'Vista detallada',\n    size: 'lg',\n  },\n}"
             },
             {
                 "name": "LargeSize",
@@ -2206,16 +2230,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuChip>",
-                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role=\"group\"` for selectable filters.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2226,11 +2240,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuChipGroup>",
-                "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Accessible group (`role=\"group\"`) for selectable filter chips. Use `au-list` for static/removable tags.',\n      },\n    },\n  },\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
+                "type": "Meta<AuChip>",
+                "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role=\"group\"` for selectable filters.',\n      },\n    },\n  },\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2240,7 +2254,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuDialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Control visibility with `[(open)]` on a writable signal in the parent component; open from a trigger (button) and close from footer actions, backdrop, Escape, or the header close button.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuChipGroup>",
+                "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Accessible group (`role=\"group\"`) for selectable filter chips. Use `au-list` for static/removable tags.',\n      },\n    },\n  },\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2359,8 +2383,8 @@
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuSnackbarStoryHost>",
-                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies AuSnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                "type": "Meta<AuSnackbar>",
+                "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbar,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action and auto-dismiss. Control visibility with `[(open)]` on a writable signal; open from a trigger and listen to `dismiss` / `action`.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies AuSnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { table: { category: 'Events' } },\n    action: { table: { category: 'Events' } },\n  },\n  args: {\n    open: false,\n    message: 'Cambios guardados correctamente.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2440,7 +2464,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Backdrop clicks are ignored; use the close button or Escape.',\n  title: 'Persistent dialog',\n  closeOnBackdrop: false,\n  body: '<p>Clicking the dimmed overlay does not close this dialog.</p>',\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Los clics en el fondo atenuado no cierran el diálogo.</p>',\n  }),\n  args: {\n    title: 'Diálogo persistente',\n    closeOnBackdrop: false,\n  },\n}"
             },
             {
                 "name": "NoCloseButton",
@@ -2450,7 +2474,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Dismiss with backdrop click or Escape only.',\n  title: 'No close button',\n  showCloseButton: false,\n  body: '<p>There is no header close control in this variant.</p>',\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin botón de cierre en la cabecera; usa backdrop o Escape.</p>',\n  }),\n  args: {\n    title: 'Sin botón cerrar',\n    showCloseButton: false,\n  },\n}"
             },
             {
                 "name": "On",
@@ -2718,16 +2742,6 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
-            },
-            {
-                "name": "SmallSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2738,11 +2752,21 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Compact width (24rem) for short confirmations.',\n  title: 'Confirm',\n  size: 'sm',\n  body: '<p>Continue?</p>',\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>¿Continuar con esta operación?</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Continuar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Confirmar',\n    size: 'sm',\n  },\n}"
             },
             {
                 "name": "storyImports",
@@ -2812,7 +2836,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n}"
+                "defaultValue": "{\n  ...snackbarStory('Mostrar éxito'),\n  args: {\n    message: 'Perfil actualizado.',\n    variant: 'success',\n  },\n}"
             },
             {
                 "name": "tabTemplate",
@@ -2842,7 +2866,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n}"
+                "defaultValue": "{\n  ...snackbarStory('Mostrar arriba a la derecha'),\n  args: {\n    message: 'Nuevo mensaje recibido.',\n    variant: 'info',\n    position: 'top-end',\n  },\n}"
             },
             {
                 "name": "variants",
@@ -2892,7 +2916,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n}"
+                "defaultValue": "{\n  ...snackbarStory('Mostrar con acción'),\n  args: {\n    message: 'Elemento eliminado.',\n    actionLabel: 'Deshacer',\n    durationMs: 8000,\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'La acción opcional cierra el snackbar y emite `action`.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "WithBounds",
@@ -3042,7 +3066,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Footer actions match card footers. Import `AuDialogFooter` in your host component.',\n  title: 'With footer',\n  showDemoFooter: true,\n  body: '<p>Dialog body content here.</p>',\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Contenido del diálogo.</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Guardar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Con pie de página',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Importa `AuDialogFooter` en el componente host que proyecta el pie.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "withFooterImports",
@@ -3122,7 +3146,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "hostStory({\n  hint: 'Provide `ariaLabel` when there is no visible title.',\n  title: '',\n  ariaLabel: 'Information',\n  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',\n})"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin título visible; el nombre accesible viene de <code>ariaLabel</code>.</p>',\n  }),\n  args: {\n    title: '',\n    ariaLabel: 'Información',\n  },\n}"
             },
             {
                 "name": "WithValue",
@@ -3277,6 +3301,33 @@
                 ]
             },
             {
+                "name": "dialogStory",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "config",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "Story",
+                "jsdoctags": [
+                    {
+                        "name": "config",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "getCombobox",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "ctype": "miscellaneous",
@@ -3415,8 +3466,8 @@
                 ]
             },
             {
-                "name": "hostStory",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "name": "snackbarStory",
+                "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "ctype": "miscellaneous",
                 "subtype": "function",
                 "deprecated": false,
@@ -3424,17 +3475,21 @@
                 "description": "",
                 "args": [
                     {
-                        "name": "config",
+                        "name": "triggerLabel",
+                        "type": "string",
                         "deprecated": false,
-                        "deprecationMessage": ""
+                        "deprecationMessage": "",
+                        "optional": true
                     }
                 ],
                 "returnType": "Story",
                 "jsdoctags": [
                     {
-                        "name": "config",
+                        "name": "triggerLabel",
+                        "type": "string",
                         "deprecated": false,
                         "deprecationMessage": "",
+                        "optional": true,
                         "tagName": {
                             "text": "param"
                         }
@@ -3536,17 +3591,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuChip>",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<CheckboxStoryArgs>",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
@@ -3558,8 +3602,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuChipGroup>",
-                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
+                "rawtype": "StoryObj<AuChip>",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3571,6 +3615,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuDialog>",
                 "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuChipGroup>",
+                "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3701,7 +3756,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuSnackbarStoryHost>",
+                "rawtype": "StoryObj<AuSnackbar>",
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -4747,6 +4802,34 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Select with a pre-selected value.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n      { value: 'mx', label: 'Mexico' },\n    ],\n    value: 'ca',\n  },\n}"
                 }
             ],
+            "projects/components/.storybook/main.ts": [
+                {
+                    "name": "config",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/.storybook/main.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "StorybookConfig",
+                    "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: [\n    '@storybook/addon-a11y',\n    '@storybook/addon-docs',\n    '@storybook/addon-onboarding',\n  ],\n  framework: '@storybook/angular',\n}",
+                    "rawdescription": "In Storybook 10 the **Interactions** panel (debug `play`) lives in the manager by default;\nyou do not need `@storybook/addon-interactions` (still a separate v8/9 package on npm).",
+                    "description": "<p>In Storybook 10 the <strong>Interactions</strong> panel (debug <code>play</code>) lives in the manager by default;\nyou do not need <code>@storybook/addon-interactions</code> (still a separate v8/9 package on npm).</p>\n"
+                }
+            ],
+            "projects/components/.storybook/test-runner.ts": [
+                {
+                    "name": "config",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/.storybook/test-runner.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "TestRunnerConfig",
+                    "defaultValue": "{\n  logLevel: process.env['CI'] ? 'warn' : 'info',\n}",
+                    "rawdescription": "Test-runner: visit stories, run `play`, and fail on assertion, render, or a11y errors.\nAxe failures use `parameters.a11y.test: 'error'` from `preview.ts` (full violation report in CI logs).",
+                    "description": "<p>Test-runner: visit stories, run <code>play</code>, and fail on assertion, render, or a11y errors.\nAxe failures use <code>parameters.a11y.test: &#39;error&#39;</code> from <code>preview.ts</code> (full violation report in CI logs).</p>\n"
+                }
+            ],
             "projects/components/src/lib/tabs/tabs.stories.ts": [
                 {
                     "name": "Contained",
@@ -4972,7 +5055,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Centred panel (max 35rem). Click outside the panel or press Escape to dismiss.',\n  title: 'Confirm action',\n  body: '<p>Are you sure you want to proceed with this action?</p>',\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Eliminar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Eliminar proyecto',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "FullScreen",
@@ -4982,7 +5065,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Fills the viewport with a 16px inset — for wizards, editors, or immersive flows.',\n  triggerLabel: 'Open full-screen dialog',\n  title: 'Full screen',\n  size: 'full',\n  showDemoFooter: true,\n  body: `\n    <p>The panel stretches to the viewport minus padding.</p>\n    <p>Scroll still works inside the body when content overflows.</p>\n  `,\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    triggerLabel: 'Abrir pantalla completa',\n    body: `\n          <p>El panel ocupa el viewport con un margen de 16px.</p>\n          <p>El scroll sigue funcionando dentro del cuerpo.</p>`,\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Confirmar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Pantalla completa',\n    size: 'full',\n  },\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -4992,7 +5075,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Wider panel (45rem) for forms or longer copy.',\n  title: 'Detailed view',\n  size: 'lg',\n  body: `\n    <p>This dialog can hold multiple paragraphs or form fields.</p>\n    <p>Body scrolls when content exceeds the viewport.</p>\n  `,\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: `\n          <p>Este diálogo admite varios párrafos o campos de formulario.</p>\n          <p>El cuerpo hace scroll si el contenido supera el viewport.</p>`,\n  }),\n  args: {\n    title: 'Vista detallada',\n    size: 'lg',\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -5002,7 +5085,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuDialog>",
-                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Control visibility with `[(open)]` on a writable signal in the parent component; open from a trigger (button) and close from footer actions, backdrop, Escape, or the header close button.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
                 },
                 {
                     "name": "NoBackdropClose",
@@ -5012,7 +5095,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Backdrop clicks are ignored; use the close button or Escape.',\n  title: 'Persistent dialog',\n  closeOnBackdrop: false,\n  body: '<p>Clicking the dimmed overlay does not close this dialog.</p>',\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Los clics en el fondo atenuado no cierran el diálogo.</p>',\n  }),\n  args: {\n    title: 'Diálogo persistente',\n    closeOnBackdrop: false,\n  },\n}"
                 },
                 {
                     "name": "NoCloseButton",
@@ -5022,7 +5105,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Dismiss with backdrop click or Escape only.',\n  title: 'No close button',\n  showCloseButton: false,\n  body: '<p>There is no header close control in this variant.</p>',\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin botón de cierre en la cabecera; usa backdrop o Escape.</p>',\n  }),\n  args: {\n    title: 'Sin botón cerrar',\n    showCloseButton: false,\n  },\n}"
                 },
                 {
                     "name": "SmallSize",
@@ -5032,7 +5115,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Compact width (24rem) for short confirmations.',\n  title: 'Confirm',\n  size: 'sm',\n  body: '<p>Continue?</p>',\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: '<p>¿Continuar con esta operación?</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Continuar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Confirmar',\n    size: 'sm',\n  },\n}"
                 },
                 {
                     "name": "WithFooter",
@@ -5042,7 +5125,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Footer actions match card footers. Import `AuDialogFooter` in your host component.',\n  title: 'With footer',\n  showDemoFooter: true,\n  body: '<p>Dialog body content here.</p>',\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Contenido del diálogo.</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Guardar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: 'Con pie de página',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Importa `AuDialogFooter` en el componente host que proyecta el pie.',\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "WithoutTitle",
@@ -5052,7 +5135,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "hostStory({\n  hint: 'Provide `ariaLabel` when there is no visible title.',\n  title: '',\n  ariaLabel: 'Information',\n  body: '<p>This dialog has no visible title. The accessible name comes from <code>ariaLabel</code>.</p>',\n})"
+                    "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin título visible; el nombre accesible viene de <code>ariaLabel</code>.</p>',\n  }),\n  args: {\n    title: '',\n    ariaLabel: 'Información',\n  },\n}"
                 }
             ],
             "projects/components/src/lib/divider/divider.stories.ts": [
@@ -5190,7 +5273,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{}"
+                    "defaultValue": "snackbarStory()"
                 },
                 {
                     "name": "ErrorPersistent",
@@ -5200,7 +5283,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Error uses role=\"alert\"; **durationMs** 0 requires manual dismiss.',\n    triggerLabel: 'Show error',\n    message: 'Could not save changes. Try again.',\n    variant: 'error',\n    durationMs: 0,\n  },\n}"
+                    "defaultValue": "{\n  ...snackbarStory('Mostrar error'),\n  args: {\n    message: 'No se pudieron guardar los cambios. Inténtalo de nuevo.',\n    variant: 'error',\n    durationMs: 0,\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Variante error con `role=\"alert\"`; `durationMs` 0 exige cierre manual.',\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -5209,8 +5292,8 @@
                     "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<AuSnackbarStoryHost>",
-                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbarStoryHost,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action, auto-dismiss, and semantic variants. Use **open** or the trigger button to preview; controls update the live snackbar.',\n      },\n    },\n  },\n  argTypes: {\n    hint: { control: 'text', table: { category: 'Storybook' } },\n    triggerLabel: { control: 'text', table: { category: 'Storybook' } },\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies AuSnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { action: 'dismiss', table: { category: 'Events' } },\n    action: { action: 'action', table: { category: 'Events' } },\n  },\n  args: {\n    hint: 'Use **open** or the button below. Controls apply to the snackbar on the page.',\n    triggerLabel: 'Show snackbar',\n    open: false,\n    message: 'Changes saved successfully.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
+                    "type": "Meta<AuSnackbar>",
+                    "defaultValue": "{\n  title: 'Aurea/Snackbar',\n  component: AuSnackbar,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'fullscreen',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Transient feedback toast with optional action and auto-dismiss. Control visibility with `[(open)]` on a writable signal; open from a trigger and listen to `dismiss` / `action`.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    variant: {\n      control: 'select',\n      options: ['default', 'success', 'warning', 'error', 'info'] satisfies AuSnackbarVariant[],\n      table: { category: 'Appearance' },\n    },\n    position: {\n      control: 'select',\n      options: [\n        'bottom-center',\n        'bottom-start',\n        'bottom-end',\n        'top-center',\n        'top-start',\n        'top-end',\n      ] satisfies AuSnackbarPosition[],\n      table: { category: 'Appearance' },\n    },\n    durationMs: { control: 'number', table: { category: 'Behavior' } },\n    actionLabel: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    dismiss: { table: { category: 'Events' } },\n    action: { table: { category: 'Events' } },\n  },\n  args: {\n    open: false,\n    message: 'Cambios guardados correctamente.',\n    variant: 'default',\n    position: 'bottom-center',\n    durationMs: 5000,\n    actionLabel: '',\n    showCloseButton: true,\n    dismiss: fn(),\n    action: fn(),\n  },\n}"
                 },
                 {
                     "name": "Success",
@@ -5220,7 +5303,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Semantic success surface for positive feedback.',\n    triggerLabel: 'Show success',\n    message: 'Profile updated.',\n    variant: 'success',\n  },\n}"
+                    "defaultValue": "{\n  ...snackbarStory('Mostrar éxito'),\n  args: {\n    message: 'Perfil actualizado.',\n    variant: 'success',\n  },\n}"
                 },
                 {
                     "name": "TopEnd",
@@ -5230,7 +5313,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Placement via **position** = top-end.',\n    triggerLabel: 'Show top-end',\n    message: 'New message received.',\n    variant: 'info',\n    position: 'top-end',\n  },\n}"
+                    "defaultValue": "{\n  ...snackbarStory('Mostrar arriba a la derecha'),\n  args: {\n    message: 'Nuevo mensaje recibido.',\n    variant: 'info',\n    position: 'top-end',\n  },\n}"
                 },
                 {
                     "name": "WithAction",
@@ -5240,7 +5323,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    hint: 'Optional action closes the snackbar and emits **action**.',\n    triggerLabel: 'Show with action',\n    message: 'Item removed.',\n    actionLabel: 'Undo',\n    durationMs: 8000,\n  },\n}"
+                    "defaultValue": "{\n  ...snackbarStory('Mostrar con acción'),\n  args: {\n    message: 'Elemento eliminado.',\n    actionLabel: 'Deshacer',\n    durationMs: 8000,\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'La acción opcional cierra el snackbar y emite `action`.',\n      },\n    },\n  },\n}"
                 }
             ],
             "projects/components/src/lib/switch/switch.stories.ts": [
@@ -5647,6 +5730,35 @@
                     ]
                 }
             ],
+            "projects/components/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "dialogStory",
+                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "config",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "Story",
+                    "jsdoctags": [
+                        {
+                            "name": "config",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "projects/components/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "getCombobox",
@@ -5789,10 +5901,10 @@
                     ]
                 }
             ],
-            "projects/components/src/lib/dialog/dialog.stories.ts": [
+            "projects/components/src/lib/snackbar/snackbar.stories.ts": [
                 {
-                    "name": "hostStory",
-                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "name": "snackbarStory",
+                    "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
                     "deprecated": false,
@@ -5800,17 +5912,21 @@
                     "description": "",
                     "args": [
                         {
-                            "name": "config",
+                            "name": "triggerLabel",
+                            "type": "string",
                             "deprecated": false,
-                            "deprecationMessage": ""
+                            "deprecationMessage": "",
+                            "optional": true
                         }
                     ],
                     "returnType": "Story",
                     "jsdoctags": [
                         {
-                            "name": "config",
+                            "name": "triggerLabel",
+                            "type": "string",
                             "deprecated": false,
                             "deprecationMessage": "",
+                            "optional": true,
                             "tagName": {
                                 "text": "param"
                             }
@@ -5931,19 +6047,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/chip/chip.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuChip>",
-                    "file": "projects/components/src/lib/chip/chip.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Story",
@@ -5957,13 +6060,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/chip-group/chip-group.stories.ts": [
+            "projects/components/src/lib/chip/chip.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuChipGroup>",
-                    "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
+                    "rawtype": "StoryObj<AuChip>",
+                    "file": "projects/components/src/lib/chip/chip.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -5977,6 +6080,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuDialog>",
                     "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/chip-group/chip-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuChipGroup>",
+                    "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -6118,7 +6234,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuSnackbarStoryHost>",
+                    "rawtype": "StoryObj<AuSnackbar>",
                     "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -6210,9 +6326,19 @@
         "children": []
     },
     "coverage": {
-        "count": 1,
+        "count": 2,
         "status": "low",
         "files": [
+            {
+                "filePath": "projects/components/.storybook/main.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "config",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
             {
                 "filePath": "projects/components/.storybook/preview.ts",
                 "type": "function",
@@ -6229,6 +6355,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "preview",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/components/.storybook/test-runner.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "config",
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
@@ -6926,7 +7062,7 @@
                 "type": "function",
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
-                "name": "hostStory",
+                "name": "dialogStory",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -7901,6 +8037,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
                 "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/snackbar/snackbar.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "snackbarStory",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

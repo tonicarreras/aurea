@@ -49,8 +49,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       </defs>
     </svg>
   `,
-  styles: [
-    `
+  styles: `
       :host {
         display: block;
         flex-shrink: 0;
@@ -64,6 +63,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         height: 100%;
       }
     `,
-  ],
 })
 export class AngularLogo {}

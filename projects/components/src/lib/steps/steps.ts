@@ -140,7 +140,7 @@ export class AuSteps {
         break;
     }
 
-    const target = enabled[targetIndex]!;
+    const target = enabled[targetIndex];
     this.selectStep(target.auStep());
     target.focus();
   }
@@ -154,6 +154,6 @@ export class AuSteps {
     if (current && enabled.some((s) => s.auStep() === current)) {
       return;
     }
-    this.selectStep(enabled[0]!.auStep());
+    this.selectStep(enabled[0].auStep());
   }
 }

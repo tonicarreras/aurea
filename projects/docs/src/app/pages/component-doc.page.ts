@@ -171,8 +171,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
       </docs-page>
     }
   `,
-  styles: [
-    `
+  styles: `
       .docs-component-steps {
         position: sticky;
         top: calc(var(--docs-header-height) + var(--au-space-3));
@@ -315,7 +314,6 @@ import { DocsTokenList } from '../shared/docs-token-list';
         }
       }
     `,
-  ],
 })
 export class ComponentDocPage {
   private readonly route = inject(ActivatedRoute);

@@ -83,7 +83,10 @@ export class AuSelect implements FormValueControl<string | null> {
 
   private readonly syncListboxOverlay = afterRenderEffect(() => {
     const trigger = this.triggerNativeElement();
-    const anchor = trigger.closest('.au-select__control-row')! as HTMLElement;
+    const anchor = trigger.closest('.au-select__control-row');
+    if (!(anchor instanceof HTMLElement)) {
+      return;
+    }
     this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
   });
 
@@ -375,7 +378,7 @@ export class AuSelect implements FormValueControl<string | null> {
     }
     const opts = this.options();
     for (let i = 0; i < opts.length; i++) {
-      if (!opts[i]!.disabled) {
+      if (!opts[i].disabled) {
         return this.optionListIndex(i);
       }
     }

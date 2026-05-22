@@ -39,8 +39,7 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       </ul>
     </docs-page>
   `,
-  styles: [
-    `
+  styles: `
       .docs-components-index {
         margin: 0;
         padding: 0;
@@ -124,7 +123,6 @@ import { DocsInlineText } from '../shared/docs-inline-text';
           opacity var(--au-duration-short) var(--au-ease-in-out);
       }
     `,
-  ],
 })
 export class ComponentsIndexPage {
   readonly i18n = inject(DocsLocaleService);

@@ -71,39 +71,45 @@ au-snackbar:not([data-au-variant]) .au-snackbar__surface {
   color: var(--au-color-text-primary);
 }
 
+/* Toasts attach to `document.body`; mix on opaque `surface-raised`, not semantic *-surface
+   tokens (dark theme uses rgba surfaces for inline callouts). */
 au-snackbar[data-au-variant='success'] .au-snackbar__surface {
   background: color-mix(
     in srgb,
-    var(--au-color-semantic-success) 24%,
-    var(--au-color-semantic-success-surface)
+    var(--au-color-semantic-success) 22%,
+    var(--au-color-surface-raised)
   );
-  border-color: color-mix(in srgb, var(--au-color-semantic-success) 52%, transparent);
+  border-color: color-mix(in srgb, var(--au-color-semantic-success) 45%, var(--au-color-border-default));
   color: var(--au-color-text-primary);
 }
 
 au-snackbar[data-au-variant='warning'] .au-snackbar__surface {
   background: color-mix(
     in srgb,
-    var(--au-color-semantic-warning) 26%,
-    var(--au-color-semantic-warning-surface)
+    var(--au-color-semantic-warning) 24%,
+    var(--au-color-surface-raised)
   );
-  border-color: color-mix(in srgb, var(--au-color-semantic-warning) 55%, transparent);
+  border-color: color-mix(in srgb, var(--au-color-semantic-warning) 48%, var(--au-color-border-default));
   color: var(--au-color-text-primary);
 }
 
 au-snackbar[data-au-variant='error'] .au-snackbar__surface {
   background: color-mix(
     in srgb,
-    var(--au-color-semantic-error) 26%,
-    var(--au-color-semantic-error-surface)
+    var(--au-color-semantic-error) 24%,
+    var(--au-color-surface-raised)
   );
-  border-color: color-mix(in srgb, var(--au-color-semantic-error) 55%, transparent);
+  border-color: color-mix(in srgb, var(--au-color-semantic-error) 48%, var(--au-color-border-default));
   color: var(--au-color-text-primary);
 }
 
 au-snackbar[data-au-variant='info'] .au-snackbar__surface {
-  background: color-mix(in srgb, var(--au-color-semantic-info) 24%, var(--au-color-semantic-info-surface));
-  border-color: color-mix(in srgb, var(--au-color-semantic-info) 52%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 22%,
+    var(--au-color-surface-raised)
+  );
+  border-color: color-mix(in srgb, var(--au-color-semantic-info) 45%, var(--au-color-border-default));
   color: var(--au-color-text-primary);
 }
 

@@ -153,7 +153,7 @@ export class AuSnackbar {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-    const host = this.host.nativeElement;
+    const host = this.host.nativeElement as HTMLElement;
     if (host.parentElement === this.document.body) {
       return;
     }
@@ -169,9 +169,9 @@ export class AuSnackbar {
     if (!isPlatformBrowser(this.platformId) || !this.bodyAnchor?.parentNode) {
       return;
     }
-    const host = this.host.nativeElement;
+    const host = this.host.nativeElement as HTMLElement;
     if (host.parentElement === this.document.body) {
-      this.bodyAnchor.parentNode.insertBefore(host, this.bodyAnchor);
+      this.bodyAnchor.parentNode?.insertBefore(host, this.bodyAnchor);
       this.bodyAnchor.remove();
       this.bodyAnchor = null;
     }

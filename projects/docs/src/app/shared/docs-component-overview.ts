@@ -105,8 +105,7 @@ import { DocsInlineText } from './docs-inline-text';
       </div>
     }
   `,
-  styles: [
-    `
+  styles: `
       .docs-overview {
         display: flex;
         flex-direction: column;
@@ -342,7 +341,6 @@ import { DocsInlineText } from './docs-inline-text';
         }
       }
     `,
-  ],
 })
 export class DocsComponentOverview {
   private readonly i18n = inject(DocsLocaleService);

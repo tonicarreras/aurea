@@ -89,8 +89,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
       </p>
     </docs-page>
   `,
-  styles: [
-    `
+  styles: `
       .docs-theme-preview {
         padding: var(--au-space-6);
         border-radius: var(--au-radius-lg);
@@ -153,7 +152,6 @@ import { DocsTokenList } from '../shared/docs-token-list';
         line-height: var(--au-leading-relaxed);
       }
     `,
-  ],
 })
 export class ThemingPage {
   readonly i18n = inject(DocsLocaleService);

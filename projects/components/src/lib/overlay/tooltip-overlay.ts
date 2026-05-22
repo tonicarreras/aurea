@@ -137,5 +137,4 @@ export class TooltipOverlay {
     this.document.defaultView?.removeEventListener('scroll', this.onWindowChange, true);
     this.document.defaultView?.removeEventListener('resize', this.onWindowChange);
   }
-
 }

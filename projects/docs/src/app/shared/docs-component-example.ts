@@ -31,8 +31,7 @@ import { DemoPanel } from './demo-panel';
       />
     </article>
   `,
-  styles: [
-    `
+  styles: `
       .docs-example {
         display: flex;
         flex-direction: column;
@@ -60,7 +59,6 @@ import { DemoPanel } from './demo-panel';
         line-height: var(--au-leading-relaxed);
       }
     `,
-  ],
 })
 export class DocsComponentExample {
   readonly title = input.required<string>();

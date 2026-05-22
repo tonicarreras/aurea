@@ -151,12 +151,12 @@ export class AuChip {
 
   /** Moves focus to the chip control (selectable) or remove button (removable). */
   focus(): void {
-    const root = this.host.nativeElement;
+    const root = this.host.nativeElement as HTMLElement;
     const surface = root.querySelector('.au-chip__surface');
     if (surface instanceof HTMLButtonElement) {
       surface.focus();
       return;
     }
-    (root.querySelector('.au-chip__remove') as HTMLButtonElement | null)?.focus();
+    root.querySelector<HTMLButtonElement>('.au-chip__remove')?.focus();
   }
 }

@@ -33,7 +33,7 @@
   box-shadow: var(--au-shadow-overlay);
 }
 
-/* Portaled to document.body (see field-listbox-overlay.ts) — top/width set in JS */
+/* Portaled to document.body (see overlay/field-listbox-overlay.ts) — top/width set in JS */
 .au-field-listbox--overlay {
   position: fixed;
   z-index: var(--au-z-dropdown);

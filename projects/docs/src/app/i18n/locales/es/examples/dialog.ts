@@ -11,10 +11,10 @@ export const examples: ComponentDocExample[] = [
     demoComponent: ExampleDialogConfirmDemo,
     code: `<au-button (click)="open.set(true)">Abrir</au-button>
 
-<au-dialog [(open)]="open" title="Eliminar proyecto" size="sm">
+<au-dialog [(open)]="open" title="¿Quieres aceptar?" size="sm">
   <p>Esta acción no se puede deshacer.</p>
   <div auDialogFooter>
-    <au-button variant="secondary" (click)="open.set(false)">Cancelar</au-button>
+    <au-button style="margin-right: var(--au-space-2);" variant="secondary" (click)="open.set(false)">Cancelar</au-button>
     <au-button (click)="open.set(false)">Eliminar</au-button>
   </div>
 </au-dialog>`,
