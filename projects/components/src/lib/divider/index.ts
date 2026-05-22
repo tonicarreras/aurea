@@ -1,3 +1,3 @@
 export * from './divider';
 
-export type { DividerOrientation } from './divider';
+export type { AuDividerOrientation } from './divider';

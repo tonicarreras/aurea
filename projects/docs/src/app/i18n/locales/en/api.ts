@@ -1,4 +1,7 @@
-import type { ComponentApiEntry, ResolvedComponentApi } from '../../../core/component-docs.registry';
+import type {
+  ComponentApiEntry,
+  ResolvedComponentApi,
+} from '../../../core/component-docs.registry';
 
 const i = (
   name: string,
@@ -21,21 +24,26 @@ const o = (name: string, type: string, description: string): ComponentApiEntry =
   kind: 'output',
 });
 
-const FIELD_STRING: ComponentApiEntry[] = [
+const FORM_FIELD_CHROME: ComponentApiEntry[] = [
+  i('label', 'string', 'Visible label (`<label for>`). Radio group: becomes `<legend>`.', "''"),
+  i('hint', 'string', 'Helper below the control.', "''"),
+  i('errorMessage', 'string', 'Manual error when the child has no signal-form message.', "''"),
+  i('invalid', 'boolean', 'Forces invalid chrome.', 'false'),
+  i('required', 'boolean', 'Required marker on label/legend.', 'false'),
+  i('showRequired', 'boolean', 'Shows asterisk when required.', 'true'),
+  i('controlIdInput', 'string', 'Stable control id; auto-generated when empty.', "''"),
+];
+
+const VALUE_FIELD_BASE: ComponentApiEntry[] = [
   m('value', 'ModelSignal<string | null>', 'Field value; empty ↔ `null`.'),
-  i('label', 'string', 'Visible label linked with `for`/`id`.', "''"),
-  i('hint', 'string', 'Help text (`aria-describedby`).', "''"),
-  i('errorMessage', 'string', 'Manual error message.', "''"),
   i('errors', 'ValidationError[]', 'Errors from signal forms (`formField`).', '[]'),
-  i('invalid', 'boolean', 'Marks the field invalid.', 'false'),
+  i('invalid', 'boolean', 'Marks the control invalid.', 'false'),
   i('disabled', 'boolean', 'Disables editing.', 'false'),
   i('readOnly', 'boolean', 'Read-only.', 'false'),
-  i('required', 'boolean', '`required` and `aria-required`.', 'false'),
-  i('showRequired', 'boolean', 'Shows asterisk when `required`.', 'true'),
-  i('id', 'string', 'Stable id; generated when empty.', "''"),
+  i('required', 'boolean', '`required` and `aria-required` on the control.', 'false'),
   i('name', 'string', 'Native `name` attribute.', "''"),
   i('placeholder', 'string', 'Placeholder.', "''"),
-  i('size', "'sm' | 'md' | 'lg'", 'Densidad (`data-au-size`).', "'md'"),
+  i('size', "'sm' | 'md' | 'lg'", 'Density (`data-au-size`).', "'md'"),
   o('blur', 'void', 'When the native control blurs.'),
   o('valueChange', 'string | null', 'Each `input` event when not disabled.'),
 ];
@@ -47,7 +55,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuButton',
         rows: [
-          i('variant', "'primary' | 'secondary' | 'outline' | 'ghost'", 'Visual style.', "'primary'"),
+          i(
+            'variant',
+            "'primary' | 'secondary' | 'outline' | 'ghost'",
+            'Visual style.',
+            "'primary'",
+          ),
           i('size', "'sm' | 'md' | 'lg'", 'Altura y padding; `lg` ≥ 44px.', "'md'"),
           i('disabled', 'boolean', 'Disables the button.', 'false'),
           i('loading', 'boolean', 'Spinner and `aria-busy`; blocks click.', 'false'),
@@ -59,14 +72,26 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'form-field': {
+    importNames: ['AuFormField'],
+    sections: [
+      {
+        title: 'AuFormField',
+        description:
+          'Wrap projected controls (`au-input-text`, `au-select`, …). Provides `AU_FORM_FIELD` for shared ids and validation chrome.',
+        rows: FORM_FIELD_CHROME,
+      },
+    ],
+  },
   'input-text': {
-    importNames: ['AuInputText'],
+    importNames: ['AuFormField', 'AuInputText'],
     sections: [
       {
         title: 'AuInputText',
-        description: 'Implementa `FormValueControl<string | null>`. Enlaza `[formField]` o `[(value)]`.',
+        description:
+          'Project inside `au-form-field`. Implements `FormValueControl<string | null>`. Bind `[formField]` or `[(value)]`.',
         rows: [
-          ...FIELD_STRING,
+          ...VALUE_FIELD_BASE,
           i('type', "'text' | 'password' | 'email' | …", 'Tipo nativo del `<input>`.', "'text'"),
           i('autocomplete', 'string | undefined', 'Atributo `autocomplete`.'),
           i('minLength', 'number | undefined', 'Validación nativa `minlength`.'),
@@ -77,13 +102,14 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   textarea: {
-    importNames: ['AuTextarea'],
+    importNames: ['AuFormField', 'AuTextarea'],
     sections: [
       {
         title: 'AuTextarea',
-        description: 'Implementa `FormValueControl<string | null>`.',
+        description:
+          'Project inside `au-form-field`. Implements `FormValueControl<string | null>`.',
         rows: [
-          ...FIELD_STRING,
+          ...VALUE_FIELD_BASE,
           i('rows', 'number', 'Filas visibles del `<textarea>`.', '4'),
           i('cols', 'number | undefined', 'Columnas nativas.'),
           i('resize', "'vertical' | 'horizontal' | 'both' | 'none'", 'CSS `resize`.', "'vertical'"),
@@ -104,16 +130,14 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         description: 'Implementa `FormCheckboxControl`. Usa `[(checked)]` o `[formField]`.',
         rows: [
           m('checked', 'ModelSignal<boolean>', 'Estado marcado.'),
-          i('label', 'string', 'Etiqueta del control.', "''"),
-          i('description', 'string', 'Texto secundario bajo la etiqueta.', "''"),
-          i('errorMessage', 'string', 'Error visible.', "''"),
-          i('errors', 'ValidationError[]', 'Desde signal forms.', '[]'),
+          i('label', 'string', 'Inline label on the checkbox.', "''"),
+          i('description', 'string', 'Supporting text (`aria-describedby`).', "''"),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
           i('invalid', 'boolean', 'Estado inválido.', 'false'),
           i('disabled', 'boolean', 'Desactiva interacción.', 'false'),
           i('required', 'boolean', 'Campo obligatorio.', 'false'),
           i('indeterminate', 'boolean', 'Estado parcial (p. ej. «seleccionar todo»).', 'false'),
           i('size', "'sm' | 'md' | 'lg'", 'Tamaño de la casilla.', "'md'"),
-          i('id', 'string', 'Id para `label for`.', "''"),
           i('name', 'string', 'Atributo `name`.', "''"),
           o('blur', 'void', 'Blur del input nativo.'),
           o('checkedChange', 'boolean', 'Al cambiar el valor.'),
@@ -122,24 +146,22 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   switch: {
-    importNames: ['AuSwitch'],
+    importNames: ['AuFormField', 'AuSwitch'],
     sections: [
       {
         title: 'AuSwitch',
-        description: 'Implementa `FormCheckboxControl` con `role="switch"`.',
+        description:
+          'Inline `label` on the switch; wrap in `au-form-field` for hint and error. Implements `FormCheckboxControl`.',
         rows: [
-          m('checked', 'ModelSignal<boolean>', 'Estado on/off.'),
-          i('label', 'string', 'Etiqueta.', "''"),
-          i('hint', 'string', 'Ayuda contextual.', "''"),
-          i('errorMessage', 'string', 'Mensaje de error.', "''"),
-          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
-          i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('disabled', 'boolean', 'Desactivado.', 'false'),
-          i('required', 'boolean', 'Obligatorio.', 'false'),
-          i('showRequired', 'boolean', 'Asterisco visual.', 'true'),
-          i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
-          i('id', 'string', 'Id del control.', "''"),
-          i('name', 'string', 'Name nativo.', "''"),
+          m('checked', 'ModelSignal<boolean>', 'On/off state.'),
+          i('label', 'string', 'Inline label.', "''"),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid state.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('showRequired', 'boolean', 'Asterisk on inline label.', 'true'),
+          i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
+          i('name', 'string', 'Native `name`.', "''"),
           o('blur', 'void', 'Blur.'),
           o('checkedChange', 'boolean', 'Al alternar.'),
         ],
@@ -147,25 +169,21 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   select: {
-    importNames: ['AuSelect', 'type SelectOption'],
+    importNames: ['AuFormField', 'AuSelect', 'type AuSelectOption'],
     sections: [
       {
         title: 'AuSelect',
-        description: 'Combobox con listbox en portal. `FormValueControl<string | null>`.',
+        description:
+          'Project inside `au-form-field`. Portaled combobox listbox. `FormValueControl<string | null>`.',
         rows: [
-          m('value', 'ModelSignal<string | null>', 'Opción seleccionada (`value` de la opción).'),
-          i('label', 'string', 'Etiqueta.', "''"),
-          i('hint', 'string', 'Ayuda.', "''"),
-          i('errorMessage', 'string', 'Error.', "''"),
-          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
-          i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('options', 'SelectOption[]', '`{ value, label, disabled? }[]`.', '[]'),
-          i('disabled', 'boolean', 'Desactivado.', 'false'),
-          i('readOnly', 'boolean', 'Listbox visible pero sin cambiar valor.', 'false'),
-          i('required', 'boolean', 'Obligatorio.', 'false'),
-          i('showRequired', 'boolean', 'Asterisco.', 'true'),
-          i('id', 'string', 'Id.', "''"),
-          i('name', 'string', 'Name (input oculto para POST).', "''"),
+          m('value', 'ModelSignal<string | null>', 'Selected option `value`.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('options', 'AuSelectOption[]', '`{ value, label, disabled? }[]`.', '[]'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('readOnly', 'boolean', 'Listbox visible but value locked.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('name', 'string', 'Native `name` (hidden input for POST).', "''"),
           i('placeholder', 'string', 'Texto cuando no hay valor.', "''"),
           i('autocomplete', 'string | undefined', 'Autocomplete nativo.'),
           i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
@@ -176,14 +194,14 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   autocomplete: {
-    importNames: ['AuAutocomplete', 'type AutocompleteOption'],
+    importNames: ['AuFormField', 'AuAutocomplete', 'type AuAutocompleteOption'],
     sections: [
       {
         title: 'AuAutocomplete',
-        description: 'Filtra opciones al escribir. Patrón combobox ARIA.',
+        description: 'Project inside `au-form-field`. Filter-as-you-type combobox.',
         rows: [
-          ...FIELD_STRING,
-          i('options', 'AutocompleteOption[]', 'Lista de sugerencias.', '[]'),
+          ...VALUE_FIELD_BASE,
+          i('options', 'AuAutocompleteOption[]', 'Lista de sugerencias.', '[]'),
           i('minFilterLength', 'number', 'Caracteres mínimos antes de filtrar.', '0'),
           i('caseSensitive', 'boolean', 'Filtro sensible a mayúsculas.', 'false'),
           i('strictSelection', 'boolean', 'Blur limpia si no hay coincidencia exacta.', 'true'),
@@ -194,23 +212,20 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   'radio-group': {
-    importNames: ['AuRadioGroup', 'type RadioOption'],
+    importNames: ['AuFormField', 'AuRadioGroup', 'type AuRadioOption'],
     sections: [
       {
         title: 'AuRadioGroup',
-        description: 'Elección única. `FormValueControl<string | null>`.',
+        description:
+          'Project inside `au-form-field`; `label` on the form-field becomes `<legend>`. `FormValueControl<string | null>`.',
         rows: [
-          m('value', 'ModelSignal<string | null>', 'Valor de la opción seleccionada.'),
-          i('label', 'string', 'Leyenda del grupo.', "''"),
-          i('hint', 'string', 'Ayuda.', "''"),
-          i('errorMessage', 'string', 'Error.', "''"),
-          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
-          i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('options', 'RadioOption[]', 'Opciones del grupo.', '[]'),
-          i('disabled', 'boolean', 'Desactiva todo el grupo.', 'false'),
-          i('required', 'boolean', 'Obligatorio.', 'false'),
-          i('id', 'string', 'Prefijo de ids.', "''"),
-          i('name', 'string', 'Name compartido de radios.', "''"),
+          m('value', 'ModelSignal<string | null>', 'Selected option value.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('options', 'AuRadioOption[]', 'Group options.', '[]'),
+          i('disabled', 'boolean', 'Disables the group.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('name', 'string', 'Shared radio `name`.', "''"),
           i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
           o('blur', 'void', 'Blur del grupo.'),
           o('valueChange', 'string | null', 'Al seleccionar.'),
@@ -219,22 +234,19 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   'input-number': {
-    importNames: ['AuInputNumber'],
+    importNames: ['AuFormField', 'AuInputNumber'],
     sections: [
       {
         title: 'AuInputNumber',
-        description: '`<input type="number">`; vacío ↔ `null`. `FormValueControl<number | null>`.',
+        description:
+          'Project inside `au-form-field`. Empty ↔ `null`. `FormValueControl<number | null>`.',
         rows: [
-          m('value', 'ModelSignal<number | null>', 'Valor numérico.'),
-          i('label', 'string', 'Etiqueta.', "''"),
-          i('hint', 'string', 'Ayuda.', "''"),
-          i('errorMessage', 'string', 'Error.', "''"),
-          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
-          i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          m('value', 'ModelSignal<number | null>', 'Numeric value.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
           i('readOnly', 'boolean', 'Read-only.', 'false'),
-          i('required', 'boolean', 'Obligatorio.', 'false'),
-          i('showRequired', 'boolean', 'Asterisco.', 'true'),
+          i('required', 'boolean', 'Required.', 'false'),
           i('min', 'number | undefined', 'Mínimo nativo.'),
           i('max', 'number | undefined', 'Máximo nativo.'),
           i('step', "number | 'any'", 'Paso del spinner.', '1'),
@@ -247,22 +259,19 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   'input-date': {
-    importNames: ['AuInputDate'],
+    importNames: ['AuFormField', 'AuInputDate'],
     sections: [
       {
         title: 'AuInputDate',
-        description: 'Selector nativo `type="date"`. Valor ISO `YYYY-MM-DD` o `null`.',
+        description:
+          'Project inside `au-form-field`. Native `type="date"`; ISO `YYYY-MM-DD` or `null`.',
         rows: [
-          m('value', 'ModelSignal<string | null>', 'Fecha como string ISO.'),
-          i('label', 'string', 'Etiqueta.', "''"),
-          i('hint', 'string', 'Ayuda.', "''"),
-          i('errorMessage', 'string', 'Error.', "''"),
-          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
-          i('invalid', 'boolean', 'Inválido.', 'false'),
-          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          m('value', 'ModelSignal<string | null>', 'Date as ISO string.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
           i('readOnly', 'boolean', 'Read-only.', 'false'),
-          i('required', 'boolean', 'Obligatorio.', 'false'),
-          i('showRequired', 'boolean', 'Asterisco.', 'true'),
+          i('required', 'boolean', 'Required.', 'false'),
           i('minDate', 'string | undefined', 'Atributo `min` (ISO).'),
           i('maxDate', 'string | undefined', 'Atributo `max` (ISO).'),
           i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
@@ -292,7 +301,8 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
       {
         title: 'AuDialogFooter',
-        description: 'Directiva de marcado: `import { AuDialogFooter }` y proyecta `<div auDialogFooter>`.',
+        description:
+          'Directiva de marcado: `import { AuDialogFooter }` y proyecta `<div auDialogFooter>`.',
         rows: [
           {
             name: 'auDialogFooter',
@@ -323,10 +333,22 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'Proyección de contenido',
         description: 'Atributos en el contenido proyectado (no son inputs del componente).',
         rows: [
-          { name: 'auCardHeader', type: 'atributo', description: 'Cabecera (usa un heading semántico).' },
+          {
+            name: 'auCardHeader',
+            type: 'atributo',
+            description: 'Cabecera (usa un heading semántico).',
+          },
           { name: 'auCardBody', type: 'atributo', description: 'Cuerpo principal.' },
-          { name: 'auCardMedia', type: 'atributo', description: 'Imagen o vídeo a sangre en la parte superior.' },
-          { name: 'auCardFooter', type: 'atributo', description: 'Pie con acciones; requiere `AuCardFooter` en imports.' },
+          {
+            name: 'auCardMedia',
+            type: 'atributo',
+            description: 'Imagen o vídeo a sangre en la parte superior.',
+          },
+          {
+            name: 'auCardFooter',
+            type: 'atributo',
+            description: 'Pie con acciones; requiere `AuCardFooter` en imports.',
+          },
         ],
       },
     ],
@@ -350,7 +372,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuTab',
         description: 'En `<button type="button" auTab="clave">`.',
         rows: [
-          { name: 'auTab', type: 'string (requerido)', description: 'Identificador; coincide con `auTabPanel`.' },
+          {
+            name: 'auTab',
+            type: 'string (requerido)',
+            description: 'Identificador; coincide con `auTabPanel`.',
+          },
           i('auTabDisabled', 'boolean', 'Desactiva la pestaña.', 'false'),
         ],
       },
@@ -358,7 +384,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         title: 'AuTabPanel',
         description: 'En `<div auTabPanel="clave">`.',
         rows: [
-          { name: 'auTabPanel', type: 'string (requerido)', description: 'Clave del panel emparejada con `auTab`.' },
+          {
+            name: 'auTabPanel',
+            type: 'string (requerido)',
+            description: 'Clave del panel emparejada con `auTab`.',
+          },
         ],
       },
     ],
@@ -393,11 +423,17 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         rows: [
           m('open', 'ModelSignal<boolean>', 'Visibilidad.'),
           i('message', 'string', 'Texto principal (o slot proyectado).', "''"),
-          i('variant', "'default' | 'success' | 'warning' | 'error' | 'info'", 'Semántica visual.', "'default'"),
-          i('position', 'SnackbarPosition', 'Esquina de la pantalla.', "'bottom-center'"),
+          i(
+            'variant',
+            "'default' | 'success' | 'warning' | 'error' | 'info'",
+            'Semántica visual.',
+            "'default'",
+          ),
+          i('position', 'AuSnackbarPosition', 'Esquina de la pantalla.', "'bottom-center'"),
           i('durationMs', 'number', 'Auto-cierre en ms; `0` desactiva timer.', '5000'),
           i('actionLabel', 'string', 'Etiqueta del botón de acción opcional.', "''"),
           i('showCloseButton', 'boolean', 'Botón cerrar.', 'true'),
+          i('showIcon', 'boolean', 'Variant icon (not on default).', 'true'),
           i('closeAriaLabel', 'string', 'Nombre accesible del cerrar.', "'Dismiss notification'"),
           o('dismiss', 'void', 'Al cerrar (timer, Escape, cerrar).'),
           o('action', 'void', 'Al pulsar la acción opcional.'),
@@ -418,6 +454,143 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'chip-group': {
+    importNames: ['AuChipGroup', 'AuChip'],
+    sections: [
+      {
+        title: 'AuChipGroup',
+        description:
+          '`role="group"` for selectable filter chips. Use `au-list` for removable/static tags.',
+        rows: [
+          i('ariaLabel', 'string', 'Accessible name when there is no visible caption.', "''"),
+          i('ariaLabelledBy', 'string', 'ID of labelling element.', "''"),
+        ],
+      },
+    ],
+  },
+  list: {
+    importNames: ['AuList', 'AuListItem', 'AuChip'],
+    sections: [
+      {
+        title: 'AuList',
+        description: '`role="list"` wrapper. Chips inside get `listitem` via `AuListItem`.',
+        rows: [
+          i('ariaLabel', 'string', 'Accessible name.', "''"),
+          i('ariaLabelledBy', 'string', 'ID of labelling element.', "''"),
+        ],
+      },
+      {
+        title: 'AuListItem',
+        description: 'On custom hosts inside `au-list`: `<div auListItem>`.',
+        rows: [
+          i(
+            'auListItemDisabled',
+            'boolean',
+            'Suppresses `listitem` (chips use this when `selectable`).',
+            'false',
+          ),
+        ],
+      },
+    ],
+  },
+  message: {
+    importNames: ['AuMessage'],
+    sections: [
+      {
+        title: 'AuMessage',
+        description: 'Inline callout; error/warning use `role="alert"`.',
+        rows: [
+          i(
+            'variant',
+            "'default' | 'success' | 'warning' | 'error' | 'info'",
+            'Semantic surface.',
+            "'default'",
+          ),
+          i('title', 'string', 'Optional heading.', "''"),
+          i('message', 'string', 'Body text (or default slot).', "''"),
+          i('dismissible', 'boolean', 'Close button.', 'false'),
+          i('showIcon', 'boolean', 'Variant icon (not on default).', 'true'),
+          i('closeAriaLabel', 'string', 'Close button label.', "'Dismiss message'"),
+          o('dismiss', 'void', 'When the user dismisses.'),
+        ],
+      },
+    ],
+  },
+  icon: {
+    importNames: ['AuIcon'],
+    sections: [
+      {
+        title: 'AuIcon',
+        description: 'Decorative (`aria-hidden`). Name the parent for screen readers.',
+        rows: [
+          { name: 'name', type: 'AuIconName (required)', description: 'Glyph identifier.' },
+          i('size', "'sm' | 'md' | 'lg'", 'Dimensions.', "'md'"),
+          i('warningScale', 'number', 'Scales warning triangle only.', '1.1'),
+        ],
+      },
+    ],
+  },
+  skeleton: {
+    importNames: ['AuSkeleton'],
+    sections: [
+      {
+        title: 'AuSkeleton',
+        description: 'Decorative placeholder; set `aria-busy` on a parent region.',
+        rows: [
+          i(
+            'variant',
+            "'text' | 'circular' | 'rectangular' | 'rounded' | 'button'",
+            'Shape preset.',
+            "'text'",
+          ),
+          i('animation', "'pulse' | 'wave' | 'none'", 'Motion.', "'pulse'"),
+          i('size', "'sm' | 'md' | 'lg'", 'Density for circular/button/text line.', "'md'"),
+          i('width', 'string', 'CSS width override.'),
+          i('height', 'string', 'CSS height override.'),
+          i('radius', 'string', 'Border-radius override.'),
+        ],
+      },
+    ],
+  },
+  steps: {
+    importNames: ['AuSteps', 'AuStep', 'AuStepPanel'],
+    sections: [
+      {
+        title: 'AuSteps',
+        rows: [
+          m('value', 'ModelSignal<string>', 'Active step key.'),
+          i('ariaLabel', 'string', 'Accessible name of the step list.', "''"),
+          i('layout', "'tabs' | 'sections'", 'One panel vs. scrollable sections.', "'tabs'"),
+          i('size', "'sm' | 'md'", 'Step button density.', "'md'"),
+          i('id', 'string', 'Base id for step/panel elements.', "''"),
+          o('valueChange', 'string', 'When the active step changes.'),
+        ],
+      },
+      {
+        title: 'AuStep',
+        description: 'On `<button type="button" auStep="key">`.',
+        rows: [
+          {
+            name: 'auStep',
+            type: 'string (required)',
+            description: 'Step key; matches `auStepPanel`.',
+          },
+          i('auStepDisabled', 'boolean', 'Disables the step.', 'false'),
+        ],
+      },
+      {
+        title: 'AuStepPanel',
+        description: 'On `<div auStepPanel="key">`.',
+        rows: [
+          {
+            name: 'auStepPanel',
+            type: 'string (required)',
+            description: 'Panel key paired with `auStep`.',
+          },
+        ],
+      },
+    ],
+  },
   tooltip: {
     importNames: ['AuTooltip'],
     sections: [
@@ -426,7 +599,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         description: 'Directiva en el disparador enfocable (`button`, `a`, etc.).',
         rows: [
           i('auTooltip', 'string', 'Texto del globo (vacío = sin tooltip).', "''"),
-          i('auTooltipPlacement', 'TooltipPlacement', 'Posición preferida; voltea si no cabe.', "'top'"),
+          i(
+            'auTooltipPlacement',
+            'AuTooltipPlacement',
+            'Posición preferida; voltea si no cabe.',
+            "'top'",
+          ),
           i('auTooltipShowDelay', 'number', 'Retardo al mostrar (ms).', '200'),
           i('auTooltipHideDelay', 'number', 'Retardo al ocultar (ms).', '100'),
           i('auTooltipDisabled', 'boolean', 'Suprime el tooltip.', 'false'),

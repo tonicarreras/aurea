@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { resetSnackbarStackForTests } from './snackbar-stack';
 import { AuSnackbar } from './snackbar';
 
 describe('AuSnackbar', () => {
@@ -9,6 +10,10 @@ describe('AuSnackbar', () => {
     await TestBed.configureTestingModule({
       imports: [AuSnackbar],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    resetSnackbarStackForTests();
   });
 
   function querySurface(fixture: ComponentFixture<AuSnackbar>) {
@@ -37,6 +42,48 @@ describe('AuSnackbar', () => {
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('default');
     expect(host.getAttribute('data-au-position')).toBe('bottom-center');
+  });
+
+  it('does not render an icon for the default variant', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'default');
+    fix.componentRef.setInput('showIcon', true);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__icon')).toBeNull();
+  });
+
+  it('renders a semantic icon when variant is not default', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'success');
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__icon')).not.toBeNull();
+  });
+
+  it('hides icon when showIcon is false', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('variant', 'error');
+    fix.componentRef.setInput('showIcon', false);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__icon')).toBeNull();
+  });
+
+  it('maps variant to icon names', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('variant', 'info');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBe('info');
+    fix.componentRef.setInput('variant', 'warning');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBe('warning');
+    fix.componentRef.setInput('variant', 'error');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBe('error');
+    fix.componentRef.setInput('variant', 'default');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBeNull();
   });
 
   it('applies variant and position attributes', () => {
@@ -89,12 +136,23 @@ describe('AuSnackbar', () => {
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Hi');
     fix.detectChanges();
-    const closeBtn = fix.debugElement.query(By.css('.au-snackbar__close'))!.nativeElement as HTMLButtonElement;
+    const closeBtn = fix.debugElement.query(By.css('.au-snackbar__close'))!
+      .nativeElement as HTMLButtonElement;
     closeBtn.click();
     fix.detectChanges();
     expect(fix.componentInstance.open()).toBe(false);
     expect(dismiss).toHaveBeenCalledTimes(1);
     expect(querySurface(fix)).toBeNull();
+  });
+
+  it('omits actions row when there is no action or close control', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Sin acciones');
+    fix.componentRef.setInput('actionLabel', '');
+    fix.componentRef.setInput('showCloseButton', false);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__actions')).toBeNull();
   });
 
   it('hides close button when showCloseButton is false', () => {
@@ -114,7 +172,8 @@ describe('AuSnackbar', () => {
     fix.componentRef.setInput('message', 'Undo?');
     fix.componentRef.setInput('actionLabel', 'Undo');
     fix.detectChanges();
-    const actionBtn = fix.debugElement.query(By.css('.au-snackbar__action'))!.nativeElement as HTMLButtonElement;
+    const actionBtn = fix.debugElement.query(By.css('.au-snackbar__action'))!
+      .nativeElement as HTMLButtonElement;
     actionBtn.click();
     fix.detectChanges();
     expect(action).toHaveBeenCalledTimes(1);
@@ -151,6 +210,52 @@ describe('AuSnackbar', () => {
     expect(fix.componentInstance.open()).toBe(true);
     expect(querySurface(fix)).not.toBeNull();
     vi.useRealTimers();
+  });
+
+  it('stacks newer snackbars on the edge and offsets older ones', () => {
+    const first = TestBed.createComponent(AuSnackbar);
+    first.componentRef.setInput('open', true);
+    first.componentRef.setInput('message', 'Primero');
+    first.detectChanges();
+
+    const second = TestBed.createComponent(AuSnackbar);
+    second.componentRef.setInput('open', true);
+    second.componentRef.setInput('message', 'Segundo');
+    second.detectChanges();
+
+    expect(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset')).toBe('0px');
+    expect(
+      Number.parseFloat(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset')),
+    ).toBeGreaterThan(0);
+    expect(
+      Number(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer')),
+    ).toBeGreaterThan(
+      Number(first.nativeElement.style.getPropertyValue('--au-snackbar-stack-layer')),
+    );
+  });
+
+  it('Escape dismisses only the topmost snackbar in the stack', () => {
+    const first = TestBed.createComponent(AuSnackbar);
+    const firstDismiss = vi.fn();
+    first.componentInstance.dismiss.subscribe(firstDismiss);
+    first.componentRef.setInput('open', true);
+    first.componentRef.setInput('message', 'Primero');
+    first.componentRef.setInput('durationMs', 0);
+    first.detectChanges();
+
+    const second = TestBed.createComponent(AuSnackbar);
+    second.componentRef.setInput('open', true);
+    second.componentRef.setInput('message', 'Segundo');
+    second.componentRef.setInput('durationMs', 0);
+    second.detectChanges();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    second.detectChanges();
+    first.detectChanges();
+
+    expect(second.componentInstance.open()).toBe(false);
+    expect(first.componentInstance.open()).toBe(true);
+    expect(firstDismiss).not.toHaveBeenCalled();
   });
 
   it('closes on Escape via document keydown', () => {
@@ -270,6 +375,150 @@ describe('AuSnackbar', () => {
     wrapper.remove();
   });
 
+  it('reuses the stack id when syncStack runs while already open', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      syncStack: () => void;
+      stackId: number | null;
+    };
+    const stackId = inst.stackId;
+    inst.syncStack();
+    expect(inst.stackId).toBe(stackId);
+  });
+
+  it('shows action without close when only actionLabel is set', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Con acción');
+    fix.componentRef.setInput('actionLabel', 'Deshacer');
+    fix.componentRef.setInput('showCloseButton', false);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__action')).not.toBeNull();
+    expect(fix.nativeElement.querySelector('.au-snackbar__close')).toBeNull();
+  });
+
+  it('relayouts stack when ResizeObserver fires', () => {
+    const callbacks: ResizeObserverCallback[] = [];
+    const observe = vi.fn();
+    const disconnect = vi.fn();
+    const ResizeObserverMock = vi.fn(function (
+      this: ResizeObserver,
+      callback: ResizeObserverCallback,
+    ) {
+      callbacks.push(callback);
+      return Object.assign(this, { observe, disconnect, unobserve: vi.fn() });
+    });
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Resize');
+    fix.detectChanges();
+
+    const surface = fix.nativeElement.querySelector('.au-snackbar__surface') as HTMLElement;
+    expect(observe).toHaveBeenCalledWith(surface);
+    const inst = fix.componentInstance as unknown as {
+      teardownStack: () => void;
+      stackId: number | null;
+    };
+    const entry = { target: surface } as unknown as ResizeObserverEntry;
+    const observer = {} as ResizeObserver;
+    callbacks[0]?.([entry], observer);
+    inst.teardownStack();
+    callbacks[0]?.([entry], observer);
+    expect(inst.stackId).toBeNull();
+
+    vi.unstubAllGlobals();
+  });
+
+  it('observeStackResize is noop without surface or stack id', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      observeStackResize: (surface: HTMLElement | null) => void;
+      stackId: number | null;
+    };
+    inst.stackId = null;
+    expect(() => inst.observeStackResize(null)).not.toThrow();
+
+    const surface = document.createElement('div');
+    expect(() => inst.observeStackResize(surface)).not.toThrow();
+  });
+
+  it('observeStackResize returns early after the stack entry is torn down', () => {
+    const ResizeObserverMock = vi.fn(function (this: ResizeObserver) {
+      return Object.assign(this, { observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() });
+    });
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      observeStackResize: (surface: HTMLElement | null) => void;
+      teardownStack: () => void;
+      stackId: number | null;
+    };
+    const surface = fix.nativeElement.querySelector('.au-snackbar__surface') as HTMLElement;
+    expect(inst.stackId).not.toBeNull();
+    inst.teardownStack();
+    expect(inst.stackId).toBeNull();
+    inst.observeStackResize(surface);
+    expect(ResizeObserverMock).toHaveBeenCalledTimes(1);
+
+    vi.unstubAllGlobals();
+  });
+
+  it('observeStackResize disconnects a prior observer before attaching', () => {
+    const disconnect = vi.fn();
+    const observe = vi.fn();
+    const ResizeObserverMock = vi.fn(function (this: ResizeObserver) {
+      return Object.assign(this, { observe, disconnect, unobserve: vi.fn() });
+    });
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      observeStackResize: (surface: HTMLElement | null) => void;
+    };
+    const surface = fix.nativeElement.querySelector('.au-snackbar__surface') as HTMLElement;
+    inst.observeStackResize(surface);
+    expect(disconnect).toHaveBeenCalled();
+
+    vi.unstubAllGlobals();
+  });
+
+  it('skips ResizeObserver when it is not available', () => {
+    vi.stubGlobal('ResizeObserver', undefined);
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'No RO');
+    expect(() => fix.detectChanges()).not.toThrow();
+    vi.unstubAllGlobals();
+  });
+
+  it('syncStack is noop outside the browser platform', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [AuSnackbar],
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+    }).compileComponents();
+    const fix = TestBed.createComponent(AuSnackbar);
+    const inst = fix.componentInstance as unknown as {
+      syncStack: () => void;
+      stackId: number | null;
+    };
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(inst.stackId).toBeNull();
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({ imports: [AuSnackbar] }).compileComponents();
+  });
+
   it('projects slot content when message is empty', () => {
     const fix = TestBed.createComponent(SnackbarSlotHost);
     fix.detectChanges();
@@ -281,7 +530,10 @@ describe('AuSnackbar', () => {
 @Component({
   imports: [AuSnackbar],
   template: `
-    <au-snackbar [open]="true" message="">
+    <au-snackbar
+      [open]="true"
+      message=""
+    >
       <span class="snackbar-slot-custom">Custom body</span>
     </au-snackbar>
   `,

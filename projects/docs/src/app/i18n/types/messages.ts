@@ -1,6 +1,7 @@
 export interface DocsMessages {
   shell: {
     skipToContent: string;
+    theme: string;
     themeSystem: string;
     themeLight: string;
     themeDark: string;
@@ -8,6 +9,12 @@ export interface DocsMessages {
     lang: string;
     langEn: string;
     langEs: string;
+    menuLabel: string;
+    menuCloseAria: string;
+    settingsMenuAria: string;
+    githubLabel: string;
+    npmLabel: string;
+    storybookLabel: string;
     navAria: string;
     githubAria: string;
     npmAria: string;

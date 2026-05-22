@@ -83,7 +83,9 @@ describe('AuTooltip', () => {
     fixture.detectChanges();
     expect(bubble()).toBeTruthy();
 
-    trigger().dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }));
+    trigger().dispatchEvent(
+      new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
+    );
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();

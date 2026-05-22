@@ -6,9 +6,13 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Primary and secondary actions with variants, loading states, and an accessible focus ring.',
     'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
   ),
+  'form-field': L(
+    'Shared label, hint, and error chrome around projected inputs; wires ids and ARIA via `AU_FORM_FIELD`.',
+    'Cromado compartido de label, hint y error; enlaza ids y ARIA vía `AU_FORM_FIELD`.',
+  ),
   'input-text': L(
-    'Single-line field with label, hint, error, and signal forms support (`formField`).',
-    'Campo de una línea con etiqueta, hint, error y soporte para signal forms (`formField`).',
+    'Single-line control inside `au-form-field`; signal forms via `formField`.',
+    'Control de una línea dentro de `au-form-field`; signal forms con `formField`.',
   ),
   textarea: L(
     'Multi-line text with the same visual grammar as other fields.',
@@ -58,9 +62,33 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Compact labels; removable or selectable variants.',
     'Etiquetas compactas; variantes removibles o seleccionables.',
   ),
+  'chip-group': L(
+    'Accessible `role="group"` wrapper for selectable filter chips.',
+    'Contenedor `role="group"` para chips de filtro seleccionables.',
+  ),
+  list: L(
+    'Accessible `role="list"` for removable tags or custom list items.',
+    'Contenedor `role="list"` para etiquetas removibles o ítems personalizados.',
+  ),
   snackbar: L(
     'Transient messages with optional action and auto-dismiss.',
     'Mensajes transitorios con acción opcional y auto-cierre.',
+  ),
+  message: L(
+    'Inline callout with semantic variants, optional icon, and dismiss.',
+    'Aviso inline con variantes semánticas, icono opcional y cierre.',
+  ),
+  icon: L(
+    'Shared SVG glyphs (decorative); used in message, chips, and buttons.',
+    'Glifos SVG compartidos (decorativos); usados en message, chips y botones.',
+  ),
+  skeleton: L(
+    'Loading placeholders (text, avatar, button) with pulse or wave.',
+    'Placeholders de carga (texto, avatar, botón) con pulse o wave.',
+  ),
+  steps: L(
+    'Documentation stepper with `auStep` / `auStepPanel` and keyboard nav.',
+    'Stepper de documentación con `auStep` / `auStepPanel` y teclado.',
   ),
   divider: L(
     'Horizontal or vertical rules with optional inset and label.',

@@ -4,22 +4,41 @@ import type { ComponentStylingToken } from '../../../core/component-docs.registr
 export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> = {
   button: [
     { token: '--au-color-action-primary', description: 'Fondo y borde de la variante primary.' },
-    { token: '--au-color-action-primary-hover', description: 'Estado hover de primary y secondary.' },
+    {
+      token: '--au-color-action-primary-hover',
+      description: 'Estado hover de primary y secondary.',
+    },
     { token: '--au-color-action-primary-pressed', description: 'Estado activo al pulsar.' },
     { token: '--au-color-text-on-solid', description: 'Texto sobre variantes rellenas (primary).' },
-    { token: '--au-color-surface-raised', description: 'Fondo de secondary y estados hover de outline/ghost.' },
+    {
+      token: '--au-color-surface-raised',
+      description: 'Fondo de secondary y estados hover de outline/ghost.',
+    },
     { token: '--au-color-border-default', description: 'Borde de secondary y outline.' },
     { token: '--au-radius-sm', description: 'Radio de esquina del botón.' },
-    { token: '--au-size-field-h-sm / md', description: 'Altura por tamaño (`size`); lg usa `--au-touch-target-min`.' },
+    {
+      token: '--au-size-field-h-sm / md',
+      description: 'Altura por tamaño (`size`); lg usa `--au-touch-target-min`.',
+    },
     { token: '--au-color-focus-ring', description: 'Anillo de foco visible al tabular.' },
     {
       token: '--au-transition-background, --au-transition-border',
       description: 'Transiciones de fondo, borde y sombra entre estados.',
     },
   ],
+  'form-field': [
+    { token: '--au-color-text-label', description: 'Visible label above the projected control.' },
+    { token: '--au-color-form-error', description: 'Error message and required asterisk.' },
+    { token: '--au-color-text-tertiary', description: 'Hint text below the control.' },
+    { token: '--au-text-sm', description: 'Label, hint, and error typography.' },
+    { token: '--au-space-2', description: 'Vertical gap between label, control, and messages.' },
+  ],
   'input-text': [
     { token: '--au-color-form-border', description: 'Borde del campo en reposo.' },
-    { token: '--au-color-form-border-hover', description: 'Borde al pasar el cursor por el control.' },
+    {
+      token: '--au-color-form-border-hover',
+      description: 'Borde al pasar el cursor por el control.',
+    },
     { token: '--au-color-form-text', description: 'Color del texto introducido.' },
     { token: '--au-color-form-placeholder', description: 'Placeholder del input nativo.' },
     { token: '--au-color-form-caret', description: 'Color del cursor de texto.' },
@@ -27,14 +46,20 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-error', description: 'Borde y mensaje cuando hay error.' },
     { token: '--au-color-form-error-bg', description: 'Fondo del shell en estado inválido.' },
     { token: '--au-radius-field', description: 'Radio de la caja del campo (2px por defecto).' },
-    { token: '--au-size-field-h-md', description: 'Altura del control; sm/lg usan las variantes homónimas.' },
+    {
+      token: '--au-size-field-h-md',
+      description: 'Altura del control; sm/lg usan las variantes homónimas.',
+    },
     { token: '--au-color-focus-ring', description: 'Borde y sombra de foco (`:focus-within`).' },
   ],
   textarea: [
     { token: '--au-color-form-border', description: 'Borde del área de texto.' },
     { token: '--au-color-form-text', description: 'Texto multilínea.' },
     { token: '--au-color-form-placeholder', description: 'Placeholder.' },
-    { token: '--au-textarea-min-h-md', description: 'Altura mínima por defecto; sm/lg en el host por `size`.' },
+    {
+      token: '--au-textarea-min-h-md',
+      description: 'Altura mínima por defecto; sm/lg en el host por `size`.',
+    },
     { token: '--au-textarea-pad-y', description: 'Padding vertical interno del textarea.' },
     { token: '--au-size-field-px-md', description: 'Padding horizontal; escala con `size`.' },
     { token: '--au-radius-field', description: 'Esquinas del shell del campo.' },
@@ -42,17 +67,26 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Indicador de foco en el contenedor.' },
   ],
   checkbox: [
-    { token: '--au-checkbox-size-md', description: 'Tamaño de la caja; sm/lg con `--au-checkbox-size-*`.' },
+    {
+      token: '--au-checkbox-size-md',
+      description: 'Tamaño de la caja; sm/lg con `--au-checkbox-size-*`.',
+    },
     { token: '--au-radius-xs', description: 'Radio de la casilla.' },
     { token: '--au-color-form-border', description: 'Borde sin marcar.' },
-    { token: '--au-color-action-primary', description: 'Relleno cuando está marcado o indeterminado.' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Relleno cuando está marcado o indeterminado.',
+    },
     { token: '--au-color-text-on-solid', description: 'Marca (tick) sobre fondo primary.' },
     { token: '--au-color-form-disabled-surface', description: 'Fondo deshabilitado.' },
     { token: '--au-color-form-error', description: 'Borde y énfasis en etiqueta con error.' },
     { token: '--au-color-focus-ring', description: 'Anillo al enfocar la casilla nativa.' },
   ],
   switch: [
-    { token: '--au-color-switch-track-off', description: 'Fondo de la pista con el switch apagado.' },
+    {
+      token: '--au-color-switch-track-off',
+      description: 'Fondo de la pista con el switch apagado.',
+    },
     { token: '--au-color-switch-track-off-border', description: 'Borde de la pista apagada.' },
     { token: '--au-color-switch-thumb-off', description: 'Color del thumb en estado off.' },
     { token: '--au-color-action-primary', description: 'Pista y thumb cuando está activo.' },
@@ -65,8 +99,14 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-border', description: 'Borde del trigger del desplegable.' },
     { token: '--au-color-select-field-hover-bg', description: 'Fondo del trigger al hover.' },
     { token: '--au-color-select-menu-bg', description: 'Fondo del listbox en portal.' },
-    { token: '--au-color-select-option-highlight-bg', description: 'Opción resaltada al navegar con teclado.' },
-    { token: '--au-color-select-option-selected-bg', description: 'Opción actualmente seleccionada.' },
+    {
+      token: '--au-color-select-option-highlight-bg',
+      description: 'Opción resaltada al navegar con teclado.',
+    },
+    {
+      token: '--au-color-select-option-selected-bg',
+      description: 'Opción actualmente seleccionada.',
+    },
     { token: '--au-shadow-overlay', description: 'Sombra del panel desplegable.' },
     { token: '--au-z-dropdown', description: 'Apilamiento del listbox sobre el resto de la UI.' },
     { token: '--au-size-field-h-md', description: 'Altura del trigger; escala con `size`.' },
@@ -75,7 +115,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-border', description: 'Borde del campo de búsqueda.' },
     { token: '--au-color-select-field-hover-bg', description: 'Fondo del campo al hover.' },
     { token: '--au-color-select-menu-bg', description: 'Fondo de la lista de sugerencias.' },
-    { token: '--au-color-select-option-highlight-bg', description: 'Sugerencia activa (teclado o hover).' },
+    {
+      token: '--au-color-select-option-highlight-bg',
+      description: 'Sugerencia activa (teclado o hover).',
+    },
     { token: '--au-color-form-text', description: 'Texto escrito y etiquetas de opción.' },
     { token: '--au-shadow-overlay', description: 'Elevación del panel de resultados.' },
     { token: '--au-z-dropdown', description: 'Z-index del overlay de opciones.' },
@@ -138,6 +181,14 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Anillo de foco en el botón tab.' },
     { token: '--au-transition-color', description: 'Transición de color al cambiar de pestaña.' },
   ],
+  'chip-group': [
+    { token: '--au-space-2', description: 'Gap between chips in the flex row.' },
+    { token: '--au-color-focus-ring', description: 'Focus on selectable chips inside the group.' },
+  ],
+  list: [
+    { token: '--au-space-2', description: 'Gap between list items (chips or custom hosts).' },
+    { token: '--au-color-focus-ring', description: 'Focus ring on interactive list items.' },
+  ],
   chip: [
     { token: '--au-color-surface-elevated', description: 'Fondo de la variante filled.' },
     { token: '--au-color-border-subtle', description: 'Borde de filled y outline.' },
@@ -147,15 +198,53 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-text-xs / --au-text-sm', description: 'Tipografía según `size`.' },
     { token: '--au-color-focus-ring', description: 'Foco cuando el chip es interactivo.' },
   ],
+  message: [
+    { token: '--au-message-bg', description: 'Surface background per variant.' },
+    { token: '--au-message-border', description: 'Border color per variant.' },
+    { token: '--au-message-accent', description: 'Icon and title accent.' },
+    {
+      token: '--au-color-feedback-success-bg',
+      description: 'Success background (shared with snackbar).',
+    },
+    { token: '--au-color-feedback-success-border', description: 'Success border.' },
+    { token: '--au-color-feedback-error-bg', description: 'Error background.' },
+    { token: '--au-color-feedback-error-border', description: 'Error border.' },
+    { token: '--au-radius-sm', description: 'Callout corner radius.' },
+  ],
+  icon: [
+    { token: 'data-au-icon', description: 'Selects the SVG glyph in CSS.' },
+    { token: 'data-au-size', description: 'sm / md / lg dimensions.' },
+    { token: '--au-color-text-primary', description: 'Inherited stroke/fill color.' },
+  ],
+  skeleton: [
+    {
+      token: '--au-color-skeleton-base',
+      description: 'Block fill on raised surfaces (theme-tuned).',
+    },
+    { token: '--au-color-skeleton-shimmer', description: 'Lighter peak for pulse and wave.' },
+    { token: '--au-radius-xs / sm / lg', description: 'Corners per variant preset.' },
+    { token: '--au-size-field-h-md', description: 'Button bar height (md).' },
+  ],
+  steps: [
+    { token: '--au-color-border-subtle', description: 'Underline rail under step buttons.' },
+    { token: '--au-color-action-primary', description: 'Active step text and indicator.' },
+    { token: '--au-color-text-secondary', description: 'Inactive step labels.' },
+    { token: '--au-color-focus-ring', description: 'Keyboard focus on step buttons.' },
+    {
+      token: '--au-space-6 / --au-space-10',
+      description: 'Gap between rail and panels / sections.',
+    },
+  ],
   snackbar: [
-    { token: '--au-z-toast', description: 'Capa de toasts sobre modales y dropdowns.' },
-    { token: '--au-color-surface-raised', description: 'Fondo de la variante default.' },
-    { token: '--au-color-semantic-success', description: 'Acento y borde en variant success.' },
-    { token: '--au-color-semantic-error', description: 'Variante error.' },
-    { token: '--au-color-semantic-warning', description: 'Variante warning.' },
-    { token: '--au-color-semantic-info', description: 'Variante info.' },
-    { token: '--au-radius-lg', description: 'Radio del contenedor del mensaje.' },
-    { token: '--au-duration-default', description: 'Animación de entrada (`au-snackbar-in`).' },
+    { token: '--au-z-toast', description: 'Toast layer above modals and dropdowns.' },
+    {
+      token: '--au-color-feedback-success-bg',
+      description: 'Semantic variants (same tokens as message).',
+    },
+    { token: '--au-color-surface-raised', description: 'Default variant background.' },
+    { token: '--au-shadow-raised', description: 'Toast elevation over the canvas.' },
+    { token: '--au-radius-lg', description: 'Message container radius.' },
+    { token: '--au-duration-default', description: 'Enter animation (`au-snackbar-in`).' },
   ],
   divider: [
     { token: '--au-color-border-subtle', description: 'Color de la línea horizontal o vertical.' },
@@ -174,4 +263,3 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-text-sm', description: 'Tamaño de fuente del mensaje.' },
   ],
 };
-

@@ -1,2 +1,2 @@
 export * from './autocomplete';
-export type { AutocompleteOption } from './autocomplete';
+export type { AuAutocompleteOption } from './autocomplete';

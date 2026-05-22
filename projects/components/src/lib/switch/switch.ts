@@ -2,29 +2,24 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
   computed,
+  inject,
   input,
   model,
   output,
   signal,
-  viewChild,
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
+import { AU_FORM_FIELD } from '../form-field/form-field';
+import { createStandaloneAuFormFieldContext, injectAuFormField } from '../form-field/form-field';
+import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
-type AuSize = 'sm' | 'md' | 'lg';
-
-/**
- * Design-system **switch** (boolean toggle): same field chrome as other controls, native checkbox
- * with `role="switch"` for assistive tech.
- *
- * @remarks
- * - **Signal forms:** implements {@link FormCheckboxControl}; bind `[formField]` on a boolean field.
- * - **Classic:** use `[(checked)]` and optional `errorMessage` / `invalid`.
- * - **Focus:** Tab vs pointer rings via `tabFocusState`, aligned with `au-input-text` / `au-select`.
- *
- * @see {@link FormCheckboxControl}
- */
+/** Switch toggle; inline `label` on control; hint/error on {@link AuFormField}. */
 @Component({
   selector: 'au-switch',
   templateUrl: './switch.html',
@@ -34,13 +29,13 @@ type AuSize = 'sm' | 'md' | 'lg';
     class: 'au-switch',
     '[attr.data-au-size]': 'size()',
   },
+  providers: [{ provide: AU_FORM_FIELD, useFactory: createStandaloneAuFormFieldContext }],
 })
 export class AuSwitch implements FormCheckboxControl {
   readonly checked = model<boolean>(false);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
@@ -49,47 +44,44 @@ export class AuSwitch implements FormCheckboxControl {
   readonly showRequired = input(true);
 
   readonly size = input<AuSize>('md');
-  readonly id = input<string>('');
   readonly name = input<string>('');
 
   readonly blur = output<void>();
   readonly checkedChange = output<boolean>();
 
-  private static idCounter = 0;
-
+  protected readonly formField = injectAuFormField();
+  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
-  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-  readonly resolvedId = computed(() => {
-    const v = this.id();
-    if (v) {
-      return v;
-    }
-    return `au-switch-${++AuSwitch.idCounter}`;
-  });
+  readonly controlId = computed(() => this.formField.controlId());
 
-  readonly hintId = computed(() => `${this.resolvedId()}-hint`);
-  readonly errorId = computed(() => `${this.resolvedId()}-error`);
-
-  readonly displayError = computed(() => {
-    const manual = this.errorMessage().trim();
-    if (manual.length > 0) {
-      return manual;
-    }
-    const list = this.errors();
-    if (list.length === 0) {
-      return '';
-    }
-    const first = list[0]!;
-    return (first.message ?? first.kind) || '';
-  });
-
+  readonly displayError = displayErrorFromErrors(this.errors);
   readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
+  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+    invalid: () => this.invalid(),
+    isInvalid: () => this.isInvalid(),
+  });
 
-  readonly ariaDescribedBy = computed((): string | null =>
-    this.hint().trim().length > 0 ? this.hintId() : null,
-  );
+  readonly ariaDescribedBy = computed((): string | null => {
+    const ids: string[] = [];
+    if (this.formField.hint().trim().length > 0) {
+      ids.push(this.formField.hintId());
+    }
+    if (this.effectiveInvalid()) {
+      ids.push(this.formField.errorId());
+    }
+    return ids.length > 0 ? ids.join(' ') : null;
+  });
+
+  constructor() {
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
+  }
 
   onChange(event: Event): void {
     if (this.disabled()) {
@@ -122,6 +114,6 @@ export class AuSwitch implements FormCheckboxControl {
   }
 
   focus(): void {
-    this.inputEl().nativeElement.focus();
+    queryFieldNative<HTMLInputElement>(this.host, '.au-switch__element').focus();
   }
 }

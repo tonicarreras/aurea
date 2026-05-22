@@ -18,12 +18,12 @@ bun run build:docs
 
 Todas las URLs llevan prefijo de idioma (`es` o `en`):
 
-| Ruta | Descripción |
-|------|-------------|
-| `/es`, `/en` | Inicio |
-| `/es/get-started`, `/en/get-started` | Instalación y primer uso |
-| `/es/themes`, `/en/themes` | Tokens y modo claro/oscuro |
-| `/es/components`, `/en/components` | Índice de componentes |
+| Ruta                                           | Descripción                                 |
+| ---------------------------------------------- | ------------------------------------------- |
+| `/es`, `/en`                                   | Inicio                                      |
+| `/es/get-started`, `/en/get-started`           | Instalación y primer uso                    |
+| `/es/themes`, `/en/themes`                     | Tokens y modo claro/oscuro                  |
+| `/es/components`, `/en/components`             | Índice de componentes                       |
 | `/es/components/:slug`, `/en/components/:slug` | Vista previa + documentación por componente |
 
 `/` redirige a `/es`.

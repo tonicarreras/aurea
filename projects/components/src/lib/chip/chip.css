@@ -3,7 +3,7 @@
  * Variant: `data-au-variant` (filled | outline | accent).
  * Size: `data-au-size` (sm | md).
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 :host {
   display: inline-flex;
@@ -28,12 +28,10 @@
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
   letter-spacing: var(--au-tracking-ui);
-  color: var(--au-color-text-secondary);
+  color: var(--au-color-text-primary);
   background: var(--au-color-surface-elevated);
   transition:
-    var(--au-transition-background),
-    var(--au-transition-border),
-    var(--au-transition-shadow),
+    var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
     var(--au-transition-color);
   white-space: nowrap;
 }
@@ -72,13 +70,11 @@ button.au-chip__surface {
 :host([data-au-variant='filled']) .au-chip__surface {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-subtle);
-  color: var(--au-color-text-secondary);
 }
 
 :host([data-au-variant='outline']) .au-chip__surface {
   background: transparent;
   border-color: var(--au-color-border-default);
-  color: var(--au-color-text-secondary);
 }
 
 :host([data-au-variant='accent']) .au-chip__surface,
@@ -110,10 +106,12 @@ button.au-chip__surface:active:not(:disabled) {
   color: var(--au-color-select-option-highlight-text);
 }
 
-/* Disabled */
+/* Disabled — explicit colors (opacity fails axe color-contrast on label text) */
 .au-chip__surface--disabled,
 button.au-chip__surface:disabled {
-  opacity: 0.45;
+  color: var(--au-color-text-secondary);
+  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-color-border-subtle);
   cursor: not-allowed;
 }
 
@@ -149,10 +147,8 @@ button.au-chip__surface:disabled {
   height: 1.25rem;
 }
 
-.au-chip__remove-glyph {
-  font-size: 1rem;
-  line-height: 1;
-  font-weight: var(--au-weight-semibold);
+.au-chip__remove au-icon {
+  display: block;
 }
 
 .au-chip__remove:hover:not(:disabled) {
@@ -161,7 +157,7 @@ button.au-chip__surface:disabled {
 }
 
 .au-chip__remove:disabled {
-  opacity: 0.45;
+  color: var(--au-color-text-disabled);
   cursor: not-allowed;
 }
 

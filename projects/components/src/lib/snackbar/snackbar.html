@@ -5,6 +5,15 @@
     [attr.aria-live]="livePoliteness()"
     aria-atomic="true"
   >
+    @if (showVariantIcon() && variantIcon(); as iconName) {
+      <span class="au-snackbar__icon">
+        <au-icon
+          [name]="iconName"
+          size="md"
+        />
+      </span>
+    }
+
     <div class="au-snackbar__body">
       @if (showMessage()) {
         <p class="au-snackbar__message">{{ message() }}</p>
@@ -18,7 +27,11 @@
     @if (actionLabel().trim() || showCloseButton()) {
       <div class="au-snackbar__actions">
         @if (actionLabel().trim()) {
-          <button type="button" class="au-snackbar__action" (click)="onActionClick()">
+          <button
+            type="button"
+            class="au-snackbar__action"
+            (click)="onActionClick()"
+          >
             {{ actionLabel() }}
           </button>
         }
@@ -29,14 +42,10 @@
             [attr.aria-label]="closeAriaLabel()"
             (click)="onCloseClick()"
           >
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path
-                d="M15 5L5 15M5 5L15 15"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
+            <au-icon
+              name="close"
+              size="sm"
+            />
           </button>
         }
       </div>

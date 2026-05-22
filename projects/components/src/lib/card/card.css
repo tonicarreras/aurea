@@ -1,7 +1,7 @@
 /**
  * Card — grouped content with shared surface language as au-dialog.
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 au-card {
   display: block;

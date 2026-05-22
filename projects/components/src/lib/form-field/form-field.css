@@ -1,0 +1,62 @@
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
+
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.au-form-field__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+.au-form-field__label-host {
+  display: block;
+}
+
+.au-form-field__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+.au-form-field__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-form-field__control {
+  display: block;
+}
+
+.au-form-field__hint {
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-tertiary);
+}

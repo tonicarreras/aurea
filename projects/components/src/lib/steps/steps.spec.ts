@@ -12,9 +12,22 @@ async function flushStepsSelection(): Promise<void> {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps [(value)]="active" ariaLabel="Doc sections">
-      <button type="button" auStep="overview">Overview</button>
-      <button type="button" auStep="api">API</button>
+    <au-steps
+      [(value)]="active"
+      ariaLabel="Doc sections"
+    >
+      <button
+        type="button"
+        auStep="overview"
+      >
+        Overview
+      </button>
+      <button
+        type="button"
+        auStep="api"
+      >
+        API
+      </button>
       <div auStepPanel="overview">Overview body</div>
       <div auStepPanel="api">API body</div>
     </au-steps>
@@ -27,9 +40,23 @@ class TestStepsHost {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps layout="sections" [(value)]="active" ariaLabel="Sections">
-      <button type="button" auStep="overview">Overview</button>
-      <button type="button" auStep="api">API</button>
+    <au-steps
+      layout="sections"
+      [(value)]="active"
+      ariaLabel="Sections"
+    >
+      <button
+        type="button"
+        auStep="overview"
+      >
+        Overview
+      </button>
+      <button
+        type="button"
+        auStep="api"
+      >
+        API
+      </button>
       <div auStepPanel="overview">Overview body</div>
       <div auStepPanel="api">API body</div>
     </au-steps>
@@ -42,9 +69,24 @@ class SectionsHost {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps layout="sections" [(value)]="active" id="doc" ariaLabel="Doc scroll">
-      <button type="button" auStep="overview">Overview</button>
-      <button type="button" auStep="api">API</button>
+    <au-steps
+      layout="sections"
+      [(value)]="active"
+      id="doc"
+      ariaLabel="Doc scroll"
+    >
+      <button
+        type="button"
+        auStep="overview"
+      >
+        Overview
+      </button>
+      <button
+        type="button"
+        auStep="api"
+      >
+        API
+      </button>
       <div auStepPanel="overview">Overview body</div>
       <div auStepPanel="api">API body</div>
     </au-steps>
@@ -57,10 +99,28 @@ class SectionsScrollHost {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps [(value)]="active" ariaLabel="Three steps">
-      <button type="button" auStep="a">A</button>
-      <button type="button" auStep="b">B</button>
-      <button type="button" auStep="c">C</button>
+    <au-steps
+      [(value)]="active"
+      ariaLabel="Three steps"
+    >
+      <button
+        type="button"
+        auStep="a"
+      >
+        A
+      </button>
+      <button
+        type="button"
+        auStep="b"
+      >
+        B
+      </button>
+      <button
+        type="button"
+        auStep="c"
+      >
+        C
+      </button>
       <div auStepPanel="a">A</div>
       <div auStepPanel="b">B</div>
       <div auStepPanel="c">C</div>
@@ -74,10 +134,29 @@ class TestThreeStepsHost {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps [(value)]="active" ariaLabel="Disabled">
-      <button type="button" auStep="a">A</button>
-      <button type="button" auStep="b" [auStepDisabled]="true">B</button>
-      <button type="button" auStep="c">C</button>
+    <au-steps
+      [(value)]="active"
+      ariaLabel="Disabled"
+    >
+      <button
+        type="button"
+        auStep="a"
+      >
+        A
+      </button>
+      <button
+        type="button"
+        auStep="b"
+        [auStepDisabled]="true"
+      >
+        B
+      </button>
+      <button
+        type="button"
+        auStep="c"
+      >
+        C
+      </button>
       <div auStepPanel="a">A</div>
       <div auStepPanel="b">B</div>
       <div auStepPanel="c">C</div>
@@ -91,9 +170,23 @@ class TestStepsWithDisabledHost {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps [(value)]="active" id="settings" ariaLabel="With id">
-      <button type="button" auStep="profile">Profile</button>
-      <button type="button" auStep="billing">Billing</button>
+    <au-steps
+      [(value)]="active"
+      id="settings"
+      ariaLabel="With id"
+    >
+      <button
+        type="button"
+        auStep="profile"
+      >
+        Profile
+      </button>
+      <button
+        type="button"
+        auStep="billing"
+      >
+        Billing
+      </button>
       <div auStepPanel="profile">Profile body</div>
       <div auStepPanel="billing">Billing body</div>
     </au-steps>
@@ -106,9 +199,22 @@ class TestStepsWithIdHost {
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps [(value)]="active" ariaLabel="Unknown value">
-      <button type="button" auStep="a">A</button>
-      <button type="button" auStep="b">B</button>
+    <au-steps
+      [(value)]="active"
+      ariaLabel="Unknown value"
+    >
+      <button
+        type="button"
+        auStep="a"
+      >
+        A
+      </button>
+      <button
+        type="button"
+        auStep="b"
+      >
+        B
+      </button>
       <div auStepPanel="a">A</div>
       <div auStepPanel="b">B</div>
     </au-steps>
@@ -170,11 +276,34 @@ describe('AuSteps', () => {
         `,
       ],
       template: `
-        <au-steps [(value)]="active" ariaLabel="Tabs">
-          <button type="button" auStep="overview">Overview</button>
-          <button type="button" auStep="api">API</button>
-          <div class="panel-host" auStepPanel="overview">Overview body</div>
-          <div class="panel-host" auStepPanel="api">API body</div>
+        <au-steps
+          [(value)]="active"
+          ariaLabel="Tabs"
+        >
+          <button
+            type="button"
+            auStep="overview"
+          >
+            Overview
+          </button>
+          <button
+            type="button"
+            auStep="api"
+          >
+            API
+          </button>
+          <div
+            class="panel-host"
+            auStepPanel="overview"
+          >
+            Overview body
+          </div>
+          <div
+            class="panel-host"
+            auStepPanel="api"
+          >
+            API body
+          </div>
         </au-steps>
       `,
     })
@@ -212,7 +341,10 @@ describe('AuSteps', () => {
     const steps = fix.debugElement.query(By.directive(AuSteps))!.componentInstance as AuSteps;
     steps.value.set('ghost');
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'End', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('c');
   });
@@ -223,10 +355,16 @@ describe('AuSteps', () => {
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('b');
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('a');
   });
@@ -237,10 +375,16 @@ describe('AuSteps', () => {
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'End', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('c');
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'Home', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('a');
   });
@@ -263,7 +407,10 @@ describe('AuSteps', () => {
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('c');
   });
@@ -418,7 +565,10 @@ describe('AuSteps', () => {
     const bStep = fix.nativeElement.querySelector('button[auStep="b"]') as HTMLButtonElement;
     const focusSpy = vi.spyOn(bStep, 'focus');
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
-    list.triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
     fix.detectChanges();
     expect(focusSpy).toHaveBeenCalled();
   });
@@ -428,7 +578,9 @@ describe('AuSteps', () => {
     fix.detectChanges();
     await flushStepsSelection();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    const overview = fix.nativeElement.querySelector('button[auStep="overview"]') as HTMLButtonElement;
+    const overview = fix.nativeElement.querySelector(
+      'button[auStep="overview"]',
+    ) as HTMLButtonElement;
     overview.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     fix.detectChanges();
     expect(overview.classList.contains('au-steps__step--from-tab')).toBe(true);
@@ -441,7 +593,9 @@ describe('AuSteps', () => {
     const fix = TestBed.createComponent(SectionsHost);
     fix.detectChanges();
     await flushStepsSelection();
-    const overview = fix.nativeElement.querySelector('button[auStep="overview"]') as HTMLButtonElement;
+    const overview = fix.nativeElement.querySelector(
+      'button[auStep="overview"]',
+    ) as HTMLButtonElement;
     expect(overview.getAttribute('role')).toBeNull();
     expect(overview.getAttribute('aria-current')).toBe('true');
   });

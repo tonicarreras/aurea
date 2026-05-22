@@ -1,34 +1,45 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuSwitch } from '@aurea-design-system/components';
+import { AuFormField, AuSwitch } from '@aurea-design-system/components';
 
 @Component({
   selector: 'docs-example-switch-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuSwitch],
-  template: `<au-switch label="Notificaciones push" />`,
+  imports: [AuFormField, AuSwitch],
+  template: `
+    <au-form-field>
+      <au-switch label="Notificaciones push" />
+    </au-form-field>
+  `,
 })
 export class ExampleSwitchBasicDemo {}
 
 @Component({
   selector: 'docs-example-switch-disabled',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuSwitch],
-  template: `<au-switch label="Modo avión" [checked]="true" [disabled]="true" />`,
+  imports: [AuFormField, AuSwitch],
+  template: `
+    <au-form-field>
+      <au-switch
+        label="Modo avión"
+        [checked]="true"
+        [disabled]="true"
+      />
+    </au-form-field>
+  `,
 })
 export class ExampleSwitchDisabledDemo {}
 
 @Component({
   selector: 'docs-example-switch-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuSwitch],
+  imports: [AuFormField, AuSwitch],
   template: `
-    <au-switch
-      label="Acepto la política de privacidad"
-      [required]="true"
+    <au-form-field
       errorMessage="Debes activar esta opción para continuar."
-    />
+      [invalid]="true"
+    >
+      <au-switch label="Acepto la política de privacidad" />
+    </au-form-field>
   `,
 })
 export class ExampleSwitchErrorDemo {}
-
-// —— Select / Autocomplete ——

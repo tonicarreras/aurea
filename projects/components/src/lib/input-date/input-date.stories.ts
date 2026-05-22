@@ -1,21 +1,84 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { fn } from 'storybook/test';
 
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field';
 import { AuInputDate } from './input-date';
 
-const meta: Meta<AuInputDate> = {
+interface InputDateStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  minDate: string | undefined;
+  maxDate: string | undefined;
+  disabled: boolean;
+  readOnly: boolean;
+  name: string;
+  autocomplete: string | undefined;
+  size: 'sm' | 'md' | 'lg';
+}
+
+const meta: Meta<InputDateStoryArgs> = {
   title: 'Aurea/Input date',
   component: AuInputDate,
   tags: ['autodocs', 'au'],
   parameters: { layout: 'padded' },
+  argTypes: {
+    ...fieldChromeArgTypes,
+    value: { control: 'text', table: { category: 'Value' } },
+    valueChange: { table: { category: 'Events' } },
+    blur: { table: { category: 'Events' } },
+    placeholder: { control: 'text', table: { category: 'Field' } },
+    minDate: { control: 'text', table: { category: 'Field' } },
+    maxDate: { control: 'text', table: { category: 'Field' } },
+    disabled: { control: 'boolean', table: { category: 'Field' } },
+    readOnly: { control: 'boolean', table: { category: 'Field' } },
+    name: { control: 'text', table: { category: 'Field' } },
+    autocomplete: { control: 'text', table: { category: 'Field' } },
+    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },
+  } as Meta<InputDateStoryArgs>['argTypes'],
   args: {
+    ...defaultFieldChromeArgs,
     valueChange: fn(),
     blur: fn(),
+    value: null,
+    placeholder: '',
+    minDate: undefined,
+    maxDate: undefined,
+    disabled: false,
+    readOnly: false,
+    name: '',
+    autocomplete: undefined,
+    size: 'md',
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuInputDate],
+      args,
+      `<au-input-date
+  [(value)]="value"
+  [placeholder]="placeholder"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [name]="name"
+  [autocomplete]="autocomplete"
+  [size]="size"
+  [invalid]="invalid"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuInputDate>;
+type Story = StoryObj<InputDateStoryArgs>;
 
 export const Default: Story = {
   args: {

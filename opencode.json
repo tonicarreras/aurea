@@ -12,11 +12,7 @@
       "url": "https://mcp.context7.com/mcp"
     },
     "engram": {
-      "command": [
-        "/home/tonicarreras/.local/bin/engram",
-        "mcp",
-        "--tools=agent"
-      ],
+      "command": ["/home/tonicarreras/.local/bin/engram", "mcp", "--tools=agent"],
       "type": "local",
       "environment": {
         "ENGRAM_PROJECT": "aurea-ds"

@@ -2,8 +2,8 @@
  * Input text — built from scratch: crisp border, no faux-3D fill.
  * Size: `data-au-size` on host (sm | md | lg).
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
 
 :host {
   display: block;
@@ -222,8 +222,7 @@
   line-height: 1;
   cursor: pointer;
   user-select: none;
-  transition:
-    var(--au-transition-glyph), var(--au-transition-background);
+  transition: var(--au-transition-glyph), var(--au-transition-background);
 }
 
 .au-input-text__reveal:hover:not(:disabled) {

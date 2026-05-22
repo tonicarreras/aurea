@@ -1,7 +1,7 @@
 /**
  * Tabs — WAI-ARIA tablist with line or contained triggers.
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 au-tabs {
   display: block;
@@ -96,9 +96,7 @@ au-tabs[data-au-variant='contained'] .au-tabs__list {
   cursor: pointer;
   user-select: none;
   transition:
-    var(--au-transition-color),
-    var(--au-transition-background),
-    var(--au-transition-border),
+    var(--au-transition-color), var(--au-transition-background), var(--au-transition-border),
     var(--au-transition-shadow);
 }
 

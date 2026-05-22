@@ -16,6 +16,7 @@ export interface DocsNavSection {
 
 const COMPONENT_SLUGS: { slug: string; label: string }[] = [
   { slug: 'button', label: 'Button' },
+  { slug: 'form-field', label: 'Form field' },
   { slug: 'input-text', label: 'Input text' },
   { slug: 'textarea', label: 'Textarea' },
   { slug: 'checkbox', label: 'Checkbox' },
@@ -29,7 +30,13 @@ const COMPONENT_SLUGS: { slug: string; label: string }[] = [
   { slug: 'card', label: 'Card' },
   { slug: 'tabs', label: 'Tabs' },
   { slug: 'chip', label: 'Chip' },
+  { slug: 'chip-group', label: 'Chip group' },
+  { slug: 'list', label: 'List' },
   { slug: 'snackbar', label: 'Snackbar' },
+  { slug: 'message', label: 'Message' },
+  { slug: 'icon', label: 'Icon' },
+  { slug: 'skeleton', label: 'Skeleton' },
+  { slug: 'steps', label: 'Steps' },
   { slug: 'divider', label: 'Divider' },
   { slug: 'tooltip', label: 'Tooltip' },
 ];

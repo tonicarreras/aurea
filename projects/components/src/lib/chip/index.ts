@@ -1,3 +1,3 @@
 export * from './chip';
 
-export type { ChipVariant, ChipSize } from './chip';
+export type { AuChipVariant, AuChipSize } from './chip';

@@ -38,7 +38,11 @@ export class ExampleButtonGhostDemo {}
   selector: 'docs-example-button-loading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="primary" [loading]="true">Guardando…</au-button>`,
+  template: `<au-button
+    variant="primary"
+    [loading]="true"
+    >Guardando…</au-button
+  >`,
 })
 export class ExampleButtonLoadingDemo {}
 
@@ -46,7 +50,11 @@ export class ExampleButtonLoadingDemo {}
   selector: 'docs-example-button-disabled',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="primary" [disabled]="true">No disponible</au-button>`,
+  template: `<au-button
+    variant="primary"
+    [disabled]="true"
+    >No disponible</au-button
+  >`,
 })
 export class ExampleButtonDisabledDemo {}
 

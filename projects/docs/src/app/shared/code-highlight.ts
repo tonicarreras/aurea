@@ -7,10 +7,10 @@ import 'prismjs/components/prism-typescript';
 export type CodeLanguage = 'typescript' | 'css' | 'bash' | 'html' | 'text';
 
 const GRAMMAR: Record<Exclude<CodeLanguage, 'text'>, Prism.Grammar> = {
-  typescript: Prism.languages['typescript']!,
-  css: Prism.languages['css']!,
-  bash: Prism.languages['bash']!,
-  html: Prism.languages['markup']!,
+  typescript: Prism.languages['typescript'],
+  css: Prism.languages['css'],
+  bash: Prism.languages['bash'],
+  html: Prism.languages['markup'],
 };
 
 const PRISM_LANG: Record<Exclude<CodeLanguage, 'text'>, string> = {

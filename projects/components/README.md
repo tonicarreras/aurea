@@ -54,7 +54,7 @@ Optional (form/listbox overlays):
 ### 2. Dark mode (optional)
 
 ```html
-<html data-au-theme="dark">
+<html data-au-theme="dark"></html>
 ```
 
 Or use the `auTheme` directive from the same package.
@@ -68,7 +68,11 @@ import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system
   imports: [AuButton, AuCheckbox, AuDivider, AuTooltip],
   template: `
     <au-button variant="primary">Save</au-button>
-    <au-button variant="outline" auTooltip="Extra help">?</au-button>
+    <au-button
+      variant="outline"
+      auTooltip="Extra help"
+      >?</au-button
+    >
     <au-divider />
     <au-checkbox label="Remember me" />
   `,
@@ -78,28 +82,85 @@ export class Example {}
 
 ---
 
+## Signal forms (Angular 21+)
+
+Field controls implement `FormValueControl` and bind with **`[formField]`** from `@angular/forms/signals`. Put **`form()`** and the model **`signal()`** in your **page or feature component** (injection context). Wrap the control in **`au-form-field`** for label, hint, and error chrome — do not duplicate `label` on the inner control.
+
+Import **`FormField`** next to the control in the same `@Component.imports` array.
+
+### Example: email with `required` + `email`
+
+```ts
+import { Component, signal } from '@angular/core';
+import { FormField, email, form, required } from '@angular/forms/signals';
+import { AuFormField, AuInputText } from '@aurea-design-system/components';
+
+@Component({
+  selector: 'app-profile-email',
+  imports: [AuFormField, AuInputText, FormField],
+  template: `
+    <au-form-field
+      label="Email"
+      hint="We only use this for account notices."
+      [required]="true"
+    >
+      <au-input-text
+        [formField]="fieldRoot.email"
+        type="email"
+        placeholder="you@company.com"
+      />
+    </au-form-field>
+  `,
+})
+export class ProfileEmailComponent {
+  private readonly data = signal({ email: '' as string });
+
+  readonly fieldRoot = form(this.data, (schema) => {
+    required(schema.email, { message: 'Email is required' });
+    email(schema.email, { message: 'Enter a valid email address' });
+  });
+}
+```
+
+### Controls with `[formField]`
+
+| Component                      | Value type       | Notes                 |
+| ------------------------------ | ---------------- | --------------------- |
+| `AuInputText`, `AuTextarea`    | `string \| null` | Empty field → `null`  |
+| `AuInputNumber`, `AuInputDate` | `string \| null` | Same empty semantics  |
+| `AuSelect`, `AuAutocomplete`   | `string \| null` | Option `value`        |
+| `AuCheckbox`, `AuSwitch`       | `boolean`        |                       |
+| `AuRadioGroup`                 | `string \| null` | Selected option value |
+
+### Manual validation (no `form()`)
+
+Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → _With error_ and **Aurea/Form field**.
+
+---
+
 ## Components
 
-| Export | Selector / API | Notes |
-|--------|----------------|-------|
-| `AuButton` | `<au-button>` | Variants, loading, focus ring |
-| `AuInputText` | `<au-input-text>` | Signal forms via `formField` |
-| `AuTextarea` | `<au-textarea>` | |
-| `AuCheckbox` | `<au-checkbox>` | |
-| `AuSelect` | `<au-select>` | Portaled listbox |
-| `AuAutocomplete` | `<au-autocomplete>` | |
-| `AuSwitch` | `<au-switch>` | |
-| `AuRadioGroup` | `<au-radio-group>` | |
-| `AuInputNumber` | `<au-input-number>` | |
-| `AuInputDate` | `<au-input-date>` | |
-| `AuDialog` | `<au-dialog>` | Native `<dialog>` |
-| `AuCard` | `<au-card>` | `AuCardFooter` directive |
-| `AuTabs` | `<au-tabs>` | `AuTab`, `AuTabPanel` |
-| `AuChip` | `<au-chip>` | Removable / selectable |
-| `AuSnackbar` | `<au-snackbar>` | |
-| `AuDivider` | `<au-divider>` | Horizontal / vertical |
-| `AuTooltip` | `[auTooltip]` | Directive on the trigger |
-| `AuTheme` | `[auTheme]` | `light` / `dark` / `system` |
+| Export           | Selector / API      | Notes                                          |
+| ---------------- | ------------------- | ---------------------------------------------- |
+| `AuButton`       | `<au-button>`       | Variants, loading, focus ring                  |
+| `AuInputText`    | `<au-input-text>`   | `[formField]` or `[(value)]` + `au-form-field` |
+| `AuTextarea`     | `<au-textarea>`     | Same as input-text                             |
+| `AuFormField`    | `<au-form-field>`   | Label / hint / error wrapper                   |
+| `AuCheckbox`     | `<au-checkbox>`     |                                                |
+| `AuSelect`       | `<au-select>`       | Portaled listbox                               |
+| `AuAutocomplete` | `<au-autocomplete>` |                                                |
+| `AuSwitch`       | `<au-switch>`       |                                                |
+| `AuRadioGroup`   | `<au-radio-group>`  |                                                |
+| `AuInputNumber`  | `<au-input-number>` |                                                |
+| `AuInputDate`    | `<au-input-date>`   |                                                |
+| `AuDialog`       | `<au-dialog>`       | Native `<dialog>`                              |
+| `AuCard`         | `<au-card>`         | `AuCardFooter` directive                       |
+| `AuTabs`         | `<au-tabs>`         | `AuTab`, `AuTabPanel`                          |
+| `AuChip`         | `<au-chip>`         | Removable / selectable                         |
+| `AuSnackbar`     | `<au-snackbar>`     |                                                |
+| `AuDivider`      | `<au-divider>`      | Horizontal / vertical                          |
+| `AuTooltip`      | `[auTooltip]`       | Directive on the trigger                       |
+| `AuTheme`        | `[auTheme]`         | `light` / `dark` / `system`                    |
 
 ---
 

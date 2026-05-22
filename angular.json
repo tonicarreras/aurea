@@ -38,8 +38,9 @@
               "coverageInclude": ["projects/components/src/lib/**/*.ts"],
               "coverageExclude": [
                 "projects/components/src/lib/**/*.stories.ts",
-                "projects/components/src/lib/**/*.docs-overview.ts",
-                "projects/components/src/lib/**/*-story-host.ts"
+                "projects/components/src/lib/**/*.stories-chrome.ts",
+                "projects/components/src/lib/**/*-story-host.ts",
+                "projects/components/src/lib/**/form-field.spec-hosts.ts"
               ],
               "coverageThresholds": {
                 "statements": 100,

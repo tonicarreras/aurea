@@ -1,8 +1,8 @@
 /**
  * Radio group — fieldset + native radios in a bordered shell.
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
 
 :host {
   display: block;

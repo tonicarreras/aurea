@@ -2,36 +2,25 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
   computed,
+  inject,
   input,
   model,
   output,
   signal,
-  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
+import { AU_FORM_FIELD } from '../form-field/form-field';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
+import type { AuFieldOption } from '../field-option';
 
-type AuSize = 'sm' | 'md' | 'lg';
+export type AuRadioOption = AuFieldOption;
 
-export interface RadioOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-
-/**
- * Design-system **radio group**: native radios in a `<fieldset>`, single `value` model.
- *
- * @remarks
- * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` on a string field.
- * - **Classic:** use `[(value)]` with `options` and optional `errorMessage` / `invalid`.
- * - **Parsing:** empty string sets `null`.
- * - **Accessibility:** `<fieldset>` + `<legend>`; each radio has a stable `id` / `label for`.
- * - **Focus:** group shell uses the same Tab vs pointer ring pattern as `au-select`.
- *
- * @see {@link FormValueControl}
- */
+/** Radio group; project inside {@link AuFormField} (legend from form-field `label`). */
 @Component({
   selector: 'au-radio-group',
   templateUrl: './radio-group.html',
@@ -45,78 +34,76 @@ export interface RadioOption {
 export class AuRadioGroup implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
-  readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
-  readonly options = input<RadioOption[]>([]);
+  readonly options = input<AuRadioOption[]>([]);
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
-  readonly showRequired = input(true);
 
-  readonly id = input<string>('');
   readonly name = input<string>('');
   readonly size = input<AuSize>('md');
 
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
 
-  private static idCounter = 0;
-
+  protected readonly formField = inject(AU_FORM_FIELD);
+  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
-  readonly fieldEl = viewChild.required<ElementRef<HTMLElement>>('fieldEl');
 
-  readonly resolvedId = computed(() => {
-    const v = this.id();
-    if (v) {
-      return v;
-    }
-    return `au-radio-group-${++AuRadioGroup.idCounter}`;
-  });
-
-  readonly legendId = computed(() => `${this.resolvedId()}-legend`);
-  readonly hintId = computed(() => `${this.resolvedId()}-hint`);
-  readonly errorId = computed(() => `${this.resolvedId()}-error`);
+  readonly controlId = computed(() => this.formField.controlId());
+  readonly legendId = computed(() => `${this.controlId()}-legend`);
 
   readonly groupName = computed(() => {
     const n = this.name().trim();
     if (n) {
       return n;
     }
-    return this.resolvedId();
+    return this.controlId();
   });
 
-  readonly legendFallback = computed(() => {
+  readonly legendText = computed(() => {
+    const fromField = this.formField.label().trim();
+    if (fromField.length > 0) {
+      return fromField;
+    }
     const n = this.name().trim();
     return n || 'Options';
   });
 
-  readonly displayError = computed(() => {
-    const manual = this.errorMessage().trim();
-    if (manual.length > 0) {
-      return manual;
-    }
-    const list = this.errors();
-    if (list.length === 0) {
-      return '';
-    }
-    const first = list[0]!;
-    return (first.message ?? first.kind) || '';
+  readonly displayError = displayErrorFromErrors(this.errors);
+  readonly isInvalid = computed(() => this.displayError().length > 0);
+  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+    invalid: () => this.invalid(),
+    isInvalid: () => this.isInvalid(),
   });
 
-  readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
+  readonly ariaDescribedBy = computed((): string | null => {
+    const ids: string[] = [];
+    if (this.formField.hint().trim().length > 0) {
+      ids.push(this.formField.hintId());
+    }
+    if (this.effectiveInvalid()) {
+      ids.push(this.formField.errorId());
+    }
+    return ids.length > 0 ? ids.join(' ') : null;
+  });
 
-  readonly ariaDescribedBy = computed((): string | null =>
-    this.hint().trim().length > 0 ? this.hintId() : null,
-  );
+  constructor() {
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+        usesLegend: () => true,
+      }),
+    );
+  }
 
   optionInputId(optionValue: string): string {
     const safe = optionValue.replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '') || 'opt';
-    return `${this.resolvedId()}-${safe}`;
+    return `${this.controlId()}-${safe}`;
   }
 
   onRadioChange(event: Event): void {
@@ -148,7 +135,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   }
 
   focus(): void {
-    const first = this.fieldEl().nativeElement.querySelector<HTMLInputElement>(
+    const first = (this.host.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
       'input[type="radio"]:not(:disabled)',
     );
     first?.focus();

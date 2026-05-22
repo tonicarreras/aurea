@@ -1,0 +1,104 @@
+:host.docs-shell-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--au-space-4);
+  flex-shrink: 0;
+}
+
+.docs-toolbar--desktop {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--au-space-4);
+}
+
+.docs-toolbar__field {
+  min-width: 8.5rem;
+}
+
+.docs-toolbar__field ::ng-deep .au-form-field__label {
+  font-size: var(--au-text-2xs);
+}
+
+.docs-toolbar__icon-links {
+  display: flex;
+  align-items: center;
+  gap: var(--au-space-2);
+  padding-bottom: 0.15rem;
+}
+
+.docs-toolbar__icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-sm);
+  color: var(--au-color-text-secondary);
+  text-decoration: none;
+  background: var(--au-color-surface-canvas);
+  transition:
+    color var(--au-duration-short) var(--au-ease-in-out),
+    border-color var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.docs-toolbar__icon-link:hover {
+  color: var(--au-color-text-primary);
+  border-color: var(--au-color-border-default);
+  background: color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
+}
+
+.docs-toolbar__icon-link:focus-visible {
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.docs-toolbar__icon-link--npm {
+  color: #c12127;
+}
+
+.docs-toolbar__icon-link--npm:hover {
+  color: #a31f21;
+  border-color: color-mix(in srgb, #c12127 45%, transparent);
+  background: color-mix(in srgb, #c12127 10%, transparent);
+}
+
+.docs-toolbar__icon-link--storybook {
+  color: #ff4785;
+}
+
+.docs-toolbar__icon-link--storybook:hover {
+  color: #e03f78;
+  border-color: color-mix(in srgb, #ff4785 50%, transparent);
+  background: color-mix(in srgb, #ff4785 10%, transparent);
+}
+
+.docs-toolbar__menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: var(--au-space-1-5) var(--au-space-3);
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-sm);
+  background: var(--au-color-surface-canvas);
+  color: var(--au-color-text-primary);
+  font: inherit;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  cursor: pointer;
+  transition:
+    border-color var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.docs-toolbar__menu-trigger:hover {
+  border-color: var(--au-color-border-default);
+  background: color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
+}
+
+.docs-toolbar__menu-trigger:focus-visible {
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}

@@ -1,7 +1,7 @@
 /**
  * Steps — horizontal section navigation (docs / wizards).
  */
-@import url('../theme/au-tokens.css');
+@import url('../tokens/au-tokens.css');
 
 au-steps {
   display: block;

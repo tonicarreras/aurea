@@ -13,7 +13,10 @@ export class ExampleCheckboxBasicDemo {}
   selector: 'docs-example-checkbox-checked',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
-  template: `<au-checkbox label="Newsletter" [checked]="true" />`,
+  template: `<au-checkbox
+    label="Newsletter"
+    [checked]="true"
+  />`,
 })
 export class ExampleCheckboxCheckedDemo {}
 
@@ -21,7 +24,10 @@ export class ExampleCheckboxCheckedDemo {}
   selector: 'docs-example-checkbox-indeterminate',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
-  template: `<au-checkbox label="Seleccionar todo" [indeterminate]="true" />`,
+  template: `<au-checkbox
+    label="Seleccionar todo"
+    [indeterminate]="true"
+  />`,
 })
 export class ExampleCheckboxIndeterminateDemo {}
 

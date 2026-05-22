@@ -1,8 +1,8 @@
 /**
  * Input number — same field chrome as au-input-text, native type="number".
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
 
 :host {
   display: block;
@@ -98,7 +98,9 @@
   outline-offset: 2px;
 }
 
-.au-input-number__control-row--from-tab:focus-within:has(.au-input-number__input[aria-invalid='true']) {
+.au-input-number__control-row--from-tab:focus-within:has(
+    .au-input-number__input[aria-invalid='true']
+  ) {
   border-color: var(--au-color-form-error);
   outline: 2px solid var(--au-color-form-error);
 }

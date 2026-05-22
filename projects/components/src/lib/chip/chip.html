@@ -1,4 +1,4 @@
-@if (selectable()) {
+@if (isSelectable()) {
   <button
     type="button"
     class="au-chip__surface"
@@ -29,7 +29,7 @@
         <ng-content />
       }
     </span>
-    @if (removable()) {
+    @if (isRemovable()) {
       <button
         type="button"
         class="au-chip__remove"
@@ -41,7 +41,10 @@
         (click)="onRemoveClick($event)"
         (keydown)="onRemoveKeydown($event)"
       >
-        <span class="au-chip__remove-glyph" aria-hidden="true">×</span>
+        <au-icon
+          name="close"
+          size="sm"
+        />
       </button>
     }
   </span>

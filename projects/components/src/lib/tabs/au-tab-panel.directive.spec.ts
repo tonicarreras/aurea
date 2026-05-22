@@ -14,8 +14,16 @@ describe('AuTabPanel', () => {
   selector: 'test-tabs-panel',
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs value="a" ariaLabel="Test">
-      <button type="button" auTab="a">A</button>
+    <au-tabs
+      value="a"
+      ariaLabel="Test"
+    >
+      <button
+        type="button"
+        auTab="a"
+      >
+        A
+      </button>
       <div auTabPanel="a">Panel A</div>
     </au-tabs>
   `,

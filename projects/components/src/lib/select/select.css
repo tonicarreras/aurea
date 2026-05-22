@@ -2,9 +2,9 @@
  * Select — combobox with shared field listbox (same hover as au-autocomplete).
  * Size: `data-au-size` on host (sm | md | lg).
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
-@import url('../theme/au-field-listbox.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
+@import url('../styles/au-field-listbox.css');
 
 :host {
   display: block;

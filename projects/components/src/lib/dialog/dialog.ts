@@ -12,11 +12,9 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from './dialog-footer.directive';
-import {
-  focusInitialInDialogPanel,
-  handleDialogTabKeydown,
-} from './dialog-focus-trap';
+import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
 
 /**
  * Design-system **dialog**: native `<dialog>` overlay for focused interactions.
@@ -42,6 +40,7 @@ import {
  */
 @Component({
   selector: 'au-dialog',
+  imports: [AuIcon],
   templateUrl: './dialog.html',
   styleUrl: './dialog.css',
   encapsulation: ViewEncapsulation.None,
@@ -98,9 +97,14 @@ export class AuDialog {
     this.applyOpenStateToNativeDialog();
   });
 
+  private nativeDialog(): HTMLDialogElement | null {
+    const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
+    return el instanceof HTMLDialogElement ? el : null;
+  }
+
   private applyOpenStateToNativeDialog(): void {
     const isOpen = this.open();
-    const dialog = this.host.nativeElement.querySelector('dialog');
+    const dialog = this.nativeDialog();
     if (!dialog) {
       return;
     }
@@ -158,7 +162,7 @@ export class AuDialog {
   }
 
   onCloseButtonClick(): void {
-    const dialog = this.host.nativeElement.querySelector('dialog');
+    const dialog = this.nativeDialog();
     if (dialog) {
       this.closeDialogElement(dialog);
     }
@@ -172,7 +176,7 @@ export class AuDialog {
     if (target instanceof Element && target.closest('.au-dialog__panel')) {
       return;
     }
-    const dialog = this.host.nativeElement.querySelector('dialog');
+    const dialog = this.nativeDialog();
     if (dialog) {
       this.closeDialogElement(dialog);
     }
@@ -182,8 +186,8 @@ export class AuDialog {
     if (!this.open()) {
       return;
     }
-    const dialog = this.host.nativeElement.querySelector('dialog');
-    const panel = dialog?.querySelector('.au-dialog__panel') as HTMLElement | null;
+    const dialog = this.nativeDialog();
+    const panel = dialog?.querySelector<HTMLElement>('.au-dialog__panel');
     if (!panel) {
       return;
     }
@@ -196,7 +200,7 @@ export class AuDialog {
       return;
     }
     event.preventDefault();
-    const dialog = this.host.nativeElement.querySelector('dialog');
+    const dialog = this.nativeDialog();
     if (dialog && this.isDialogDisplayed(dialog)) {
       this.closeDialogElement(dialog);
     }

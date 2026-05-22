@@ -153,7 +153,12 @@ class TestCardSlotsComponent {}
     <au-card>
       <h3 auCardHeader>Title</h3>
       <p auCardBody>Body</p>
-      <button type="button" auCardFooter>Save</button>
+      <button
+        type="button"
+        auCardFooter
+      >
+        Save
+      </button>
     </au-card>
   `,
 })

@@ -2,29 +2,23 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  afterRenderEffect,
   computed,
+  inject,
   input,
   model,
   output,
   signal,
-  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { AuSize } from '../au-size';
+import { AU_FORM_FIELD } from '../form-field/form-field';
+import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
+import { syncFormFieldControlState } from '../form-field/form-field';
+import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
-type AuSize = 'sm' | 'md' | 'lg';
-
-/**
- * Design-system **numeric** field backed by `<input type="number">`, with `null` for empty input.
- *
- * @remarks
- * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` on `number | null`.
- * - **Classic:** use `[(value)]` (empty field ↔ `null`).
- * - **Parsing:** updates the model when `Number(raw)` is finite; empty string sets `null`.
- * - **Focus:** same Tab vs pointer ring pattern as `au-input-text`.
- *
- * @see {@link FormValueControl}
- */
+/** Numeric control; project inside {@link AuFormField}. */
 @Component({
   selector: 'au-input-number',
   templateUrl: './input-number.html',
@@ -37,21 +31,16 @@ type AuSize = 'sm' | 'md' | 'lg';
 })
 export class AuInputNumber implements FormValueControl<number | null> {
   readonly value = model<number | null>(null);
-
-  readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly hint = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
-  readonly errorMessage = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
-  readonly showRequired = input(true);
-
-  readonly id = input<string>('');
   readonly name = input<string>('');
-  readonly placeholder = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly placeholder = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
   readonly autocomplete = input<string | undefined>(undefined);
   readonly min = input<number | undefined>(undefined);
   readonly max = input<number | undefined>(undefined);
@@ -61,21 +50,28 @@ export class AuInputNumber implements FormValueControl<number | null> {
   readonly blur = output<void>();
   readonly valueChange = output<number | null>();
 
-  private static idCounter = 0;
-
+  protected readonly formField = inject(AU_FORM_FIELD);
+  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
-  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-  readonly resolvedId = computed(() => {
-    const v = this.id();
-    if (v) {
-      return v;
-    }
-    return `au-input-number-${++AuInputNumber.idCounter}`;
+  readonly controlId = computed(() => this.formField.controlId());
+  readonly displayError = displayErrorFromErrors(this.errors);
+  readonly isInvalid = computed(() => this.displayError().length > 0);
+  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+    invalid: () => this.invalid(),
+    isInvalid: () => this.isInvalid(),
   });
 
-  readonly hintId = computed(() => `${this.resolvedId()}-hint`);
-  readonly errorId = computed(() => `${this.resolvedId()}-error`);
+  readonly ariaDescribedBy = computed((): string | null => {
+    const ids: string[] = [];
+    if (this.formField.hint().trim().length > 0) {
+      ids.push(this.formField.hintId());
+    }
+    if (this.effectiveInvalid()) {
+      ids.push(this.formField.errorId());
+    }
+    return ids.length > 0 ? ids.join(' ') : null;
+  });
 
   readonly inputDisplay = computed(() => {
     const v = this.value();
@@ -85,25 +81,15 @@ export class AuInputNumber implements FormValueControl<number | null> {
     return String(v);
   });
 
-  readonly displayError = computed(() => {
-    const manual = this.errorMessage().trim();
-    if (manual.length > 0) {
-      return manual;
-    }
-    const list = this.errors();
-    if (list.length === 0) {
-      return '';
-    }
-    const first = list[0]!;
-    return (first.message ?? first.kind) || '';
-  });
-
-  readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = computed(() => this.invalid() || this.isInvalid());
-
-  readonly ariaDescribedBy = computed((): string | null =>
-    this.hint().trim().length > 0 ? this.hintId() : null,
-  );
+  constructor() {
+    afterRenderEffect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
+  }
 
   onInput(event: Event): void {
     if (this.disabled() || this.readOnly()) {
@@ -143,6 +129,6 @@ export class AuInputNumber implements FormValueControl<number | null> {
   }
 
   focus(): void {
-    this.inputEl().nativeElement.focus();
+    queryFieldNative<HTMLInputElement>(this.host, '.au-input-number__input').focus();
   }
 }

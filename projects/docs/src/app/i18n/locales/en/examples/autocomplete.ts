@@ -6,33 +6,32 @@ import {
 import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
-{
-      title: 'Autocomplete',
-      demoComponent: ExampleAutocompleteBasicDemo,
-      code: `<au-autocomplete
-  label="Ciudad"
-  placeholder="Buscar…"
-  [options]="cities"
-/>`,
-    },
-    {
-      title: 'With error',
-      demoComponent: ExampleAutocompleteErrorDemo,
-      code: `<au-autocomplete
+  {
+    title: 'Autocomplete',
+    demoComponent: ExampleAutocompleteBasicDemo,
+    code: `<au-form-field label="City">
+  <au-autocomplete placeholder="Search…" [options]="cities" />
+</au-form-field>`,
+  },
+  {
+    title: 'With error',
+    demoComponent: ExampleAutocompleteErrorDemo,
+    code: `<au-form-field
   label="City"
-  placeholder="Search…"
-  [options]="cities"
   errorMessage="Pick a city from the list."
-/>`,
-    },
-    {
-      title: 'With hint',
-      demoComponent: ExampleAutocompleteHintDemo,
-      code: `<au-autocomplete
+  [invalid]="true"
+>
+  <au-autocomplete placeholder="Search…" [options]="cities" />
+</au-form-field>`,
+  },
+  {
+    title: 'With hint',
+    demoComponent: ExampleAutocompleteHintDemo,
+    code: `<au-form-field
   label="City"
-  placeholder="Search…"
-  [options]="cities"
   hint="Type to filter; choose with Enter or click."
-/>`,
-    },
+>
+  <au-autocomplete placeholder="Search…" [options]="cities" />
+</au-form-field>`,
+  },
 ];

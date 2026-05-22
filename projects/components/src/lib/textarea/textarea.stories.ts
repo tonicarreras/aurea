@@ -1,10 +1,91 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
-import { TEXTAREA_DOCS_OVERVIEW } from './textarea.docs-overview';
+import { AuFormField } from '../form-field/form-field';
+import {
+  defaultFieldChromeArgs,
+  fieldChromeArgTypes,
+  formFieldControlRender,
+  type FieldChromeStoryArgs,
+} from '../form-field';
 import { AuTextarea } from './textarea';
 
-const meta: Meta<AuTextarea> = {
+const docsOverview = `
+## Overview
+
+\`au-textarea\` is a multi-line control. It implements \`FormValueControl<string | null>\` (\`[formField]\`) or \`[(value)]\`. Use **\`au-form-field\`** for label, hint, and errors (package **README** → *Signal forms*).
+
+## When to use
+
+| Use \`au-textarea\` | Prefer \`au-input-text\` |
+|--------------------|---------------------------|
+| Long text, descriptions, comments | Single line, email, password, compact fields |
+| User-controlled height (\`resize\`) | Fixed single-line height |
+
+## Anatomy
+
+| Region | Notes |
+|--------|-------|
+| Label + host | Same stacking pattern as input-text for focus overlay / contrast tooling |
+| Control row | Wraps \`<textarea>\`; error and focus styles mirror the input |
+| Textarea | \`rows\`, \`cols\`, \`wrap\`, \`spellcheck\`, \`resize\` exposed as inputs |
+| Hint / error | Same ARIA pattern as input-text (\`aria-describedby\`, \`aria-errormessage\`, \`role="alert"\`) |
+
+## Resize
+
+| \`resize\` value | Typical use |
+|----------------|-------------|
+| \`vertical\` **(default)** | User expands height; avoids breaking horizontal grids |
+| \`none\` | Fixed layout |
+| \`both\` | Power users; may affect layout width |
+
+## Accessibility
+
+| Topic | Implementation |
+|-------|----------------|
+| Multiline | Native \`<textarea>\`; **no** redundant \`aria-multiline\` (implicit) |
+| Invalid / error | Same as input: \`aria-invalid\`, \`aria-errormessage\`, live region for error |
+| Hint | \`aria-describedby\` when hint text is present |
+| Keyboard | Tab order: label (if present) → textarea → no extra traps inside the row |
+
+### Manual checks
+
+1. Run the **Accessibility** addon on **Default**, **With error**, and **Read-only**.
+2. Confirm error text is announced when \`errorMessage\` is set (role **alert**).
+3. With **Read-only**, verify the control is not editable but still readable.
+
+## Signal forms vs manual
+
+Same contract as \`au-input-text\`: \`[formField]\` + \`form()\` in your component, chrome on \`au-form-field\`; or manual \`[(value)]\` and \`errorMessage\` / \`invalid\` on the wrapper. Example: package **README** → *Signal forms*.
+
+## Tokens
+
+Uses the same form surface tokens as \`au-input-text\` (\`--au-color-form-*\`, \`--au-color-text-label\`, etc.). See **DESIGN.md** for the semantic palette.
+`.trim();
+
+type TextareaResize = 'none' | 'vertical' | 'both';
+
+interface TextareaStoryArgs extends FieldChromeStoryArgs {
+  valueChange: ReturnType<typeof fn>;
+  blur: ReturnType<typeof fn>;
+  value: string | null;
+  placeholder: string;
+  rows: number;
+  cols: number | undefined;
+  resize: TextareaResize;
+  wrap: 'soft' | 'hard';
+  spellcheck: boolean | undefined;
+  disabled: boolean;
+  readOnly: boolean;
+  name: string;
+  autocomplete: string | undefined;
+  minLength: number | undefined;
+  maxLength: number | undefined;
+  size: 'sm' | 'md' | 'lg';
+  errors: readonly unknown[];
+}
+
+const meta: Meta<TextareaStoryArgs> = {
   title: 'Aurea/Textarea',
   component: AuTextarea,
   tags: ['autodocs', 'au'],
@@ -12,11 +93,12 @@ const meta: Meta<AuTextarea> = {
     layout: 'padded',
     docs: {
       description: {
-        component: TEXTAREA_DOCS_OVERVIEW,
+        component: docsOverview,
       },
     },
   },
   argTypes: {
+    ...fieldChromeArgTypes,
     value: {
       control: 'text',
       description: 'Current value (`ModelSignal<string>`).',
@@ -30,43 +112,13 @@ const meta: Meta<AuTextarea> = {
       description: 'Emits when the textarea loses focus.',
       table: { category: 'Events' },
     },
-    label: {
-      control: 'text',
-      description: 'Visible label; `for` matches textarea `id`.',
-      table: { category: 'Chrome' },
-    },
-    hint: {
-      control: 'text',
-      description: 'Helper text; `aria-describedby` when set.',
-      table: { category: 'Chrome' },
-    },
     placeholder: {
       control: 'text',
       description: 'Native placeholder.',
-      table: { category: 'Chrome' },
-    },
-    showRequired: {
-      control: 'boolean',
-      description: 'Shows `*` + SR-only “(required)” when combined with `required`.',
-      table: { category: 'Chrome' },
-    },
-    errorMessage: {
-      control: 'text',
-      description: 'Manual error; overrides `errors` display when non-empty.',
-      table: { category: 'Validation' },
+      table: { category: 'Field' },
     },
     errors: {
       description: 'Signal-form errors via `formField`.',
-      table: { category: 'Validation' },
-    },
-    invalid: {
-      control: 'boolean',
-      description: 'External invalid from parent or directive.',
-      table: { category: 'Validation' },
-    },
-    required: {
-      control: 'boolean',
-      description: 'Native `required` + `aria-required`.',
       table: { category: 'Validation' },
     },
     minLength: {
@@ -117,19 +169,57 @@ const meta: Meta<AuTextarea> = {
       description: 'Padding and type scale.',
       table: { category: 'Field' },
     },
-    id: { control: 'text', table: { category: 'Field' } },
     name: { control: 'text', table: { category: 'Field' } },
     autocomplete: { control: 'text', table: { category: 'Field' } },
-  },
+  } as Meta<TextareaStoryArgs>['argTypes'],
   args: {
+    ...defaultFieldChromeArgs,
     value: '',
     valueChange: fn(),
     blur: fn(),
+    placeholder: '',
+    rows: 4,
+    cols: undefined,
+    resize: 'vertical',
+    wrap: 'soft',
+    spellcheck: undefined,
+    disabled: false,
+    readOnly: false,
+    name: '',
+    autocomplete: undefined,
+    minLength: undefined,
+    maxLength: undefined,
+    size: 'md',
+    errors: [],
   },
+  render: (args) =>
+    formFieldControlRender(
+      [AuFormField, AuTextarea],
+      args,
+      `<au-textarea
+  [(value)]="value"
+  [placeholder]="placeholder"
+  [rows]="rows"
+  [cols]="cols"
+  [resize]="resize"
+  [wrap]="wrap"
+  [spellcheck]="spellcheck"
+  [disabled]="disabled"
+  [readOnly]="readOnly"
+  [required]="required"
+  [name]="name"
+  [autocomplete]="autocomplete"
+  [minLength]="minLength"
+  [maxLength]="maxLength"
+  [size]="size"
+  [invalid]="invalid"
+  [errors]="$any(errors)"
+/>`,
+    ),
 };
 
 export default meta;
-type Story = StoryObj<AuTextarea>;
+type Story = StoryObj<TextareaStoryArgs>;
 
 export const Default: Story = {
   parameters: {
@@ -167,6 +257,7 @@ export const WithError: Story = {
     label: 'Comment',
     rows: 3,
     errorMessage: 'Add at least one sentence.',
+    invalid: true,
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
@@ -185,7 +276,8 @@ export const ReadOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',
+        story:
+          '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',
       },
     },
   },

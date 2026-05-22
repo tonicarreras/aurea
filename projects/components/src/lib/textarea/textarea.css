@@ -2,8 +2,8 @@
  * Textarea — same control grammar as input-text (border, Tab focus, × error).
  * Multiline: readable line-height; default `resize` vertical (attribute in template).
  */
-@import url('../theme/au-tokens.css');
-@import url('../theme/au-field-error.css');
+@import url('../tokens/au-tokens.css');
+@import url('../styles/au-field-error.css');
 
 :host {
   display: block;

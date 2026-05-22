@@ -5,7 +5,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'docs-angular-logo',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 223 236" aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 223 236"
+      aria-hidden="true"
+    >
       <g clip-path="url(#docs-angular-clip)">
         <path
           fill="url(#docs-angular-grad-main)"
@@ -26,11 +31,26 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
           gradientUnits="userSpaceOnUse"
         >
           <stop stop-color="#E40035" />
-          <stop offset=".24" stop-color="#F60A48" />
-          <stop offset=".352" stop-color="#F20755" />
-          <stop offset=".494" stop-color="#DC087D" />
-          <stop offset=".745" stop-color="#9717E7" />
-          <stop offset="1" stop-color="#6C00F5" />
+          <stop
+            offset=".24"
+            stop-color="#F60A48"
+          />
+          <stop
+            offset=".352"
+            stop-color="#F20755"
+          />
+          <stop
+            offset=".494"
+            stop-color="#DC087D"
+          />
+          <stop
+            offset=".745"
+            stop-color="#9717E7"
+          />
+          <stop
+            offset="1"
+            stop-color="#6C00F5"
+          />
         </linearGradient>
         <linearGradient
           id="docs-angular-grad-shine"
@@ -41,29 +61,34 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
           gradientUnits="userSpaceOnUse"
         >
           <stop stop-color="#FF31D9" />
-          <stop offset="1" stop-color="#FF5BE1" stop-opacity="0" />
+          <stop
+            offset="1"
+            stop-color="#FF5BE1"
+            stop-opacity="0"
+          />
         </linearGradient>
         <clipPath id="docs-angular-clip">
-          <path fill="#fff" d="M0 0h223v236H0z" />
+          <path
+            fill="#fff"
+            d="M0 0h223v236H0z"
+          />
         </clipPath>
       </defs>
     </svg>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        flex-shrink: 0;
-        width: 1.85rem;
-        height: 1.95rem;
-      }
+  styles: `
+    :host {
+      display: block;
+      flex-shrink: 0;
+      width: 1.85rem;
+      height: 1.95rem;
+    }
 
-      svg {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-    `,
-  ],
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  `,
 })
 export class AngularLogo {}
