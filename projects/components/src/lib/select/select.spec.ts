@@ -60,6 +60,18 @@ describe('AuSelect', () => {
     spy.mockRestore();
   });
 
+  it('syncListboxOverlay no-ops when the trigger is outside the control row', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+    });
+    const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
+    row.classList.remove('au-select__control-row');
+    openListbox(fix);
+    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!.nativeElement as HTMLElement;
+    expect(listbox.parentElement).not.toBe(document.body);
+    expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
+  });
+
   it('binds value when an option is chosen', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     queryTrigger(fix).click();

@@ -78,6 +78,12 @@ describe('AuSnackbar', () => {
     fix.componentRef.setInput('variant', 'warning');
     fix.detectChanges();
     expect(fix.componentInstance.variantIcon()).toBe('warning');
+    fix.componentRef.setInput('variant', 'error');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBe('error');
+    fix.componentRef.setInput('variant', 'default');
+    fix.detectChanges();
+    expect(fix.componentInstance.variantIcon()).toBeNull();
   });
 
   it('applies variant and position attributes', () => {
@@ -136,6 +142,16 @@ describe('AuSnackbar', () => {
     expect(fix.componentInstance.open()).toBe(false);
     expect(dismiss).toHaveBeenCalledTimes(1);
     expect(querySurface(fix)).toBeNull();
+  });
+
+  it('omits actions row when there is no action or close control', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Sin acciones');
+    fix.componentRef.setInput('actionLabel', '');
+    fix.componentRef.setInput('showCloseButton', false);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__actions')).toBeNull();
   });
 
   it('hides close button when showCloseButton is false', () => {
@@ -353,6 +369,141 @@ describe('AuSnackbar', () => {
     fix.destroy();
     expect(wrapper.contains(fix.nativeElement)).toBe(true);
     wrapper.remove();
+  });
+
+  it('reuses the stack id when syncStack runs while already open', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as { syncStack: () => void; stackId: number | null };
+    const stackId = inst.stackId;
+    inst.syncStack();
+    expect(inst.stackId).toBe(stackId);
+  });
+
+  it('shows action without close when only actionLabel is set', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Con acción');
+    fix.componentRef.setInput('actionLabel', 'Deshacer');
+    fix.componentRef.setInput('showCloseButton', false);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-snackbar__action')).not.toBeNull();
+    expect(fix.nativeElement.querySelector('.au-snackbar__close')).toBeNull();
+  });
+
+  it('relayouts stack when ResizeObserver fires', () => {
+    const callbacks: ResizeObserverCallback[] = [];
+    const observe = vi.fn();
+    const disconnect = vi.fn();
+    const ResizeObserverMock = vi.fn(function (this: ResizeObserver, callback: ResizeObserverCallback) {
+      callbacks.push(callback);
+      return Object.assign(this, { observe, disconnect, unobserve: vi.fn() });
+    });
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Resize');
+    fix.detectChanges();
+
+    const surface = fix.nativeElement.querySelector('.au-snackbar__surface') as HTMLElement;
+    expect(observe).toHaveBeenCalledWith(surface);
+    const inst = fix.componentInstance as unknown as {
+      teardownStack: () => void;
+      stackId: number | null;
+    };
+    const entry = { target: surface } as unknown as ResizeObserverEntry;
+    const observer = {} as ResizeObserver;
+    callbacks[0]?.([entry], observer);
+    inst.teardownStack();
+    callbacks[0]?.([entry], observer);
+    expect(inst.stackId).toBeNull();
+
+    vi.unstubAllGlobals();
+  });
+
+  it('observeStackResize is noop without surface or stack id', () => {
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      observeStackResize: (surface: HTMLElement | null) => void;
+      stackId: number | null;
+    };
+    inst.stackId = null;
+    expect(() => inst.observeStackResize(null)).not.toThrow();
+
+    const surface = document.createElement('div');
+    expect(() => inst.observeStackResize(surface)).not.toThrow();
+  });
+
+  it('observeStackResize returns early after the stack entry is torn down', () => {
+    const ResizeObserverMock = vi.fn(function (this: ResizeObserver) {
+      return Object.assign(this, { observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() });
+    });
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      observeStackResize: (surface: HTMLElement | null) => void;
+      teardownStack: () => void;
+      stackId: number | null;
+    };
+    const surface = fix.nativeElement.querySelector('.au-snackbar__surface') as HTMLElement;
+    expect(inst.stackId).not.toBeNull();
+    inst.teardownStack();
+    expect(inst.stackId).toBeNull();
+    inst.observeStackResize(surface);
+    expect(ResizeObserverMock).toHaveBeenCalledTimes(1);
+
+    vi.unstubAllGlobals();
+  });
+
+  it('observeStackResize disconnects a prior observer before attaching', () => {
+    const disconnect = vi.fn();
+    const observe = vi.fn();
+    const ResizeObserverMock = vi.fn(function (this: ResizeObserver) {
+      return Object.assign(this, { observe, disconnect, unobserve: vi.fn() });
+    });
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      observeStackResize: (surface: HTMLElement | null) => void;
+    };
+    const surface = fix.nativeElement.querySelector('.au-snackbar__surface') as HTMLElement;
+    inst.observeStackResize(surface);
+    expect(disconnect).toHaveBeenCalled();
+
+    vi.unstubAllGlobals();
+  });
+
+  it('skips ResizeObserver when it is not available', () => {
+    vi.stubGlobal('ResizeObserver', undefined);
+    const fix = TestBed.createComponent(AuSnackbar);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'No RO');
+    expect(() => fix.detectChanges()).not.toThrow();
+    vi.unstubAllGlobals();
+  });
+
+  it('syncStack is noop outside the browser platform', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [AuSnackbar],
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+    }).compileComponents();
+    const fix = TestBed.createComponent(AuSnackbar);
+    const inst = fix.componentInstance as unknown as { syncStack: () => void; stackId: number | null };
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(inst.stackId).toBeNull();
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({ imports: [AuSnackbar] }).compileComponents();
   });
 
   it('projects slot content when message is empty', () => {

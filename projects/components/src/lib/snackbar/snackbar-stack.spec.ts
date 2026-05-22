@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 import {
   isTopmostSnackbarStackEntry,
+  measureSnackbarStackSurfaceHeight,
   registerSnackbarStackEntry,
   resetSnackbarStackForTests,
   setSnackbarStackSurface,
@@ -9,6 +10,10 @@ import {
 } from './snackbar-stack';
 
 describe('snackbar-stack', () => {
+  beforeEach(() => {
+    resetSnackbarStackForTests();
+  });
+
   afterEach(() => {
     resetSnackbarStackForTests();
   });
@@ -68,4 +73,20 @@ describe('snackbar-stack', () => {
     a.host.remove();
     b.host.remove();
   });
+
+  it('measureSnackbarStackSurfaceHeight falls back when missing or zero-sized', () => {
+    expect(measureSnackbarStackSurfaceHeight(null)).toBe(56);
+    const surface = document.createElement('div');
+    vi.spyOn(surface, 'offsetHeight', 'get').mockReturnValue(0);
+    expect(measureSnackbarStackSurfaceHeight(surface)).toBe(56);
+    vi.spyOn(surface, 'offsetHeight', 'get').mockReturnValue(32);
+    expect(measureSnackbarStackSurfaceHeight(surface)).toBe(32);
+  });
+
+  it('is noop for unknown stack ids', () => {
+    expect(isTopmostSnackbarStackEntry(99_999)).toBe(false);
+    expect(() => setSnackbarStackSurface(99_999, null)).not.toThrow();
+    expect(() => unregisterSnackbarStackEntry(99_999)).not.toThrow();
+  });
+
 });

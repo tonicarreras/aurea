@@ -197,6 +197,14 @@ describe('queryFieldNative', () => {
     expect(input.tagName).toBe('INPUT');
     expect(input.classList.contains('probe-input')).toBe(true);
   });
+
+  it('throws when no element matches the selector', () => {
+    const fixture = TestBed.createComponent(ProbeHost);
+    fixture.detectChanges();
+    expect(() => queryFieldNative(fixture.componentInstance.host, '.missing')).toThrow(
+      'queryFieldNative: no element matches ".missing"',
+    );
+  });
 });
 
 describe('createStandaloneAuFormFieldContext', () => {

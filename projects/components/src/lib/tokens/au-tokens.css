@@ -253,6 +253,11 @@
     var(--au-color-semantic-info) 44%,
     var(--au-color-border-default)
   );
+  /* Titles on feedback surfaces (≥ 4.5:1 vs feedback *-bg in light theme) */
+  --au-color-feedback-success-title: #065f46;
+  --au-color-feedback-warning-title: #92400e;
+  --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
+  --au-color-feedback-info-title: #075985;
   /* Text selection */
   --au-color-selection: rgba(16, 89, 200, 0.2);
   --au-color-selection-text: inherit;
@@ -398,6 +403,11 @@
     var(--au-color-semantic-info) 50%,
     var(--au-color-border-default)
   );
+  /* Titles on feedback surfaces (readable on tinted elevated backgrounds) */
+  --au-color-feedback-success-title: #86efac;
+  --au-color-feedback-warning-title: #fde68a;
+  --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
+  --au-color-feedback-info-title: #bae6fd;
   /* Selection */
   --au-color-selection: rgba(110, 180, 255, 0.28);
   /* Form */

@@ -22,7 +22,8 @@ function groupFor(position: AuSnackbarPosition): StackEntry[] {
     .sort((a, b) => a.id - b.id);
 }
 
-function surfaceHeight(surface: HTMLElement | null): number {
+/** @internal Used by layout; exported for unit tests. */
+export function measureSnackbarStackSurfaceHeight(surface: HTMLElement | null): number {
   if (!surface) {
     return STACK_FALLBACK_HEIGHT_PX;
   }
@@ -39,7 +40,7 @@ function layout(position: AuSnackbarPosition): void {
     entry.host.style.setProperty('--au-snackbar-stack-offset', `${offsetPx}px`);
     entry.host.style.setProperty('--au-snackbar-stack-layer', String(index));
     if (index > 0) {
-      offsetPx += surfaceHeight(entry.surface) + STACK_GAP_PX;
+      offsetPx += measureSnackbarStackSurfaceHeight(entry.surface) + STACK_GAP_PX;
     }
   }
 }

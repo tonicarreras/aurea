@@ -46,6 +46,22 @@ describe('AuAutocomplete', () => {
     spy.mockRestore();
   });
 
+  it('syncListboxOverlay no-ops when the input is outside the control row', () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+    });
+    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    row.classList.remove('au-autocomplete__control-row');
+    const input = queryInput(fix);
+    input.focus();
+    input.value = 'm';
+    input.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!.nativeElement as HTMLElement;
+    expect(listbox.parentElement).not.toBe(document.body);
+    expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
+  });
+
   it('filters options and selects on mousedown', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => { f.componentInstance.options = testOptions; });
     const input = queryInput(fix);
