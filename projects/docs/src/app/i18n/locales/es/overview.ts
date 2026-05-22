@@ -614,6 +614,246 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     accessibility: ['`aria-orientation` según `orientation`.'],
   },
+  badge: {
+    intro: [
+      'Etiqueta compacta de estado o contador. Las variantes usan tokens semánticos; el modo punto para indicadores sin texto legible.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Contadores no leídos, píldoras de estado o categorías junto a títulos o filas.',
+        'Punto indicador cuando el significado está claro en el contexto (p. ej. en línea).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Etiquetas removibles o filtros seleccionables → `au-chip` / `au-chip-group`.',
+        'Frases completas o alertas descartables → `au-message`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Host `au-badge`', detail: '`data-au-variant`; `data-au-dot` opcional.' },
+      { region: 'Label', detail: 'Texto vía `label`; oculto visualmente en modo solo punto.' },
+    ],
+    accessibility: [
+      'Combina badges solo-punto con texto visible o nombre accesible en un padre.',
+      'Contadores que cambian en vivo: considera `aria-live` en la región padre.',
+    ],
+  },
+  breadcrumb: {
+    intro: [
+      'Ruta jerárquica con `role="navigation"` y `aria-label="Breadcrumb"`.',
+      'Los ítems pueden enlazar (`href`) o representar la página actual como texto.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Jerarquías profundas donde el usuario necesita contexto y navegación hacia arriba.',
+        'Ajustes o documentación con más de dos niveles.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Apps planas de un nivel → omitir breadcrumbs.',
+        'Navegación principal → tabs o menú lateral del router.',
+      ],
+    },
+    anatomy: [
+      { region: 'Lista', detail: 'Ruta ordenada con separadores entre ítems.' },
+      { region: 'Ítem enlace', detail: 'Tokens de enlace; anillo de foco con teclado.' },
+      { region: 'Página actual', detail: 'Último segmento sin `href`; texto enfatizado.' },
+    ],
+    accessibility: [
+      'Landmark `navigation` con `aria-label` por defecto.',
+      'La página actual es texto, no enlace — evita auto-enlace redundante.',
+    ],
+    keyboard: ['Tab recorre segmentos enlazados; la página actual no está en el orden de tabulación.'],
+  },
+  link: {
+    intro: [
+      'Enlace inline con tokens Aurea en `<a auLink>` o `<au-link>`.',
+      'Variantes default y subtle; `external` añade `target="_blank"` y `rel="noopener noreferrer"`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Navegación inline en párrafos, tablas o mensajes.',
+        'Referencias externas con `rel` seguro cuando `external` es true.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Acciones principales → `au-button`.',
+        'Ruta de migas → ítems de `au-breadcrumb` con `href`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Ancla', detail: 'Host `au-link` con `data-au-variant`.' },
+      { region: 'Contenido proyectado', detail: 'Texto del enlace en el slot por defecto.' },
+    ],
+    accessibility: [
+      'Anillo de foco visible (`--au-shadow-focus-ring`) con teclado.',
+      'Enlaces externos abren contexto nuevo con `noopener`.',
+    ],
+    keyboard: ['Enter activa el enlace nativo; Tab sigue el orden del documento.'],
+  },
+  menu: {
+    intro: [
+      'Menú desplegable con panel en portal anclado a `auMenuTrigger`.',
+      'Usa `[(open)]` para estado controlado; los ítems `au-menu-item` cierran al seleccionar.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Acciones de fila o barra que no requieren un diálogo completo.',
+        'Listas de comandos desde un único disparador.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Filtros o formularios compactos no modales → `au-popover`.',
+        'Confirmación bloqueante → `au-dialog`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Disparador', detail: '`auMenuTrigger`; `aria-haspopup="menu"` y `aria-expanded`.' },
+      { region: 'Panel', detail: '`.au-floating-panel` en portal; posicionado por overlay.' },
+      { region: 'Ítems', detail: 'Botones `au-menu-item`; `select` cierra el menú.' },
+    ],
+    accessibility: [
+      'El disparador expone estado expandido mientras está abierto.',
+      'Cierra con Escape o clic fuera; devuelve foco según el patrón del overlay.',
+    ],
+    keyboard: [
+      'Disparador: Enter/Espacio alterna; Escape cierra.',
+      'Ítems: activación por clic; extiende con tabindex roving si añades patrones compuestos.',
+    ],
+    relatedExports: ['AuMenu', 'AuMenuItem', 'AuMenuTrigger', 'AU_MENU'],
+  },
+  popover: {
+    intro: [
+      'Panel anclado ligero para filtros, ayuda o formularios compactos. Mismo modelo de overlay que `au-menu`.',
+      'Disparador `auPopoverTrigger` con `aria-haspopup="dialog"`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Filtros o ajustes inline cerca del disparador.',
+        'Contenido breve que no es un modal completo.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Ayuda al hover → `auTooltip`.',
+        'Flujos destructivos o bloqueantes → `au-dialog`.',
+        'Listas de acciones → `au-menu`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Disparador', detail: '`auPopoverTrigger` alterna `[(open)]`.' },
+      { region: 'Panel', detail: 'Contenido proyectado en `.au-floating-panel` portaled.' },
+    ],
+    accessibility: [
+      '`aria-expanded` del disparador refleja el estado abierto.',
+      'Gestiona foco explícitamente si el panel contiene controles de formulario.',
+      'Escape y clic fuera cierran.',
+    ],
+    keyboard: ['El disparador alterna con Enter/Espacio; Escape cierra el panel.'],
+    relatedExports: ['AuPopover', 'AuPopoverTrigger', 'AU_POPOVER'],
+  },
+  pagination: {
+    intro: [
+      'Navegación por páginas para tablas y listas. Las páginas son **base 1**; emite `pageChange` al elegir.',
+      'Colapsa rangos largos con elipsis cuando `pageCount` > 7.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Tablas o rejillas paginadas en servidor o cliente.',
+        'Cuando el usuario necesita saltar a páginas numeradas.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Feeds con scroll infinito → patrón load-more.',
+        'Listas muy pequeñas → mostrar todas las filas.',
+      ],
+    },
+    anatomy: [
+      { region: 'Nav', detail: '`role="navigation"` con `aria-label="Pagination"`.' },
+      { region: 'Anterior / siguiente', detail: 'Controles `au-button` ghost.' },
+      { region: 'Botones de página', detail: 'Páginas numeradas; la actual con estilo activo.' },
+    ],
+    accessibility: [
+      'Landmark de navegación con nombre accesible por defecto.',
+      'La página actual debe distinguirse visualmente; `aria-current="page"` en la app si personalizas botones.',
+    ],
+    keyboard: ['Tab por anterior, números y siguiente; Espacio/Enter activan botones.'],
+  },
+  progress: {
+    intro: [
+      'Barra de progreso determinada o indeterminada con `role="progressbar"`.',
+      'Modo determinado: `aria-valuenow`, `aria-valuemin`, `aria-valuemax`; `label` opcional para `aria-valuetext`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Subidas, tareas multi-paso o porcentaje conocido.',
+        'Esperas indeterminadas cuando la duración es desconocida.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Placeholders de contenido → `au-skeleton`.',
+        'Estado de botón en vuelo → `au-button` `loading`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Pista', detail: 'Superficie hundida con radio pill.' },
+      { region: 'Barra', detail: 'Ancho desde `value`/`max` o animación indeterminada.' },
+    ],
+    accessibility: [
+      '`aria-valuetext` desde `label` o porcentaje redondeado.',
+      'Modo indeterminado omite min/max/now según práctica ARIA.',
+    ],
+  },
+  table: {
+    intro: [
+      'Envoltorio semántico alrededor de `<table>` nativo. Modos opcionales `striped` y `compact`.',
+      'Columnas ordenables con `th[auTableSortHeader]`, `aria-sort` y ciclo none → asc → desc.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Datos tabulares con cabeceras y filas.',
+        'Columnas ordenables cuando el padre posee el estado de orden.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Rejillas solo de maquetación → CSS grid, no tablas.',
+        'Listas muy anchas responsive → patrones de tarjetas.',
+      ],
+    },
+    anatomy: [
+      { region: 'Host `au-table`', detail: 'Envuelve `<table>` proyectada; atributos de modo.' },
+      { region: 'Cabecera ordenable', detail: 'Botón en `<th>` con `aria-sort` e icono.' },
+    ],
+    accessibility: [
+      'Conserva semántica nativa (`thead`, `tbody`, `th scope`).',
+      'Botones de orden son botones reales con `aria-sort` según dirección.',
+    ],
+    keyboard: ['Tab a botones de orden; Enter/Espacio alternan el ciclo de orden.'],
+    relatedExports: ['AuTable', 'AuTableSortHeader'],
+  },
   tooltip: {
     intro: [
       'Ayuda contextual en portal al hacer hover o foco en el disparador. Retardos configurables para evitar parpadeos.',

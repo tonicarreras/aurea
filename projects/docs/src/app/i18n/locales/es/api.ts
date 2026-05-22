@@ -593,6 +593,143 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  badge: {
+    importNames: ['AuBadge'],
+    sections: [
+      {
+        title: 'AuBadge',
+        rows: [
+          i(
+            'variant',
+            "'default' | 'accent' | 'success' | 'warning' | 'error' | 'info'",
+            'Superficie semántica.',
+            "'default'",
+          ),
+          i('dot', 'boolean', 'Indicador sin texto de etiqueta visible.', 'false'),
+          i('label', 'string', 'Texto de contador o estado.', "''"),
+        ],
+      },
+    ],
+  },
+  breadcrumb: {
+    importNames: ['AuBreadcrumb'],
+    sections: [
+      {
+        title: 'AuBreadcrumb',
+        rows: [
+          i('items', 'AuBreadcrumbItem[]', 'Segmentos (`label`, `href` opcional).', '[]'),
+        ],
+      },
+    ],
+  },
+  link: {
+    importNames: ['AuLink'],
+    sections: [
+      {
+        title: 'AuLink',
+        description: 'En `<a auLink>` o `<au-link>`.',
+        rows: [
+          i('variant', "'default' | 'subtle'", 'Énfasis visual.', "'default'"),
+          i('href', 'string', 'URL de destino.', "'#'"),
+          i('external', 'boolean', 'Abre en pestaña nueva con `noopener noreferrer`.', 'false'),
+        ],
+      },
+    ],
+  },
+  menu: {
+    importNames: ['AuMenu', 'AuMenuItem', 'AuMenuTrigger'],
+    sections: [
+      {
+        title: 'AuMenu',
+        rows: [
+          m('open', 'ModelSignal<boolean>', 'Estado abierto del panel.'),
+          i('placement', 'AuTooltipPlacement', 'Posición preferida del panel.', "'bottom'"),
+          i('disabled', 'boolean', 'Impide abrir.', 'false'),
+          o('openChange', 'boolean', 'Al cambiar el estado abierto.'),
+        ],
+      },
+      {
+        title: 'AuMenuTrigger',
+        description: 'Directiva en el control que alterna (`auMenuTrigger`).',
+        rows: [],
+      },
+      {
+        title: 'AuMenuItem',
+        rows: [
+          i('disabled', 'boolean', 'Desactiva la acción.', 'false'),
+          o('select', 'void', 'Al activar el ítem; cierra el menú.'),
+        ],
+      },
+    ],
+  },
+  popover: {
+    importNames: ['AuPopover', 'AuPopoverTrigger'],
+    sections: [
+      {
+        title: 'AuPopover',
+        rows: [
+          m('open', 'ModelSignal<boolean>', 'Estado abierto del panel.'),
+          i('placement', 'AuTooltipPlacement', 'Posición preferida del panel.', "'bottom'"),
+          i('disabled', 'boolean', 'Impide abrir.', 'false'),
+          o('openChange', 'boolean', 'Al cambiar el estado abierto.'),
+        ],
+      },
+      {
+        title: 'AuPopoverTrigger',
+        description: 'Directiva en el control que alterna (`auPopoverTrigger`).',
+        rows: [],
+      },
+    ],
+  },
+  pagination: {
+    importNames: ['AuPagination'],
+    sections: [
+      {
+        title: 'AuPagination',
+        rows: [
+          i('page', 'number', 'Página actual (base 1).', '1'),
+          i('pageCount', 'number', 'Total de páginas (≥ 1).', '1'),
+          i('disabled', 'boolean', 'Desactiva todos los controles.', 'false'),
+          o('pageChange', 'number', 'Al elegir una página.'),
+        ],
+      },
+    ],
+  },
+  progress: {
+    importNames: ['AuProgress'],
+    sections: [
+      {
+        title: 'AuProgress',
+        rows: [
+          i('mode', "'determinate' | 'indeterminate'", 'Modo de visualización.', "'determinate'"),
+          i('value', 'number', 'Valor actual (determinado).', '0'),
+          i('max', 'number', 'Valor máximo (determinado).', '100'),
+          i('label', 'string', 'Sobrescribe `aria-valuetext` si está definido.', "''"),
+        ],
+      },
+    ],
+  },
+  table: {
+    importNames: ['AuTable', 'AuTableSortHeader'],
+    sections: [
+      {
+        title: 'AuTable',
+        description: 'Envuelve markup `<table>` nativo en el slot por defecto.',
+        rows: [
+          i('striped', 'boolean', 'Fondo alterno en filas.', 'false'),
+          i('compact', 'boolean', 'Padding reducido en celdas.', 'false'),
+        ],
+      },
+      {
+        title: 'AuTableSortHeader',
+        description: 'En `<th auTableSortHeader>`.',
+        rows: [
+          i('sortDirection', "'asc' | 'desc' | null", 'Dirección de orden actual.', 'null'),
+          o('sort', "AuTableSortDirection", 'Ciclo none → asc → desc al activar.'),
+        ],
+      },
+    ],
+  },
   tooltip: {
     importNames: ['AuTooltip'],
     sections: [
