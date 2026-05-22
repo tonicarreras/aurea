@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuChip } from '../chip/chip';
 import { AuListItem } from './au-list-item.directive';
@@ -11,13 +12,7 @@ const meta: Meta<AuList> = {
   title: 'Aurea/List',
   component: AuList,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     ariaLabel: { control: 'text', table: { category: 'Accessibility' } },
     ariaLabelledBy: { control: 'text', table: { category: 'Accessibility' } },

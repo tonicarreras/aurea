@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { signal } from '@angular/core';
 
 import { AuTable, AuTableSortHeader } from './table';
@@ -10,13 +11,7 @@ const meta: Meta<AuTable> = {
   title: 'Aurea/Table',
   component: AuTable,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     striped: {
       control: 'boolean',

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { signal } from '@angular/core';
 
 import { AuPagination } from './pagination';
@@ -10,13 +11,7 @@ const meta: Meta<AuPagination> = {
   title: 'Aurea/Pagination',
   component: AuPagination,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     page: {
       control: { type: 'number', min: 1 },

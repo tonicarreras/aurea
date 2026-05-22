@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -32,7 +33,7 @@ const meta: Meta<InputNumberStoryArgs> = {
   title: 'Aurea/Input number',
   component: AuInputNumber,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: { layout: 'padded' },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     ...fieldChromeArgTypes,
     value: { control: 'number', table: { category: 'Value' } },

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuTab } from './au-tab.directive';
@@ -14,12 +15,7 @@ const meta: Meta<AuTabs> = {
   title: 'Aurea/Tabs',
   component: AuTabs,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     value: {
       control: 'text',

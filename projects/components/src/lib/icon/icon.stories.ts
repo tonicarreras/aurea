@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuIcon, type AuIconName } from './icon';
 
@@ -11,13 +12,7 @@ const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
   component: AuIcon,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     name: { control: 'select', options: names, table: { category: 'Content' } },
     size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Appearance' } },

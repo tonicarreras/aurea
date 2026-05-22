@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuLink } from './link';
 
@@ -9,13 +10,7 @@ const meta: Meta<AuLink> = {
   title: 'Aurea/Link',
   component: AuLink,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'centered',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     variant: {
       control: 'select',

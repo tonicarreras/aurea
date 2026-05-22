@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuButton } from '../button/button';
@@ -21,13 +22,7 @@ interface TooltipStoryArgs {
 const meta: Meta<TooltipStoryArgs> = {
   title: 'Aurea/Tooltip',
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'centered',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     text: { control: 'text', table: { category: 'Content' } },
     placement: {

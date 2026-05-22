@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -30,9 +31,7 @@ const meta: Meta<CheckboxStoryArgs> = {
   title: 'Aurea/Checkbox',
   component: AuCheckbox,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'padded',
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     ...fieldChromeHintOnlyArgTypes,
     checked: {

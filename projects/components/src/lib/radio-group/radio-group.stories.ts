@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -35,7 +36,7 @@ const meta: Meta<RadioGroupStoryArgs> = {
   title: 'Aurea/Radio group',
   component: AuRadioGroup,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: { layout: 'padded' },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     ...fieldChromeArgTypes,
     value: { control: 'text', table: { category: 'Value' } },

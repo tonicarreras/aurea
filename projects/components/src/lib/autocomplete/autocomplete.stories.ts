@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -42,10 +43,7 @@ const meta: Meta<AutocompleteStoryArgs> = {
   title: 'Aurea/Autocomplete',
   component: AuAutocomplete,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: {
-    layout: 'padded',
-    docs: { extractArgTypes: () => ({}) },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     ...fieldChromeArgTypes,
     value: {

@@ -1,6 +1,7 @@
 import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
 import { AuButton } from '../button/button';
@@ -12,13 +13,7 @@ const meta: Meta<AuSnackbar> = {
   title: 'Aurea/Snackbar',
   component: AuSnackbar,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: { component: docsOverview },
-    },
-  },
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     open: { control: 'boolean', table: { category: 'State' } },
     message: { control: 'text', table: { category: 'Content' } },
