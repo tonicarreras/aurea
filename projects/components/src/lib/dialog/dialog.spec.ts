@@ -87,7 +87,7 @@ describe('AuDialog', () => {
     fix.componentRef.setInput('title', 'Confirm Action');
     fix.detectChanges();
     const titleEl = fix.debugElement.query(By.css('.au-dialog__title'));
-    expect(titleEl?.nativeElement.textContent).toBe('Confirm Action');
+    expect(titleEl?.nativeElement.textContent.trim()).toBe('Confirm Action');
   });
 
   it('renders close button by default', () => {
