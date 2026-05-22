@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve docs",
     "docs": "ng serve docs --port 4200",
-    "build:docs": "ng build docs",
+    "build:docs": "node scripts/generate-docs-sitemap.mjs && ng build docs",
     "build": "ng build components && node scripts/strip-sourcemaps.mjs",
     "build:components": "ng build components && node scripts/strip-sourcemaps.mjs",
     "pack:package": "ng build components && npm pack --prefix dist/components --pack-destination=.",

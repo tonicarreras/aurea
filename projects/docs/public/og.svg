@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Aurea Design System">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="180" fill="#6366f1" opacity="0.18"/>
+  <circle cx="180" cy="520" r="220" fill="#a855f7" opacity="0.14"/>
+  <text x="80" y="280" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="72" font-weight="700">Aurea</text>
+  <text x="80" y="360" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="40" font-weight="500">Design System � Angular 21</text>
+  <text x="80" y="430" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="28">Accessible components � Semantic tokens � Signal forms</text>
+  <rect x="80" y="480" width="320" height="8" rx="4" fill="url(#accent)"/>
+</svg>

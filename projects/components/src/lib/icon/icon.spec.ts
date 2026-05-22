@@ -32,4 +32,13 @@ describe('AuIcon', () => {
       expect(fixture.nativeElement.querySelector('.au-icon__svg')).not.toBeNull();
     }
   });
+
+  it('reflects size on the host for semantic glyphs', () => {
+    fixture.componentRef.setInput('name', 'info');
+    for (const size of ['sm', 'md', 'lg'] as const) {
+      fixture.componentRef.setInput('size', size);
+      fixture.detectChanges();
+      expect((fixture.nativeElement as HTMLElement).getAttribute('data-au-size')).toBe(size);
+    }
+  });
 });

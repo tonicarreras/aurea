@@ -8,17 +8,22 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { AuButton } from '@aurea-design-system/components';
+
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { type CodeLanguage, highlightCode } from './code-highlight';
 
 @Component({
   selector: 'docs-code-block',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuButton],
   template: `
     <section class="docs-code-panel" [class.docs-code-panel--open]="expanded()">
       <div class="docs-code-panel__bar">
         <div class="docs-code-panel__bar-start">
-          <button
+          <au-button
+            variant="ghost"
+            size="sm"
             type="button"
             class="docs-code-panel__toggle"
             [attr.aria-expanded]="expanded()"
@@ -29,11 +34,13 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             @if (showLanguage() && language() !== 'text') {
               <span class="docs-code-panel__lang">{{ languageLabel() }}</span>
             }
-          </button>
+          </au-button>
         </div>
 
         @if (expanded()) {
-          <button
+          <au-button
+            variant="outline"
+            size="sm"
             type="button"
             class="docs-code-panel__copy"
             [class.docs-code-panel__copy--done]="copied()"
@@ -41,7 +48,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             [attr.aria-label]="copied() ? copyDoneAria() : copyAria()"
           >
             {{ copied() ? copyDoneLabel() : copyLabel() }}
-          </button>
+          </au-button>
         }
       </div>
 
@@ -99,27 +106,12 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
         border-bottom-color: var(--docs-border-fine);
       }
 
-      .docs-code-panel__toggle {
+      .docs-code-panel__toggle ::ng-deep .au-button__content {
         display: inline-flex;
         align-items: center;
         gap: var(--au-space-2);
-        padding: var(--au-space-1-5) var(--au-space-2);
-        border: none;
-        border-radius: var(--au-radius-sm);
-        background: transparent;
-        color: var(--au-color-text-primary);
-        font: inherit;
         font-size: var(--au-text-sm);
         font-weight: var(--au-weight-medium);
-        cursor: pointer;
-        transition:
-          background-color var(--au-duration-short) var(--au-ease-in-out),
-          color var(--au-duration-short) var(--au-ease-in-out);
-      }
-
-      .docs-code-panel__toggle:hover {
-        background: var(--au-color-surface-raised);
-        color: var(--au-color-accent);
       }
 
       .docs-code-panel__chevron {
@@ -147,26 +139,10 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
       }
 
       .docs-code-panel__copy {
-        padding: var(--au-space-1) var(--au-space-2);
-        border: 1px solid var(--au-color-border-subtle);
-        border-radius: var(--au-radius-sm);
-        background: var(--au-color-surface-raised);
-        color: var(--au-color-text-secondary);
-        font: inherit;
-        font-size: var(--au-text-xs);
-        cursor: pointer;
         animation: docs-fade-in 0.2s var(--au-ease-out) both;
-        transition:
-          border-color var(--au-duration-short) var(--au-ease-in-out),
-          color var(--au-duration-short) var(--au-ease-in-out);
       }
 
-      .docs-code-panel__copy:hover {
-        border-color: var(--au-color-accent);
-        color: var(--au-color-accent);
-      }
-
-      .docs-code-panel__copy--done {
+      .docs-code-panel__copy--done ::ng-deep .au-button__element {
         border-color: color-mix(in srgb, var(--au-color-semantic-success) 50%, transparent);
         color: var(--au-color-semantic-success);
       }

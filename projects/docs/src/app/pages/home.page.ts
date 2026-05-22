@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuButton, AuDivider } from '@aurea-design-system/components';
+import { AuButton, AuCard, AuDivider } from '@aurea-design-system/components';
 
 import { COMPONENT_DOCS } from '../core/component-docs.registry';
 import { DOCS_ROUTES } from '../core/docs-locale';
@@ -10,7 +10,7 @@ import { DocsInlineText } from '../shared/docs-inline-text';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, RouterLink, AuButton, AuDivider, DocsInlineText],
+  imports: [DocPage, RouterLink, AuButton, AuCard, AuDivider, DocsInlineText],
   template: `
     <docs-page
       [hero]="true"
@@ -20,27 +20,35 @@ import { DocsInlineText } from '../shared/docs-inline-text';
     >
       <section class="docs-home-stats" [attr.aria-label]="i18n.messages().home.statsAria">
         @for (stat of stats(); track stat.label; let i = $index) {
-          <article
+          <au-card
+            variant="outlined"
+            size="sm"
             class="docs-home-stats__card"
             [style.animation-delay]="i * 80 + 'ms'"
           >
-            <span class="docs-home-stats__value">{{ stat.value }}</span>
-            <span class="docs-home-stats__label">{{ stat.label }}</span>
-          </article>
+            <p auCardBody class="docs-home-stats__body">
+              <span class="docs-home-stats__value">{{ stat.value }}</span>
+              <span class="docs-home-stats__label">{{ stat.label }}</span>
+            </p>
+          </au-card>
         }
       </section>
 
       <section class="docs-home-grid" [attr.aria-label]="i18n.messages().home.exploreAria">
         @for (card of exploreCards(); track card.title; let i = $index) {
           <a
-            class="docs-home-grid__card"
+            class="docs-home-grid__link"
             [routerLink]="card.link"
             [style.animation-delay]="120 + i * 70 + 'ms'"
           >
-            <span class="docs-home-grid__icon" aria-hidden="true">{{ card.icon }}</span>
-            <span class="docs-home-grid__title">{{ card.title }}</span>
-            <span class="docs-home-grid__text">{{ card.text }}</span>
-            <span class="docs-home-grid__arrow" aria-hidden="true">→</span>
+            <au-card variant="outlined" size="md" class="docs-home-grid__card">
+              <p auCardBody class="docs-home-grid__body">
+                <span class="docs-home-grid__icon" aria-hidden="true">{{ card.icon }}</span>
+                <span class="docs-home-grid__title">{{ card.title }}</span>
+                <span class="docs-home-grid__text">{{ card.text }}</span>
+                <span class="docs-home-grid__arrow" aria-hidden="true">→</span>
+              </p>
+            </au-card>
           </a>
         }
       </section>
@@ -72,36 +80,27 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         list-style: none;
       }
 
-      :host-context([data-au-theme='dark']) .docs-home-stats__card,
-      :host-context([data-au-theme='dark']) .docs-home-grid__card {
-        border-color: var(--docs-border-fine);
-        background: var(--au-color-surface-raised);
-        backdrop-filter: none;
-      }
-
       .docs-home-stats__card {
-        margin: 0;
-        padding: var(--au-space-4);
-        border-radius: var(--au-radius-lg);
-        border: 1px solid color-mix(in srgb, var(--au-color-border-subtle) 90%, transparent);
-        background: color-mix(in srgb, var(--au-color-surface-raised) 88%, transparent);
-        backdrop-filter: blur(6px);
         animation: docs-fade-up 0.5s var(--au-ease-out) both;
         transition:
           transform var(--au-duration-short) var(--au-ease-emph),
-          box-shadow var(--au-duration-short) var(--au-ease-in-out),
-          border-color var(--au-duration-short) var(--au-ease-in-out);
+          box-shadow var(--au-duration-short) var(--au-ease-in-out);
+      }
+
+      .docs-home-stats__body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--au-space-1);
       }
 
       @media (hover: hover) {
         .docs-home-stats__card:hover {
           transform: translateY(-2px);
-          border-color: color-mix(in srgb, var(--au-color-accent) 35%, transparent);
         }
 
         :host-context([data-au-theme='dark']) .docs-home-stats__card:hover {
           transform: none;
-          border-color: color-mix(in srgb, var(--au-color-border-subtle) 70%, transparent);
         }
       }
 
@@ -126,23 +125,29 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         gap: var(--au-space-3);
       }
 
+      .docs-home-grid__link {
+        text-decoration: none;
+        color: inherit;
+      }
+
       .docs-home-grid__card {
         position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: var(--au-space-2);
-        padding: var(--au-space-5);
+        height: 100%;
         min-height: 9rem;
-        border-radius: var(--au-radius-lg);
-        border: 1px solid var(--au-color-border-subtle);
-        background: var(--au-color-surface-raised);
-        text-decoration: none;
         overflow: hidden;
         animation: docs-fade-up 0.55s var(--au-ease-out) both;
         transition:
           transform var(--au-duration-default) var(--au-ease-emph),
           border-color var(--au-duration-short) var(--au-ease-in-out),
           box-shadow var(--au-duration-short) var(--au-ease-in-out);
+      }
+
+      .docs-home-grid__body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--au-space-2);
+        min-height: 7rem;
       }
 
       .docs-home-grid__card::after {
@@ -160,26 +165,26 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       }
 
       @media (hover: hover) {
-        .docs-home-grid__card:hover {
+        .docs-home-grid__link:hover .docs-home-grid__card {
           transform: translateY(-2px);
           border-color: var(--au-color-accent);
         }
 
-        .docs-home-grid__card:hover::after {
+        .docs-home-grid__link:hover .docs-home-grid__card::after {
           transform: translateX(120%);
         }
 
-        :host-context([data-au-theme='dark']) .docs-home-grid__card:hover {
+        :host-context([data-au-theme='dark']) .docs-home-grid__link:hover .docs-home-grid__card {
           transform: none;
           border-color: color-mix(in srgb, var(--au-color-border-subtle) 70%, transparent);
         }
 
-        :host-context([data-au-theme='dark']) .docs-home-grid__card:hover::after {
+        :host-context([data-au-theme='dark']) .docs-home-grid__link:hover .docs-home-grid__card::after {
           transform: translateX(-120%);
         }
       }
 
-      .docs-home-grid__card:hover .docs-home-grid__arrow {
+      .docs-home-grid__link:hover .docs-home-grid__arrow {
         transform: translateX(4px);
         opacity: 1;
       }

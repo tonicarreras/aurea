@@ -10,6 +10,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
+  AuButton,
   AuStep,
   AuStepPanel,
   AuSteps,
@@ -44,6 +45,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
     CodeBlock,
     NgComponentOutlet,
     RouterLink,
+    AuButton,
     AuSteps,
     AuStep,
     AuStepPanel,
@@ -162,9 +164,9 @@ import { DocsTokenList } from '../shared/docs-token-list';
         [lead]="i18n.messages().componentDoc.notFoundLead"
       >
         <p>
-          <a [routerLink]="i18n.link(DOCS_ROUTES.components)">{{
-            i18n.messages().componentDoc.backToIndex
-          }}</a>
+          <a [routerLink]="i18n.link(DOCS_ROUTES.components)" class="docs-component-not-found__link">
+            <au-button variant="outline">{{ i18n.messages().componentDoc.backToIndex }}</au-button>
+          </a>
         </p>
       </docs-page>
     }
@@ -273,6 +275,10 @@ import { DocsTokenList } from '../shared/docs-token-list';
         font-weight: var(--au-weight-medium);
         line-height: 1;
         color: var(--au-color-accent);
+      }
+
+      .docs-component-not-found__link {
+        text-decoration: none;
       }
 
       .docs-api-section {

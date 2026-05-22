@@ -1,20 +1,20 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
   signal,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
 import { DocsLocaleService } from '../core/docs-locale.service';
-import type { DocsLocale } from '../core/docs-locale';
+import { DocsSeoService } from '../core/docs-seo.service';
 import { AngularLogo } from '../shared/angular-logo';
-import { GithubIcon, NpmIcon, StorybookIcon } from '../shared/brand-icons';
-
-type ThemeMode = 'light' | 'dark' | 'system';
+import { DocsShellMobileMenu } from './docs-shell-mobile-menu';
+import {
+  DocsShellToolbar,
+  type DocsThemeMode,
+} from './docs-shell-toolbar';
 
 @Component({
   selector: 'docs-shell',
@@ -24,9 +24,8 @@ type ThemeMode = 'light' | 'dark' | 'system';
     RouterLink,
     RouterLinkActive,
     AngularLogo,
-    GithubIcon,
-    NpmIcon,
-    StorybookIcon,
+    DocsShellToolbar,
+    DocsShellMobileMenu,
   ],
   host: {
     class: 'docs-shell',
@@ -52,57 +51,16 @@ type ThemeMode = 'light' | 'dark' | 'system';
           </span>
         </a>
       </div>
-      <div class="docs-header__actions">
-        <label class="docs-lang-picker">
-          <span class="docs-lang-picker__label">{{ locale.messages().shell.lang }}</span>
-          <select
-            class="docs-lang-picker__select"
-            [value]="locale.locale()"
-            (change)="onLangChange($event)"
-          >
-            <option value="en">{{ locale.messages().shell.langEn }}</option>
-            <option value="es">{{ locale.messages().shell.langEs }}</option>
-          </select>
-        </label>
-        <button
-          type="button"
-          class="docs-theme-toggle"
-          (click)="cycleTheme()"
-          [attr.aria-label]="themeToggleAria()"
-        >
-          <span class="docs-theme-toggle__emoji" aria-hidden="true">{{ themeEmoji() }}</span>
-        </button>
-        <div class="docs-header__icon-links">
-          <a
-            class="docs-header__icon-link"
-            [href]="links.github"
-            target="_blank"
-            rel="noopener noreferrer"
-            [attr.aria-label]="locale.messages().shell.githubAria"
-          >
-            <docs-github-icon />
-          </a>
-          <a
-            class="docs-header__icon-link docs-header__icon-link--npm"
-            [href]="links.npm"
-            target="_blank"
-            rel="noopener noreferrer"
-            [attr.aria-label]="locale.messages().shell.npmAria"
-          >
-            <docs-npm-icon />
-          </a>
-          <a
-            class="docs-header__icon-link docs-header__icon-link--storybook"
-            [href]="links.storybook"
-            target="_blank"
-            rel="noopener noreferrer"
-            [attr.aria-label]="locale.messages().shell.storybookAria"
-          >
-            <docs-storybook-icon />
-          </a>
-        </div>
-      </div>
+      <docs-shell-toolbar
+        [theme]="theme()"
+        (themeChange)="onThemeChange($event)"
+      />
     </header>
+
+    <docs-shell-mobile-menu
+      [theme]="theme()"
+      (themeChange)="onThemeChange($event)"
+    />
 
     <div class="docs-layout">
       <nav class="docs-nav" [attr.aria-label]="locale.messages().shell.navAria">
@@ -138,8 +96,9 @@ type ThemeMode = 'light' | 'dark' | 'system';
 })
 export class DocsShell {
   readonly locale = inject(DocsLocaleService);
-  readonly links = DOCS_EXTERNAL_LINKS;
-  readonly theme = signal<ThemeMode>('system');
+  /** Activates per-route title, meta, canonical, hreflang, and JSON-LD. */
+  private readonly _seo = inject(DocsSeoService);
+  readonly theme = signal<DocsThemeMode>('system');
   readonly resolvedTheme = signal<'light' | 'dark'>('light');
 
   constructor() {
@@ -157,30 +116,8 @@ export class DocsShell {
     }
   }
 
-  onLangChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value as DocsLocale;
-    this.locale.switchLocale(value);
-  }
-
-  readonly themeEmoji = computed(() => {
-    const mode = this.theme();
-    if (mode === 'light') {
-      return '☀️';
-    }
-    if (mode === 'dark') {
-      return '🌙';
-    }
-    return '🖥️';
-  });
-
-  themeToggleAria(): string {
-    return this.locale.messages().shell.themeToggleAria(this.theme());
-  }
-
-  cycleTheme(): void {
-    const order: ThemeMode[] = ['light', 'dark', 'system'];
-    const index = order.indexOf(this.theme());
-    this.theme.set(order[(index + 1) % order.length]!);
+  onThemeChange(mode: DocsThemeMode): void {
+    this.theme.set(mode);
     this.syncResolvedTheme();
   }
 

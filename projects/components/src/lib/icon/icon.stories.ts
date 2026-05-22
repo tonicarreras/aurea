@@ -32,6 +32,23 @@ type Story = StoryObj<AuIcon>;
 
 export const Default: Story = {};
 
+export const Sizes: Story = {
+  render: () => ({
+    moduleMetadata: { imports: [AuIcon] },
+    template: `
+      <div style="display:flex;gap:1.5rem;align-items:flex-end;color:var(--au-color-text-primary);">
+        @for (s of sizes; track s) {
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0.35rem;font-size:0.75rem;">
+            <au-icon name="info" [size]="s" />
+            <span>{{ s }}</span>
+          </div>
+        }
+      </div>
+    `,
+    props: { sizes: ['sm', 'md', 'lg'] as const },
+  }),
+};
+
 export const AllGlyphs: Story = {
   render: () => ({
     moduleMetadata: { imports: [AuIcon] },
