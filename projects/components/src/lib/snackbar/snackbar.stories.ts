@@ -1,9 +1,12 @@
 import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { fn } from 'storybook/test';
 
 import { AuButton } from '../button/button';
 import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './snackbar';
+
+const docsOverview = getStoryOverview('snackbar');
 
 const meta: Meta<AuSnackbar> = {
   title: 'Aurea/Snackbar',
@@ -13,10 +16,7 @@ const meta: Meta<AuSnackbar> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Transient feedback toast with optional action and auto-dismiss. Control visibility with `[(open)]` on a writable signal; open from a trigger and listen to `dismiss` / `action`.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

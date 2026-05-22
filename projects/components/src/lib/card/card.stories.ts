@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import type { Type } from '@angular/core';
 
 import { AuButton } from '../button/button';
@@ -16,6 +17,8 @@ function cardRender(
   return { props: args, moduleMetadata, template };
 }
 
+const docsOverview = getStoryOverview('card');
+
 const meta: Meta<AuCard> = {
   title: 'Aurea/Card',
   component: AuCard,
@@ -24,10 +27,7 @@ const meta: Meta<AuCard> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Container for grouped content with elevated, outlined, or filled variants. Project header, body, footer (`AuCardFooter`), and media slots.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

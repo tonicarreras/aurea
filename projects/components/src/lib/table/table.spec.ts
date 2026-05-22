@@ -62,6 +62,10 @@ describe('AuTableSortHeader', () => {
   it('maps aria-sort and icons', () => {
     fixture.componentRef.setInput('sortDirection', 'asc');
     fixture.detectChanges();
+    const host = fixture.nativeElement as HTMLElement;
+    const btn = host.querySelector('.au-table__sort-btn') as HTMLButtonElement;
+    expect(host.getAttribute('aria-sort')).toBe('ascending');
+    expect(btn.getAttribute('aria-sort')).toBeNull();
     expect(component.ariaSort()).toBe('ascending');
     expect(component.sortIcon()).toBe('↑');
 

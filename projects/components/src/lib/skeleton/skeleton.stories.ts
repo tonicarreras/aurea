@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 
 import { AuSkeleton } from './skeleton';
+
+const docsOverview = getStoryOverview('skeleton');
 
 const meta: Meta<AuSkeleton> = {
   title: 'Aurea/Skeleton',
@@ -10,10 +13,7 @@ const meta: Meta<AuSkeleton> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Loading placeholders with text, circular, rectangular, rounded, and button shapes. Pulse or wave animation; set `aria-busy` on the parent region.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

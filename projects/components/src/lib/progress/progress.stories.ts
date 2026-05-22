@@ -1,40 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 
-import { buildStoryDocsOverview } from '../story-docs/build-story-docs-overview';
 import { AuProgress } from './progress';
 
-const docsOverview = buildStoryDocsOverview({
-  overview:
-    '`au-progress` is a determinate or indeterminate progress bar (`role="progressbar"`). Determinate mode exposes `aria-valuenow` / min / max; optional **`label`** overrides `aria-valuetext`.',
-  whenToUse: {
-    use: [
-      'File uploads, multi-step tasks, or known completion percentage',
-      'Indeterminate waits when duration is unknown',
-    ],
-    avoid: [
-      'Content placeholders → **`au-skeleton`**',
-      'Button in-flight state → **`au-button`** `loading`',
-    ],
-  },
-  anatomy: [
-    { region: 'Track', notes: 'Sunken surface with pill radius.' },
-    { region: 'Bar', notes: 'Width from `value`/`max` or indeterminate animation.' },
-  ],
-  accessibility: [
-    {
-      topic: 'Value text',
-      detail: '`label` or rounded percent becomes `aria-valuetext`.',
-    },
-    {
-      topic: 'Indeterminate',
-      detail: 'Omits value min/max/now per ARIA guidance.',
-    },
-  ],
-  tokens: [
-    { concern: 'Track / fill', examples: '`--au-color-surface-sunken`, `--au-color-action-primary`' },
-    { concern: 'Motion', examples: '`--au-duration-default`, `--au-ease-out`' },
-  ],
-});
+const docsOverview = getStoryOverview('progress');
 
 const meta: Meta<AuProgress> = {
   title: 'Aurea/Progress',
@@ -66,7 +35,7 @@ const meta: Meta<AuProgress> = {
     },
     label: {
       control: 'text',
-      description: 'Overrides `aria-valuetext` when non-empty.',
+      description: 'Accessible name and `aria-valuetext` when non-empty.',
       table: { category: 'Accessibility' },
     },
   },

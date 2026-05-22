@@ -17,6 +17,7 @@ export type AuProgressMode = 'determinate' | 'indeterminate';
     '[attr.aria-valuemax]': 'mode() === "determinate" ? max() : null',
     '[attr.aria-valuenow]': 'mode() === "determinate" ? value() : null',
     '[attr.aria-valuetext]': 'ariaValueText()',
+    '[attr.aria-label]': 'ariaLabel()',
     '[attr.data-au-mode]': 'mode()',
   },
 })
@@ -41,5 +42,17 @@ export class AuProgress {
       return 'Loading';
     }
     return `${Math.round(this.percent())}%`;
+  });
+
+  /** Accessible name for `role="progressbar"` (axe `aria-progressbar-name`). */
+  readonly ariaLabel = computed(() => {
+    const text = this.label().trim();
+    if (text) {
+      return text;
+    }
+    if (this.mode() === 'indeterminate') {
+      return 'Loading';
+    }
+    return `Progress, ${Math.round(this.percent())}%`;
   });
 }

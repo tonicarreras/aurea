@@ -29,7 +29,6 @@ export class AuTable {
   template: `<button
     type="button"
     class="au-table__sort-btn"
-    [attr.aria-sort]="ariaSort()"
     (click)="onSort()"
   >
     <ng-content />
@@ -44,6 +43,7 @@ export class AuTable {
   host: {
     class: 'au-table__sort-header',
     scope: 'col',
+    '[attr.aria-sort]': 'ariaSort()',
   },
 })
 export class AuTableSortHeader {

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuTab } from './au-tab.directive';
@@ -7,6 +8,8 @@ import { AuTabs } from './tabs';
 
 const storyImports = { imports: [AuTabs, AuTab, AuTabPanel] };
 
+const docsOverview = getStoryOverview('tabs');
+
 const meta: Meta<AuTabs> = {
   title: 'Aurea/Tabs',
   component: AuTabs,
@@ -14,10 +17,7 @@ const meta: Meta<AuTabs> = {
   parameters: {
     layout: 'padded',
     docs: {
-      description: {
-        component:
-          'WAI-ARIA tabs with projected `button[auTab]` triggers and `[auTabPanel]` regions. Import `AuTab` and `AuTabPanel` in the host that projects content.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

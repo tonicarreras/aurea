@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -18,6 +19,8 @@ const cities: AuAutocompleteOption[] = [
   { value: 'bio', label: 'Bilbao' },
   { value: 'agp', label: 'Málaga' },
 ];
+
+const docsOverview = getStoryOverview('autocomplete');
 
 interface AutocompleteStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;

@@ -1,53 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { signal } from '@angular/core';
 
-import { buildStoryDocsOverview } from '../story-docs/build-story-docs-overview';
 import { AuTable, AuTableSortHeader } from './table';
 
-const docsOverview = buildStoryDocsOverview({
-  overview:
-    '`au-table` wraps native **`<table>`** markup with optional **`striped`** and **`compact`** modes. Sortable columns use **`th[auTableSortHeader]`** with `aria-sort` and a none → asc → desc cycle.',
-  whenToUse: {
-    use: [
-      'Tabular data with headers and body rows',
-      'Sortable columns when the parent owns sort state',
-    ],
-    avoid: [
-      'Layout-only grids → CSS grid',
-      'Very wide responsive lists → card list patterns',
-    ],
-  },
-  anatomy: [
-    { region: 'Host `au-table`', notes: 'Projects `<table>`; `data-au-striped` / `data-au-compact`.' },
-    {
-      region: 'Sort header',
-      notes: 'Button in `<th>` with `aria-sort` and direction icon.',
-    },
-  ],
-  accessibility: [
-    {
-      topic: 'Semantics',
-      detail: 'Keep `thead`, `tbody`, and `th scope` on native table markup.',
-    },
-    {
-      topic: 'Sort',
-      detail: '`aria-sort` reflects asc, desc, or none on the sort button.',
-    },
-  ],
-  keyboard: [
-    {
-      interaction: 'Tab / Enter / Space',
-      behavior: 'Focus and activate sort buttons in column headers.',
-    },
-  ],
-  tokens: [
-    {
-      concern: 'Shell',
-      examples: '`--au-color-surface-raised`, `--au-color-border-subtle`',
-    },
-    { concern: 'Cells', examples: '`--au-text-sm`, `--au-space-3` (compact: `--au-space-2`)' },
-  ],
-});
+const docsOverview = getStoryOverview('table');
 
 const meta: Meta<AuTable> = {
   title: 'Aurea/Table',

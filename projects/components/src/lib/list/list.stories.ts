@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 
 import { AuChip } from '../chip/chip';
 import { AuListItem } from './au-list-item.directive';
 import { AuList } from './list';
+
+const docsOverview = getStoryOverview('list');
 
 const meta: Meta<AuList> = {
   title: 'Aurea/List',
@@ -12,10 +15,7 @@ const meta: Meta<AuList> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Accessible list container (`role="list"`). Children with `auListItem` (or `au-chip` inside the list) get `role="listitem"`. Use `role="group"` for selectable filter chips instead.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

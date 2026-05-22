@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -15,6 +16,8 @@ const sample: AuRadioOption[] = [
   { value: 'sms', label: 'SMS' },
   { value: 'none', label: 'None' },
 ];
+
+const docsOverview = getStoryOverview('radio-group');
 
 interface RadioGroupStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;

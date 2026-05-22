@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 
 import { AuDivider } from './divider';
+
+const docsOverview = getStoryOverview('divider');
 
 const meta: Meta<AuDivider> = {
   title: 'Aurea/Divider',
@@ -10,10 +13,7 @@ const meta: Meta<AuDivider> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Visual separator between sections. Horizontal (optional inset or label) or vertical in flex layouts; `role="separator"` with `aria-orientation`.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

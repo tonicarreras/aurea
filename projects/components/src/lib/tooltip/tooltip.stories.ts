@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuButton } from '../button/button';
@@ -6,6 +7,8 @@ import { AuTooltip } from './au-tooltip.directive';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
 const storyImports = { imports: [AuTooltip, AuButton] };
+
+const docsOverview = getStoryOverview('tooltip');
 
 interface TooltipStoryArgs {
   text: string;
@@ -22,10 +25,7 @@ const meta: Meta<TooltipStoryArgs> = {
     layout: 'centered',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Contextual tooltip on a host via `auTooltip` / `auTooltipPlacement`. Portaled bubble with configurable show/hide delay.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

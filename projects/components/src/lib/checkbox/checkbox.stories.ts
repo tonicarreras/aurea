@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
 import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
 import { AuCheckbox } from './checkbox';
+
+const docsOverview = getStoryOverview('checkbox');
 
 interface CheckboxStoryArgs {
   checkedChange: ReturnType<typeof fn>;

@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuChipGroup } from '../chip-group/chip-group';
 import { AuList } from '../list/list';
 import { AuChip } from './chip';
+
+const docsOverview = getStoryOverview('chip');
 
 const meta: Meta<AuChip> = {
   title: 'Aurea/Chip',
@@ -13,10 +16,7 @@ const meta: Meta<AuChip> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Compact chip for filters, tags, or selections. Wrap static/removable chips in `au-list`; use `role="group"` for selectable filters.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

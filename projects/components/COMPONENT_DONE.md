@@ -27,7 +27,7 @@ Checklist obligatorio antes de marcar un componente como **stable** o publicar u
 - [ ] Overview en `i18n/locales/{en,es}/overview.ts` (intro, cuándo usar, anatomía, accesibilidad, teclado si aplica).
 - [ ] API en `i18n/locales/{en,es}/api.ts` (imports, inputs/outputs por sección).
 - [ ] Tokens en `i18n/locales/{en,es}/styling.ts` (o justificación de `DEFAULT_COMPONENT_STYLING`).
-- [ ] Storybook: `buildStoryDocsOverview` + `argTypes` con `table.category` + `extractArgTypes: () => ({})`.
+- [ ] Storybook: `getStoryOverview('<slug>')` + `argTypes` con `table.category` + `extractArgTypes: () => ({})`.
 - [ ] Preview en carrusel landing si es componente “hero” (opcional).
 
 ## 5. Accesibilidad

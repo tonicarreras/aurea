@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 
 import { AuInputText } from '../input-text/input-text';
 import { AuFormField } from './form-field';
 
 /** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */
+const docsOverview = getStoryOverview('form-field');
+
 interface FormFieldStoryArgs {
   label: string;
   hint: string;
@@ -21,10 +24,7 @@ const meta: Meta<FormFieldStoryArgs> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Optional label, hint, and error chrome around a projected control. Leave `label` empty on the inner control when using this wrapper. With signal forms, child `errors` / `invalid` from `[formField]` drive the error region — see the package README (*Signal forms*).',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

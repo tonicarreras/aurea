@@ -30,6 +30,7 @@ describe('AuProgress', () => {
     expect(el.getAttribute('aria-valuemin')).toBe('0');
     expect(el.getAttribute('aria-valuemax')).toBe('100');
     expect(el.getAttribute('aria-valuetext')).toBe('50%');
+    expect(el.getAttribute('aria-label')).toBe('Progress, 50%');
   });
 
   it('uses custom aria-valuetext from label', () => {
@@ -44,6 +45,7 @@ describe('AuProgress', () => {
     const el = fixture.nativeElement as HTMLElement;
     expect(el.getAttribute('aria-valuenow')).toBeNull();
     expect(component.ariaValueText()).toBe('Loading');
+    expect((fixture.nativeElement as HTMLElement).getAttribute('aria-label')).toBe('Loading');
   });
 
   it('clamps value to max for percent', () => {

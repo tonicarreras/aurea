@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -9,6 +10,8 @@ import {
   type FieldChromeStoryArgs,
 } from '../form-field';
 import { AuInputDate } from './input-date';
+
+const docsOverview = getStoryOverview('input-date');
 
 interface InputDateStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;

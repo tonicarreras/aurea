@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 
 import { AuIcon, type AuIconName } from './icon';
 
 const names: AuIconName[] = ['check-circle', 'warning', 'error', 'info', 'close', 'spinner'];
+
+const docsOverview = getStoryOverview('icon');
 
 const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
@@ -12,10 +15,7 @@ const meta: Meta<AuIcon> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Shared SVG glyphs for alerts, dialogs, buttons, and chips. Decorative (`aria-hidden`).',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

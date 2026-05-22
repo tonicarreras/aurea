@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { fn, expect } from 'storybook/test';
 
 import { AuButton } from './button';
@@ -9,6 +10,8 @@ function buttonRender(args: Record<string, unknown>, template: string) {
   return { props: args, moduleMetadata: storyImports, template };
 }
 
+const docsOverview = getStoryOverview('button');
+
 const meta: Meta<AuButton> = {
   title: 'Aurea/Button',
   component: AuButton,
@@ -17,10 +20,7 @@ const meta: Meta<AuButton> = {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Aurea button with primary, secondary, outline, and ghost variants; sizes sm–lg; loading and disabled states; WCAG 2.2 focus rings.',
-      },
+      description: { component: docsOverview },
     },
   },
   argTypes: {

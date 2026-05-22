@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
@@ -24,6 +25,8 @@ const groupedOptions: AuSelectOption[] = [
   { value: 'group4', label: 'Group B - Option 2' },
   { value: 'group5', label: 'Group B - Option 3', disabled: true },
 ];
+
+const docsOverview = getStoryOverview('select');
 
 interface SelectStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
