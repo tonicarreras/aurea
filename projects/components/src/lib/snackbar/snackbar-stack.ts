@@ -34,17 +34,15 @@ export function measureSnackbarStackSurfaceHeight(surface: HTMLElement | null): 
 function layout(position: AuSnackbarPosition): void {
   const group = groupFor(position);
   let offsetPx = 0;
+  let layer = group.length - 1;
 
-  for (let index = group.length - 1; index >= 0; index--) {
-    const entry = group[index];
-    if (!entry) {
-      continue;
-    }
+  for (const entry of group.slice().reverse()) {
     entry.host.style.setProperty('--au-snackbar-stack-offset', `${offsetPx}px`);
-    entry.host.style.setProperty('--au-snackbar-stack-layer', String(index));
-    if (index > 0) {
+    entry.host.style.setProperty('--au-snackbar-stack-layer', String(layer));
+    if (layer > 0) {
       offsetPx += measureSnackbarStackSurfaceHeight(entry.surface) + STACK_GAP_PX;
     }
+    layer--;
   }
 }
 
