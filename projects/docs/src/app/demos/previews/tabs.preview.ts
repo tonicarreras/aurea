@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuTab, AuTabPanel, AuTabs } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -16,7 +16,7 @@ interface FormFieldStoryArgs {
 const meta: Meta<FormFieldStoryArgs> = {
   title: 'Aurea/Form field',
   component: AuFormField,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

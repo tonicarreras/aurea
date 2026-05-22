@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuButton, AuSnackbar } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-snackbar',
   changeDetection: ChangeDetectionStrategy.OnPush,

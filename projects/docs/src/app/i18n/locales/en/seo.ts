@@ -43,6 +43,33 @@ export const SEO_EN: DocsSeoMessages = {
     description:
       'Per-symbol imports, global CSS footprint, production stats-json, and lazy routes.',
   },
+  guidesMigrateMaterial: {
+    title: 'Migrate from Angular Material — Aurea',
+    description:
+      'Map mat-form-field, mat-table, mat-dialog, and buttons to Aurea primitives and signal forms.',
+  },
+  guidesMigrateCdk: {
+    title: 'Migrate from Angular CDK — Aurea',
+    description:
+      'Replace CDK overlay and focus-trap patterns with au-menu, au-popover, au-tooltip, and au-dialog.',
+  },
+  guidesCrudDemo: {
+    title: 'CRUD reference demo — Aurea',
+    description:
+      'Live list screen with table, pagination, filters, row menu, dialogs, and signal-form editor.',
+  },
+  roadmap: {
+    title: 'Roadmap — Aurea Design System',
+    description: 'Public delivery phases and version targets toward 1.0.0.',
+  },
+  maturity: {
+    title: 'Component maturity matrix — Aurea',
+    description: 'Stable, beta, and experimental levels for every catalog component.',
+  },
+  designTokens: {
+    title: 'Design tokens for Figma — Aurea',
+    description: 'JSON token files aligned with au-tokens.css for design-tool import.',
+  },
   themes: {
     title: 'Themes & design tokens — Aurea Design System',
     description:

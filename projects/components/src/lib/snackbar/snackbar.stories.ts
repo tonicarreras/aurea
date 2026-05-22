@@ -8,7 +8,7 @@ import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './s
 const meta: Meta<AuSnackbar> = {
   title: 'Aurea/Snackbar',
   component: AuSnackbar,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

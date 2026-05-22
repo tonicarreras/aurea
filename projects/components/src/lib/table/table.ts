@@ -74,8 +74,7 @@ export class AuTableSortHeader {
 
   protected onSort(): void {
     const current = this.sortDirection();
-    const next: AuTableSortDirection =
-      current === null ? 'asc' : current === 'asc' ? 'desc' : null;
+    const next: AuTableSortDirection = current === null ? 'asc' : current === 'asc' ? 'desc' : null;
     this.sort.emit(next);
   }
 }

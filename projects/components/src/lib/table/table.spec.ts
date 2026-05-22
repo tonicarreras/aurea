@@ -1,42 +1,78 @@
-import { Component, signal } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuTable, AuTableSortHeader } from './table';
 
-@Component({
-  imports: [AuTable, AuTableSortHeader],
-  template: `
-    <au-table [striped]="true">
-      <thead>
-        <tr>
-          <th
-            auTableSortHeader
-            [sortDirection]="sort()"
-            (sort)="sort.set($event)"
-            >Name</th
-          >
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Ada</td></tr>
-      </tbody>
-    </au-table>
-  `,
-})
-class Host {
-  readonly sort = signal<'asc' | 'desc' | null>(null);
-}
-
 describe('AuTable', () => {
-  it('cycles sort direction on header click', () => {
-    const fixture = TestBed.createComponent(Host);
+  let fixture: ComponentFixture<AuTable>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AuTable],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AuTable);
     fixture.detectChanges();
+  });
+
+  it('creates', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('sets striped and compact host attributes', () => {
+    fixture.componentRef.setInput('striped', true);
+    fixture.componentRef.setInput('compact', true);
+    fixture.detectChanges();
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.getAttribute('data-au-striped')).toBe('');
+    expect(host.getAttribute('data-au-compact')).toBe('');
+  });
+});
+
+describe('AuTableSortHeader', () => {
+  let fixture: ComponentFixture<AuTableSortHeader>;
+  let component: AuTableSortHeader;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AuTableSortHeader],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AuTableSortHeader);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('cycles sort direction null → asc → desc → null', () => {
+    const directions: Array<'asc' | 'desc' | null> = [];
+    component.sort.subscribe((d) => directions.push(d));
     const btn = fixture.nativeElement.querySelector('.au-table__sort-btn') as HTMLButtonElement;
     btn.click();
+    fixture.componentRef.setInput('sortDirection', 'asc');
     fixture.detectChanges();
-    expect(fixture.componentInstance.sort()).toBe('asc');
     btn.click();
+    fixture.componentRef.setInput('sortDirection', 'desc');
     fixture.detectChanges();
-    expect(fixture.componentInstance.sort()).toBe('desc');
+    btn.click();
+    fixture.componentRef.setInput('sortDirection', null);
+    fixture.detectChanges();
+    btn.click();
+    expect(directions).toEqual(['asc', 'desc', null, 'asc']);
+  });
+
+  it('maps aria-sort and icons', () => {
+    fixture.componentRef.setInput('sortDirection', 'asc');
+    fixture.detectChanges();
+    expect(component.ariaSort()).toBe('ascending');
+    expect(component.sortIcon()).toBe('↑');
+
+    fixture.componentRef.setInput('sortDirection', 'desc');
+    fixture.detectChanges();
+    expect(component.ariaSort()).toBe('descending');
+    expect(component.sortIcon()).toBe('↓');
+
+    fixture.componentRef.setInput('sortDirection', null);
+    fixture.detectChanges();
+    expect(component.ariaSort()).toBe('none');
+    expect(component.sortIcon()).toBe('↕');
   });
 });

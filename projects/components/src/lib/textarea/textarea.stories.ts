@@ -60,7 +60,7 @@ Same contract as \`au-input-text\`: \`[formField]\` + \`form()\` in your compone
 
 ## Tokens
 
-Uses the same form surface tokens as \`au-input-text\` (\`--au-color-form-*\`, \`--au-color-text-label\`, etc.). See **DESIGN.md** for the semantic palette.
+Uses the same form surface tokens as \`au-input-text\` (\`--au-color-form-*\`, \`--au-color-text-label\`, etc.). See **docs/DESIGN.md** for the semantic palette.
 `.trim();
 
 type TextareaResize = 'none' | 'vertical' | 'both';
@@ -88,7 +88,7 @@ interface TextareaStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<TextareaStoryArgs> = {
   title: 'Aurea/Textarea',
   component: AuTextarea,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

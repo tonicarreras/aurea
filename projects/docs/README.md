@@ -18,13 +18,13 @@ bun run build:docs
 
 Todas las URLs llevan prefijo de idioma (`es` o `en`):
 
-| Ruta | Descripción |
-|------|-------------|
-| `/es`, `/en` | **Landing de diseño** (sin sidebar): principios, sistema, previews |
-| `/es/components`, … | **Documentación** (con sidebar): índice, API, ejemplos |
-| `/es/get-started`, … | Instalación |
-| `/es/themes`, … | Tokens y temas |
-| `/es/components/:slug`, … | Página por componente |
+| Ruta                      | Descripción                                                        |
+| ------------------------- | ------------------------------------------------------------------ |
+| `/es`, `/en`              | **Landing de diseño** (sin sidebar): principios, sistema, previews |
+| `/es/components`, …       | **Documentación** (con sidebar): índice, API, ejemplos             |
+| `/es/get-started`, …      | Instalación                                                        |
+| `/es/themes`, …           | Tokens y temas                                                     |
+| `/es/components/:slug`, … | Página por componente                                              |
 
 `/` redirige a `/es`. El botón **Documentación** en la landing abre el catálogo (`/components`).
 

@@ -10,7 +10,7 @@ export interface ComponentMaturityMeta {
 }
 
 /**
- * Catálogo v0.3.x — actualizar al cambiar APIs o promover componentes.
+ * Catálogo v0.9.x — actualizar al cambiar APIs o promover componentes.
  * @see projects/components/COMPONENT_DONE.md
  */
 export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
@@ -21,10 +21,18 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
   checkbox: { level: 'stable', since: '0.1.0' },
   switch: { level: 'stable', since: '0.2.0' },
   select: { level: 'stable', since: '0.2.0' },
-  autocomplete: { level: 'beta', since: '0.2.0', note: 'Listbox overlay; test strictSelection in your flows.' },
+  autocomplete: {
+    level: 'beta',
+    since: '0.2.0',
+    note: 'Listbox overlay; test strictSelection in your flows.',
+  },
   'radio-group': { level: 'stable', since: '0.2.0' },
   'input-number': { level: 'stable', since: '0.2.0' },
-  'input-date': { level: 'beta', since: '0.2.0', note: 'Native date picker styling varies by browser.' },
+  'input-date': {
+    level: 'beta',
+    since: '0.2.0',
+    note: 'Native date picker styling varies by browser.',
+  },
   dialog: { level: 'stable', since: '0.2.0' },
   card: { level: 'stable', since: '0.1.0' },
   tabs: { level: 'beta', since: '0.2.0' },
@@ -43,9 +51,13 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
   breadcrumb: { level: 'stable', since: '0.4.0' },
   pagination: { level: 'stable', since: '0.4.0' },
   link: { level: 'stable', since: '0.4.0' },
-  menu: { level: 'beta', since: '0.4.0', note: 'Portaled panel; verify focus in nested triggers.' },
-  popover: { level: 'beta', since: '0.4.0' },
-  table: { level: 'beta', since: '0.4.0', note: 'Shell + sort header; no built-in data source yet.' },
+  menu: { level: 'stable', since: '0.9.0', note: 'Portaled panel; roving tabindex planned 0.10.' },
+  popover: { level: 'stable', since: '0.9.0' },
+  table: {
+    level: 'stable',
+    since: '0.9.0',
+    note: 'Shell + sort header; no built-in data source — bring your own rows.',
+  },
 };
 
 export const COMPONENT_MATURITY_LEVELS: readonly ComponentMaturityLevel[] = [

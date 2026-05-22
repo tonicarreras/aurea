@@ -26,7 +26,11 @@
 }
 
 :host([data-au-variant='accent']) {
-  background: color-mix(in srgb, var(--au-color-action-primary) 16%, var(--au-color-surface-raised));
+  background: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 16%,
+    var(--au-color-surface-raised)
+  );
   color: var(--au-color-action-primary);
   border-color: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
 }

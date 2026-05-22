@@ -17,6 +17,12 @@ export interface DocsSeoMessages {
   guidesPatterns: DocsPageSeo;
   guidesTroubleshooting: DocsPageSeo;
   guidesBundle: DocsPageSeo;
+  guidesMigrateMaterial: DocsPageSeo;
+  guidesMigrateCdk: DocsPageSeo;
+  guidesCrudDemo: DocsPageSeo;
+  roadmap: DocsPageSeo;
+  maturity: DocsPageSeo;
+  designTokens: DocsPageSeo;
   themes: DocsPageSeo;
   componentsIndex: DocsPageSeo;
   componentTitle: (name: string, exportName: string) => string;

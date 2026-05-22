@@ -5,7 +5,7 @@ import { AuLink } from './link';
 const meta: Meta<AuLink> = {
   title: 'Aurea/Link',
   component: AuLink,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'centered',
     docs: {

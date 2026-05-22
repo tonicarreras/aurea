@@ -45,17 +45,18 @@
   max-width: 18rem;
 }
 
-.docs-preview--field :where(
-  au-form-field,
-  au-input-text,
-  au-textarea,
-  au-select,
-  au-autocomplete,
-  au-input-number,
-  au-input-date,
-  au-radio-group,
-  au-switch
-) {
+.docs-preview--field
+  :where(
+    au-form-field,
+    au-input-text,
+    au-textarea,
+    au-select,
+    au-autocomplete,
+    au-input-number,
+    au-input-date,
+    au-radio-group,
+    au-switch
+  ) {
   width: 100%;
 }
 

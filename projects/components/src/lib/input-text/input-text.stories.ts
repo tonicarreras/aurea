@@ -82,7 +82,7 @@ Full \`form()\` example: **\`@aurea-design-system/components\` README** → *Sig
 | Label / hint | \`--au-color-text-label\`, \`--au-color-text-tertiary\` |
 | Focus | \`--au-color-focus-ring\`, \`--au-shadow-focus-ring\` |
 
-See **DESIGN.md** at the repo root for the full token model.
+See **docs/DESIGN.md** for the full token model.
 `.trim();
 
 type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
@@ -107,7 +107,7 @@ interface InputTextStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<InputTextStoryArgs> = {
   title: 'Aurea/InputText',
   component: AuInputText,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

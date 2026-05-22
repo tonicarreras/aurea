@@ -70,9 +70,7 @@ export class GuideTroubleshootingPage {
 
   readonly rows = computed(() => this.i18n.messages().guides.troubleshooting.items);
 
-  readonly colProblem = computed(() =>
-    this.i18n.locale() === 'en' ? 'Symptom' : 'Síntoma',
-  );
+  readonly colProblem = computed(() => (this.i18n.locale() === 'en' ? 'Symptom' : 'Síntoma'));
   readonly colCause = computed(() => (this.i18n.locale() === 'en' ? 'Cause' : 'Causa'));
   readonly colFix = computed(() => (this.i18n.locale() === 'en' ? 'Fix' : 'Solución'));
 }

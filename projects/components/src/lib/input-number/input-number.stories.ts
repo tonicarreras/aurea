@@ -28,7 +28,7 @@ interface InputNumberStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<InputNumberStoryArgs> = {
   title: 'Aurea/Input number',
   component: AuInputNumber,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: { layout: 'padded' },
   argTypes: {
     ...fieldChromeArgTypes,

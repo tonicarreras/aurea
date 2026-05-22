@@ -8,13 +8,14 @@ const storyImports = { imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton] };
 
 const meta: Meta = {
   title: 'Aurea/Menu',
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'centered',
     docs: {
       extractArgTypes: () => ({}),
       description: {
-        component: 'Dropdown menu with portaled panel. Use `auMenuTrigger` on the trigger and `au-menu-item` for actions.',
+        component:
+          'Dropdown menu with portaled panel. Use `auMenuTrigger` on the trigger and `au-menu-item` for actions.',
       },
     },
   },

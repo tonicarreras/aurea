@@ -5,7 +5,11 @@ import { AuPagination } from '@aurea-design-system/components';
   selector: 'docs-preview-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuPagination],
-  template: `<au-pagination [page]="page()" [pageCount]="8" (pageChange)="page.set($event)" />`,
+  template: `<au-pagination
+    [page]="page()"
+    [pageCount]="8"
+    (pageChange)="page.set($event)"
+  />`,
 })
 export class PaginationDemo {
   readonly page = signal(2);

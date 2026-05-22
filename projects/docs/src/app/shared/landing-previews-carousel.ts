@@ -1,12 +1,5 @@
 import { NgComponentOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuButton, AuCard } from '@aurea-design-system/components';
 
@@ -43,6 +36,7 @@ function chunkPages<T>(items: T[], size: number): T[][] {
           size="sm"
           type="button"
           [attr.aria-label]="ui().carouselPrev"
+          aria-controls="landing-carousel-grid"
           (click)="prev()"
         >
           ←
@@ -58,6 +52,7 @@ function chunkPages<T>(items: T[], size: number): T[][] {
           size="sm"
           type="button"
           [attr.aria-label]="ui().carouselNext"
+          aria-controls="landing-carousel-grid"
           (click)="next()"
         >
           →
@@ -65,6 +60,7 @@ function chunkPages<T>(items: T[], size: number): T[][] {
       </div>
 
       <ul
+        id="landing-carousel-grid"
         class="landing-carousel__grid"
         [attr.aria-label]="ui().carouselSlideAria(pageIndex() + 1)"
       >

@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { AuButton, AuCard } from '@aurea-design-system/components';
 
 import { COMPONENT_DOCS, componentDocSummary } from '../core/component-docs.registry';
+import { getDocsComponentMaturity } from '../core/docs-component-maturity';
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
@@ -390,11 +391,13 @@ export class LandingPage {
   readonly storybookUrl = DOCS_EXTERNAL_LINKS.storybook;
   readonly m = computed(() => this.i18n.messages().landing);
 
+  /** V1: landing carousel shows **stable** components only (no beta/experimental). */
   readonly previewDocs = computed(() =>
-    COMPONENT_DOCS.map((doc) => ({
-      ...doc,
-      summary: componentDocSummary(doc, this.i18n.locale()),
-    })),
+    COMPONENT_DOCS.filter((doc) => getDocsComponentMaturity(doc.slug).level === 'stable')
+      .map((doc) => ({
+        ...doc,
+        summary: componentDocSummary(doc, this.i18n.locale()),
+      })),
   );
 
   readonly docLinkFn = (slug: string): string[] => this.i18n.link(DOCS_ROUTES.components, slug);

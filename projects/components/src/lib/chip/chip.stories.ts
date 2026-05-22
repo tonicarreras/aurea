@@ -8,7 +8,7 @@ import { AuChip } from './chip';
 const meta: Meta<AuChip> = {
   title: 'Aurea/Chip',
   component: AuChip,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

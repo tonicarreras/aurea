@@ -1,0 +1,22 @@
+# Suggested labels — import with gh label sync or create manually in repo Settings.
+# See docs/GOOD_FIRST_ISSUES.md
+
+- name: good first issue
+  color: '7057ff'
+  description: 'Small scoped task for new contributors'
+
+- name: a11y
+  color: '0075ca'
+  description: 'Accessibility (WCAG)'
+
+- name: documentation
+  color: '0e8a16'
+  description: 'Docs site or README'
+
+- name: components
+  color: 'd4c5f9'
+  description: 'projects/components library'
+
+- name: ci
+  color: 'fbca04'
+  description: 'GitHub Actions or tooling'

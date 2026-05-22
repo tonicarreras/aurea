@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuTextarea } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-textarea',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -5,18 +5,22 @@ import { AuBadge } from './badge';
 const meta: Meta<AuBadge> = {
   title: 'Aurea/Badge',
   component: AuBadge,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'centered',
     docs: {
       extractArgTypes: () => ({}),
       description: {
-        component: 'Compact status or count label. Variants map to semantic tokens; dot mode for indicators without text.',
+        component:
+          'Compact status or count label. Variants map to semantic tokens; dot mode for indicators without text.',
       },
     },
   },
   argTypes: {
-    variant: { control: 'select', options: ['default', 'accent', 'success', 'warning', 'error', 'info'] },
+    variant: {
+      control: 'select',
+      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],
+    },
     dot: { control: 'boolean' },
     label: { control: 'text' },
   },

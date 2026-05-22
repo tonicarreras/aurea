@@ -7,12 +7,14 @@ import { AuPopover, AuPopoverTrigger } from './index';
 
 const meta: Meta = {
   title: 'Aurea/Popover',
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'centered',
     docs: {
       extractArgTypes: () => ({}),
-      description: { component: 'Anchored panel for filters or compact forms. Toggle with `auPopoverTrigger`.' },
+      description: {
+        component: 'Anchored panel for filters or compact forms. Toggle with `auPopoverTrigger`.',
+      },
     },
   },
 };

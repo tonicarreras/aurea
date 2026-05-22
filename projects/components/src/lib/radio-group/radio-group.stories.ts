@@ -31,7 +31,7 @@ interface RadioGroupStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<RadioGroupStoryArgs> = {
   title: 'Aurea/Radio group',
   component: AuRadioGroup,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: { layout: 'padded' },
   argTypes: {
     ...fieldChromeArgTypes,

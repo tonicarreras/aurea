@@ -7,11 +7,10 @@ const root = process.cwd();
 const schematicsSrc = join(root, 'projects/components/schematics');
 const schematicsDist = join(root, 'dist/components/schematics');
 
-const tsc = spawnSync(
-  'npx',
-  ['tsc', '-p', 'projects/components/tsconfig.schematics.json'],
-  { stdio: 'inherit', cwd: root },
-);
+const tsc = spawnSync('npx', ['tsc', '-p', 'projects/components/tsconfig.schematics.json'], {
+  stdio: 'inherit',
+  cwd: root,
+});
 if (tsc.status !== 0) {
   process.exit(tsc.status ?? 1);
 }

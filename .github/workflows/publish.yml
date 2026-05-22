@@ -161,7 +161,7 @@ jobs:
         working-directory: dist/components
         run: |
           test -f package.json || (echo "::error::dist/components missing — build did not run or failed." && exit 1)
-          npm publish --access public
+          npm publish --access public --provenance
 
       - name: Summary
         run: |

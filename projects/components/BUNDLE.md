@@ -16,11 +16,11 @@ import * as Aurea from '@aurea-design-system/components';
 
 These files are **not** tree-shaken; include only what you need:
 
-| File | When |
-|------|------|
-| `styles/au-tokens.css` | Always (required) |
-| `styles/au-field-error.css` | Forms with validation messages |
-| `styles/au-field-listbox.css` | Select, autocomplete overlays |
+| File                          | When                           |
+| ----------------------------- | ------------------------------ |
+| `styles/au-tokens.css`        | Always (required)              |
+| `styles/au-field-error.css`   | Forms with validation messages |
+| `styles/au-field-listbox.css` | Select, autocomplete overlays  |
 
 ```scss
 @import '@aurea-design-system/components/styles/au-tokens.css';

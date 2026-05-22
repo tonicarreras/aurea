@@ -7,7 +7,7 @@ import { AuList } from './list';
 const meta: Meta<AuList> = {
   title: 'Aurea/List',
   component: AuList,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'beta'],
   parameters: {
     layout: 'padded',
     docs: {

@@ -266,8 +266,7 @@
 .docs-main--landing {
   max-width: min(88rem, 100%);
   margin: 0 auto;
-  padding: 0 clamp(var(--au-space-4), 4vw, var(--au-space-8))
-    var(--au-space-10);
+  padding: 0 clamp(var(--au-space-4), 4vw, var(--au-space-8)) var(--au-space-10);
 }
 
 .docs-shell--landing .docs-header {

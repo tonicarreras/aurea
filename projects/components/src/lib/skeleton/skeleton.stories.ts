@@ -5,7 +5,7 @@ import { AuSkeleton } from './skeleton';
 const meta: Meta<AuSkeleton> = {
   title: 'Aurea/Skeleton',
   component: AuSkeleton,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

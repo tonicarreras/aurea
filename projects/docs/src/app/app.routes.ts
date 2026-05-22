@@ -42,6 +42,36 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/guide-bundle.page').then((m) => m.GuideBundlePage),
       },
       {
+        path: 'guides/migrate-material',
+        loadComponent: () =>
+          import('./pages/guide-migrate-material.page').then((m) => m.GuideMigrateMaterialPage),
+      },
+      {
+        path: 'guides/migrate-cdk',
+        loadComponent: () =>
+          import('./pages/guide-migrate-cdk.page').then((m) => m.GuideMigrateCdkPage),
+      },
+      {
+        path: 'guides/crud-demo',
+        loadComponent: () =>
+          import('./pages/guide-crud-demo.page').then((m) => m.GuideCrudDemoPage),
+      },
+      {
+        path: 'roadmap',
+        loadComponent: () =>
+          import('./pages/ecosystem-roadmap.page').then((m) => m.EcosystemRoadmapPage),
+      },
+      {
+        path: 'maturity',
+        loadComponent: () =>
+          import('./pages/ecosystem-maturity.page').then((m) => m.EcosystemMaturityPage),
+      },
+      {
+        path: 'design-tokens',
+        loadComponent: () =>
+          import('./pages/ecosystem-design-tokens.page').then((m) => m.EcosystemDesignTokensPage),
+      },
+      {
         path: 'themes',
         loadComponent: () => import('./pages/theming.page').then((m) => m.ThemingPage),
       },

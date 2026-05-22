@@ -43,12 +43,12 @@ Checklist obligatorio antes de marcar un componente como **stable** o publicar u
 ## 7. Publicación
 
 - [ ] `CHANGELOG.md` actualizado.
-- [ ] Si breaking: entrada en `VERSIONING.md` / nota de migración.
+- [ ] Si breaking: entrada en [docs/VERSIONING.md](../../docs/VERSIONING.md) / nota de migración.
 
 ## Niveles de madurez
 
-| Nivel | Requisito mínimo |
-|-------|------------------|
-| **experimental** | API pública + story básica |
-| **beta** | DoD §1–3 completo; a11y revisada |
-| **stable** | DoD completo + cobertura a11y en auditoría |
+| Nivel            | Requisito mínimo                           |
+| ---------------- | ------------------------------------------ |
+| **experimental** | API pública + story básica                 |
+| **beta**         | DoD §1–3 completo; a11y revisada           |
+| **stable**       | DoD completo + cobertura a11y en auditoría |

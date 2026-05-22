@@ -25,10 +25,17 @@ ng serve docs
 4. Run before push:
 
 ```bash
-ng test components --no-watch --browsers=ChromeHeadless
-ng build components
-ng build docs
+bun run test:coverage
+bun run build:components
+bun run test-storybook:ci
+bun run test:visual:ci          # after first-time: bun run test:visual:update
+bun run audit:ci
+bun run validate:tokens         # JSON design tokens ↔ au-tokens.css
+bun run build:docs
+bun run tag:stories             # sync stable/beta tags from component-maturity.ts
 ```
+
+New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Governance index: [docs/README.md](./docs/README.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
 
 5. Update `CHANGELOG.md` under `[Unreleased]` for user-visible library changes.
 

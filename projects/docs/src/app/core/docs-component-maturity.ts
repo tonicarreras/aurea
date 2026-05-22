@@ -40,11 +40,18 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   breadcrumb: { level: 'stable', since: '0.4.0' },
   pagination: { level: 'stable', since: '0.4.0' },
   link: { level: 'stable', since: '0.4.0' },
-  menu: { level: 'beta', since: '0.4.0' },
-  popover: { level: 'beta', since: '0.4.0' },
-  table: { level: 'beta', since: '0.4.0' },
+  menu: { level: 'stable', since: '0.9.0' },
+  popover: { level: 'stable', since: '0.9.0' },
+  table: { level: 'stable', since: '0.9.0' },
 };
 
 export function getDocsComponentMaturity(slug: string): DocsComponentMaturityMeta {
   return MATURITY[slug] ?? { level: 'experimental', since: '0.0.0' };
+}
+
+/** All slugs with documented maturity (for the public matrix page). */
+export function listDocsMaturityEntries(): { slug: string; meta: DocsComponentMaturityMeta }[] {
+  return Object.entries(MATURITY)
+    .map(([slug, meta]) => ({ slug, meta }))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
 }

@@ -1,4 +1,5 @@
 import type { DocsMessages } from '../../types/messages';
+import { ECOSYSTEM_EN } from './ecosystem';
 import { GUIDES_EN } from './guides';
 
 export const MESSAGES_EN: DocsMessages = {
@@ -63,7 +64,7 @@ export const MESSAGES_EN: DocsMessages = {
     themesLink: 'Explore themes & tokens',
     previewsTitle: 'Component previews',
     previewsLead:
-      'All 24 catalog components, four per page — use the arrows to browse the full set.',
+      'Stable production components only, four per page — use the arrows to browse the set.',
     previewsAria: 'Component preview gallery',
     previewOpenDoc: 'View docs',
     carouselAria: 'Component carousel',
@@ -73,8 +74,7 @@ export const MESSAGES_EN: DocsMessages = {
     carouselSlideAria: (page) => `Components, page ${page}`,
     carouselDotsAria: 'Go to carousel page',
     carouselGoToPage: (page) => `Go to page ${page}`,
-    footer:
-      'MIT · Use Aurea in any Angular product. Technical reference also lives in Storybook.',
+    footer: 'MIT · Use Aurea in any Angular product. Technical reference also lives in Storybook.',
   },
   getStarted: {
     title: 'Get started',
@@ -98,11 +98,13 @@ export const MESSAGES_EN: DocsMessages = {
       },
       nextGuides: {
         title: 'Go deeper',
-        intro: 'Follow the adoption guide for signal forms, patterns, troubleshooting, and bundle tips.',
+        intro:
+          'Follow the adoption guide for signal forms, patterns, troubleshooting, and bundle tips — or open the',
       },
     },
   },
   guides: GUIDES_EN,
+  ecosystem: ECOSYSTEM_EN,
   themes: {
     title: 'Themes & tokens',
     lead: 'Global --au-* variables defined in au-tokens.css. Each component page lists only the tokens it consumes under Styling.',
@@ -139,7 +141,8 @@ export const MESSAGES_EN: DocsMessages = {
   componentsIndex: {
     title: 'Components',
     lead: 'Design system primitives. Each page includes a live preview, maturity badge, and import example.',
-    maturityLegend: 'Maturity: stable = production-ready; beta = usable with noted edge cases; experimental = may change.',
+    maturityLegend:
+      'Maturity: stable = production-ready; beta = usable with noted edge cases; experimental = may change.',
     maturityStable: 'Stable',
     maturityBeta: 'Beta',
     maturityExperimental: 'Experimental',

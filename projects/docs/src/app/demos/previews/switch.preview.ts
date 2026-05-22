@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuSwitch } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,

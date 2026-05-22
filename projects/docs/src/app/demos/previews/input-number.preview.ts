@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuInputNumber } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-input-number',
   changeDetection: ChangeDetectionStrategy.OnPush,

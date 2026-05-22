@@ -6,7 +6,7 @@ import { AuPagination } from './pagination';
 const meta: Meta<AuPagination> = {
   title: 'Aurea/Pagination',
   component: AuPagination,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

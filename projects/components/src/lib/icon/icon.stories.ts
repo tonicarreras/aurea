@@ -7,7 +7,7 @@ const names: AuIconName[] = ['check-circle', 'warning', 'error', 'info', 'close'
 const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
   component: AuIcon,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

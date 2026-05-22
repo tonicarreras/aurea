@@ -21,6 +21,12 @@ const STATIC_SEGMENTS = [
   'guides/patterns',
   'guides/troubleshooting',
   'guides/bundle',
+  'guides/migrate-material',
+  'guides/migrate-cdk',
+  'guides/crud-demo',
+  'roadmap',
+  'maturity',
+  'design-tokens',
   'themes',
   'components',
 ];

@@ -19,7 +19,7 @@ function cardRender(
 const meta: Meta<AuCard> = {
   title: 'Aurea/Card',
   component: AuCard,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

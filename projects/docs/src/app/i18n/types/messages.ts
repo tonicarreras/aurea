@@ -1,3 +1,4 @@
+import type { EcosystemMessages } from './ecosystem';
 import type { GuidesMessages } from './guides';
 
 export interface DocsMessages {
@@ -89,6 +90,7 @@ export interface DocsMessages {
     ruleBody: string;
   };
   guides: GuidesMessages;
+  ecosystem: EcosystemMessages;
   componentsIndex: {
     title: string;
     lead: string;

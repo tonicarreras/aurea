@@ -17,7 +17,7 @@ interface TooltipStoryArgs {
 
 const meta: Meta<TooltipStoryArgs> = {
   title: 'Aurea/Tooltip',
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'centered',
     docs: {

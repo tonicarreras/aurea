@@ -5,12 +5,14 @@ import { AuProgress } from './progress';
 const meta: Meta<AuProgress> = {
   title: 'Aurea/Progress',
   component: AuProgress,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {
       extractArgTypes: () => ({}),
-      description: { component: 'Determinate or indeterminate progress bar with ARIA progressbar.' },
+      description: {
+        component: 'Determinate or indeterminate progress bar with ARIA progressbar.',
+      },
     },
   },
   argTypes: {

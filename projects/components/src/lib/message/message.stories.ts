@@ -7,7 +7,7 @@ const variants: AuMessageVariant[] = ['default', 'success', 'warning', 'error', 
 const meta: Meta<AuMessage> = {
   title: 'Aurea/Message',
   component: AuMessage,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

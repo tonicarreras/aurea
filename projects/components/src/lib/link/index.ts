@@ -1,1 +1,3 @@
-export { AuLink, type AuLinkVariant } from './link';
+export * from './link';
+
+export type { AuLinkVariant } from './link';

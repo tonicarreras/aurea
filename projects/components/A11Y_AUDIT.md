@@ -5,16 +5,16 @@ Last review: 2025-05 (Fase 0).
 
 ## Summary
 
-| Area | Status | Notes |
-|------|--------|-------|
-| Focus visibility | Pass | `--au-focus-ring-width` + `box-shadow` on interactive controls |
-| Color contrast (light/dark) | Pass | Semantic tokens tuned per theme |
-| High contrast theme | Experimental | `data-au-theme="high-contrast"` — manual QA ongoing |
-| Keyboard — buttons, chips | Pass | Native focus; chip group roving tabindex |
-| Keyboard — dialogs | Pass | Escape closes; focus trap in `AuDialog` |
-| Keyboard — tabs | Pass | Arrow keys between tabs |
-| Form errors | Pass | `aria-invalid`, `aria-describedby` via `au-form-field` |
-| Screen reader labels | Pass | Visible labels or `aria-label` documented per component |
+| Area                        | Status       | Notes                                                          |
+| --------------------------- | ------------ | -------------------------------------------------------------- |
+| Focus visibility            | Pass         | `--au-focus-ring-width` + `box-shadow` on interactive controls |
+| Color contrast (light/dark) | Pass         | Semantic tokens tuned per theme                                |
+| High contrast theme         | Experimental | `data-au-theme="high-contrast"` — manual QA ongoing            |
+| Keyboard — buttons, chips   | Pass         | Native focus; chip group roving tabindex                       |
+| Keyboard — dialogs          | Pass         | Escape closes; focus trap in `AuDialog`                        |
+| Keyboard — tabs             | Pass         | Arrow keys between tabs                                        |
+| Form errors                 | Pass         | `aria-invalid`, `aria-describedby` via `au-form-field`         |
+| Screen reader labels        | Pass         | Visible labels or `aria-label` documented per component        |
 
 ## Per-component notes
 
@@ -33,27 +33,27 @@ Last review: 2025-05 (Fase 0).
 - **au-tabs**: Ensure selected tab `aria-selected` when dynamically added tabs.
 - **au-steps**: Step state should expose current step to SR (roadmap: `aria-current="step"`).
 
-### Phase 2 (0.4)
+### Phase 2 (0.9 stable)
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| `au-menu` | Beta | Escape closes; arrow keys between items planned 0.5 |
-| `au-popover` | Beta | `role="dialog"` non-modal; focus return on close |
-| `au-pagination` | Stable | `aria-current="page"` on active page button |
-| `au-table` | Beta | Native table semantics; sort header exposes `aria-sort` |
-| `au-breadcrumb` | Stable | `nav` + `aria-current="page"` on last item |
-| `au-badge` | Stable | Decorative when dot-only; pair with visible text when possible |
-| `au-progress` | Stable | `progressbar` + valuemin/max/now |
-| `au-link` | Stable | Focus ring; external links get `rel="noopener"` |
+| Component       | Status | Notes                                                          |
+| --------------- | ------ | -------------------------------------------------------------- |
+| `au-menu`       | Stable | Escape closes; roving tabindex / typeahead planned 0.10 (A11Y-004) |
+| `au-popover`    | Stable | `role="dialog"` non-modal; focus return on close               |
+| `au-pagination` | Stable | `aria-current="page"` on active page button                    |
+| `au-table`      | Stable | Native table semantics; sort header exposes `aria-sort`        |
+| `au-breadcrumb` | Stable | `nav` + `aria-current="page"` on last item                     |
+| `au-badge`      | Stable | Decorative when dot-only; pair with visible text when possible |
+| `au-progress`   | Stable | `progressbar` + valuemin/max/now                               |
+| `au-link`       | Stable | Focus ring; external links get `rel="noopener"`                |
 
 ### Known debt (visible)
 
-| ID | Component | Issue | Target |
-|----|-----------|-------|--------|
-| A11Y-001 | `au-snackbar` | Multiple live regions — verify polite vs assertive | 0.5.0 |
-| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile | 0.5.0 |
-| A11Y-003 | Docs site | Skip link present; carousel arrows need `aria-controls` link to slide | 0.4.1 docs |
-| A11Y-004 | `au-menu` | Roving tabindex + typeahead | 0.5.0 |
+| ID       | Component       | Issue                                                                 | Target     |
+| -------- | --------------- | --------------------------------------------------------------------- | ---------- |
+| A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                    | 0.5.0      |
+| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                                | 0.5.0      |
+| A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing      | —          |
+| A11Y-004 | `au-menu`       | Roving tabindex + typeahead                                           | 0.5.0      |
 
 ## Testing checklist (manual)
 
@@ -65,7 +65,7 @@ Last review: 2025-05 (Fase 0).
 ## Automated
 
 - Storybook test-runner in CI for smoke interaction tests.
-- Future: axe-core in test-runner per stable story (Fase 2 roadmap).
+- **CI:** `axe-playwright` runs on stable Storybook stories via test-runner (`stable-story-ids.ts` + tag `stable` on stories).
 
 ## Reporting
 

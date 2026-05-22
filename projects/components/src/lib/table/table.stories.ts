@@ -5,7 +5,7 @@ import { AuTable, AuTableSortHeader } from './table';
 
 const meta: Meta = {
   title: 'Aurea/Table',
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

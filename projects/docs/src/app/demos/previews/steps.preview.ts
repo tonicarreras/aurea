@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuStep, AuStepPanel, AuSteps } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-steps',
   changeDetection: ChangeDetectionStrategy.OnPush,

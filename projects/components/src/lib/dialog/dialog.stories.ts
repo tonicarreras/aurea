@@ -9,7 +9,7 @@ import { AuDialogFooter } from './dialog-footer.directive';
 const meta: Meta<AuDialog> = {
   title: 'Aurea/Dialog',
   component: AuDialog,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

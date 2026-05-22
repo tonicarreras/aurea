@@ -5,7 +5,7 @@ import { AuDivider } from './divider';
 const meta: Meta<AuDivider> = {
   title: 'Aurea/Divider',
   component: AuDivider,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: {

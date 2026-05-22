@@ -19,15 +19,35 @@ import {
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_MENU } from './au-menu.token';
+
+/** Used by `forwardRef` in component providers (testable factory). */
+export function auMenuSelfRef(): typeof AuMenu {
+  return AuMenu;
+}
+
 /**
- * Dropdown menu anchored to a trigger. Panel is portaled to document.body.
+ * Dropdown menu anchored to a trigger. Panel is portaled to `document.body`.
+ *
+ * @remarks
+ * - **Open state:** `[(open)]` with `openChange` output.
+ * - **Trigger:** `auMenuTrigger` on the control that toggles the panel.
+ * - **Items:** `au-menu-item` emits `select` and closes the menu.
+ * - **Dismiss:** outside click and Escape.
+ *
+ * @example
+ * ```html
+ * <au-menu [(open)]="open">
+ *   <au-button auMenuTrigger>Actions</au-button>
+ *   <au-menu-item (select)="onEdit()">Edit</au-menu-item>
+ * </au-menu>
+ * ```
  */
 @Component({
   selector: 'au-menu',
   templateUrl: './menu.html',
   styleUrl: './menu.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: AU_MENU, useExisting: forwardRef(() => AuMenu) }],
+  providers: [{ provide: AU_MENU, useExisting: forwardRef(auMenuSelfRef) }],
   host: {
     class: 'au-menu',
     '(document:click)': 'onDocumentClick($event)',

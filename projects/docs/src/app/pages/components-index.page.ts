@@ -19,7 +19,9 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
       [title]="i18n.messages().componentsIndex.title"
       [lead]="i18n.messages().componentsIndex.lead"
     >
-      <p class="docs-components-index__legend">{{ i18n.messages().componentsIndex.maturityLegend }}</p>
+      <p class="docs-components-index__legend">
+        {{ i18n.messages().componentsIndex.maturityLegend }}
+      </p>
       <ul class="docs-components-index">
         @for (doc of docs(); track doc.slug; let i = $index) {
           <li

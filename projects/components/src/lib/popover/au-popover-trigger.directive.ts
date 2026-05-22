@@ -11,7 +11,7 @@ import { AU_POPOVER } from './au-popover.token';
   },
 })
 export class AuPopoverTrigger {
-  readonly popover = inject(AU_POPOVER);
+  protected readonly popover = inject(AU_POPOVER);
   private readonly host = inject(ElementRef<HTMLElement>);
 
   constructor() {

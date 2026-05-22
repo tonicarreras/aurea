@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuButton, AuCard, AuCardFooter } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-card',
   changeDetection: ChangeDetectionStrategy.OnPush,

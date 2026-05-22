@@ -27,9 +27,7 @@ export class AuPagination {
   readonly pageChange = output<number>();
 
   readonly safePageCount = computed(() => Math.max(1, this.pageCount()));
-  readonly safePage = computed(() =>
-    Math.min(Math.max(1, this.page()), this.safePageCount()),
-  );
+  readonly safePage = computed(() => Math.min(Math.max(1, this.page()), this.safePageCount()));
   readonly canPrev = computed(() => !this.disabled() && this.safePage() > 1);
   readonly canNext = computed(() => !this.disabled() && this.safePage() < this.safePageCount());
 

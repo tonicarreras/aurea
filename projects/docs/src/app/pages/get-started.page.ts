@@ -82,6 +82,8 @@ export type GetStartedStep =
         <strong>{{ i18n.messages().getStarted.steps.nextGuides.title }}</strong>
         {{ i18n.messages().getStarted.steps.nextGuides.intro }}
         <a [routerLink]="adoptionLink()">{{ adoptionLinkLabel() }}</a>
+        ·
+        <a [routerLink]="crudDemoLink()">{{ crudDemoLinkLabel() }}</a>
       </p>
     </docs-page>
   `,
@@ -267,5 +269,13 @@ export class ProfileForm {}`;
 
   adoptionLinkLabel(): string {
     return this.i18n.locale() === 'en' ? 'Adoption guide →' : 'Guía de adopción →';
+  }
+
+  crudDemoLink(): string[] {
+    return this.i18n.link(DOCS_ROUTES.guidesCrudDemo);
+  }
+
+  crudDemoLinkLabel(): string {
+    return this.i18n.locale() === 'en' ? 'CRUD reference demo →' : 'Demo CRUD de referencia →';
   }
 }

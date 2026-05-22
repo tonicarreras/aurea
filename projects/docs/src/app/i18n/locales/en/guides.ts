@@ -35,6 +35,31 @@ export const GUIDES_EN: GuidesMessages = {
         description: 'Light/dark, density, and high-contrast palettes.',
         path: 'themes',
       },
+      {
+        title: 'Migrate from Material',
+        description: 'Replace mat-form-field, table, dialog, and buttons.',
+        path: 'guides/migrate-material',
+      },
+      {
+        title: 'Migrate from CDK',
+        description: 'Overlays, focus trap, and when to keep CDK.',
+        path: 'guides/migrate-cdk',
+      },
+      {
+        title: 'CRUD reference demo',
+        description: 'Table, pagination, menu, dialog, signal forms.',
+        path: 'guides/crud-demo',
+      },
+      {
+        title: 'Roadmap & maturity',
+        description: 'Public phases, v1 criteria, component matrix.',
+        path: 'roadmap',
+      },
+      {
+        title: 'Figma design tokens',
+        description: 'JSON files synced with au-tokens.css.',
+        path: 'design-tokens',
+      },
     ],
   },
   signalForms: {

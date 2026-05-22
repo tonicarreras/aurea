@@ -38,7 +38,7 @@ interface AutocompleteStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<AutocompleteStoryArgs> = {
   title: 'Aurea/Autocomplete',
   component: AuAutocomplete,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'beta'],
   parameters: {
     layout: 'padded',
     docs: { extractArgTypes: () => ({}) },

@@ -1,0 +1,39 @@
+name: Feature request
+description: Propose a new component, token, or API improvement
+title: '[Feature]: '
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What job are you trying to accomplish? Who benefits (dev, design, end user)?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: API sketch, alternatives considered, links to other design systems
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Suggested priority
+      options:
+        - P0 — blocks adoption in production
+        - P1 — common app pattern
+        - P2 — nice to have
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Willing to contribute?
+      options:
+        - label: I can open a PR with guidance
+          required: false

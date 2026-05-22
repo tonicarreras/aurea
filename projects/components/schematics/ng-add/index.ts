@@ -1,17 +1,9 @@
-import {
-  Rule,
-  SchematicContext,
-  Tree,
-  chain,
-} from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree, chain } from '@angular-devkit/schematics';
 import type { Schema as NgAddSchema } from './schema';
 
-const TOKEN_STYLE =
-  'node_modules/@aurea-design-system/components/styles/au-tokens.css';
-const ERROR_STYLE =
-  'node_modules/@aurea-design-system/components/styles/au-field-error.css';
-const LISTBOX_STYLE =
-  'node_modules/@aurea-design-system/components/styles/au-field-listbox.css';
+const TOKEN_STYLE = 'node_modules/@aurea-design-system/components/styles/au-tokens.css';
+const ERROR_STYLE = 'node_modules/@aurea-design-system/components/styles/au-field-error.css';
+const LISTBOX_STYLE = 'node_modules/@aurea-design-system/components/styles/au-field-listbox.css';
 
 function addStylesToProject(options: NgAddSchema): Rule {
   return (tree: Tree, context: SchematicContext) => {
@@ -26,10 +18,7 @@ function addStylesToProject(options: NgAddSchema): Rule {
     }
 
     const config = JSON.parse(angularJson.toString('utf-8')) as {
-      projects?: Record<
-        string,
-        { architect?: { build?: { options?: { styles?: string[] } } } }
-      >;
+      projects?: Record<string, { architect?: { build?: { options?: { styles?: string[] } } } }>;
       defaultProject?: string;
     };
 

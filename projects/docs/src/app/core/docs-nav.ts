@@ -62,6 +62,9 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
             { path: DOCS_ROUTES.guidesPatterns, label: 'UI patterns' },
             { path: DOCS_ROUTES.guidesTroubleshooting, label: 'Troubleshooting' },
             { path: DOCS_ROUTES.guidesBundle, label: 'Bundle size' },
+            { path: DOCS_ROUTES.guidesMigrateMaterial, label: 'Migrate from Material' },
+            { path: DOCS_ROUTES.guidesMigrateCdk, label: 'Migrate from CDK' },
+            { path: DOCS_ROUTES.guidesCrudDemo, label: 'CRUD demo' },
             { path: DOCS_ROUTES.themes, label: 'Themes & tokens' },
           ],
         }
@@ -75,7 +78,29 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
             { path: DOCS_ROUTES.guidesPatterns, label: 'Patrones de UI' },
             { path: DOCS_ROUTES.guidesTroubleshooting, label: 'Problemas frecuentes' },
             { path: DOCS_ROUTES.guidesBundle, label: 'Tamaño del bundle' },
+            { path: DOCS_ROUTES.guidesMigrateMaterial, label: 'Migrar desde Material' },
+            { path: DOCS_ROUTES.guidesMigrateCdk, label: 'Migrar desde CDK' },
+            { path: DOCS_ROUTES.guidesCrudDemo, label: 'Demo CRUD' },
             { path: DOCS_ROUTES.themes, label: 'Temas y tokens' },
+          ],
+        };
+
+  const ecosystem =
+    locale === 'en'
+      ? {
+          title: 'Ecosystem',
+          items: [
+            { path: DOCS_ROUTES.roadmap, label: 'Roadmap' },
+            { path: DOCS_ROUTES.maturity, label: 'Maturity matrix' },
+            { path: DOCS_ROUTES.designTokens, label: 'Figma tokens' },
+          ],
+        }
+      : {
+          title: 'Ecosistema',
+          items: [
+            { path: DOCS_ROUTES.roadmap, label: 'Roadmap' },
+            { path: DOCS_ROUTES.maturity, label: 'Matriz de madurez' },
+            { path: DOCS_ROUTES.designTokens, label: 'Tokens Figma' },
           ],
         };
 
@@ -102,7 +127,7 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
           ],
         };
 
-  return [intro, components];
+  return [intro, ecosystem, components];
 }
 
 const DOCS_NAV_BY_LOCALE: Record<DocsLocale, DocsNavSection[]> = {

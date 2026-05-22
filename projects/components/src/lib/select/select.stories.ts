@@ -42,7 +42,7 @@ interface SelectStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<SelectStoryArgs> = {
   title: 'Aurea/Select',
   component: AuSelect,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
     docs: { extractArgTypes: () => ({}) },

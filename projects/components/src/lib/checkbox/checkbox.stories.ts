@@ -26,7 +26,7 @@ interface CheckboxStoryArgs {
 const meta: Meta<CheckboxStoryArgs> = {
   title: 'Aurea/Checkbox',
   component: AuCheckbox,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: {
     layout: 'padded',
   },

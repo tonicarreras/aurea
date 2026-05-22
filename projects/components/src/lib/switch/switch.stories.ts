@@ -25,7 +25,7 @@ interface SwitchStoryArgs {
 const meta: Meta<SwitchStoryArgs> = {
   title: 'Aurea/Switch',
   component: AuSwitch,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: { layout: 'padded' },
   argTypes: {
     ...fieldChromeHintOnlyArgTypes,

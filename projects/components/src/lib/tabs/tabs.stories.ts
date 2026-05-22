@@ -10,7 +10,7 @@ const storyImports = { imports: [AuTabs, AuTab, AuTabPanel] };
 const meta: Meta<AuTabs> = {
   title: 'Aurea/Tabs',
   component: AuTabs,
-  tags: ['autodocs', 'au'],
+  tags: ['autodocs', 'au', 'beta'],
   parameters: {
     layout: 'padded',
     docs: {

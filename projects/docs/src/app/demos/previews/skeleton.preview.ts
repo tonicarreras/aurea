@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuSkeleton } from '@aurea-design-system/components';
 
-
 @Component({
   selector: 'docs-preview-skeleton',
   changeDetection: ChangeDetectionStrategy.OnPush,
