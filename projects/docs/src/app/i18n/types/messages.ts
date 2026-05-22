@@ -38,6 +38,13 @@ export interface DocsMessages {
     previewsLead: string;
     previewsAria: string;
     previewOpenDoc: string;
+    carouselAria: string;
+    carouselPrev: string;
+    carouselNext: string;
+    carouselPageStatus: (current: number, total: number) => string;
+    carouselSlideAria: (page: number) => string;
+    carouselDotsAria: string;
+    carouselGoToPage: (page: number) => string;
     footer: string;
   };
   getStarted: {

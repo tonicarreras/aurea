@@ -62,9 +62,16 @@ export const MESSAGES_ES: DocsMessages = {
     themesLink: 'Explorar temas y tokens',
     previewsTitle: 'Vista previa de componentes',
     previewsLead:
-      'Muestras en vivo de la librería — abre la documentación completa para API, estilo y ejemplos.',
+      'Los 24 componentes del catálogo, cuatro por página — usa las flechas para verlos todos.',
     previewsAria: 'Galería de vistas previas',
     previewOpenDoc: 'Ver docs',
+    carouselAria: 'Carrusel de componentes',
+    carouselPrev: 'Página anterior',
+    carouselNext: 'Página siguiente',
+    carouselPageStatus: (current, total) => `Página ${current} de ${total}`,
+    carouselSlideAria: (page) => `Componentes, página ${page}`,
+    carouselDotsAria: 'Ir a una página del carrusel',
+    carouselGoToPage: (page) => `Ir a la página ${page}`,
     footer: 'MIT · Aurea en cualquier producto Angular. La referencia técnica también está en Storybook.',
   },
   getStarted: {

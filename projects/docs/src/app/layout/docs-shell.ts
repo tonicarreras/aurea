@@ -8,6 +8,7 @@ import { isDocsLocale } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocsSeoService } from '../core/docs-seo.service';
 import { AngularLogo } from '../shared/angular-logo';
+import { DocsLandingLines } from './docs-landing-lines';
 import { DocsShellMobileMenu } from './docs-shell-mobile-menu';
 import { DocsShellToolbar, type DocsThemeMode } from './docs-shell-toolbar';
 
@@ -21,6 +22,7 @@ import { DocsShellToolbar, type DocsThemeMode } from './docs-shell-toolbar';
     AngularLogo,
     DocsShellToolbar,
     DocsShellMobileMenu,
+    DocsLandingLines,
   ],
   host: {
     class: 'docs-shell',
@@ -29,14 +31,18 @@ import { DocsShellToolbar, type DocsThemeMode } from './docs-shell-toolbar';
     '[attr.lang]': 'locale.locale()',
   },
   template: `
-    <div
-      class="docs-atmosphere"
-      aria-hidden="true"
-    >
-      <div class="docs-atmosphere__orb docs-atmosphere__orb--1"></div>
-      <div class="docs-atmosphere__orb docs-atmosphere__orb--2"></div>
-      <div class="docs-atmosphere__orb docs-atmosphere__orb--3"></div>
-    </div>
+    @if (isLanding()) {
+      <docs-landing-lines />
+    } @else {
+      <div
+        class="docs-atmosphere"
+        aria-hidden="true"
+      >
+        <div class="docs-atmosphere__orb docs-atmosphere__orb--1"></div>
+        <div class="docs-atmosphere__orb docs-atmosphere__orb--2"></div>
+        <div class="docs-atmosphere__orb docs-atmosphere__orb--3"></div>
+      </div>
+    }
 
     <a
       class="docs-skip"

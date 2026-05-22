@@ -61,9 +61,17 @@ export const MESSAGES_EN: DocsMessages = {
     ],
     themesLink: 'Explore themes & tokens',
     previewsTitle: 'Component previews',
-    previewsLead: 'Live samples from the library — open full documentation for API, styling, and examples.',
+    previewsLead:
+      'All 24 catalog components, four per page — use the arrows to browse the full set.',
     previewsAria: 'Component preview gallery',
     previewOpenDoc: 'View docs',
+    carouselAria: 'Component carousel',
+    carouselPrev: 'Previous page',
+    carouselNext: 'Next page',
+    carouselPageStatus: (current, total) => `Page ${current} of ${total}`,
+    carouselSlideAria: (page) => `Components, page ${page}`,
+    carouselDotsAria: 'Go to carousel page',
+    carouselGoToPage: (page) => `Go to page ${page}`,
     footer:
       'MIT · Use Aurea in any Angular product. Technical reference also lives in Storybook.',
   },

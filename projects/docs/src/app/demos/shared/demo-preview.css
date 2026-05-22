@@ -1,0 +1,128 @@
+/* Hosts de previews: ancho completo en carrusel y panel de docs */
+:where(
+  docs-preview-button,
+  docs-preview-form-field,
+  docs-preview-input-text,
+  docs-preview-textarea,
+  docs-preview-checkbox,
+  docs-preview-switch,
+  docs-preview-select,
+  docs-preview-autocomplete,
+  docs-preview-radio-group,
+  docs-preview-input-number,
+  docs-preview-input-date,
+  docs-preview-dialog,
+  docs-preview-card,
+  docs-preview-tabs,
+  docs-preview-chip,
+  docs-preview-chip-group,
+  docs-preview-list,
+  docs-preview-snackbar,
+  docs-preview-message,
+  docs-preview-icon,
+  docs-preview-skeleton,
+  docs-preview-steps,
+  docs-preview-divider,
+  docs-preview-tooltip
+) {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+}
+
+.docs-preview {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.docs-preview--field {
+  width: 100%;
+  max-width: 18rem;
+}
+
+.docs-preview--field :where(
+  au-form-field,
+  au-input-text,
+  au-textarea,
+  au-select,
+  au-autocomplete,
+  au-input-number,
+  au-input-date,
+  au-radio-group,
+  au-switch
+) {
+  width: 100%;
+}
+
+.docs-preview--wide {
+  width: 100%;
+  max-width: 100%;
+  align-items: stretch;
+}
+
+.docs-preview--wide :where(au-tabs, au-steps) {
+  width: 100%;
+}
+
+.docs-preview--row {
+  width: 100%;
+}
+
+.docs-preview--row .docs-demo-row {
+  width: 100%;
+  justify-content: center;
+}
+
+.docs-preview--stack {
+  width: 100%;
+  max-width: 18rem;
+  align-items: stretch;
+}
+
+.docs-preview--stack .docs-demo-stack {
+  width: 100%;
+}
+
+.docs-preview--block {
+  width: 100%;
+  max-width: 18rem;
+}
+
+.docs-preview--block :where(au-card) {
+  width: 100%;
+}
+
+.docs-preview--action {
+  width: 100%;
+}
+
+.docs-preview--action :where([auDialogFooter]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--au-space-2);
+  justify-content: flex-end;
+}
+
+.docs-demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--au-space-3);
+  align-items: center;
+  justify-content: center;
+}
+
+.docs-demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-3);
+  width: 100%;
+}
+
+.docs-demo-row--tight {
+  gap: var(--au-space-2);
+}

@@ -100,7 +100,7 @@
 .docs-header {
   position: sticky;
   top: 0;
-  z-index: var(--au-z-sticky);
+  z-index: calc(var(--au-z-sticky) + 1);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -255,6 +255,8 @@
 }
 
 .docs-main {
+  position: relative;
+  z-index: 1;
   min-width: 0;
   width: 100%;
   padding: 0;

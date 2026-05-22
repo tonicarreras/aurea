@@ -1,32 +1,17 @@
-import { NgComponentOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuButton, AuCard } from '@aurea-design-system/components';
 
-import {
-  COMPONENT_DOCS_BY_SLUG,
-  componentDocSummary,
-  type ComponentDoc,
-} from '../core/component-docs.registry';
+import { COMPONENT_DOCS, componentDocSummary } from '../core/component-docs.registry';
 import { DOCS_EXTERNAL_LINKS } from '../core/docs-external-links';
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
+import { LandingPreviewsCarousel } from '../shared/landing-previews-carousel';
 import { DocsInlineText } from '../shared/docs-inline-text';
-
-const LANDING_PREVIEW_SLUGS = [
-  'button',
-  'card',
-  'message',
-  'form-field',
-  'snackbar',
-  'dialog',
-  'tabs',
-  'input-text',
-] as const;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, AuButton, AuCard, NgComponentOutlet, DocsInlineText],
+  imports: [RouterLink, AuButton, AuCard, LandingPreviewsCarousel, DocsInlineText],
   template: `
     <div class="landing">
       <section class="landing-hero">
@@ -121,42 +106,10 @@ const LANDING_PREVIEW_SLUGS = [
           {{ m().previewsTitle }}
         </h2>
         <p class="landing-previews__lead">{{ m().previewsLead }}</p>
-        <ul
-          class="landing-previews__grid"
-          [attr.aria-label]="m().previewsAria"
-        >
-          @for (doc of previewDocs(); track doc.slug; let i = $index) {
-            <li
-              class="landing-previews__cell"
-              [style.animation-delay]="100 + i * 60 + 'ms'"
-            >
-              <a
-                [routerLink]="docLink(doc.slug)"
-                class="landing-previews__link"
-              >
-                <au-card
-                  variant="outlined"
-                  size="lg"
-                  class="landing-previews__card"
-                >
-                  <div class="landing-previews__head">
-                    <h3 class="landing-previews__name">{{ doc.title }}</h3>
-                    <span class="landing-previews__doc-hint">{{ m().previewOpenDoc }}</span>
-                  </div>
-                  <div
-                    class="landing-previews__stage"
-                    role="presentation"
-                  >
-                    <ng-container *ngComponentOutlet="doc.demoComponent" />
-                  </div>
-                  <p class="landing-previews__summary">
-                    <docs-inline-text [text]="doc.summary" />
-                  </p>
-                </au-card>
-              </a>
-            </li>
-          }
-        </ul>
+        <docs-landing-previews-carousel
+          [docs]="previewDocs()"
+          [slugLink]="docLinkFn"
+        />
       </section>
 
       <footer class="landing-footer">
@@ -396,112 +349,6 @@ const LANDING_PREVIEW_SLUGS = [
       line-height: var(--au-leading-relaxed);
     }
 
-    .landing-previews__grid {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--au-space-5);
-    }
-
-    @media (min-width: 40rem) {
-      .landing-previews__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .landing-previews__cell {
-      animation: docs-fade-up 0.5s var(--au-ease-out) both;
-    }
-
-    .landing-previews__link {
-      display: block;
-      height: 100%;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .landing-previews__card {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition:
-        transform var(--au-duration-default) var(--au-ease-emph),
-        border-color var(--au-duration-short) var(--au-ease-in-out);
-    }
-
-    @media (hover: hover) {
-      .landing-previews__link:hover .landing-previews__card {
-        transform: translateY(-3px);
-        border-color: var(--au-color-accent);
-      }
-
-      .landing-previews__link:hover .landing-previews__doc-hint {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .landing-previews__head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: var(--au-space-3);
-      padding: var(--au-space-5) var(--au-space-5) 0;
-    }
-
-    .landing-previews__name {
-      margin: 0;
-      font-size: var(--au-text-md);
-      font-weight: var(--au-weight-semibold);
-    }
-
-    .landing-previews__doc-hint {
-      font-size: var(--au-text-2xs);
-      font-weight: var(--au-weight-semibold);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--au-color-accent);
-      opacity: 0.5;
-      transform: translateX(-4px);
-      transition:
-        opacity var(--au-duration-short) var(--au-ease-in-out),
-        transform var(--au-duration-short) var(--au-ease-emph);
-    }
-
-    .landing-previews__stage {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 11.5rem;
-      margin: var(--au-space-4) var(--au-space-5) 0;
-      padding: var(--au-space-6) var(--au-space-5);
-      border-radius: var(--au-radius-lg);
-      border: 1px dashed var(--docs-border-fine);
-      background: color-mix(
-        in srgb,
-        var(--au-color-surface-raised) 90%,
-        var(--au-color-surface-canvas)
-      );
-      overflow: hidden;
-    }
-
-    .landing-previews__stage ::ng-deep .docs-demo-row,
-    .landing-previews__stage ::ng-deep .docs-demo-stack {
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .landing-previews__summary {
-      margin: var(--au-space-4) var(--au-space-5) var(--au-space-5);
-      font-size: var(--au-text-sm);
-      line-height: var(--au-leading-relaxed);
-      color: var(--au-color-text-secondary);
-    }
-
     .landing-footer {
       display: flex;
       flex-wrap: wrap;
@@ -534,12 +381,6 @@ const LANDING_PREVIEW_SLUGS = [
       .landing-overview {
         padding: var(--au-space-6) var(--au-space-4);
       }
-
-      .landing-previews__stage {
-        min-height: 10rem;
-        margin-inline: var(--au-space-4);
-        padding: var(--au-space-5);
-      }
     }
   `,
 })
@@ -550,19 +391,11 @@ export class LandingPage {
   readonly m = computed(() => this.i18n.messages().landing);
 
   readonly previewDocs = computed(() =>
-    LANDING_PREVIEW_SLUGS.map((slug) => {
-      const doc = COMPONENT_DOCS_BY_SLUG[slug];
-      if (!doc) {
-        return null;
-      }
-      return {
-        ...doc,
-        summary: componentDocSummary(doc, this.i18n.locale()),
-      };
-    }).filter((doc): doc is ComponentDoc & { summary: string } => doc !== null),
+    COMPONENT_DOCS.map((doc) => ({
+      ...doc,
+      summary: componentDocSummary(doc, this.i18n.locale()),
+    })),
   );
 
-  docLink(slug: string): string[] {
-    return this.i18n.link(DOCS_ROUTES.components, slug);
-  }
+  readonly docLinkFn = (slug: string): string[] => this.i18n.link(DOCS_ROUTES.components, slug);
 }
