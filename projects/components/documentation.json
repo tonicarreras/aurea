@@ -2166,21 +2166,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Aurea button with primary, secondary, outline, and ghost variants; sizes sm–lg; loading and disabled states; WCAG 2.2 focus rings.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuCard>",
                 "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Container for grouped content with elevated, outlined, or filled variants. Project header, body, footer (`AuCardFooter`), and media slots.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Aurea button with primary, secondary, outline, and ghost variants; sizes sm–lg; loading and disabled states; WCAG 2.2 focus rings.',\n      },\n    },\n  },\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description: 'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2206,16 +2206,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuDialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2226,11 +2216,31 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuDialog>",
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Native `<dialog>` modal. Use the trigger in each story to preview overlay, backdrop, and size. The dashed canvas shell is Storybook-only.',\n      },\n    },\n  },\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuDivider>",
                 "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Visual separator between sections. Horizontal (optional inset or label) or vertical in flex layouts; `role=\"separator\"` with `aria-orientation`.',\n      },\n    },\n  },\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<FormFieldStoryArgs>",
+                "defaultValue": "{\n  title: 'Aurea/Form field',\n  component: AuFormField,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Optional label, hint, and error chrome around a projected control. Leave `label` empty on the inner field when using this wrapper.',\n      },\n    },\n  },\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2251,16 +2261,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<InputDateStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au'],\n  parameters: { layout: 'padded' },\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<FormFieldStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Form field',\n  component: AuFormField,\n  tags: ['autodocs', 'au'],\n  parameters: {\n    layout: 'padded',\n    docs: {\n      extractArgTypes: () => ({}),\n      description: {\n        component:\n          'Optional label, hint, and error chrome around a projected control. Leave `label` empty on the inner field when using this wrapper.',\n      },\n    },\n  },\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2695,6 +2695,16 @@
                 "defaultValue": "[AuFormField, AuTextarea, FormField, JsonPipe]"
             },
             {
+                "name": "Sizes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuIcon] },\n    template: `\n      <div style=\"display:flex;gap:1.5rem;align-items:flex-end;color:var(--au-color-text-primary);\">\n        @for (s of sizes; track s) {\n          <div style=\"display:flex;flex-direction:column;align-items:center;gap:0.35rem;font-size:0.75rem;\">\n            <au-icon name=\"info\" [size]=\"s\" />\n            <span>{{ s }}</span>\n          </div>\n        }\n      </div>\n    `,\n    props: { sizes: ['sm', 'md', 'lg'] as const },\n  }),\n}"
+            },
+            {
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2758,21 +2768,21 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{ imports: [AuButton] }"
-            },
-            {
-                "name": "storyImports",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuCard] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [AuButton] }"
             },
             {
                 "name": "storyImports",
@@ -3544,8 +3554,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "rawtype": "StoryObj<AuCard>",
+                "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3555,8 +3565,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuCard>",
-                "file": "projects/components/src/lib/card/card.stories.ts",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3588,17 +3598,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDialog>",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuChipGroup>",
                 "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
                 "deprecated": false,
@@ -3610,8 +3609,30 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuDialog>",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuDivider>",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<FormFieldStoryArgs>",
+                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3634,17 +3655,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<InputDateStoryArgs>",
                 "file": "projects/components/src/lib/input-date/input-date.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<FormFieldStoryArgs>",
-                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3869,6 +3879,16 @@
                     "deprecationMessage": "",
                     "type": "AuIconName[]",
                     "defaultValue": "['check-circle', 'warning', 'error', 'info', 'close', 'spinner']"
+                },
+                {
+                    "name": "Sizes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuIcon] },\n    template: `\n      <div style=\"display:flex;gap:1.5rem;align-items:flex-end;color:var(--au-color-text-primary);\">\n        @for (s of sizes; track s) {\n          <div style=\"display:flex;flex-direction:column;align-items:center;gap:0.35rem;font-size:0.75rem;\">\n            <au-icon name=\"info\" [size]=\"s\" />\n            <span>{{ s }}</span>\n          </div>\n        }\n      </div>\n    `,\n    props: { sizes: ['sm', 'md', 'lg'] as const },\n  }),\n}"
                 }
             ],
             "projects/components/src/lib/button/button.stories.ts": [
@@ -5991,19 +6011,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/button/button.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButton>",
-                    "file": "projects/components/src/lib/button/button.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/card/card.stories.ts": [
                 {
                     "name": "Story",
@@ -6011,6 +6018,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuCard>",
                     "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/button/button.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuButton>",
+                    "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -6043,19 +6063,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/dialog/dialog.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuDialog>",
-                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/chip-group/chip-group.stories.ts": [
                 {
                     "name": "Story",
@@ -6069,6 +6076,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuDialog>",
+                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/divider/divider.stories.ts": [
                 {
                     "name": "Story",
@@ -6076,6 +6096,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuDivider>",
                     "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/form-field/form-field.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<FormFieldStoryArgs>",
+                    "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -6102,19 +6135,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputDateStoryArgs>",
                     "file": "projects/components/src/lib/input-date/input-date.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/form-field/form-field.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<FormFieldStoryArgs>",
-                    "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7288,6 +7308,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "names",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/icon/icon.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Sizes",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
