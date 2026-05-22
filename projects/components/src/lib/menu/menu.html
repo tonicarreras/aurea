@@ -1,0 +1,13 @@
+<div class="au-menu__anchor">
+  <ng-content select="[auMenuTrigger]" />
+</div>
+@if (open()) {
+  <div
+    #panel
+    class="au-menu__panel"
+    role="menu"
+    tabindex="-1"
+  >
+    <ng-content />
+  </div>
+}

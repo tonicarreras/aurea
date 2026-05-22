@@ -176,6 +176,14 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuSnackbar`     | `<au-snackbar>`     |                                                |
 | `AuDivider`      | `<au-divider>`      | Horizontal / vertical                          |
 | `AuTooltip`      | `[auTooltip]`       | Directive on the trigger                       |
+| `AuBadge`        | `<au-badge>`        | Status / count label                           |
+| `AuBreadcrumb`   | `<au-breadcrumb>`   | Navigation trail                               |
+| `AuPagination`   | `<au-pagination>`   | Page controls (1-based)                        |
+| `AuMenu`         | `<au-menu>`         | Dropdown + `auMenuTrigger` / `au-menu-item`    |
+| `AuPopover`      | `<au-popover>`      | Anchored panel + `auPopoverTrigger`            |
+| `AuTable`        | `<au-table>`        | Table shell + `auTableSortHeader`              |
+| `AuProgress`     | `<au-progress>`     | Progressbar                                    |
+| `AuLink`         | `a[auLink]`         | Semantic inline link                           |
 | `AuTheme`        | `[auTheme]`         | `light` / `dark` / `system` / `high-contrast`  |
 | `AuDensityDirective` | `[auDensity]`   | `compact` / `comfortable` / `spacious`         |
 

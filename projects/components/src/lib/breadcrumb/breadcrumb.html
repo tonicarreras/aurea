@@ -1,0 +1,29 @@
+<ol class="au-breadcrumb__list">
+  @for (item of items(); track $index; let last = $last) {
+    <li
+      class="au-breadcrumb__item"
+      [class.au-breadcrumb__item--current]="last"
+    >
+      @if (!last && item.href) {
+        <a
+          class="au-breadcrumb__link"
+          [href]="item.href"
+          >{{ item.label }}</a
+        >
+      } @else {
+        <span
+          class="au-breadcrumb__current"
+          [attr.aria-current]="last ? 'page' : null"
+          >{{ item.label }}</span
+        >
+      }
+      @if (!last) {
+        <span
+          class="au-breadcrumb__separator"
+          aria-hidden="true"
+          >/</span
+        >
+      }
+    </li>
+  }
+</ol>

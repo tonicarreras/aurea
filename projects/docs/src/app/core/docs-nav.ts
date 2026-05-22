@@ -15,12 +15,15 @@ export interface DocsNavSection {
 }
 
 const COMPONENT_SLUGS: { slug: string; label: string }[] = [
+  { slug: 'badge', label: 'Badge' },
+  { slug: 'breadcrumb', label: 'Breadcrumb' },
   { slug: 'button', label: 'Button' },
   { slug: 'form-field', label: 'Form field' },
   { slug: 'input-text', label: 'Input text' },
   { slug: 'textarea', label: 'Textarea' },
   { slug: 'checkbox', label: 'Checkbox' },
   { slug: 'switch', label: 'Switch' },
+  { slug: 'table', label: 'Table' },
   { slug: 'select', label: 'Select' },
   { slug: 'autocomplete', label: 'Autocomplete' },
   { slug: 'radio-group', label: 'Radio group' },
@@ -31,7 +34,12 @@ const COMPONENT_SLUGS: { slug: string; label: string }[] = [
   { slug: 'tabs', label: 'Tabs' },
   { slug: 'chip', label: 'Chip' },
   { slug: 'chip-group', label: 'Chip group' },
+  { slug: 'link', label: 'Link' },
   { slug: 'list', label: 'List' },
+  { slug: 'menu', label: 'Menu' },
+  { slug: 'pagination', label: 'Pagination' },
+  { slug: 'popover', label: 'Popover' },
+  { slug: 'progress', label: 'Progress' },
   { slug: 'snackbar', label: 'Snackbar' },
   { slug: 'message', label: 'Message' },
   { slug: 'icon', label: 'Icon' },

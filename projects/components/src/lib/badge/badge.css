@@ -1,0 +1,60 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.4em;
+  border-radius: var(--au-radius-pill);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-xs);
+  font-weight: var(--au-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  background: var(--au-color-surface-sunken);
+  color: var(--au-color-text-secondary);
+  border: 1px solid var(--au-color-border-subtle);
+}
+
+:host([data-au-dot]) {
+  min-width: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+}
+
+:host([data-au-variant='accent']) {
+  background: color-mix(in srgb, var(--au-color-action-primary) 16%, var(--au-color-surface-raised));
+  color: var(--au-color-action-primary);
+  border-color: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
+}
+
+:host([data-au-variant='success']) {
+  background: var(--au-color-semantic-success-surface);
+  color: var(--au-color-semantic-success);
+  border-color: color-mix(in srgb, var(--au-color-semantic-success) 40%, transparent);
+}
+
+:host([data-au-variant='warning']) {
+  background: var(--au-color-semantic-warning-surface);
+  color: var(--au-color-semantic-warning);
+  border-color: color-mix(in srgb, var(--au-color-semantic-warning) 40%, transparent);
+}
+
+:host([data-au-variant='error']) {
+  background: var(--au-color-semantic-error-surface);
+  color: var(--au-color-semantic-error);
+  border-color: color-mix(in srgb, var(--au-color-semantic-error) 40%, transparent);
+}
+
+:host([data-au-variant='info']) {
+  background: var(--au-color-semantic-info-surface);
+  color: var(--au-color-semantic-info);
+  border-color: color-mix(in srgb, var(--au-color-semantic-info) 40%, transparent);
+}
+
+.au-badge__label {
+  display: inline-block;
+}

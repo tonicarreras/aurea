@@ -33,13 +33,27 @@ Last review: 2025-05 (Fase 0).
 - **au-tabs**: Ensure selected tab `aria-selected` when dynamically added tabs.
 - **au-steps**: Step state should expose current step to SR (roadmap: `aria-current="step"`).
 
+### Phase 2 (0.4)
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| `au-menu` | Beta | Escape closes; arrow keys between items planned 0.5 |
+| `au-popover` | Beta | `role="dialog"` non-modal; focus return on close |
+| `au-pagination` | Stable | `aria-current="page"` on active page button |
+| `au-table` | Beta | Native table semantics; sort header exposes `aria-sort` |
+| `au-breadcrumb` | Stable | `nav` + `aria-current="page"` on last item |
+| `au-badge` | Stable | Decorative when dot-only; pair with visible text when possible |
+| `au-progress` | Stable | `progressbar` + valuemin/max/now |
+| `au-link` | Stable | Focus ring; external links get `rel="noopener"` |
+
 ### Known debt (visible)
 
 | ID | Component | Issue | Target |
 |----|-----------|-------|--------|
-| A11Y-001 | `au-snackbar` | Multiple live regions — verify polite vs assertive | 0.4.0 |
-| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile | 0.4.0 |
-| A11Y-003 | Docs site | Skip link present; carousel arrows need `aria-controls` link to slide | 0.3.1 docs |
+| A11Y-001 | `au-snackbar` | Multiple live regions — verify polite vs assertive | 0.5.0 |
+| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile | 0.5.0 |
+| A11Y-003 | Docs site | Skip link present; carousel arrows need `aria-controls` link to slide | 0.4.1 docs |
+| A11Y-004 | `au-menu` | Roving tabindex + typeahead | 0.5.0 |
 
 ## Testing checklist (manual)
 

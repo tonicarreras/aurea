@@ -9,6 +9,11 @@ Versioning follows [Semantic Versioning](https://semver.org/) — see [VERSIONIN
 
 ### Added
 
+- **Phase 2 components:** `AuMenu`, `AuPopover`, `AuPagination`, `AuTable`, `AuBadge`, `AuBreadcrumb`, `AuProgress`, `AuLink`.
+- Public [ROADMAP.md](./ROADMAP.md).
+
+### Added (0.4 prep)
+
 - Component maturity catalog (`COMPONENT_MATURITY`) and docs badges (stable / beta / experimental).
 - Density tokens v2: `data-au-density` (`compact` | `comfortable` | `spacious`) and `AuDensityDirective`.
 - Experimental high-contrast theme: `data-au-theme="high-contrast"`.

@@ -98,4 +98,12 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Directive on a focusable trigger; positions with collision handling.',
     'Directiva en disparador enfocable; posiciona con detección de colisiones.',
   ),
+  badge: L('Status or count label with semantic variants and dot mode.', 'Etiqueta de estado o contador con variantes semánticas y modo dot.'),
+  progress: L('Determinate or indeterminate progressbar.', 'Barra de progreso determinada o indeterminada.'),
+  breadcrumb: L('Hierarchical navigation trail with optional links.', 'Ruta jerárquica con enlaces opcionales.'),
+  pagination: L('Previous/next and numbered page controls (1-based).', 'Controles de página anterior/siguiente y numeración (base 1).'),
+  link: L('Inline link styled with Aurea token colors.', 'Enlace inline con colores de tokens Aurea.'),
+  menu: L('Dropdown menu with portaled panel and menu items.', 'Menú desplegable con panel en portal e ítems de acción.'),
+  popover: L('Anchored panel for filters or compact content.', 'Panel anclado para filtros o contenido compacto.'),
+  table: L('Table shell with striped/compact modes and sortable headers.', 'Tabla con modos striped/compact y cabeceras ordenables.'),
 };

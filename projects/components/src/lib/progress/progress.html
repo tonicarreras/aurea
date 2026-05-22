@@ -1,0 +1,10 @@
+<div class="au-progress__track">
+  @if (mode() === 'determinate') {
+    <div
+      class="au-progress__bar"
+      [style.width.%]="percent()"
+    ></div>
+  } @else {
+    <div class="au-progress__bar au-progress__bar--indeterminate"></div>
+  }
+</div>

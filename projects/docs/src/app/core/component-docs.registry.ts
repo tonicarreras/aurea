@@ -5,14 +5,21 @@ import { type DocsLocale, pickL } from './docs-locale';
 
 import {
   AutocompleteDemo,
+  BadgeDemo,
+  BreadcrumbDemo,
   ButtonDemo,
   CardDemo,
   CheckboxDemo,
   FormFieldDemo,
   ChipDemo,
   ChipGroupDemo,
+  LinkDemo,
   ListDemo,
+  MenuDemo,
   MessageDemo,
+  PaginationDemo,
+  PopoverDemo,
+  ProgressDemo,
   IconDemo,
   SkeletonDemo,
   StepsDemo,
@@ -25,6 +32,7 @@ import {
   SelectDemo,
   SnackbarDemo,
   SwitchDemo,
+  TableDemo,
   TabsDemo,
   TextareaDemo,
   TooltipDemo,
@@ -400,6 +408,106 @@ options: AuSelectOption[] = [
 
 <au-divider />
 <au-divider label="o" />`,
+  },
+  {
+    slug: 'badge',
+    title: 'Badge',
+    exportName: 'AuBadge',
+    selector: 'au-badge',
+    summary: 'Etiqueta compacta de estado o contador.',
+    demoComponent: BadgeDemo,
+    snippet: `import { AuBadge } from '@aurea-design-system/components';
+
+<au-badge variant="accent" label="New" />`,
+  },
+  {
+    slug: 'breadcrumb',
+    title: 'Breadcrumb',
+    exportName: 'AuBreadcrumb',
+    selector: 'au-breadcrumb',
+    summary: 'Ruta de navegación jerárquica.',
+    demoComponent: BreadcrumbDemo,
+    snippet: `import { AuBreadcrumb } from '@aurea-design-system/components';
+
+<au-breadcrumb [items]="[
+  { label: 'Home', href: '/' },
+  { label: 'Components' },
+]" />`,
+  },
+  {
+    slug: 'link',
+    title: 'Link',
+    exportName: 'AuLink',
+    selector: 'a[auLink]',
+    summary: 'Enlace inline con tokens semánticos.',
+    demoComponent: LinkDemo,
+    snippet: `import { AuLink } from '@aurea-design-system/components';
+
+<a auLink href="/docs">Documentation</a>`,
+  },
+  {
+    slug: 'menu',
+    title: 'Menu',
+    exportName: 'AuMenu',
+    selector: 'au-menu',
+    summary: 'Menú desplegable con panel en portal.',
+    demoComponent: MenuDemo,
+    snippet: `import { AuMenu, AuMenuItem, AuMenuTrigger, AuButton } from '@aurea-design-system/components';
+
+<au-menu>
+  <au-button auMenuTrigger>Actions</au-button>
+  <au-menu-item>Edit</au-menu-item>
+</au-menu>`,
+  },
+  {
+    slug: 'pagination',
+    title: 'Pagination',
+    exportName: 'AuPagination',
+    selector: 'au-pagination',
+    summary: 'Navegación por páginas para listados.',
+    demoComponent: PaginationDemo,
+    snippet: `import { AuPagination } from '@aurea-design-system/components';
+
+<au-pagination [page]="page()" [pageCount]="12" (pageChange)="page.set($event)" />`,
+  },
+  {
+    slug: 'popover',
+    title: 'Popover',
+    exportName: 'AuPopover',
+    selector: 'au-popover',
+    summary: 'Panel anclado para filtros o contenido compacto.',
+    demoComponent: PopoverDemo,
+    snippet: `import { AuPopover, AuPopoverTrigger, AuButton } from '@aurea-design-system/components';
+
+<au-popover>
+  <au-button auPopoverTrigger>Filters</au-button>
+  <!-- panel content -->
+</au-popover>`,
+  },
+  {
+    slug: 'progress',
+    title: 'Progress',
+    exportName: 'AuProgress',
+    selector: 'au-progress',
+    summary: 'Indicador de progreso determinado o indeterminado.',
+    demoComponent: ProgressDemo,
+    snippet: `import { AuProgress } from '@aurea-design-system/components';
+
+<au-progress [value]="45" [max]="100" />`,
+  },
+  {
+    slug: 'table',
+    title: 'Table',
+    exportName: 'AuTable',
+    selector: 'au-table',
+    summary: 'Tabla semántica con modos striped/compact y cabeceras ordenables.',
+    demoComponent: TableDemo,
+    snippet: `import { AuTable, AuTableSortHeader } from '@aurea-design-system/components';
+
+<au-table striped>
+  <thead><tr><th auTableSortHeader>Name</th></tr></thead>
+  <tbody><tr><td>Ada</td></tr></tbody>
+</au-table>`,
   },
   {
     slug: 'tooltip',

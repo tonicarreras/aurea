@@ -1,0 +1,48 @@
+<div class="au-pagination__inner">
+  <au-button
+    variant="outline"
+    size="sm"
+    type="button"
+    [disabled]="!canPrev()"
+    (click)="prev()"
+    aria-label="Previous page"
+  >
+    Prev
+  </au-button>
+
+  <ul class="au-pagination__pages">
+    @for (p of pageItems(); track p; let i = $index) {
+      @if (showEllipsisBefore(i, pageItems())) {
+        <li
+          class="au-pagination__ellipsis"
+          aria-hidden="true"
+          >…</li
+        >
+      }
+      <li>
+        <au-button
+          [variant]="p === safePage() ? 'primary' : 'outline'"
+          size="sm"
+          type="button"
+          [disabled]="disabled()"
+          (click)="goTo(p)"
+          [attr.aria-current]="p === safePage() ? 'page' : null"
+          [attr.aria-label]="'Page ' + p"
+        >
+          {{ p }}
+        </au-button>
+      </li>
+    }
+  </ul>
+
+  <au-button
+    variant="outline"
+    size="sm"
+    type="button"
+    [disabled]="!canNext()"
+    (click)="next()"
+    aria-label="Next page"
+  >
+    Next
+  </au-button>
+</div>

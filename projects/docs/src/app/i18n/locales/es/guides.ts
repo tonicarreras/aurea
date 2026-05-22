@@ -114,6 +114,18 @@ readonly loginForm = form(this.model, (m) => {
         expandLabel: 'Ver diálogo',
       },
       {
+        heading: 'Pantalla CRUD',
+        body: 'Combina au-breadcrumb, au-table con auTableSortHeader, au-pagination, au-menu para acciones por fila y au-popover para filtros.',
+        code: `<au-breadcrumb [items]="crumbs" />
+<au-table striped>
+  <thead>...</thead>
+  <tbody>...</tbody>
+</au-table>
+<au-pagination [page]="page()" [pageCount]="totalPages" (pageChange)="loadPage($event)" />`,
+        codeLanguage: 'html',
+        expandLabel: 'Ver layout CRUD',
+      },
+      {
         heading: 'Feedback asíncrono con snackbar',
         body: 'Tras guardar, muestra un snackbar con variant success y duración acorde a la urgencia.',
         code: `this.snackbar.show({

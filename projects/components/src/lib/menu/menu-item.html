@@ -1,0 +1,9 @@
+<button
+  type="button"
+  role="menuitem"
+  class="au-menu-item__btn"
+  [disabled]="disabled()"
+  (click)="onClick($event)"
+>
+  <ng-content />
+</button>

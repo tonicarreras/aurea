@@ -206,7 +206,7 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 ## 📋 Governance
 
-- [CHANGELOG](./CHANGELOG.md) · [VERSIONING](./VERSIONING.md) · [CONTRIBUTING](./CONTRIBUTING.md)
+- [ROADMAP](./ROADMAP.md) · [CHANGELOG](./CHANGELOG.md) · [VERSIONING](./VERSIONING.md) · [CONTRIBUTING](./CONTRIBUTING.md)
 - [Component Definition of Done](./projects/components/COMPONENT_DONE.md) · [Accessibility audit](./projects/components/A11Y_AUDIT.md) · [Bundle guide](./projects/components/BUNDLE.md)
 
 ## 📄 License

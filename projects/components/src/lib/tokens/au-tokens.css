@@ -144,6 +144,23 @@
   }
 }
 
+/* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
+.au-floating-panel {
+  box-sizing: border-box;
+  border-radius: var(--au-radius-md);
+  background: var(--au-color-surface-elevated);
+  color: var(--au-color-text-primary);
+  border: 1px solid var(--au-color-border-subtle);
+  box-shadow: var(--au-shadow-overlay);
+  font-family: var(--au-font-sans);
+  z-index: var(--au-z-dropdown);
+  pointer-events: auto;
+}
+
+.au-floating-panel--overlay {
+  position: fixed;
+}
+
 /* UI transitions: one easing for color, one “logical” for motion */
 :root {
   --au-duration-instant: 0ms;

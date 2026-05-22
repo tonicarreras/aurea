@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.au-table__scroll {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-md);
+  background: var(--au-color-surface-raised);
+}
+
+.au-table__grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+}
+
+.au-table__grid :where(thead th) {
+  padding: var(--au-space-3) var(--au-space-4);
+  text-align: start;
+  font-weight: var(--au-weight-semibold);
+  color: var(--au-color-text-secondary);
+  background: var(--au-color-surface-sunken);
+  border-bottom: 1px solid var(--au-color-border-default);
+}
+
+.au-table__grid :where(tbody td) {
+  padding: var(--au-space-3) var(--au-space-4);
+  color: var(--au-color-text-primary);
+  border-bottom: 1px solid var(--au-color-border-subtle);
+}
+
+:host([data-au-striped]) .au-table__grid :where(tbody tr:nth-child(even) td) {
+  background: color-mix(in srgb, var(--au-color-surface-sunken) 50%, transparent);
+}
+
+:host([data-au-compact]) .au-table__grid :where(th, td) {
+  padding: var(--au-space-2) var(--au-space-3);
+}
+
+.au-table__grid :where(tbody tr:last-child td) {
+  border-bottom: none;
+}

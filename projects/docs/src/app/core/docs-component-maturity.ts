@@ -35,6 +35,14 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   skeleton: { level: 'stable', since: '0.2.0' },
   divider: { level: 'stable', since: '0.1.0' },
   tooltip: { level: 'stable', since: '0.2.0' },
+  badge: { level: 'stable', since: '0.4.0' },
+  progress: { level: 'stable', since: '0.4.0' },
+  breadcrumb: { level: 'stable', since: '0.4.0' },
+  pagination: { level: 'stable', since: '0.4.0' },
+  link: { level: 'stable', since: '0.4.0' },
+  menu: { level: 'beta', since: '0.4.0' },
+  popover: { level: 'beta', since: '0.4.0' },
+  table: { level: 'beta', since: '0.4.0' },
 };
 
 export function getDocsComponentMaturity(slug: string): DocsComponentMaturityMeta {
