@@ -6,13 +6,15 @@ import { AuButton, AuTooltip } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button
-      variant="outline"
-      auTooltip="Texto de ayuda contextual"
-      auTooltipPlacement="top"
-    >
-      Pasar el cursor
-    </au-button>
+    <div class="docs-preview docs-preview--action">
+      <au-button
+        variant="outline"
+        auTooltip="Texto de ayuda contextual"
+        auTooltipPlacement="top"
+      >
+        Pasar el cursor
+      </au-button>
+    </div>
   `,
 })
 export class TooltipDemo {}

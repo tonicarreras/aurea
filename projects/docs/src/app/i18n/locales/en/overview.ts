@@ -609,6 +609,253 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: ['`aria-orientation` from `orientation`.'],
   },
+  badge: {
+    intro: [
+      'Compact status or count label. Variants map to semantic surface tokens; dot mode for indicators without readable text.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Unread counts, status pills, or category labels inline with headings or list rows.',
+        'Dot indicator when meaning is clear from surrounding text (e.g. online status).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Removable or selectable filters → `au-chip` / `au-chip-group`.',
+        'Full sentences or dismissible alerts → `au-message`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Host `au-badge`', detail: '`data-au-variant`; optional `data-au-dot`.' },
+      { region: 'Label', detail: 'Text via `label`; omitted visually in dot-only mode.' },
+    ],
+    accessibility: [
+      'Pair dot-only badges with visible text or an accessible name on a parent.',
+      'Counts that change live should use `aria-live` on a parent region if announced.',
+    ],
+  },
+  breadcrumb: {
+    intro: [
+      'Hierarchical navigation trail with `role="navigation"` and `aria-label="Breadcrumb"`.',
+      'Items may link (`href`) or represent the current page as plain text.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Deep page hierarchies where users need context and upward navigation.',
+        'Settings or docs sections with more than two levels.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Flat apps with one level → skip breadcrumbs.',
+        'Primary app navigation → router tabs or side nav.',
+      ],
+    },
+    anatomy: [
+      { region: 'List', detail: 'Ordered trail with separators between items.' },
+      { region: 'Link item', detail: 'Uses link tokens; focus ring on keyboard.' },
+      { region: 'Current item', detail: 'Last segment without `href`; emphasized text.' },
+    ],
+    accessibility: [
+      'Landmark `navigation` with default `aria-label`.',
+      'Current page is text, not a link — avoids redundant self-link.',
+    ],
+    keyboard: ['Tab moves through linked segments; current page is not in tab order.'],
+  },
+  link: {
+    intro: [
+      'Inline link styled with Aurea link tokens on native `<a auLink>` or `<au-link>`.',
+      'Supports default and subtle variants; `external` adds `target="_blank"` and `rel="noopener noreferrer"`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Inline navigation within copy, tables, or messages.',
+        'External references with safe `rel` when `external` is true.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Primary actions → `au-button`.',
+        'Breadcrumb trail → `au-breadcrumb` items with `href`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Anchor', detail: 'Host `au-link` with `data-au-variant`.' },
+      { region: 'Projected content', detail: 'Link text in the default slot.' },
+    ],
+    accessibility: [
+      'Visible focus ring (`--au-shadow-focus-ring`) on keyboard focus.',
+      'External links open in a new browsing context with `noopener`.',
+    ],
+    keyboard: ['Enter activates the native link; Tab follows document order.'],
+  },
+  menu: {
+    intro: [
+      'Dropdown menu with a portaled panel anchored to `auMenuTrigger`.',
+      'Use `[(open)]` for controlled state; items are `au-menu-item` actions that close on select.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Row or toolbar actions that do not need a full dialog.',
+        'Command lists opened from a single trigger button.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Non-modal filters or compact forms → `au-popover`.',
+        'Blocking confirmation → `au-dialog`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Trigger', detail: '`auMenuTrigger`; `aria-haspopup="menu"` and `aria-expanded`.' },
+      { region: 'Panel', detail: 'Portaled `.au-floating-panel`; positioned via overlay helper.' },
+      { region: 'Items', detail: '`au-menu-item` buttons; `select` output closes the menu.' },
+    ],
+    accessibility: [
+      'Trigger exposes expanded state while open.',
+      'Dismiss with Escape or outside click; focus returns to trigger pattern documented in overlay.',
+    ],
+    keyboard: [
+      'Trigger: Enter/Space toggles; Escape closes.',
+      'Items: activate with click; extend with roving tabindex if you add composite patterns.',
+    ],
+    relatedExports: ['AuMenu', 'AuMenuItem', 'AuMenuTrigger', 'AU_MENU'],
+  },
+  popover: {
+    intro: [
+      'Lightweight anchored panel for filters, help, or compact forms. Same overlay model as `au-menu`.',
+      'Trigger uses `auPopoverTrigger` with `aria-haspopup="dialog"`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Inline filters or settings that should stay near the trigger.',
+        'Short supplementary content that is not a full modal.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Simple hover hints → `auTooltip`.',
+        'Destructive or blocking flows → `au-dialog`.',
+        'Action lists → `au-menu`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Trigger', detail: '`auPopoverTrigger` toggles `[(open)]`.' },
+      { region: 'Panel', detail: 'Projected content in portaled `.au-floating-panel`.' },
+    ],
+    accessibility: [
+      'Trigger `aria-expanded` reflects open state.',
+      'Keep focus management explicit when panel contains form controls.',
+      'Escape and outside click dismiss.',
+    ],
+    keyboard: ['Trigger toggles with Enter/Space; Escape closes the panel.'],
+    relatedExports: ['AuPopover', 'AuPopoverTrigger', 'AU_POPOVER'],
+  },
+  pagination: {
+    intro: [
+      'Page navigation for tables and lists. Pages are **1-based**; emits `pageChange` when the user picks a page.',
+      'Collapses long ranges with ellipses when `pageCount` > 7.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Server- or client-paginated tables and card grids.',
+        'When users need direct jumps to numbered pages.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Infinite scroll feeds → load-more pattern.', 'Very small lists → show all rows.'],
+    },
+    anatomy: [
+      { region: 'Nav', detail: '`role="navigation"` with `aria-label="Pagination"`.' },
+      { region: 'Prev / next', detail: '`au-button` ghost controls.' },
+      { region: 'Page buttons', detail: 'Numbered pages; current page styled as active.' },
+    ],
+    accessibility: [
+      'Navigation landmark with default accessible name.',
+      'Current page should be distinguishable visually; wire `aria-current="page"` in app if you replace buttons.',
+    ],
+    keyboard: ['Tab through prev, page numbers, and next; Space/Enter activate buttons.'],
+  },
+  progress: {
+    intro: [
+      'Determinate or indeterminate progress bar with `role="progressbar"`.',
+      'Determinate mode sets `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`; optional `label` overrides `aria-valuetext`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'File uploads, multi-step tasks, or known completion percentage.',
+        'Indeterminate waits when duration is unknown.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Loading placeholders for content → `au-skeleton`.',
+        'Button in-flight state → `au-button` `loading`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Track', detail: 'Sunken surface with pill radius.' },
+      { region: 'Bar', detail: 'Width from `value`/`max` or indeterminate animation.' },
+    ],
+    accessibility: [
+      '`aria-valuetext` from `label` or rounded percent.',
+      'Indeterminate mode omits value min/max/now per ARIA practice.',
+    ],
+  },
+  table: {
+    intro: [
+      'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
+      'Custom cells: `ng-template[auTableCell] let-row` inside a column. Sort with `sortable` + `[(sort)]` or `clientSort`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Tabular data with headers and body rows.',
+        'Sortable columns when the parent owns sort state.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Layout-only grids → CSS grid, not tables.',
+        'Very wide responsive lists → consider card list patterns.',
+      ],
+    },
+    anatomy: [
+      {
+        region: '`au-table`',
+        detail: 'Renders header, `<table>`, and body from `[data]` + column children.',
+      },
+      {
+        region: '`au-table-column`',
+        detail: 'Defines `name`, `header`, `sortable`, `align`, `cellVariant`.',
+      },
+      {
+        region: '`auTableCell`',
+        detail: 'Optional template for rich cell content (badges, menus).',
+      },
+    ],
+    accessibility: [
+      'Preserve native table semantics (`thead`, `tbody`, `th scope`).',
+      'Sort buttons are real buttons with `aria-sort` reflecting direction.',
+    ],
+    keyboard: ['Tab to sort buttons; Enter/Space toggles sort cycle.'],
+    relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
+  },
   tooltip: {
     intro: [
       'Contextual help in a portal on hover or focus of the trigger. Configurable delays to avoid flicker.',

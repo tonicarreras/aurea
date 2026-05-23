@@ -25,6 +25,17 @@ export const DOCS_ROUTES = {
   getStarted: 'get-started',
   themes: 'themes',
   components: 'components',
+  guidesAdoption: 'guides/adoption',
+  guidesSignalForms: 'guides/signal-forms',
+  guidesPatterns: 'guides/patterns',
+  guidesTroubleshooting: 'guides/troubleshooting',
+  guidesBundle: 'guides/bundle',
+  guidesMigrateMaterial: 'guides/migrate-material',
+  guidesMigrateCdk: 'guides/migrate-cdk',
+  guidesCrudDemo: 'guides/crud-demo',
+  roadmap: 'roadmap',
+  maturity: 'maturity',
+  designTokens: 'design-tokens',
 } as const;
 
 export function docsPath(locale: DocsLocale, ...segments: string[]): string[] {

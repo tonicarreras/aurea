@@ -1,0 +1,1 @@
+export { AuPagination } from './pagination';

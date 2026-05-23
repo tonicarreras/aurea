@@ -1,25 +1,20 @@
 import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
 import { AuButton } from '../button/button';
 import { AuDialog } from './dialog';
 import { AuDialogFooter } from './dialog-footer.directive';
 
+const docsOverview = getStoryOverview('dialog');
+
 const meta: Meta<AuDialog> = {
   title: 'Aurea/Dialog',
   component: AuDialog,
-  tags: ['autodocs', 'au'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Native `<dialog>` modal. Control visibility with `[(open)]` on a writable signal in the parent component; open from a trigger (button) and close from footer actions, backdrop, Escape, or the header close button.',
-      },
-    },
-  },
+  tags: ['autodocs', 'au', 'stable'],
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     open: { control: 'boolean', table: { category: 'State' } },
     close: { table: { category: 'Events' } },

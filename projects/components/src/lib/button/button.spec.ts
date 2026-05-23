@@ -11,6 +11,14 @@ class ButtonLoadingHost {
   loading = true;
 }
 
+@Component({
+  imports: [AuButton],
+  template: `<au-button (click)="count = count + 1">Go</au-button>`,
+})
+class ButtonClickHost {
+  count = 0;
+}
+
 describe('AuButton', () => {
   let component: AuButton;
   let fixture: ComponentFixture<AuButton>;
@@ -69,6 +77,15 @@ describe('AuButton', () => {
     button.click();
 
     expect(emitted.length).toBe(1);
+  });
+
+  it('invokes parent (click) handler once per activation', async () => {
+    const hostFixture = TestBed.createComponent(ButtonClickHost);
+    hostFixture.detectChanges();
+
+    hostFixture.nativeElement.querySelector('button').click();
+
+    expect(hostFixture.componentInstance.count).toBe(1);
   });
 
   it('does not emit click when disabled', () => {

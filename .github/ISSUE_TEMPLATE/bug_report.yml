@@ -1,0 +1,68 @@
+name: Bug report
+description: Report incorrect behavior in @aurea-design-system/components or the docs site
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Aurea. Search [existing issues](https://github.com/tonicarreras/aurea/issues) first.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Expected vs actual behavior. Include steps to reproduce.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: e.g. 0.4.0
+    validations:
+      required: true
+
+  - type: input
+    id: angular
+    attributes:
+      label: Angular version
+      placeholder: e.g. 21.2.14
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component (if applicable)
+      options:
+        - Unknown / multiple
+        - Tokens / theme
+        - Button
+        - Form field / inputs
+        - Overlay (dialog, tooltip, menu, popover)
+        - Navigation (tabs, steps, breadcrumb)
+        - Data (table, pagination, list)
+        - Feedback (message, snackbar)
+        - Docs site
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: StackBlitz, repo branch, or code snippet
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues
+          required: true
+        - label: This is not a duplicate of a known limitation in A11Y_AUDIT.md
+          required: false

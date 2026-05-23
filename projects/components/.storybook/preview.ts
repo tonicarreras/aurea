@@ -40,6 +40,7 @@ const preview: Preview = {
     },
   ],
   parameters: {
+    /* Canvas: top-left + padding. Do not override with `centered` in stories. */
     layout: 'padded',
     docs: {
       toc: true,

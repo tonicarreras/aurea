@@ -1,0 +1,14 @@
+:host {
+  display: inline-block;
+}
+
+.au-popover__anchor {
+  display: inline-flex;
+}
+
+.au-popover__panel {
+  min-width: 12rem;
+  max-width: min(24rem, calc(100vw - 2rem));
+  padding: var(--au-space-4);
+  box-sizing: border-box;
+}

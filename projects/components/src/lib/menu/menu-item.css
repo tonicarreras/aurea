@@ -1,0 +1,32 @@
+.au-menu-item__btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: var(--au-space-2) var(--au-space-3);
+  border: none;
+  border-radius: var(--au-radius-sm);
+  background: transparent;
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-snug);
+  color: var(--au-color-text-primary);
+  text-align: start;
+  cursor: pointer;
+  transition: background-color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.au-menu-item__btn:hover:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+.au-menu-item__btn:focus-visible {
+  outline: none;
+  box-shadow: var(--au-shadow-focus-ring);
+}
+
+.au-menu-item__btn:disabled {
+  color: var(--au-color-text-disabled);
+  cursor: not-allowed;
+}

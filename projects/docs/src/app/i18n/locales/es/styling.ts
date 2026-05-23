@@ -253,6 +253,65 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-space-4', description: 'Inset horizontal (`inset` en el host).' },
     { token: '--au-space-3', description: 'Separación entre línea y etiqueta.' },
   ],
+  badge: [
+    { token: '--au-radius-pill', description: 'Forma pill del host.' },
+    { token: '--au-text-xs', description: 'Tipografía de la etiqueta.' },
+    { token: '--au-color-surface-sunken', description: 'Fondo de la variante default.' },
+    {
+      token: '--au-color-semantic-success-surface',
+      description: 'Superficies success/warning/error/info.',
+    },
+  ],
+  breadcrumb: [
+    { token: '--au-text-sm', description: 'Tipografía de la ruta.' },
+    { token: '--au-color-link', description: 'Segmentos enlazados.' },
+    { token: '--au-color-text-primary', description: 'Énfasis de la página actual.' },
+    { token: '--au-shadow-focus-ring', description: 'Foco de teclado en enlaces.' },
+  ],
+  link: [
+    { token: '--au-color-link', description: 'Color del enlace.' },
+    { token: '--au-color-link-hover', description: 'Estado hover.' },
+    { token: '--au-shadow-focus-ring', description: 'Anillo focus-visible.' },
+    { token: '--au-duration-short', description: 'Transición de color.' },
+  ],
+  menu: [
+    {
+      token: '--au-color-surface-elevated',
+      description: 'Panel en portal (`.au-floating-panel`).',
+    },
+    { token: '--au-shadow-overlay', description: 'Elevación del panel.' },
+    { token: '--au-z-dropdown', description: 'Apilamiento sobre el contenido.' },
+    { token: '--au-space-2', description: 'Padding de ítems.' },
+    { token: '--au-shadow-focus-ring', description: 'Anillo focus-visible en ítems.' },
+  ],
+  popover: [
+    { token: '--au-color-surface-elevated', description: 'Superficie del panel.' },
+    { token: '--au-shadow-overlay', description: 'Sombra del panel.' },
+    { token: '--au-z-dropdown', description: 'Orden de apilamiento.' },
+    { token: '--au-radius-md', description: 'Esquinas del panel.' },
+  ],
+  pagination: [
+    { token: '--au-space-2', description: 'Separación entre anterior, páginas y siguiente.' },
+    { token: '--au-text-sm', description: 'Tipografía de elipsis.' },
+    { token: '--au-color-text-tertiary', description: 'Color de elipsis.' },
+  ],
+  progress: [
+    { token: '--au-radius-pill', description: 'Forma de pista y barra.' },
+    { token: '--au-color-surface-sunken', description: 'Fondo de la pista.' },
+    { token: '--au-color-action-primary', description: 'Relleno determinado.' },
+    { token: '--au-duration-default', description: 'Transición de ancho (determinado).' },
+  ],
+  table: [
+    { token: '--au-color-surface-raised', description: 'Fondo del shell y de las filas.' },
+    { token: '--au-color-border-subtle', description: 'Contorno exterior y separadores de fila.' },
+    { token: '--au-color-border-default', description: 'Línea bajo la cabecera.' },
+    { token: '--au-text-sm', description: 'Tipografía de cabecera y celdas.' },
+    {
+      token: '--au-table-cell-x / --au-table-cell-y',
+      description: 'Padding de celdas (host; compact lo reduce).',
+    },
+    { token: '--au-table-row-hover', description: 'Fondo al pasar el ratón (override en host).' },
+  ],
   tooltip: [
     { token: '--au-color-surface-inverted', description: 'Fondo del globo (clase `.au-tooltip`).' },
     { token: '--au-color-text-on-solid', description: 'Texto del tooltip.' },

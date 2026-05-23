@@ -6,12 +6,11 @@ import { AuFormField, AuInputText } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field label="Nombre">
-      <au-input-text
-        placeholder="Tu nombre"
-        style="max-width: 20rem"
-      />
-    </au-form-field>
+    <div class="docs-preview docs-preview--field">
+      <au-form-field label="Nombre">
+        <au-input-text placeholder="Tu nombre" />
+      </au-form-field>
+    </div>
   `,
 })
 export class InputTextDemo {}

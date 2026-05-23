@@ -7,10 +7,10 @@ export interface InlineTextPart {
   value: string;
 }
 
-/** Divide texto con fragmentos entre backticks (`código`) en partes texto/código. */
+/** Divide texto con `backticks` o etiquetas <code> en partes texto/código. */
 export function splitInlineCode(text: string): InlineTextPart[] {
   const parts: InlineTextPart[] = [];
-  const re = /`([^`]+)`/g;
+  const re = /`([^`]+)`|<code>([\s\S]*?)<\/code>/gi;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let partIndex = 0;
@@ -23,7 +23,7 @@ export function splitInlineCode(text: string): InlineTextPart[] {
     if (match.index > lastIndex) {
       push('text', text.slice(lastIndex, match.index));
     }
-    push('code', match[1]);
+    push('code', match[1] ?? match[2]);
     lastIndex = match.index + match[0].length;
   }
 

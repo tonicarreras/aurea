@@ -6,13 +6,14 @@ import { AuFormField, AuInputNumber } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputNumber],
   template: `
-    <au-form-field label="Cantidad">
-      <au-input-number
-        [min]="0"
-        [max]="10"
-        style="max-width: 12rem"
-      />
-    </au-form-field>
+    <div class="docs-preview docs-preview--field">
+      <au-form-field label="Cantidad">
+        <au-input-number
+          [min]="0"
+          [max]="10"
+        />
+      </au-form-field>
+    </div>
   `,
 })
 export class InputNumberDemo {}

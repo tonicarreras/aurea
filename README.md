@@ -204,6 +204,16 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 ---
 
+## 📋 Governance
+
+Documentación de producto y proceso: **[docs/](./docs/)** (índice). En la raíz solo lo habitual para GitHub/npm:
+
+- [CHANGELOG](./CHANGELOG.md) · [CONTRIBUTING](./CONTRIBUTING.md) · [SECURITY](./SECURITY.md)
+- [Roadmap](./docs/ROADMAP.md) · [Versioning](./docs/VERSIONING.md) · [Releases](./docs/RELEASE.md) · [V1 criteria](./docs/V1_CRITERIA.md) (17/19)
+- [Design principles](./docs/DESIGN.md) · [Good first issues](./docs/GOOD_FIRST_ISSUES.md) · [Design tokens (Figma)](./projects/design-tokens/README.md)
+- Live docs: [aurea-ds.netlify.app](https://aurea-ds.netlify.app/) — roadmap, maturity matrix, CRUD demo, migration guides
+- [Component Definition of Done](./projects/components/COMPONENT_DONE.md) · [Accessibility audit](./projects/components/A11Y_AUDIT.md) · [Bundle](./projects/components/BUNDLE.md) · [Performance](./projects/components/PERFORMANCE.md)
+
 ## 📄 License
 
 The published package **`@aurea-design-system/components`** is [MIT](LICENSE). You may use it freely in commercial and open-source apps.

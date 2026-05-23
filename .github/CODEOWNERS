@@ -1,2 +1,36 @@
-# Default owner — used when "Require review from Code Owners" is enabled on branch rulesets.
+# Default — enable "Require review from Code Owners" on protected branches when ready.
 * @tonicarreras
+
+# Design tokens & theming
+/projects/components/src/lib/tokens/ @tonicarreras
+/projects/components/src/lib/tokens/au-tokens.css @tonicarreras
+
+# Form system
+/projects/components/src/lib/form-field/ @tonicarreras
+/projects/components/src/lib/input-text/ @tonicarreras
+/projects/components/src/lib/textarea/ @tonicarreras
+/projects/components/src/lib/checkbox/ @tonicarreras
+/projects/components/src/lib/switch/ @tonicarreras
+/projects/components/src/lib/select/ @tonicarreras
+/projects/components/src/lib/autocomplete/ @tonicarreras
+/projects/components/src/lib/radio-group/ @tonicarreras
+/projects/components/src/lib/input-number/ @tonicarreras
+/projects/components/src/lib/input-date/ @tonicarreras
+/projects/components/src/lib/styles/ @tonicarreras
+
+# Overlay & floating UI
+/projects/components/src/lib/overlay/ @tonicarreras
+/projects/components/src/lib/dialog/ @tonicarreras
+/projects/components/src/lib/tooltip/ @tonicarreras
+/projects/components/src/lib/menu/ @tonicarreras
+/projects/components/src/lib/popover/ @tonicarreras
+/projects/components/src/lib/snackbar/ @tonicarreras
+
+# CI & quality gates
+/.github/workflows/ @tonicarreras
+/projects/components/.storybook/ @tonicarreras
+/projects/components/e2e-visual/ @tonicarreras
+/scripts/ @tonicarreras
+
+# Documentation site
+/projects/docs/ @tonicarreras

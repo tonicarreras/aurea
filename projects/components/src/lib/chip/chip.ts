@@ -128,6 +128,7 @@ export class AuChip {
     this.selected.set(next);
     this.selectedChange.emit(next);
     this.click.emit(event);
+    event.stopPropagation();
   }
 
   protected onRemoveClick(event: MouseEvent): void {

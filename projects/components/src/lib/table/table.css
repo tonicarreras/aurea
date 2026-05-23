@@ -1,0 +1,220 @@
+/**
+ * Aurea Table — Material-style column API; encapsulation None.
+ */
+@import url('../tokens/au-tokens.css');
+
+au-table {
+  --au-table-shell-pad: var(--au-space-4);
+  --au-table-cell-x: var(--au-space-4);
+  --au-table-cell-y: var(--au-space-3-5);
+  --au-table-header-bg: var(--au-color-surface-elevated);
+  --au-table-row-hover: var(--au-color-surface-elevated);
+  --au-table-row-stripe: color-mix(
+    in srgb,
+    var(--au-color-surface-elevated) 55%,
+    var(--au-color-surface-raised)
+  );
+
+  display: block;
+  width: 100%;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+au-table[data-au-compact] {
+  --au-table-shell-pad: var(--au-space-3);
+  --au-table-cell-x: var(--au-space-3);
+  --au-table-cell-y: var(--au-space-2-5);
+}
+
+au-table .au-table__shell {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-lg);
+  background: var(--au-color-surface-raised);
+  overflow: hidden;
+}
+
+au-table .au-table__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-1);
+  padding: var(--au-table-shell-pad) var(--au-table-shell-pad) var(--au-space-3);
+  border-bottom: 1px solid var(--au-color-border-subtle);
+}
+
+au-table .au-table__title {
+  margin: 0;
+  font-size: var(--au-text-md);
+  font-weight: var(--au-weight-semibold);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-primary);
+}
+
+au-table .au-table__description {
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-secondary);
+}
+
+au-table .au-table__scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+au-table .au-table__grid {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+}
+
+au-table .au-table__caption--sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+au-table .au-table__grid thead {
+  background: var(--au-table-header-bg);
+}
+
+au-table .au-table__header-cell {
+  padding: var(--au-table-cell-y) var(--au-table-cell-x);
+  text-align: start;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-secondary);
+  border-bottom: 1px solid var(--au-color-border-default);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+au-table .au-table__header-cell--end {
+  text-align: end;
+}
+
+au-table .au-table__header-cell--center {
+  text-align: center;
+}
+
+au-table .au-table__header-cell--sorted {
+  color: var(--au-color-text-primary);
+}
+
+au-table[data-au-sticky-header] .au-table__header-cell {
+  position: sticky;
+  top: 0;
+  z-index: var(--au-z-raised);
+  background: var(--au-table-header-bg);
+}
+
+au-table .au-table__sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--au-space-2);
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--au-radius-xs);
+  background: transparent;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+au-table .au-table__header-cell--end .au-table__sort-btn {
+  flex-direction: row-reverse;
+}
+
+au-table .au-table__sort-icon {
+  display: inline-flex;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--au-color-text-tertiary);
+  opacity: 0.55;
+}
+
+au-table .au-table__header-cell--sorted .au-table__sort-icon {
+  color: var(--au-color-action-primary);
+  opacity: 1;
+}
+
+au-table .au-table__sort-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--au-shadow-focus-ring);
+}
+
+au-table .au-table__sort-btn svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+au-table .au-table__cell {
+  padding: var(--au-table-cell-y) var(--au-table-cell-x);
+  color: var(--au-color-text-primary);
+  border-bottom: 1px solid var(--au-color-border-subtle);
+  vertical-align: middle;
+}
+
+au-table .au-table__cell--end {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+au-table .au-table__cell--center {
+  text-align: center;
+}
+
+au-table .au-table__cell--primary {
+  font-weight: var(--au-weight-medium);
+}
+
+au-table .au-table__cell--secondary {
+  color: var(--au-color-text-secondary);
+}
+
+au-table .au-table__grid tbody tr:last-child .au-table__cell {
+  border-bottom: none;
+}
+
+au-table .au-table__grid tbody tr {
+  background: var(--au-color-surface-raised);
+  transition: background-color var(--au-duration-short) var(--au-ease-out);
+}
+
+au-table .au-table__grid tbody tr:hover {
+  background: var(--au-table-row-hover);
+}
+
+au-table[data-au-striped] .au-table__grid tbody tr:nth-child(even) {
+  background: var(--au-table-row-stripe);
+}
+
+au-table .au-table__empty-row td {
+  padding: var(--au-space-6) var(--au-table-cell-x);
+  text-align: center;
+  color: var(--au-color-text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  au-table .au-table__grid tbody tr {
+    transition: none;
+  }
+}

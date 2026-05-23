@@ -18,6 +18,10 @@
 
 Global Playwright/CLI tweaks: `test-runner.ts` in this folder (`@storybook/test-runner` reads it via `--config-dir`).
 
+- **Addon a11y:** `parameters.a11y.test: 'error'` fails CI on violations.
+- **axe-core (stable only):** `postVisit` runs `axe-playwright` for story ids listed in `stable-story-ids.ts`. Stories are tagged `stable` / `beta` via `bun run tag:stories` (from `component-maturity.ts`).
+- **Visual smoke:** `bun run test:visual:ci` — Playwright screenshots in `../e2e-visual/__snapshots__/`.
+
 Stories with **custom `render`** (Button, Card, Divider, etc.): `preview.ts` disables Compodoc `extractArgTypes` / `extractComponentDescription` globally so static builds (Netlify, `build-storybook`) do not throw `Invalid component undefined` when class names are minified. Add `parameters.docs.description.component` on the story `Meta` when you want an Autodocs blurb.
 
 Signal forms: document in [`../README.md`](../README.md) with a host-component example; do not add separate Storybook “Signal form” story files (`form()` needs an app injection context).

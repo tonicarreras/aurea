@@ -1,4 +1,6 @@
 import type { DocsMessages } from '../../types/messages';
+import { ECOSYSTEM_ES } from './ecosystem';
+import { GUIDES_ES } from './guides';
 
 export const MESSAGES_ES: DocsMessages = {
   shell: {
@@ -25,25 +27,55 @@ export const MESSAGES_ES: DocsMessages = {
     npmAria: 'Paquete en npm',
     storybookAria: 'Abrir Storybook',
   },
-  home: {
-    eyebrow: 'Angular 21 · Accesible · Signals',
-    title: 'Aurea Design System',
-    lead: 'Componentes listos para producción, tokens semánticos y formularios con signals — documentados, probados y publicados en npm.',
-    statsAria: 'Resumen del sistema',
-    statsComponents: 'Componentes',
-    statsA11y: 'Accesibilidad',
-    statsForms: 'Formularios',
-    exploreAria: 'Explorar documentación',
-    cardGetStartedTitle: 'Empezar',
-    cardGetStartedText: 'Instala el paquete y conecta tokens en tu app Angular.',
-    cardThemesTitle: 'Temas',
-    cardThemesText: 'Modo claro, oscuro y variables --au-* semánticas.',
-    cardComponentsTitle: 'Componentes',
-    cardComponentsText: 'Vistas previas en vivo y fragmentos de código.',
+  landing: {
+    eyebrow: 'Aurea · Sistema de diseño · Angular 21',
+    title: 'Menos ruido visual.',
+    titleAccent: 'Más foco en la tarea.',
+    lead: 'Librería npm abierta (MIT) para cualquier producto: tokens semánticos, componentes accesibles y formularios con signals. Explora la visión de diseño aquí; la documentación técnica cuando vayas a implementar.',
+    ctaDocs: 'Documentación',
+    ctaStorybook: 'Storybook',
+    overviewTitle: 'Visión de diseño',
+    overviewAria: 'Principios de diseño',
+    principles: [
+      {
+        title: 'Tarea clara, UI tranquila',
+        text: 'Jerarquía y contraste al servicio del trabajo — el adorno no compite con el contenido.',
+        accent: 'task',
+      },
+      {
+        title: 'Tokens semánticos',
+        text: 'Superficies, acciones y estados de formulario comparten el vocabulario <code>--au-*</code> en claro y oscuro.',
+        accent: 'tokens',
+      },
+      {
+        title: 'Accesible por defecto',
+        text: 'Anillos de foco, etiquetas y regiones dinámicas forman parte del contrato de cada componente.',
+        accent: 'a11y',
+      },
+    ],
+    systemTitle: 'Cómo está construido el sistema',
+    systemLead:
+      'Tres capas: primitivos (internos), tokens semánticos en <code>au-tokens.css</code> y estilos de componente que mapean semántica a UI real.',
+    systemPoints: [
+      'Patrones orientados a WCAG 2.2 en flujos principales',
+      'Formularios con signals alineados con <code>formField</code> de Angular 21',
+      'Publicado como <code>@aurea-design-system/components</code> en npm',
+    ],
+    themesLink: 'Explorar temas y tokens',
+    previewsTitle: 'Vista previa de componentes',
+    previewsLead:
+      'Solo componentes estables en producción, cuatro por página — usa las flechas para recorrer el set.',
+    previewsAria: 'Galería de vistas previas',
+    previewOpenDoc: 'Ver docs',
+    carouselAria: 'Carrusel de componentes',
+    carouselPrev: 'Página anterior',
+    carouselNext: 'Página siguiente',
+    carouselPageStatus: (current, total) => `Página ${current} de ${total}`,
+    carouselSlideAria: (page) => `Componentes, página ${page}`,
+    carouselDotsAria: 'Ir a una página del carrusel',
+    carouselGoToPage: (page) => `Ir a la página ${page}`,
     footer:
-      'Paquete npm <code>@aurea-design-system/components</code> — guías, temas y demos interactivas en esta app; catálogo completo en Storybook.',
-    ctaComponents: 'Ver componentes',
-    ctaInstall: 'Guía de instalación',
+      'MIT · Aurea en cualquier producto Angular. La referencia técnica también está en Storybook.',
   },
   getStarted: {
     title: 'Empezar',
@@ -60,8 +92,20 @@ export const MESSAGES_ES: DocsMessages = {
         expand: 'Ver imports CSS',
       },
       firstComponent: { title: 'Primer componente', expand: 'Ver ejemplo Angular' },
+      ngAdd: {
+        title: 'Schematic (recomendado)',
+        intro: 'Añade los estilos globales a angular.json automáticamente:',
+        expand: 'Ver comando ng add',
+      },
+      nextGuides: {
+        title: 'Siguiente paso',
+        intro:
+          'Sigue la guía de adopción: signal forms, patrones, troubleshooting y bundle — o abre la',
+      },
     },
   },
+  guides: GUIDES_ES,
+  ecosystem: ECOSYSTEM_ES,
   themes: {
     title: 'Temas y tokens',
     lead: 'Variables globales --au-* definidas en au-tokens.css. Cada componente documenta solo los tokens que consume en su pestaña Styling.',
@@ -78,6 +122,15 @@ export const MESSAGES_ES: DocsMessages = {
     previewCardBody: 'Los colores siguen el tema del contenedor.',
     previewLight: 'Claro',
     previewDark: 'Oscuro',
+    previewHighContrast: 'Alto contraste',
+    densityHeading: 'Densidad (v2)',
+    densityBody:
+      'Define <code>data-au-density</code> en el shell: <code>compact</code>, <code>comfortable</code> (por defecto) o <code>spacious</code>. Usa la directiva <code>auDensity</code> para enlazarlo de forma reactiva.',
+    densityExpand: 'Ver HTML de densidad',
+    highContrastHeading: 'Alto contraste (experimental)',
+    highContrastBody:
+      'Paleta fija con bordes y foco más marcados: <code>data-au-theme="high-contrast"</code> o <code>[auTheme]="\'high-contrast\'"</code>. Valídalo con tu checklist de QA.',
+    highContrastExpand: 'Ver HTML alto contraste',
     globalHeading: 'Tokens globales',
     globalBody:
       'Sobrescribe en <code>:root</code> o <code>[data-au-theme]</code>. Los tokens de un componente concreto (p. ej. <code>--au-card-padding</code>) se listan en la página de ese componente —',
@@ -88,7 +141,12 @@ export const MESSAGES_ES: DocsMessages = {
   },
   componentsIndex: {
     title: 'Componentes',
-    lead: 'Catálogo de primitivos del design system. Cada página incluye vista previa y ejemplo de importación.',
+    lead: 'Catálogo de primitivos. Cada página incluye vista previa, badge de madurez y ejemplo de importación.',
+    maturityLegend:
+      'Madurez: stable = listo para producción; beta = usable con casos límite documentados; experimental = puede cambiar.',
+    maturityStable: 'Estable',
+    maturityBeta: 'Beta',
+    maturityExperimental: 'Experimental',
   },
   componentDoc: {
     sectionsAria: (title) => `Secciones de ${title}`,

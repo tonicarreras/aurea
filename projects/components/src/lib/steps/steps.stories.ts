@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuStep } from './au-step.directive';
 import { AuStepPanel } from './au-step-panel.directive';
@@ -6,18 +8,35 @@ import { AuSteps } from './steps';
 
 const storyImports = { imports: [AuSteps, AuStep, AuStepPanel] };
 
+const docsOverview = getStoryOverview('steps');
+
 const meta: Meta<AuSteps> = {
   title: 'Aurea/Steps',
   component: AuSteps,
-  tags: ['autodocs', 'au'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Documentation stepper: projected `auStep` triggers and `auStepPanel` regions with keyboard navigation and `aria-current` on the active step.',
-      },
+  tags: ['autodocs', 'au', 'beta'],
+  parameters: storyMetaParameters(docsOverview),
+  argTypes: {
+    value: {
+      control: 'text',
+      description: 'Active step key (`[(value)]`).',
+      table: { category: 'State' },
+    },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible name of the step list.',
+      table: { category: 'Accessibility' },
+    },
+    layout: {
+      control: 'select',
+      options: ['tabs', 'sections'],
+      description: 'One panel at a time vs. scrollable sections.',
+      table: { category: 'Layout' },
+    },
+    size: {
+      control: 'select',
+      options: ['sm', 'md'],
+      description: 'Step button density.',
+      table: { category: 'Appearance' },
     },
   },
   args: {

@@ -99,4 +99,18 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       { token: '--au-transition-control', description: 'Bundle used on field shells.' },
     ],
   },
+  {
+    title: 'Density (v2)',
+    description: 'Set data-au-density on the shell; scales field heights and spacing.',
+    tokens: [
+      { token: 'data-au-density="compact"', description: 'Tighter fields and spacing scale.' },
+      {
+        token: 'data-au-density="comfortable"',
+        description: 'Default — matches :root field sizes.',
+      },
+      { token: 'data-au-density="spacious"', description: 'Larger touch targets and gaps.' },
+      { token: '--au-density-space-scale', description: 'Multiplier applied to spacing tokens.' },
+      { token: '--au-size-field-h-md', description: 'Overridden per density preset.' },
+    ],
+  },
 ];

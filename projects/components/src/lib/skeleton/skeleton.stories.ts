@@ -1,21 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuSkeleton } from './skeleton';
+
+const docsOverview = getStoryOverview('skeleton');
 
 const meta: Meta<AuSkeleton> = {
   title: 'Aurea/Skeleton',
   component: AuSkeleton,
-  tags: ['autodocs', 'au'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Loading placeholders with text, circular, rectangular, rounded, and button shapes. Pulse or wave animation; set `aria-busy` on the parent region.',
-      },
-    },
-  },
+  tags: ['autodocs', 'au', 'stable'],
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     variant: {
       control: 'select',

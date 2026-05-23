@@ -6,20 +6,19 @@ import { AuButton, AuCard, AuCardFooter } from '@aurea-design-system/components'
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard, AuCardFooter, AuButton],
   template: `
-    <au-card
-      variant="outlined"
-      style="max-width: 22rem"
-    >
-      <h3 auCardHeader>Proyecto Aurea</h3>
-      <p>Superficie con cabecera, cuerpo y pie opcional para agrupar contenido relacionado.</p>
-      <div auCardFooter>
-        <au-button
-          variant="primary"
-          size="sm"
-          >Abrir</au-button
-        >
-      </div>
-    </au-card>
+    <div class="docs-preview docs-preview--block">
+      <au-card variant="outlined">
+        <h3 auCardHeader>Proyecto Aurea</h3>
+        <p>Superficie con cabecera, cuerpo y pie opcional para agrupar contenido relacionado.</p>
+        <div auCardFooter>
+          <au-button
+            variant="primary"
+            size="sm"
+            >Abrir</au-button
+          >
+        </div>
+      </au-card>
+    </div>
   `,
 })
 export class CardDemo {}

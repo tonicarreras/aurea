@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
+import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { CodeBlock } from '../shared/code-block';
 import type { CodeLanguage } from '../shared/code-highlight';
@@ -27,7 +29,7 @@ export type GetStartedStep =
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, CodeBlock],
+  imports: [DocPage, CodeBlock, RouterLink],
   template: `
     <docs-page
       [title]="i18n.messages().getStarted.title"
@@ -76,6 +78,13 @@ export type GetStartedStep =
           </li>
         }
       </ol>
+      <p class="docs-get-started-next">
+        <strong>{{ i18n.messages().getStarted.steps.nextGuides.title }}</strong>
+        {{ i18n.messages().getStarted.steps.nextGuides.intro }}
+        <a [routerLink]="adoptionLink()">{{ adoptionLinkLabel() }}</a>
+        ·
+        <a [routerLink]="crudDemoLink()">{{ crudDemoLinkLabel() }}</a>
+      </p>
     </docs-page>
   `,
   styles: `
@@ -163,6 +172,19 @@ export type GetStartedStep =
       text-decoration: underline;
     }
 
+    .docs-get-started-next {
+      margin-top: var(--au-space-8);
+      max-width: min(52rem, 100%);
+      font-size: var(--au-text-sm);
+      line-height: var(--au-leading-relaxed);
+      color: var(--au-color-text-secondary);
+    }
+
+    .docs-get-started-next a {
+      color: var(--au-color-accent);
+      font-weight: var(--au-weight-semibold);
+    }
+
     .docs-requirements__version {
       display: inline-flex;
       align-items: center;
@@ -180,6 +202,8 @@ export class GetStartedPage {
   readonly installSnippet = `bun add @aurea-design-system/components
  # or 
  pnpm add @aurea-design-system/components`;
+
+  readonly ngAddSnippet = 'ng add @aurea-design-system/components';
 
   readonly stylesSnippet = `@import '@aurea-design-system/components/styles/au-tokens.css';
  @import '@aurea-design-system/components/styles/au-field-error.css';
@@ -217,6 +241,13 @@ export class ProfileForm {}`;
         expandLabel: s.install.expand,
       },
       {
+        title: s.ngAdd.title,
+        intro: s.ngAdd.intro,
+        code: this.ngAddSnippet,
+        language: 'bash',
+        expandLabel: s.ngAdd.expand,
+      },
+      {
         title: s.tokens.title,
         intro: s.tokens.intro,
         code: this.stylesSnippet,
@@ -231,4 +262,20 @@ export class ProfileForm {}`;
       },
     ];
   });
+
+  adoptionLink(): string[] {
+    return this.i18n.link(DOCS_ROUTES.guidesAdoption);
+  }
+
+  adoptionLinkLabel(): string {
+    return this.i18n.locale() === 'en' ? 'Adoption guide →' : 'Guía de adopción →';
+  }
+
+  crudDemoLink(): string[] {
+    return this.i18n.link(DOCS_ROUTES.guidesCrudDemo);
+  }
+
+  crudDemoLinkLabel(): string {
+    return this.i18n.locale() === 'en' ? 'CRUD reference demo →' : 'Demo CRUD de referencia →';
+  }
 }

@@ -1,0 +1,32 @@
+:host {
+  display: inline;
+  font-family: var(--au-font-sans);
+  font-size: inherit;
+  font-weight: var(--au-weight-medium);
+  line-height: inherit;
+  color: var(--au-color-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+  transition: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+:host(:hover) {
+  color: var(--au-color-link-hover);
+}
+
+:host(:focus-visible) {
+  outline: none;
+  box-shadow: var(--au-shadow-focus-ring);
+  border-radius: var(--au-radius-xs);
+}
+
+:host([data-au-variant='subtle']) {
+  color: var(--au-color-text-secondary);
+  text-decoration: none;
+}
+
+:host([data-au-variant='subtle']:hover) {
+  color: var(--au-color-link);
+  text-decoration: underline;
+}

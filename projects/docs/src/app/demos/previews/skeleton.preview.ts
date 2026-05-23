@@ -6,24 +6,26 @@ import { AuSkeleton } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSkeleton],
   template: `
-    <div
-      class="docs-skeleton-profile"
-      aria-busy="true"
-    >
-      <au-skeleton
-        variant="circular"
-        size="lg"
-      />
-      <div class="docs-skeleton-profile__lines">
+    <div class="docs-preview docs-preview--block">
+      <div
+        class="docs-skeleton-profile"
+        aria-busy="true"
+      >
         <au-skeleton
-          variant="text"
-          width="40%"
+          variant="circular"
+          size="lg"
         />
-        <au-skeleton variant="text" />
-        <au-skeleton
-          variant="text"
-          width="70%"
-        />
+        <div class="docs-skeleton-profile__lines">
+          <au-skeleton
+            variant="text"
+            width="40%"
+          />
+          <au-skeleton variant="text" />
+          <au-skeleton
+            variant="text"
+            width="70%"
+          />
+        </div>
       </div>
     </div>
   `,
@@ -32,13 +34,15 @@ import { AuSkeleton } from '@aurea-design-system/components';
       display: flex;
       gap: var(--au-space-4);
       align-items: flex-start;
-      max-width: 20rem;
+      width: 100%;
     }
+
     .docs-skeleton-profile__lines {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: var(--au-space-2);
+      min-width: 0;
     }
   `,
 })
