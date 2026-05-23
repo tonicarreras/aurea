@@ -1,4 +1,6 @@
 import type { DocsMessages } from '../../types/messages';
+import { ECOSYSTEM_EN } from './ecosystem';
+import { GUIDES_EN } from './guides';
 
 export const MESSAGES_EN: DocsMessages = {
   shell: {
@@ -25,25 +27,54 @@ export const MESSAGES_EN: DocsMessages = {
     npmAria: 'npm package',
     storybookAria: 'Open Storybook',
   },
-  home: {
-    eyebrow: 'Angular 21 · Accessible · Signals',
-    title: 'Aurea Design System',
-    lead: 'Production-ready components, semantic tokens, and signal-based forms — documented, tested, and published on npm.',
-    statsAria: 'System summary',
-    statsComponents: 'Components',
-    statsA11y: 'Accessibility',
-    statsForms: 'Forms',
-    exploreAria: 'Explore documentation',
-    cardGetStartedTitle: 'Get started',
-    cardGetStartedText: 'Install the package and wire tokens in your Angular app.',
-    cardThemesTitle: 'Themes',
-    cardThemesText: 'Light, dark, and semantic --au-* variables.',
-    cardComponentsTitle: 'Components',
-    cardComponentsText: 'Live previews and copy-ready snippets.',
-    footer:
-      'npm package <code>@aurea-design-system/components</code> — guides, themes, and interactive demos in this app; full catalog in Storybook.',
-    ctaComponents: 'Browse components',
-    ctaInstall: 'Installation guide',
+  landing: {
+    eyebrow: 'Aurea · Design system · Angular 21',
+    title: 'Less visual noise.',
+    titleAccent: 'More focus on the task.',
+    lead: 'Open npm library (MIT) for any product: semantic tokens, accessible components, and signal-based forms. Explore the design overview here; open technical documentation when you build.',
+    ctaDocs: 'Documentation',
+    ctaStorybook: 'Storybook',
+    overviewTitle: 'Design overview',
+    overviewAria: 'Design principles',
+    principles: [
+      {
+        title: 'Clear task, quiet UI',
+        text: 'Hierarchy and contrast serve the job — decoration never fights the content.',
+        accent: 'task',
+      },
+      {
+        title: 'Semantic tokens',
+        text: 'Surfaces, actions, and form states share one <code>--au-*</code> vocabulary in light and dark.',
+        accent: 'tokens',
+      },
+      {
+        title: 'Accessible by default',
+        text: 'Focus rings, labels, and live regions are part of every component contract.',
+        accent: 'a11y',
+      },
+    ],
+    systemTitle: 'How the system is built',
+    systemLead:
+      'Three layers: primitives (internal), semantic tokens in <code>au-tokens.css</code>, and component styles that map semantics to real UI.',
+    systemPoints: [
+      'WCAG 2.2-minded patterns on primary flows',
+      'Signal forms aligned with Angular 21 <code>formField</code>',
+      'Published as <code>@aurea-design-system/components</code> on npm',
+    ],
+    themesLink: 'Explore themes & tokens',
+    previewsTitle: 'Component previews',
+    previewsLead:
+      'Stable production components only, four per page — use the arrows to browse the set.',
+    previewsAria: 'Component preview gallery',
+    previewOpenDoc: 'View docs',
+    carouselAria: 'Component carousel',
+    carouselPrev: 'Previous page',
+    carouselNext: 'Next page',
+    carouselPageStatus: (current, total) => `Page ${current} of ${total}`,
+    carouselSlideAria: (page) => `Components, page ${page}`,
+    carouselDotsAria: 'Go to carousel page',
+    carouselGoToPage: (page) => `Go to page ${page}`,
+    footer: 'MIT · Use Aurea in any Angular product. Technical reference also lives in Storybook.',
   },
   getStarted: {
     title: 'Get started',
@@ -60,8 +91,20 @@ export const MESSAGES_EN: DocsMessages = {
         expand: 'Show CSS imports',
       },
       firstComponent: { title: 'First component', expand: 'Show Angular example' },
+      ngAdd: {
+        title: 'Schematic (recommended)',
+        intro: 'Adds global styles to angular.json automatically:',
+        expand: 'Show ng add command',
+      },
+      nextGuides: {
+        title: 'Go deeper',
+        intro:
+          'Follow the adoption guide for signal forms, patterns, troubleshooting, and bundle tips — or open the',
+      },
     },
   },
+  guides: GUIDES_EN,
+  ecosystem: ECOSYSTEM_EN,
   themes: {
     title: 'Themes & tokens',
     lead: 'Global --au-* variables defined in au-tokens.css. Each component page lists only the tokens it consumes under Styling.',
@@ -78,6 +121,15 @@ export const MESSAGES_EN: DocsMessages = {
     previewCardBody: 'Colors follow the container theme.',
     previewLight: 'Light',
     previewDark: 'Dark',
+    previewHighContrast: 'High contrast',
+    densityHeading: 'Density (v2)',
+    densityBody:
+      'Set <code>data-au-density</code> on the shell: <code>compact</code>, <code>comfortable</code> (default), or <code>spacious</code>. Use the <code>auDensity</code> directive for reactive binding.',
+    densityExpand: 'Show density HTML',
+    highContrastHeading: 'High contrast (experimental)',
+    highContrastBody:
+      'Fixed palette for stronger borders and focus: <code>data-au-theme="high-contrast"</code> or <code>[auTheme]="\'high-contrast\'"</code>. Validate with your QA checklist.',
+    highContrastExpand: 'Show high-contrast HTML',
     globalHeading: 'Global tokens',
     globalBody:
       'Override on <code>:root</code> or <code>[data-au-theme]</code>. Per-component tokens (e.g. <code>--au-card-padding</code>) are listed on that component’s page —',
@@ -88,7 +140,12 @@ export const MESSAGES_EN: DocsMessages = {
   },
   componentsIndex: {
     title: 'Components',
-    lead: 'Design system primitives. Each page includes a live preview and import example.',
+    lead: 'Design system primitives. Each page includes a live preview, maturity badge, and import example.',
+    maturityLegend:
+      'Maturity: stable = production-ready; beta = usable with noted edge cases; experimental = may change.',
+    maturityStable: 'Stable',
+    maturityBeta: 'Beta',
+    maturityExperimental: 'Experimental',
   },
   componentDoc: {
     sectionsAria: (title) => `${title} sections`,

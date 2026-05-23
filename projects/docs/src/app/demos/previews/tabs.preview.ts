@@ -6,30 +6,31 @@ import { AuTab, AuTabPanel, AuTabs } from '@aurea-design-system/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTabs, AuTab, AuTabPanel],
   template: `
-    <au-tabs
-      [(value)]="tab"
-      ariaLabel="Ejemplo de pestañas"
-      style="max-width: 28rem"
-    >
-      <button
-        type="button"
-        auTab="general"
+    <div class="docs-preview docs-preview--wide">
+      <au-tabs
+        [(value)]="tab"
+        ariaLabel="Ejemplo de pestañas"
       >
-        General
-      </button>
-      <button
-        type="button"
-        auTab="seguridad"
-      >
-        Seguridad
-      </button>
-      <div auTabPanel="general">
-        <p>Preferencias generales de la cuenta.</p>
-      </div>
-      <div auTabPanel="seguridad">
-        <p>Contraseña y autenticación en dos pasos.</p>
-      </div>
-    </au-tabs>
+        <button
+          type="button"
+          auTab="general"
+        >
+          General
+        </button>
+        <button
+          type="button"
+          auTab="seguridad"
+        >
+          Seguridad
+        </button>
+        <div auTabPanel="general">
+          <p>Preferencias generales de la cuenta.</p>
+        </div>
+        <div auTabPanel="seguridad">
+          <p>Contraseña y autenticación en dos pasos.</p>
+        </div>
+      </au-tabs>
+    </div>
   `,
 })
 export class TabsDemo {

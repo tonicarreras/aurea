@@ -2,20 +2,26 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { RouterLink } from '@angular/router';
 import { AuCard } from '@aurea-design-system/components';
 
+import { getDocsComponentMaturity } from '../core/docs-component-maturity';
+
 import { COMPONENT_DOCS, componentDocSummary } from '../core/component-docs.registry';
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocPage } from '../shared/doc-page';
 import { DocsInlineText } from '../shared/docs-inline-text';
+import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, RouterLink, AuCard, DocsInlineText],
+  imports: [DocPage, RouterLink, AuCard, DocsInlineText, DocsMaturityBadge],
   template: `
     <docs-page
       [title]="i18n.messages().componentsIndex.title"
       [lead]="i18n.messages().componentsIndex.lead"
     >
+      <p class="docs-components-index__legend">
+        {{ i18n.messages().componentsIndex.maturityLegend }}
+      </p>
       <ul class="docs-components-index">
         @for (doc of docs(); track doc.slug; let i = $index) {
           <li
@@ -28,15 +34,16 @@ import { DocsInlineText } from '../shared/docs-inline-text';
             >
               <au-card
                 variant="outlined"
-                size="md"
+                size="lg"
                 class="docs-components-index__card"
               >
-                <h3
+                <div
                   auCardHeader
-                  class="docs-components-index__name"
+                  class="docs-components-index__header"
                 >
-                  {{ doc.title }}
-                </h3>
+                  <h3 class="docs-components-index__name">{{ doc.title }}</h3>
+                  <docs-maturity-badge [level]="doc.maturity.level" />
+                </div>
                 <p
                   auCardBody
                   class="docs-components-index__body"
@@ -64,11 +71,32 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       padding: 0;
       list-style: none;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-      gap: var(--au-space-4);
+      grid-template-columns: 1fr;
+      gap: var(--au-space-5);
+      width: 100%;
+    }
+
+    @media (min-width: 36rem) {
+      .docs-components-index {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--au-space-6);
+      }
+    }
+
+    @media (min-width: 56rem) {
+      .docs-components-index {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 80rem) {
+      .docs-components-index {
+        gap: var(--au-space-7);
+      }
     }
 
     .docs-components-index__item {
+      min-width: 0;
       animation: docs-fade-up 0.45s var(--au-ease-out) both;
     }
 
@@ -82,16 +110,46 @@ import { DocsInlineText } from '../shared/docs-inline-text';
     .docs-components-index__card {
       position: relative;
       height: 100%;
+      min-height: 10.5rem;
+      display: flex;
+      flex-direction: column;
       transition:
         transform var(--au-duration-default) var(--au-ease-emph),
         border-color var(--au-duration-short) var(--au-ease-in-out),
         box-shadow var(--au-duration-short) var(--au-ease-in-out);
     }
 
+    .docs-components-index__legend {
+      margin: 0 0 var(--au-space-5);
+      max-width: min(52rem, 100%);
+      font-size: var(--au-text-sm);
+      color: var(--au-color-text-secondary);
+      line-height: var(--au-leading-relaxed);
+    }
+
+    .docs-components-index__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--au-space-2) var(--au-space-3);
+      padding-right: var(--au-space-8);
+    }
+
+    .docs-components-index__name {
+      margin: 0;
+      font-size: var(--au-text-md);
+      font-weight: var(--au-weight-semibold);
+      color: var(--au-color-text-primary);
+      line-height: var(--au-leading-snug);
+    }
+
     .docs-components-index__body {
       margin: 0;
-      display: grid;
-      gap: var(--au-space-2);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--au-space-3);
+      padding-top: var(--au-space-1);
     }
 
     @media (hover: hover) {
@@ -113,14 +171,13 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       }
     }
 
-    .docs-components-index__name {
-      margin: 0;
-      font-size: inherit;
-      font-weight: var(--au-weight-semibold);
-      color: var(--au-color-text-primary);
-    }
-
     .docs-components-index__export {
+      display: inline-block;
+      width: fit-content;
+      padding: 0.12em 0.45em;
+      border-radius: var(--au-radius-xs);
+      border: 1px solid var(--docs-border-fine);
+      background: color-mix(in srgb, var(--au-color-accent) 8%, var(--au-color-surface-raised));
       font-family: var(--au-font-mono);
       font-size: var(--au-text-xs);
       color: var(--au-color-accent);
@@ -134,8 +191,8 @@ import { DocsInlineText } from '../shared/docs-inline-text';
 
     .docs-components-index__arrow {
       position: absolute;
-      top: var(--au-space-4);
-      right: var(--au-space-4);
+      top: var(--au-space-5);
+      right: var(--au-space-5);
       font-size: var(--au-text-lg);
       color: var(--au-color-accent);
       opacity: 0.45;
@@ -152,6 +209,7 @@ export class ComponentsIndexPage {
     COMPONENT_DOCS.map((doc) => ({
       ...doc,
       summary: componentDocSummary(doc, this.i18n.locale()),
+      maturity: getDocsComponentMaturity(doc.slug),
     })),
   );
 

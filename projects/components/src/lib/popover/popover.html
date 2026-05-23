@@ -1,0 +1,14 @@
+<div class="au-popover__anchor">
+  <ng-content select="[auPopoverTrigger]" />
+</div>
+@if (open()) {
+  <div
+    #panel
+    class="au-popover__panel"
+    role="dialog"
+    [attr.aria-modal]="'false'"
+    tabindex="-1"
+  >
+    <ng-content />
+  </div>
+}

@@ -102,4 +102,18 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
       { token: '--au-transition-control', description: 'Paquete usado en shells de campo.' },
     ],
   },
+  {
+    title: 'Densidad (v2)',
+    description: 'data-au-density en el shell; escala alturas de campo y espaciado.',
+    tokens: [
+      { token: 'data-au-density="compact"', description: 'Campos y espaciado más compactos.' },
+      {
+        token: 'data-au-density="comfortable"',
+        description: 'Por defecto — coincide con tamaños en :root.',
+      },
+      { token: 'data-au-density="spacious"', description: 'Targets táctiles y gaps mayores.' },
+      { token: '--au-density-space-scale', description: 'Multiplicador de tokens de espacio.' },
+      { token: '--au-size-field-h-md', description: 'Sobrescrito por cada preset de densidad.' },
+    ],
+  },
 ];

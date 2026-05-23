@@ -113,6 +113,8 @@ export class AuButton {
       return;
     }
     this.click.emit(event);
+    // Evita doble handler en padres: output `click` + burbuja DOM al host <au-button>.
+    event.stopPropagation();
   }
 
   focus(): void {

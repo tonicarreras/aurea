@@ -51,15 +51,31 @@ Optional (form/listbox overlays):
 @import '@aurea-design-system/components/styles/au-field-listbox.css';
 ```
 
-### 2. Dark mode (optional)
+### 2. Schematic (optional)
+
+```bash
+ng add @aurea-design-system/components
+```
+
+Adds global styles to `angular.json` and prints next steps.
+
+### 3. Dark mode (optional)
 
 ```html
 <html data-au-theme="dark"></html>
 ```
 
-Or use the `auTheme` directive from the same package.
+Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast` experimental).
 
-### 3. Components
+### 4. Density (optional)
+
+```html
+<body data-au-density="compact"></body>
+```
+
+Or `[auDensity]="'spacious'"` on your shell.
+
+### 5. Components
 
 ```ts
 import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system/components';
@@ -140,27 +156,45 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 
 ## Components
 
-| Export           | Selector / API      | Notes                                          |
-| ---------------- | ------------------- | ---------------------------------------------- |
-| `AuButton`       | `<au-button>`       | Variants, loading, focus ring                  |
-| `AuInputText`    | `<au-input-text>`   | `[formField]` or `[(value)]` + `au-form-field` |
-| `AuTextarea`     | `<au-textarea>`     | Same as input-text                             |
-| `AuFormField`    | `<au-form-field>`   | Label / hint / error wrapper                   |
-| `AuCheckbox`     | `<au-checkbox>`     |                                                |
-| `AuSelect`       | `<au-select>`       | Portaled listbox                               |
-| `AuAutocomplete` | `<au-autocomplete>` |                                                |
-| `AuSwitch`       | `<au-switch>`       |                                                |
-| `AuRadioGroup`   | `<au-radio-group>`  |                                                |
-| `AuInputNumber`  | `<au-input-number>` |                                                |
-| `AuInputDate`    | `<au-input-date>`   |                                                |
-| `AuDialog`       | `<au-dialog>`       | Native `<dialog>`                              |
-| `AuCard`         | `<au-card>`         | `AuCardFooter` directive                       |
-| `AuTabs`         | `<au-tabs>`         | `AuTab`, `AuTabPanel`                          |
-| `AuChip`         | `<au-chip>`         | Removable / selectable                         |
-| `AuSnackbar`     | `<au-snackbar>`     |                                                |
-| `AuDivider`      | `<au-divider>`      | Horizontal / vertical                          |
-| `AuTooltip`      | `[auTooltip]`       | Directive on the trigger                       |
-| `AuTheme`        | `[auTheme]`         | `light` / `dark` / `system`                    |
+| Export               | Selector / API      | Notes                                          |
+| -------------------- | ------------------- | ---------------------------------------------- |
+| `AuButton`           | `<au-button>`       | Variants, loading, focus ring                  |
+| `AuInputText`        | `<au-input-text>`   | `[formField]` or `[(value)]` + `au-form-field` |
+| `AuTextarea`         | `<au-textarea>`     | Same as input-text                             |
+| `AuFormField`        | `<au-form-field>`   | Label / hint / error wrapper                   |
+| `AuCheckbox`         | `<au-checkbox>`     |                                                |
+| `AuSelect`           | `<au-select>`       | Portaled listbox                               |
+| `AuAutocomplete`     | `<au-autocomplete>` |                                                |
+| `AuSwitch`           | `<au-switch>`       |                                                |
+| `AuRadioGroup`       | `<au-radio-group>`  |                                                |
+| `AuInputNumber`      | `<au-input-number>` |                                                |
+| `AuInputDate`        | `<au-input-date>`   |                                                |
+| `AuDialog`           | `<au-dialog>`       | Native `<dialog>`                              |
+| `AuCard`             | `<au-card>`         | `AuCardFooter` directive                       |
+| `AuTabs`             | `<au-tabs>`         | `AuTab`, `AuTabPanel`                          |
+| `AuChip`             | `<au-chip>`         | Removable / selectable                         |
+| `AuSnackbar`         | `<au-snackbar>`     |                                                |
+| `AuDivider`          | `<au-divider>`      | Horizontal / vertical                          |
+| `AuTooltip`          | `[auTooltip]`       | Directive on the trigger                       |
+| `AuBadge`            | `<au-badge>`        | Status / count label                           |
+| `AuBreadcrumb`       | `<au-breadcrumb>`   | Navigation trail                               |
+| `AuPagination`       | `<au-pagination>`   | Page controls (1-based)                        |
+| `AuMenu`             | `<au-menu>`         | Dropdown + `auMenuTrigger` / `au-menu-item`    |
+| `AuPopover`          | `<au-popover>`      | Anchored panel + `auPopoverTrigger`            |
+| `AuTable`            | `<au-table>`        | Table shell + `auTableSortHeader`              |
+| `AuProgress`         | `<au-progress>`     | Progressbar                                    |
+| `AuLink`             | `a[auLink]`         | Semantic inline link                           |
+| `AuTheme`            | `[auTheme]`         | `light` / `dark` / `system` / `high-contrast`  |
+| `AuDensityDirective` | `[auDensity]`       | `compact` / `comfortable` / `spacious`         |
+
+---
+
+## Governance & maturity
+
+- [CHANGELOG](../../CHANGELOG.md) · [Governance docs](../../docs/README.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [Security](../../SECURITY.md)
+- [Versioning](../../docs/VERSIONING.md) · [Deprecation](../../docs/DEPRECATION.md) · [Angular compatibility](../../docs/ANGULAR_COMPATIBILITY.md)
+- [Component Definition of Done](./COMPONENT_DONE.md) · [A11y audit](./A11Y_AUDIT.md) · [Bundle](./BUNDLE.md) · [Performance](./PERFORMANCE.md)
+- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`)
 
 ---
 

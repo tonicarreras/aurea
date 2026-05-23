@@ -6,32 +6,33 @@ import { AuButton, AuDialog, AuDialogFooter } from '@aurea-design-system/compone
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuDialog, AuDialogFooter],
   template: `
-    <au-button
-      type="button"
-      (click)="open.set(true)"
-      >Abrir diálogo</au-button
-    >
-    <au-dialog
-      [(open)]="open"
-      title="Confirmar acción"
-      size="sm"
-    >
-      <p>Esta acción no se puede deshacer.</p>
-      <div auDialogFooter>
-        <au-button
-          style="margin-right: var(--au-space-2);"
-          variant="secondary"
-          type="button"
-          (click)="open.set(false)"
-          >Cancelar</au-button
-        >
-        <au-button
-          type="button"
-          (click)="open.set(false)"
-          >Confirmar</au-button
-        >
-      </div>
-    </au-dialog>
+    <div class="docs-preview docs-preview--action">
+      <au-button
+        type="button"
+        (click)="open.set(true)"
+        >Abrir diálogo</au-button
+      >
+      <au-dialog
+        [(open)]="open"
+        title="Confirmar acción"
+        size="sm"
+      >
+        <p>Esta acción no se puede deshacer.</p>
+        <div auDialogFooter>
+          <au-button
+            variant="secondary"
+            type="button"
+            (click)="open.set(false)"
+            >Cancelar</au-button
+          >
+          <au-button
+            type="button"
+            (click)="open.set(false)"
+            >Confirmar</au-button
+          >
+        </div>
+      </au-dialog>
+    </div>
   `,
 })
 export class DialogDemo {

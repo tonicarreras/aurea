@@ -1,0 +1,194 @@
+import { NgTemplateOutlet } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+  computed,
+  input,
+  model,
+  output,
+  signal,
+} from '@angular/core';
+
+import { AuTableColumn } from './au-table-column';
+import type { AuTableSortDirection, AuTableSortState } from './table-types';
+
+export type {
+  AuTableAlign,
+  AuTableCellVariant,
+  AuTableSortDirection,
+  AuTableSortState,
+} from './table-types';
+
+/**
+ * Data table with column definitions (`au-table-column`), Material-style.
+ */
+@Component({
+  selector: 'au-table',
+  templateUrl: './table.html',
+  styleUrl: './table.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  imports: [NgTemplateOutlet],
+  host: {
+    class: 'au-table',
+    '[attr.data-au-striped]': 'striped() ? "" : null',
+    '[attr.data-au-compact]': 'compact() ? "" : null',
+    '[attr.data-au-sticky-header]': 'stickyHeader() ? "" : null',
+  },
+})
+export class AuTable {
+  private readonly columnRegistry = signal<readonly AuTableColumn[]>([]);
+
+  /** Row data rendered in the table body. */
+  readonly data = input.required<readonly unknown[]>();
+  readonly title = input('');
+  readonly description = input('');
+  readonly caption = input('');
+  readonly striped = input(false);
+  readonly compact = input(false);
+  readonly stickyHeader = input(false);
+  readonly emptyMessage = input('No data');
+  readonly sort = model<AuTableSortState | null>(null);
+  readonly clientSort = input(true);
+  readonly sortChange = output<AuTableSortState | null>();
+  readonly trackByFn = input<((index: number, row: unknown) => unknown) | undefined>(undefined);
+
+  readonly columns = computed(() => this.columnRegistry());
+
+  readonly viewRows = computed(() => {
+    const rows = this.data();
+    const state = this.sort();
+    if (!this.clientSort() || !state?.direction) {
+      return rows;
+    }
+    const col = this.columns().find((c) => c.name() === state.column);
+    if (!col) {
+      return rows;
+    }
+    const dir = state.direction === 'asc' ? 1 : -1;
+    return [...rows].sort((a, b) => dir * this.compareRows(col, a, b));
+  });
+
+  registerColumn(column: AuTableColumn): void {
+    this.columnRegistry.update((list) => (list.includes(column) ? list : [...list, column]));
+  }
+
+  unregisterColumn(column: AuTableColumn): void {
+    this.columnRegistry.update((list) => list.filter((c) => c !== column));
+  }
+
+  protected trackRow(index: number, row: unknown): unknown {
+    const trackBy = this.trackByFn();
+    return trackBy ? trackBy(index, row) : index;
+  }
+
+  protected headerClasses(col: AuTableColumn): string {
+    const align = col.align();
+    return [
+      'au-table__header-cell',
+      align === 'end' ? 'au-table__header-cell--end' : '',
+      align === 'center' ? 'au-table__header-cell--center' : '',
+      this.columnSortDirection(col.name()) ? 'au-table__header-cell--sorted' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  protected cellClasses(col: AuTableColumn): string {
+    const align = col.align();
+    const variant = col.cellVariant();
+    return [
+      'au-table__cell',
+      align === 'end' ? 'au-table__cell--end' : '',
+      align === 'center' ? 'au-table__cell--center' : '',
+      variant === 'primary' ? 'au-table__cell--primary' : '',
+      variant === 'secondary' ? 'au-table__cell--secondary' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  protected headerAriaSort(col: AuTableColumn): string | null {
+    if (!col.sortable()) {
+      return null;
+    }
+    const dir = this.columnSortDirection(col.name());
+    if (dir === 'asc') {
+      return 'ascending';
+    }
+    if (dir === 'desc') {
+      return 'descending';
+    }
+    return 'none';
+  }
+
+  protected columnSortDirection(column: string): AuTableSortDirection {
+    const state = this.sort();
+    if (!state || state.column !== column) {
+      return null;
+    }
+    return state.direction;
+  }
+
+  protected toggleSort(column: string): void {
+    const current = this.sort();
+    let next: AuTableSortState | null;
+    if (!current || current.column !== column) {
+      next = { column, direction: 'asc' };
+    } else if (current.direction === 'asc') {
+      next = { column, direction: 'desc' };
+    } else if (current.direction === 'desc') {
+      next = null;
+    } else {
+      next = { column, direction: 'asc' };
+    }
+    this.sort.set(next);
+    this.sortChange.emit(next);
+  }
+
+  protected cellContext(row: unknown): { $implicit: unknown; row: unknown } {
+    return { $implicit: row, row };
+  }
+
+  protected formatCell(col: AuTableColumn, row: unknown): string {
+    return this.cellText(this.readCell(col, row));
+  }
+
+  private cellText(value: unknown): string {
+    if (value == null) {
+      return '';
+    }
+    if (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean' ||
+      typeof value === 'bigint'
+    ) {
+      return String(value);
+    }
+    return JSON.stringify(value);
+  }
+
+  private readCell(col: AuTableColumn, row: unknown): unknown {
+    const accessor = col.accessor();
+    if (accessor) {
+      return accessor(row);
+    }
+    if (row && typeof row === 'object') {
+      return (row as Record<string, unknown>)[col.name()];
+    }
+    return undefined;
+  }
+
+  private compareRows(col: AuTableColumn, a: unknown, b: unknown): number {
+    const left = this.readCell(col, a);
+    const right = this.readCell(col, b);
+    if (typeof left === 'number' && typeof right === 'number') {
+      return left - right;
+    }
+    return this.cellText(left).localeCompare(this.cellText(right), undefined, {
+      numeric: true,
+    });
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@aurea-design-system/components",
-  "version": "0.3.0",
+  "version": "0.9.0",
   "description": "Aurea design system for Angular 21 — accessible components and semantic tokens.",
   "license": "MIT",
   "author": "Toni Carreras",
@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/tonicarreras/aurea-ds/issues"
   },
-  "homepage": "https://github.com/tonicarreras/aurea-ds#readme",
+  "homepage": "https://aurea-ds.netlify.app/es/get-started",
   "keywords": [
     "angular",
     "design-system",
@@ -29,6 +29,10 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
   },
   "sideEffects": [
     "**/*.css"

@@ -1,23 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuIcon, type AuIconName } from './icon';
 
 const names: AuIconName[] = ['check-circle', 'warning', 'error', 'info', 'close', 'spinner'];
 
+const docsOverview = getStoryOverview('icon');
+
 const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
   component: AuIcon,
-  tags: ['autodocs', 'au'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Shared SVG glyphs for alerts, dialogs, buttons, and chips. Decorative (`aria-hidden`).',
-      },
-    },
-  },
+  tags: ['autodocs', 'au', 'stable'],
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     name: { control: 'select', options: names, table: { category: 'Content' } },
     size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Appearance' } },

@@ -1,0 +1,53 @@
+name: Accessibility
+description: Report WCAG / keyboard / screen reader issues
+title: '[A11y]: '
+labels: ['a11y']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Accessibility regressions in **stable** components are release blockers.
+        See [A11Y_AUDIT.md](https://github.com/tonicarreras/aurea/blob/develop/projects/components/A11Y_AUDIT.md).
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What assistive tech or criterion fails (e.g. WCAG 2.2 SC 2.4.7 Focus Visible)?
+    validations:
+      required: true
+
+  - type: input
+    id: component
+    attributes:
+      label: Component / page
+      placeholder: e.g. au-dialog, docs landing
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include keyboard sequence or SR announcement heard
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Blocker — cannot complete task
+        - Major — workaround exists
+        - Minor — cosmetic / edge case
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, screen reader (NVDA, VoiceOver, …)
+    validations:
+      required: false

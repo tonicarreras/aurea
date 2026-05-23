@@ -18,14 +18,14 @@ bun run build:docs
 
 Todas las URLs llevan prefijo de idioma (`es` o `en`):
 
-| Ruta                                           | Descripción                                 |
-| ---------------------------------------------- | ------------------------------------------- |
-| `/es`, `/en`                                   | Inicio                                      |
-| `/es/get-started`, `/en/get-started`           | Instalación y primer uso                    |
-| `/es/themes`, `/en/themes`                     | Tokens y modo claro/oscuro                  |
-| `/es/components`, `/en/components`             | Índice de componentes                       |
-| `/es/components/:slug`, `/en/components/:slug` | Vista previa + documentación por componente |
+| Ruta                      | Descripción                                                        |
+| ------------------------- | ------------------------------------------------------------------ |
+| `/es`, `/en`              | **Landing de diseño** (sin sidebar): principios, sistema, previews |
+| `/es/components`, …       | **Documentación** (con sidebar): índice, API, ejemplos             |
+| `/es/get-started`, …      | Instalación                                                        |
+| `/es/themes`, …           | Tokens y temas                                                     |
+| `/es/components/:slug`, … | Página por componente                                              |
 
-`/` redirige a `/es`.
+`/` redirige a `/es`. El botón **Documentación** en la landing abre el catálogo (`/components`).
 
-Storybook en producción: [https://aurea-ds-storybook.netlify.app/](https://aurea-ds-storybook.netlify.app/) (`bun run storybook` en local). Esta app es la documentación orientada a quien integra el paquete.
+Storybook: [https://aurea-ds-storybook.netlify.app/](https://aurea-ds-storybook.netlify.app/) — referencia técnica interactiva.

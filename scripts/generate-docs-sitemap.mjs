@@ -13,7 +13,23 @@ const outPath = join(root, 'projects/docs/public/sitemap.xml');
 
 const SITE = 'https://aurea-ds.netlify.app';
 const LOCALES = ['en', 'es'];
-const STATIC_SEGMENTS = ['', 'get-started', 'themes', 'components'];
+const STATIC_SEGMENTS = [
+  '',
+  'get-started',
+  'guides/adoption',
+  'guides/signal-forms',
+  'guides/patterns',
+  'guides/troubleshooting',
+  'guides/bundle',
+  'guides/migrate-material',
+  'guides/migrate-cdk',
+  'guides/crud-demo',
+  'roadmap',
+  'maturity',
+  'design-tokens',
+  'themes',
+  'components',
+];
 
 const registry = readFileSync(registryPath, 'utf8');
 const slugs = [...registry.matchAll(/slug: '([^']+)'/g)].map((m) => m[1]);

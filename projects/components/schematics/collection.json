@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "Adds Aurea global styles and documents next setup steps",
+      "factory": "./ng-add/index.js",
+      "schema": "./ng-add/schema.json"
+    }
+  }
+}

@@ -1,23 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { getStoryOverview } from '../story-docs/get-story-overview';
+import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuMessage, type AuMessageVariant } from './message';
 
 const variants: AuMessageVariant[] = ['default', 'success', 'warning', 'error', 'info'];
 
+const docsOverview = getStoryOverview('message');
+
 const meta: Meta<AuMessage> = {
   title: 'Aurea/Message',
   component: AuMessage,
-  tags: ['autodocs', 'au'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      extractArgTypes: () => ({}),
-      description: {
-        component:
-          'Inline callout for status, validation, or help. Semantic icons follow Material-style glyphs (check_circle, warning, error, info); default has no icon. Error and warning use `role="alert"`.',
-      },
-    },
-  },
+  tags: ['autodocs', 'au', 'stable'],
+  parameters: storyMetaParameters(docsOverview),
   argTypes: {
     variant: {
       control: 'select',
