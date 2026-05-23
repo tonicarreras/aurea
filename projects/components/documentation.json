@@ -1862,7 +1862,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    expect(canvas.getByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    expect(canvas.getAllByRole('cell')[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
+                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2038,21 +2038,21 @@
                 "name": "docsOverview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "getStoryOverview('button')"
-            },
-            {
-                "name": "docsOverview",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "getStoryOverview('card')"
+            },
+            {
+                "name": "docsOverview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "getStoryOverview('button')"
             },
             {
                 "name": "docsOverview",
@@ -2200,21 +2200,21 @@
                 "name": "docsOverview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/popover/popover.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "getStoryOverview('popover')"
-            },
-            {
-                "name": "docsOverview",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "getStoryOverview('pagination')"
+            },
+            {
+                "name": "docsOverview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/popover/popover.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "getStoryOverview('popover')"
             },
             {
                 "name": "docsOverview",
@@ -2640,21 +2640,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuCard>",
                 "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2800,21 +2800,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/popover/popover.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuPopover>",
-                "defaultValue": "{\n  title: 'Aurea/Popover',\n  component: AuPopover,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the panel.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuPagination>",
                 "defaultValue": "{\n  title: 'Aurea/Pagination',\n  component: AuPagination,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    page: {\n      control: { type: 'number', min: 1 },\n      description: 'Current page (1-based).',\n      table: { category: 'State' },\n    },\n    pageCount: {\n      control: { type: 'number', min: 1 },\n      description: 'Total number of pages.',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables prev, next, and page buttons.',\n      table: { category: 'State' },\n    },\n    pageChange: {\n      description: 'Emits the selected page (1-based).',\n      table: { category: 'Events' },\n    },\n  },\n  args: { page: 3, pageCount: 12, disabled: false },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/popover/popover.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuPopover>",
+                "defaultValue": "{\n  title: 'Aurea/Popover',\n  component: AuPopover,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the panel.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3282,21 +3282,21 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{ imports: [AuButton] }"
-            },
-            {
-                "name": "storyImports",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuCard] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [AuButton] }"
             },
             {
                 "name": "storyImports",
@@ -4152,8 +4152,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "rawtype": "StoryObj<AuCard>",
+                "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4163,8 +4163,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuCard>",
-                "file": "projects/components/src/lib/card/card.stories.ts",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4328,8 +4328,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj",
-                "file": "projects/components/src/lib/popover/popover.stories.ts",
+                "rawtype": "StoryObj<AuPagination>",
+                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4339,8 +4339,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuPagination>",
-                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
+                "rawtype": "StoryObj",
+                "file": "projects/components/src/lib/popover/popover.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6416,7 +6416,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    expect(canvas.getByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    expect(canvas.getAllByRole('cell')[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
+                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
                 },
                 {
                     "name": "docsOverview",
@@ -7288,19 +7288,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/button/button.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButton>",
-                    "file": "projects/components/src/lib/button/button.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/card/card.stories.ts": [
                 {
                     "name": "Story",
@@ -7308,6 +7295,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuCard>",
                     "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/button/button.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuButton>",
+                    "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7483,19 +7483,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/popover/popover.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj",
-                    "file": "projects/components/src/lib/popover/popover.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/pagination/pagination.stories.ts": [
                 {
                     "name": "Story",
@@ -7503,6 +7490,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuPagination>",
                     "file": "projects/components/src/lib/pagination/pagination.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/popover/popover.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj",
+                    "file": "projects/components/src/lib/popover/popover.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
