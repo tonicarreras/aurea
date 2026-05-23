@@ -7,6 +7,7 @@ import type { ComponentDocExample } from '../../../types/example';
 export const examples: ComponentDocExample[] = [
   {
     title: 'Layout tabs',
+    description: 'Un panel activo (`layout="tabs"`).',
     demoComponent: ExampleStepsTabsDemo,
     code: `<au-steps [(value)]="section" ariaLabel="Documentación" layout="tabs">
   <button type="button" auStep="overview">Overview</button>
@@ -18,6 +19,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Layout sections',
+    description: 'Todos los paneles visibles; los botones de paso hacen scroll (`layout="sections"`).',
     demoComponent: ExampleStepsSectionsDemo,
     code: `<au-steps [(value)]="section" ariaLabel="Secciones" layout="sections">
   <button type="button" auStep="intro">Intro</button>

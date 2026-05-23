@@ -8,6 +8,7 @@ import type { ComponentDocExample } from '../../../types/example';
 export const examples: ComponentDocExample[] = [
   {
     title: 'Líneas de texto',
+    description: 'Marca la región de carga con `aria-busy` en un contenedor padre.',
     demoComponent: ExampleSkeletonTextDemo,
     code: `<div aria-busy="true">
   <au-skeleton variant="text" width="60%" />

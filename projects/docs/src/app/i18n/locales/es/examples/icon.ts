@@ -7,6 +7,7 @@ import type { ComponentDocExample } from '../../../types/example';
 export const examples: ComponentDocExample[] = [
   {
     title: 'Icono básico',
+    description: 'Glifo decorativo (`aria-hidden`). Nombra el control padre para lectores de pantalla.',
     demoComponent: ExampleIconBasicDemo,
     code: `<au-icon name="info" size="md" />`,
   },

@@ -28,7 +28,7 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 
 ## Phase 3 — Pro quality (delivered)
 
-- Playwright visual smoke tests (`test:visual:ci`, 9 stories, snapshots in `e2e-visual/__snapshots__`)
+- Playwright visual smoke tests (`test:visual:ci`, **26 stable** stories via `visual-story-manifest.ts`, snapshots in `e2e-visual/__snapshots__`)
 - axe-core via `axe-playwright` on **stable** stories in test-runner (`stable-story-ids.ts`)
 - GitHub issue templates (bug, feature, a11y) + `config.yml`
 - CODEOWNERS by area (forms, overlay, tokens, CI, docs)
@@ -56,3 +56,12 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | **0.6–0.8.x** | Table data features, file upload            |
 | **0.9.x**     | Visual regression + API freeze candidate    |
 | **1.0.0**     | Stable core, public roadmap, reference app  |
+
+## Post-1.0 — Tooling
+
+| Item | Status | Notes |
+| ---- | ------ | ----- |
+| Changelog automation (`changesets` or `standard-version`) | Planned | Evaluate after API freeze; keep [Keep a Changelog](https://keepachangelog.com/) format |
+| Angular compat matrix CI | ✅ | Weekly workflow `compat-matrix.yml` |
+| Docs site Playwright smoke | ✅ | `test:docs:e2e:ci` |
+| Bundle size guard | ✅ | `check:bundle` (+5% threshold) |

@@ -1668,6 +1668,16 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1678,11 +1688,11 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic checkbox with label. The **play** function clicks the checkbox.',\n      },\n    },\n  },\n  args: {\n    label: 'Accept terms',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const checkbox = el.getByRole('checkbox');\n    await userEvent.click(checkbox);\n    await expect(checkbox).toBeChecked();\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1703,16 +1713,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic checkbox with label. The **play** function clicks the checkbox.',\n      },\n    },\n  },\n  args: {\n    label: 'Accept terms',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const checkbox = el.getByRole('checkbox');\n    await userEvent.click(checkbox);\n    await expect(checkbox).toBeChecked();\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1788,21 +1788,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/menu/menu.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/message/message.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    variant: 'default',\n    message: 'Neutral callout without a leading icon — only semantic variants show one.',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/menu/menu.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1918,11 +1918,11 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n    ),\n}"
             },
             {
                 "name": "Disabled",
@@ -1938,11 +1938,11 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"click\">Disabled</au-button>`,\n    ),\n}"
+                "defaultValue": "{\n  args: {\n    label: 'Archived',\n    removable: true,\n    disabled: true,\n  },\n}"
             },
             {
                 "name": "Disabled",
@@ -2018,6 +2018,16 @@
                 "name": "docsOverview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "getStoryOverview('badge')"
+            },
+            {
+                "name": "docsOverview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2028,11 +2038,21 @@
                 "name": "docsOverview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
-                "defaultValue": "getStoryOverview('badge')"
+                "defaultValue": "getStoryOverview('button')"
+            },
+            {
+                "name": "docsOverview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "getStoryOverview('checkbox')"
             },
             {
                 "name": "docsOverview",
@@ -2053,26 +2073,6 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "getStoryOverview('chip')"
-            },
-            {
-                "name": "docsOverview",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "getStoryOverview('checkbox')"
-            },
-            {
-                "name": "docsOverview",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "getStoryOverview('button')"
             },
             {
                 "name": "docsOverview",
@@ -2180,21 +2180,21 @@
                 "name": "docsOverview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/menu/menu.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "getStoryOverview('menu')"
-            },
-            {
-                "name": "docsOverview",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/message/message.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "getStoryOverview('message')"
+            },
+            {
+                "name": "docsOverview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/menu/menu.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "getStoryOverview('menu')"
             },
             {
                 "name": "docsOverview",
@@ -2410,21 +2410,21 @@
                 "name": "FocusRing",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Tab into the checkbox to see the **outer focus ring**; click to see the **inset ring**. Both use `--au-color-focus-ring`.',\n      },\n    },\n  },\n  args: {\n    label: 'Focus demo',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "FocusRing",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <au-button [variant]=\"variant\" (click)=\"click\">Tab to me</au-button>\n        <au-button [variant]=\"'secondary'\">Next element</au-button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const button = canvasElement.querySelector('au-button') as HTMLElement;\n    const firstButton = button?.querySelector('button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+            },
+            {
+                "name": "FocusRing",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Tab into the checkbox to see the **outer focus ring**; click to see the **inset ring**. Both use `--au-color-focus-ring`.',\n      },\n    },\n  },\n  args: {\n    label: 'Focus demo',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "FullScreen",
@@ -2540,21 +2540,21 @@
                 "name": "LargeSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
-            },
-            {
-                "name": "LargeSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"lg\"`** (`data-au-size=\"lg\"`) — 24x24 target (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    label: 'Large touch target',\n    size: 'lg',\n  },\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "LargeSize",
@@ -2620,6 +2620,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuBadge>",
+                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2630,11 +2640,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuBadge>",
-                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CheckboxStoryArgs>",
+                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    ...fieldChromeHintOnlyArgTypes,\n    checked: {\n      control: 'boolean',\n      description:\n        'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Inline label on the checkbox control.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    indeterminate: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms.',\n      table: { category: 'Validation' },\n    },\n  } as Meta<CheckboxStoryArgs>['argTypes'],\n  args: {\n    label: '',\n    description: '',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: false,\n    controlIdInput: '',\n    showRequired: true,\n    checked: false,\n    indeterminate: false,\n    disabled: false,\n    name: '',\n    size: 'md',\n    errors: [],\n    checkedChange: fn(),\n  },\n  render: (args) =>\n    formFieldHintOnlyRender(\n      [AuFormField, AuCheckbox],\n      args,\n      `<au-checkbox\n  [(checked)]=\"checked\"\n  [label]=\"label\"\n  [description]=\"description\"\n  [disabled]=\"disabled\"\n  [required]=\"required\"\n  [showRequired]=\"showRequired\"\n  [indeterminate]=\"indeterminate\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -2655,26 +2675,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuChip>",
                 "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<CheckboxStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    ...fieldChromeHintOnlyArgTypes,\n    checked: {\n      control: 'boolean',\n      description:\n        'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Inline label on the checkbox control.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    indeterminate: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms.',\n      table: { category: 'Validation' },\n    },\n  } as Meta<CheckboxStoryArgs>['argTypes'],\n  args: {\n    label: '',\n    description: '',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: false,\n    controlIdInput: '',\n    showRequired: true,\n    checked: false,\n    indeterminate: false,\n    disabled: false,\n    name: '',\n    size: 'md',\n    errors: [],\n    checkedChange: fn(),\n  },\n  render: (args) =>\n    formFieldHintOnlyRender(\n      [AuFormField, AuCheckbox],\n      args,\n      `<au-checkbox\n  [(checked)]=\"checked\"\n  [label]=\"label\"\n  [description]=\"description\"\n  [disabled]=\"disabled\"\n  [required]=\"required\"\n  [showRequired]=\"showRequired\"\n  [indeterminate]=\"indeterminate\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2780,21 +2780,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/menu/menu.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuMenu>",
-                "defaultValue": "{\n  title: 'Aurea/Menu',\n  component: AuMenu,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position; flips when needed.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the menu.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/message/message.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuMessage>",
                 "defaultValue": "{\n  title: 'Aurea/Message',\n  component: AuMessage,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: variants,\n      table: { category: 'Appearance' },\n    },\n    title: { control: 'text', table: { category: 'Content' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    dismissible: { control: 'boolean', table: { category: 'Behavior' } },\n    showIcon: {\n      control: 'boolean',\n      description: 'Semantic icon only (success, warning, error, info). Default never shows one.',\n      table: { category: 'Appearance' },\n    },\n    closeAriaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    variant: 'info',\n    title: '',\n    message: 'Your session will expire in 10 minutes.',\n    dismissible: false,\n    showIcon: true,\n    closeAriaLabel: 'Dismiss message',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/menu/menu.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuMenu>",
+                "defaultValue": "{\n  title: 'Aurea/Menu',\n  component: AuMenu,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position; flips when needed.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the menu.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2980,21 +2980,21 @@
                 "name": "Outline",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Outline',\n    variant: 'outline',\n  },\n}"
-            },
-            {
-                "name": "Outline",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"click\">Outline</au-button>`,\n    ),\n}"
+            },
+            {
+                "name": "Outline",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/chip/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Outline',\n    variant: 'outline',\n  },\n}"
             },
             {
                 "name": "Outlined",
@@ -3232,6 +3232,16 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3247,16 +3257,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
-            },
-            {
-                "name": "SmallSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
             },
             {
                 "name": "SmallSize",
@@ -3282,21 +3282,21 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{ imports: [AuCard] }"
-            },
-            {
-                "name": "storyImports",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuButton] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [AuCard] }"
             },
             {
                 "name": "storyImports",
@@ -4130,6 +4130,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuBadge>",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuBreadcrumb>",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
@@ -4141,8 +4152,19 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBadge>",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<CheckboxStoryArgs>",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4165,28 +4187,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuChip>",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<CheckboxStoryArgs>",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4306,8 +4306,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj",
-                "file": "projects/components/src/lib/menu/menu.stories.ts",
+                "rawtype": "StoryObj<AuMessage>",
+                "file": "projects/components/src/lib/message/message.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4317,8 +4317,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuMessage>",
-                "file": "projects/components/src/lib/message/message.stories.ts",
+                "rawtype": "StoryObj",
+                "file": "projects/components/src/lib/menu/menu.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5703,38 +5703,6 @@
                     "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuList, AuChip] },\n    template: `\n      <au-list [ariaLabel]=\"ariaLabel\">\n        <au-chip label=\"Angular\" removable />\n        <au-chip label=\"TypeScript\" removable />\n        <au-chip label=\"Vitest\" removable />\n      </au-list>\n    `,\n  }),\n}"
                 }
             ],
-            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: [{ label: 'Home', href: '#' }, { label: 'Components', href: '#' }, { label: 'Button' }],\n  },\n}"
-                },
-                {
-                    "name": "docsOverview",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "getStoryOverview('breadcrumb')"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuBreadcrumb>",
-                    "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
-                }
-            ],
             "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Default",
@@ -5785,6 +5753,38 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuBadge] },\n    template: `\n      <div style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-badge label=\"Default\" />\n        <au-badge variant=\"accent\" label=\"New\" />\n        <au-badge variant=\"success\" label=\"OK\" />\n        <au-badge variant=\"warning\" label=\"!\" />\n        <au-badge variant=\"error\" label=\"3\" />\n        <au-badge variant=\"info\" label=\"i\" />\n      </div>\n    `,\n  }),\n}"
+                }
+            ],
+            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: [{ label: 'Home', href: '#' }, { label: 'Components', href: '#' }, { label: 'Button' }],\n  },\n}"
+                },
+                {
+                    "name": "docsOverview",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "getStoryOverview('breadcrumb')"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuBreadcrumb>",
+                    "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
                 }
             ],
             "projects/components/src/lib/card/card.stories.ts": [
@@ -7262,6 +7262,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/badge/badge.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuBadge>",
+                    "file": "projects/components/src/lib/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
                 {
                     "name": "Story",
@@ -7275,13 +7288,26 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/badge/badge.stories.ts": [
+            "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBadge>",
-                    "file": "projects/components/src/lib/badge/badge.stories.ts",
+                    "rawtype": "StoryObj<AuButton>",
+                    "file": "projects/components/src/lib/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/checkbox/checkbox.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CheckboxStoryArgs>",
+                    "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7308,32 +7334,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuChip>",
                     "file": "projects/components/src/lib/chip/chip.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/checkbox/checkbox.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<CheckboxStoryArgs>",
-                    "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/button/button.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButton>",
-                    "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7457,19 +7457,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/menu/menu.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj",
-                    "file": "projects/components/src/lib/menu/menu.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/message/message.stories.ts": [
                 {
                     "name": "Story",
@@ -7477,6 +7464,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuMessage>",
                     "file": "projects/components/src/lib/message/message.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/menu/menu.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj",
+                    "file": "projects/components/src/lib/menu/menu.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

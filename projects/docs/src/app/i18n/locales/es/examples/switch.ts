@@ -18,6 +18,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Obligatorio con error',
+    description: '`label` inline en el switch; hint y error en `au-form-field`.',
     demoComponent: ExampleSwitchErrorDemo,
     code: `<au-form-field
   errorMessage="Debes activar esta opción para continuar."

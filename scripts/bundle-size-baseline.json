@@ -1,0 +1,5 @@
+{
+  "raw": 1320564,
+  "gzip": 124429,
+  "note": "Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
+}

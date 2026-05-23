@@ -29,6 +29,12 @@ bun run test:coverage
 bun run build:components
 bun run test-storybook:ci
 bun run test:visual:ci          # after first-time: bun run test:visual:update
+bun run sync:visual-stories     # regenerate visual-story-manifest.ts from stable maturity
+bun run check:bundle            # after build:components
+bun run test:docs:e2e:ci        # docs site smoke (Playwright)
+bun run verify:story-tags
+bun run verify:i18n
+bun run audit:spec-quality
 bun run audit:ci
 bun run validate:tokens         # JSON design tokens ↔ au-tokens.css
 bun run build:docs
@@ -64,6 +70,10 @@ Use clear, imperative subjects. Prefer Conventional Commits prefixes when helpfu
 - `feat(components): add AuFoo`
 - `fix(button): stop click propagation`
 - `docs: signal forms guide`
+
+## Changelog
+
+Keep [CHANGELOG.md](./CHANGELOG.md) manually until **1.0.0**. Post-1.0, evaluate [@changesets/cli](https://github.com/changesets/changesets) — see [ROADMAP.md](./docs/ROADMAP.md) Post-1.0 tooling.
 
 ## Accessibility
 
