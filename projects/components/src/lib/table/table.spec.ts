@@ -254,10 +254,7 @@ describe('AuTable', () => {
       `,
     })
     class NoClientSortHost {
-      rows = [
-        { name: 'Grace' },
-        { name: 'Ada' },
-      ];
+      rows = [{ name: 'Grace' }, { name: 'Ada' }];
     }
 
     await TestBed.configureTestingModule({ imports: [NoClientSortHost] }).compileComponents();
@@ -340,7 +337,8 @@ describe('AuTable custom cell', () => {
     await TestBed.configureTestingModule({ imports: [CustomCellHost] }).compileComponents();
     const f = TestBed.createComponent(CustomCellHost);
     f.detectChanges();
-    const column = f.debugElement.query(By.directive(AuTableColumn)).componentInstance as AuTableColumn;
+    const column = f.debugElement.query(By.directive(AuTableColumn))
+      .componentInstance as AuTableColumn;
     expect(column.cellDef()).toBeTruthy();
   });
 });
@@ -374,7 +372,9 @@ describe('AuTableColumn', () => {
     fixture.detectChanges();
     const table = tableInstance(fixture);
     expect(table.columns()[0].sortable()).toBe(true);
-    expect((fixture.nativeElement as HTMLElement).querySelector('.au-table__sort-btn')).toBeTruthy();
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('.au-table__sort-btn'),
+    ).toBeTruthy();
   });
 });
 
@@ -383,7 +383,9 @@ describe('AuTable accessor column', () => {
     await TestBed.configureTestingModule({ imports: [AccessorHost] }).compileComponents();
     const f = TestBed.createComponent(AccessorHost);
     f.detectChanges();
-    const btn = (f.nativeElement as HTMLElement).querySelector('.au-table__sort-btn') as HTMLButtonElement;
+    const btn = (f.nativeElement as HTMLElement).querySelector(
+      '.au-table__sort-btn',
+    ) as HTMLButtonElement;
     btn.click();
     f.detectChanges();
     const first = (f.nativeElement as HTMLElement).querySelector('tbody tr td');
