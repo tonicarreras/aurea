@@ -15,7 +15,7 @@ export class AuMenuTrigger {
   private readonly host = inject(ElementRef<HTMLElement>);
 
   constructor() {
-    this.menu.registerTrigger(this.host.nativeElement);
+    this.menu.registerTrigger(this.host.nativeElement as HTMLElement);
   }
 
   protected onClick(event: MouseEvent): void {

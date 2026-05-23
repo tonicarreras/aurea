@@ -15,7 +15,7 @@ export class AuPopoverTrigger {
   private readonly host = inject(ElementRef<HTMLElement>);
 
   constructor() {
-    this.popover.registerTrigger(this.host.nativeElement);
+    this.popover.registerTrigger(this.host.nativeElement as HTMLElement);
   }
 
   protected onClick(event: MouseEvent): void {

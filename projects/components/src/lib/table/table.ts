@@ -71,9 +71,7 @@ export class AuTable {
   });
 
   registerColumn(column: AuTableColumn): void {
-    this.columnRegistry.update((list) =>
-      list.includes(column) ? list : [...list, column],
-    );
+    this.columnRegistry.update((list) => (list.includes(column) ? list : [...list, column]));
   }
 
   unregisterColumn(column: AuTableColumn): void {
@@ -154,8 +152,22 @@ export class AuTable {
   }
 
   protected formatCell(col: AuTableColumn, row: unknown): string {
-    const value = this.readCell(col, row);
-    return value == null ? '' : String(value);
+    return this.cellText(this.readCell(col, row));
+  }
+
+  private cellText(value: unknown): string {
+    if (value == null) {
+      return '';
+    }
+    if (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean' ||
+      typeof value === 'bigint'
+    ) {
+      return String(value);
+    }
+    return JSON.stringify(value);
   }
 
   private readCell(col: AuTableColumn, row: unknown): unknown {
@@ -175,6 +187,8 @@ export class AuTable {
     if (typeof left === 'number' && typeof right === 'number') {
       return left - right;
     }
-    return String(left ?? '').localeCompare(String(right ?? ''), undefined, { numeric: true });
+    return this.cellText(left).localeCompare(this.cellText(right), undefined, {
+      numeric: true,
+    });
   }
 }

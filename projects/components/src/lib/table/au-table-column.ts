@@ -9,7 +9,7 @@ import {
   input,
 } from '@angular/core';
 
-import { AuTableCellDef } from './au-table-cell-def.directive';
+import { AU_TABLE_CELL_DEF } from './au-table-cell-def.directive';
 import { AuTable } from './table';
 import type { AuTableAlign, AuTableCellVariant } from './table-types';
 
@@ -36,7 +36,9 @@ export class AuTableColumn {
   readonly cellVariant = input<AuTableCellVariant>('default');
   readonly accessor = input<((row: unknown) => unknown) | undefined>(undefined);
 
-  readonly cellDef = contentChild(AuTableCellDef);
+  /* v8 ignore start -- contentChild token reference is not invoked at runtime */
+  readonly cellDef = contentChild(AU_TABLE_CELL_DEF);
+  /* v8 ignore stop */
 
   private readonly registerWhenReady = afterNextRender(() => {
     this.table.registerColumn(this);

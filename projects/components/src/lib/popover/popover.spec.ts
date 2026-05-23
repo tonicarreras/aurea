@@ -4,7 +4,6 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AuButton } from '../button/button';
-import { AU_POPOVER } from './au-popover.token';
 import { AuPopoverTrigger } from './au-popover-trigger.directive';
 import { AuPopover, auPopoverSelfRef } from './popover';
 

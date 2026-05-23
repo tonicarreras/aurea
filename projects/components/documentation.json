@@ -1792,7 +1792,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      ...storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
+                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1862,7 +1862,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => {\n    const nameSort = signal<'asc' | 'desc' | null>(null);\n    const rows = [\n      { name: 'Ada Lovelace', role: 'Engineer' },\n      { name: 'Grace Hopper', role: 'Admiral' },\n      { name: 'Katherine Johnson', role: 'Mathematician' },\n    ];\n    return {\n      props: { nameSort, rows },\n      moduleMetadata: { imports: [AuTable, AuTableSortHeader] },\n      template: `\n        <au-table striped>\n          <thead>\n            <tr>\n              <th auTableSortHeader [sortDirection]=\"nameSort()\" (sort)=\"nameSort.set($event)\">Name</th>\n              <th scope=\"col\">Role</th>\n            </tr>\n          </thead>\n          <tbody>\n            @for (row of rows; track row.name) {\n              <tr>\n                <td>{{ row.name }}</td>\n                <td>{{ row.role }}</td>\n              </tr>\n            }\n          </tbody>\n        </au-table>\n      `,\n    };\n  },\n}"
+                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    expect(canvas.getByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    expect(canvas.getAllByRole('cell')[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2200,21 +2200,21 @@
                 "name": "docsOverview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "getStoryOverview('pagination')"
-            },
-            {
-                "name": "docsOverview",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/popover/popover.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "getStoryOverview('popover')"
+            },
+            {
+                "name": "docsOverview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "getStoryOverview('pagination')"
             },
             {
                 "name": "docsOverview",
@@ -2800,21 +2800,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuPagination>",
-                "defaultValue": "{\n  title: 'Aurea/Pagination',\n  component: AuPagination,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    page: {\n      control: { type: 'number', min: 1 },\n      description: 'Current page (1-based).',\n      table: { category: 'State' },\n    },\n    pageCount: {\n      control: { type: 'number', min: 1 },\n      description: 'Total number of pages.',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables prev, next, and page buttons.',\n      table: { category: 'State' },\n    },\n    pageChange: {\n      description: 'Emits the selected page (1-based).',\n      table: { category: 'Events' },\n    },\n  },\n  args: { page: 3, pageCount: 12, disabled: false },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/popover/popover.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuPopover>",
                 "defaultValue": "{\n  title: 'Aurea/Popover',\n  component: AuPopover,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the panel.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuPagination>",
+                "defaultValue": "{\n  title: 'Aurea/Pagination',\n  component: AuPagination,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    page: {\n      control: { type: 'number', min: 1 },\n      description: 'Current page (1-based).',\n      table: { category: 'State' },\n    },\n    pageCount: {\n      control: { type: 'number', min: 1 },\n      description: 'Total number of pages.',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables prev, next, and page buttons.',\n      table: { category: 'State' },\n    },\n    pageChange: {\n      description: 'Emits the selected page (1-based).',\n      table: { category: 'Events' },\n    },\n  },\n  args: { page: 3, pageCount: 12, disabled: false },\n}"
             },
             {
                 "name": "meta",
@@ -2894,7 +2894,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuTable>",
-                "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    striped: {\n      control: 'boolean',\n      description: 'Alternating row background.',\n      table: { category: 'Appearance' },\n    },\n    compact: {\n      control: 'boolean',\n      description: 'Reduced cell padding.',\n      table: { category: 'Appearance' },\n    },\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3139,6 +3139,16 @@
                 "defaultValue": "{\n  args: { variant: 'rounded', animation: 'pulse' },\n  render: Rectangular.render,\n}"
             },
             {
+                "name": "rows",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Row[]",
+                "defaultValue": "[\n  { name: 'Ada Lovelace', role: 'Engineer', score: 98, status: 'active' },\n  { name: 'Grace Hopper', role: 'Admiral', score: 94, status: 'active' },\n  { name: 'Katherine Johnson', role: 'Mathematician', score: 97, status: 'away' },\n]"
+            },
+            {
                 "name": "sample",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3312,6 +3322,16 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "[]",
+                "defaultValue": "[AuTable, AuTableColumn, AuTableCellDef, AuBadge]"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/tabs/tabs.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3327,6 +3347,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuTooltip, AuButton] }"
+            },
+            {
+                "name": "Striped",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { striped: true },\n  render: Default.render,\n}"
             },
             {
                 "name": "Success",
@@ -4075,6 +4105,17 @@
                 "kind": 193
             },
             {
+                "name": "Row",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 188
+            },
+            {
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
@@ -4287,8 +4328,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuPagination>",
-                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
+                "rawtype": "StoryObj",
+                "file": "projects/components/src/lib/popover/popover.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4298,8 +4339,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj",
-                "file": "projects/components/src/lib/popover/popover.stories.ts",
+                "rawtype": "StoryObj<AuPagination>",
+                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4386,7 +4427,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj",
+                "rawtype": "StoryObj<AuTable>",
                 "file": "projects/components/src/lib/table/table.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -6115,7 +6156,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      ...storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
+                    "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
                 },
                 {
                     "name": "docsOverview",
@@ -6375,7 +6416,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => {\n    const nameSort = signal<'asc' | 'desc' | null>(null);\n    const rows = [\n      { name: 'Ada Lovelace', role: 'Engineer' },\n      { name: 'Grace Hopper', role: 'Admiral' },\n      { name: 'Katherine Johnson', role: 'Mathematician' },\n    ];\n    return {\n      props: { nameSort, rows },\n      moduleMetadata: { imports: [AuTable, AuTableSortHeader] },\n      template: `\n        <au-table striped>\n          <thead>\n            <tr>\n              <th auTableSortHeader [sortDirection]=\"nameSort()\" (sort)=\"nameSort.set($event)\">Name</th>\n              <th scope=\"col\">Role</th>\n            </tr>\n          </thead>\n          <tbody>\n            @for (row of rows; track row.name) {\n              <tr>\n                <td>{{ row.name }}</td>\n                <td>{{ row.role }}</td>\n              </tr>\n            }\n          </tbody>\n        </au-table>\n      `,\n    };\n  },\n}"
+                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    expect(canvas.getByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    expect(canvas.getAllByRole('cell')[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
                 },
                 {
                     "name": "docsOverview",
@@ -6395,7 +6436,37 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuTable>",
-                    "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    striped: {\n      control: 'boolean',\n      description: 'Alternating row background.',\n      table: { category: 'Appearance' },\n    },\n    compact: {\n      control: 'boolean',\n      description: 'Reduced cell padding.',\n      table: { category: 'Appearance' },\n    },\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters(docsOverview),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n}"
+                },
+                {
+                    "name": "rows",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Row[]",
+                    "defaultValue": "[\n  { name: 'Ada Lovelace', role: 'Engineer', score: 98, status: 'active' },\n  { name: 'Grace Hopper', role: 'Admiral', score: 94, status: 'active' },\n  { name: 'Katherine Johnson', role: 'Mathematician', score: 97, status: 'away' },\n]"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "defaultValue": "[AuTable, AuTableColumn, AuTableCellDef, AuBadge]"
+                },
+                {
+                    "name": "Striped",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { striped: true },\n  render: Default.render,\n}"
                 }
             ],
             "projects/components/src/lib/textarea/textarea.stories.ts": [
@@ -7154,6 +7225,30 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/table/table.stories.ts": [
+                {
+                    "name": "Row",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 188
+                },
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuTable>",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "Story",
@@ -7388,19 +7483,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/pagination/pagination.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuPagination>",
-                    "file": "projects/components/src/lib/pagination/pagination.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/popover/popover.stories.ts": [
                 {
                     "name": "Story",
@@ -7408,6 +7490,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj",
                     "file": "projects/components/src/lib/popover/popover.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/pagination/pagination.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuPagination>",
+                    "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7499,19 +7594,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<SwitchStoryArgs>",
                     "file": "projects/components/src/lib/switch/switch.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/table/table.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj",
-                    "file": "projects/components/src/lib/table/table.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -10036,6 +10118,46 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "rows",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Striped",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Row",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

@@ -13,8 +13,8 @@ const cache = new Map<string, string>();
 
 function parseA11y(line: string): StoryDocsA11yRow {
   const tick = line.match(/^(`[^`]+`)\s+(.+)$/);
-  if (tick) {
-    return { topic: tick[1]!, detail: tick[2]! };
+  if (tick?.[1] && tick[2]) {
+    return { topic: tick[1], detail: tick[2] };
   }
   const colon = line.indexOf(': ');
   if (colon > 0 && colon < 60) {

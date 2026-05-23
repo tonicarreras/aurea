@@ -89,10 +89,11 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByRole('heading', { name: 'Team members' })).toBeVisible();
+    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();
     const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });
     await userEvent.click(sortBtn);
-    expect(canvas.getAllByRole('cell')[0]).toHaveTextContent('Ada Lovelace');
+    const cells = await canvas.findAllByRole('cell');
+    await expect(cells[0]).toHaveTextContent('Ada Lovelace');
   },
 };
 

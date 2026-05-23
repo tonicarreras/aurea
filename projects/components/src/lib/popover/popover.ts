@@ -117,7 +117,7 @@ export class AuPopover {
     if (!(target instanceof Node)) {
       return;
     }
-    const host = this.host.nativeElement;
+    const host = this.host.nativeElement as HTMLElement;
     const panel = this.panelRef()?.nativeElement;
     if (host.contains(target) || panel?.contains(target)) {
       return;

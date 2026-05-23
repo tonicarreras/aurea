@@ -60,6 +60,6 @@ export class AuPagination {
   }
 
   protected showEllipsisBefore(index: number, pages: number[]): boolean {
-    return index > 0 && pages[index]! - pages[index - 1]! > 1;
+    return index > 0 && pages[index] - pages[index - 1] > 1;
   }
 }

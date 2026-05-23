@@ -29,23 +29,21 @@ import { AuSkeleton } from '@aurea-design-system/components';
       </div>
     </div>
   `,
-  styles: [
-    `
-      .docs-skeleton-profile {
-        display: flex;
-        gap: var(--au-space-4);
-        align-items: flex-start;
-        width: 100%;
-      }
+  styles: `
+    .docs-skeleton-profile {
+      display: flex;
+      gap: var(--au-space-4);
+      align-items: flex-start;
+      width: 100%;
+    }
 
-      .docs-skeleton-profile__lines {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: var(--au-space-2);
-        min-width: 0;
-      }
-    `,
-  ],
+    .docs-skeleton-profile__lines {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--au-space-2);
+      min-width: 0;
+    }
+  `,
 })
 export class SkeletonDemo {}
