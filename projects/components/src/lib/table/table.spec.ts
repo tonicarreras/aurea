@@ -49,7 +49,7 @@ class TableHost {
   ];
   description = 'Team roster';
   sort = null as { column: string; direction: 'asc' | 'desc' | null } | null;
-  sortChanges: { column: string; direction: 'asc' | 'desc' | null } | null[] = [];
+  sortChanges: ({ column: string; direction: 'asc' | 'desc' | null } | null)[] = [];
 
   onSortChange(state: { column: string; direction: 'asc' | 'desc' | null } | null): void {
     this.sort = state;
