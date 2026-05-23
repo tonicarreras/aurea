@@ -1,82 +1,107 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuTable, AuTableSortHeader } from './table';
+import { AuTableCellDef } from './au-table-cell-def.directive';
+import { AuTableColumn } from './au-table-column';
+import { AuTable } from './table';
+
+@Component({
+  imports: [AuTable, AuTableColumn],
+  template: `
+    <au-table
+      [data]="rows"
+      title="People"
+      caption="People"
+      [(sort)]="sort"
+    >
+      <au-table-column
+        name="name"
+        header="Name"
+        [sortable]="true"
+        cellVariant="primary"
+      />
+      <au-table-column
+        name="role"
+        header="Role"
+        cellVariant="secondary"
+      />
+      <au-table-column
+        name="score"
+        header="Score"
+        align="end"
+        [sortable]="true"
+      />
+    </au-table>
+  `,
+})
+class TableHost {
+  rows = [
+    { name: 'Grace', role: 'Admiral', score: 94 },
+    { name: 'Ada', role: 'Engineer', score: 98 },
+  ];
+  sort = null as { column: string; direction: 'asc' | 'desc' | null } | null;
+}
+
+@Component({
+  imports: [AuTable, AuTableColumn, AuTableCellDef],
+  template: `
+    <au-table [data]="rows">
+      <au-table-column
+        name="label"
+        header="Label"
+      >
+        <ng-template
+          auTableCell
+          let-row
+        >
+          <span class="custom">{{ row.label }}</span>
+        </ng-template>
+      </au-table-column>
+    </au-table>
+  `,
+})
+class CustomCellHost {
+  rows = [{ label: 'X' }];
+}
 
 describe('AuTable', () => {
-  let fixture: ComponentFixture<AuTable>;
+  let fixture: ComponentFixture<TableHost>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AuTable],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(AuTable);
+    await TestBed.configureTestingModule({ imports: [TableHost] }).compileComponents();
+    fixture = TestBed.createComponent(TableHost);
     fixture.detectChanges();
   });
 
-  it('creates', () => {
-    expect(fixture.componentInstance).toBeTruthy();
+  it('renders title and column headers', () => {
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('.au-table__title')?.textContent?.trim()).toBe('People');
+    expect(root.textContent).toContain('Name');
+    expect(root.textContent).toContain('Score');
   });
 
-  it('sets striped and compact host attributes', () => {
-    fixture.componentRef.setInput('striped', true);
-    fixture.componentRef.setInput('compact', true);
+  it('renders row cells from column keys', () => {
+    const cells = (fixture.nativeElement as HTMLElement).querySelectorAll('tbody td');
+    expect(cells.length).toBe(6);
+    expect(cells[0]?.textContent?.trim()).toBe('Grace');
+  });
+
+  it('client-sorts when a sortable header is activated', () => {
+    const btn = (fixture.nativeElement as HTMLElement).querySelector(
+      '.au-table__sort-btn',
+    ) as HTMLButtonElement;
+    btn.click();
     fixture.detectChanges();
-    const host = fixture.nativeElement as HTMLElement;
-    expect(host.getAttribute('data-au-striped')).toBe('');
-    expect(host.getAttribute('data-au-compact')).toBe('');
+    const first = (fixture.nativeElement as HTMLElement).querySelector('tbody tr td');
+    expect(first?.textContent?.trim()).toBe('Ada');
   });
 });
 
-describe('AuTableSortHeader', () => {
-  let fixture: ComponentFixture<AuTableSortHeader>;
-  let component: AuTableSortHeader;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AuTableSortHeader],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(AuTableSortHeader);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('cycles sort direction null → asc → desc → null', () => {
-    const directions: Array<'asc' | 'desc' | null> = [];
-    component.sort.subscribe((d) => directions.push(d));
-    const btn = fixture.nativeElement.querySelector('.au-table__sort-btn') as HTMLButtonElement;
-    btn.click();
-    fixture.componentRef.setInput('sortDirection', 'asc');
-    fixture.detectChanges();
-    btn.click();
-    fixture.componentRef.setInput('sortDirection', 'desc');
-    fixture.detectChanges();
-    btn.click();
-    fixture.componentRef.setInput('sortDirection', null);
-    fixture.detectChanges();
-    btn.click();
-    expect(directions).toEqual(['asc', 'desc', null, 'asc']);
-  });
-
-  it('maps aria-sort and icons', () => {
-    fixture.componentRef.setInput('sortDirection', 'asc');
-    fixture.detectChanges();
-    const host = fixture.nativeElement as HTMLElement;
-    const btn = host.querySelector('.au-table__sort-btn') as HTMLButtonElement;
-    expect(host.getAttribute('aria-sort')).toBe('ascending');
-    expect(btn.getAttribute('aria-sort')).toBeNull();
-    expect(component.ariaSort()).toBe('ascending');
-    expect(component.sortIcon()).toBe('↑');
-
-    fixture.componentRef.setInput('sortDirection', 'desc');
-    fixture.detectChanges();
-    expect(component.ariaSort()).toBe('descending');
-    expect(component.sortIcon()).toBe('↓');
-
-    fixture.componentRef.setInput('sortDirection', null);
-    fixture.detectChanges();
-    expect(component.ariaSort()).toBe('none');
-    expect(component.sortIcon()).toBe('↕');
+describe('AuTable custom cell', () => {
+  it('projects auTableCell template', async () => {
+    await TestBed.configureTestingModule({ imports: [CustomCellHost] }).compileComponents();
+    const f = TestBed.createComponent(CustomCellHost);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.custom')?.textContent).toBe('X');
   });
 });

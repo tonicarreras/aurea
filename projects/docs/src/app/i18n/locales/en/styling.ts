@@ -299,10 +299,15 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-duration-default', description: 'Width transition (determinate).' },
   ],
   table: [
-    { token: '--au-color-surface-raised', description: 'Table shell background.' },
-    { token: '--au-color-border-subtle', description: 'Cell and outer borders.' },
-    { token: '--au-text-sm', description: 'Cell typography.' },
-    { token: '--au-space-3', description: 'Default cell padding (compact uses `--au-space-2`).' },
+    { token: '--au-color-surface-raised', description: 'Table shell and row background.' },
+    { token: '--au-color-border-subtle', description: 'Outer shell and row dividers.' },
+    { token: '--au-color-border-default', description: 'Header separator.' },
+    { token: '--au-text-sm', description: 'Header and body typography.' },
+    {
+      token: '--au-table-cell-x / --au-table-cell-y',
+      description: 'Cell padding (host; compact tightens both).',
+    },
+    { token: '--au-table-row-hover', description: 'Row hover background (host override).' },
   ],
   tooltip: [
     { token: '--au-color-surface-inverted', description: 'Fondo del globo (clase `.au-tooltip`).' },

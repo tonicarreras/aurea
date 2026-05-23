@@ -13,8 +13,10 @@ import {
   AuPagination,
   AuSnackbar,
   AuTable,
-  AuTableSortHeader,
+  AuTableCellDef,
+  AuTableColumn,
   type AuBreadcrumbItem,
+  type AuTableSortState,
 } from '@aurea-design-system/components';
 
 import { DocsLocaleService } from '../core/docs-locale.service';
@@ -53,7 +55,8 @@ const SEED: PersonRow[] = [
     AuPagination,
     AuSnackbar,
     AuTable,
-    AuTableSortHeader,
+    AuTableColumn,
+    AuTableCellDef,
     FormField,
   ],
   template: `
@@ -76,51 +79,51 @@ const SEED: PersonRow[] = [
         >
       </div>
 
-      <au-table [striped]="true">
-        <thead>
-          <tr>
-            <th
-              auTableSortHeader
-              [sortDirection]="nameSort()"
-              (sort)="nameSort.set($event); page.set(1)"
-            >
-              {{ t().colName }}
-            </th>
-            <th scope="col">{{ t().colRole }}</th>
-            <th
-              scope="col"
-              class="docs-crud-demo__actions-col"
-            >
-              {{ t().colActions }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of pageRows(); track row.id) {
-            <tr>
-              <td>{{ row.name }}</td>
-              <td>{{ row.role }}</td>
-              <td class="docs-crud-demo__actions-col">
-                <au-menu>
-                  <au-button
-                    auMenuTrigger
-                    variant="ghost"
-                    size="sm"
-                    type="button"
-                    [attr.aria-label]="t().colActions + ' — ' + row.name"
-                    >⋯</au-button
-                  >
-                  <au-menu-item (select)="openEdit(row)">{{ t().edit }}</au-menu-item>
-                  <au-menu-item (select)="openDelete(row)">{{ t().delete }}</au-menu-item>
-                </au-menu>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="3">—</td>
-            </tr>
-          }
-        </tbody>
+      <au-table
+        [data]="pageRows()"
+        [striped]="true"
+        title="People"
+        [description]="t().lead"
+        caption="People"
+        [clientSort]="false"
+        [(sort)]="tableSort"
+        (sortChange)="page.set(1)"
+        emptyMessage="—"
+      >
+        <au-table-column
+          name="name"
+          [header]="t().colName"
+          [sortable]="true"
+          cellVariant="primary"
+        />
+        <au-table-column
+          name="role"
+          [header]="t().colRole"
+          cellVariant="secondary"
+        />
+        <au-table-column
+          name="actions"
+          [header]="t().colActions"
+          align="center"
+        >
+          <ng-template
+            auTableCell
+            let-row
+          >
+            <au-menu>
+              <au-button
+                auMenuTrigger
+                variant="ghost"
+                size="sm"
+                type="button"
+                [attr.aria-label]="t().colActions + ' — ' + row.name"
+                >⋯</au-button
+              >
+              <au-menu-item (select)="openEdit(row)">{{ t().edit }}</au-menu-item>
+              <au-menu-item (select)="openDelete(row)">{{ t().delete }}</au-menu-item>
+            </au-menu>
+          </ng-template>
+        </au-table-column>
       </au-table>
 
       <au-pagination
@@ -183,7 +186,7 @@ const SEED: PersonRow[] = [
             >{{ t().cancel }}</au-button
           >
           <au-button
-            variant="primary"
+            variant="secondary"
             type="button"
             (click)="confirmDelete()"
             >{{ t().delete }}</au-button
@@ -220,11 +223,6 @@ const SEED: PersonRow[] = [
       flex: 1 1 14rem;
       min-width: 12rem;
     }
-
-    .docs-crud-demo__actions-col {
-      width: 5rem;
-      text-align: right;
-    }
   `,
 })
 export class DocsCrudDemo {
@@ -237,7 +235,7 @@ export class DocsCrudDemo {
   readonly rows = signal<PersonRow[]>([...SEED]);
   readonly filter = signal('');
   readonly page = signal(1);
-  readonly nameSort = signal<'asc' | 'desc' | null>(null);
+  readonly tableSort = signal<AuTableSortState | null>(null);
 
   readonly editOpen = signal(false);
   readonly deleteOpen = signal(false);
@@ -259,11 +257,11 @@ export class DocsCrudDemo {
     if (q) {
       list = list.filter((r) => r.name.toLowerCase().includes(q));
     }
-    const sort = this.nameSort();
-    if (sort) {
+    const sort = this.tableSort();
+    if (sort?.column === 'name' && sort.direction) {
       list = [...list].sort((a, b) => {
         const cmp = a.name.localeCompare(b.name);
-        return sort === 'asc' ? cmp : -cmp;
+        return sort.direction === 'asc' ? cmp : -cmp;
       });
     }
     return list;

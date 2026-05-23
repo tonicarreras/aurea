@@ -140,11 +140,11 @@ readonly loginForm = form(this.model, (m) => {
       },
       {
         heading: 'Pantalla CRUD',
-        body: 'Combina au-breadcrumb, au-table con auTableSortHeader, au-pagination, au-menu para acciones por fila y au-popover para filtros.',
+        body: 'Combina au-breadcrumb, au-table con au-table-column, au-pagination, au-menu para acciones por fila y au-popover para filtros.',
         code: `<au-breadcrumb [items]="crumbs" />
-<au-table striped>
-  <thead>...</thead>
-  <tbody>...</tbody>
+<au-table [data]="rows" striped>
+  <au-table-column name="name" header="Nombre" sortable />
+  <au-table-column name="role" header="Rol" />
 </au-table>
 <au-pagination [page]="page()" [pageCount]="totalPages" (pageChange)="loadPage($event)" />`,
         codeLanguage: 'html',

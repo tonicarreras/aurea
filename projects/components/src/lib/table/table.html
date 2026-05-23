@@ -1,5 +1,111 @@
-<div class="au-table__scroll">
-  <table class="au-table__grid">
-    <ng-content />
-  </table>
+<div class="au-table__shell">
+  @if (title()) {
+    <div class="au-table__header">
+      <h2 class="au-table__title">{{ title() }}</h2>
+      @if (description()) {
+        <p class="au-table__description">{{ description() }}</p>
+      }
+    </div>
+  }
+  <div class="au-table__scroll">
+    <table class="au-table__grid">
+      @if (caption()) {
+        <caption class="au-table__caption--sr">
+          {{
+            caption()
+          }}
+        </caption>
+      }
+      <thead>
+        <tr>
+          @for (col of columns(); track col.name()) {
+            <th
+              scope="col"
+              [class]="headerClasses(col)"
+              [attr.aria-sort]="headerAriaSort(col)"
+            >
+              @if (col.sortable()) {
+                <button
+                  type="button"
+                  class="au-table__sort-btn"
+                  [attr.aria-label]="'Sort by ' + col.header()"
+                  (click)="toggleSort(col.name())"
+                >
+                  <span class="au-table__sort-label">{{ col.header() }}</span>
+                  <span
+                    class="au-table__sort-icon"
+                    aria-hidden="true"
+                  >
+                    @switch (columnSortDirection(col.name())) {
+                      @case ('asc') {
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M8 3v10M4.5 6.5 8 3l3.5 3.5" />
+                        </svg>
+                      }
+                      @case ('desc') {
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M8 13V3M4.5 9.5 8 13l3.5-3.5" />
+                        </svg>
+                      }
+                      @default {
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M5.5 6 8 3.5 10.5 6M5.5 10 8 12.5 10.5 10" />
+                        </svg>
+                      }
+                    }
+                  </span>
+                </button>
+              } @else {
+                {{ col.header() }}
+              }
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of viewRows(); track trackRow($index, row)) {
+          <tr>
+            @for (col of columns(); track col.name()) {
+              <td [class]="cellClasses(col)">
+                @if (col.cellDef()?.templateRef; as tpl) {
+                  <ng-container
+                    [ngTemplateOutlet]="tpl"
+                    [ngTemplateOutletContext]="cellContext(row)"
+                  />
+                } @else {
+                  {{ formatCell(col, row) }}
+                }
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr class="au-table__empty-row">
+            <td [attr.colspan]="columns().length">{{ emptyMessage() }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <ng-content select="au-table-column" />
 </div>

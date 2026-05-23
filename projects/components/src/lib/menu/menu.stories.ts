@@ -47,7 +47,7 @@ export const Default: Story = {
     const open = signal(false);
     return {
       props: { open },
-      ...storyImports,
+      moduleMetadata: storyImports,
       template: `
         <au-menu [(open)]="open">
           <au-button auMenuTrigger variant="outline">Actions</au-button>

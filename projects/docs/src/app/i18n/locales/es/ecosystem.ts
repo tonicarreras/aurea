@@ -65,7 +65,7 @@ ng add @aurea-design-system/components`,
       },
       {
         heading: 'Tablas y paginador',
-        body: '<code>mat-table</code> + <code>mat-paginator</code> → <code>au-table</code> + <code>au-pagination</code> y <code>auTableSortHeader</code>.',
+        body: '<code>mat-table</code> + <code>matColumnDef</code> → <code>au-table</code> + <code>au-table-column</code> + <code>au-pagination</code>.',
       },
     ],
   },

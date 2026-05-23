@@ -302,10 +302,15 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-duration-default', description: 'Transición de ancho (determinado).' },
   ],
   table: [
-    { token: '--au-color-surface-raised', description: 'Fondo del shell de tabla.' },
-    { token: '--au-color-border-subtle', description: 'Bordes de celdas y contorno.' },
-    { token: '--au-text-sm', description: 'Tipografía de celdas.' },
-    { token: '--au-space-3', description: 'Padding por defecto (compact usa `--au-space-2`).' },
+    { token: '--au-color-surface-raised', description: 'Fondo del shell y de las filas.' },
+    { token: '--au-color-border-subtle', description: 'Contorno exterior y separadores de fila.' },
+    { token: '--au-color-border-default', description: 'Línea bajo la cabecera.' },
+    { token: '--au-text-sm', description: 'Tipografía de cabecera y celdas.' },
+    {
+      token: '--au-table-cell-x / --au-table-cell-y',
+      description: 'Padding de celdas (host; compact lo reduce).',
+    },
+    { token: '--au-table-row-hover', description: 'Fondo al pasar el ratón (override en host).' },
   ],
   tooltip: [
     { token: '--au-color-surface-inverted', description: 'Fondo del globo (clase `.au-tooltip`).' },

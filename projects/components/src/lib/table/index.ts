@@ -1,1 +1,9 @@
-export { AuTable, AuTableSortHeader, type AuTableSortDirection } from './table';
+export { AuTable } from './table';
+export { AuTableColumn } from './au-table-column';
+export { AuTableCellDef } from './au-table-cell-def.directive';
+export type {
+  AuTableAlign,
+  AuTableCellVariant,
+  AuTableSortDirection,
+  AuTableSortState,
+} from './table-types';

@@ -10,8 +10,7 @@ import { fileURLToPath } from 'node:url';
 const lib = join(dirname(fileURLToPath(import.meta.url)), '../src/lib');
 const files = globSync('**/*.stories.ts', { cwd: lib });
 
-const importLine =
-  "import { storyMetaParameters } from '../story-docs/story-meta-parameters';";
+const importLine = "import { storyMetaParameters } from '../story-docs/story-meta-parameters';";
 
 for (const rel of files) {
   const path = join(lib, rel);
@@ -31,7 +30,9 @@ for (const rel of files) {
 
   if (
     /const meta: Meta[\s\S]*?tags: \['autodocs'[\s\S]*?\n  argTypes:/.test(src) &&
-    !/parameters: storyMetaParameters/.test(src.split('const meta:')[1]?.split('export default')[0] ?? '')
+    !/parameters: storyMetaParameters/.test(
+      src.split('const meta:')[1]?.split('export default')[0] ?? '',
+    )
   ) {
     src = src.replace(
       /(  tags: \['autodocs[^\]]*\],\n)(  argTypes:)/,

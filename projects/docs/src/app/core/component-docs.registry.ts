@@ -502,11 +502,11 @@ options: AuSelectOption[] = [
     selector: 'au-table',
     summary: 'Tabla semántica con modos striped/compact y cabeceras ordenables.',
     demoComponent: TableDemo,
-    snippet: `import { AuTable, AuTableSortHeader } from '@aurea-design-system/components';
+    snippet: `import { AuTable, AuTableColumn } from '@aurea-design-system/components';
 
-<au-table striped>
-  <thead><tr><th auTableSortHeader>Name</th></tr></thead>
-  <tbody><tr><td>Ada</td></tr></tbody>
+<au-table [data]="rows" title="Team">
+  <au-table-column name="name" header="Name" sortable cellVariant="primary" />
+  <au-table-column name="role" header="Role" />
 </au-table>`,
   },
   {

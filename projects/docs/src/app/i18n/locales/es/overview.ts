@@ -831,8 +831,8 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   table: {
     intro: [
-      'Envoltorio semántico alrededor de `<table>` nativo. Modos opcionales `striped` y `compact`.',
-      'Columnas ordenables con `th[auTableSortHeader]`, `aria-sort` y ciclo none → asc → desc.',
+      'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
+      'Celdas custom: `ng-template[auTableCell] let-row` en la columna. Orden: `sortable` + `[(sort)]` o `clientSort`.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -849,15 +849,22 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Host `au-table`', detail: 'Envuelve `<table>` proyectada; atributos de modo.' },
-      { region: 'Cabecera ordenable', detail: 'Botón en `<th>` con `aria-sort` e icono.' },
+      {
+        region: '`au-table`',
+        detail: 'Cabecera, `<table>` y cuerpo desde `[data]` + columnas hijas.',
+      },
+      {
+        region: '`au-table-column`',
+        detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`.',
+      },
+      { region: '`auTableCell`', detail: 'Plantilla opcional para celdas ricas (badges, menús).' },
     ],
     accessibility: [
       'Conserva semántica nativa (`thead`, `tbody`, `th scope`).',
       'Botones de orden son botones reales con `aria-sort` según dirección.',
     ],
     keyboard: ['Tab a botones de orden; Enter/Espacio alternan el ciclo de orden.'],
-    relatedExports: ['AuTable', 'AuTableSortHeader'],
+    relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
   },
   tooltip: {
     intro: [

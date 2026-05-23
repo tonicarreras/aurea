@@ -708,23 +708,47 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     ],
   },
   table: {
-    importNames: ['AuTable', 'AuTableSortHeader'],
+    importNames: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
     sections: [
       {
         title: 'AuTable',
-        description: 'Envuelve markup `<table>` nativo en el slot por defecto.',
+        description: 'Rejilla de datos; declara columnas con `au-table-column`.',
         rows: [
+          i('data', 'readonly unknown[]', 'Filas del cuerpo de la tabla.', '—'),
+          i('title', 'string', 'Título visible sobre la rejilla.', "''"),
+          i('description', 'string', 'Texto de apoyo bajo `title`.', "''"),
+          i('caption', 'string', 'Nombre accesible de la tabla.', "''"),
           i('striped', 'boolean', 'Fondo alterno en filas.', 'false'),
           i('compact', 'boolean', 'Padding reducido en celdas.', 'false'),
+          i('stickyHeader', 'boolean', 'Cabecera fija al hacer scroll.', 'false'),
+          i('clientSort', 'boolean', 'Ordena filas al pulsar cabeceras.', 'true'),
+          i('sort', 'AuTableSortState | null', 'Columna y dirección de orden activas.', 'null'),
+          o('sortChange', 'AuTableSortState | null', 'Al alternar el orden.'),
+          i('emptyMessage', 'string', 'Texto si `data` está vacío.', "'No data'"),
         ],
       },
       {
-        title: 'AuTableSortHeader',
-        description: 'En `<th auTableSortHeader>`.',
+        title: 'AuTableColumn',
+        description: 'Hijo de `au-table`; una por columna.',
         rows: [
-          i('sortDirection', "'asc' | 'desc' | null", 'Dirección de orden actual.', 'null'),
-          o('sort', 'AuTableSortDirection', 'Ciclo none → asc → desc al activar.'),
+          i('name', 'string', 'Clave de columna (propiedad de la fila).', '—'),
+          i('header', 'string', 'Etiqueta de cabecera.', '—'),
+          i('sortable', 'boolean', 'Control de orden en cabecera.', 'false'),
+          i('align', "'start' | 'end' | 'center'", 'Alineación de celdas.', "'start'"),
+          i(
+            'cellVariant',
+            "'default' | 'primary' | 'secondary'",
+            'Énfasis de celda por defecto.',
+            "'default'",
+          ),
+          i('accessor', '(row) => unknown', 'Lector de valor personalizado.', 'undefined'),
         ],
+      },
+      {
+        title: 'AuTableCellDef',
+        description:
+          '`ng-template[auTableCell] let-row` dentro de `au-table-column` para celdas custom.',
+        rows: [],
       },
     ],
   },

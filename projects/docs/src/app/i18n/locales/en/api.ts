@@ -708,23 +708,52 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     ],
   },
   table: {
-    importNames: ['AuTable', 'AuTableSortHeader'],
+    importNames: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
     sections: [
       {
         title: 'AuTable',
-        description: 'Wrap native `<table>` markup in the default slot.',
+        description: 'Data grid; declare columns with `au-table-column`.',
         rows: [
+          i('data', 'readonly unknown[]', 'Rows rendered in the table body.', '—'),
+          i('title', 'string', 'Visible heading above the grid.', "''"),
+          i('description', 'string', 'Supporting line under `title`.', "''"),
+          i('caption', 'string', 'Screen-reader table name.', "''"),
           i('striped', 'boolean', 'Alternating row background.', 'false'),
           i('compact', 'boolean', 'Reduced cell padding.', 'false'),
+          i('stickyHeader', 'boolean', 'Sticky header while scrolling.', 'false'),
+          i(
+            'clientSort',
+            'boolean',
+            'Sort rows inside the table when headers are clicked.',
+            'true',
+          ),
+          i('sort', 'AuTableSortState | null', 'Active sort column and direction.', 'null'),
+          o('sortChange', 'AuTableSortState | null', 'When the user toggles sort.'),
+          i('emptyMessage', 'string', 'Text when `data` is empty.', "'No data'"),
         ],
       },
       {
-        title: 'AuTableSortHeader',
-        description: 'On `<th auTableSortHeader>`.',
+        title: 'AuTableColumn',
+        description: 'Child of `au-table`; one per column.',
         rows: [
-          i('sortDirection', "'asc' | 'desc' | null", 'Current sort direction.', 'null'),
-          o('sort', 'AuTableSortDirection', 'Cycles none → asc → desc on activate.'),
+          i('name', 'string', 'Column key (row property).', '—'),
+          i('header', 'string', 'Header label.', '—'),
+          i('sortable', 'boolean', 'Sort control in header.', 'false'),
+          i('align', "'start' | 'end' | 'center'", 'Cell alignment.', "'start'"),
+          i(
+            'cellVariant',
+            "'default' | 'primary' | 'secondary'",
+            'Default cell emphasis.',
+            "'default'",
+          ),
+          i('accessor', '(row) => unknown', 'Custom value reader.', 'undefined'),
         ],
+      },
+      {
+        title: 'AuTableCellDef',
+        description:
+          '`ng-template[auTableCell] let-row` inside `au-table-column` for custom cells.',
+        rows: [],
       },
     ],
   },

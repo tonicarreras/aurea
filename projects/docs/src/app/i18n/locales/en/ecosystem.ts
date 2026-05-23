@@ -69,7 +69,7 @@ ng add @aurea-design-system/components`,
       },
       {
         heading: 'Tables and paginator',
-        body: '<code>mat-table</code> + <code>mat-paginator</code> → semantic table inside <code>au-table</code> + <code>au-pagination</code>. Wire sort headers with <code>auTableSortHeader</code>.',
+        body: '<code>mat-table</code> + <code>matColumnDef</code> → <code>au-table</code> + <code>au-table-column</code> + <code>au-pagination</code>.',
       },
     ],
   },

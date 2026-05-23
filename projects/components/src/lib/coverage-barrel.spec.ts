@@ -67,7 +67,8 @@ describe('library barrel exports', () => {
     expect(snackbar.AuSnackbar).toBeDefined();
     expect(switchMod.AuSwitch).toBeDefined();
     expect(table.AuTable).toBeDefined();
-    expect(table.AuTableSortHeader).toBeDefined();
+    expect(table.AuTableColumn).toBeDefined();
+    expect(table.AuTableCellDef).toBeDefined();
     expect(tabs.AuTabs).toBeDefined();
     expect(tabs.AuTab).toBeDefined();
     expect(tabs.AuTabPanel).toBeDefined();

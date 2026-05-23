@@ -837,8 +837,8 @@ export const STORY_OVERVIEW_SOURCE = {
   },
   table: {
     intro: [
-      'Semantic table shell around native `<table>` markup. Optional `striped` and `compact` density.',
-      'Sortable columns use `th[auTableSortHeader]` with `aria-sort` and a cycle none → asc → desc.',
+      'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
+      'Custom cells: `ng-template[auTableCell] let-row` inside a column. Sort with `sortable` + `[(sort)]` or `clientSort`.',
     ],
     whenToUse: [
       'Tabular data with headers and body rows.',
@@ -850,12 +850,16 @@ export const STORY_OVERVIEW_SOURCE = {
     ],
     anatomy: [
       {
-        region: 'Host `au-table`',
-        detail: 'Wraps projected `<table>`; data attributes for modes.',
+        region: '`au-table`',
+        detail: 'Renders header, `<table>`, and body from `[data]` + column children.',
       },
       {
-        region: 'Sort header',
-        detail: 'Button in `<th>` with `aria-sort` and icon.',
+        region: '`au-table-column`',
+        detail: 'Defines `name`, `header`, `sortable`, `align`, `cellVariant`.',
+      },
+      {
+        region: '`auTableCell`',
+        detail: 'Optional template for rich cell content (badges, menus).',
       },
     ],
     accessibility: [

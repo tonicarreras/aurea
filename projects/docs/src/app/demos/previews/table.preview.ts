@@ -1,32 +1,40 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuTable } from '@aurea-design-system/components';
+import { AuTable, AuTableColumn } from '@aurea-design-system/components';
 
 @Component({
   selector: 'docs-preview-table',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuTable],
+  imports: [AuTable, AuTableColumn],
   template: `
     <au-table
-      [striped]="true"
-      [compact]="true"
+      [data]="rows"
+      title="Team"
+      description="Docs preview."
+      caption="Team"
     >
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Role</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Ada</td>
-          <td>Engineer</td>
-        </tr>
-        <tr>
-          <td>Grace</td>
-          <td>Admiral</td>
-        </tr>
-      </tbody>
+      <au-table-column
+        name="name"
+        header="Name"
+        [sortable]="true"
+        cellVariant="primary"
+      />
+      <au-table-column
+        name="role"
+        header="Role"
+        cellVariant="secondary"
+      />
+      <au-table-column
+        name="score"
+        header="Score"
+        align="end"
+        [sortable]="true"
+      />
     </au-table>
   `,
 })
-export class TableDemo {}
+export class TableDemo {
+  readonly rows = [
+    { name: 'Ada Lovelace', role: 'Engineer', score: 98 },
+    { name: 'Grace Hopper', role: 'Admiral', score: 94 },
+  ];
+}
