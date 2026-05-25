@@ -18,6 +18,8 @@
   --docs-sidebar-breakpoint: 68rem;
   --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 65%, transparent);
   --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 35%, transparent);
+  --docs-aurea-box-stroke: color-mix(in srgb, var(--au-color-border-default) 28%, transparent);
+  --docs-aurea-spiral-stroke: color-mix(in srgb, var(--au-color-action-primary) 10%, transparent);
   --docs-elevated-shadow: 0 4px 24px
     color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
   --docs-code-bg: #f4f6f9;
@@ -63,6 +65,8 @@
   --au-color-border-default: #434c5c;
   --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent);
   --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 22%, transparent);
+  --docs-aurea-box-stroke: color-mix(in srgb, var(--au-color-border-default) 24%, transparent);
+  --docs-aurea-spiral-stroke: color-mix(in srgb, var(--au-color-action-primary) 12%, transparent);
   --docs-glow: transparent;
   --docs-mesh-1: color-mix(in srgb, var(--au-color-action-primary) 7%, transparent);
   --docs-mesh-2: color-mix(in srgb, #c9a227 5%, transparent);
