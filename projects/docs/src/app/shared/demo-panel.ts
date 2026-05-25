@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+
+import { DocsLocaleService } from '../core/docs-locale.service';
 
 @Component({
   selector: 'docs-demo-panel',
@@ -7,12 +9,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     <section
       class="docs-demo"
       [class.docs-demo--compact]="compact()"
-      aria-label="Vista previa en vivo"
+      [attr.aria-label]="ui().ariaLabel"
     >
       @if (!compact()) {
         <header class="docs-demo__header">
-          <h2 class="docs-demo__title">Vista previa</h2>
-          <span class="docs-demo__badge">Live</span>
+          <h2 class="docs-demo__title">{{ ui().title }}</h2>
+          <span class="docs-demo__badge">{{ ui().badge }}</span>
         </header>
       }
       <div class="docs-demo__canvas">
@@ -82,6 +84,10 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   `,
 })
 export class DemoPanel {
+  private readonly i18n = inject(DocsLocaleService);
+
+  readonly ui = computed(() => this.i18n.messages().demoPanel);
+
   /** Oculta cabecera «Vista previa» (p. ej. en bloques de Examples). */
   readonly compact = input(false);
 }

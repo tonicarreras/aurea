@@ -1,5 +1,9 @@
+import type { DemoFixturesMessages } from './fixtures';
 import type { EcosystemMessages } from './ecosystem';
+import type { ExampleLiveMessages } from './example-live';
 import type { GuidesMessages } from './guides';
+import type { DocsNavMessages } from './nav';
+import type { PreviewMessages } from './previews';
 
 export interface DocsMessages {
   shell: {
@@ -53,13 +57,19 @@ export interface DocsMessages {
   getStarted: {
     title: string;
     lead: string;
+    componentSnippet: string;
     steps: {
       requirements: { title: string; intro: string };
       install: { title: string; expand: string };
       tokens: { title: string; intro: string; expand: string };
       firstComponent: { title: string; expand: string };
       ngAdd: { title: string; intro: string; expand: string };
-      nextGuides: { title: string; intro: string };
+      nextGuides: {
+        title: string;
+        intro: string;
+        adoptionLink: string;
+        crudDemoLink: string;
+      };
     };
   };
   themes: {
@@ -115,10 +125,27 @@ export interface DocsMessages {
     stylingLead: (title: string) => string;
     themesLink: string;
     examplesLead: string;
+    exampleFallbackTitle: string;
     notFoundTitle: string;
     notFoundLead: string;
     backToIndex: string;
+    apiTable: {
+      colName: string;
+      colType: string;
+      colDescription: string;
+      colDefault: string;
+      colKind: string;
+    };
   };
+  demoPanel: {
+    ariaLabel: string;
+    title: string;
+    badge: string;
+  };
+  fixtures: DemoFixturesMessages;
+  previews: PreviewMessages;
+  exampleLive: ExampleLiveMessages;
+  nav: DocsNavMessages;
   overviewUi: {
     introSr: string;
     relatedExports: string;
@@ -131,5 +158,15 @@ export interface DocsMessages {
     hide: string;
     copy: string;
     copied: string;
+    copyAria: string;
+    copiedAria: string;
+    snippetAria: (language: string) => string;
+    lang: {
+      typescript: string;
+      css: string;
+      bash: string;
+      html: string;
+      text: string;
+    };
   };
 }

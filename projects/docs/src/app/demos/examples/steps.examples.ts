@@ -1,34 +1,22 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuStep, AuStepPanel, AuSteps } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-steps-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps
-      [(value)]="section"
-      ariaLabel="Documentation sections"
-      layout="tabs"
-    >
-      <button
-        type="button"
-        auStep="overview"
-      >
-        Overview
-      </button>
-      <button
-        type="button"
-        auStep="api"
-      >
-        API
-      </button>
-      <div auStepPanel="overview"><p>Overview content</p></div>
-      <div auStepPanel="api"><p>API reference</p></div>
+    <au-steps [(value)]="section" [ariaLabel]="t().tabsAria" layout="tabs">
+      <button type="button" auStep="overview">{{ t().overview }}</button>
+      <button type="button" auStep="api">{{ t().api }}</button>
+      <div auStepPanel="overview"><p>{{ t().overviewPanel }}</p></div>
+      <div auStepPanel="api"><p>{{ t().apiPanel }}</p></div>
     </au-steps>
   `,
 })
 export class ExampleStepsTabsDemo {
+  readonly t = docsExampleLive('steps');
   readonly section = model('overview');
 }
 
@@ -37,28 +25,15 @@ export class ExampleStepsTabsDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
-    <au-steps
-      [(value)]="section"
-      ariaLabel="On-page sections"
-      layout="sections"
-    >
-      <button
-        type="button"
-        auStep="intro"
-      >
-        Intro
-      </button>
-      <button
-        type="button"
-        auStep="usage"
-      >
-        Usage
-      </button>
-      <div auStepPanel="intro"><p id="intro">Introduction</p></div>
-      <div auStepPanel="usage"><p id="usage">Usage notes</p></div>
+    <au-steps [(value)]="section" [ariaLabel]="t().sectionsAria" layout="sections">
+      <button type="button" auStep="intro">{{ t().intro }}</button>
+      <button type="button" auStep="usage">{{ t().usage }}</button>
+      <div auStepPanel="intro"><p>{{ t().introPanel }}</p></div>
+      <div auStepPanel="usage"><p>{{ t().usagePanel }}</p></div>
     </au-steps>
   `,
 })
 export class ExampleStepsSectionsDemo {
+  readonly t = docsExampleLive('steps');
   readonly section = model('intro');
 }

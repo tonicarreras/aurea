@@ -1,16 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuBadge } from './badge';
 
-const docsOverview = getStoryOverview('badge');
 
 const meta: Meta<AuBadge> = {
   title: 'Aurea/Badge',
   component: AuBadge,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('badge'),
   argTypes: {
     variant: {
       control: 'select',

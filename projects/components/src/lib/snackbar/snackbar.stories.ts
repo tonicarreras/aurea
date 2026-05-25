@@ -1,19 +1,17 @@
 import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
 import { AuButton } from '../button/button';
 import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './snackbar';
 
-const docsOverview = getStoryOverview('snackbar');
 
 const meta: Meta<AuSnackbar> = {
   title: 'Aurea/Snackbar',
   component: AuSnackbar,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('snackbar'),
   argTypes: {
     open: { control: 'boolean', table: { category: 'State' } },
     message: { control: 'text', table: { category: 'Content' } },

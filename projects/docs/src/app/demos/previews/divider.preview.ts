@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuDivider } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-divider',
@@ -8,12 +9,14 @@ import { AuDivider } from '@aurea-design-system/components';
   template: `
     <div class="docs-preview docs-preview--stack">
       <div class="docs-demo-stack">
-        <p>Sección superior</p>
+        <p>{{ t().top }}</p>
         <au-divider />
-        <au-divider label="o" />
-        <p>Sección inferior</p>
+        <au-divider [label]="t().label" />
+        <p>{{ t().bottom }}</p>
       </div>
     </div>
   `,
 })
-export class DividerDemo {}
+export class DividerDemo {
+  readonly t = docsPreviewCopy('divider');
+}

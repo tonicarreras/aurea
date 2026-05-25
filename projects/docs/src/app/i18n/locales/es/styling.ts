@@ -322,3 +322,13 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-text-sm', description: 'Tamaño de fuente del mensaje.' },
   ],
 };
+
+/** Reserva si falta entrada en el mapa de styling. */
+export const DEFAULT_COMPONENT_STYLING_ES: ComponentStylingToken[] = [
+  { token: '--au-font-sans', description: 'Tipografía base del componente.' },
+  { token: '--au-color-text-primary', description: 'Texto principal.' },
+  { token: '--au-color-surface-raised', description: 'Superficie de fondo habitual.' },
+  { token: '--au-color-border-subtle', description: 'Bordes discretos.' },
+  { token: '--au-color-action-primary', description: 'Acento de foco y acciones.' },
+  { token: '--au-radius-md', description: 'Radio de esquina por defecto.' },
+];

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
@@ -14,7 +13,6 @@ import { AuInputText } from './input-text';
 
 type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
-const docsOverview = getStoryOverview('input-text');
 
 interface InputTextStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -37,7 +35,7 @@ const meta: Meta<InputTextStoryArgs> = {
   title: 'Aurea/InputText',
   component: AuInputText,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('input-text'),
   argTypes: {
     ...fieldChromeArgTypes,
     value: {

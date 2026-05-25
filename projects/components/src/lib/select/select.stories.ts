@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
@@ -27,7 +26,6 @@ const groupedOptions: AuSelectOption[] = [
   { value: 'group5', label: 'Group B - Option 3', disabled: true },
 ];
 
-const docsOverview = getStoryOverview('select');
 
 interface SelectStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -47,7 +45,7 @@ const meta: Meta<SelectStoryArgs> = {
   title: 'Aurea/Select',
   component: AuSelect,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('select'),
   argTypes: {
     ...fieldChromeArgTypes,
     value: {

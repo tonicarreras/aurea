@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
@@ -14,7 +13,6 @@ import { AuTextarea } from './textarea';
 
 type TextareaResize = 'none' | 'vertical' | 'both';
 
-const docsOverview = getStoryOverview('textarea');
 
 interface TextareaStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -40,7 +38,7 @@ const meta: Meta<TextareaStoryArgs> = {
   title: 'Aurea/Textarea',
   component: AuTextarea,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('textarea'),
   argTypes: {
     ...fieldChromeArgTypes,
     value: {

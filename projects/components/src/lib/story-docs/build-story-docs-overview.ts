@@ -1,3 +1,67 @@
+export type StoryDocsLocale = 'en' | 'es';
+
+const HEADINGS: Record<
+  StoryDocsLocale,
+  {
+    overview: string;
+    whenToUse: string;
+    useCol: string;
+    avoidCol: string;
+    anatomy: string;
+    regionCol: string;
+    notesCol: string;
+    keyboard: string;
+    interactionCol: string;
+    behaviorCol: string;
+    accessibility: string;
+    topicCol: string;
+    implementationCol: string;
+    tokens: string;
+    concernCol: string;
+    examplesCol: string;
+    tokensFooter: string;
+  }
+> = {
+  en: {
+    overview: 'Overview',
+    whenToUse: 'When to use',
+    useCol: 'Use',
+    avoidCol: 'Prefer something else',
+    anatomy: 'Anatomy',
+    regionCol: 'Region',
+    notesCol: 'Notes',
+    keyboard: 'Keyboard and focus',
+    interactionCol: 'Interaction',
+    behaviorCol: 'Behavior',
+    accessibility: 'Accessibility',
+    topicCol: 'Topic',
+    implementationCol: 'Implementation',
+    tokens: 'Design tokens (reference)',
+    concernCol: 'Concern',
+    examplesCol: 'Token examples',
+    tokensFooter: 'See **docs/DESIGN.md** for the full token model.',
+  },
+  es: {
+    overview: 'Resumen',
+    whenToUse: 'Cuándo usarlo',
+    useCol: 'Usar',
+    avoidCol: 'Mejor alternativa',
+    anatomy: 'Anatomía',
+    regionCol: 'Región',
+    notesCol: 'Notas',
+    keyboard: 'Teclado y foco',
+    interactionCol: 'Interacción',
+    behaviorCol: 'Comportamiento',
+    accessibility: 'Accesibilidad',
+    topicCol: 'Tema',
+    implementationCol: 'Implementación',
+    tokens: 'Tokens de diseño (referencia)',
+    concernCol: 'Aspecto',
+    examplesCol: 'Ejemplos de tokens',
+    tokensFooter: 'Consulta **docs/DESIGN.md** para el modelo completo de tokens.',
+  },
+};
+
 export interface StoryDocsWhenToUse {
   use: string[];
   avoid: string[];
@@ -33,27 +97,31 @@ export interface StoryDocsOverviewInput {
   extra?: string;
 }
 
-/** Builds the standard Aurea Storybook component docs markdown (matches input-text sections). */
-export function buildStoryDocsOverview(input: StoryDocsOverviewInput): string {
+/** Builds the standard Aurea Storybook component docs markdown (matches docs site overview). */
+export function buildStoryDocsOverview(
+  input: StoryDocsOverviewInput,
+  locale: StoryDocsLocale = 'en',
+): string {
+  const h = HEADINGS[locale];
   const useRows = input.whenToUse.use.map((u) => `| ${u} | |`).join('\n');
   const avoidRows = input.whenToUse.avoid.map((a) => `| | ${a} |`).join('\n');
   const anatomyRows = input.anatomy.map((r) => `| ${r.region} | ${r.notes} |`).join('\n');
   const a11yRows = input.accessibility.map((a) => `| ${a.topic} | ${a.detail} |`).join('\n');
 
-  let md = `## Overview
+  let md = `## ${h.overview}
 
 ${input.overview}
 
-## When to use
+## ${h.whenToUse}
 
-| Use | Prefer something else |
+| ${h.useCol} | ${h.avoidCol} |
 |-----|------------------------|
 ${useRows}
 ${avoidRows}
 
-## Anatomy
+## ${h.anatomy}
 
-| Region | Notes |
+| ${h.regionCol} | ${h.notesCol} |
 |--------|-------|
 ${anatomyRows}
 `;
@@ -61,18 +129,18 @@ ${anatomyRows}
   if (input.keyboard?.length) {
     const kbRows = input.keyboard.map((k) => `| ${k.interaction} | ${k.behavior} |`).join('\n');
     md += `
-## Keyboard and focus
+## ${h.keyboard}
 
-| Interaction | Behavior |
+| ${h.interactionCol} | ${h.behaviorCol} |
 |-------------|----------|
 ${kbRows}
 `;
   }
 
   md += `
-## Accessibility
+## ${h.accessibility}
 
-| Topic | Implementation |
+| ${h.topicCol} | ${h.implementationCol} |
 |-------|----------------|
 ${a11yRows}
 `;
@@ -80,13 +148,13 @@ ${a11yRows}
   if (input.tokens?.length) {
     const tokenRows = input.tokens.map((t) => `| ${t.concern} | ${t.examples} |`).join('\n');
     md += `
-## Design tokens (reference)
+## ${h.tokens}
 
-| Concern | Token examples |
+| ${h.concernCol} | ${h.examplesCol} |
 |---------|----------------|
 ${tokenRows}
 
-See **docs/DESIGN.md** for the full token model.
+${h.tokensFooter}
 `;
   }
 

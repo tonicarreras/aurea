@@ -1,18 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuMessage, type AuMessageVariant } from './message';
 
 const variants: AuMessageVariant[] = ['default', 'success', 'warning', 'error', 'info'];
 
-const docsOverview = getStoryOverview('message');
 
 const meta: Meta<AuMessage> = {
   title: 'Aurea/Message',
   component: AuMessage,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('message'),
   argTypes: {
     variant: {
       control: 'select',

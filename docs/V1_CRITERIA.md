@@ -9,7 +9,6 @@ Last audit: **2026-05-22** (post Phase 4 + 0.9.0 API freeze candidate).
 - [x] All **P0** components from [ROADMAP.md](./ROADMAP.md) Phase 2 marked **stable** (`menu`, `popover`, `pagination`, `table` shell + sort header)
 - [x] No **experimental** components in the public “recommended” set on the docs landing (carousel filters `stable` only)
 - [x] Reference **CRUD demo** published and linked from docs (`/guides/crud-demo`, get-started, adoption cards)
-- [x] Migration guides: Material + CDK (`/guides/migrate-material`, `/guides/migrate-cdk`)
 
 ## API & semver
 

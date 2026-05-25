@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { signal } from '@angular/core';
 
@@ -8,13 +7,12 @@ import { AuFormField } from '../form-field/form-field';
 import { AuInputText } from '../input-text/input-text';
 import { AuPopover, AuPopoverTrigger } from './index';
 
-const docsOverview = getStoryOverview('popover');
 
 const meta: Meta<AuPopover> = {
   title: 'Aurea/Popover',
   component: AuPopover,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('popover'),
   argTypes: {
     open: {
       control: 'boolean',

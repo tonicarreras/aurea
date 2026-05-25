@@ -1,23 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuAutocomplete, AuFormField } from '@aurea-design-system/components';
-import { autocompleteOptions } from '../shared/demo-fixtures';
+import { DocsLocaleService } from '../../core/docs-locale.service';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
+import { getAutocompleteOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-example-autocomplete-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-form-field label="Ciudad">
-      <au-autocomplete
-        placeholder="Buscar…"
-        [options]="options"
-        style="max-width: 16rem"
-      />
+    <au-form-field [label]="t().basic.label">
+      <au-autocomplete [placeholder]="t().basic.placeholder" [options]="options()" />
     </au-form-field>
   `,
 })
 export class ExampleAutocompleteBasicDemo {
-  readonly options = autocompleteOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('autocomplete');
+  readonly options = computed(() => getAutocompleteOptions(this.i18n.locale()));
 }
 
 @Component({
@@ -26,20 +26,18 @@ export class ExampleAutocompleteBasicDemo {
   imports: [AuFormField, AuAutocomplete],
   template: `
     <au-form-field
-      label="Ciudad"
-      errorMessage="Elige una ciudad de la lista."
+      [label]="t().error.label"
+      [errorMessage]="t().error.errorMessage"
       [invalid]="true"
     >
-      <au-autocomplete
-        placeholder="Buscar…"
-        [options]="options"
-        style="max-width: 16rem"
-      />
+      <au-autocomplete [placeholder]="t().error.placeholder" [options]="options()" />
     </au-form-field>
   `,
 })
 export class ExampleAutocompleteErrorDemo {
-  readonly options = autocompleteOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('autocomplete');
+  readonly options = computed(() => getAutocompleteOptions(this.i18n.locale()));
 }
 
 @Component({
@@ -47,18 +45,13 @@ export class ExampleAutocompleteErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-form-field
-      label="Ciudad"
-      hint="Escribe para filtrar; elige con Enter o clic."
-    >
-      <au-autocomplete
-        placeholder="Buscar…"
-        [options]="options"
-        style="max-width: 16rem"
-      />
+    <au-form-field [label]="t().hint.label" [hint]="t().hint.hint">
+      <au-autocomplete [placeholder]="t().hint.placeholder" [options]="options()" />
     </au-form-field>
   `,
 })
 export class ExampleAutocompleteHintDemo {
-  readonly options = autocompleteOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('autocomplete');
+  readonly options = computed(() => getAutocompleteOptions(this.i18n.locale()));
 }

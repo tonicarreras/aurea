@@ -1,5 +1,5 @@
 /**
- * Regenerates story-overview-source.ts from docs site English overviews.
+ * Regenerates story-overview-source.ts from docs site en/es overviews.
  * Run: node projects/components/scripts/generate-story-overview-source.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -7,18 +7,19 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
-const overviewPath = join(root, 'projects/docs/src/app/i18n/locales/en/overview.ts');
-const outPath = join(root, 'projects/components/src/lib/story-docs/story-overview-source.ts');
 
-const raw = readFileSync(overviewPath, 'utf8');
-const start = raw.indexOf('export const OVERVIEWS_EN');
-const end = raw.lastIndexOf('};');
-const objLiteral = raw.slice(raw.indexOf('{', start), end + 1);
+function loadOverviews(locale) {
+  const overviewPath = join(root, `projects/docs/src/app/i18n/locales/${locale}/overview.ts`);
+  const raw = readFileSync(overviewPath, 'utf8');
+  const exportName = locale === 'en' ? 'OVERVIEWS_EN' : 'OVERVIEWS_ES';
+  const start = raw.indexOf(`export const ${exportName}`);
+  const end = raw.lastIndexOf('};');
+  const objLiteral = raw.slice(raw.indexOf('{', start), end + 1);
+  // eslint-disable-next-line no-new-func
+  return new Function(`return (${objLiteral});`)();
+}
 
-// eslint-disable-next-line no-new-func
-const OVERVIEWS_EN = new Function(`return (${objLiteral});`)();
-
-const extras = {
+const extrasEn = {
   'input-text': `## Signal forms vs manual
 
 | Mode | Where | Validation |
@@ -41,32 +42,71 @@ Project \`au-input-text\`, \`au-select\`, and other field controls **inside \`au
 \`AU_FORM_FIELD\`, \`AuFormFieldContext\` — import from \`@aurea-design-system/components\`.`,
 };
 
-const lines = [
-  `/** Auto-generated from projects/docs/.../en/overview.ts — do not edit by hand. */`,
-  `import type { StoryOverviewSource } from './story-overview-types';`,
-  '',
-  'export const STORY_OVERVIEW_SOURCE = {',
-];
+const extrasEs = {
+  'input-text': `## Signal forms vs manual
 
-for (const [slug, o] of Object.entries(OVERVIEWS_EN)) {
-  lines.push(
-    `  ${JSON.stringify(slug)}: ${JSON.stringify(
-      {
-        intro: o.intro,
-        whenToUse: o.whenToUse.items,
-        whenNotToUse: o.whenNotToUse?.items ?? [],
-        anatomy: o.anatomy,
-        accessibility: o.accessibility,
-        keyboard: o.keyboard,
-        extra: extras[slug],
-      },
-      null,
-      2,
-    ).replaceAll('\n', '\n  ')},`,
-  );
+| Modo | Dónde | Validación |
+|------|--------|------------|
+| Signal forms | \`[formField]\` en \`au-input-text\`; \`form()\` en tu componente | El esquema define \`errors\` / \`invalid\`; \`au-form-field\` muestra el mensaje |
+| Manual | \`[(value)]\` + \`errorMessage\` / \`invalid\` en \`au-form-field\` | El padre controla el cromado (story **With error**) |
+
+Ejemplo completo con \`form()\`: README de **\`@aurea-design-system/components\`** → *Signal forms*.
+
+### Comprobaciones manuales (addon **Accessibility**)
+
+1. **Accessibility** → **Run** en cada story.
+2. Tab en **Password** y revisa anillos de foco teclado vs puntero.
+3. **With error**: el lector debe anunciar \`aria-errormessage\`.`,
+  popover: `### Controles en paneles
+
+Los controles \`au-input-text\`, \`au-select\`, etc. **dentro de \`au-form-field\`** requieren \`AU_FORM_FIELD\` por DI.`,
+  'form-field': `### Exportaciones relacionadas
+
+\`AU_FORM_FIELD\`, \`AuFormFieldContext\` — import desde \`@aurea-design-system/components\`.`,
+};
+
+function toSource(overviews, extras) {
+  const out = {};
+  for (const [slug, o] of Object.entries(overviews)) {
+    out[slug] = {
+      intro: o.intro,
+      whenToUse: o.whenToUse.items,
+      whenNotToUse: o.whenNotToUse?.items ?? [],
+      anatomy: o.anatomy,
+      accessibility: o.accessibility,
+      keyboard: o.keyboard,
+      extra: extras[slug],
+    };
+  }
+  return out;
 }
 
-lines.push('} satisfies Record<string, StoryOverviewSource>;', '');
+const OVERVIEWS_EN = loadOverviews('en');
+const OVERVIEWS_ES = loadOverviews('es');
+
+const STORY_OVERVIEW_SOURCE = {
+  en: toSource(OVERVIEWS_EN, extrasEn),
+  es: toSource(OVERVIEWS_ES, extrasEs),
+};
+
+const outPath = join(root, 'projects/components/src/lib/story-docs/story-overview-source.ts');
+const lines = [
+  '/** Auto-generated from projects/docs/.../locales/{en,es}/overview.ts — do not edit by hand. */',
+  "import type { StoryOverviewSource } from './story-overview-types';",
+  '',
+  "export type StoryOverviewLocale = 'en' | 'es';",
+  '',
+  'export const STORY_OVERVIEW_SOURCE = {',
+  `  en: ${JSON.stringify(STORY_OVERVIEW_SOURCE.en, null, 2).replaceAll('\n', '\n  ')},`,
+  `  es: ${JSON.stringify(STORY_OVERVIEW_SOURCE.es, null, 2).replaceAll('\n', '\n  ')},`,
+  '} as const satisfies Record<StoryOverviewLocale, Record<string, StoryOverviewSource>>;',
+  '',
+  '/** @deprecated Use STORY_OVERVIEW_SOURCE.en — kept for type inference in tests. */',
+  'export const STORY_OVERVIEW_SOURCE_EN = STORY_OVERVIEW_SOURCE.en;',
+  '',
+];
 
 writeFileSync(outPath, lines.join('\n'));
-console.log(`Wrote ${outPath} (${Object.keys(OVERVIEWS_EN).length} slugs)`);
+console.log(
+  `Wrote ${outPath} (${Object.keys(OVERVIEWS_EN).length} slugs × 2 locales)`,
+);

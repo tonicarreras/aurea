@@ -1,16 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuBreadcrumb } from './breadcrumb';
 
-const docsOverview = getStoryOverview('breadcrumb');
 
 const meta: Meta<AuBreadcrumb> = {
   title: 'Aurea/Breadcrumb',
   component: AuBreadcrumb,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('breadcrumb'),
   argTypes: {
     items: {
       control: 'object',

@@ -1,19 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuFormField, AuRadioGroup } from '@aurea-design-system/components';
-import { radioOptions } from '../shared/demo-fixtures';
+import { DocsLocaleService } from '../../core/docs-locale.service';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
+import { getRadioOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-example-radio-group-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-form-field label="Plan">
-      <au-radio-group [options]="options" />
+    <au-form-field [label]="t().basicLabel">
+      <au-radio-group [options]="options()" />
     </au-form-field>
   `,
 })
 export class ExampleRadioGroupBasicDemo {
-  readonly options = radioOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('radioGroup');
+  readonly options = computed(() => getRadioOptions(this.i18n.locale()));
 }
 
 @Component({
@@ -21,17 +25,15 @@ export class ExampleRadioGroupBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-form-field
-      label="Plan"
-      errorMessage="Elige un plan para continuar."
-      [invalid]="true"
-    >
-      <au-radio-group [options]="options" />
+    <au-form-field [label]="t().errorLabel" [errorMessage]="t().errorMessage" [invalid]="true">
+      <au-radio-group [options]="options()" />
     </au-form-field>
   `,
 })
 export class ExampleRadioGroupErrorDemo {
-  readonly options = radioOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('radioGroup');
+  readonly options = computed(() => getRadioOptions(this.i18n.locale()));
 }
 
 @Component({
@@ -39,14 +41,13 @@ export class ExampleRadioGroupErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-form-field
-      label="Plan"
-      hint="La opción Pro estará disponible pronto."
-    >
-      <au-radio-group [options]="options" />
+    <au-form-field [label]="t().hintLabel" [hint]="t().hint">
+      <au-radio-group [options]="options()" />
     </au-form-field>
   `,
 })
 export class ExampleRadioGroupHintDemo {
-  readonly options = radioOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('radioGroup');
+  readonly options = computed(() => getRadioOptions(this.i18n.locale()));
 }

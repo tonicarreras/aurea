@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuSwitch } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-switch',
@@ -7,10 +8,12 @@ import { AuFormField, AuSwitch } from '@aurea-design-system/components';
   imports: [AuFormField, AuSwitch],
   template: `
     <div class="docs-preview docs-preview--field">
-      <au-form-field hint="Puedes cambiarlo en ajustes del sistema.">
-        <au-switch label="Modo oscuro del sistema" />
+      <au-form-field [hint]="t().hint">
+        <au-switch [label]="t().label" />
       </au-form-field>
     </div>
   `,
 })
-export class SwitchDemo {}
+export class SwitchDemo {
+  readonly t = docsPreviewCopy('switch');
+}

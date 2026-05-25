@@ -7,7 +7,7 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | Phase | Focus                                                                                        | Status    |
 | ----- | -------------------------------------------------------------------------------------------- | --------- |
 | **0** | Gobernanza, madurez, guías adopción, auditoría a11y                                          | ✅        |
-| **1** | Tokens v2, densidad, alto contraste, schematic `ng add`, patrones docs                       | ✅        |
+| **1** | Tokens v2, densidad, alto contraste, schematic `ng add`, guías docs                         | ✅        |
 | **2** | Core de aplicación: menú, popover, paginación, tabla, badge, breadcrumb, progress, link      | ✅ (v0.4) |
 | **3** | Calidad pro: axe stable, visual regression, audit CI, issue templates, CODEOWNERS, políticas | ✅        |
 
@@ -40,7 +40,6 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | Deliverable                             | Location                                                                               |
 | --------------------------------------- | -------------------------------------------------------------------------------------- |
 | Figma / Penpot tokens ↔ `au-tokens.css` | `projects/design-tokens/`, `scripts/validate-design-tokens.mjs`, docs `/design-tokens` |
-| Migration guides (Material, CDK)        | Docs `/guides/migrate-material`, `/guides/migrate-cdk`                                 |
 | Reference CRUD demo                     | Docs `/guides/crud-demo` (`docs-crud-demo`)                                            |
 | Public roadmap & maturity matrix        | Docs `/roadmap`, `/maturity`                                                           |
 | v1 criteria & contributor onboarding    | [V1_CRITERIA.md](./V1_CRITERIA.md), [GOOD_FIRST_ISSUES.md](./GOOD_FIRST_ISSUES.md)     |

@@ -1,23 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuFormField, AuSelect } from '@aurea-design-system/components';
-import { selectOptions } from '../shared/demo-fixtures';
+import { DocsLocaleService } from '../../core/docs-locale.service';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
+import { getSelectOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-example-select-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuSelect],
   template: `
-    <au-form-field label="País">
-      <au-select
-        placeholder="Elige…"
-        [options]="options"
-        style="max-width: 16rem"
-      />
+    <au-form-field [label]="t().basicLabel">
+      <au-select [placeholder]="t().placeholder" [options]="options()" style="max-width: 16rem" />
     </au-form-field>
   `,
 })
 export class ExampleSelectBasicDemo {
-  readonly options = selectOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('select');
+  readonly options = computed(() => getSelectOptions(this.i18n.locale()));
 }
 
 @Component({
@@ -26,20 +26,18 @@ export class ExampleSelectBasicDemo {
   imports: [AuFormField, AuSelect],
   template: `
     <au-form-field
-      label="País"
-      errorMessage="Selecciona un país."
+      [label]="t().errorLabel"
+      [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-select
-        placeholder="Elige…"
-        [options]="options"
-        style="max-width: 16rem"
-      />
+      <au-select [placeholder]="t().placeholder" [options]="options()" style="max-width: 16rem" />
     </au-form-field>
   `,
 })
 export class ExampleSelectErrorDemo {
-  readonly options = selectOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('select');
+  readonly options = computed(() => getSelectOptions(this.i18n.locale()));
 }
 
 @Component({
@@ -47,18 +45,13 @@ export class ExampleSelectErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuSelect],
   template: `
-    <au-form-field
-      label="País de residencia"
-      hint="Usado para facturación y envíos."
-    >
-      <au-select
-        placeholder="Elige…"
-        [options]="options"
-        style="max-width: 16rem"
-      />
+    <au-form-field [label]="t().hintLabel" [hint]="t().hint">
+      <au-select [placeholder]="t().placeholder" [options]="options()" style="max-width: 16rem" />
     </au-form-field>
   `,
 })
 export class ExampleSelectHintDemo {
-  readonly options = selectOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsExampleLive('select');
+  readonly options = computed(() => getSelectOptions(this.i18n.locale()));
 }

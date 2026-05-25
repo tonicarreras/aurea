@@ -79,15 +79,8 @@ export class DocsSeoService {
     if (first === 'guides') {
       if (second === 'adoption') return seo.guidesAdoption;
       if (second === 'signal-forms') return seo.guidesSignalForms;
-      if (second === 'patterns') return seo.guidesPatterns;
       if (second === 'troubleshooting') return seo.guidesTroubleshooting;
-      if (second === 'bundle') return seo.guidesBundle;
-      if (second === 'migrate-material') return seo.guidesMigrateMaterial;
-      if (second === 'migrate-cdk') return seo.guidesMigrateCdk;
       if (second === 'crud-demo') return seo.guidesCrudDemo;
-    }
-    if (first === DOCS_ROUTES.roadmap) {
-      return seo.roadmap;
     }
     if (first === DOCS_ROUTES.maturity) {
       return seo.maturity;
@@ -286,13 +279,6 @@ export class DocsSeoService {
       items.push({
         name: guideSeo.title.split(' — ')[0] ?? guideSeo.title,
         url: `${DOCS_SITE_ORIGIN}${this.buildPath(locale, 'guides', second)}`,
-      });
-      return items;
-    }
-    if (first === DOCS_ROUTES.roadmap) {
-      items.push({
-        name: seo.roadmap.title.split(' — ')[0] ?? seo.roadmap.title,
-        url: `${DOCS_SITE_ORIGIN}${this.buildPath(locale, DOCS_ROUTES.roadmap)}`,
       });
       return items;
     }

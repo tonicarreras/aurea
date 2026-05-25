@@ -1,6 +1,11 @@
 import type { DocsMessages } from '../../types/messages';
 import { ECOSYSTEM_ES } from './ecosystem';
+import { FIXTURES_ES } from './fixtures';
+import { GET_STARTED_COMPONENT_SNIPPET } from './get-started-snippets';
 import { GUIDES_ES } from './guides';
+import { EXAMPLE_LIVE_ES } from './example-live';
+import { NAV_ES } from './nav';
+import { PREVIEWS_ES } from './previews';
 
 export const MESSAGES_ES: DocsMessages = {
   shell: {
@@ -29,42 +34,41 @@ export const MESSAGES_ES: DocsMessages = {
   },
   landing: {
     eyebrow: 'Aurea · Sistema de diseño · Angular 21',
-    title: 'Menos ruido visual.',
-    titleAccent: 'Más foco en la tarea.',
-    lead: 'Librería npm abierta (MIT) para cualquier producto: tokens semánticos, componentes accesibles y formularios con signals. Explora la visión de diseño aquí; la documentación técnica cuando vayas a implementar.',
+    title: 'Sistema de diseño',
+    titleAccent: 'para Angular 21',
+    lead: 'Librería npm open source (MIT): tokens CSS semánticos, componentes standalone y signal forms de Angular. Guía de instalación, referencia de componentes y Storybook.',
     ctaDocs: 'Documentación',
     ctaStorybook: 'Storybook',
-    overviewTitle: 'Visión de diseño',
+    overviewTitle: 'Principios',
     overviewAria: 'Principios de diseño',
     principles: [
       {
-        title: 'Tarea clara, UI tranquila',
-        text: 'Jerarquía y contraste al servicio del trabajo — el adorno no compite con el contenido.',
-        accent: 'task',
+        title: 'Jerarquía visual',
+        text: 'Tipografía, espaciado y contraste usan tokens <code>--au-*</code> documentados, no estilos sueltos.',
+        accent: 'hierarchy',
       },
       {
         title: 'Tokens semánticos',
-        text: 'Superficies, acciones y estados de formulario comparten el vocabulario <code>--au-*</code> en claro y oscuro.',
+        text: 'Superficies, acciones y estados de formulario comparten los mismos nombres de token en tema claro y oscuro.',
         accent: 'tokens',
       },
       {
         title: 'Accesible por defecto',
-        text: 'Anillos de foco, etiquetas y regiones dinámicas forman parte del contrato de cada componente.',
+        text: 'Foco visible, etiquetas y roles ARIA documentados en cada componente.',
         accent: 'a11y',
       },
     ],
-    systemTitle: 'Cómo está construido el sistema',
+    systemTitle: 'Arquitectura',
     systemLead:
-      'Tres capas: primitivos (internos), tokens semánticos en <code>au-tokens.css</code> y estilos de componente que mapean semántica a UI real.',
+      'Primitivos (internos), tokens semánticos en <code>au-tokens.css</code> y CSS de componente que mapea tokens a la UI.',
     systemPoints: [
-      'Patrones orientados a WCAG 2.2 en flujos principales',
-      'Formularios con signals alineados con <code>formField</code> de Angular 21',
+      'Notas de accesibilidad y teclado en la documentación de cada componente',
+      'Signal forms con <code>formField</code> de Angular 21',
       'Publicado como <code>@aurea-design-system/components</code> en npm',
     ],
-    themesLink: 'Explorar temas y tokens',
+    themesLink: 'Temas y tokens',
     previewsTitle: 'Vista previa de componentes',
-    previewsLead:
-      'Solo componentes estables en producción, cuatro por página — usa las flechas para recorrer el set.',
+    previewsLead: 'Solo componentes estables — cuatro por página del carrusel.',
     previewsAria: 'Galería de vistas previas',
     previewOpenDoc: 'Ver docs',
     carouselAria: 'Carrusel de componentes',
@@ -74,12 +78,12 @@ export const MESSAGES_ES: DocsMessages = {
     carouselSlideAria: (page) => `Componentes, página ${page}`,
     carouselDotsAria: 'Ir a una página del carrusel',
     carouselGoToPage: (page) => `Ir a la página ${page}`,
-    footer:
-      'MIT · Aurea en cualquier producto Angular. La referencia técnica también está en Storybook.',
+    footer: 'Licencia MIT. Referencia de componentes también en Storybook.',
   },
   getStarted: {
     title: 'Empezar',
     lead: 'Instala el paquete publicado y conecta tokens y componentes en tu aplicación Angular 21.',
+    componentSnippet: GET_STARTED_COMPONENT_SNIPPET,
     steps: {
       requirements: {
         title: 'Requisitos',
@@ -100,7 +104,9 @@ export const MESSAGES_ES: DocsMessages = {
       nextGuides: {
         title: 'Siguiente paso',
         intro:
-          'Sigue la guía de adopción: signal forms, patrones, troubleshooting y bundle — o abre la',
+          'Consulta la guía de adopción: signal forms y resolución de problemas — o abre la',
+        adoptionLink: 'Guía de adopción →',
+        crudDemoLink: 'Demo CRUD de referencia →',
       },
     },
   },
@@ -150,10 +156,10 @@ export const MESSAGES_ES: DocsMessages = {
   },
   componentDoc: {
     sectionsAria: (title) => `Secciones de ${title}`,
-    overview: 'Overview',
+    overview: 'Resumen',
     api: 'API',
-    styling: 'Styling',
-    examples: 'Examples',
+    styling: 'Estilos',
+    examples: 'Ejemplos',
     export: 'Export',
     selector: 'Selector',
     apiLead: (exportName) =>
@@ -167,10 +173,27 @@ export const MESSAGES_ES: DocsMessages = {
       `Tokens que <strong>${title}</strong> consume en su CSS (específicos de este componente). La paleta global, formularios compartidos y capas del tema están en`,
     themesLink: 'Temas y tokens',
     examplesLead: 'Variantes con vista previa en vivo y fragmento de código listo para copiar.',
+    exampleFallbackTitle: 'Uso básico',
     notFoundTitle: 'No encontrado',
     notFoundLead: 'No hay documentación para este componente.',
     backToIndex: 'Volver al índice',
+    apiTable: {
+      colName: 'Nombre',
+      colType: 'Tipo',
+      colDescription: 'Descripción',
+      colDefault: 'Por defecto',
+      colKind: 'Rol',
+    },
   },
+  demoPanel: {
+    ariaLabel: 'Vista previa en vivo',
+    title: 'Vista previa',
+    badge: 'En vivo',
+  },
+  fixtures: FIXTURES_ES,
+  previews: PREVIEWS_ES,
+  exampleLive: EXAMPLE_LIVE_ES,
+  nav: NAV_ES,
   overviewUi: {
     introSr: 'Introducción',
     relatedExports: 'Exportaciones relacionadas',
@@ -183,5 +206,15 @@ export const MESSAGES_ES: DocsMessages = {
     hide: 'Ocultar código',
     copy: 'Copiar',
     copied: 'Copiado',
+    copyAria: 'Copiar código',
+    copiedAria: 'Código copiado',
+    snippetAria: (language) => `Código ${language}`,
+    lang: {
+      typescript: 'TypeScript',
+      css: 'CSS',
+      bash: 'Shell',
+      html: 'HTML',
+      text: 'Texto',
+    },
   },
 };

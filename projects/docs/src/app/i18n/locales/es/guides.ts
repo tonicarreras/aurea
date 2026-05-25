@@ -3,7 +3,7 @@ import type { GuidesMessages } from '../../types/guides';
 export const GUIDES_ES: GuidesMessages = {
   adoption: {
     title: 'Guía de adopción',
-    lead: 'Ruta de extremo a extremo: instalación, formularios y producción. Cada tema tiene su página.',
+    lead: 'Índice de guías por tema; cada una en su propia página.',
     cards: [
       {
         title: 'Empezar',
@@ -16,19 +16,9 @@ export const GUIDES_ES: GuidesMessages = {
         path: 'guides/signal-forms',
       },
       {
-        title: 'Patrones de UI',
-        description: 'Formularios validados, diálogos de confirmación y snackbar.',
-        path: 'guides/patterns',
-      },
-      {
         title: 'Resolución de problemas',
         description: 'Errores frecuentes de configuración y cómo corregirlos.',
         path: 'guides/troubleshooting',
-      },
-      {
-        title: 'Bundle y tree-shaking',
-        description: 'Imports, CSS y rutas lazy.',
-        path: 'guides/bundle',
       },
       {
         title: 'Temas y tokens',
@@ -36,24 +26,14 @@ export const GUIDES_ES: GuidesMessages = {
         path: 'themes',
       },
       {
-        title: 'Migrar desde Material',
-        description: 'Sustituir mat-form-field, tabla, diálogo y botones.',
-        path: 'guides/migrate-material',
-      },
-      {
-        title: 'Migrar desde CDK',
-        description: 'Overlays, focus trap y cuándo mantener CDK.',
-        path: 'guides/migrate-cdk',
-      },
-      {
         title: 'Demo CRUD de referencia',
         description: 'Tabla, paginación, menú, diálogo y signal forms.',
         path: 'guides/crud-demo',
       },
       {
-        title: 'Roadmap y madurez',
-        description: 'Fases públicas, criterios v1 y matriz de componentes.',
-        path: 'roadmap',
+        title: 'Madurez de componentes',
+        description: 'Niveles stable, beta y experimental por componente.',
+        path: 'maturity',
       },
       {
         title: 'Tokens Figma',
@@ -108,64 +88,12 @@ export class ProfileEmail {
       },
     ],
   },
-  patterns: {
-    title: 'Patrones de UI',
-    lead: 'Recetas compuestas con primitivas estables de Aurea.',
-    sections: [
-      {
-        heading: 'Bloque de acceso validado',
-        body: 'Combina au-form-field, au-input-text, au-checkbox y au-button con un único modelo signal form.',
-        code: `readonly model = signal({ email: '', password: '', remember: false });
-readonly loginForm = form(this.model, (m) => {
-  required(m.email);
-  email(m.email);
-  required(m.password);
-});`,
-        codeLanguage: 'typescript',
-        expandLabel: 'Ver modelo',
-      },
-      {
-        heading: 'Acción destructiva con diálogo',
-        body: 'Usa au-dialog con au-button variant="danger" en el pie. Escape cierra si auDialogClose está configurado.',
-        code: `<au-dialog [open]="confirmOpen()" (openChange)="confirmOpen.set($event)">
-  <h2 auDialogTitle>¿Eliminar proyecto?</h2>
-  <p>No se puede deshacer.</p>
-  <div auDialogFooter>
-    <au-button variant="outline" (click)="confirmOpen.set(false)">Cancelar</au-button>
-    <au-button variant="danger" (click)="onConfirmDelete()">Eliminar</au-button>
-  </div>
-</au-dialog>`,
-        codeLanguage: 'html',
-        expandLabel: 'Ver diálogo',
-      },
-      {
-        heading: 'Pantalla CRUD',
-        body: 'Combina au-breadcrumb, au-table con au-table-column, au-pagination, au-menu para acciones por fila y au-popover para filtros.',
-        code: `<au-breadcrumb [items]="crumbs" />
-<au-table [data]="rows" striped>
-  <au-table-column name="name" header="Nombre" sortable />
-  <au-table-column name="role" header="Rol" />
-</au-table>
-<au-pagination [page]="page()" [pageCount]="totalPages" (pageChange)="loadPage($event)" />`,
-        codeLanguage: 'html',
-        expandLabel: 'Ver layout CRUD',
-      },
-      {
-        heading: 'Feedback asíncrono con snackbar',
-        body: 'Tras guardar, muestra un snackbar con variant success y duración acorde a la urgencia.',
-        code: `this.snackbar.show({
-  message: 'Perfil guardado',
-  variant: 'success',
-  duration: 4000,
-});`,
-        codeLanguage: 'typescript',
-        expandLabel: 'Ver snackbar',
-      },
-    ],
-  },
   troubleshooting: {
     title: 'Resolución de problemas',
-    lead: 'Síntomas habituales al integrar Aurea en apps Angular existentes.',
+    lead: 'Problemas habituales de integración y cómo resolverlos.',
+    colProblem: 'Síntoma',
+    colCause: 'Causa',
+    colFix: 'Solución',
     items: [
       {
         problem: 'Componentes sin estilo',
@@ -195,34 +123,7 @@ readonly loginForm = form(this.model, (m) => {
       {
         problem: 'Bundle mayor de lo esperado',
         cause: 'import * as Aurea',
-        fix: 'Importa símbolos nombrados; ver guía Bundle.',
-      },
-    ],
-  },
-  bundle: {
-    title: 'Bundle y tree-shaking',
-    lead: 'La librería publica módulos ES; el CLI elimina componentes no usados si importas por símbolo.',
-    sections: [
-      {
-        heading: 'Imports por componente',
-        body: 'Usa exportaciones nombradas. Evita imports con namespace que confunden el análisis estático.',
-        code: `import { AuButton, AuCard } from '@aurea-design-system/components';`,
-        codeLanguage: 'typescript',
-        expandLabel: 'Ver import',
-      },
-      {
-        heading: 'El CSS no se tree-shakea',
-        body: 'Incluye siempre au-tokens.css; añade au-field-error.css y au-field-listbox.css solo si los necesitas.',
-        code: `@import '@aurea-design-system/components/styles/au-tokens.css';`,
-        codeLanguage: 'css',
-        expandLabel: 'Ver CSS',
-      },
-      {
-        heading: 'Mide tu app',
-        body: 'Ejecuta ng build --configuration=production --stats-json e inspecciona el chunk de @aurea-design-system/components.',
-        code: 'ng build --configuration=production --stats-json',
-        codeLanguage: 'bash',
-        expandLabel: 'Ver comando',
+        fix: 'Importa símbolos nombrados desde @aurea-design-system/components; evita imports con namespace.',
       },
     ],
   },

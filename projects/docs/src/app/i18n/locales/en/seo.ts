@@ -9,9 +9,9 @@ export const SEO_EN: DocsSeoMessages = {
   breadcrumbThemes: 'Themes & tokens',
   breadcrumbComponents: 'Components',
   home: {
-    title: 'Aurea — Angular 21 design system focused on the task',
+    title: 'Aurea — Angular 21 design system',
     description:
-      'Open MIT UI system: less visual noise, accessible components, semantic tokens, and live previews. Documentation for install and implementation.',
+      'MIT npm library: semantic tokens, accessible components, signal forms, and live previews. Install and API reference.',
   },
   getStarted: {
     title: 'Get started — Install Aurea on Angular 21',
@@ -21,46 +21,22 @@ export const SEO_EN: DocsSeoMessages = {
   guidesAdoption: {
     title: 'Adoption guide — Aurea Design System',
     description:
-      'Roadmap from install to signal forms, UI patterns, troubleshooting, bundle size, and themes.',
+      'Guides for install, signal forms, troubleshooting, and themes.',
   },
   guidesSignalForms: {
     title: 'Signal forms with Aurea — Angular 21',
     description:
       'Bind au-form-field and controls with FormField, form(), validators, and submit guards.',
   },
-  guidesPatterns: {
-    title: 'UI patterns — Aurea Design System',
-    description:
-      'Validated forms, destructive confirm dialogs, and snackbar feedback composed from Aurea primitives.',
-  },
   guidesTroubleshooting: {
     title: 'Troubleshooting Aurea — common fixes',
     description:
-      'Unstyled components, missing listbox CSS, validation messages, theme attributes, and bundle imports.',
-  },
-  guidesBundle: {
-    title: 'Bundle size & tree-shaking — Aurea',
-    description:
-      'Per-symbol imports, global CSS footprint, production stats-json, and lazy routes.',
-  },
-  guidesMigrateMaterial: {
-    title: 'Migrate from Angular Material — Aurea',
-    description:
-      'Map mat-form-field, mat-table, mat-dialog, and buttons to Aurea primitives and signal forms.',
-  },
-  guidesMigrateCdk: {
-    title: 'Migrate from Angular CDK — Aurea',
-    description:
-      'Replace CDK overlay and focus-trap patterns with au-menu, au-popover, au-tooltip, and au-dialog.',
+      'Unstyled components, missing listbox CSS, validation messages, and theme attributes.',
   },
   guidesCrudDemo: {
     title: 'CRUD reference demo — Aurea',
     description:
       'Live list screen with table, pagination, filters, row menu, dialogs, and signal-form editor.',
-  },
-  roadmap: {
-    title: 'Roadmap — Aurea Design System',
-    description: 'Public delivery phases and version targets toward 1.0.0.',
   },
   maturity: {
     title: 'Component maturity matrix — Aurea',
@@ -78,7 +54,7 @@ export const SEO_EN: DocsSeoMessages = {
   componentsIndex: {
     title: 'Angular UI components — Aurea catalog',
     description:
-      'Browse every Aurea component: buttons, inputs, dialogs, chips, steps, accessibility notes, API tables, and live demos.',
+      'Catalog of Aurea components with API tables, styling tokens, and live demos.',
   },
   componentTitle: (name, exportName) => `${name} (${exportName}) — Aurea docs`,
   componentDescription: (name, summary) =>

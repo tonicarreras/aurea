@@ -268,7 +268,7 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         box-shadow var(--au-duration-short) var(--au-ease-in-out);
     }
 
-    .landing-principles__item--task .landing-principles__card {
+    .landing-principles__item--hierarchy .landing-principles__card {
       border-color: color-mix(in srgb, var(--au-color-action-primary) 22%, transparent);
     }
 

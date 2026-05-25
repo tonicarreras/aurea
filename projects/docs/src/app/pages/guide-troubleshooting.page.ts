@@ -15,9 +15,9 @@ import { DocPage } from '../shared/doc-page';
         <table class="docs-troubleshooting-table">
           <thead>
             <tr>
-              <th scope="col">{{ colProblem() }}</th>
-              <th scope="col">{{ colCause() }}</th>
-              <th scope="col">{{ colFix() }}</th>
+              <th scope="col">{{ cols().colProblem }}</th>
+              <th scope="col">{{ cols().colCause }}</th>
+              <th scope="col">{{ cols().colFix }}</th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +70,5 @@ export class GuideTroubleshootingPage {
 
   readonly rows = computed(() => this.i18n.messages().guides.troubleshooting.items);
 
-  readonly colProblem = computed(() => (this.i18n.locale() === 'en' ? 'Symptom' : 'Síntoma'));
-  readonly colCause = computed(() => (this.i18n.locale() === 'en' ? 'Cause' : 'Causa'));
-  readonly colFix = computed(() => (this.i18n.locale() === 'en' ? 'Fix' : 'Solución'));
+  readonly cols = computed(() => this.i18n.messages().guides.troubleshooting);
 }

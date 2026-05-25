@@ -29,37 +29,14 @@ export const routes: Routes = [
           import('./pages/guide-signal-forms.page').then((m) => m.GuideSignalFormsPage),
       },
       {
-        path: 'guides/patterns',
-        loadComponent: () => import('./pages/guide-patterns.page').then((m) => m.GuidePatternsPage),
-      },
-      {
         path: 'guides/troubleshooting',
         loadComponent: () =>
           import('./pages/guide-troubleshooting.page').then((m) => m.GuideTroubleshootingPage),
       },
       {
-        path: 'guides/bundle',
-        loadComponent: () => import('./pages/guide-bundle.page').then((m) => m.GuideBundlePage),
-      },
-      {
-        path: 'guides/migrate-material',
-        loadComponent: () =>
-          import('./pages/guide-migrate-material.page').then((m) => m.GuideMigrateMaterialPage),
-      },
-      {
-        path: 'guides/migrate-cdk',
-        loadComponent: () =>
-          import('./pages/guide-migrate-cdk.page').then((m) => m.GuideMigrateCdkPage),
-      },
-      {
         path: 'guides/crud-demo',
         loadComponent: () =>
           import('./pages/guide-crud-demo.page').then((m) => m.GuideCrudDemoPage),
-      },
-      {
-        path: 'roadmap',
-        loadComponent: () =>
-          import('./pages/ecosystem-roadmap.page').then((m) => m.EcosystemRoadmapPage),
       },
       {
         path: 'maturity',

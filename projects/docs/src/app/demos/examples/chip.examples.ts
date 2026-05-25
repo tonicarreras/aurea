@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuChip } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-chip-filled',
@@ -13,10 +14,7 @@ export class ExampleChipFilledDemo {}
   selector: 'docs-example-chip-outline',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
-  template: `<au-chip
-    label="TypeScript"
-    variant="outline"
-  />`,
+  template: `<au-chip label="TypeScript" variant="outline" />`,
 })
 export class ExampleChipOutlineDemo {}
 
@@ -24,10 +22,8 @@ export class ExampleChipOutlineDemo {}
   selector: 'docs-example-chip-removable',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuChip],
-  template: `<au-chip
-    label="Filtro activo"
-    variant="accent"
-    [removable]="true"
-  />`,
+  template: `<au-chip [label]="t().removable" variant="accent" [removable]="true" />`,
 })
-export class ExampleChipRemovableDemo {}
+export class ExampleChipRemovableDemo {
+  readonly t = docsExampleLive('chip');
+}

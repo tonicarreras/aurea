@@ -6,11 +6,11 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Éxito',
+    title: 'Success',
     demoComponent: ExampleSnackbarSuccessDemo,
     code: `<au-snackbar
   [(open)]="saved"
-  message="Cambios guardados"
+  message="Changes saved"
   variant="success"
   [durationMs]="3000"
 />`,
@@ -21,7 +21,7 @@ export const examples: ComponentDocExample[] = [
     demoComponent: ExampleSnackbarErrorDemo,
     code: `<au-snackbar
   [(open)]="failed"
-  message="No se pudo guardar"
+  message="Could not save"
   variant="error"
 />`,
     language: 'typescript',

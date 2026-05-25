@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuButton, AuSnackbar } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-snackbar',
@@ -7,20 +8,12 @@ import { AuButton, AuSnackbar } from '@aurea-design-system/components';
   imports: [AuButton, AuSnackbar],
   template: `
     <div class="docs-preview docs-preview--action">
-      <au-button
-        type="button"
-        (click)="open.set(true)"
-        >Mostrar snackbar</au-button
-      >
-      <au-snackbar
-        [(open)]="open"
-        message="Cambios guardados"
-        variant="success"
-        [durationMs]="3500"
-      />
+      <au-button type="button" (click)="open.set(true)">{{ t().show }}</au-button>
+      <au-snackbar [(open)]="open" [message]="t().message" variant="success" [durationMs]="3500" />
     </div>
   `,
 })
 export class SnackbarDemo {
+  readonly t = docsPreviewCopy('snackbar');
   readonly open = model(false);
 }

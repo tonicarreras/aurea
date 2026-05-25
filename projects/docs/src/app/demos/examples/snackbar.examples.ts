@@ -1,25 +1,23 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuButton, AuSnackbar } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-snackbar-success',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <au-button
-      type="button"
-      (click)="open.set(true)"
-      >Mostrar éxito</au-button
-    >
+    <au-button type="button" (click)="open.set(true)">{{ t().showSuccess }}</au-button>
     <au-snackbar
       [(open)]="open"
-      message="Cambios guardados"
+      [message]="t().successMessage"
       variant="success"
       [durationMs]="3000"
     />
   `,
 })
 export class ExampleSnackbarSuccessDemo {
+  readonly t = docsExampleLive('snackbar');
   readonly open = model(false);
 }
 
@@ -28,22 +26,11 @@ export class ExampleSnackbarSuccessDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <au-button
-      variant="outline"
-      type="button"
-      (click)="open.set(true)"
-      >Mostrar error</au-button
-    >
-    <au-snackbar
-      [(open)]="open"
-      message="No se pudo guardar"
-      variant="error"
-      [durationMs]="4000"
-    />
+    <au-button type="button" (click)="open.set(true)">{{ t().showError }}</au-button>
+    <au-snackbar [(open)]="open" [message]="t().errorMessage" variant="error" />
   `,
 })
 export class ExampleSnackbarErrorDemo {
+  readonly t = docsExampleLive('snackbar');
   readonly open = model(false);
 }
-
-// —— Divider ——

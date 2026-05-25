@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { STORY_OVERVIEW_SOURCE } from './story-overview-source';
 import {
   getStoryOverview,
+  setStoryOverviewLocale,
   storyOverviewParsers,
   type StoryOverviewSlug,
 } from './get-story-overview';
 
-const slugs = Object.keys(STORY_OVERVIEW_SOURCE) as StoryOverviewSlug[];
+const slugs = Object.keys(STORY_OVERVIEW_SOURCE.en) as StoryOverviewSlug[];
 
 describe('getStoryOverview', () => {
   it('builds markdown for every catalog slug', () => {
@@ -23,6 +24,12 @@ describe('getStoryOverview', () => {
 
   it('includes signal-forms extra for input-text', () => {
     expect(getStoryOverview('input-text')).toContain('Signal forms vs manual');
+  });
+
+  it('serves Spanish overview when locale is es', () => {
+    setStoryOverviewLocale('es');
+    expect(getStoryOverview('button')).toContain('## Resumen');
+    setStoryOverviewLocale('en');
   });
 
   it('includes form-field note for popover', () => {

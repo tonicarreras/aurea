@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import type { Type } from '@angular/core';
 
@@ -18,13 +17,12 @@ function cardRender(
   return { props: args, moduleMetadata, template };
 }
 
-const docsOverview = getStoryOverview('card');
 
 const meta: Meta<AuCard> = {
   title: 'Aurea/Card',
   component: AuCard,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('card'),
   argTypes: {
     variant: {
       control: 'select',

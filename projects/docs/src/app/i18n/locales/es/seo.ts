@@ -9,9 +9,9 @@ export const SEO_ES: DocsSeoMessages = {
   breadcrumbThemes: 'Temas y tokens',
   breadcrumbComponents: 'Componentes',
   home: {
-    title: 'Aurea — Design system Angular 21 con foco en la tarea',
+    title: 'Aurea — Sistema de diseño para Angular 21',
     description:
-      'Sistema UI abierto MIT: menos ruido visual, componentes accesibles, tokens semánticos y vistas previas. Documentación para instalar e implementar.',
+      'Librería npm MIT: tokens semánticos, componentes accesibles, signal forms y vistas previas. Instalación y referencia de API.',
   },
   getStarted: {
     title: 'Empezar — Instalar Aurea en Angular 21',
@@ -21,45 +21,22 @@ export const SEO_ES: DocsSeoMessages = {
   guidesAdoption: {
     title: 'Guía de adopción — Aurea Design System',
     description:
-      'Ruta desde la instalación hasta signal forms, patrones, troubleshooting, bundle y temas.',
+      'Guías de instalación, signal forms, resolución de problemas y temas.',
   },
   guidesSignalForms: {
     title: 'Signal forms con Aurea — Angular 21',
     description:
       'Enlaza au-form-field y controles con FormField, form(), validadores y envío seguro.',
   },
-  guidesPatterns: {
-    title: 'Patrones de UI — Aurea Design System',
-    description:
-      'Formularios validados, diálogos de confirmación destructiva y feedback con snackbar.',
-  },
   guidesTroubleshooting: {
     title: 'Resolución de problemas — Aurea',
     description:
-      'Componentes sin estilo, CSS listbox, mensajes de validación, tema y imports del bundle.',
-  },
-  guidesBundle: {
-    title: 'Bundle y tree-shaking — Aurea',
-    description: 'Imports por símbolo, CSS global, stats-json en producción y rutas lazy.',
-  },
-  guidesMigrateMaterial: {
-    title: 'Migrar desde Angular Material — Aurea',
-    description:
-      'Mapea mat-form-field, mat-table, mat-dialog y botones a primitivas Aurea y signal forms.',
-  },
-  guidesMigrateCdk: {
-    title: 'Migrar desde Angular CDK — Aurea',
-    description:
-      'Sustituye overlay y focus-trap del CDK por au-menu, au-popover, au-tooltip y au-dialog.',
+      'Componentes sin estilo, CSS listbox, mensajes de validación y atributos de tema.',
   },
   guidesCrudDemo: {
     title: 'Demo CRUD de referencia — Aurea',
     description:
       'Pantalla de listado con tabla, paginación, filtros, menú por fila, diálogos y formulario con signals.',
-  },
-  roadmap: {
-    title: 'Roadmap — Aurea Design System',
-    description: 'Fases públicas y objetivos de versión hacia 1.0.0.',
   },
   maturity: {
     title: 'Matriz de madurez — Aurea',
@@ -78,7 +55,7 @@ export const SEO_ES: DocsSeoMessages = {
   componentsIndex: {
     title: 'Componentes UI Angular — Catálogo Aurea',
     description:
-      'Explora cada componente Aurea: botones, inputs, diálogos, chips, steps, accesibilidad, tablas API y demos interactivas.',
+      'Catálogo de componentes Aurea con tablas API, tokens de estilo y demos en vivo.',
   },
   componentTitle: (name, exportName) => `${name} (${exportName}) — Docs Aurea`,
   componentDescription: (name, summary) =>

@@ -39,4 +39,11 @@ describe('buildStoryDocsOverview', () => {
     expect(md).not.toContain('## Keyboard and focus');
     expect(md).not.toContain('## Design tokens');
   });
+
+  it('uses Spanish section headings for locale es', () => {
+    const md = buildStoryDocsOverview(baseInput, 'es');
+    expect(md).toContain('## Resumen');
+    expect(md).toContain('## Cuándo usarlo');
+    expect(md).toContain('## Anatomía');
+  });
 });

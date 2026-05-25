@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { signal } from '@angular/core';
 
@@ -8,13 +7,12 @@ import { AuMenu, AuMenuItem, AuMenuTrigger } from './index';
 
 const storyImports = { imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton] };
 
-const docsOverview = getStoryOverview('menu');
 
 const meta: Meta<AuMenu> = {
   title: 'Aurea/Menu',
   component: AuMenu,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('menu'),
   argTypes: {
     open: {
       control: 'boolean',

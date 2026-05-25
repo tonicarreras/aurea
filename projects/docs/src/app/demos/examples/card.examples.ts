@@ -1,55 +1,51 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuButton, AuCard, AuCardFooter } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-card-elevated',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard],
   template: `
-    <au-card
-      variant="elevated"
-      style="max-width: 20rem"
-    >
-      <h3 auCardHeader>Elevada</h3>
-      <p>Sombra sutil para destacar sobre el canvas.</p>
+    <au-card variant="elevated" style="max-width: 20rem">
+      <h3 auCardHeader>{{ t().elevatedTitle }}</h3>
+      <p>{{ t().elevatedBody }}</p>
     </au-card>
   `,
 })
-export class ExampleCardElevatedDemo {}
+export class ExampleCardElevatedDemo {
+  readonly t = docsExampleLive('card');
+}
 
 @Component({
   selector: 'docs-example-card-outlined',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard],
   template: `
-    <au-card
-      variant="outlined"
-      style="max-width: 20rem"
-    >
-      <h3 auCardHeader>Contorno</h3>
-      <p>Borde visible sin sombra pronunciada.</p>
+    <au-card variant="outlined" style="max-width: 20rem">
+      <h3 auCardHeader>{{ t().outlinedTitle }}</h3>
+      <p>{{ t().outlinedBody }}</p>
     </au-card>
   `,
 })
-export class ExampleCardOutlinedDemo {}
+export class ExampleCardOutlinedDemo {
+  readonly t = docsExampleLive('card');
+}
 
 @Component({
   selector: 'docs-example-card-filled-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCard, AuCardFooter, AuButton],
   template: `
-    <au-card
-      variant="filled"
-      style="max-width: 20rem"
-    >
-      <h3 auCardHeader>Con pie</h3>
-      <p>Superficie rellena con acciones en el footer.</p>
+    <au-card variant="filled" style="max-width: 20rem">
+      <h3 auCardHeader>{{ t().footerTitle }}</h3>
+      <p>{{ t().footerBody }}</p>
       <div auCardFooter>
-        <au-button size="sm">Ver detalle</au-button>
+        <au-button size="sm">{{ t().footerAction }}</au-button>
       </div>
     </au-card>
   `,
 })
-export class ExampleCardFilledFooterDemo {}
-
-// —— Tabs ——
+export class ExampleCardFilledFooterDemo {
+  readonly t = docsExampleLive('card');
+}

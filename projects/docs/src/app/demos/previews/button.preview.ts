@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuButton } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-button',
@@ -8,12 +9,14 @@ import { AuButton } from '@aurea-design-system/components';
   template: `
     <div class="docs-preview docs-preview--row">
       <div class="docs-demo-row">
-        <au-button variant="primary">Primary</au-button>
-        <au-button variant="secondary">Secondary</au-button>
-        <au-button variant="outline">Outline</au-button>
-        <au-button variant="ghost">Ghost</au-button>
+        <au-button variant="primary">{{ t().primary }}</au-button>
+        <au-button variant="secondary">{{ t().secondary }}</au-button>
+        <au-button variant="outline">{{ t().outline }}</au-button>
+        <au-button variant="ghost">{{ t().ghost }}</au-button>
       </div>
     </div>
   `,
 })
-export class ButtonDemo {}
+export class ButtonDemo {
+  readonly t = docsPreviewCopy('button');
+}

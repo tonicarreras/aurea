@@ -24,19 +24,12 @@ export interface GuidesMessages {
     lead: string;
     sections: GuideSection[];
   };
-  patterns: {
-    title: string;
-    lead: string;
-    sections: GuideSection[];
-  };
   troubleshooting: {
     title: string;
     lead: string;
+    colProblem: string;
+    colCause: string;
+    colFix: string;
     items: { problem: string; cause: string; fix: string }[];
-  };
-  bundle: {
-    title: string;
-    lead: string;
-    sections: GuideSection[];
   };
 }

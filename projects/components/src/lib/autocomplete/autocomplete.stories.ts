@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
@@ -21,7 +20,6 @@ const cities: AuAutocompleteOption[] = [
   { value: 'agp', label: 'Málaga' },
 ];
 
-const docsOverview = getStoryOverview('autocomplete');
 
 interface AutocompleteStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -43,7 +41,7 @@ const meta: Meta<AutocompleteStoryArgs> = {
   title: 'Aurea/Autocomplete',
   component: AuAutocomplete,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('autocomplete'),
   argTypes: {
     ...fieldChromeArgTypes,
     value: {

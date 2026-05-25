@@ -85,16 +85,6 @@ export interface ComponentDoc {
   styling?: ComponentStylingToken[];
 }
 
-/** Reserva genérica si falta entrada en `component-doc-styling.ts`. */
-export const DEFAULT_COMPONENT_STYLING: ComponentStylingToken[] = [
-  { token: '--au-font-sans', description: 'Tipografía base del componente.' },
-  { token: '--au-color-text-primary', description: 'Texto principal.' },
-  { token: '--au-color-surface-raised', description: 'Superficie de fondo habitual.' },
-  { token: '--au-color-border-subtle', description: 'Bordes discretos.' },
-  { token: '--au-color-action-primary', description: 'Acento de foco y acciones.' },
-  { token: '--au-radius-md', description: 'Radio de esquina por defecto.' },
-];
-
 export const COMPONENT_DOCS: ComponentDoc[] = [
   {
     slug: 'button',
