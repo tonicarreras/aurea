@@ -52,7 +52,11 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       { token: '--au-color-form-disabled-surface', description: 'Disabled background.' },
       { token: '--au-radius-field', description: 'Field corner radius (2px default).' },
       { token: '--au-size-field-h-sm / md / lg', description: 'Form control heights.' },
-      { token: '--au-shadow-focus-ring', description: 'Field focus shadow.' },
+      { token: '--au-shadow-control', description: 'Resting shadow on field shells.' },
+      {
+        token: '--au-shadow-focus-control',
+        description: 'Focus shadow (depth + ring) on field shells.',
+      },
     ],
   },
   {
@@ -81,9 +85,18 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
   },
   {
     title: 'Elevation & layers',
+    description: 'Shadow scale from controls to overlays; z-index for portaled UI.',
     tokens: [
-      { token: '--au-shadow-raised', description: 'Elevated cards.' },
-      { token: '--au-shadow-overlay', description: 'Dialogs, listbox, tooltips.' },
+      { token: '--au-shadow-control', description: 'Fields, chips, badges, outline buttons.' },
+      { token: '--au-shadow-raised', description: 'Cards, messages, tables.' },
+      { token: '--au-shadow-float', description: 'Elevated cards and snackbars.' },
+      { token: '--au-shadow-overlay', description: 'Dialogs, listbox, tooltips, menus.' },
+      { token: '--au-shadow-button-primary', description: 'Primary button resting shadow.' },
+      { token: '--au-shadow-button-hover', description: 'Lift on button hover.' },
+      {
+        token: '--au-shadow-focus-control',
+        description: 'Combined depth + focus ring on fields.',
+      },
       { token: '--au-z-dropdown', description: 'Dropdown lists.' },
       { token: '--au-z-modal', description: 'Modal dialogs.' },
       { token: '--au-z-toast', description: 'Snackbars.' },
@@ -92,11 +105,16 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
   },
   {
     title: 'Motion',
+    description: 'Duration + easing bundles for micro-interactions and overlays.',
     tokens: [
-      { token: '--au-duration-short', description: '120ms — hover and borders.' },
-      { token: '--au-duration-default', description: '200ms — panels and snackbar.' },
+      { token: '--au-motion-tap', description: '80ms — button press feedback.' },
+      { token: '--au-motion-control', description: '120ms — borders, backgrounds, shadows on fields.' },
+      { token: '--au-motion-modal', description: '200ms — dialog backdrop and panel.' },
+      { token: '--au-motion-toast', description: '300ms — snackbar enter/exit.' },
+      { token: '--au-duration-short / default / slow', description: 'Primitive durations (ms).' },
       { token: '--au-ease-out / --au-ease-in-out', description: 'Animation curves.' },
       { token: '--au-transition-control', description: 'Bundle used on field shells.' },
+      { token: '--au-transition-motion-tap', description: 'Bundle for button hover/active.' },
     ],
   },
   {

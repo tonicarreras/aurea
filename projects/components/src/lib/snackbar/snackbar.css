@@ -66,10 +66,10 @@ au-snackbar .au-snackbar__surface {
   border: 1px solid var(--au-color-border-default);
   border-radius: var(--au-radius-lg);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: var(--au-shadow-float);
   color: var(--au-color-text-primary);
   pointer-events: auto;
-  animation: au-snackbar-in var(--au-duration-default) var(--au-ease-out);
+  animation: au-snackbar-in var(--au-motion-toast);
 }
 
 au-snackbar[data-au-variant='default'] .au-snackbar__surface,

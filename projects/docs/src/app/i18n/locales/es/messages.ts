@@ -137,9 +137,31 @@ export const MESSAGES_ES: DocsMessages = {
     highContrastBody:
       'Paleta fija con bordes y foco más marcados: <code>data-au-theme="high-contrast"</code> o <code>[auTheme]="\'high-contrast\'"</code>. Valídalo con tu checklist de QA.',
     highContrastExpand: 'Ver HTML alto contraste',
-    globalHeading: 'Tokens globales',
+    brandHeading: 'Personalizar marca',
+    brandBody:
+      'Crea una hoja de estilos pequeña cargada <strong>después</strong> de <code>au-tokens.css</code>. Sobrescribe tokens semánticos en <code>:root</code> y por tema — sin fork de la librería.',
+    brandExpand: 'Ver CSS de marca',
+    overrideLevelsHeading: 'Tres niveles de override',
+    overrideLevelsBody:
+      'Elige el nivel más acotado que resuelva tu caso. Prefiere tokens antes que clases internas.',
+    overrideGlobalTitle: '1. Global (recomendado para marca)',
+    overrideGlobalBody:
+      'Define <code>--au-color-*</code>, <code>--au-font-sans</code>, <code>--au-shadow-*</code> en <code>:root</code> o <code>[data-au-theme]</code>. Todos los componentes los heredan.',
+    overrideHostTitle: '2. Por componente (host)',
+    overrideHostBody:
+      'Define <code>--au-card-padding</code>, <code>--au-table-row-hover</code>, etc. en el custom element (<code>au-card</code>, <code>au-table</code>…). Mejor en componentes con <code>ViewEncapsulation.None</code>.',
+    overrideAvoidTitle: '3. Evitar en apps de producto',
+    overrideAvoidBody:
+      'No dependas de clases BEM internas (<code>.au-button__element</code>) ni <code>::ng-deep</code>. No forman parte de la API pública y pueden cambiar en minor releases.',
+    hostOverrideHeading: 'Overrides en host (referencia)',
+    hostOverrideBody:
+      'Variables habituales por host. La pestaña <strong>Styling</strong> de cada componente lista todos los tokens que consume.',
+    hostOverrideColHost: 'Host',
+    hostOverrideColToken: 'Token',
+    hostOverrideColDescription: 'Descripción',
+    globalHeading: 'Catálogo global de tokens',
     globalBody:
-      'Sobrescribe en <code>:root</code> o <code>[data-au-theme]</code>. Los tokens de un componente concreto (p. ej. <code>--au-card-padding</code>) se listan en la página de ese componente —',
+      'Referencia completa abajo. Los tokens por componente (p. ej. <code>--au-card-padding</code>) están en la página de ese componente —',
     globalLink: 'índice de componentes',
     ruleHeading: 'Regla de uso',
     ruleBody:

@@ -88,11 +88,22 @@
   --au-checkbox-size-lg: 1.5rem; /* 24px */
 }
 
-/* Elevation: subtle, readable, no neumorphism */
+/* Elevation: readable depth, no neumorphism — scale control → raised → float → overlay */
 :root {
   --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
-  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.05), 0 1px 1px rgba(15, 20, 26, 0.04);
-  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.04), 0 10px 40px rgba(15, 20, 26, 0.12);
+  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px rgba(15, 20, 26, 0.04);
+  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.08), 0 2px 8px rgba(15, 20, 26, 0.06);
+  --au-shadow-float: 0 4px 14px rgba(15, 20, 26, 0.1), 0 2px 4px rgba(15, 20, 26, 0.06);
+  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 12px 40px rgba(15, 20, 26, 0.14);
+  --au-shadow-button: var(--au-shadow-control);
+  --au-shadow-button-primary:
+    0 1px 2px color-mix(in srgb, var(--au-color-action-primary) 36%, transparent),
+    0 1px 1px rgba(15, 20, 26, 0.05);
+  --au-shadow-button-hover: 0 2px 6px rgba(15, 20, 26, 0.1), 0 1px 2px rgba(15, 20, 26, 0.06);
+  --au-shadow-focus-control:
+    0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error:
+    0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-form-error);
 }
 
 /* Stacking (z-index) — avoid magic numbers in product stylesheets */
@@ -181,6 +192,14 @@
   --au-transition-control:
     var(--au-transition-border), var(--au-transition-shadow), var(--au-transition-background);
   --au-transition-glyph: color var(--au-duration-short) var(--au-ease-in-out);
+  /* Motion intent (duration + easing) for overlays and micro-interactions */
+  --au-motion-tap: var(--au-duration-micro) var(--au-ease-out);
+  --au-motion-control: var(--au-duration-short) var(--au-ease-in-out);
+  --au-motion-modal: var(--au-duration-default) var(--au-ease-standard);
+  --au-motion-toast: var(--au-duration-slow) var(--au-ease-out);
+  --au-transition-motion-tap:
+    transform var(--au-motion-tap), box-shadow var(--au-motion-tap),
+    background-color var(--au-motion-tap), border-color var(--au-motion-tap);
 }
 
 /* ==========================================================================
@@ -519,8 +538,19 @@
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
-  --au-shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 50px rgba(0, 0, 0, 0.45);
+  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --au-shadow-float: 0 6px 18px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.28);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 48px rgba(0, 0, 0, 0.48);
+  --au-shadow-button: var(--au-shadow-control);
+  --au-shadow-button-primary:
+    0 1px 3px color-mix(in srgb, var(--au-color-action-primary) 42%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.28);
+  --au-shadow-button-hover: 0 3px 10px rgba(0, 0, 0, 0.34), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --au-shadow-focus-control:
+    0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error:
+    0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-form-error);
   /* Rings */
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);

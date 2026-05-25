@@ -4,7 +4,7 @@ import { AuButton, AuCard, AuDensityDirective, AuTheme } from '@aurea-design-sys
 
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
-import { themeTokenGroups } from '../core/docs-theme-tokens';
+import { themeTokenGroups, themeHostOverrides } from '../core/docs-theme-tokens';
 import { CodeBlock } from '../shared/code-block';
 import { DocPage } from '../shared/doc-page';
 import { DocsInlineText } from '../shared/docs-inline-text';
@@ -144,6 +144,39 @@ import { DocsTokenList } from '../shared/docs-token-list';
         </au-card>
       </div>
 
+      <h2>{{ i18n.messages().themes.brandHeading }}</h2>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.brandBody" />
+      </p>
+      <docs-code-block
+        [code]="brandSnippet"
+        language="css"
+        [expandLabel]="i18n.messages().themes.brandExpand"
+      />
+
+      <h2>{{ i18n.messages().themes.overrideLevelsHeading }}</h2>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.overrideLevelsBody" />
+      </p>
+      <section class="docs-theme-override">
+        <h3 class="docs-theme-override__title">{{ i18n.messages().themes.overrideGlobalTitle }}</h3>
+        <p>
+          <docs-inline-text [text]="i18n.messages().themes.overrideGlobalBody" />
+        </p>
+      </section>
+      <section class="docs-theme-override">
+        <h3 class="docs-theme-override__title">{{ i18n.messages().themes.overrideHostTitle }}</h3>
+        <p>
+          <docs-inline-text [text]="i18n.messages().themes.overrideHostBody" />
+        </p>
+      </section>
+      <section class="docs-theme-override">
+        <h3 class="docs-theme-override__title">{{ i18n.messages().themes.overrideAvoidTitle }}</h3>
+        <p>
+          <docs-inline-text [text]="i18n.messages().themes.overrideAvoidBody" />
+        </p>
+      </section>
+
       <h2>{{ i18n.messages().themes.globalHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.globalBody" />
@@ -152,6 +185,31 @@ import { DocsTokenList } from '../shared/docs-token-list';
         }}</a
         >.
       </p>
+
+      <h3 class="docs-theme-host__title">{{ i18n.messages().themes.hostOverrideHeading }}</h3>
+      <p class="docs-theme-host__lead">
+        <docs-inline-text [text]="i18n.messages().themes.hostOverrideBody" />
+      </p>
+      <div class="docs-theme-host__table-wrap">
+        <table class="docs-theme-host__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ i18n.messages().themes.hostOverrideColHost }}</th>
+              <th scope="col">{{ i18n.messages().themes.hostOverrideColToken }}</th>
+              <th scope="col">{{ i18n.messages().themes.hostOverrideColDescription }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of hostOverrides(); track row.host + row.token) {
+              <tr>
+                <td><code>{{ row.host }}</code></td>
+                <td><code>{{ row.token }}</code></td>
+                <td><docs-inline-text [text]="row.description" /></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
       @for (group of tokenGroups(); track group.title) {
         <section class="docs-theme-group">
@@ -237,6 +295,61 @@ import { DocsTokenList } from '../shared/docs-token-list';
       font-size: var(--au-text-sm);
       line-height: var(--au-leading-relaxed);
     }
+
+    .docs-theme-override {
+      margin-top: var(--au-space-6);
+    }
+
+    .docs-theme-override__title {
+      margin: 0 0 var(--au-space-2);
+      font-size: var(--au-text-base);
+      font-weight: var(--au-weight-semibold);
+    }
+
+    .docs-theme-override p {
+      margin: 0;
+      max-width: min(62rem, 100%);
+      line-height: var(--au-leading-relaxed);
+      color: var(--au-color-text-secondary);
+    }
+
+    .docs-theme-host__title {
+      margin: var(--au-space-8) 0 var(--au-space-2);
+      font-size: var(--au-text-lg);
+      font-weight: var(--au-weight-semibold);
+    }
+
+    .docs-theme-host__lead {
+      margin: 0 0 var(--au-space-4);
+      max-width: min(62rem, 100%);
+      color: var(--au-color-text-secondary);
+      line-height: var(--au-leading-relaxed);
+    }
+
+    .docs-theme-host__table-wrap {
+      overflow-x: auto;
+      margin-bottom: var(--au-space-4);
+    }
+
+    .docs-theme-host__table {
+      width: 100%;
+      min-width: 28rem;
+      border-collapse: collapse;
+      font-size: var(--au-text-sm);
+    }
+
+    .docs-theme-host__table th,
+    .docs-theme-host__table td {
+      padding: var(--au-space-3) var(--au-space-4);
+      border-bottom: 1px solid var(--docs-border-fine);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .docs-theme-host__table th {
+      font-weight: var(--au-weight-semibold);
+      color: var(--au-color-text-secondary);
+    }
   `,
 })
 export class ThemingPage {
@@ -246,6 +359,7 @@ export class ThemingPage {
   readonly previewDensity = signal<'compact' | 'comfortable' | 'spacious'>('comfortable');
 
   readonly tokenGroups = computed(() => themeTokenGroups(this.i18n.locale()));
+  readonly hostOverrides = computed(() => themeHostOverrides(this.i18n.locale()));
 
   readonly swatches = [
     'var(--au-color-surface-raised)',
@@ -269,4 +383,18 @@ export class ThemingPage {
   readonly highContrastSnippet = `<html data-au-theme="high-contrast">
   <!-- experimental WCAG-oriented palette -->
 </html>`;
+
+  readonly brandSnippet = `/* After au-tokens.css */
+:root,
+[data-au-theme='light'] {
+  --au-color-action-primary: #0066cc;
+  --au-color-action-primary-hover: #0052a3;
+  --au-color-focus-ring: #0066cc;
+  --au-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+[data-au-theme='dark'] {
+  --au-color-action-primary: #5eb0ff;
+  --au-color-focus-ring: #5eb0ff;
+}`;
 }

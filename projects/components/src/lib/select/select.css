@@ -93,6 +93,7 @@
   border: 1px solid var(--au-color-form-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
+  box-shadow: var(--au-shadow-control);
   transition: var(--au-transition-control);
 }
 
@@ -114,13 +115,13 @@
  */
 .au-select__control-row:focus-within {
   border-color: var(--au-color-focus-ring);
-  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+  box-shadow: var(--au-shadow-focus-control);
 }
 
 .au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
-  box-shadow: 0 0 0 1px var(--au-color-form-error);
+  box-shadow: var(--au-shadow-focus-control-error);
 }
 
 /* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
@@ -148,6 +149,7 @@
 .au-select__control-row:has(.au-select__trigger:disabled) {
   border-color: var(--au-color-border-subtle);
   background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
 }
 
 .au-select__trigger {

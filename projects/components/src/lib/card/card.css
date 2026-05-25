@@ -22,19 +22,19 @@ au-card .au-card__container {
 au-card[data-au-variant='elevated'] .au-card__container {
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: var(--au-shadow-float);
 }
 
 au-card[data-au-variant='outlined'] .au-card__container {
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-default);
-  box-shadow: none;
+  box-shadow: var(--au-shadow-raised);
 }
 
 au-card[data-au-variant='filled'] .au-card__container {
   background: var(--au-color-surface-elevated);
   border: 1px solid var(--au-color-border-subtle);
-  box-shadow: none;
+  box-shadow: var(--au-shadow-control);
 }
 
 au-card .au-card__container [auCardMedia] {

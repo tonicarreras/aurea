@@ -137,9 +137,31 @@ export const MESSAGES_EN: DocsMessages = {
     highContrastBody:
       'Fixed palette for stronger borders and focus: <code>data-au-theme="high-contrast"</code> or <code>[auTheme]="\'high-contrast\'"</code>. Validate with your QA checklist.',
     highContrastExpand: 'Show high-contrast HTML',
-    globalHeading: 'Global tokens',
+    brandHeading: 'Brand customization',
+    brandBody:
+      'Create a small stylesheet loaded <strong>after</strong> <code>au-tokens.css</code>. Override semantic tokens on <code>:root</code> and per theme — no fork of the library required.',
+    brandExpand: 'Show brand override CSS',
+    overrideLevelsHeading: 'Three override levels',
+    overrideLevelsBody:
+      'Pick the narrowest level that solves your need. Prefer tokens over targeting internal class names.',
+    overrideGlobalTitle: '1. Global (recommended for brand)',
+    overrideGlobalBody:
+      'Set <code>--au-color-*</code>, <code>--au-font-sans</code>, <code>--au-shadow-*</code> on <code>:root</code> or <code>[data-au-theme]</code>. Every component picks them up automatically.',
+    overrideHostTitle: '2. Per component (host)',
+    overrideHostBody:
+      'Set <code>--au-card-padding</code>, <code>--au-table-row-hover</code>, etc. on the custom element (<code>au-card</code>, <code>au-table</code>…). Works best on components with <code>ViewEncapsulation.None</code>.',
+    overrideAvoidTitle: '3. Avoid in product apps',
+    overrideAvoidBody:
+      'Do not rely on internal BEM classes (<code>.au-button__element</code>) or <code>::ng-deep</code>. They are not part of the public API and can change in minor releases.',
+    hostOverrideHeading: 'Host overrides (reference)',
+    hostOverrideBody:
+      'Common per-host variables. Each component’s <strong>Styling</strong> tab lists every token that component reads.',
+    hostOverrideColHost: 'Host',
+    hostOverrideColToken: 'Token',
+    hostOverrideColDescription: 'Description',
+    globalHeading: 'Global token catalog',
     globalBody:
-      'Override on <code>:root</code> or <code>[data-au-theme]</code>. Per-component tokens (e.g. <code>--au-card-padding</code>) are listed on that component’s page —',
+      'Full reference below. Per-component tokens (e.g. <code>--au-card-padding</code>) are listed on that component’s page — see the',
     globalLink: 'component index',
     ruleHeading: 'Usage rule',
     ruleBody:
