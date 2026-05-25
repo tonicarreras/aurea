@@ -601,12 +601,66 @@
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
 }
 
+[data-au-theme='high-contrast-dark'] {
+  color-scheme: dark;
+  --au-color-surface-canvas: #000000;
+  --au-color-surface-raised: #000000;
+  --au-color-surface-elevated: #141414;
+  --au-color-surface-sunken: #0a0a0a;
+  --au-color-surface-inverted: #ffffff;
+  --au-color-text-primary: #ffffff;
+  --au-color-text-secondary: #f0f0f0;
+  --au-color-text-tertiary: #e0e0e0;
+  --au-color-text-placeholder: #cccccc;
+  --au-color-text-disabled: #999999;
+  --au-color-text-label: #ffffff;
+  --au-color-text-on-solid: #000000;
+  --au-color-border-subtle: #ffffff;
+  --au-color-border-default: #ffffff;
+  --au-color-border-strong: #ffffff;
+  --au-color-action-primary: #00ffff;
+  --au-color-action-primary-hover: #80ffff;
+  --au-color-action-primary-pressed: #b3ffff;
+  --au-color-link: #00ffff;
+  --au-color-link-hover: #80ffff;
+  --au-color-focus-ring: #ffffff;
+  --au-color-focus-inner: #000000;
+  --au-focus-ring-width: 3px;
+  --au-color-semantic-error: #ff6b6b;
+  --au-color-semantic-error-contrast: #000000;
+  --au-color-semantic-error-surface: #3d0000;
+  --au-color-semantic-success: #7fff7f;
+  --au-color-semantic-success-surface: #003300;
+  --au-color-semantic-warning: #ffff00;
+  --au-color-semantic-warning-surface: #333300;
+  --au-color-semantic-info: #80d4ff;
+  --au-color-semantic-info-surface: #001a33;
+  --au-color-form-border: #ffffff;
+  --au-color-form-border-hover: #ffffff;
+  --au-color-form-text: #ffffff;
+  --au-color-form-placeholder: #cccccc;
+  --au-color-form-error: #ff6b6b;
+  --au-color-form-error-bg: #3d0000;
+  --au-color-form-disabled-surface: #1a1a1a;
+  --au-shadow-control: 0 0 0 1px #ffffff;
+  --au-shadow-raised: 0 0 0 1px #ffffff;
+  --au-shadow-float: 0 0 0 2px #ffffff;
+  --au-shadow-overlay: 0 0 0 2px #ffffff, 0 8px 24px rgba(0, 0, 0, 0.9);
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  --au-shadow-focus-control:
+    0 0 0 1px var(--au-color-focus-ring), 0 0 0 calc(var(--au-focus-ring-width) + 1px) #000000;
+  --au-shadow-focus-control-error:
+    0 0 0 1px var(--au-color-semantic-error), 0 0 0 calc(var(--au-focus-ring-width) + 1px) #000000;
+}
+
 /* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */
 @media (prefers-reduced-motion: reduce) {
   :root,
   [data-au-theme='light'],
   [data-au-theme='dark'],
-  [data-au-theme='high-contrast'] {
+  [data-au-theme='high-contrast'],
+  [data-au-theme='high-contrast-dark'] {
     --au-scroll-smooth: auto;
   }
 }

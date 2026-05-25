@@ -86,7 +86,13 @@ export interface DocsMessages {
     previewCardBody: string;
     previewLight: string;
     previewDark: string;
+    previewThemeLabel: string;
     previewHighContrast: string;
+    previewHighContrastHint: string;
+    previewDensityLabel: string;
+    previewDensityCompact: string;
+    previewDensityComfortable: string;
+    previewDensitySpacious: string;
     densityHeading: string;
     densityBody: string;
     densityExpand: string;

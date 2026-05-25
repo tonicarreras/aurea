@@ -1,10 +1,18 @@
 import { computed, DestroyRef, Directive, inject, input, signal } from '@angular/core';
 
+export type AuThemeMode =
+  | 'light'
+  | 'dark'
+  | 'system'
+  | 'high-contrast'
+  | 'high-contrast-dark';
+
 /**
  * Applies Aurea semantic colors by setting `data-au-theme` on the host element
  * (see `au-tokens.css`). Use on a layout root (`<body>`, shell div) or `document.documentElement`.
  *
- * - `light` / `dark` / `high-contrast`: fixed palette.
+ * - `light` / `dark` / `high-contrast` / `high-contrast-dark`: fixed palettes.
+ * - `high-contrast` pairs with light appearance; `high-contrast-dark` with dark.
  * - `system`: follows `prefers-color-scheme` and updates when the OS preference changes.
  */
 @Directive({
@@ -16,13 +24,18 @@ import { computed, DestroyRef, Directive, inject, input, signal } from '@angular
 export class AuTheme {
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly auTheme = input<'light' | 'dark' | 'system' | 'high-contrast'>('system');
+  readonly auTheme = input<AuThemeMode>('system');
 
   private readonly prefersDark = signal(false);
 
   readonly resolved = computed(() => {
     const mode = this.auTheme();
-    if (mode === 'light' || mode === 'dark' || mode === 'high-contrast') {
+    if (
+      mode === 'light' ||
+      mode === 'dark' ||
+      mode === 'high-contrast' ||
+      mode === 'high-contrast-dark'
+    ) {
       return mode;
     }
     return this.prefersDark() ? 'dark' : 'light';

@@ -65,7 +65,7 @@ Adds global styles to `angular.json` and prints next steps.
 <html data-au-theme="dark"></html>
 ```
 
-Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast` experimental).
+Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark` experimental).
 
 ### 4. Density (optional)
 
@@ -184,7 +184,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuTable`            | `<au-table>`        | Table shell + `auTableSortHeader`              |
 | `AuProgress`         | `<au-progress>`     | Progressbar                                    |
 | `AuLink`             | `a[auLink]`         | Semantic inline link                           |
-| `AuTheme`            | `[auTheme]`         | `light` / `dark` / `system` / `high-contrast`  |
+| `AuTheme`            | `[auTheme]`         | `light` / `dark` / `system` / `high-contrast` / `high-contrast-dark` |
 | `AuDensityDirective` | `[auDensity]`       | `compact` / `comfortable` / `spacious`         |
 
 ---

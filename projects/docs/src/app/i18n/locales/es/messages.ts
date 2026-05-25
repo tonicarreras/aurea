@@ -128,14 +128,21 @@ export const MESSAGES_ES: DocsMessages = {
     previewCardBody: 'Los colores siguen el tema del contenedor.',
     previewLight: 'Claro',
     previewDark: 'Oscuro',
-    previewHighContrast: 'Alto contraste',
+    previewThemeLabel: 'Apariencia',
+    previewHighContrast: 'Alto contraste (a11y)',
+    previewHighContrastHint:
+      'Combina con la apariencia: claro → high-contrast, oscuro → high-contrast-dark.',
+    previewDensityLabel: 'Densidad',
+    previewDensityCompact: 'Compacto',
+    previewDensityComfortable: 'Cómodo',
+    previewDensitySpacious: 'Espacioso',
     densityHeading: 'Densidad (v2)',
     densityBody:
       'Define <code>data-au-density</code> en el shell: <code>compact</code>, <code>comfortable</code> (por defecto) o <code>spacious</code>. Usa la directiva <code>auDensity</code> para enlazarlo de forma reactiva.',
     densityExpand: 'Ver HTML de densidad',
     highContrastHeading: 'Alto contraste (experimental)',
     highContrastBody:
-      'Paleta fija con bordes y foco más marcados: <code>data-au-theme="high-contrast"</code> o <code>[auTheme]="\'high-contrast\'"</code>. Valídalo con tu checklist de QA.',
+      'Independiente de la apariencia: bordes y foco reforzados para accesibilidad. Cuando el usuario lo active, mapea la apariencia a <code>high-contrast</code> (claro) o <code>high-contrast-dark</code> (oscuro) con <code>data-au-theme</code> o <code>[auTheme]</code>. Ambas paletas son experimentales — valídalo con tu checklist de QA.',
     highContrastExpand: 'Ver HTML alto contraste',
     brandHeading: 'Personalizar marca',
     brandBody:

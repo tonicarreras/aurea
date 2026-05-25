@@ -9,7 +9,7 @@ Last review: **2026-05-23** (post Phase 4 + menu/popover/table stable).
 | --------------------------- | ------------ | -------------------------------------------------------------- |
 | Focus visibility            | Pass         | `--au-focus-ring-width` + `box-shadow` on interactive controls |
 | Color contrast (light/dark) | Pass         | Semantic tokens tuned per theme                                |
-| High contrast theme         | Experimental | `data-au-theme="high-contrast"` — manual QA ongoing            |
+| High contrast theme         | Experimental | `high-contrast` / `high-contrast-dark` — manual QA ongoing       |
 | Keyboard — buttons, chips   | Pass         | Native focus; chip group roving tabindex                       |
 | Keyboard — dialogs          | Pass         | Escape closes; focus trap in `AuDialog`                        |
 | Keyboard — tabs             | Pass         | Arrow keys between tabs                                        |

@@ -128,14 +128,21 @@ export const MESSAGES_EN: DocsMessages = {
     previewCardBody: 'Colors follow the container theme.',
     previewLight: 'Light',
     previewDark: 'Dark',
-    previewHighContrast: 'High contrast',
+    previewThemeLabel: 'Appearance',
+    previewHighContrast: 'High contrast (a11y)',
+    previewHighContrastHint:
+      'Combines with appearance: light → high-contrast, dark → high-contrast-dark.',
+    previewDensityLabel: 'Density',
+    previewDensityCompact: 'Compact',
+    previewDensityComfortable: 'Comfortable',
+    previewDensitySpacious: 'Spacious',
     densityHeading: 'Density (v2)',
     densityBody:
       'Set <code>data-au-density</code> on the shell: <code>compact</code>, <code>comfortable</code> (default), or <code>spacious</code>. Use the <code>auDensity</code> directive for reactive binding.',
     densityExpand: 'Show density HTML',
     highContrastHeading: 'High contrast (experimental)',
     highContrastBody:
-      'Fixed palette for stronger borders and focus: <code>data-au-theme="high-contrast"</code> or <code>[auTheme]="\'high-contrast\'"</code>. Validate with your QA checklist.',
+      'Separate from appearance: stronger borders and focus for accessibility. When the user opts in, map appearance to <code>high-contrast</code> (light) or <code>high-contrast-dark</code> (dark) via <code>data-au-theme</code> or <code>[auTheme]</code>. Both palettes are experimental — validate with your QA checklist.',
     highContrastExpand: 'Show high-contrast HTML',
     brandHeading: 'Brand customization',
     brandBody:

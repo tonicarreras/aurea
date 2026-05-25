@@ -27,6 +27,19 @@ export interface EcosystemMessages {
   crudDemo: {
     title: string;
     lead: string;
+    frameHint: string;
+    frameTitle: string;
+    themeLabel: string;
+    densityLabel: string;
+    themeLight: string;
+    themeDark: string;
+    highContrastLabel: string;
+    highContrastHint: string;
+    densityCompact: string;
+    densityComfortable: string;
+    densitySpacious: string;
+    pageTitle: string;
+    pageSubtitle: string;
     filterLabel: string;
     filterPlaceholder: string;
     colName: string;
