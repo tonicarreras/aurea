@@ -27,7 +27,6 @@ export const DOCS_ROUTES = {
   components: 'components',
   guidesAdoption: 'guides/adoption',
   guidesSignalForms: 'guides/signal-forms',
-  guidesTroubleshooting: 'guides/troubleshooting',
   guidesCrudDemo: 'guides/crud-demo',
   maturity: 'maturity',
   designTokens: 'design-tokens',

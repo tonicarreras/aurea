@@ -38,15 +38,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/signal-forms"/>
   </url>
   <url>
-    <loc>https://aurea-ds.netlify.app/en/guides/troubleshooting</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/troubleshooting"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/troubleshooting"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/troubleshooting"/>
-  </url>
-  <url>
     <loc>https://aurea-ds.netlify.app/en/guides/crud-demo</loc>
     <lastmod>2026-05-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -414,15 +405,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/signal-forms"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/signal-forms"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/signal-forms"/>
-  </url>
-  <url>
-    <loc>https://aurea-ds.netlify.app/es/guides/troubleshooting</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/troubleshooting"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/troubleshooting"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/troubleshooting"/>
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/guides/crud-demo</loc>

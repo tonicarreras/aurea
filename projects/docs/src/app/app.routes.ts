@@ -29,11 +29,6 @@ export const routes: Routes = [
           import('./pages/guide-signal-forms.page').then((m) => m.GuideSignalFormsPage),
       },
       {
-        path: 'guides/troubleshooting',
-        loadComponent: () =>
-          import('./pages/guide-troubleshooting.page').then((m) => m.GuideTroubleshootingPage),
-      },
-      {
         path: 'guides/crud-demo',
         loadComponent: () =>
           import('./pages/guide-crud-demo.page').then((m) => m.GuideCrudDemoPage),

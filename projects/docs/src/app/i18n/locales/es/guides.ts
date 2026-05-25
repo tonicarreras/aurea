@@ -16,11 +16,6 @@ export const GUIDES_ES: GuidesMessages = {
         path: 'guides/signal-forms',
       },
       {
-        title: 'Resolución de problemas',
-        description: 'Errores frecuentes de configuración y cómo corregirlos.',
-        path: 'guides/troubleshooting',
-      },
-      {
         title: 'Temas y tokens',
         description: 'Claro/oscuro, densidad y alto contraste.',
         path: 'themes',
@@ -85,45 +80,6 @@ export class ProfileEmail {
 }`,
         codeLanguage: 'typescript',
         expandLabel: 'Ver guard de envío',
-      },
-    ],
-  },
-  troubleshooting: {
-    title: 'Resolución de problemas',
-    lead: 'Problemas habituales de integración y cómo resolverlos.',
-    colProblem: 'Síntoma',
-    colCause: 'Causa',
-    colFix: 'Solución',
-    items: [
-      {
-        problem: 'Componentes sin estilo',
-        cause: 'Falta au-tokens.css en estilos globales',
-        fix: 'Ejecuta ng add @aurea-design-system/components o importa styles/au-tokens.css en angular.json.',
-      },
-      {
-        problem: 'Lista de select/autocomplete rota',
-        cause: 'Falta au-field-listbox.css',
-        fix: 'Añade styles/au-field-listbox.css junto a los tokens.',
-      },
-      {
-        problem: 'No aparecen mensajes de validación',
-        cause: 'Control sin au-form-field o sin importar FormField',
-        fix: 'Envuelve el control e importa FormField desde @angular/forms/signals.',
-      },
-      {
-        problem: 'El tema no cambia',
-        cause: 'data-au-theme en un hijo demasiado profundo',
-        fix: 'Pon data-au-theme en html/body o shell; usa la directiva [auTheme].',
-      },
-      {
-        problem: 'Doble envío / carrusel salta diapositivas',
-        cause: 'El click burbujea al padre',
-        fix: 'Actualiza @aurea-design-system/components (el botón hace stopPropagation tras emit).',
-      },
-      {
-        problem: 'Bundle mayor de lo esperado',
-        cause: 'import * as Aurea',
-        fix: 'Importa símbolos nombrados desde @aurea-design-system/components; evita imports con namespace.',
       },
     ],
   },

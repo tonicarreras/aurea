@@ -16,11 +16,6 @@ export const GUIDES_EN: GuidesMessages = {
         path: 'guides/signal-forms',
       },
       {
-        title: 'Troubleshooting',
-        description: 'Common setup mistakes and fixes.',
-        path: 'guides/troubleshooting',
-      },
-      {
         title: 'Themes & tokens',
         description: 'Light/dark, density, and high-contrast palettes.',
         path: 'themes',
@@ -85,45 +80,6 @@ export class ProfileEmail {
 }`,
         codeLanguage: 'typescript',
         expandLabel: 'Show submit guard',
-      },
-    ],
-  },
-  troubleshooting: {
-    title: 'Troubleshooting',
-    lead: 'Common integration issues and how to fix them.',
-    colProblem: 'Symptom',
-    colCause: 'Cause',
-    colFix: 'Fix',
-    items: [
-      {
-        problem: 'Components render unstyled',
-        cause: 'au-tokens.css not in global styles',
-        fix: 'Run ng add @aurea-design-system/components or import styles/au-tokens.css in angular.json.',
-      },
-      {
-        problem: 'Select/autocomplete list looks broken',
-        cause: 'Missing au-field-listbox.css',
-        fix: 'Add styles/au-field-listbox.css next to tokens.',
-      },
-      {
-        problem: 'Validation messages never show',
-        cause: 'Control not wrapped in au-form-field or missing FormField import',
-        fix: 'Wrap control and import FormField from @angular/forms/signals.',
-      },
-      {
-        problem: 'Theme does not switch',
-        cause: 'data-au-theme on a child while tokens expect ancestor',
-        fix: 'Set data-au-theme on html/body or app shell; use [auTheme] directive.',
-      },
-      {
-        problem: 'Double submit / carousel skips slides',
-        cause: 'Click bubbles to parent handlers',
-        fix: 'Upgrade to latest @aurea-design-system/components (button stops propagation after emit).',
-      },
-      {
-        problem: 'Bundle larger than expected',
-        cause: 'Barrel import import * as Aurea',
-        fix: 'Import named symbols from @aurea-design-system/components; avoid namespace imports.',
       },
     ],
   },

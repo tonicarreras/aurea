@@ -23,7 +23,15 @@
   docs-preview-skeleton,
   docs-preview-steps,
   docs-preview-divider,
-  docs-preview-tooltip
+  docs-preview-tooltip,
+  docs-preview-badge,
+  docs-preview-breadcrumb,
+  docs-preview-link,
+  docs-preview-menu,
+  docs-preview-pagination,
+  docs-preview-popover,
+  docs-preview-progress,
+  docs-preview-table
 ) {
   display: flex;
   width: 100%;
@@ -55,9 +63,33 @@
     au-input-number,
     au-input-date,
     au-radio-group,
-    au-switch
+    au-switch,
+    au-progress
   ) {
   width: 100%;
+}
+
+/* Barras de progreso: ancho completo en el carrusel (la pista es baja, ~6px) */
+.docs-preview--progress {
+  width: 100%;
+  max-width: 14rem;
+  min-width: 10rem;
+  padding: var(--au-space-3) 0;
+}
+
+.docs-preview--progress :where(au-progress) {
+  display: block;
+  width: 100%;
+}
+
+.docs-preview--inline {
+  width: 100%;
+  max-width: 100%;
+}
+
+.docs-preview--inline :where(au-pagination, au-breadcrumb, au-badge) {
+  width: auto;
+  max-width: 100%;
 }
 
 .docs-preview--wide {

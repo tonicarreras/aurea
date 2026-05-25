@@ -6,7 +6,11 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   selector: 'docs-preview-breadcrumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuBreadcrumb],
-  template: `<au-breadcrumb [items]="items()" />`,
+  template: `
+    <div class="docs-preview docs-preview--inline">
+      <au-breadcrumb [items]="items()" />
+    </div>
+  `,
 })
 export class BreadcrumbDemo {
   readonly t = docsPreviewCopy('breadcrumb');

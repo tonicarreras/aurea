@@ -18,7 +18,6 @@ const STATIC_SEGMENTS = [
   'get-started',
   'guides/adoption',
   'guides/signal-forms',
-  'guides/troubleshooting',
   'guides/crud-demo',
   'maturity',
   'design-tokens',

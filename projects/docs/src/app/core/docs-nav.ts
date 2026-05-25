@@ -33,7 +33,6 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
         { path: DOCS_ROUTES.getStarted, label: n.intro.getStarted },
         { path: DOCS_ROUTES.guidesAdoption, label: n.intro.adoption },
         { path: DOCS_ROUTES.guidesSignalForms, label: n.intro.signalForms },
-        { path: DOCS_ROUTES.guidesTroubleshooting, label: n.intro.troubleshooting },
         { path: DOCS_ROUTES.guidesCrudDemo, label: n.intro.crudDemo },
         { path: DOCS_ROUTES.themes, label: n.intro.themes },
       ],

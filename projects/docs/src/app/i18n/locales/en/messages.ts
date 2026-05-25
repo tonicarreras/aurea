@@ -104,7 +104,7 @@ export const MESSAGES_EN: DocsMessages = {
       nextGuides: {
         title: 'Go deeper',
         intro:
-          'See the adoption guide for signal forms and troubleshooting — or open the',
+          'See the adoption guide for signal forms — or open the',
         adoptionLink: 'Adoption guide →',
         crudDemoLink: 'CRUD reference demo →',
       },

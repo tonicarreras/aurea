@@ -8,7 +8,6 @@ export const NAV_EN: DocsNavMessages = {
     getStarted: 'Get started',
     adoption: 'Adoption guide',
     signalForms: 'Signal forms',
-    troubleshooting: 'Troubleshooting',
     crudDemo: 'CRUD demo',
     themes: 'Themes & tokens',
   },

@@ -21,17 +21,12 @@ export const SEO_EN: DocsSeoMessages = {
   guidesAdoption: {
     title: 'Adoption guide — Aurea Design System',
     description:
-      'Guides for install, signal forms, troubleshooting, and themes.',
+      'Guides for install, signal forms, and themes.',
   },
   guidesSignalForms: {
     title: 'Signal forms with Aurea — Angular 21',
     description:
       'Bind au-form-field and controls with FormField, form(), validators, and submit guards.',
-  },
-  guidesTroubleshooting: {
-    title: 'Troubleshooting Aurea — common fixes',
-    description:
-      'Unstyled components, missing listbox CSS, validation messages, and theme attributes.',
   },
   guidesCrudDemo: {
     title: 'CRUD reference demo — Aurea',

@@ -5,7 +5,6 @@ export interface DocsNavMessages {
     getStarted: string;
     adoption: string;
     signalForms: string;
-    troubleshooting: string;
     crudDemo: string;
     themes: string;
   };

@@ -94,9 +94,7 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-switch-thumb-off', description: 'Color del thumb en estado off.' },
     { token: '--au-color-action-primary', description: 'Pista y thumb cuando está activo.' },
     { token: '--au-color-text-on-solid', description: 'Thumb sobre pista activa.' },
-    { token: '--au-color-form-border', description: 'Borde del shell que envuelve el control.' },
-    { token: '--au-radius-field', description: 'Esquinas del contenedor del switch.' },
-    { token: '--au-color-form-error', description: 'Shell y etiqueta en estado inválido.' },
+    { token: '--au-color-form-error', description: 'Anillo de error en la pista del switch.' },
   ],
   select: [
     { token: '--au-color-form-border', description: 'Borde del trigger del desplegable.' },
@@ -128,13 +126,13 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Foco en el input de búsqueda.' },
   ],
   'radio-group': [
-    { token: '--au-color-form-border', description: 'Borde del contenedor del grupo.' },
     { token: '--au-color-text-label', description: 'Leyenda del grupo.' },
-    { token: '--au-color-action-primary', description: 'Indicador de la opción seleccionada.' },
-    { token: '--au-color-surface-raised', description: 'Fondo del shell del grupo.' },
-    { token: '--au-radius-field', description: 'Esquinas del contenedor.' },
-    { token: '--au-color-form-error', description: 'Estado inválido del grupo.' },
-    { token: '--au-color-focus-ring', description: 'Foco en la opción activa.' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Indicador de la opción seleccionada (`accent-color` nativo).',
+    },
+    { token: '--au-color-form-error', description: 'Contorno de error en cada radio.' },
+    { token: '--au-color-focus-ring', description: 'Anillo de foco en la opción activa.' },
   ],
   'input-number': [
     { token: '--au-color-form-border', description: 'Borde del campo numérico.' },
