@@ -6,10 +6,10 @@
   "author": "Toni Carreras",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tonicarreras/aurea-ds.git"
+    "url": "git+https://github.com/tonicarreras/aurea.git"
   },
   "bugs": {
-    "url": "https://github.com/tonicarreras/aurea-ds/issues"
+    "url": "https://github.com/tonicarreras/aurea/issues"
   },
   "homepage": "https://aurea-ds.netlify.app/es/get-started",
   "keywords": [
