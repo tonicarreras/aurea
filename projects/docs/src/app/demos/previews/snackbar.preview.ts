@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuButton, AuSnackbar } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-snackbar',
@@ -10,11 +11,11 @@ import { AuButton, AuSnackbar } from '@aurea-design-system/components';
       <au-button
         type="button"
         (click)="open.set(true)"
-        >Mostrar snackbar</au-button
+        >{{ t().show }}</au-button
       >
       <au-snackbar
         [(open)]="open"
-        message="Cambios guardados"
+        [message]="t().message"
         variant="success"
         [durationMs]="3500"
       />
@@ -22,5 +23,6 @@ import { AuButton, AuSnackbar } from '@aurea-design-system/components';
   `,
 })
 export class SnackbarDemo {
+  readonly t = docsPreviewCopy('snackbar');
   readonly open = model(false);
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
- * Fondo decorativo de la landing: pocas líneas suaves que cruzan la pantalla.
+ * Fondo decorativo de la landing: espiral áurea (Fibonacci) derivada de `public/aurea.svg`.
  */
 @Component({
   selector: 'docs-landing-lines',
@@ -13,42 +13,87 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     >
       <svg
         class="docs-landing-lines__svg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
+        viewBox="0 0 570 360"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <!-- diagonal principal: esquina sup. izq. → inf. der. -->
-        <line
-          class="docs-landing-lines__stroke"
-          x1="-12"
-          y1="8"
-          x2="112"
-          y2="92"
-        />
-        <!-- cruce suave por el centro -->
-        <line
-          class="docs-landing-lines__stroke docs-landing-lines__stroke--soft"
-          x1="95"
-          y1="-8"
-          x2="5"
-          y2="58"
-        />
-        <!-- horizonte alto, casi paralelo al hero -->
-        <line
-          class="docs-landing-lines__stroke docs-landing-lines__stroke--faint"
-          x1="-10"
-          y1="24"
-          x2="110"
-          y2="36"
-        />
-        <!-- ligera pendiente en la zona del carrusel -->
-        <line
-          class="docs-landing-lines__stroke docs-landing-lines__stroke--soft"
-          x1="-6"
-          y1="62"
-          x2="106"
-          y2="54"
-        />
+        <g transform="translate(10, 10)">
+          <rect
+            class="docs-landing-lines__box"
+            x="0"
+            y="0"
+            width="340"
+            height="340"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="340"
+            y="0"
+            width="210"
+            height="210"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="420"
+            y="210"
+            width="130"
+            height="130"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="340"
+            y="260"
+            width="80"
+            height="80"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="340"
+            y="210"
+            width="50"
+            height="50"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="390"
+            y="210"
+            width="30"
+            height="30"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="400"
+            y="240"
+            width="20"
+            height="20"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="390"
+            y="250"
+            width="10"
+            height="10"
+          />
+          <rect
+            class="docs-landing-lines__box"
+            x="390"
+            y="240"
+            width="10"
+            height="10"
+          />
+          <path
+            class="docs-landing-lines__spiral"
+            d="M 0 340
+               A 340 340 0 0 1 340 0
+               A 210 210 0 0 1 550 210
+               A 130 130 0 0 1 420 340
+               A 80 80 0 0 1 340 260
+               A 50 50 0 0 1 390 210
+               A 30 30 0 0 1 420 240
+               A 20 20 0 0 1 400 260
+               A 10 10 0 0 1 390 250
+               A 10 10 0 0 1 400 240"
+          />
+        </g>
       </svg>
     </div>
   `,
@@ -66,41 +111,47 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     }
 
     .docs-landing-lines__svg {
-      width: 100%;
-      height: 100%;
-      color: var(--au-color-action-primary);
+      position: absolute;
+      width: min(172vmin, 76rem);
+      height: auto;
+      top: clamp(-5rem, 0vh, 0);
+      left: clamp(40%, 56vw, 64%);
+      right: auto;
+      transform: translateX(-22%);
+      opacity: 1;
     }
 
-    .docs-landing-lines__stroke {
-      stroke: currentColor;
+    .docs-landing-lines__box {
+      fill: none;
+      stroke: var(--docs-aurea-box-stroke);
       stroke-width: 1;
       vector-effect: non-scaling-stroke;
-      opacity: 0.07;
     }
 
-    .docs-landing-lines__stroke--soft {
-      opacity: 0.05;
+    .docs-landing-lines__spiral {
+      fill: none;
+      stroke: var(--docs-aurea-spiral-stroke);
+      stroke-width: 1.15;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
     }
 
-    .docs-landing-lines__stroke--faint {
-      opacity: 0.035;
+    :host-context([data-au-theme='dark']) .docs-landing-lines__box {
+      stroke-width: 1.05;
     }
 
-    :host-context([data-au-theme='dark']) .docs-landing-lines__stroke {
-      opacity: 0.1;
-    }
-
-    :host-context([data-au-theme='dark']) .docs-landing-lines__stroke--soft {
-      opacity: 0.07;
-    }
-
-    :host-context([data-au-theme='dark']) .docs-landing-lines__stroke--faint {
-      opacity: 0.045;
+    @media (max-width: 48rem) {
+      .docs-landing-lines__svg {
+        width: min(176vmin, 50rem);
+        top: -2.5rem;
+        left: 64%;
+        transform: translateX(-36%);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .docs-landing-lines__stroke {
-        opacity: 0.04;
+      .docs-landing-lines__svg {
+        opacity: 0.72;
       }
     }
   `,

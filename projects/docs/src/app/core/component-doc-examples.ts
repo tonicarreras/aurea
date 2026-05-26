@@ -1,5 +1,6 @@
 import type { ComponentDoc } from './component-docs.registry';
 import type { DocsLocale } from './docs-locale';
+import { DOCS_MESSAGES } from '../i18n';
 import { COMPONENT_DOC_EXAMPLES_EN } from '../i18n/locales/en/examples/index';
 import { COMPONENT_DOC_EXAMPLES_ES } from '../i18n/locales/es/examples/index';
 import type { ComponentDocExample } from '../i18n/types/example';
@@ -21,7 +22,7 @@ export function resolveComponentExamples(
   const cacheKey = `${locale}:${doc.slug}`;
   let cached = EXAMPLE_FALLBACK_CACHE.get(cacheKey);
   if (!cached) {
-    const fallbackTitle = locale === 'en' ? 'Basic usage' : 'Uso básico';
+    const fallbackTitle = DOCS_MESSAGES[locale].componentDoc.exampleFallbackTitle;
     cached = [
       {
         title: fallbackTitle,

@@ -16,6 +16,7 @@
   background: var(--au-color-surface-sunken);
   color: var(--au-color-text-secondary);
   border: 1px solid var(--au-color-border-subtle);
+  box-shadow: var(--au-shadow-control);
 }
 
 :host([data-au-dot]) {

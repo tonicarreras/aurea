@@ -1,16 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuDivider } from './divider';
-
-const docsOverview = getStoryOverview('divider');
 
 const meta: Meta<AuDivider> = {
   title: 'Aurea/Divider',
   component: AuDivider,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('divider'),
   argTypes: {
     orientation: {
       control: 'select',

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { copyFile, mkdir, readdir } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
@@ -32,4 +32,8 @@ async function copyJsonFiles(dir, base = schematicsSrc) {
 
 await mkdir(schematicsDist, { recursive: true });
 await copyJsonFiles(schematicsSrc);
+await writeFile(
+  join(schematicsDist, 'package.json'),
+  JSON.stringify({ type: 'commonjs' }, null, 2) + '\n',
+);
 console.log('Schematics built to dist/components/schematics');

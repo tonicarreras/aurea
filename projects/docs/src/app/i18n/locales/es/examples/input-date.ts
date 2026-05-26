@@ -26,6 +26,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Rango de fechas',
+    description: 'Usa `minDate` y `maxDate` (ISO `YYYY-MM-DD`) para `min`/`max` nativos.',
     demoComponent: ExampleInputDateHintDemo,
     code: `<au-form-field label="Fecha de entrega" hint="Solo entregas en 2026.">
   <au-input-date minDate="2026-01-01" maxDate="2026-12-31" />

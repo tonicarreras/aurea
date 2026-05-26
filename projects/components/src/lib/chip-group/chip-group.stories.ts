@@ -1,17 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuChip } from '../chip/chip';
 import { AuChipGroup } from './chip-group';
 
-const docsOverview = getStoryOverview('chip-group');
-
 const meta: Meta<AuChipGroup> = {
   title: 'Aurea/Chip group',
   component: AuChipGroup,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('chip-group'),
   argTypes: {
     ariaLabel: { control: 'text', table: { category: 'Accessibility' } },
   },

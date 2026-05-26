@@ -1,13 +1,18 @@
+import { getStoryOverview, type StoryOverviewSlug } from './get-story-overview';
+
 /**
- * Storybook canvas meta parameters. Layout defaults to `padded` in `.storybook/preview.ts`
- * (top-left, 16px padding). Do not set `layout: 'centered'` on stories — it vertically centers
- * the canvas and breaks visual consistency across the catalog.
+ * Storybook canvas meta parameters. Layout defaults to `padded` in `.storybook/preview.ts`.
+ * Pass a component slug so Autodocs respects the Storybook `docsLocale` toolbar global.
  */
-export function storyMetaParameters(componentDocs: string) {
+export function storyMetaParameters(slug: StoryOverviewSlug) {
   return {
     docs: {
       extractArgTypes: () => ({}),
-      description: { component: componentDocs },
+      description: {
+        get component() {
+          return getStoryOverview(slug);
+        },
+      },
     },
   };
 }

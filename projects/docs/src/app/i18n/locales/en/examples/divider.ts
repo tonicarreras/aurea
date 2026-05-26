@@ -6,15 +6,15 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Separador simple',
+    title: 'Simple divider',
     demoComponent: ExampleDividerBasicDemo,
-    code: `<p>Arriba</p>
+    code: `<p>Above</p>
 <au-divider />
-<p>Abajo</p>`,
+<p>Below</p>`,
   },
   {
-    title: 'Con etiqueta',
+    title: 'With label',
     demoComponent: ExampleDividerLabelDemo,
-    code: `<au-divider label="o continúa con" />`,
+    code: `<au-divider label="or continue with" />`,
   },
 ];

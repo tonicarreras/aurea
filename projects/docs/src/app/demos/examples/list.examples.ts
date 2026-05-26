@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuChip, AuList } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-list-chips',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuList, AuChip],
   template: `
-    <au-list ariaLabel="Selected technologies">
+    <au-list [ariaLabel]="t().chipsAria">
       <au-chip
         label="Angular"
         [removable]="true"
@@ -18,24 +19,24 @@ import { AuChip, AuList } from '@aurea-design-system/components';
     </au-list>
   `,
 })
-export class ExampleListChipsDemo {}
+export class ExampleListChipsDemo {
+  readonly t = docsExampleLive('list');
+}
 
 @Component({
   selector: 'docs-example-list-labelled-by',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuList, AuChip],
   template: `
-    <p id="tags-heading">Tags</p>
+    <p id="tags-heading">{{ t().tagsHeading }}</p>
     <au-list ariaLabelledBy="tags-heading">
       <au-chip
-        label="Design system"
-        [removable]="true"
-      />
-      <au-chip
-        label="Angular"
+        [label]="t().labelledByChip"
         [removable]="true"
       />
     </au-list>
   `,
 })
-export class ExampleListLabelledByDemo {}
+export class ExampleListLabelledByDemo {
+  readonly t = docsExampleLive('list');
+}

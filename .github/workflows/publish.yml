@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   publish:
@@ -30,11 +30,15 @@ jobs:
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+          fetch-depth: 0
 
       - name: Resolve publish version
         id: publish_version
@@ -163,6 +167,44 @@ jobs:
           test -f package.json || (echo "::error::dist/components missing — build did not run or failed." && exit 1)
           npm publish --access public --provenance
 
+      - name: Create Git tag (if missing)
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.registries.outputs.npm_published != 'true' &&
+          steps.npm_token.outputs.present == 'true'
+        env:
+          VERSION: ${{ steps.publish_version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="components-v${VERSION}"
+          if git rev-parse "${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists — skipping tag create."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "${TAG}" -m "@aurea-design-system/components ${VERSION}"
+            git push origin "${TAG}"
+          fi
+
+      - name: Create GitHub Release
+        if: >-
+          steps.npm_skip.outputs.already_published != 'true' &&
+          steps.registries.outputs.npm_published != 'true' &&
+          steps.npm_token.outputs.present == 'true'
+        env:
+          VERSION: ${{ steps.publish_version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="components-v${VERSION}"
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "GitHub Release ${TAG} already exists — skipping."
+            exit 0
+          fi
+          node scripts/extract-changelog-section.mjs "${VERSION}" > release-notes.md
+          gh release create "${TAG}" \
+            --title "@aurea-design-system/components ${VERSION}" \
+            --notes-file release-notes.md
+
       - name: Summary
         run: |
           VERSION="${{ steps.publish_version.outputs.version }}"
@@ -176,6 +218,7 @@ jobs:
             echo "- npm: ✓ already on [npmjs](https://www.npmjs.com/package/@aurea-design-system/components)" >> "$GITHUB_STEP_SUMMARY"
           elif [ "${{ steps.npm_token.outputs.present }}" = "true" ]; then
             echo "- npm: ✓ published this run → \`bun add @aurea-design-system/components\`" >> "$GITHUB_STEP_SUMMARY"
+            echo "- GitHub: release \`components-v${VERSION}\` (tag + notes from CHANGELOG)" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "- npm: ⚠ skipped (set **NPM_TOKEN** on the **production** environment)" >> "$GITHUB_STEP_SUMMARY"
           fi

@@ -4,7 +4,7 @@ A **semantic** UI system, targeting **WCAG 2.2 AA** on primary flows, aligned wi
 
 ## Principles
 
-1. **Clear task, quiet UI**: users complete a goal; the system provides hierarchy, contrast, and calm—not decoration that fights the text.
+1. **Visual hierarchy**: typography, spacing, and contrast use documented `--au-*` tokens; product code should not add decorative styles that compete with content.
 2. **Single source of truth (state)**: in forms, Angular’s reactive model is the truth; the UI does not duplicate validation logic already in `FieldTree`.
 3. **Accessibility by default**: **visible, consistent** focus (ring tokens), regions and `aria-*` wired to controls, `prefers-reduced-motion` respected on interactive pieces.
 4. **Design layers**:

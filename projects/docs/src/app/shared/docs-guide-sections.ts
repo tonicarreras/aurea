@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
+import { DocsLocaleService } from '../core/docs-locale.service';
 import type { GuideSection } from '../i18n/types/guides';
 import { CodeBlock } from './code-block';
 import { DocsInlineText } from './docs-inline-text';
@@ -19,7 +20,7 @@ import { DocsInlineText } from './docs-inline-text';
           <docs-code-block
             [code]="section.code"
             [language]="section.codeLanguage"
-            [expandLabel]="section.expandLabel ?? 'Show code'"
+            [expandLabel]="section.expandLabel ?? codeBlockShow()"
           />
         }
       </section>
@@ -44,5 +45,8 @@ import { DocsInlineText } from './docs-inline-text';
   `,
 })
 export class DocsGuideSections {
+  private readonly i18n = inject(DocsLocaleService);
+
   readonly sections = input.required<GuideSection[]>();
+  readonly codeBlockShow = computed(() => this.i18n.messages().codeBlock.show);
 }

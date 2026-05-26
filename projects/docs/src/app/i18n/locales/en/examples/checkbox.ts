@@ -7,19 +7,19 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Sin marcar',
+    title: 'Unchecked',
     demoComponent: ExampleCheckboxBasicDemo,
-    code: `<au-checkbox label="Acepto los términos" />`,
+    code: `<au-checkbox label="I accept the terms" />`,
   },
   {
-    title: 'Marcado',
+    title: 'Checked',
     demoComponent: ExampleCheckboxCheckedDemo,
     code: `<au-checkbox label="Newsletter" [checked]="true" />`,
   },
   {
-    title: 'Indeterminado',
-    description: 'Útil para patrones «seleccionar todo» con selección parcial.',
+    title: 'Indeterminate',
+    description: 'Useful for “select all” patterns with partial selection.',
     demoComponent: ExampleCheckboxIndeterminateDemo,
-    code: `<au-checkbox label="Seleccionar todo" [indeterminate]="true" />`,
+    code: `<au-checkbox label="Select all" [indeterminate]="true" />`,
   },
 ];

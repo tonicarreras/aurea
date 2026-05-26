@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuStep } from './au-step.directive';
@@ -8,13 +7,11 @@ import { AuSteps } from './steps';
 
 const storyImports = { imports: [AuSteps, AuStep, AuStepPanel] };
 
-const docsOverview = getStoryOverview('steps');
-
 const meta: Meta<AuSteps> = {
   title: 'Aurea/Steps',
   component: AuSteps,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('steps'),
   argTypes: {
     value: {
       control: 'text',

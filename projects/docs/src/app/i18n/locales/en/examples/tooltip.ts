@@ -6,14 +6,14 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Arriba',
+    title: 'Top',
     demoComponent: ExampleTooltipTopDemo,
-    code: `<au-button auTooltip="Ayuda contextual" auTooltipPlacement="top">
-  Pasar el cursor
+    code: `<au-button auTooltip="Contextual help" auTooltipPlacement="top">
+  Hover me
 </au-button>`,
   },
   {
-    title: 'Final (end)',
+    title: 'End',
     demoComponent: ExampleTooltipRightDemo,
     code: `<au-button auTooltip="Appears at the end" auTooltipPlacement="end">
   End

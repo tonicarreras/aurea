@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuLink } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-link',
@@ -9,8 +10,10 @@ import { AuLink } from '@aurea-design-system/components';
     <a
       auLink
       href="#"
-      >Design tokens</a
+      >{{ t().label }}</a
     >
   </p>`,
 })
-export class LinkDemo {}
+export class LinkDemo {
+  readonly t = docsPreviewCopy('link');
+}

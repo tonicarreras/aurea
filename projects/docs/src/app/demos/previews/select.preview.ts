@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuFormField, AuSelect } from '@aurea-design-system/components';
-
-import { selectOptions } from '../shared/demo-fixtures';
+import { DocsLocaleService } from '../../core/docs-locale.service';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
+import { getSelectOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-preview-select',
@@ -9,15 +10,17 @@ import { selectOptions } from '../shared/demo-fixtures';
   imports: [AuFormField, AuSelect],
   template: `
     <div class="docs-preview docs-preview--field">
-      <au-form-field label="País">
+      <au-form-field [label]="t().label">
         <au-select
-          placeholder="Elige un país"
-          [options]="options"
+          [placeholder]="t().placeholder"
+          [options]="options()"
         />
       </au-form-field>
     </div>
   `,
 })
 export class SelectDemo {
-  readonly options = selectOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsPreviewCopy('select');
+  readonly options = computed(() => getSelectOptions(this.i18n.locale()));
 }

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
@@ -7,13 +6,11 @@ import { AuChipGroup } from '../chip-group/chip-group';
 import { AuList } from '../list/list';
 import { AuChip } from './chip';
 
-const docsOverview = getStoryOverview('chip');
-
 const meta: Meta<AuChip> = {
   title: 'Aurea/Chip',
   component: AuChip,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('chip'),
   argTypes: {
     label: {
       control: 'text',

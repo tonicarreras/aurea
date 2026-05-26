@@ -88,11 +88,21 @@
   --au-checkbox-size-lg: 1.5rem; /* 24px */
 }
 
-/* Elevation: subtle, readable, no neumorphism */
+/* Elevation: readable depth, no neumorphism — scale control → raised → float → overlay */
 :root {
   --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
-  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.05), 0 1px 1px rgba(15, 20, 26, 0.04);
-  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.04), 0 10px 40px rgba(15, 20, 26, 0.12);
+  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px rgba(15, 20, 26, 0.04);
+  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.08), 0 2px 8px rgba(15, 20, 26, 0.06);
+  --au-shadow-float: 0 4px 14px rgba(15, 20, 26, 0.1), 0 2px 4px rgba(15, 20, 26, 0.06);
+  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 12px 40px rgba(15, 20, 26, 0.14);
+  --au-shadow-button: var(--au-shadow-control);
+  --au-shadow-button-primary:
+    0 1px 2px color-mix(in srgb, var(--au-color-action-primary) 36%, transparent),
+    0 1px 1px rgba(15, 20, 26, 0.05);
+  --au-shadow-button-hover: 0 2px 6px rgba(15, 20, 26, 0.1), 0 1px 2px rgba(15, 20, 26, 0.06);
+  --au-shadow-focus-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error:
+    0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-form-error);
 }
 
 /* Stacking (z-index) — avoid magic numbers in product stylesheets */
@@ -181,6 +191,14 @@
   --au-transition-control:
     var(--au-transition-border), var(--au-transition-shadow), var(--au-transition-background);
   --au-transition-glyph: color var(--au-duration-short) var(--au-ease-in-out);
+  /* Motion intent (duration + easing) for overlays and micro-interactions */
+  --au-motion-tap: var(--au-duration-micro) var(--au-ease-out);
+  --au-motion-control: var(--au-duration-short) var(--au-ease-in-out);
+  --au-motion-modal: var(--au-duration-default) var(--au-ease-standard);
+  --au-motion-toast: var(--au-duration-slow) var(--au-ease-out);
+  --au-transition-motion-tap:
+    transform var(--au-motion-tap), box-shadow var(--au-motion-tap),
+    background-color var(--au-motion-tap), border-color var(--au-motion-tap);
 }
 
 /* ==========================================================================
@@ -519,8 +537,18 @@
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
-  --au-shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 50px rgba(0, 0, 0, 0.45);
+  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --au-shadow-float: 0 6px 18px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.28);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 48px rgba(0, 0, 0, 0.48);
+  --au-shadow-button: var(--au-shadow-control);
+  --au-shadow-button-primary:
+    0 1px 3px color-mix(in srgb, var(--au-color-action-primary) 42%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.28);
+  --au-shadow-button-hover: 0 3px 10px rgba(0, 0, 0, 0.34), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --au-shadow-focus-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error:
+    0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-form-error);
   /* Rings */
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
@@ -571,12 +599,66 @@
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
 }
 
+[data-au-theme='high-contrast-dark'] {
+  color-scheme: dark;
+  --au-color-surface-canvas: #000000;
+  --au-color-surface-raised: #000000;
+  --au-color-surface-elevated: #141414;
+  --au-color-surface-sunken: #0a0a0a;
+  --au-color-surface-inverted: #ffffff;
+  --au-color-text-primary: #ffffff;
+  --au-color-text-secondary: #f0f0f0;
+  --au-color-text-tertiary: #e0e0e0;
+  --au-color-text-placeholder: #cccccc;
+  --au-color-text-disabled: #999999;
+  --au-color-text-label: #ffffff;
+  --au-color-text-on-solid: #000000;
+  --au-color-border-subtle: #ffffff;
+  --au-color-border-default: #ffffff;
+  --au-color-border-strong: #ffffff;
+  --au-color-action-primary: #00ffff;
+  --au-color-action-primary-hover: #80ffff;
+  --au-color-action-primary-pressed: #b3ffff;
+  --au-color-link: #00ffff;
+  --au-color-link-hover: #80ffff;
+  --au-color-focus-ring: #ffffff;
+  --au-color-focus-inner: #000000;
+  --au-focus-ring-width: 3px;
+  --au-color-semantic-error: #ff6b6b;
+  --au-color-semantic-error-contrast: #000000;
+  --au-color-semantic-error-surface: #3d0000;
+  --au-color-semantic-success: #7fff7f;
+  --au-color-semantic-success-surface: #003300;
+  --au-color-semantic-warning: #ffff00;
+  --au-color-semantic-warning-surface: #333300;
+  --au-color-semantic-info: #80d4ff;
+  --au-color-semantic-info-surface: #001a33;
+  --au-color-form-border: #ffffff;
+  --au-color-form-border-hover: #ffffff;
+  --au-color-form-text: #ffffff;
+  --au-color-form-placeholder: #cccccc;
+  --au-color-form-error: #ff6b6b;
+  --au-color-form-error-bg: #3d0000;
+  --au-color-form-disabled-surface: #1a1a1a;
+  --au-shadow-control: 0 0 0 1px #ffffff;
+  --au-shadow-raised: 0 0 0 1px #ffffff;
+  --au-shadow-float: 0 0 0 2px #ffffff;
+  --au-shadow-overlay: 0 0 0 2px #ffffff, 0 8px 24px rgba(0, 0, 0, 0.9);
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  --au-shadow-focus-control:
+    0 0 0 1px var(--au-color-focus-ring), 0 0 0 calc(var(--au-focus-ring-width) + 1px) #000000;
+  --au-shadow-focus-control-error:
+    0 0 0 1px var(--au-color-semantic-error), 0 0 0 calc(var(--au-focus-ring-width) + 1px) #000000;
+}
+
 /* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */
 @media (prefers-reduced-motion: reduce) {
   :root,
   [data-au-theme='light'],
   [data-au-theme='dark'],
-  [data-au-theme='high-contrast'] {
+  [data-au-theme='high-contrast'],
+  [data-au-theme='high-contrast-dark'] {
     --au-scroll-smooth: auto;
   }
 }

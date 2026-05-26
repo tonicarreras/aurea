@@ -55,7 +55,11 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
         token: '--au-size-field-h-sm / md / lg',
         description: 'Alturas de controles de formulario.',
       },
-      { token: '--au-shadow-focus-ring', description: 'Sombra de foco en campos.' },
+      { token: '--au-shadow-control', description: 'Sombra en reposo de shells de campo.' },
+      {
+        token: '--au-shadow-focus-control',
+        description: 'Sombra de foco (profundidad + anillo) en campos.',
+      },
     ],
   },
   {
@@ -84,9 +88,18 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
   },
   {
     title: 'Elevación y capas',
+    description: 'Escala de sombras de controles a overlays; z-index para UI en portal.',
     tokens: [
-      { token: '--au-shadow-raised', description: 'Tarjetas elevated.' },
-      { token: '--au-shadow-overlay', description: 'Diálogos, listbox y tooltips.' },
+      { token: '--au-shadow-control', description: 'Campos, chips, badges, botones outline.' },
+      { token: '--au-shadow-raised', description: 'Cards, messages, tablas.' },
+      { token: '--au-shadow-float', description: 'Cards elevated y snackbars.' },
+      { token: '--au-shadow-overlay', description: 'Diálogos, listbox, tooltips, menús.' },
+      { token: '--au-shadow-button-primary', description: 'Sombra en reposo del botón primary.' },
+      { token: '--au-shadow-button-hover', description: 'Elevación en hover de botones.' },
+      {
+        token: '--au-shadow-focus-control',
+        description: 'Profundidad + anillo de foco en campos.',
+      },
       { token: '--au-z-dropdown', description: 'Listas desplegables.' },
       { token: '--au-z-modal', description: 'Diálogos modales.' },
       { token: '--au-z-toast', description: 'Snackbars.' },
@@ -95,11 +108,19 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
   },
   {
     title: 'Movimiento',
+    description: 'Paquetes de duración + easing para micro-interacciones y overlays.',
     tokens: [
-      { token: '--au-duration-short', description: '120ms — hover y bordes.' },
-      { token: '--au-duration-default', description: '200ms — paneles y snackbar.' },
+      { token: '--au-motion-tap', description: '80ms — feedback al pulsar botones.' },
+      {
+        token: '--au-motion-control',
+        description: '120ms — bordes, fondos y sombras en campos.',
+      },
+      { token: '--au-motion-modal', description: '200ms — backdrop y panel de diálogo.' },
+      { token: '--au-motion-toast', description: '300ms — entrada/salida de snackbar.' },
+      { token: '--au-duration-short / default / slow', description: 'Duraciones primitivas (ms).' },
       { token: '--au-ease-out / --au-ease-in-out', description: 'Curvas de animación.' },
       { token: '--au-transition-control', description: 'Paquete usado en shells de campo.' },
+      { token: '--au-transition-motion-tap', description: 'Paquete para hover/active de botones.' },
     ],
   },
   {

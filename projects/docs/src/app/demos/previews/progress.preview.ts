@@ -5,6 +5,13 @@ import { AuProgress } from '@aurea-design-system/components';
   selector: 'docs-preview-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuProgress],
-  template: `<div class="docs-preview docs-preview--field"><au-progress [value]="62" /></div>`,
+  template: `
+    <div class="docs-preview docs-preview--progress">
+      <au-progress
+        [value]="62"
+        [max]="100"
+      />
+    </div>
+  `,
 })
 export class ProgressDemo {}

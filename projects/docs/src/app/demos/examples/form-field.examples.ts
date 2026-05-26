@@ -1,24 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuInputText } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-form-field-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field
-      label="Email"
-      [required]="true"
-    >
+    <au-form-field [label]="t().emailLabel">
       <au-input-text
         type="email"
-        placeholder="tu@correo.com"
-        style="max-width: 20rem"
+        [placeholder]="t().emailPlaceholder"
       />
     </au-form-field>
   `,
 })
-export class ExampleFormFieldBasicDemo {}
+export class ExampleFormFieldBasicDemo {
+  readonly t = docsExampleLive('formField');
+}
 
 @Component({
   selector: 'docs-example-form-field-hint',
@@ -26,17 +25,16 @@ export class ExampleFormFieldBasicDemo {}
   imports: [AuFormField, AuInputText],
   template: `
     <au-form-field
-      label="Usuario"
-      hint="Entre 3 y 20 caracteres."
+      [label]="t().userLabel"
+      [hint]="t().userHint"
     >
-      <au-input-text
-        placeholder="nombre"
-        style="max-width: 20rem"
-      />
+      <au-input-text [placeholder]="t().userPlaceholder" />
     </au-form-field>
   `,
 })
-export class ExampleFormFieldHintDemo {}
+export class ExampleFormFieldHintDemo {
+  readonly t = docsExampleLive('formField');
+}
 
 @Component({
   selector: 'docs-example-form-field-error',
@@ -44,16 +42,17 @@ export class ExampleFormFieldHintDemo {}
   imports: [AuFormField, AuInputText],
   template: `
     <au-form-field
-      label="Email"
-      errorMessage="Introduce un correo válido."
+      [label]="t().emailErrorLabel"
+      [errorMessage]="t().emailError"
       [invalid]="true"
     >
       <au-input-text
         type="email"
-        placeholder="correo"
-        style="max-width: 20rem"
+        [placeholder]="t().emailErrorPlaceholder"
       />
     </au-form-field>
   `,
 })
-export class ExampleFormFieldErrorDemo {}
+export class ExampleFormFieldErrorDemo {
+  readonly t = docsExampleLive('formField');
+}

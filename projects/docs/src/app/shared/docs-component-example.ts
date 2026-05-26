@@ -1,6 +1,7 @@
 import { NgComponentOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, Type } from '@angular/core';
 
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { CodeBlock } from './code-block';
 import { type CodeLanguage } from './code-highlight';
 import { DemoPanel } from './demo-panel';
@@ -26,8 +27,8 @@ import { DemoPanel } from './demo-panel';
         [code]="code()"
         [language]="language()"
         [showLanguage]="false"
-        expandLabel="Código"
-        collapseLabel="Ocultar código"
+        [expandLabel]="codeLabels().show"
+        [collapseLabel]="codeLabels().hide"
       />
     </article>
   `,
@@ -61,6 +62,10 @@ import { DemoPanel } from './demo-panel';
   `,
 })
 export class DocsComponentExample {
+  private readonly i18n = inject(DocsLocaleService);
+
+  readonly codeLabels = computed(() => this.i18n.messages().codeBlock);
+
   readonly title = input.required<string>();
   readonly description = input<string>();
   readonly demoComponent = input.required<Type<unknown>>();

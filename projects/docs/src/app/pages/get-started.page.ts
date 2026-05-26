@@ -209,19 +209,7 @@ export class GetStartedPage {
  @import '@aurea-design-system/components/styles/au-field-error.css';
  @import '@aurea-design-system/components/styles/au-field-listbox.css';`;
 
-  readonly componentSnippet = `import { AuButton, AuCheckbox, AuFormField, AuInputText } from '@aurea-design-system/components';
-
-@Component({
-  imports: [AuButton, AuCheckbox, AuFormField, AuInputText],
-  template: \`
-    <au-form-field label="Email" [required]="true">
-      <au-input-text type="email" placeholder="tu@correo.com" />
-    </au-form-field>
-    <au-checkbox label="Recordarme" />
-    <au-button variant="primary">Guardar</au-button>
-  \`,
-})
-export class ProfileForm {}`;
+  readonly componentSnippet = computed(() => this.i18n.messages().getStarted.componentSnippet);
 
   readonly steps = computed((): GetStartedStep[] => {
     const s = this.i18n.messages().getStarted.steps;
@@ -256,7 +244,7 @@ export class ProfileForm {}`;
       },
       {
         title: s.firstComponent.title,
-        code: this.componentSnippet,
+        code: this.componentSnippet(),
         language: 'typescript',
         expandLabel: s.firstComponent.expand,
       },
@@ -268,7 +256,7 @@ export class ProfileForm {}`;
   }
 
   adoptionLinkLabel(): string {
-    return this.i18n.locale() === 'en' ? 'Adoption guide →' : 'Guía de adopción →';
+    return this.i18n.messages().getStarted.steps.nextGuides.adoptionLink;
   }
 
   crudDemoLink(): string[] {
@@ -276,6 +264,6 @@ export class ProfileForm {}`;
   }
 
   crudDemoLinkLabel(): string {
-    return this.i18n.locale() === 'en' ? 'CRUD reference demo →' : 'Demo CRUD de referencia →';
+    return this.i18n.messages().getStarted.steps.nextGuides.crudDemoLink;
   }
 }

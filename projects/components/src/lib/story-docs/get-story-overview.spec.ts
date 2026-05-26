@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { STORY_OVERVIEW_SOURCE } from './story-overview-source';
 import {
   getStoryOverview,
+  setStoryOverviewLocale,
   storyOverviewParsers,
   type StoryOverviewSlug,
 } from './get-story-overview';
 
-const slugs = Object.keys(STORY_OVERVIEW_SOURCE) as StoryOverviewSlug[];
+const slugs = Object.keys(STORY_OVERVIEW_SOURCE.en) as StoryOverviewSlug[];
 
 describe('getStoryOverview', () => {
   it('builds markdown for every catalog slug', () => {
@@ -25,6 +26,12 @@ describe('getStoryOverview', () => {
     expect(getStoryOverview('input-text')).toContain('Signal forms vs manual');
   });
 
+  it('serves Spanish overview when locale is es', () => {
+    setStoryOverviewLocale('es');
+    expect(getStoryOverview('button')).toContain('## Resumen');
+    setStoryOverviewLocale('en');
+  });
+
   it('includes form-field note for popover', () => {
     expect(getStoryOverview('popover')).toContain('au-form-field');
   });
@@ -36,6 +43,16 @@ describe('getStoryOverview', () => {
 
   it('parses accessibility lines with colon separators', () => {
     expect(getStoryOverview('switch')).toContain('## Accessibility');
+  });
+
+  it('returns empty string for an unknown slug', () => {
+    expect(getStoryOverview('__missing__' as StoryOverviewSlug)).toBe('');
+  });
+
+  it('returns cached markdown on repeated calls', () => {
+    const first = getStoryOverview('button');
+    const second = getStoryOverview('button');
+    expect(second).toBe(first);
   });
 
   it('covers parser edge cases', () => {

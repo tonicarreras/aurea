@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuSwitch } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-switch-basic',
@@ -7,11 +8,13 @@ import { AuFormField, AuSwitch } from '@aurea-design-system/components';
   imports: [AuFormField, AuSwitch],
   template: `
     <au-form-field>
-      <au-switch label="Notificaciones push" />
+      <au-switch [label]="t().push" />
     </au-form-field>
   `,
 })
-export class ExampleSwitchBasicDemo {}
+export class ExampleSwitchBasicDemo {
+  readonly t = docsExampleLive('switch');
+}
 
 @Component({
   selector: 'docs-example-switch-disabled',
@@ -20,14 +23,16 @@ export class ExampleSwitchBasicDemo {}
   template: `
     <au-form-field>
       <au-switch
-        label="Modo avión"
+        [label]="t().airplane"
         [checked]="true"
         [disabled]="true"
       />
     </au-form-field>
   `,
 })
-export class ExampleSwitchDisabledDemo {}
+export class ExampleSwitchDisabledDemo {
+  readonly t = docsExampleLive('switch');
+}
 
 @Component({
   selector: 'docs-example-switch-error',
@@ -35,11 +40,13 @@ export class ExampleSwitchDisabledDemo {}
   imports: [AuFormField, AuSwitch],
   template: `
     <au-form-field
-      errorMessage="Debes activar esta opción para continuar."
+      [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-switch label="Acepto la política de privacidad" />
+      <au-switch [label]="t().privacy" />
     </au-form-field>
   `,
 })
-export class ExampleSwitchErrorDemo {}
+export class ExampleSwitchErrorDemo {
+  readonly t = docsExampleLive('switch');
+}
