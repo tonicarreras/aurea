@@ -491,7 +491,6 @@ const SEED: PersonRow[] = [
       position: relative;
       border-radius: var(--au-radius-md);
       background: var(--au-color-surface-raised);
-      box-shadow: var(--au-shadow-control);
       overflow: hidden;
     }
 
@@ -503,7 +502,6 @@ const SEED: PersonRow[] = [
       display: flex;
       justify-content: flex-end;
       padding: var(--au-space-3) var(--au-space-4);
-      border-top: 1px solid var(--au-color-border-subtle);
       background: color-mix(in srgb, var(--au-color-surface-canvas) 40%, transparent);
     }
 
