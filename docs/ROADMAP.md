@@ -7,7 +7,7 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | Phase | Focus                                                                                        | Status    |
 | ----- | -------------------------------------------------------------------------------------------- | --------- |
 | **0** | Gobernanza, madurez, guías adopción, auditoría a11y                                          | ✅        |
-| **1** | Tokens v2, densidad, alto contraste, schematic `ng add`, guías docs                         | ✅        |
+| **1** | Tokens v2, densidad, alto contraste, schematic `ng add`, guías docs                          | ✅        |
 | **2** | Core de aplicación: menú, popover, paginación, tabla, badge, breadcrumb, progress, link      | ✅ (v0.4) |
 | **3** | Calidad pro: axe stable, visual regression, audit CI, issue templates, CODEOWNERS, políticas | ✅        |
 
@@ -58,9 +58,9 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 
 ## Post-1.0 — Tooling
 
-| Item | Status | Notes |
-| ---- | ------ | ----- |
+| Item                                                      | Status  | Notes                                                                                  |
+| --------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------- |
 | Changelog automation (`changesets` or `standard-version`) | Planned | Evaluate after API freeze; keep [Keep a Changelog](https://keepachangelog.com/) format |
-| Angular compat matrix CI | ✅ | Weekly workflow `compat-matrix.yml` |
-| Docs site Playwright smoke | ✅ | `test:docs:e2e:ci` |
-| Bundle size guard | ✅ | `check:bundle` (+5% threshold) |
+| Angular compat matrix CI                                  | ✅      | Weekly workflow `compat-matrix.yml`                                                    |
+| Docs site Playwright smoke                                | ✅      | `test:docs:e2e:ci`                                                                     |
+| Bundle size guard                                         | ✅      | `check:bundle` (+5% threshold)                                                         |

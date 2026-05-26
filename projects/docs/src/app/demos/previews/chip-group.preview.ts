@@ -10,9 +10,20 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
     <div class="docs-preview docs-preview--row">
       <au-chip-group [ariaLabel]="t().ariaLabel">
         <div class="docs-demo-row docs-demo-row--tight">
-          <au-chip [label]="t().draft" [selectable]="true" />
-          <au-chip [label]="t().published" [selectable]="true" [selected]="true" variant="accent" />
-          <au-chip [label]="t().archived" [selectable]="true" />
+          <au-chip
+            [label]="t().draft"
+            [selectable]="true"
+          />
+          <au-chip
+            [label]="t().published"
+            [selectable]="true"
+            [selected]="true"
+            variant="accent"
+          />
+          <au-chip
+            [label]="t().archived"
+            [selectable]="true"
+          />
         </div>
       </au-chip-group>
     </div>

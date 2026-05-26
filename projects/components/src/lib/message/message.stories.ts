@@ -5,7 +5,6 @@ import { AuMessage, type AuMessageVariant } from './message';
 
 const variants: AuMessageVariant[] = ['default', 'success', 'warning', 'error', 'info'];
 
-
 const meta: Meta<AuMessage> = {
   title: 'Aurea/Message',
   component: AuMessage,

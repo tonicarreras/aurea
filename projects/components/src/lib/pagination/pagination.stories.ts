@@ -4,7 +4,6 @@ import { signal } from '@angular/core';
 
 import { AuPagination } from './pagination';
 
-
 const meta: Meta<AuPagination> = {
   title: 'Aurea/Pagination',
   component: AuPagination,

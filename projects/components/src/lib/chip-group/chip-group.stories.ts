@@ -4,7 +4,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { AuChip } from '../chip/chip';
 import { AuChipGroup } from './chip-group';
 
-
 const meta: Meta<AuChipGroup> = {
   title: 'Aurea/Chip group',
   component: AuChipGroup,

@@ -10,8 +10,14 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
     <div class="docs-preview docs-preview--row">
       <div class="docs-demo-row docs-demo-row--tight">
         <au-chip label="Angular" />
-        <au-chip label="TypeScript" variant="outline" />
-        <au-chip [label]="t().removable" [removable]="true" />
+        <au-chip
+          label="TypeScript"
+          variant="outline"
+        />
+        <au-chip
+          [label]="t().removable"
+          [removable]="true"
+        />
       </div>
     </div>
   `,

@@ -22,7 +22,11 @@ export class ExampleSwitchBasicDemo {
   imports: [AuFormField, AuSwitch],
   template: `
     <au-form-field>
-      <au-switch [label]="t().airplane" [checked]="true" [disabled]="true" />
+      <au-switch
+        [label]="t().airplane"
+        [checked]="true"
+        [disabled]="true"
+      />
     </au-form-field>
   `,
 })
@@ -35,7 +39,10 @@ export class ExampleSwitchDisabledDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuSwitch],
   template: `
-    <au-form-field [errorMessage]="t().errorMessage" [invalid]="true">
+    <au-form-field
+      [errorMessage]="t().errorMessage"
+      [invalid]="true"
+    >
       <au-switch [label]="t().privacy" />
     </au-form-field>
   `,

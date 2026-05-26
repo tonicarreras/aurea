@@ -8,9 +8,20 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuChip, AuChipGroup],
   template: `
     <au-chip-group [ariaLabel]="t().ariaLabel">
-      <au-chip [label]="t().draft" [selectable]="true" />
-      <au-chip [label]="t().published" [selectable]="true" [selected]="true" variant="accent" />
-      <au-chip [label]="t().archived" [selectable]="true" />
+      <au-chip
+        [label]="t().draft"
+        [selectable]="true"
+      />
+      <au-chip
+        [label]="t().published"
+        [selectable]="true"
+        [selected]="true"
+        variant="accent"
+      />
+      <au-chip
+        [label]="t().archived"
+        [selectable]="true"
+      />
     </au-chip-group>
   `,
 })

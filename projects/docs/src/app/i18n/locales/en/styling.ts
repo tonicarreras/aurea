@@ -124,7 +124,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
   ],
   'radio-group': [
     { token: '--au-color-text-label', description: 'Group legend.' },
-    { token: '--au-color-action-primary', description: 'Selected option indicator (native `accent-color`).' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Selected option indicator (native `accent-color`).',
+    },
     { token: '--au-color-form-error', description: 'Invalid outline on radio inputs.' },
     { token: '--au-color-focus-ring', description: 'Focus ring on the active option.' },
   ],
@@ -160,7 +163,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-card-padding', description: 'Inner padding; the host adjusts it via `size`.' },
     { token: '--au-card-main-gap', description: 'Gap between header and body.' },
     { token: '--au-card-footer-gap', description: 'Footer spacing and top border.' },
-    { token: '--au-color-surface-raised', description: 'Background on elevated and outlined variants.' },
+    {
+      token: '--au-color-surface-raised',
+      description: 'Background on elevated and outlined variants.',
+    },
     { token: '--au-color-surface-elevated', description: 'Filled variant background.' },
     { token: '--au-shadow-raised', description: 'Elevated variant shadow.' },
     { token: '--au-radius-lg', description: 'Card container radius.' },
@@ -171,7 +177,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-text-secondary', description: 'Inactive tab.' },
     { token: '--au-color-action-primary', description: 'Active tab and indicator.' },
     { token: '--au-color-surface-sunken', description: 'Rail background in segmented variant.' },
-    { token: '--au-color-surface-elevated', description: 'Hover and active tab in segmented variant.' },
+    {
+      token: '--au-color-surface-elevated',
+      description: 'Hover and active tab in segmented variant.',
+    },
     { token: '--au-size-field-h-md', description: 'Minimum height of each tab per `size`.' },
     { token: '--au-color-focus-ring', description: 'Focus ring on the tab button.' },
     { token: '--au-transition-color', description: 'Color transition when switching tabs.' },
@@ -305,7 +314,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-table-row-hover', description: 'Row hover background (host override).' },
   ],
   tooltip: [
-    { token: '--au-color-surface-inverted', description: 'Tooltip bubble background (`.au-tooltip` class).' },
+    {
+      token: '--au-color-surface-inverted',
+      description: 'Tooltip bubble background (`.au-tooltip` class).',
+    },
     { token: '--au-color-text-on-solid', description: 'Tooltip text.' },
     { token: '--au-shadow-overlay', description: 'Portaled tooltip shadow.' },
     { token: '--au-z-popover', description: 'Apilamiento sobre contenido circundante.' },

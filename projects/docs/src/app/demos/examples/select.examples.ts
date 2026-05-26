@@ -10,7 +10,11 @@ import { getSelectOptions } from '../shared/demo-fixtures';
   imports: [AuFormField, AuSelect],
   template: `
     <au-form-field [label]="t().basicLabel">
-      <au-select [placeholder]="t().placeholder" [options]="options()" style="max-width: 16rem" />
+      <au-select
+        [placeholder]="t().placeholder"
+        [options]="options()"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })
@@ -30,7 +34,11 @@ export class ExampleSelectBasicDemo {
       [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-select [placeholder]="t().placeholder" [options]="options()" style="max-width: 16rem" />
+      <au-select
+        [placeholder]="t().placeholder"
+        [options]="options()"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })
@@ -45,8 +53,15 @@ export class ExampleSelectErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuSelect],
   template: `
-    <au-form-field [label]="t().hintLabel" [hint]="t().hint">
-      <au-select [placeholder]="t().placeholder" [options]="options()" style="max-width: 16rem" />
+    <au-form-field
+      [label]="t().hintLabel"
+      [hint]="t().hint"
+    >
+      <au-select
+        [placeholder]="t().placeholder"
+        [options]="options()"
+        style="max-width: 16rem"
+      />
     </au-form-field>
   `,
 })

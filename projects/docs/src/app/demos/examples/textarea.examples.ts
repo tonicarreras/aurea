@@ -8,7 +8,10 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuTextarea],
   template: `
     <au-form-field [label]="t().commentLabel">
-      <au-textarea [rows]="3" [placeholder]="t().commentPlaceholder" />
+      <au-textarea
+        [rows]="3"
+        [placeholder]="t().commentPlaceholder"
+      />
     </au-form-field>
   `,
 })
@@ -21,8 +24,14 @@ export class ExampleTextareaBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuTextarea],
   template: `
-    <au-form-field [label]="t().bioLabel" [hint]="t().bioHint">
-      <au-textarea [rows]="3" [placeholder]="t().bioPlaceholder" />
+    <au-form-field
+      [label]="t().bioLabel"
+      [hint]="t().bioHint"
+    >
+      <au-textarea
+        [rows]="3"
+        [placeholder]="t().bioPlaceholder"
+      />
     </au-form-field>
   `,
 })
@@ -35,7 +44,11 @@ export class ExampleTextareaHintDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuTextarea],
   template: `
-    <au-form-field [label]="t().errorLabel" [errorMessage]="t().errorMessage" [invalid]="true">
+    <au-form-field
+      [label]="t().errorLabel"
+      [errorMessage]="t().errorMessage"
+      [invalid]="true"
+    >
       <au-textarea [rows]="3" />
     </au-form-field>
   `,

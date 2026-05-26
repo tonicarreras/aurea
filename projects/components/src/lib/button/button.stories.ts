@@ -10,7 +10,6 @@ function buttonRender(args: Record<string, unknown>, template: string) {
   return { props: args, moduleMetadata: storyImports, template };
 }
 
-
 const meta: Meta<AuButton> = {
   title: 'Aurea/Button',
   component: AuButton,

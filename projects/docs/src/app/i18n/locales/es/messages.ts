@@ -103,8 +103,7 @@ export const MESSAGES_ES: DocsMessages = {
       },
       nextGuides: {
         title: 'Siguiente paso',
-        intro:
-          'Consulta la guía de adopción: signal forms — o abre la',
+        intro: 'Consulta la guía de adopción: signal forms — o abre la',
         adoptionLink: 'Guía de adopción →',
         crudDemoLink: 'Demo CRUD de referencia →',
       },

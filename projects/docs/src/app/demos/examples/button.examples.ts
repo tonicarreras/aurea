@@ -47,7 +47,11 @@ export class ExampleButtonGhostDemo {
   selector: 'docs-example-button-loading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="primary" [loading]="true">{{ t().loading }}</au-button>`,
+  template: `<au-button
+    variant="primary"
+    [loading]="true"
+    >{{ t().loading }}</au-button
+  >`,
 })
 export class ExampleButtonLoadingDemo {
   readonly t = docsExampleLive('button');
@@ -57,7 +61,11 @@ export class ExampleButtonLoadingDemo {
   selector: 'docs-example-button-disabled',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="primary" [disabled]="true">{{ t().disabled }}</au-button>`,
+  template: `<au-button
+    variant="primary"
+    [disabled]="true"
+    >{{ t().disabled }}</au-button
+  >`,
 })
 export class ExampleButtonDisabledDemo {
   readonly t = docsExampleLive('button');

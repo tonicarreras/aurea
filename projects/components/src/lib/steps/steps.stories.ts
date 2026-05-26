@@ -7,7 +7,6 @@ import { AuSteps } from './steps';
 
 const storyImports = { imports: [AuSteps, AuStep, AuStepPanel] };
 
-
 const meta: Meta<AuSteps> = {
   title: 'Aurea/Steps',
   component: AuSteps,

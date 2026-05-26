@@ -8,7 +8,12 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   imports: [AuButton, AuTooltip],
   template: `
     <div class="docs-preview docs-preview--action">
-      <au-button variant="outline" [auTooltip]="t().text" auTooltipPlacement="top">{{ t().button }}</au-button>
+      <au-button
+        variant="outline"
+        [auTooltip]="t().text"
+        auTooltipPlacement="top"
+        >{{ t().button }}</au-button
+      >
     </div>
   `,
 })

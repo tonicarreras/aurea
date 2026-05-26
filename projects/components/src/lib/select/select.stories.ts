@@ -26,7 +26,6 @@ const groupedOptions: AuSelectOption[] = [
   { value: 'group5', label: 'Group B - Option 3', disabled: true },
 ];
 
-
 interface SelectStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

@@ -45,6 +45,16 @@ describe('getStoryOverview', () => {
     expect(getStoryOverview('switch')).toContain('## Accessibility');
   });
 
+  it('returns empty string for an unknown slug', () => {
+    expect(getStoryOverview('__missing__' as StoryOverviewSlug)).toBe('');
+  });
+
+  it('returns cached markdown on repeated calls', () => {
+    const first = getStoryOverview('button');
+    const second = getStoryOverview('button');
+    expect(second).toBe(first);
+  });
+
   it('covers parser edge cases', () => {
     const { parseA11y, parseKeyboard } = storyOverviewParsers;
     expect(parseKeyboard('Open menu; Escape closes')).toEqual({

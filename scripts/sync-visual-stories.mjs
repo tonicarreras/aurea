@@ -27,8 +27,7 @@ function readStableSlugs() {
   const src = readFileSync(maturityPath, 'utf8');
   const slugs = [];
   const blockStart = /^\s{2}(?:'([^']+)'|([\w-]+)):\s*\{/;
-  const singleStable =
-    /^\s{2}(?:'([^']+)'|([\w-]+)):\s*\{\s*level:\s*'stable'/;
+  const singleStable = /^\s{2}(?:'([^']+)'|([\w-]+)):\s*\{\s*level:\s*'stable'/;
   const levelStable = /level:\s*'stable'/;
 
   let pendingSlug = null;

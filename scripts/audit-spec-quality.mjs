@@ -13,8 +13,7 @@ const outPath = join(process.cwd(), 'spec-quality-report.md');
 function readStableSlugs() {
   const src = readFileSync(maturityPath, 'utf8');
   const slugs = new Set();
-  const singleStable =
-    /^\s{2}(?:'([^']+)'|([\w-]+)):\s*\{\s*level:\s*'stable'/;
+  const singleStable = /^\s{2}(?:'([^']+)'|([\w-]+)):\s*\{\s*level:\s*'stable'/;
   const blockStart = /^\s{2}(?:'([^']+)'|([\w-]+)):\s*\{/;
   const levelStable = /level:\s*'stable'/;
   let pending = null;

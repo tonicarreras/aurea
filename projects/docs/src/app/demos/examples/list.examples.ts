@@ -8,8 +8,14 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuList, AuChip],
   template: `
     <au-list [ariaLabel]="t().chipsAria">
-      <au-chip label="Angular" [removable]="true" />
-      <au-chip label="TypeScript" [removable]="true" />
+      <au-chip
+        label="Angular"
+        [removable]="true"
+      />
+      <au-chip
+        label="TypeScript"
+        [removable]="true"
+      />
     </au-list>
   `,
 })
@@ -24,7 +30,10 @@ export class ExampleListChipsDemo {
   template: `
     <p id="tags-heading">{{ t().tagsHeading }}</p>
     <au-list ariaLabelledBy="tags-heading">
-      <au-chip [label]="t().labelledByChip" [removable]="true" />
+      <au-chip
+        [label]="t().labelledByChip"
+        [removable]="true"
+      />
     </au-list>
   `,
 })

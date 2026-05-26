@@ -8,7 +8,6 @@ import { AuTabs } from './tabs';
 
 const storyImports = { imports: [AuTabs, AuTab, AuTabPanel] };
 
-
 const meta: Meta<AuTabs> = {
   title: 'Aurea/Tabs',
   component: AuTabs,

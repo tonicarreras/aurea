@@ -107,6 +107,4 @@ const lines = [
 ];
 
 writeFileSync(outPath, lines.join('\n'));
-console.log(
-  `Wrote ${outPath} (${Object.keys(OVERVIEWS_EN).length} slugs × 2 locales)`,
-);
+console.log(`Wrote ${outPath} (${Object.keys(OVERVIEWS_EN).length} slugs × 2 locales)`);

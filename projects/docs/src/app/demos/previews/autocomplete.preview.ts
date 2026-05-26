@@ -11,7 +11,10 @@ import { getAutocompleteOptions } from '../shared/demo-fixtures';
   template: `
     <div class="docs-preview docs-preview--field">
       <au-form-field [label]="t().label">
-        <au-autocomplete [placeholder]="t().placeholder" [options]="options()" />
+        <au-autocomplete
+          [placeholder]="t().placeholder"
+          [options]="options()"
+        />
       </au-form-field>
     </div>
   `,

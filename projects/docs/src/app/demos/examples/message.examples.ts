@@ -22,7 +22,10 @@ export class ExampleMessageSuccessDemo {
   selector: 'docs-example-message-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuMessage],
-  template: `<au-message variant="error" [message]="t().errorBody" />`,
+  template: `<au-message
+    variant="error"
+    [message]="t().errorBody"
+  />`,
 })
 export class ExampleMessageErrorDemo {
   readonly t = docsExampleLive('message');
@@ -33,7 +36,11 @@ export class ExampleMessageErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuMessage],
   template: `
-    <au-message variant="info" [message]="t().infoBody" [dismissible]="true" />
+    <au-message
+      variant="info"
+      [message]="t().infoBody"
+      [dismissible]="true"
+    />
   `,
 })
 export class ExampleMessageDismissibleDemo {

@@ -209,9 +209,7 @@ export class GetStartedPage {
  @import '@aurea-design-system/components/styles/au-field-error.css';
  @import '@aurea-design-system/components/styles/au-field-listbox.css';`;
 
-  readonly componentSnippet = computed(
-    () => this.i18n.messages().getStarted.componentSnippet,
-  );
+  readonly componentSnippet = computed(() => this.i18n.messages().getStarted.componentSnippet);
 
   readonly steps = computed((): GetStartedStep[] => {
     const s = this.i18n.messages().getStarted.steps;

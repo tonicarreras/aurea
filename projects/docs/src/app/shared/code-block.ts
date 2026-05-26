@@ -218,13 +218,9 @@ export class CodeBlock {
 
   private readonly labels = computed(() => this.i18n.messages().codeBlock);
 
-  readonly expandLabelText = computed(
-    () => this.expandLabel() ?? this.labels().show,
-  );
+  readonly expandLabelText = computed(() => this.expandLabel() ?? this.labels().show);
 
-  readonly collapseLabelText = computed(
-    () => this.collapseLabel() ?? this.labels().hide,
-  );
+  readonly collapseLabelText = computed(() => this.collapseLabel() ?? this.labels().hide);
 
   readonly copyButtonLabel = computed(() => this.labels().copy);
 
@@ -234,9 +230,7 @@ export class CodeBlock {
 
   readonly copyDoneAriaLabel = computed(() => this.labels().copiedAria);
 
-  readonly snippetAriaLabel = computed(() =>
-    this.labels().snippetAria(this.languageLabel()),
-  );
+  readonly snippetAriaLabel = computed(() => this.labels().snippetAria(this.languageLabel()));
 
   toggle(): void {
     this.expanded.update((open) => !open);

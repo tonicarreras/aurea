@@ -6,7 +6,6 @@ import { fn } from 'storybook/test';
 import { AuButton } from '../button/button';
 import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './snackbar';
 
-
 const meta: Meta<AuSnackbar> = {
   title: 'Aurea/Snackbar',
   component: AuSnackbar,

@@ -6,7 +6,6 @@ import { AuChipGroup } from '../chip-group/chip-group';
 import { AuList } from '../list/list';
 import { AuChip } from './chip';
 
-
 const meta: Meta<AuChip> = {
   title: 'Aurea/Chip',
   component: AuChip,

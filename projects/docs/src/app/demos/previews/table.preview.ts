@@ -7,10 +7,29 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuTable, AuTableColumn],
   template: `
-    <au-table [data]="rows()" [title]="t().title" [description]="t().description" [caption]="t().caption">
-      <au-table-column name="name" [header]="t().colName" [sortable]="true" cellVariant="primary" />
-      <au-table-column name="role" [header]="t().colRole" cellVariant="secondary" />
-      <au-table-column name="score" [header]="t().colScore" align="end" [sortable]="true" />
+    <au-table
+      [data]="rows()"
+      [title]="t().title"
+      [description]="t().description"
+      [caption]="t().caption"
+    >
+      <au-table-column
+        name="name"
+        [header]="t().colName"
+        [sortable]="true"
+        cellVariant="primary"
+      />
+      <au-table-column
+        name="role"
+        [header]="t().colRole"
+        cellVariant="secondary"
+      />
+      <au-table-column
+        name="score"
+        [header]="t().colScore"
+        align="end"
+        [sortable]="true"
+      />
     </au-table>
   `,
 })

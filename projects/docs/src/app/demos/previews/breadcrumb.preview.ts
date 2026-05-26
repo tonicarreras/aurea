@@ -16,10 +16,6 @@ export class BreadcrumbDemo {
   readonly t = docsPreviewCopy('breadcrumb');
   readonly items = computed(() => {
     const t = this.t();
-    return [
-      { label: t.home, href: '#' },
-      { label: t.components, href: '#' },
-      { label: t.table },
-    ];
+    return [{ label: t.home, href: '#' }, { label: t.components, href: '#' }, { label: t.table }];
   });
 }

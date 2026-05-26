@@ -3,7 +3,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuSkeleton } from './skeleton';
 
-
 const meta: Meta<AuSkeleton> = {
   title: 'Aurea/Skeleton',
   component: AuSkeleton,

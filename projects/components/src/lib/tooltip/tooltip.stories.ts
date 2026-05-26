@@ -8,7 +8,6 @@ import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
 const storyImports = { imports: [AuTooltip, AuButton] };
 
-
 interface TooltipStoryArgs {
   text: string;
   placement: AuTooltipPlacement;

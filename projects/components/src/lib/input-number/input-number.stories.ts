@@ -11,7 +11,6 @@ import {
 } from '../form-field';
 import { AuInputNumber } from './input-number';
 
-
 interface InputNumberStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

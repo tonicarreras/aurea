@@ -12,7 +12,11 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
         <h3 auCardHeader>{{ t().title }}</h3>
         <p>{{ t().body }}</p>
         <div auCardFooter>
-          <au-button variant="primary" size="sm">{{ t().action }}</au-button>
+          <au-button
+            variant="primary"
+            size="sm"
+            >{{ t().action }}</au-button
+          >
         </div>
       </au-card>
     </div>

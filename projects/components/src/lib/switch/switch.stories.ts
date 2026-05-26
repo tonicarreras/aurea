@@ -6,7 +6,6 @@ import { AuFormField } from '../form-field/form-field';
 import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
 import { AuSwitch } from './switch';
 
-
 interface SwitchStoryArgs {
   checkedChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

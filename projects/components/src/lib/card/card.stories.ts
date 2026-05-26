@@ -17,7 +17,6 @@ function cardRender(
   return { props: args, moduleMetadata, template };
 }
 
-
 const meta: Meta<AuCard> = {
   title: 'Aurea/Card',
   component: AuCard,

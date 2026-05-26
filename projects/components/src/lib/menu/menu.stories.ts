@@ -7,7 +7,6 @@ import { AuMenu, AuMenuItem, AuMenuTrigger } from './index';
 
 const storyImports = { imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton] };
 
-
 const meta: Meta<AuMenu> = {
   title: 'Aurea/Menu',
   component: AuMenu,

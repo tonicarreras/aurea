@@ -10,7 +10,10 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
     <div class="docs-preview docs-preview--stack">
       <div class="docs-demo-stack">
         <au-checkbox [label]="t().terms" />
-        <au-checkbox [label]="t().newsletter" [checked]="true" />
+        <au-checkbox
+          [label]="t().newsletter"
+          [checked]="true"
+        />
       </div>
     </div>
   `,

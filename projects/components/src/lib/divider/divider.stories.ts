@@ -3,7 +3,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuDivider } from './divider';
 
-
 const meta: Meta<AuDivider> = {
   title: 'Aurea/Divider',
   component: AuDivider,

@@ -25,7 +25,11 @@ export class ExampleRadioGroupBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-form-field [label]="t().errorLabel" [errorMessage]="t().errorMessage" [invalid]="true">
+    <au-form-field
+      [label]="t().errorLabel"
+      [errorMessage]="t().errorMessage"
+      [invalid]="true"
+    >
       <au-radio-group [options]="options()" />
     </au-form-field>
   `,
@@ -41,7 +45,10 @@ export class ExampleRadioGroupErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuRadioGroup],
   template: `
-    <au-form-field [label]="t().hintLabel" [hint]="t().hint">
+    <au-form-field
+      [label]="t().hintLabel"
+      [hint]="t().hint"
+    >
       <au-radio-group [options]="options()" />
     </au-form-field>
   `,

@@ -10,7 +10,10 @@ import { getAutocompleteOptions } from '../shared/demo-fixtures';
   imports: [AuFormField, AuAutocomplete],
   template: `
     <au-form-field [label]="t().basic.label">
-      <au-autocomplete [placeholder]="t().basic.placeholder" [options]="options()" />
+      <au-autocomplete
+        [placeholder]="t().basic.placeholder"
+        [options]="options()"
+      />
     </au-form-field>
   `,
 })
@@ -30,7 +33,10 @@ export class ExampleAutocompleteBasicDemo {
       [errorMessage]="t().error.errorMessage"
       [invalid]="true"
     >
-      <au-autocomplete [placeholder]="t().error.placeholder" [options]="options()" />
+      <au-autocomplete
+        [placeholder]="t().error.placeholder"
+        [options]="options()"
+      />
     </au-form-field>
   `,
 })
@@ -45,8 +51,14 @@ export class ExampleAutocompleteErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuAutocomplete],
   template: `
-    <au-form-field [label]="t().hint.label" [hint]="t().hint.hint">
-      <au-autocomplete [placeholder]="t().hint.placeholder" [options]="options()" />
+    <au-form-field
+      [label]="t().hint.label"
+      [hint]="t().hint.hint"
+    >
+      <au-autocomplete
+        [placeholder]="t().hint.placeholder"
+        [options]="options()"
+      />
     </au-form-field>
   `,
 })

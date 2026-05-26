@@ -22,7 +22,8 @@ if (start === -1) {
 
 const afterHeader = changelog.indexOf('\n', start) + 1;
 const nextSection = changelog.indexOf('\n## ', afterHeader);
-const body = (nextSection === -1 ? changelog.slice(afterHeader) : changelog.slice(afterHeader, nextSection))
-  .trim();
+const body = (
+  nextSection === -1 ? changelog.slice(afterHeader) : changelog.slice(afterHeader, nextSection)
+).trim();
 
 console.log(`# @aurea-design-system/components ${version}\n\n${body}`);

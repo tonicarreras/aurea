@@ -16,7 +16,10 @@ export class ExampleCheckboxBasicDemo {
   selector: 'docs-example-checkbox-checked',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
-  template: `<au-checkbox [label]="t().newsletter" [checked]="true" />`,
+  template: `<au-checkbox
+    [label]="t().newsletter"
+    [checked]="true"
+  />`,
 })
 export class ExampleCheckboxCheckedDemo {
   readonly t = docsExampleLive('checkbox');
@@ -26,7 +29,10 @@ export class ExampleCheckboxCheckedDemo {
   selector: 'docs-example-checkbox-indeterminate',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuCheckbox],
-  template: `<au-checkbox [label]="t().selectAll" [indeterminate]="true" />`,
+  template: `<au-checkbox
+    [label]="t().selectAll"
+    [indeterminate]="true"
+  />`,
 })
 export class ExampleCheckboxIndeterminateDemo {
   readonly t = docsExampleLive('checkbox');

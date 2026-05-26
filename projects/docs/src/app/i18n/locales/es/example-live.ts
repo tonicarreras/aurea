@@ -3,7 +3,11 @@ import type { ExampleLiveMessages } from '../../types/example-live';
 export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
   autocomplete: {
     basic: { label: 'Ciudad', placeholder: 'Buscar…' },
-    error: { label: 'Ciudad', placeholder: 'Buscar…', errorMessage: 'Elige una ciudad de la lista.' },
+    error: {
+      label: 'Ciudad',
+      placeholder: 'Buscar…',
+      errorMessage: 'Elige una ciudad de la lista.',
+    },
     hint: {
       label: 'Ciudad',
       placeholder: 'Buscar…',

@@ -10,7 +10,6 @@ import { AuTableColumn } from './au-table-column';
 import { AuTable } from './table';
 import type { AuTableSortState } from './table-types';
 
-
 type Row = {
   name: string;
   role: string;

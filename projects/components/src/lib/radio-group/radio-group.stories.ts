@@ -17,7 +17,6 @@ const sample: AuRadioOption[] = [
   { value: 'none', label: 'None' },
 ];
 
-
 interface RadioGroupStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

@@ -20,8 +20,7 @@ export const SEO_EN: DocsSeoMessages = {
   },
   guidesAdoption: {
     title: 'Adoption guide — Aurea Design System',
-    description:
-      'Guides for install, signal forms, and themes.',
+    description: 'Guides for install, signal forms, and themes.',
   },
   guidesSignalForms: {
     title: 'Signal forms with Aurea — Angular 21',
@@ -48,8 +47,7 @@ export const SEO_EN: DocsSeoMessages = {
   },
   componentsIndex: {
     title: 'Angular UI components — Aurea catalog',
-    description:
-      'Catalog of Aurea components with API tables, styling tokens, and live demos.',
+    description: 'Catalog of Aurea components with API tables, styling tokens, and live demos.',
   },
   componentTitle: (name, exportName) => `${name} (${exportName}) — Aurea docs`,
   componentDescription: (name, summary) =>

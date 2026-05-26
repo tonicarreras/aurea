@@ -19,7 +19,8 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Layout sections',
-    description: 'Todos los paneles visibles; los botones de paso hacen scroll (`layout="sections"`).',
+    description:
+      'Todos los paneles visibles; los botones de paso hacen scroll (`layout="sections"`).',
     demoComponent: ExampleStepsSectionsDemo,
     code: `<au-steps [(value)]="section" ariaLabel="Secciones" layout="sections">
   <button type="button" auStep="intro">Intro</button>

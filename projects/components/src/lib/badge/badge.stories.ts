@@ -3,7 +3,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuBadge } from './badge';
 
-
 const meta: Meta<AuBadge> = {
   title: 'Aurea/Badge',
   component: AuBadge,

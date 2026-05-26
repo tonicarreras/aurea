@@ -5,7 +5,6 @@ import { AuChip } from '../chip/chip';
 import { AuListItem } from './au-list-item.directive';
 import { AuList } from './list';
 
-
 const meta: Meta<AuList> = {
   title: 'Aurea/List',
   component: AuList,

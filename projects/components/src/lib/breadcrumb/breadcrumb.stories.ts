@@ -3,7 +3,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuBreadcrumb } from './breadcrumb';
 
-
 const meta: Meta<AuBreadcrumb> = {
   title: 'Aurea/Breadcrumb',
   component: AuBreadcrumb,

@@ -31,7 +31,9 @@ function main() {
   const rawIncrease = (current.raw - baseline.raw) / baseline.raw;
   const gzipIncrease = (current.gzip - baseline.gzip) / baseline.gzip;
 
-  console.log(`Bundle raw: ${current.raw} bytes (baseline ${baseline.raw}, +${(rawIncrease * 100).toFixed(2)}%)`);
+  console.log(
+    `Bundle raw: ${current.raw} bytes (baseline ${baseline.raw}, +${(rawIncrease * 100).toFixed(2)}%)`,
+  );
   console.log(
     `Bundle gzip: ${current.gzip} bytes (baseline ${baseline.gzip}, +${(gzipIncrease * 100).toFixed(2)}%)`,
   );

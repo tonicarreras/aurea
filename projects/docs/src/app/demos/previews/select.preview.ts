@@ -11,7 +11,10 @@ import { getSelectOptions } from '../shared/demo-fixtures';
   template: `
     <div class="docs-preview docs-preview--field">
       <au-form-field [label]="t().label">
-        <au-select [placeholder]="t().placeholder" [options]="options()" />
+        <au-select
+          [placeholder]="t().placeholder"
+          [options]="options()"
+        />
       </au-form-field>
     </div>
   `,

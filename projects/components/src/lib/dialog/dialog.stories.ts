@@ -7,7 +7,6 @@ import { AuButton } from '../button/button';
 import { AuDialog } from './dialog';
 import { AuDialogFooter } from './dialog-footer.directive';
 
-
 const meta: Meta<AuDialog> = {
   title: 'Aurea/Dialog',
   component: AuDialog,

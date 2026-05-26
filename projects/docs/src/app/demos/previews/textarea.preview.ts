@@ -9,7 +9,10 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--field">
       <au-form-field [label]="t().label">
-        <au-textarea [rows]="3" [placeholder]="t().placeholder" />
+        <au-textarea
+          [rows]="3"
+          [placeholder]="t().placeholder"
+        />
       </au-form-field>
     </div>
   `,

@@ -13,7 +13,6 @@ import { AuTextarea } from './textarea';
 
 type TextareaResize = 'none' | 'vertical' | 'both';
 
-
 interface TextareaStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

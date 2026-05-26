@@ -1,13 +1,7 @@
 import { type ComponentDoc, type ComponentStylingToken } from './component-docs.registry';
 import type { DocsLocale } from './docs-locale';
-import {
-  COMPONENT_DOC_STYLING_EN,
-  DEFAULT_COMPONENT_STYLING_EN,
-} from '../i18n/locales/en/styling';
-import {
-  COMPONENT_DOC_STYLING_ES,
-  DEFAULT_COMPONENT_STYLING_ES,
-} from '../i18n/locales/es/styling';
+import { COMPONENT_DOC_STYLING_EN, DEFAULT_COMPONENT_STYLING_EN } from '../i18n/locales/en/styling';
+import { COMPONENT_DOC_STYLING_ES, DEFAULT_COMPONENT_STYLING_ES } from '../i18n/locales/es/styling';
 
 export function resolveComponentStyling(
   doc: ComponentDoc,

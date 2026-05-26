@@ -8,7 +8,10 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuInputNumber],
   template: `
     <au-form-field [label]="t().basicLabel">
-      <au-input-number [min]="0" [max]="10" />
+      <au-input-number
+        [min]="0"
+        [max]="10"
+      />
     </au-form-field>
   `,
 })
@@ -21,8 +24,15 @@ export class ExampleInputNumberBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputNumber],
   template: `
-    <au-form-field [label]="t().errorLabel" [errorMessage]="t().errorMessage" [invalid]="true">
-      <au-input-number [min]="1" [max]="10" />
+    <au-form-field
+      [label]="t().errorLabel"
+      [errorMessage]="t().errorMessage"
+      [invalid]="true"
+    >
+      <au-input-number
+        [min]="1"
+        [max]="10"
+      />
     </au-form-field>
   `,
 })
@@ -35,8 +45,14 @@ export class ExampleInputNumberErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputNumber],
   template: `
-    <au-form-field [label]="t().hintLabel" [hint]="t().hint">
-      <au-input-number [min]="0" [max]="99" />
+    <au-form-field
+      [label]="t().hintLabel"
+      [hint]="t().hint"
+    >
+      <au-input-number
+        [min]="0"
+        [max]="99"
+      />
     </au-form-field>
   `,
 })

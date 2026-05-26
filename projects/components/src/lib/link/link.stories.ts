@@ -3,7 +3,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuLink } from './link';
 
-
 const meta: Meta<AuLink> = {
   title: 'Aurea/Link',
   component: AuLink,

@@ -9,8 +9,15 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--stack">
       <div class="docs-demo-stack">
-        <au-message variant="success" [title]="t().successTitle" [message]="t().successBody" />
-        <au-message variant="info" [message]="t().infoBody" />
+        <au-message
+          variant="success"
+          [title]="t().successTitle"
+          [message]="t().successBody"
+        />
+        <au-message
+          variant="info"
+          [message]="t().infoBody"
+        />
       </div>
     </div>
   `,

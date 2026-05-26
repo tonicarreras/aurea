@@ -3,7 +3,6 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuProgress } from './progress';
 
-
 const meta: Meta<AuProgress> = {
   title: 'Aurea/Progress',
   component: AuProgress,

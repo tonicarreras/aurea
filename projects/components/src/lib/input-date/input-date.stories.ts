@@ -11,7 +11,6 @@ import {
 } from '../form-field';
 import { AuInputDate } from './input-date';
 
-
 interface InputDateStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

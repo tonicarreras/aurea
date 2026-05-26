@@ -8,13 +8,37 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   imports: [AuSteps, AuStep, AuStepPanel],
   template: `
     <div class="docs-preview docs-preview--wide">
-      <au-steps [(value)]="section" [ariaLabel]="t().ariaLabel">
-        <button type="button" auStep="overview">{{ t().overview }}</button>
-        <button type="button" auStep="api">{{ t().api }}</button>
-        <button type="button" auStep="examples">{{ t().examples }}</button>
-        <div auStepPanel="overview"><p>{{ t().overviewPanel }}</p></div>
-        <div auStepPanel="api"><p>{{ t().apiPanel }}</p></div>
-        <div auStepPanel="examples"><p>{{ t().examplesPanel }}</p></div>
+      <au-steps
+        [(value)]="section"
+        [ariaLabel]="t().ariaLabel"
+      >
+        <button
+          type="button"
+          auStep="overview"
+        >
+          {{ t().overview }}
+        </button>
+        <button
+          type="button"
+          auStep="api"
+        >
+          {{ t().api }}
+        </button>
+        <button
+          type="button"
+          auStep="examples"
+        >
+          {{ t().examples }}
+        </button>
+        <div auStepPanel="overview">
+          <p>{{ t().overviewPanel }}</p>
+        </div>
+        <div auStepPanel="api">
+          <p>{{ t().apiPanel }}</p>
+        </div>
+        <div auStepPanel="examples">
+          <p>{{ t().examplesPanel }}</p>
+        </div>
       </au-steps>
     </div>
   `,

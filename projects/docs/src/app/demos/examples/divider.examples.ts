@@ -8,7 +8,10 @@ import { DEMO_STACK } from '../shared/demo-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuDivider],
   template: `
-    <div class="docs-demo-stack" style="max-width: 18rem">
+    <div
+      class="docs-demo-stack"
+      style="max-width: 18rem"
+    >
       <p>{{ t().above }}</p>
       <au-divider />
       <p>{{ t().below }}</p>
@@ -24,7 +27,10 @@ export class ExampleDividerBasicDemo {
   selector: 'docs-example-divider-label',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuDivider],
-  template: `<au-divider [label]="t().label" style="max-width: 18rem" />`,
+  template: `<au-divider
+    [label]="t().label"
+    style="max-width: 18rem"
+  />`,
 })
 export class ExampleDividerLabelDemo {
   readonly t = docsExampleLive('divider');

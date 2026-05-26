@@ -20,7 +20,6 @@ const cities: AuAutocompleteOption[] = [
   { value: 'agp', label: 'Málaga' },
 ];
 
-
 interface AutocompleteStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

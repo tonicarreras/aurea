@@ -7,7 +7,11 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button variant="outline" [auTooltip]="t().topText" auTooltipPlacement="top">
+    <au-button
+      variant="outline"
+      [auTooltip]="t().topText"
+      auTooltipPlacement="top"
+    >
       {{ t().topButton }}
     </au-button>
   `,
@@ -21,7 +25,11 @@ export class ExampleTooltipTopDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button variant="ghost" [auTooltip]="t().endText" auTooltipPlacement="end">
+    <au-button
+      variant="ghost"
+      [auTooltip]="t().endText"
+      auTooltipPlacement="end"
+    >
       {{ t().endButton }}
     </au-button>
   `,

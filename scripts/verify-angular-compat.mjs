@@ -57,7 +57,10 @@ export const used = AuButton;
     ),
   );
 
-  const install = spawnSync('npm', ['install', '--ignore-scripts'], { cwd: work, stdio: 'inherit' });
+  const install = spawnSync('npm', ['install', '--ignore-scripts'], {
+    cwd: work,
+    stdio: 'inherit',
+  });
   if (install.status !== 0) process.exit(install.status ?? 1);
 
   const tsc = spawnSync('npx', ['tsc', '-p', 'tsconfig.json'], { cwd: work, stdio: 'inherit' });

@@ -8,7 +8,10 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuInputText],
   template: `
     <au-form-field [label]="t().emailLabel">
-      <au-input-text type="email" [placeholder]="t().emailPlaceholder" />
+      <au-input-text
+        type="email"
+        [placeholder]="t().emailPlaceholder"
+      />
     </au-form-field>
   `,
 })
@@ -21,7 +24,10 @@ export class ExampleInputTextBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field [label]="t().userLabel" [hint]="t().userHint">
+    <au-form-field
+      [label]="t().userLabel"
+      [hint]="t().userHint"
+    >
       <au-input-text [placeholder]="t().userPlaceholder" />
     </au-form-field>
   `,
@@ -35,8 +41,15 @@ export class ExampleInputTextHintDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field [label]="t().emailErrorLabel" [errorMessage]="t().emailError" [invalid]="true">
-      <au-input-text type="email" [placeholder]="t().emailErrorPlaceholder" />
+    <au-form-field
+      [label]="t().emailErrorLabel"
+      [errorMessage]="t().emailError"
+      [invalid]="true"
+    >
+      <au-input-text
+        type="email"
+        [placeholder]="t().emailErrorPlaceholder"
+      />
     </au-form-field>
   `,
 })

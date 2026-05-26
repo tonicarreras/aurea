@@ -6,7 +6,6 @@ import { AuFormField } from '../form-field/form-field';
 import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
 import { AuCheckbox } from './checkbox';
 
-
 interface CheckboxStoryArgs {
   checkedChange: ReturnType<typeof fn>;
   label: string;

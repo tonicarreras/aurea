@@ -8,8 +8,17 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   imports: [AuButton, AuSnackbar],
   template: `
     <div class="docs-preview docs-preview--action">
-      <au-button type="button" (click)="open.set(true)">{{ t().show }}</au-button>
-      <au-snackbar [(open)]="open" [message]="t().message" variant="success" [durationMs]="3500" />
+      <au-button
+        type="button"
+        (click)="open.set(true)"
+        >{{ t().show }}</au-button
+      >
+      <au-snackbar
+        [(open)]="open"
+        [message]="t().message"
+        variant="success"
+        [durationMs]="3500"
+      />
     </div>
   `,
 })

@@ -7,7 +7,6 @@ import { AuFormField } from '../form-field/form-field';
 import { AuInputText } from '../input-text/input-text';
 import { AuPopover, AuPopoverTrigger } from './index';
 
-
 const meta: Meta<AuPopover> = {
   title: 'Aurea/Popover',
   component: AuPopover,

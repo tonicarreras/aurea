@@ -21,7 +21,11 @@ export class ExampleInputDateBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputDate],
   template: `
-    <au-form-field [label]="t().errorLabel" [errorMessage]="t().errorMessage" [invalid]="true">
+    <au-form-field
+      [label]="t().errorLabel"
+      [errorMessage]="t().errorMessage"
+      [invalid]="true"
+    >
       <au-input-date />
     </au-form-field>
   `,
@@ -35,7 +39,10 @@ export class ExampleInputDateErrorDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputDate],
   template: `
-    <au-form-field [label]="t().hintLabel" [hint]="t().hint">
+    <au-form-field
+      [label]="t().hintLabel"
+      [hint]="t().hint"
+    >
       <au-input-date />
     </au-form-field>
   `,

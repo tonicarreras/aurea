@@ -6,7 +6,13 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   selector: 'docs-preview-link',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuLink],
-  template: `<p class="docs-preview"><a auLink href="#">{{ t().label }}</a></p>`,
+  template: `<p class="docs-preview">
+    <a
+      auLink
+      href="#"
+      >{{ t().label }}</a
+    >
+  </p>`,
 })
 export class LinkDemo {
   readonly t = docsPreviewCopy('link');

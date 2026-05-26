@@ -7,7 +7,13 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuBadge],
   template: `<div class="docs-preview docs-preview--row">
-    <au-badge variant="accent" [label]="t().accent" /><au-badge variant="success" [label]="t().count" />
+    <au-badge
+      variant="accent"
+      [label]="t().accent"
+    /><au-badge
+      variant="success"
+      [label]="t().count"
+    />
   </div>`,
 })
 export class BadgeDemo {

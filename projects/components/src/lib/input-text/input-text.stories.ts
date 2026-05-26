@@ -13,7 +13,6 @@ import { AuInputText } from './input-text';
 
 type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
-
 interface InputTextStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;

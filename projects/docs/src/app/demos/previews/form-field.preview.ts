@@ -8,8 +8,15 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   imports: [AuFormField, AuInputText],
   template: `
     <div class="docs-preview docs-preview--field">
-      <au-form-field [label]="t().label" [hint]="t().hint" [required]="true">
-        <au-input-text type="email" [placeholder]="t().placeholder" />
+      <au-form-field
+        [label]="t().label"
+        [hint]="t().hint"
+        [required]="true"
+      >
+        <au-input-text
+          type="email"
+          [placeholder]="t().placeholder"
+        />
       </au-form-field>
     </div>
   `,

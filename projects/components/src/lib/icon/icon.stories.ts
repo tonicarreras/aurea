@@ -5,7 +5,6 @@ import { AuIcon, type AuIconName } from './icon';
 
 const names: AuIconName[] = ['check-circle', 'warning', 'error', 'info', 'close', 'spinner'];
 
-
 const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
   component: AuIcon,
