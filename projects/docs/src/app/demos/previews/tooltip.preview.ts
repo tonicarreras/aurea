@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuButton, AuTooltip } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-tooltip',
@@ -9,12 +10,13 @@ import { AuButton, AuTooltip } from '@aurea-design-system/components';
     <div class="docs-preview docs-preview--action">
       <au-button
         variant="outline"
-        auTooltip="Texto de ayuda contextual"
+        [auTooltip]="t().text"
         auTooltipPlacement="top"
+        >{{ t().button }}</au-button
       >
-        Pasar el cursor
-      </au-button>
     </div>
   `,
 })
-export class TooltipDemo {}
+export class TooltipDemo {
+  readonly t = docsPreviewCopy('tooltip');
+}

@@ -69,6 +69,7 @@
   border: 1px solid var(--au-color-form-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
+  box-shadow: var(--au-shadow-control);
   transition: var(--au-transition-control);
 }
 
@@ -83,13 +84,13 @@
 
 .au-input-date__control-row:focus-within {
   border-color: var(--au-color-focus-ring);
-  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+  box-shadow: var(--au-shadow-focus-control);
 }
 
 .au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
-  box-shadow: 0 0 0 1px var(--au-color-form-error);
+  box-shadow: var(--au-shadow-focus-control-error);
 }
 
 .au-input-date__control-row--from-tab:focus-within {
@@ -102,6 +103,12 @@
 .au-input-date__control-row--from-tab:focus-within:has(.au-input-date__input[aria-invalid='true']) {
   border-color: var(--au-color-form-error);
   outline: 2px solid var(--au-color-form-error);
+}
+
+.au-input-date__control-row:has(.au-input-date__input:disabled) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
 }
 
 .au-input-date__input {

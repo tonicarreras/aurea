@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
@@ -11,8 +10,6 @@ import {
   type FieldChromeStoryArgs,
 } from '../form-field';
 import { AuInputDate } from './input-date';
-
-const docsOverview = getStoryOverview('input-date');
 
 interface InputDateStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -32,7 +29,7 @@ const meta: Meta<InputDateStoryArgs> = {
   title: 'Aurea/Input date',
   component: AuInputDate,
   tags: ['autodocs', 'au', 'beta'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('input-date'),
   argTypes: {
     ...fieldChromeArgTypes,
     value: { control: 'text', table: { category: 'Value' } },

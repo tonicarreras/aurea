@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuFormField, AuRadioGroup } from '@aurea-design-system/components';
-
-import { radioOptions } from '../shared/demo-fixtures';
+import { DocsLocaleService } from '../../core/docs-locale.service';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
+import { getRadioOptions } from '../shared/demo-fixtures';
 
 @Component({
   selector: 'docs-preview-radio-group',
@@ -9,12 +10,14 @@ import { radioOptions } from '../shared/demo-fixtures';
   imports: [AuFormField, AuRadioGroup],
   template: `
     <div class="docs-preview docs-preview--field">
-      <au-form-field label="Plan">
-        <au-radio-group [options]="options" />
+      <au-form-field [label]="t().label">
+        <au-radio-group [options]="options()" />
       </au-form-field>
     </div>
   `,
 })
 export class RadioGroupDemo {
-  readonly options = radioOptions;
+  private readonly i18n = inject(DocsLocaleService);
+  readonly t = docsPreviewCopy('radioGroup');
+  readonly options = computed(() => getRadioOptions(this.i18n.locale()));
 }

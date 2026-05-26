@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuButton, AuDialog, AuDialogFooter } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-dialog',
@@ -10,25 +11,25 @@ import { AuButton, AuDialog, AuDialogFooter } from '@aurea-design-system/compone
       <au-button
         type="button"
         (click)="open.set(true)"
-        >Abrir diálogo</au-button
+        >{{ t().open }}</au-button
       >
       <au-dialog
         [(open)]="open"
-        title="Confirmar acción"
+        [title]="t().title"
         size="sm"
       >
-        <p>Esta acción no se puede deshacer.</p>
+        <p>{{ t().body }}</p>
         <div auDialogFooter>
           <au-button
             variant="secondary"
             type="button"
             (click)="open.set(false)"
-            >Cancelar</au-button
+            >{{ t().cancel }}</au-button
           >
           <au-button
             type="button"
             (click)="open.set(false)"
-            >Confirmar</au-button
+            >{{ t().confirm }}</au-button
           >
         </div>
       </au-dialog>
@@ -36,5 +37,6 @@ import { AuButton, AuDialog, AuDialogFooter } from '@aurea-design-system/compone
   `,
 })
 export class DialogDemo {
+  readonly t = docsPreviewCopy('dialog');
   readonly open = model(false);
 }

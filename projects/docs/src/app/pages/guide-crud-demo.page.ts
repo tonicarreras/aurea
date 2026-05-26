@@ -12,8 +12,18 @@ import { DocPage } from '../shared/doc-page';
       [title]="eco().crudDemo.title"
       [lead]="eco().crudDemo.lead"
     >
+      <p class="docs-crud-demo-page__hint">{{ eco().crudDemo.frameHint }}</p>
       <docs-crud-demo />
     </docs-page>
+  `,
+  styles: `
+    .docs-crud-demo-page__hint {
+      margin: 0 0 var(--au-space-6);
+      max-width: min(62rem, 100%);
+      font-size: var(--au-text-sm);
+      line-height: var(--au-leading-relaxed);
+      color: var(--au-color-text-secondary);
+    }
   `,
 })
 export class GuideCrudDemoPage {

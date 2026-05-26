@@ -1,18 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuIcon, type AuIconName } from './icon';
 
 const names: AuIconName[] = ['check-circle', 'warning', 'error', 'info', 'close', 'spinner'];
 
-const docsOverview = getStoryOverview('icon');
-
 const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
   component: AuIcon,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('icon'),
   argTypes: {
     name: { control: 'select', options: names, table: { category: 'Content' } },
     size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Appearance' } },

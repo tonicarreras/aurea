@@ -1,0 +1,38 @@
+/**
+ * Sidebar labels for component slugs. Same in every locale: product names match
+ * Storybook titles (`Aurea/Input text`) and registry `title` fields — not translated.
+ */
+export const COMPONENT_NAV_LABELS: Record<string, string> = {
+  badge: 'Badge',
+  breadcrumb: 'Breadcrumb',
+  button: 'Button',
+  'form-field': 'Form field',
+  'input-text': 'Input text',
+  textarea: 'Textarea',
+  checkbox: 'Checkbox',
+  switch: 'Switch',
+  table: 'Table',
+  select: 'Select',
+  autocomplete: 'Autocomplete',
+  'radio-group': 'Radio group',
+  'input-number': 'Input number',
+  'input-date': 'Input date',
+  dialog: 'Dialog',
+  card: 'Card',
+  tabs: 'Tabs',
+  chip: 'Chip',
+  'chip-group': 'Chip group',
+  link: 'Link',
+  list: 'List',
+  menu: 'Menu',
+  pagination: 'Pagination',
+  popover: 'Popover',
+  progress: 'Progress',
+  snackbar: 'Snackbar',
+  message: 'Message',
+  icon: 'Icon',
+  skeleton: 'Skeleton',
+  steps: 'Steps',
+  divider: 'Divider',
+  tooltip: 'Tooltip',
+};

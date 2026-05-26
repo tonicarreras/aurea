@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuMessage } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-message-success',
@@ -8,41 +9,40 @@ import { AuMessage } from '@aurea-design-system/components';
   template: `
     <au-message
       variant="success"
-      title="Profile updated"
-      message="Your changes were saved."
+      [title]="t().successTitle"
+      [message]="t().successBody"
     />
   `,
 })
-export class ExampleMessageSuccessDemo {}
+export class ExampleMessageSuccessDemo {
+  readonly t = docsExampleLive('message');
+}
 
 @Component({
   selector: 'docs-example-message-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuMessage],
-  template: `
-    <au-message
-      variant="error"
-      message="Please fix the highlighted fields."
-    />
-  `,
+  template: `<au-message
+    variant="error"
+    [message]="t().errorBody"
+  />`,
 })
-export class ExampleMessageErrorDemo {}
+export class ExampleMessageErrorDemo {
+  readonly t = docsExampleLive('message');
+}
 
 @Component({
-  selector: 'docs-example-message-dismissible',
+  selector: 'docs-example-message-info',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuMessage],
   template: `
-    @if (visible()) {
-      <au-message
-        variant="info"
-        message="You can dismiss this notice."
-        [dismissible]="true"
-        (dismiss)="visible.set(false)"
-      />
-    }
+    <au-message
+      variant="info"
+      [message]="t().infoBody"
+      [dismissible]="true"
+    />
   `,
 })
 export class ExampleMessageDismissibleDemo {
-  readonly visible = signal(true);
+  readonly t = docsExampleLive('message');
 }

@@ -6,6 +6,7 @@ import {
   AuFormField,
   AuInputText,
 } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 import { DEMO_STACK } from '../shared/demo-layout';
 
 @Component({
@@ -16,32 +17,33 @@ import { DEMO_STACK } from '../shared/demo-layout';
     <au-button
       type="button"
       (click)="open.set(true)"
-      >Abrir diálogo</au-button
+      >{{ t().confirmOpen }}</au-button
     >
     <au-dialog
       [(open)]="open"
-      title="¿Quieres aceptar?"
+      [title]="t().confirmTitle"
       size="sm"
     >
-      <p>Esta acción no se puede deshacer.</p>
+      <p>{{ t().confirmBody }}</p>
       <div auDialogFooter>
         <au-button
           style="margin-right: var(--au-space-2);"
           variant="secondary"
           type="button"
           (click)="open.set(false)"
-          >Cancelar</au-button
+          >{{ t().cancel }}</au-button
         >
         <au-button
           type="button"
           (click)="open.set(false)"
-          >Eliminar</au-button
+          >{{ t().delete }}</au-button
         >
       </div>
     </au-dialog>
   `,
 })
 export class ExampleDialogConfirmDemo {
+  readonly t = docsExampleLive('dialog');
   readonly open = model(false);
 }
 
@@ -53,32 +55,32 @@ export class ExampleDialogConfirmDemo {
     <au-button
       type="button"
       (click)="open.set(true)"
-      >Editar perfil</au-button
+      >{{ t().formOpen }}</au-button
     >
     <au-dialog
       [(open)]="open"
-      title="Editar perfil"
+      [title]="t().formTitle"
       size="md"
     >
       <div class="docs-demo-stack">
         <au-form-field
-          label="Nombre"
-          errorMessage="El nombre es obligatorio."
+          [label]="t().nameLabel"
+          [errorMessage]="t().nameError"
           [invalid]="true"
         >
           <au-input-text
-            placeholder="Tu nombre"
+            [placeholder]="t().namePlaceholder"
             style="max-width: 100%"
           />
         </au-form-field>
         <au-form-field
-          label="Email"
-          errorMessage="Introduce un correo válido."
+          [label]="t().emailLabel"
+          [errorMessage]="t().emailError"
           [invalid]="true"
         >
           <au-input-text
             type="email"
-            placeholder="tu@correo.com"
+            [placeholder]="t().emailPlaceholder"
             style="max-width: 100%"
           />
         </au-form-field>
@@ -88,12 +90,12 @@ export class ExampleDialogConfirmDemo {
           variant="secondary"
           type="button"
           (click)="open.set(false)"
-          >Cancelar</au-button
+          >{{ t().cancel }}</au-button
         >
         <au-button
           type="button"
           (click)="open.set(false)"
-          >Guardar</au-button
+          >{{ t().save }}</au-button
         >
       </div>
     </au-dialog>
@@ -101,7 +103,6 @@ export class ExampleDialogConfirmDemo {
   styles: [DEMO_STACK],
 })
 export class ExampleDialogFormValidationDemo {
+  readonly t = docsExampleLive('dialog');
   readonly open = model(false);
 }
-
-// —— Card ——

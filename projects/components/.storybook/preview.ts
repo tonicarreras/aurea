@@ -2,12 +2,23 @@ import type { Preview } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import docJson from '../documentation.json';
 
+import {
+  setStoryOverviewLocale,
+  type StoryOverviewLocale,
+} from '../src/lib/story-docs/get-story-overview';
+
 setCompodocJson(docJson);
 
 function applyAuThemeFromGlobals(globals: Record<string, unknown>): void {
   const raw = globals['auTheme'];
   const theme = raw === 'dark' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-au-theme', theme);
+}
+
+function applyDocsLocaleFromGlobals(globals: Record<string, unknown>): void {
+  const raw = globals['docsLocale'];
+  const locale: StoryOverviewLocale = raw === 'es' ? 'es' : 'en';
+  setStoryOverviewLocale(locale);
 }
 
 /**
@@ -29,13 +40,29 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    docsLocale: {
+      description: 'Idioma de Autodocs (overview desde la documentación)',
+      defaultValue: 'en',
+      toolbar: {
+        title: 'Docs',
+        icon: 'globe',
+        items: [
+          { value: 'en', title: 'English' },
+          { value: 'es', title: 'Español' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   initialGlobals: {
     auTheme: 'light',
+    docsLocale: 'en',
   },
   decorators: [
     (storyFn, context) => {
-      applyAuThemeFromGlobals(context.globals as Record<string, unknown>);
+      const globals = context.globals as Record<string, unknown>;
+      applyAuThemeFromGlobals(globals);
+      applyDocsLocaleFromGlobals(globals);
       return storyFn();
     },
   ],

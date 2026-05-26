@@ -33,7 +33,7 @@ au-dialog .au-dialog__native:not([open]) {
 
 au-dialog .au-dialog__native::backdrop {
   background: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
-  animation: au-dialog-backdrop-in var(--au-duration-short) var(--au-ease-out);
+  animation: au-dialog-backdrop-in var(--au-motion-modal);
 }
 
 au-dialog .au-dialog__panel {
@@ -46,7 +46,7 @@ au-dialog .au-dialog__panel {
   border: 1px solid var(--au-color-border-subtle);
   border-radius: var(--au-radius-sm);
   box-shadow: var(--au-shadow-overlay);
-  animation: au-dialog-panel-in var(--au-duration-default) var(--au-ease-out);
+  animation: au-dialog-panel-in var(--au-motion-modal);
 }
 
 au-dialog[data-au-size='sm'] .au-dialog__panel {

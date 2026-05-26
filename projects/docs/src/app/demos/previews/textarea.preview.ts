@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuTextarea } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-textarea',
@@ -7,13 +8,15 @@ import { AuFormField, AuTextarea } from '@aurea-design-system/components';
   imports: [AuFormField, AuTextarea],
   template: `
     <div class="docs-preview docs-preview--field">
-      <au-form-field label="Bio">
+      <au-form-field [label]="t().label">
         <au-textarea
           [rows]="3"
-          placeholder="Cuéntanos sobre ti…"
+          [placeholder]="t().placeholder"
         />
       </au-form-field>
     </div>
   `,
 })
-export class TextareaDemo {}
+export class TextareaDemo {
+  readonly t = docsPreviewCopy('textarea');
+}

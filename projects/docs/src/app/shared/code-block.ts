@@ -29,7 +29,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
               class="docs-code-panel__chevron"
               aria-hidden="true"
             ></span>
-            <span>{{ expanded() ? resolvedCollapseLabel() : resolvedExpandLabel() }}</span>
+            <span>{{ expanded() ? collapseLabelText() : expandLabelText() }}</span>
             @if (showLanguage() && language() !== 'text') {
               <span class="docs-code-panel__lang">{{ languageLabel() }}</span>
             }
@@ -44,9 +44,9 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             class="docs-code-panel__copy"
             [class.docs-code-panel__copy--done]="copied()"
             (click)="copy($event)"
-            [attr.aria-label]="copied() ? copyDoneAria() : copyAria()"
+            [attr.aria-label]="copied() ? copyDoneAriaLabel() : copyAriaLabel()"
           >
-            {{ copied() ? copyDoneLabel() : copyLabel() }}
+            {{ copied() ? copyDoneButtonLabel() : copyButtonLabel() }}
           </au-button>
         }
       </div>
@@ -59,7 +59,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
         <pre
           class="docs-code language-{{ prismLanguage() }}"
           tabindex="0"
-          [attr.aria-label]="'Código ' + languageLabel()"
+          [attr.aria-label]="snippetAriaLabel()"
         ><code [innerHTML]="highlightedHtml()"></code></pre>
       </div>
     </section>
@@ -197,12 +197,13 @@ export class CodeBlock {
   );
 
   readonly languageLabel = computed(() => {
+    const lang = this.i18n.messages().codeBlock.lang;
     const labels: Record<CodeLanguage, string> = {
-      typescript: 'TypeScript',
-      css: 'CSS',
-      bash: 'Shell',
-      html: 'HTML',
-      text: 'Texto',
+      typescript: lang.typescript,
+      css: lang.css,
+      bash: lang.bash,
+      html: lang.html,
+      text: lang.text,
     };
     return labels[this.language()];
   });
@@ -215,29 +216,21 @@ export class CodeBlock {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   });
 
-  resolvedExpandLabel(): string {
-    return this.expandLabel() ?? this.i18n.messages().codeBlock.show;
-  }
+  private readonly labels = computed(() => this.i18n.messages().codeBlock);
 
-  resolvedCollapseLabel(): string {
-    return this.collapseLabel() ?? this.i18n.messages().codeBlock.hide;
-  }
+  readonly expandLabelText = computed(() => this.expandLabel() ?? this.labels().show);
 
-  copyLabel(): string {
-    return this.i18n.messages().codeBlock.copy;
-  }
+  readonly collapseLabelText = computed(() => this.collapseLabel() ?? this.labels().hide);
 
-  copyDoneLabel(): string {
-    return `${this.i18n.messages().codeBlock.copied} ✓`;
-  }
+  readonly copyButtonLabel = computed(() => this.labels().copy);
 
-  copyAria(): string {
-    return this.i18n.locale() === 'en' ? 'Copy code' : 'Copiar código';
-  }
+  readonly copyDoneButtonLabel = computed(() => `${this.labels().copied} ✓`);
 
-  copyDoneAria(): string {
-    return this.i18n.locale() === 'en' ? 'Code copied' : 'Código copiado';
-  }
+  readonly copyAriaLabel = computed(() => this.labels().copyAria);
+
+  readonly copyDoneAriaLabel = computed(() => this.labels().copiedAria);
+
+  readonly snippetAriaLabel = computed(() => this.labels().snippetAria(this.languageLabel()));
 
   toggle(): void {
     this.expanded.update((open) => !open);

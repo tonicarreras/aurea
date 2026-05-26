@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuChip, AuList } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-list',
@@ -7,7 +8,7 @@ import { AuChip, AuList } from '@aurea-design-system/components';
   imports: [AuList, AuChip],
   template: `
     <div class="docs-preview docs-preview--row">
-      <au-list ariaLabel="Tecnologías seleccionadas">
+      <au-list [ariaLabel]="t().ariaLabel">
         <div class="docs-demo-row docs-demo-row--tight">
           <au-chip
             label="Angular"
@@ -26,4 +27,6 @@ import { AuChip, AuList } from '@aurea-design-system/components';
     </div>
   `,
 })
-export class ListDemo {}
+export class ListDemo {
+  readonly t = docsPreviewCopy('list');
+}

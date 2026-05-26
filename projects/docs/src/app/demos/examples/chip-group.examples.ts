@@ -1,27 +1,30 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuChip, AuChipGroup } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
-  selector: 'docs-example-chip-group-filters',
+  selector: 'docs-example-chip-group-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuChipGroup, AuChip],
+  imports: [AuChip, AuChipGroup],
   template: `
-    <au-chip-group ariaLabel="Status filters">
+    <au-chip-group [ariaLabel]="t().ariaLabel">
       <au-chip
-        label="Draft"
+        [label]="t().draft"
         [selectable]="true"
       />
       <au-chip
-        label="Published"
+        [label]="t().published"
         [selectable]="true"
         [selected]="true"
         variant="accent"
       />
       <au-chip
-        label="Archived"
+        [label]="t().archived"
         [selectable]="true"
       />
     </au-chip-group>
   `,
 })
-export class ExampleChipGroupFiltersDemo {}
+export class ExampleChipGroupFiltersDemo {
+  readonly t = docsExampleLive('chipGroup');
+}

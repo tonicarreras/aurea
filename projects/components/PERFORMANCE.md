@@ -29,7 +29,7 @@ See [BUNDLE.md](./BUNDLE.md). Import symbols individually; avoid `import *`.
 ## Docs / Storybook
 
 - Storybook test-runner visits all `au`-tagged stories — keep `play` functions short.
-- Visual smoke tests cover 9 stories only (`e2e-visual/`).
+- Visual smoke tests cover **all stable** components (`e2e-visual/visual-story-manifest.ts`, 26 stories).
 
 ## Checklist for new components
 

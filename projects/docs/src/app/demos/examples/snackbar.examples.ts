@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuButton, AuSnackbar } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-snackbar-success',
@@ -9,17 +10,18 @@ import { AuButton, AuSnackbar } from '@aurea-design-system/components';
     <au-button
       type="button"
       (click)="open.set(true)"
-      >Mostrar éxito</au-button
+      >{{ t().showSuccess }}</au-button
     >
     <au-snackbar
       [(open)]="open"
-      message="Cambios guardados"
+      [message]="t().successMessage"
       variant="success"
       [durationMs]="3000"
     />
   `,
 })
 export class ExampleSnackbarSuccessDemo {
+  readonly t = docsExampleLive('snackbar');
   readonly open = model(false);
 }
 
@@ -29,21 +31,18 @@ export class ExampleSnackbarSuccessDemo {
   imports: [AuButton, AuSnackbar],
   template: `
     <au-button
-      variant="outline"
       type="button"
       (click)="open.set(true)"
-      >Mostrar error</au-button
+      >{{ t().showError }}</au-button
     >
     <au-snackbar
       [(open)]="open"
-      message="No se pudo guardar"
+      [message]="t().errorMessage"
       variant="error"
-      [durationMs]="4000"
     />
   `,
 })
 export class ExampleSnackbarErrorDemo {
+  readonly t = docsExampleLive('snackbar');
   readonly open = model(false);
 }
-
-// —— Divider ——

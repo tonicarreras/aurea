@@ -31,6 +31,15 @@ class ThemeHostSystem {
   readonly mode = signal<'light' | 'dark' | 'system'>('system');
 }
 
+@Component({
+  imports: [AuTheme],
+  template: `<div
+    auTheme="high-contrast-dark"
+    id="hcDark"
+  ></div>`,
+})
+class ThemeHostHcDark {}
+
 describe('AuTheme', () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -48,6 +57,13 @@ describe('AuTheme', () => {
     fix.detectChanges();
     const el = fix.nativeElement.querySelector('#host2') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('light');
+  });
+
+  it('sets data-au-theme="high-contrast-dark" on host', () => {
+    const fix = TestBed.createComponent(ThemeHostHcDark);
+    fix.detectChanges();
+    const el = fix.nativeElement.querySelector('#hcDark') as HTMLElement;
+    expect(el.getAttribute('data-au-theme')).toBe('high-contrast-dark');
   });
 
   it('uses prefers-color-scheme when mode is system (dark)', () => {

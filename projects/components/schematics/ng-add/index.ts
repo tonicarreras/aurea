@@ -58,7 +58,7 @@ Aurea ng-add complete.
 
 Next steps:
   1. Import components per feature: import { AuButton } from '@aurea-design-system/components';
-  2. Theme: set data-au-theme="light|dark|high-contrast" on <html> or use AuTheme directive.
+  2. Theme: set data-au-theme="light|dark|high-contrast|high-contrast-dark" on <html> or use AuTheme directive.
   3. Density (optional): data-au-density="compact|comfortable|spacious" or auDensity on shell.
   4. Signal forms: see https://aurea-ds.netlify.app/en/guides/signal-forms
 

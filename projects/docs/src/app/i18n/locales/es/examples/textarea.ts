@@ -22,6 +22,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Con error',
+    description: 'Estado inválido vía `errorMessage` en `au-form-field`.',
     demoComponent: ExampleTextareaErrorDemo,
     code: `<au-form-field
   label="Comentario"

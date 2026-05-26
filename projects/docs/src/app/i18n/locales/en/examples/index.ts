@@ -20,7 +20,15 @@ import { examples as messageExamples } from './message';
 import { examples as iconExamples } from './icon';
 import { examples as skeletonExamples } from './skeleton';
 import { examples as stepsExamples } from './steps';
+import { examples as badgeExamples } from './badge';
+import { examples as breadcrumbExamples } from './breadcrumb';
 import { examples as dividerExamples } from './divider';
+import { examples as linkExamples } from './link';
+import { examples as menuExamples } from './menu';
+import { examples as paginationExamples } from './pagination';
+import { examples as popoverExamples } from './popover';
+import { examples as progressExamples } from './progress';
+import { examples as tableExamples } from './table';
 import { examples as tooltipExamples } from './tooltip';
 import type { ComponentDocExample } from '../../../types/example';
 
@@ -50,5 +58,13 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   skeleton: skeletonExamples,
   steps: stepsExamples,
   divider: dividerExamples,
+  badge: badgeExamples,
+  breadcrumb: breadcrumbExamples,
+  link: linkExamples,
+  menu: menuExamples,
+  pagination: paginationExamples,
+  popover: popoverExamples,
+  progress: progressExamples,
+  table: tableExamples,
   tooltip: tooltipExamples,
 };

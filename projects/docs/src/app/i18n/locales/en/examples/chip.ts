@@ -17,8 +17,8 @@ export const examples: ComponentDocExample[] = [
     code: `<au-chip label="TypeScript" variant="outline" />`,
   },
   {
-    title: 'Removible',
+    title: 'Removable',
     demoComponent: ExampleChipRemovableDemo,
-    code: `<au-chip label="Filtro activo" variant="accent" [removable]="true" />`,
+    code: `<au-chip label="Active filter" variant="accent" [removable]="true" />`,
   },
 ];

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
@@ -18,8 +17,6 @@ const sample: AuRadioOption[] = [
   { value: 'none', label: 'None' },
 ];
 
-const docsOverview = getStoryOverview('radio-group');
-
 interface RadioGroupStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
   blur: ReturnType<typeof fn>;
@@ -36,7 +33,7 @@ const meta: Meta<RadioGroupStoryArgs> = {
   title: 'Aurea/Radio group',
   component: AuRadioGroup,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('radio-group'),
   argTypes: {
     ...fieldChromeArgTypes,
     value: { control: 'text', table: { category: 'Value' } },

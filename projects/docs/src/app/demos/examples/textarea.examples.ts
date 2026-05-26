@@ -1,21 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuTextarea } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-textarea-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuTextarea],
   template: `
-    <au-form-field label="Comentario">
+    <au-form-field [label]="t().commentLabel">
       <au-textarea
         [rows]="3"
-        placeholder="Escribe aquí…"
-        style="max-width: 24rem"
+        [placeholder]="t().commentPlaceholder"
       />
     </au-form-field>
   `,
 })
-export class ExampleTextareaBasicDemo {}
+export class ExampleTextareaBasicDemo {
+  readonly t = docsExampleLive('textarea');
+}
 
 @Component({
   selector: 'docs-example-textarea-hint',
@@ -23,18 +25,19 @@ export class ExampleTextareaBasicDemo {}
   imports: [AuFormField, AuTextarea],
   template: `
     <au-form-field
-      label="Bio"
-      hint="Máximo 280 caracteres."
+      [label]="t().bioLabel"
+      [hint]="t().bioHint"
     >
       <au-textarea
-        [rows]="4"
-        placeholder="Quién eres y qué haces…"
-        style="max-width: 24rem"
+        [rows]="3"
+        [placeholder]="t().bioPlaceholder"
       />
     </au-form-field>
   `,
 })
-export class ExampleTextareaHintDemo {}
+export class ExampleTextareaHintDemo {
+  readonly t = docsExampleLive('textarea');
+}
 
 @Component({
   selector: 'docs-example-textarea-error',
@@ -42,15 +45,14 @@ export class ExampleTextareaHintDemo {}
   imports: [AuFormField, AuTextarea],
   template: `
     <au-form-field
-      label="Comentario"
-      errorMessage="Añade al menos una frase."
+      [label]="t().errorLabel"
+      [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-textarea
-        [rows]="3"
-        style="max-width: 24rem"
-      />
+      <au-textarea [rows]="3" />
     </au-form-field>
   `,
 })
-export class ExampleTextareaErrorDemo {}
+export class ExampleTextareaErrorDemo {
+  readonly t = docsExampleLive('textarea');
+}

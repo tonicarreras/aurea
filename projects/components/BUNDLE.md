@@ -61,3 +61,15 @@ export const routes: Routes = [
 ## Peer dependencies
 
 Angular packages are **peerDependencies** — they are not bundled into the library artifact.
+
+## CI bundle guard
+
+After `bun run build:components`, CI runs `bun run check:bundle` against `scripts/bundle-size-baseline.json` (FESM raw + gzip). Fails if size grows more than **5%** vs baseline.
+
+Update baseline intentionally:
+
+```bash
+bun run build:components
+bun run update:bundle-baseline
+git add scripts/bundle-size-baseline.json
+```

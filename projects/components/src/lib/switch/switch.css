@@ -65,45 +65,32 @@
   align-items: center;
   width: fit-content;
   max-width: 100%;
-  box-sizing: border-box;
-  padding: var(--au-space-1);
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  transition: var(--au-transition-control);
-}
-
-.au-switch__control-row:has(.au-switch__element:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-}
-
-.au-switch__control-row:has(.au-switch__element[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
 }
 
 .au-switch__control-row:focus-within {
+  outline: none;
+}
+
+.au-switch__control-row:focus-within:not(.au-switch__control-row--from-tab)
+  .au-switch__element:not(:disabled) {
   border-color: var(--au-color-focus-ring);
   box-shadow: 0 0 0 1px var(--au-color-focus-ring);
 }
 
-.au-switch__control-row:focus-within:has(.au-switch__element[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: 0 0 0 1px var(--au-color-form-error);
-}
-
-.au-switch__control-row--from-tab:focus-within {
+.au-switch__control-row--from-tab:focus-within .au-switch__element:not(:disabled) {
+  border-color: var(--au-color-switch-track-off-border);
   box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 2px;
 }
 
-.au-switch__control-row--from-tab:focus-within:has(.au-switch__element[aria-invalid='true']) {
+.au-switch__control-row--invalid .au-switch__element:not(:disabled) {
   border-color: var(--au-color-form-error);
-  outline: 2px solid var(--au-color-form-error);
+  box-shadow: 0 0 0 1px var(--au-color-form-error);
+}
+
+.au-switch__control-row--invalid .au-switch__element:checked:not(:disabled) {
+  box-shadow: 0 0 0 2px var(--au-color-form-error);
 }
 
 .au-switch__element {

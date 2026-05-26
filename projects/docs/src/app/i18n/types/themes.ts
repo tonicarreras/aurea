@@ -5,3 +5,10 @@ export interface ThemeTokenGroup {
   description?: string;
   tokens: ComponentStylingToken[];
 }
+
+/** Per-component CSS variables set on the custom element host. */
+export interface ThemeHostOverride {
+  host: string;
+  token: string;
+  description: string;
+}

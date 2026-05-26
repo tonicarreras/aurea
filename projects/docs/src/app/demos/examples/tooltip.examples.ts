@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuButton, AuTooltip } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-tooltip-top',
@@ -8,14 +9,16 @@ import { AuButton, AuTooltip } from '@aurea-design-system/components';
   template: `
     <au-button
       variant="outline"
-      auTooltip="Ayuda contextual"
+      [auTooltip]="t().topText"
       auTooltipPlacement="top"
     >
-      Pasar el cursor
+      {{ t().topButton }}
     </au-button>
   `,
 })
-export class ExampleTooltipTopDemo {}
+export class ExampleTooltipTopDemo {
+  readonly t = docsExampleLive('tooltip');
+}
 
 @Component({
   selector: 'docs-example-tooltip-right',
@@ -24,11 +27,13 @@ export class ExampleTooltipTopDemo {}
   template: `
     <au-button
       variant="ghost"
-      auTooltip="Aparece al final (inline-end)"
+      [auTooltip]="t().endText"
       auTooltipPlacement="end"
     >
-      Derecha
+      {{ t().endButton }}
     </au-button>
   `,
 })
-export class ExampleTooltipRightDemo {}
+export class ExampleTooltipRightDemo {
+  readonly t = docsExampleLive('tooltip');
+}

@@ -3,13 +3,13 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Pestañas',
+    title: 'Tabs',
     demoComponent: ExampleTabsBasicDemo,
-    code: `<au-tabs [(value)]="tab" ariaLabel="Cuenta">
-  <button type="button" auTab="perfil">Perfil</button>
-  <button type="button" auTab="seguridad">Seguridad</button>
-  <div auTabPanel="perfil">…</div>
-  <div auTabPanel="seguridad">…</div>
+    code: `<au-tabs [(value)]="tab" ariaLabel="Account">
+  <button type="button" auTab="profile">Profile</button>
+  <button type="button" auTab="security">Security</button>
+  <div auTabPanel="profile">…</div>
+  <div auTabPanel="security">…</div>
 </au-tabs>`,
     language: 'typescript',
   },

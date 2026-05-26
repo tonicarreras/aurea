@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import type { ComponentApiEntry } from '../core/component-docs.registry';
+import { DocsLocaleService } from '../core/docs-locale.service';
 import { DocsInlineText } from './docs-inline-text';
 
 @Component({
@@ -15,11 +16,11 @@ import { DocsInlineText } from './docs-inline-text';
       <table class="docs-api-table">
         <thead>
           <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Por defecto</th>
-            <th scope="col">Rol</th>
+            <th scope="col">{{ cols().colName }}</th>
+            <th scope="col">{{ cols().colType }}</th>
+            <th scope="col">{{ cols().colDescription }}</th>
+            <th scope="col">{{ cols().colDefault }}</th>
+            <th scope="col">{{ cols().colKind }}</th>
           </tr>
         </thead>
         <tbody>
@@ -111,5 +112,8 @@ import { DocsInlineText } from './docs-inline-text';
   `,
 })
 export class ComponentDocApiTable {
+  private readonly i18n = inject(DocsLocaleService);
+
   readonly rows = input.required<ComponentApiEntry[]>();
+  readonly cols = computed(() => this.i18n.messages().componentDoc.apiTable);
 }

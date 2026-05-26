@@ -22,18 +22,15 @@ ng serve docs
 1. Open an issue or comment on an existing one for non-trivial work.
 2. Branch from `develop` (or `main` per team policy).
 3. Keep PRs focused; link related docs and tests in the same PR.
-4. Run before push:
+4. Run before push (same order as `.github/workflows/test.yml`):
 
 ```bash
-bun run test:coverage
-bun run build:components
-bun run test-storybook:ci
-bun run test:visual:ci          # after first-time: bun run test:visual:update
-bun run audit:ci
-bun run validate:tokens         # JSON design tokens ↔ au-tokens.css
-bun run build:docs
-bun run tag:stories             # sync stable/beta tags from component-maturity.ts
+bun run ci                      # full pipeline (audit, build, tests, lint, E2E)
+bun run ci:fast                 # same without Playwright / Storybook test-runner
+bun run ci -- --install         # also run bun install --frozen-lockfile
 ```
+
+Individual steps (e.g. `bun run test:coverage`, `bun run verify:i18n`) remain available in `package.json` when debugging one check.
 
 New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Governance index: [docs/README.md](./docs/README.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
 
@@ -64,6 +61,10 @@ Use clear, imperative subjects. Prefer Conventional Commits prefixes when helpfu
 - `feat(components): add AuFoo`
 - `fix(button): stop click propagation`
 - `docs: signal forms guide`
+
+## Changelog
+
+Keep [CHANGELOG.md](./CHANGELOG.md) manually until **1.0.0**. Post-1.0, evaluate [@changesets/cli](https://github.com/changesets/changesets) — see [ROADMAP.md](./docs/ROADMAP.md) Post-1.0 tooling.
 
 ## Accessibility
 

@@ -4,6 +4,7 @@ import type { ComponentDocExample } from '../../../types/example';
 export const examples: ComponentDocExample[] = [
   {
     title: 'Chips de filtro',
+    description: 'Usa `au-chip-group` con chips `selectable` — no `au-list`.',
     demoComponent: ExampleChipGroupFiltersDemo,
     code: `<au-chip-group ariaLabel="Filtros de estado">
   <au-chip label="Borrador" [selectable]="true" />

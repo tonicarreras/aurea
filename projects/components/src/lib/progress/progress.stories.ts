@@ -1,16 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuProgress } from './progress';
-
-const docsOverview = getStoryOverview('progress');
 
 const meta: Meta<AuProgress> = {
   title: 'Aurea/Progress',
   component: AuProgress,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('progress'),
   argTypes: {
     mode: {
       control: 'select',

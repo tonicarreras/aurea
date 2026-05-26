@@ -1,13 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
 import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
 import { AuSwitch } from './switch';
-
-const docsOverview = getStoryOverview('switch');
 
 interface SwitchStoryArgs {
   checkedChange: ReturnType<typeof fn>;
@@ -30,7 +27,7 @@ const meta: Meta<SwitchStoryArgs> = {
   title: 'Aurea/Switch',
   component: AuSwitch,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('switch'),
   argTypes: {
     ...fieldChromeHintOnlyArgTypes,
     label: {

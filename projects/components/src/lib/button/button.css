@@ -30,6 +30,7 @@ button.au-button__element {
   letter-spacing: var(--au-tracking-ui);
   cursor: pointer;
   user-select: none;
+  box-shadow: var(--au-shadow-button);
   transition:
     var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
     var(--au-transition-color);
@@ -69,11 +70,13 @@ button.au-button__element {
   background: var(--au-color-action-primary);
   border-color: var(--au-color-action-primary);
   color: var(--au-color-text-on-solid);
+  box-shadow: var(--au-shadow-button-primary);
 }
 
 :host([data-au-variant='primary']) .au-button__element:hover:not(:disabled) {
   background: var(--au-color-action-primary-hover);
   border-color: var(--au-color-action-primary-hover);
+  box-shadow: var(--au-shadow-button-hover);
 }
 
 :host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
@@ -91,6 +94,7 @@ button.au-button__element {
 :host([data-au-variant='secondary']) .au-button__element:hover:not(:disabled) {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-strong);
+  box-shadow: var(--au-shadow-button-hover);
 }
 
 :host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
@@ -117,6 +121,7 @@ button.au-button__element {
   background: transparent;
   border-color: transparent;
   color: var(--au-color-action-primary);
+  box-shadow: none;
 }
 
 :host([data-au-variant='ghost']) .au-button__element:hover:not(:disabled) {
@@ -134,11 +139,13 @@ button.au-button__element {
 .au-button__element:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .au-button__element[aria-disabled='true'] {
   opacity: 0.45;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .au-button__element--loading {
@@ -155,7 +162,7 @@ button.au-button__element {
 
 .au-button__element:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+  box-shadow: var(--au-shadow-focus-control);
 }
 
 /* Outer ring on Tab only (not :focus-visible, which fires on click too) */

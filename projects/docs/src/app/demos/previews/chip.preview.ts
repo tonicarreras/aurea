@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuChip } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-chip',
@@ -14,11 +15,13 @@ import { AuChip } from '@aurea-design-system/components';
           variant="outline"
         />
         <au-chip
-          label="Removible"
+          [label]="t().removable"
           [removable]="true"
         />
       </div>
     </div>
   `,
 })
-export class ChipDemo {}
+export class ChipDemo {
+  readonly t = docsPreviewCopy('chip');
+}

@@ -26,11 +26,9 @@
 
 ---
 
-## 🎯 Philosophy
+## Philosophy
 
-> **Clear task, quiet UI** — users complete a goal; the system provides hierarchy, contrast, and calm—not decoration that fights the text.
-
-Aurea is built on three pillars:
+Aurea targets **WCAG 2.2 AA** on primary flows and ships as **`@aurea-design-system/components`** on npm. Three layers:
 
 | Pillar                  | Description                                                                        |
 | ----------------------- | ---------------------------------------------------------------------------------- |

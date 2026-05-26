@@ -1,7 +1,7 @@
-# Accessibility audit — Aurea v0.3
+# Accessibility audit — Aurea v0.9
 
 Baseline: **WCAG 2.2 Level AA** for documented **stable** components.  
-Last review: 2025-05 (Fase 0).
+Last review: **2026-05-23** (post Phase 4 + menu/popover/table stable).
 
 ## Summary
 
@@ -9,7 +9,7 @@ Last review: 2025-05 (Fase 0).
 | --------------------------- | ------------ | -------------------------------------------------------------- |
 | Focus visibility            | Pass         | `--au-focus-ring-width` + `box-shadow` on interactive controls |
 | Color contrast (light/dark) | Pass         | Semantic tokens tuned per theme                                |
-| High contrast theme         | Experimental | `data-au-theme="high-contrast"` — manual QA ongoing            |
+| High contrast theme         | Experimental | `high-contrast` / `high-contrast-dark` — manual QA ongoing     |
 | Keyboard — buttons, chips   | Pass         | Native focus; chip group roving tabindex                       |
 | Keyboard — dialogs          | Pass         | Escape closes; focus trap in `AuDialog`                        |
 | Keyboard — tabs             | Pass         | Arrow keys between tabs                                        |
@@ -26,13 +26,6 @@ Last review: 2025-05 (Fase 0).
 - **au-checkbox / switch / radio-group**: Label click targets; group legends for radio.
 - **au-dialog**: `role="dialog"`, `aria-modal`, labelled by header.
 
-### Beta — extra checks recommended
-
-- **au-autocomplete**: Verify listbox `aria-activedescendant` in strict keyboard flows.
-- **au-input-date**: Browser-native picker; announce format in app copy.
-- **au-tabs**: Ensure selected tab `aria-selected` when dynamically added tabs.
-- **au-steps**: Step state should expose current step to SR (roadmap: `aria-current="step"`).
-
 ### Phase 2 (0.9 stable)
 
 | Component       | Status | Notes                                                              |
@@ -46,14 +39,23 @@ Last review: 2025-05 (Fase 0).
 | `au-progress`   | Stable | `progressbar` + valuemin/max/now                                   |
 | `au-link`       | Stable | Focus ring; external links get `rel="noopener"`                    |
 
-### Known debt (visible)
+### Beta — extra checks recommended
 
-| ID       | Component       | Issue                                                              | Target |
-| -------- | --------------- | ------------------------------------------------------------------ | ------ |
-| A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                 | 0.5.0  |
-| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                             | 0.5.0  |
-| A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing | —      |
-| A11Y-004 | `au-menu`       | Roving tabindex + typeahead                                        | 0.5.0  |
+- **au-autocomplete**: Verify listbox `aria-activedescendant` in strict keyboard flows.
+- **au-input-date**: Browser-native picker; see [input-date ADR](../../docs/decisions/input-date-strategy.md).
+- **au-tabs**: Ensure selected tab `aria-selected` when dynamically added tabs.
+- **au-steps**: Step state should expose current step to SR (roadmap: `aria-current="step"`).
+
+### Known debt (tracked as GitHub issues)
+
+| ID       | Component       | Issue                                                              | Milestone |
+| -------- | --------------- | ------------------------------------------------------------------ | --------- |
+| A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                 | 0.10      |
+| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                             | 0.10      |
+| A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing | —         |
+| A11Y-004 | `au-menu`       | Roving tabindex + typeahead                                        | 0.10      |
+
+Issue bodies: [docs/a11y/issue-templates.md](../../docs/a11y/issue-templates.md).
 
 ## Testing checklist (manual)
 

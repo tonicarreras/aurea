@@ -3,15 +3,12 @@ import { signal } from '@angular/core';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuBadge } from '../badge/badge';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuTableCellDef } from './au-table-cell-def.directive';
 import { AuTableColumn } from './au-table-column';
 import { AuTable } from './table';
 import type { AuTableSortState } from './table-types';
-
-const docsOverview = getStoryOverview('table');
 
 type Row = {
   name: string;
@@ -32,7 +29,7 @@ const meta: Meta<AuTable> = {
   title: 'Aurea/Table',
   component: AuTable,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('table'),
   argTypes: {
     title: { control: 'text', table: { category: 'Content' } },
     description: { control: 'text', table: { category: 'Content' } },

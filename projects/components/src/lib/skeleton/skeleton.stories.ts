@@ -1,16 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { getStoryOverview } from '../story-docs/get-story-overview';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuSkeleton } from './skeleton';
-
-const docsOverview = getStoryOverview('skeleton');
 
 const meta: Meta<AuSkeleton> = {
   title: 'Aurea/Skeleton',
   component: AuSkeleton,
   tags: ['autodocs', 'au', 'stable'],
-  parameters: storyMetaParameters(docsOverview),
+  parameters: storyMetaParameters('skeleton'),
   argTypes: {
     variant: {
       control: 'select',

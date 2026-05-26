@@ -76,6 +76,7 @@
   border: 1px solid var(--au-color-form-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
+  box-shadow: var(--au-shadow-control);
   transition: var(--au-transition-control);
 }
 
@@ -96,13 +97,13 @@
  */
 .au-input-text__control-row:focus-within {
   border-color: var(--au-color-focus-ring);
-  box-shadow: 0 0 0 1px var(--au-color-focus-ring);
+  box-shadow: var(--au-shadow-focus-control);
 }
 
 .au-input-text__control-row:focus-within:has(.au-input-text__input[aria-invalid='true']) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
-  box-shadow: 0 0 0 1px var(--au-color-form-error);
+  box-shadow: var(--au-shadow-focus-control-error);
 }
 
 /* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
@@ -126,6 +127,7 @@
 .au-input-text__control-row:has(.au-input-text__input:disabled) {
   border-color: var(--au-color-border-subtle);
   background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
 }
 
 /* No double ring on children: the row draws the ring */

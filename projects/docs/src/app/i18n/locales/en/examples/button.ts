@@ -35,18 +35,18 @@ export const examples: ComponentDocExample[] = [
     title: 'Loading',
     description: 'Shows a spinner and sets `aria-busy` on the button.',
     demoComponent: ExampleButtonLoadingDemo,
-    code: `<au-button variant="primary" [loading]="true">Guardando…</au-button>`,
+    code: `<au-button variant="primary" [loading]="true">Saving…</au-button>`,
   },
   {
-    title: 'Deshabilitado',
+    title: 'Disabled',
     demoComponent: ExampleButtonDisabledDemo,
-    code: `<au-button variant="primary" [disabled]="true">No disponible</au-button>`,
+    code: `<au-button variant="primary" [disabled]="true">Unavailable</au-button>`,
   },
   {
-    title: 'Tamaños',
+    title: 'Sizes',
     demoComponent: ExampleButtonSizesDemo,
-    code: `<au-button size="sm">Pequeño</au-button>
-<au-button size="md">Mediano</au-button>
-<au-button size="lg">Grande</au-button>`,
+    code: `<au-button size="sm">Small</au-button>
+<au-button size="md">Medium</au-button>
+<au-button size="lg">Large</au-button>`,
   },
 ];

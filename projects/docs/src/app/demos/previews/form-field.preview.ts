@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuFormField, AuInputText } from '@aurea-design-system/components';
+import { docsPreviewCopy } from '../../core/docs-preview-copy';
 
 @Component({
   selector: 'docs-preview-form-field',
@@ -8,16 +9,18 @@ import { AuFormField, AuInputText } from '@aurea-design-system/components';
   template: `
     <div class="docs-preview docs-preview--field">
       <au-form-field
-        label="Email"
-        hint="Usamos tu correo solo para avisos."
+        [label]="t().label"
+        [hint]="t().hint"
         [required]="true"
       >
         <au-input-text
           type="email"
-          placeholder="tu@correo.com"
+          [placeholder]="t().placeholder"
         />
       </au-form-field>
     </div>
   `,
 })
-export class FormFieldDemo {}
+export class FormFieldDemo {
+  readonly t = docsPreviewCopy('formField');
+}

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { AuTab, AuTabPanel, AuTabs } from '@aurea-design-system/components';
+import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
   selector: 'docs-example-tabs-basic',
@@ -8,28 +9,31 @@ import { AuTab, AuTabPanel, AuTabs } from '@aurea-design-system/components';
   template: `
     <au-tabs
       [(value)]="tab"
-      ariaLabel="Cuenta"
+      [ariaLabel]="t().ariaLabel"
       style="max-width: 26rem"
     >
       <button
         type="button"
         auTab="perfil"
       >
-        Perfil
+        {{ t().profile }}
       </button>
       <button
         type="button"
         auTab="seguridad"
       >
-        Seguridad
+        {{ t().security }}
       </button>
-      <div auTabPanel="perfil"><p>Nombre, avatar y preferencias.</p></div>
-      <div auTabPanel="seguridad"><p>Contraseña y 2FA.</p></div>
+      <div auTabPanel="perfil">
+        <p>{{ t().profilePanel }}</p>
+      </div>
+      <div auTabPanel="seguridad">
+        <p>{{ t().securityPanel }}</p>
+      </div>
     </au-tabs>
   `,
 })
 export class ExampleTabsBasicDemo {
+  readonly t = docsExampleLive('tabs');
   readonly tab = model('perfil');
 }
-
-// —— Chip ——
