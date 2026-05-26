@@ -1,6 +1,6 @@
 # Spec quality audit
 
-Generated: 2026-05-26T06:37:30.187Z
+Generated: 2026-05-26T06:38:51.284Z
 
 | Component      | Tests | Smoke-like | Ratio | Flag |
 | -------------- | ----- | ---------- | ----- | ---- |
