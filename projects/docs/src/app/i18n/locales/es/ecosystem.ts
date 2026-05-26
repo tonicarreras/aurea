@@ -40,7 +40,8 @@ export const ECOSYSTEM_ES: EcosystemMessages = {
     themeLight: 'Claro',
     themeDark: 'Oscuro',
     highContrastLabel: 'Alto contraste (a11y)',
-    highContrastHint: 'Combina con la apariencia: claro → high-contrast, oscuro → high-contrast-dark.',
+    highContrastHint:
+      'Combina con la apariencia: claro → high-contrast, oscuro → high-contrast-dark.',
     densityCompact: 'Compacto',
     densityComfortable: 'Cómodo',
     densitySpacious: 'Espacioso',

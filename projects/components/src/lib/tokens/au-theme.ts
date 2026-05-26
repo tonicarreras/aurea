@@ -1,11 +1,6 @@
 import { computed, DestroyRef, Directive, inject, input, signal } from '@angular/core';
 
-export type AuThemeMode =
-  | 'light'
-  | 'dark'
-  | 'system'
-  | 'high-contrast'
-  | 'high-contrast-dark';
+export type AuThemeMode = 'light' | 'dark' | 'system' | 'high-contrast' | 'high-contrast-dark';
 
 /**
  * Applies Aurea semantic colors by setting `data-au-theme` on the host element

@@ -1,13 +1,16 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuButton, AuCard, AuDensityDirective, AuSwitch, AuTheme } from '@aurea-design-system/components';
+import {
+  AuButton,
+  AuCard,
+  AuDensityDirective,
+  AuSwitch,
+  AuTheme,
+} from '@aurea-design-system/components';
 
 import { DOCS_ROUTES } from '../core/docs-locale';
 import { DocsLocaleService } from '../core/docs-locale.service';
-import {
-  resolveDocsPreviewTheme,
-  type DocsAppearanceTheme,
-} from '../core/docs-theme-preview';
+import { resolveDocsPreviewTheme, type DocsAppearanceTheme } from '../core/docs-theme-preview';
 import { themeTokenGroups, themeHostOverrides } from '../core/docs-theme-tokens';
 import { CodeBlock } from '../shared/code-block';
 import { DocPage } from '../shared/doc-page';
@@ -220,8 +223,12 @@ import { DocsTokenList } from '../shared/docs-token-list';
           <tbody>
             @for (row of hostOverrides(); track row.host + row.token) {
               <tr>
-                <td><code>{{ row.host }}</code></td>
-                <td><code>{{ row.token }}</code></td>
+                <td>
+                  <code>{{ row.host }}</code>
+                </td>
+                <td>
+                  <code>{{ row.token }}</code>
+                </td>
                 <td><docs-inline-text [text]="row.description" /></td>
               </tr>
             }

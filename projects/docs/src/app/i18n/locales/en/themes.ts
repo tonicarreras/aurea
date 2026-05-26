@@ -108,7 +108,10 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
     description: 'Duration + easing bundles for micro-interactions and overlays.',
     tokens: [
       { token: '--au-motion-tap', description: '80ms — button press feedback.' },
-      { token: '--au-motion-control', description: '120ms — borders, backgrounds, shadows on fields.' },
+      {
+        token: '--au-motion-control',
+        description: '120ms — borders, backgrounds, shadows on fields.',
+      },
       { token: '--au-motion-modal', description: '200ms — dialog backdrop and panel.' },
       { token: '--au-motion-toast', description: '300ms — snackbar enter/exit.' },
       { token: '--au-duration-short / default / slow', description: 'Primitive durations (ms).' },

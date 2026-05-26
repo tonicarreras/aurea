@@ -24,10 +24,7 @@ import {
 } from '@aurea-design-system/components';
 
 import { DocsLocaleService } from '../core/docs-locale.service';
-import {
-  resolveDocsPreviewTheme,
-  type DocsAppearanceTheme,
-} from '../core/docs-theme-preview';
+import { resolveDocsPreviewTheme, type DocsAppearanceTheme } from '../core/docs-theme-preview';
 
 const PAGE_SIZE = 3;
 
@@ -91,20 +88,20 @@ const SEED: PersonRow[] = [
           [attr.aria-label]="t().themeLabel"
         >
           <au-button
-              size="sm"
-              type="button"
-              [variant]="appearanceTheme() === 'light' ? 'primary' : 'ghost'"
-              (click)="appearanceTheme.set('light')"
-            >
-              {{ t().themeLight }}
-            </au-button>
-            <au-button
-              size="sm"
-              type="button"
-              [variant]="appearanceTheme() === 'dark' ? 'primary' : 'ghost'"
-              (click)="appearanceTheme.set('dark')"
-            >
-              {{ t().themeDark }}
+            size="sm"
+            type="button"
+            [variant]="appearanceTheme() === 'light' ? 'primary' : 'ghost'"
+            (click)="appearanceTheme.set('light')"
+          >
+            {{ t().themeLight }}
+          </au-button>
+          <au-button
+            size="sm"
+            type="button"
+            [variant]="appearanceTheme() === 'dark' ? 'primary' : 'ghost'"
+            (click)="appearanceTheme.set('dark')"
+          >
+            {{ t().themeDark }}
           </au-button>
         </div>
 
@@ -123,28 +120,28 @@ const SEED: PersonRow[] = [
           [attr.aria-label]="t().densityLabel"
         >
           <au-button
-              size="sm"
-              type="button"
-              [variant]="previewDensity() === 'compact' ? 'primary' : 'ghost'"
-              (click)="previewDensity.set('compact')"
-            >
-              {{ t().densityCompact }}
-            </au-button>
-            <au-button
-              size="sm"
-              type="button"
-              [variant]="previewDensity() === 'comfortable' ? 'primary' : 'ghost'"
-              (click)="previewDensity.set('comfortable')"
-            >
-              {{ t().densityComfortable }}
-            </au-button>
-            <au-button
-              size="sm"
-              type="button"
-              [variant]="previewDensity() === 'spacious' ? 'primary' : 'ghost'"
-              (click)="previewDensity.set('spacious')"
-            >
-              {{ t().densitySpacious }}
+            size="sm"
+            type="button"
+            [variant]="previewDensity() === 'compact' ? 'primary' : 'ghost'"
+            (click)="previewDensity.set('compact')"
+          >
+            {{ t().densityCompact }}
+          </au-button>
+          <au-button
+            size="sm"
+            type="button"
+            [variant]="previewDensity() === 'comfortable' ? 'primary' : 'ghost'"
+            (click)="previewDensity.set('comfortable')"
+          >
+            {{ t().densityComfortable }}
+          </au-button>
+          <au-button
+            size="sm"
+            type="button"
+            [variant]="previewDensity() === 'spacious' ? 'primary' : 'ghost'"
+            (click)="previewDensity.set('spacious')"
+          >
+            {{ t().densitySpacious }}
           </au-button>
         </div>
       </div>
