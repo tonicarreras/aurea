@@ -2450,16 +2450,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/list/list.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuList>",
-                "defaultValue": "{\n  title: 'Aurea/List',\n  component: AuList,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('list'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    ariaLabelledBy: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Selected tags',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/menu/menu.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2495,6 +2485,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuPopover>",
                 "defaultValue": "{\n  title: 'Aurea/Popover',\n  component: AuPopover,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('popover'),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the panel.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/list/list.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuList>",
+                "defaultValue": "{\n  title: 'Aurea/List',\n  component: AuList,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('list'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    ariaLabelledBy: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Selected tags',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -4004,17 +4004,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuList>",
-                "file": "projects/components/src/lib/list/list.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj",
                 "file": "projects/components/src/lib/menu/menu.stories.ts",
                 "deprecated": false,
@@ -4050,6 +4039,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj",
                 "file": "projects/components/src/lib/popover/popover.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuList>",
+                "file": "projects/components/src/lib/list/list.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6860,19 +6860,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/list/list.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuList>",
-                    "file": "projects/components/src/lib/list/list.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/menu/menu.stories.ts": [
                 {
                     "name": "Story",
@@ -6919,6 +6906,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj",
                     "file": "projects/components/src/lib/popover/popover.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/list/list.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuList>",
+                    "file": "projects/components/src/lib/list/list.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
