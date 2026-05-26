@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { AuBreadcrumb } from '@aurea-design-system/components';
 import { docsPreviewCopy } from '../../core/docs-preview-copy';
 

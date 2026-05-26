@@ -7,6 +7,7 @@ import { STORY_OVERVIEW_SOURCE, type StoryOverviewLocale } from './story-overvie
 import type { StoryOverviewSource } from './story-overview-types';
 import { STORY_OVERVIEW_TOKENS } from './story-overview-tokens';
 
+export type { StoryOverviewLocale } from './story-overview-source';
 export type StoryOverviewSlug = keyof (typeof STORY_OVERVIEW_SOURCE)['en'];
 
 const cache = new Map<string, string>();
