@@ -3,6 +3,7 @@
  * Heuristic audit: flags spec files whose tests look like smoke-only (create + detectChanges + toBeTruthy).
  * Writes spec-quality-report.md and exits 1 if any stable component has >50% smoke tests.
  */
+import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
@@ -121,6 +122,13 @@ const md = [
 ].join('\n');
 
 writeFileSync(outPath, md);
+
+const format = spawnSync('bunx', ['prettier', '--write', outPath], { encoding: 'utf8' });
+if (format.status !== 0) {
+  console.error(format.stderr || format.stdout);
+  process.exit(format.status ?? 1);
+}
+
 console.log(`Wrote ${outPath} (${rows.length} stable specs, ${flagged} flagged)`);
 
 if (process.env['CI'] === 'true' && flagged > 0) {
