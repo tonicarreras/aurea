@@ -1,18 +1,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewEncapsulation,
   computed,
   input,
   model,
   output,
   signal,
 } from '@angular/core';
+import type { AuSize } from '../au-size';
 import { AuTab } from './au-tab.directive';
 
 export type AuTabsVariant = 'line' | 'contained';
 export type AuTabsOrientation = 'horizontal' | 'vertical';
-export type AuTabsSize = 'sm' | 'md' | 'lg';
+export type AuTabsSize = AuSize;
 
 /**
  * Design-system **tabs**: WAI-ARIA tablist with projected tab buttons and panels.
@@ -37,7 +37,6 @@ export type AuTabsSize = 'sm' | 'md' | 'lg';
   selector: 'au-tabs',
   templateUrl: './tabs.html',
   styleUrl: './tabs.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-tabs',

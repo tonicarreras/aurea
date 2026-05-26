@@ -13,7 +13,7 @@ import { AuSwitch } from './switch';
 
 describe('AuSwitch', () => {
   function queryInput(fixture: ComponentFixture<AuSwitchTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-switch__element'))!
+    return fixture.debugElement.query(By.css('input[role="switch"]'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -92,14 +92,14 @@ describe('AuSwitch', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'pattern' }];
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('pattern');
   });
 
   it('sets hint and aria-describedby', () => {
     const fix = createFieldFixture(AuSwitchTestHost, { hint: 'Help' });
     const el = queryInput(fix);
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(el.getAttribute('aria-describedby')).toBe(hint.id);
   });
 
@@ -114,10 +114,10 @@ describe('AuSwitch', () => {
 
   it('clears from-tab when focus leaves control row', () => {
     const fix = createFieldFixture(AuSwitchTestHost);
-    const row = fix.debugElement.query(By.css('.au-switch__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="switch"])'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-switch__control-row'))!
+      .query(By.css('div:has(> input[role="switch"])'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-switch__control-row--from-tab')).toBe(true);
@@ -135,7 +135,7 @@ describe('AuSwitch', () => {
 
   it('onControlRowFocusout returns when focus stays inside row', () => {
     const fix = createFieldFixture(AuSwitchTestHost);
-    const row = fix.debugElement.query(By.css('.au-switch__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="switch"])'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });

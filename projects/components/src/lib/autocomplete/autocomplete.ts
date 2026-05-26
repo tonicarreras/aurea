@@ -13,13 +13,13 @@ import {
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
@@ -81,8 +81,9 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
 
+  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly query = signal('');
@@ -193,7 +194,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   });
 
   private readonly syncListboxOverlay = afterRenderEffect(() => {
-    const input = this.inputNativeElement();
+    const input = this.inputEl().nativeElement;
     const anchor = input.closest('.au-autocomplete__control-row');
     if (!(anchor instanceof HTMLElement)) {
       return;
@@ -310,7 +311,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     this.query.set(option.label);
     this.setValue(option.value);
     this.closePanel(false);
-    this.inputNativeElement().focus();
+    this.inputEl().nativeElement.focus();
   }
 
   onInputFocus(): void {
@@ -349,11 +350,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   }
 
   focus(): void {
-    this.inputNativeElement().focus();
-  }
-
-  private inputNativeElement(): HTMLInputElement {
-    return queryFieldNative<HTMLInputElement>(this.host, '.au-autocomplete__input');
+    this.inputEl().nativeElement.focus();
   }
 
   private listboxNative(): HTMLUListElement | undefined {

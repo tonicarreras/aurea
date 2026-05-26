@@ -105,12 +105,12 @@
   outline-offset: 2px;
 }
 
-.au-radio-group__shell--invalid .au-radio-group__input:not(:disabled) {
+.au-radio-group__shell:has(.au-radio-group__input[aria-invalid='true']) .au-radio-group__input:not(:disabled) {
   outline: 1px solid var(--au-color-form-error);
   outline-offset: 1px;
 }
 
-.au-radio-group__shell--invalid:focus-within .au-radio-group__input:focus:not(:disabled) {
+.au-radio-group__shell:has(.au-radio-group__input[aria-invalid='true']):focus-within .au-radio-group__input:focus:not(:disabled) {
   outline: none;
   box-shadow: 0 0 0 2px var(--au-color-form-error);
 }

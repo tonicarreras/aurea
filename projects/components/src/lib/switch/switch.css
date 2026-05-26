@@ -84,12 +84,12 @@
   outline-offset: 2px;
 }
 
-.au-switch__control-row--invalid .au-switch__element:not(:disabled) {
+.au-switch__control-row:has(.au-switch__element[aria-invalid='true']) .au-switch__element:not(:disabled) {
   border-color: var(--au-color-form-error);
   box-shadow: 0 0 0 1px var(--au-color-form-error);
 }
 
-.au-switch__control-row--invalid .au-switch__element:checked:not(:disabled) {
+.au-switch__control-row:has(.au-switch__element[aria-invalid='true']) .au-switch__element:checked:not(:disabled) {
   box-shadow: 0 0 0 2px var(--au-color-form-error);
 }
 

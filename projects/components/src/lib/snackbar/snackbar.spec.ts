@@ -334,17 +334,10 @@ describe('AuSnackbar', () => {
     const fix = TestBed.createComponent(AuSnackbar);
     wrapper.append(fix.nativeElement);
     fix.detectChanges();
-    const inst = fix.componentInstance as unknown as {
-      restoreFromBody: () => void;
-      bodyAnchor: Comment | null;
-    };
-    const anchor = document.createComment('au-snackbar-anchor');
-    wrapper.insertBefore(anchor, fix.nativeElement);
-    inst.bodyAnchor = anchor;
+    const inst = fix.componentInstance as unknown as { restoreFromBody: () => void };
     expect(fix.nativeElement.parentElement).toBe(wrapper);
     inst.restoreFromBody();
     expect(fix.nativeElement.parentElement).toBe(wrapper);
-    expect(wrapper.contains(anchor)).toBe(true);
     wrapper.remove();
   });
 
@@ -353,13 +346,10 @@ describe('AuSnackbar', () => {
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     expect(fix.nativeElement.parentElement).toBe(document.body);
-    const inst = fix.componentInstance as unknown as {
-      attachToBody: () => void;
-      bodyAnchor: Comment | null;
-    };
-    const anchor = inst.bodyAnchor;
+    const inst = fix.componentInstance as unknown as { attachToBody: () => void };
     inst.attachToBody();
-    expect(inst.bodyAnchor).toBe(anchor);
+    inst.attachToBody();
+    expect(fix.nativeElement.parentElement).toBe(document.body);
   });
 
   it('restores host to its anchor parent on destroy', () => {

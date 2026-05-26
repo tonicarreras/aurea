@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChild,
-  ViewEncapsulation,
-  input,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, contentChild, input } from '@angular/core';
 import type { AuSize } from '../au-size';
 import { AuCardFooter } from './card-footer.directive';
 
@@ -18,7 +11,7 @@ export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
  * - **Variants:** elevated (shadow), outlined (border), filled (background).
  * - **Sizes:** sm (compact), md (default), lg (spacious).
  * - **Structure:** `[auCardMedia]`, `[auCardHeader]`, `[auCardBody]`, default slot, `[auCardFooter]`.
- * - **Footer:** import `AuCardFooter` in the host that projects `[auCardFooter]`.
+ * - **Slots:** import `AuCardHeader`, `AuCardBody`, `AuCardMedia`, and `AuCardFooter` in the host that projects them.
  * - **Padding:** `.au-card__inner` wraps all regions except media.
  * - **Accessibility:** semantic `<article>`; include a heading in `[auCardHeader]` for the document outline.
  *
@@ -36,7 +29,6 @@ export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
   selector: 'au-card',
   templateUrl: './card.html',
   styleUrl: './card.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-card',
@@ -50,13 +42,8 @@ export class AuCard {
   /** Density: sm (compact), md (default), lg (spacious). */
   readonly size = input<AuSize>('md');
 
-  private readonly footerPresent = signal(false);
-
-  @ContentChild(AuCardFooter)
-  set footerSlot(slot: AuCardFooter | undefined) {
-    this.footerPresent.set(slot != null);
-  }
+  private readonly footerSlot = contentChild(AuCardFooter);
 
   /** True when `[auCardFooter]` content is projected. */
-  readonly hasFooter = this.footerPresent.asReadonly();
+  readonly hasFooter = computed(() => this.footerSlot() != null);
 }

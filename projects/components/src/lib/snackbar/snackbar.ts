@@ -6,7 +6,6 @@ import {
   ElementRef,
   PLATFORM_ID,
   Renderer2,
-  ViewEncapsulation,
   afterRenderEffect,
   computed,
   inject,
@@ -16,6 +15,7 @@ import {
 } from '@angular/core';
 
 import { AuIcon, type AuIconName } from '../icon/icon';
+import { AuPortalOverlay } from '../overlay/portal-overlay';
 import {
   isTopmostSnackbarStackEntry,
   registerSnackbarStackEntry,
@@ -59,7 +59,6 @@ export type AuSnackbarPosition =
   imports: [AuIcon],
   templateUrl: './snackbar.html',
   styleUrl: './snackbar.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-snackbar',
@@ -77,7 +76,7 @@ export class AuSnackbar {
   private readonly platformId = inject(PLATFORM_ID);
 
   private dismissTimer: ReturnType<typeof setTimeout> | undefined;
-  private bodyAnchor: Comment | null = null;
+  private readonly bodyPortal: AuPortalOverlay;
   private stackId: number | null = null;
   private stackResizeObserver: ResizeObserver | null = null;
 
@@ -145,6 +144,12 @@ export class AuSnackbar {
   });
 
   constructor() {
+    this.bodyPortal = new AuPortalOverlay(
+      this.document,
+      this.renderer,
+      this.platformId,
+      'au-snackbar-anchor',
+    );
     this.destroyRef.onDestroy(() => {
       this.clearDismissTimer();
       this.teardownStack();
@@ -191,19 +196,7 @@ export class AuSnackbar {
 
   /** Keeps the toast above Storybook canvases and transformed ancestors. */
   private attachToBody(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-    const host = this.host.nativeElement as HTMLElement;
-    if (host.parentElement === this.document.body) {
-      return;
-    }
-    const parent = host.parentNode;
-    if (parent) {
-      this.bodyAnchor = this.document.createComment('au-snackbar-anchor');
-      parent.insertBefore(this.bodyAnchor, host);
-    }
-    this.renderer.appendChild(this.document.body, host);
+    this.bodyPortal.attach(this.host.nativeElement as HTMLElement);
   }
 
   private syncStack(): void {
@@ -246,14 +239,10 @@ export class AuSnackbar {
   }
 
   private restoreFromBody(): void {
-    if (!isPlatformBrowser(this.platformId) || !this.bodyAnchor?.parentNode) {
+    const host = this.host.nativeElement as HTMLElement;
+    if (!isPlatformBrowser(this.platformId) || host.parentElement !== this.document.body) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
-    if (host.parentElement === this.document.body) {
-      this.bodyAnchor.parentNode?.insertBefore(host, this.bodyAnchor);
-      this.bodyAnchor.remove();
-      this.bodyAnchor = null;
-    }
+    this.bodyPortal.detach(host);
   }
 }

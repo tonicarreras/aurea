@@ -1,0 +1,38 @@
+:host {
+  margin: 0;
+  min-width: 0;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+:host(.au-steps__panel--active) {
+  animation: au-steps-panel-in var(--au-duration-default) var(--au-ease-out) both;
+}
+
+:host([data-au-layout='sections']) {
+  scroll-margin-top: 6rem;
+}
+
+:host([data-au-layout='sections'].au-steps__panel--active) {
+  animation: none;
+}
+
+@keyframes au-steps-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.au-steps__panel--active) {
+    animation: none;
+  }
+}

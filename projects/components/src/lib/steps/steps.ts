@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewEncapsulation,
   computed,
   input,
   model,
@@ -34,7 +33,6 @@ export type AuStepsLayout = 'tabs' | 'sections';
   selector: 'au-steps',
   templateUrl: './steps.html',
   styleUrl: './steps.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-steps',

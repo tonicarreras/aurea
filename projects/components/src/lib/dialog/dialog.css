@@ -3,7 +3,7 @@
  */
 @import url('../tokens/au-tokens.css');
 
-au-dialog {
+:host {
   display: contents;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -11,7 +11,7 @@ au-dialog {
   text-rendering: optimizeLegibility;
 }
 
-au-dialog .au-dialog__native {
+.au-dialog__native {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,16 +27,16 @@ au-dialog .au-dialog__native {
   color: inherit;
 }
 
-au-dialog .au-dialog__native:not([open]) {
+.au-dialog__native:not([open]) {
   display: none;
 }
 
-au-dialog .au-dialog__native::backdrop {
+.au-dialog__native::backdrop {
   background: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
   animation: au-dialog-backdrop-in var(--au-motion-modal);
 }
 
-au-dialog .au-dialog__panel {
+.au-dialog__panel {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -49,26 +49,26 @@ au-dialog .au-dialog__panel {
   animation: au-dialog-panel-in var(--au-motion-modal);
 }
 
-au-dialog[data-au-size='sm'] .au-dialog__panel {
+:host([data-au-size='sm']) .au-dialog__panel {
   max-width: 24rem;
 }
 
-au-dialog[data-au-size='md'] .au-dialog__panel,
-au-dialog:not([data-au-size]) .au-dialog__panel {
+:host([data-au-size='md']) .au-dialog__panel,
+:host:not([data-au-size]) .au-dialog__panel {
   max-width: 35rem;
 }
 
-au-dialog[data-au-size='lg'] .au-dialog__panel {
+:host([data-au-size='lg']) .au-dialog__panel {
   max-width: 45rem;
 }
 
-au-dialog[data-au-size='full'] .au-dialog__native {
+:host([data-au-size='full']) .au-dialog__native {
   align-items: stretch;
   justify-content: stretch;
   padding: var(--au-space-4);
 }
 
-au-dialog[data-au-size='full'] .au-dialog__panel {
+:host([data-au-size='full']) .au-dialog__panel {
   flex: 1 1 auto;
   width: 100%;
   max-width: none;
@@ -78,7 +78,7 @@ au-dialog[data-au-size='full'] .au-dialog__panel {
   border-radius: var(--au-radius-lg);
 }
 
-au-dialog .au-dialog__header {
+.au-dialog__header {
   display: flex;
   flex-shrink: 0;
   align-items: flex-start;
@@ -88,7 +88,7 @@ au-dialog .au-dialog__header {
   border-bottom: 1px solid var(--au-color-border-subtle);
 }
 
-au-dialog .au-dialog__title {
+.au-dialog__title {
   margin: 0;
   padding: var(--au-space-0-5) 0 0;
   font-size: var(--au-text-lg);
@@ -98,7 +98,7 @@ au-dialog .au-dialog__title {
   color: var(--au-color-text-primary);
 }
 
-au-dialog .au-dialog__close {
+.au-dialog__close {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -117,19 +117,19 @@ au-dialog .au-dialog__close {
     var(--au-transition-shadow);
 }
 
-au-dialog .au-dialog__close:hover {
+.au-dialog__close:hover {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-subtle);
   color: var(--au-color-text-primary);
 }
 
-au-dialog .au-dialog__close:focus-visible {
+.au-dialog__close:focus-visible {
   outline: none;
   border-color: var(--au-color-focus-ring);
   box-shadow: var(--au-shadow-focus-ring);
 }
 
-au-dialog .au-dialog__body {
+.au-dialog__body {
   flex: 1 1 auto;
   min-height: 0;
   padding: var(--au-space-4);
@@ -139,15 +139,15 @@ au-dialog .au-dialog__body {
   color: var(--au-color-text-secondary);
 }
 
-au-dialog .au-dialog__body > * {
+.au-dialog__body-inner > * {
   margin: 0;
 }
 
-au-dialog .au-dialog__body > * + * {
+.au-dialog__body-inner > * + * {
   margin-top: var(--au-space-3);
 }
 
-au-dialog .au-dialog__footer {
+.au-dialog__footer {
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
@@ -179,8 +179,8 @@ au-dialog .au-dialog__footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  au-dialog .au-dialog__native::backdrop,
-  au-dialog .au-dialog__panel {
+  .au-dialog__native::backdrop,
+  .au-dialog__panel {
     animation: none;
   }
 }

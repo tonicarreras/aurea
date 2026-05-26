@@ -39,7 +39,9 @@
     }
 
     <div class="au-dialog__body">
-      <ng-content></ng-content>
+      <div class="au-dialog__body-inner">
+        <ng-content></ng-content>
+      </div>
     </div>
 
     @if (hasFooter()) {

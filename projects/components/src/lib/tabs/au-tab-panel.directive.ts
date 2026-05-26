@@ -1,16 +1,21 @@
-import { Directive, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { AuTabs } from './tabs';
 
 /**
  * Tab panel inside `au-tabs`. Pair with a tab button using the same key.
+ *
+ * Declared as `Component` (not `Directive`) to support scoped styles via `styleUrl`.
  *
  * @example
  * ```html
  * <div auTabPanel="settings">…</div>
  * ```
  */
-@Directive({
+@Component({
   selector: '[auTabPanel]',
+  template: '<ng-content />',
+  styleUrl: './au-tab-panel.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-tabs__panel',
     role: 'tabpanel',
@@ -19,10 +24,13 @@ import { AuTabs } from './tabs';
     '[attr.aria-labelledby]': 'tabId()',
     '[attr.hidden]': 'isHidden() ? "" : null',
     '[attr.tabindex]': 'isActive() ? 0 : null',
+    '[attr.data-au-variant]': 'tabs.variant()',
+    '[attr.data-au-size]': 'tabs.size()',
+    '[attr.data-au-orientation]': 'tabs.orientation()',
   },
 })
 export class AuTabPanel {
-  private readonly tabs = inject(AuTabs);
+  protected readonly tabs = inject(AuTabs);
 
   readonly auTabPanel = input.required<string>();
 

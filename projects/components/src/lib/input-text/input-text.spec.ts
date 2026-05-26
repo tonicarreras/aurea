@@ -14,7 +14,7 @@ import { AuInputText } from './input-text';
 
 describe('AuInputText', () => {
   function queryInput(fixture: ComponentFixture<AuInputTextTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-text__input'))!
+    return fixture.debugElement.query(By.css('input'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -80,8 +80,8 @@ describe('AuInputText', () => {
     const input = queryInput(fix);
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-errormessage')).toBe('f-email-error');
-    const errText = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(errText?.nativeElement.textContent?.trim()).toBe('This field is required');
+    const errText = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(errText?.nativeElement.textContent?.trim()).toContain('This field is required');
   });
 
   it('does not emit when disabled and typing', () => {
@@ -135,14 +135,14 @@ describe('AuInputText', () => {
   it('sets hint and aria-describedby', () => {
     const fix = createFieldFixture(AuInputTextTestHost, { hint: 'Use work email' });
     const input = queryInput(fix);
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(input.getAttribute('aria-describedby')).toBe(hint.id);
     expect(hint.textContent?.trim()).toBe('Use work email');
   });
 
   it('shows required marker when required and showRequired', () => {
     const fix = createFieldFixture(AuInputTextTestHost, { label: 'Email', required: true });
-    const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     expect(label.textContent?.replace(/\s+/g, ' ').trim()).toContain('*');
   });
 
@@ -152,7 +152,7 @@ describe('AuInputText', () => {
       required: true,
       showRequired: false,
     });
-    const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     expect(label.textContent).not.toContain('*');
   });
 
@@ -160,7 +160,7 @@ describe('AuInputText', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.type = 'password';
     });
-    const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
+    const reveal = fix.debugElement.query(By.css('button[aria-label]'))!.nativeElement;
     const input = queryInput(fix);
     expect(input.getAttribute('type')).toBe('password');
     expect(reveal.getAttribute('aria-pressed')).toBe('false');
@@ -178,7 +178,7 @@ describe('AuInputText', () => {
       f.componentInstance.type = 'password';
       f.componentInstance.showPasswordToggle = false;
     });
-    expect(fix.debugElement.query(By.css('.au-input-text__reveal'))).toBeNull();
+    expect(fix.debugElement.query(By.css('button[aria-label]'))).toBeNull();
   });
 
   it('keeps non-password type from effectiveInputType', () => {
@@ -219,16 +219,16 @@ describe('AuInputText', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'minLength', message: 'Too short' }];
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('Too short');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('Too short');
   });
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'pattern' }];
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('pattern');
   });
 
   it('marks aria-invalid when invalid without message', () => {
@@ -245,7 +245,7 @@ describe('AuInputText', () => {
 
   it('applies from-tab on control row after Tab', () => {
     const fix = createFieldFixture(AuInputTextTestHost);
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!;
+    const row = fix.debugElement.query(By.css('div:has(> input)'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     row.triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
@@ -254,7 +254,7 @@ describe('AuInputText', () => {
 
   it('clears from-tab after focus leaves control row', () => {
     const fix = createFieldFixture(AuInputTextTestHost);
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input)'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('.au-input-text__control-row'))!
@@ -272,7 +272,7 @@ describe('AuInputText', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.type = 'password';
     });
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input)'))!.nativeElement;
     expect(row.classList.contains('au-input-text__control-row--password')).toBe(true);
   });
 
@@ -281,8 +281,8 @@ describe('AuInputText', () => {
       f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }];
     });
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
-    ).toBe('Manual');
+      fix.debugElement.query(By.css('[role="alert"]'))?.nativeElement.textContent?.trim(),
+    ).toContain('Manual');
   });
 
   it('onControlRowFocusout ignores non-HTMLElement', () => {
@@ -294,8 +294,8 @@ describe('AuInputText', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.type = 'password';
     });
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
-    const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input)'))!.nativeElement;
+    const reveal = fix.debugElement.query(By.css('button[aria-label]'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: reveal });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
     control(fix).onControlRowFocusout(ev);

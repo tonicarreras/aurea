@@ -24,8 +24,15 @@ describe('AuAutocomplete', () => {
   ];
 
   function queryInput(fixture: ComponentFixture<AuAutocompleteTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-autocomplete__input'))!
+    return fixture.debugElement.query(By.css('input[role="combobox"]'))!
       .nativeElement as HTMLInputElement;
+  }
+
+  function queryActiveOption(fix: ComponentFixture<AuAutocompleteTestHost>): HTMLElement | null {
+    const input = queryInput(fix);
+    const activeId = input.getAttribute('aria-activedescendant');
+    if (!activeId) return null;
+    return document.getElementById(activeId);
   }
 
   beforeEach(async () => {
@@ -52,14 +59,14 @@ describe('AuAutocomplete', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     row.classList.remove('au-autocomplete__control-row');
     const input = queryInput(fix);
     input.focus();
     input.value = 'm';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!
+    const listbox = fix.debugElement.query(By.css('[role="listbox"]'))!
       .nativeElement as HTMLElement;
     expect(listbox.parentElement).not.toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
@@ -74,8 +81,8 @@ describe('AuAutocomplete', () => {
     input.value = 'bar';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
-    const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
+    const option = fix.debugElement.query(By.css('[role="option"]'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     fix.detectChanges();
     expect(CONTROL(fix).value()).toBe('bcn');
@@ -133,7 +140,7 @@ describe('AuAutocomplete', () => {
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
   });
 
   it('onInputFocus seeds query from selection when panel was closed', () => {
@@ -194,7 +201,7 @@ describe('AuAutocomplete', () => {
     fix.detectChanges();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
     expect(input.value).toBe('Madrid');
   });
 
@@ -206,7 +213,7 @@ describe('AuAutocomplete', () => {
     input.value = 'Not a city';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
@@ -225,7 +232,7 @@ describe('AuAutocomplete', () => {
     input.value = '   ';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('respects minFilterLength', () => {
@@ -236,17 +243,17 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
     expect(input.getAttribute('aria-expanded')).toBe('false');
     input.value = 'm';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
     input.value = 'ma';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
-    expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBeGreaterThan(
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
+    expect(fix.debugElement.queryAll(By.css('[role="option"]')).length).toBeGreaterThan(
       0,
     );
   });
@@ -260,7 +267,7 @@ describe('AuAutocomplete', () => {
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const empty = fix.debugElement.query(By.css('.au-autocomplete__empty'));
+    const empty = fix.debugElement.query(By.css('[role="status"]'));
     expect(empty?.nativeElement.textContent?.trim()).toBe('No results');
   });
 
@@ -327,9 +334,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Beta');
   });
 
@@ -343,16 +348,12 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .queryAll(By.css('.au-field-listbox__option--active'))[0]
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Valencia');
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Madrid');
   });
 
@@ -366,7 +367,7 @@ describe('AuAutocomplete', () => {
     CONTROL(fix).onInput({ target: input } as unknown as Event);
     fix.detectChanges();
     expect(CONTROL(fix).value()).toBeNull();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('does not emit when disabled on input', () => {
@@ -399,7 +400,7 @@ describe('AuAutocomplete', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
@@ -413,8 +414,8 @@ describe('AuAutocomplete', () => {
       f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
     });
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
-    ).toBe('Manual');
+      fix.debugElement.query(By.css('[role="alert"]'))?.nativeElement.textContent?.trim(),
+    ).toContain('Manual');
   });
 
   it('generates id when omitted', () => {
@@ -479,11 +480,11 @@ describe('AuAutocomplete', () => {
     input.value = 'Mad';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(1);
+    expect(fix.debugElement.queryAll(By.css('[role="option"]')).length).toBe(1);
     input.value = 'mad';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(0);
+    expect(fix.debugElement.queryAll(By.css('[role="option"]')).length).toBe(0);
   });
 
   it('does not run handlers when readOnly', () => {
@@ -496,7 +497,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new Event('input'));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
     CONTROL(fix).onOptionPointerEnter(0, testOptions[0]!);
     CONTROL(fix).onOptionPointerDown(new Event('mousedown'), testOptions[0]!);
     CONTROL(fix).selectOption(testOptions[0]!);
@@ -509,13 +510,11 @@ describe('AuAutocomplete', () => {
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
     fix.detectChanges();
-    const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
+    const option = fix.debugElement.query(By.css('[role="option"]'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Madrid');
   });
 
@@ -526,10 +525,10 @@ describe('AuAutocomplete', () => {
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
     fix.detectChanges();
-    const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
+    const option = fix.debugElement.query(By.css('[role="option"]'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
+    expect(queryInput(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
   it('ignores mousedown on disabled option', () => {
@@ -548,11 +547,9 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Valencia');
   });
 
@@ -565,7 +562,7 @@ describe('AuAutocomplete', () => {
       input.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
     }
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('Enter does not select when no highlightable option', () => {
@@ -617,7 +614,6 @@ describe('AuAutocomplete', () => {
     fix.detectChanges();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
     expect(input.getAttribute('aria-activedescendant')).toBeNull();
   });
 
@@ -632,9 +628,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Madrid');
   });
 
@@ -648,7 +642,7 @@ describe('AuAutocomplete', () => {
     input.value = 'free text';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
@@ -665,7 +659,7 @@ describe('AuAutocomplete', () => {
     input.value = 'Madrid';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
@@ -687,7 +681,7 @@ describe('AuAutocomplete', () => {
     input.value = 'bcn';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
@@ -727,8 +721,8 @@ describe('AuAutocomplete', () => {
       f.componentInstance.errors = [{ kind: 'required' }] as any;
     });
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
-    ).toBe('required');
+      fix.debugElement.query(By.css('[role="alert"]'))?.nativeElement.textContent?.trim(),
+    ).toContain('required');
   });
 
   it('shows displayError from errors and invalid without message', () => {
@@ -737,8 +731,8 @@ describe('AuAutocomplete', () => {
       f.componentInstance.errors = [{ kind: 'required', message: 'Pick one' }] as any;
     });
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
-    ).toBe('Pick one');
+      fix.debugElement.query(By.css('[role="alert"]'))?.nativeElement.textContent?.trim(),
+    ).toContain('Pick one');
   });
 
   it('marks aria-invalid when invalid without visible error', () => {
@@ -764,7 +758,7 @@ describe('AuAutocomplete', () => {
       f.componentRef.setInput('ffShowRequired', false);
     });
     expect(
-      fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement.textContent,
+      fix.debugElement.query(By.css('label[for]'))!.nativeElement.textContent,
     ).not.toContain('*');
   });
 
@@ -772,10 +766,10 @@ describe('AuAutocomplete', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-autocomplete__control-row'))!
+      .query(By.css('div:has(> input[role="combobox"])'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
     expect(row.classList.contains('au-autocomplete__control-row--from-tab')).toBe(true);
@@ -793,7 +787,7 @@ describe('AuAutocomplete', () => {
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('openPanel is a no-op when disabled or readOnly', () => {
@@ -802,14 +796,14 @@ describe('AuAutocomplete', () => {
       f.componentInstance.disabled = true;
     });
     (CONTROL(fixDisabled) as unknown as { openPanel(): void }).openPanel();
-    expect(fixDisabled.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fixDisabled.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
 
     const fixReadOnly = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
     });
     (CONTROL(fixReadOnly) as unknown as { openPanel(): void }).openPanel();
-    expect(fixReadOnly.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fixReadOnly.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('ArrowUp wraps from first to last highlightable option', () => {
@@ -823,9 +817,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Valencia');
   });
 
@@ -840,7 +832,7 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
+    expect(queryInput(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
   it('shows selected label on load and when value changes programmatically', () => {
@@ -873,7 +865,7 @@ describe('AuAutocomplete', () => {
       f.componentInstance.disabled = true;
     });
     CONTROL(fix).onOptionPointerEnter(0, testOptions[0]!);
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('ignores pointer enter when component is readOnly', () => {
@@ -882,7 +874,7 @@ describe('AuAutocomplete', () => {
       f.componentInstance.readOnly = true;
     });
     CONTROL(fix).onOptionPointerEnter(0, testOptions[0]!);
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('shows query while panel is open and selected label when closed', () => {
@@ -914,7 +906,7 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeFalsy();
   });
 
   it('ArrowDown opens panel when closed', () => {
@@ -924,11 +916,9 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
+    expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Madrid');
   });
 
@@ -942,9 +932,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Barcelona');
   });
 
@@ -963,9 +951,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Valencia');
   });
 
@@ -987,7 +973,7 @@ describe('AuAutocomplete', () => {
       f.componentInstance.disabled = true;
     });
     CONTROL(fix).onInputFocus();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onInputFocus is a no-op when readOnly', () => {
@@ -996,7 +982,7 @@ describe('AuAutocomplete', () => {
       f.componentInstance.readOnly = true;
     });
     CONTROL(fix).onInputFocus();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onInputFocus is a no-op when query is below minFilterLength', () => {
@@ -1005,7 +991,7 @@ describe('AuAutocomplete', () => {
       f.componentInstance.minFilterLength = 2;
     });
     CONTROL(fix).onInputFocus();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onInputFocus keeps highlight when already set', () => {
@@ -1050,7 +1036,7 @@ describe('AuAutocomplete', () => {
     input.value = 'Madrid';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[role="combobox"])'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
@@ -1089,6 +1075,6 @@ describe('AuAutocomplete', () => {
       f.componentInstance.required = true;
     });
     expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
-    expect(fix.debugElement.query(By.css('.au-form-field__required'))).toBeTruthy();
+    expect(fix.debugElement.query(By.css('span[aria-hidden="true"]'))).toBeTruthy();
   });
 });

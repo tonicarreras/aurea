@@ -18,7 +18,7 @@ describe('AuInputDate', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputDateTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-date__input'))!
+    return fixture.debugElement.query(By.css('input[type="date"]'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -173,7 +173,7 @@ describe('AuInputDate', () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-date__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[type="date"])'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
@@ -184,7 +184,7 @@ describe('AuInputDate', () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-date__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[type="date"])'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('.au-input-date__control-row'))!
@@ -203,7 +203,7 @@ describe('AuInputDate', () => {
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { hint: 'ISO format' });
     fix.detectChanges();
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(queryInput(fix).getAttribute('aria-describedby')).toBe(hint.id);
   });
 

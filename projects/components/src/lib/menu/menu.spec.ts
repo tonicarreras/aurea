@@ -125,6 +125,23 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
+  it('closes on window scroll', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    window.dispatchEvent(new Event('scroll'));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.open).toBe(false);
+  });
+
+  it('ignores scroll when closed', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    window.dispatchEvent(new Event('scroll'));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.open).toBe(false);
+  });
+
   it('ignores Escape when closed', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.detectChanges();

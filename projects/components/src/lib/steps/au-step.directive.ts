@@ -1,7 +1,8 @@
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
   DestroyRef,
-  Directive,
   ElementRef,
   computed,
   inject,
@@ -13,9 +14,14 @@ import { AuSteps } from './steps';
 
 /**
  * Step trigger inside `au-steps`. Place on a `<button type="button">`.
+ *
+ * Declared as `Component` (not `Directive`) to support scoped styles via `styleUrl`.
  */
-@Directive({
+@Component({
   selector: 'button[auStep]',
+  template: '<ng-content />',
+  styleUrl: './au-step.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     type: 'button',
     class: 'au-steps__step',
@@ -28,6 +34,7 @@ import { AuSteps } from './steps';
     '[attr.aria-controls]': 'steps.layout() === "tabs" ? panelId() : null',
     '[attr.tabindex]': 'tabIndexAttr()',
     '[attr.disabled]': 'auStepDisabled() ? true : null',
+    '[attr.data-au-size]': 'steps.size()',
     '(click)': 'onClick($event)',
     '(focusin)': 'onFocusin()',
     '(focusout)': 'onFocusout()',

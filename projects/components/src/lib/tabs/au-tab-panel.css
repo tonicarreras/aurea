@@ -1,0 +1,45 @@
+@import url('../tokens/au-tokens.css');
+
+:host {
+  margin: 0;
+  padding: var(--au-space-4) 0 0;
+  color: var(--au-color-text-primary);
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+:host(.au-tabs__panel--active:focus) {
+  outline: none;
+}
+
+:host(.au-tabs__panel--active:focus-visible) {
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--au-radius-xs);
+}
+
+:host([data-au-orientation='vertical']) {
+  padding-top: 0;
+}
+
+:host([data-au-size='sm']) {
+  padding-top: var(--au-space-3);
+  font-size: var(--au-text-xs);
+}
+
+:host([data-au-size='lg']) {
+  padding-top: var(--au-space-5);
+  font-size: var(--au-text-md);
+}
+
+:host :is(h1, h2, h3, h4, h5, h6, p):first-child {
+  margin-top: 0;
+}
+
+:host :is(h1, h2, h3, h4, h5, h6, p):last-child {
+  margin-bottom: 0;
+}

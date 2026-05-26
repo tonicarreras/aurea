@@ -1,7 +1,8 @@
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
   DestroyRef,
-  Directive,
   ElementRef,
   computed,
   inject,
@@ -14,13 +15,18 @@ import { AuTabs } from './tabs';
 /**
  * Tab trigger inside `au-tabs`. Place on a `<button type="button">`.
  *
+ * Declared as `Component` (not `Directive`) to support scoped styles via `styleUrl`.
+ *
  * @example
  * ```html
  * <button type="button" auTab="settings">Settings</button>
  * ```
  */
-@Directive({
+@Component({
   selector: 'button[auTab]',
+  template: '<ng-content />',
+  styleUrl: './au-tab.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     type: 'button',
     class: 'au-tabs__tab',
@@ -32,13 +38,16 @@ import { AuTabs } from './tabs';
     '[attr.aria-controls]': 'panelId()',
     '[attr.tabindex]': 'tabIndexAttr()',
     '[attr.disabled]': 'auTabDisabled() ? true : null',
+    '[attr.data-au-variant]': 'tabs.variant()',
+    '[attr.data-au-size]': 'tabs.size()',
+    '[attr.data-au-orientation]': 'tabs.orientation()',
     '(click)': 'onClick($event)',
     '(focusin)': 'onFocusin()',
     '(focusout)': 'onFocusout()',
   },
 })
 export class AuTab {
-  private readonly tabs = inject(AuTabs);
+  protected readonly tabs = inject(AuTabs);
   private readonly host = inject(ElementRef<HTMLButtonElement>);
   private readonly destroyRef = inject(DestroyRef);
 

@@ -24,7 +24,7 @@ describe('AuRadioGroup', () => {
 
   function queryRadios(fixture: ComponentFixture<AuRadioGroupTestHost>): HTMLInputElement[] {
     return fixture.debugElement
-      .queryAll(By.css('.au-radio-group__input'))
+      .queryAll(By.css('input[type="radio"]'))
       .map((d) => d.nativeElement as HTMLInputElement);
   }
 
@@ -39,8 +39,9 @@ describe('AuRadioGroup', () => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
     });
-    expect(fix.debugElement.query(By.css('.au-form-field__label'))).toBeFalsy();
-    const legend = fix.debugElement.query(By.css('.au-radio-group__legend'))!.nativeElement;
+    const formField = fix.debugElement.query(By.css('au-form-field'))?.componentInstance as any;
+    expect(formField?.showsLabel?.()).toBe(false);
+    const legend = fix.debugElement.query(By.css('legend'))!.nativeElement;
     expect(legend.textContent).toContain('Pick');
   });
 
@@ -90,6 +91,36 @@ describe('AuRadioGroup', () => {
     radios[1]!.dispatchEvent(new Event('change'));
     sub.unsubscribe();
     expect(n).toBe(0);
+  });
+
+  it('does not emit when readOnly', () => {
+    const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.readOnly = true;
+    });
+    const comp = CONTROL(fix);
+    const inj = TestBed.inject(Injector);
+    let n = 0;
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(comp.valueChange).subscribe(() => n++),
+    );
+    fix.detectChanges();
+    queryRadios(fix)[1]!.dispatchEvent(new Event('change'));
+    sub.unsubscribe();
+    expect(n).toBe(0);
+  });
+
+  it('marks radios disabled when readOnly', () => {
+    const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
+      f.componentInstance.options = opts;
+      applyFieldHarnessInputs(f, { label: 'Pick' });
+      f.componentInstance.readOnly = true;
+    });
+    fix.detectChanges();
+    for (const radio of queryRadios(fix)) {
+      expect(radio.disabled).toBe(true);
+    }
   });
 
   it('uses custom name when provided', () => {
@@ -182,7 +213,7 @@ describe('AuRadioGroup', () => {
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
     fix.detectChanges();
-    const shell = fix.debugElement.query(By.css('.au-radio-group__shell'))!.nativeElement;
+    const shell = fix.debugElement.query(By.css('div:has(> fieldset)'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: shell, configurable: true });
     CONTROL(fix).onShellFocusout(out);
@@ -203,7 +234,7 @@ describe('AuRadioGroup', () => {
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
     fix.detectChanges();
-    const shell = fix.debugElement.query(By.css('.au-radio-group__shell'))!.nativeElement;
+    const shell = fix.debugElement.query(By.css('div:has(> fieldset)'))!.nativeElement;
     const inner = queryRadios(fix)[0]!;
     const ev = new FocusEvent('focusout', { relatedTarget: inner });
     Object.defineProperty(ev, 'currentTarget', { value: shell, configurable: true });
@@ -217,7 +248,7 @@ describe('AuRadioGroup', () => {
       applyFieldHarnessInputs(f, { label: '' });
     });
     const legend = fix.debugElement.query(
-      By.css('.au-radio-group__fieldset legend'),
+      By.css('legend'),
     )!.nativeElement;
     expect(legend.textContent?.trim().length).toBeGreaterThan(0);
     expect(legend.classList.contains('au-sr-only')).toBe(true);
@@ -229,8 +260,8 @@ describe('AuRadioGroup', () => {
       applyFieldHarnessInputs(f, { label: 'Pick' });
       f.componentInstance.errors = [{ kind: 'required' }] as any;
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('required');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('required');
   });
 
   it('uses explicit id for option ids', () => {
@@ -249,7 +280,7 @@ describe('AuRadioGroup', () => {
       applyFieldHarnessInputs(f, { label: '' });
     });
     const legend = fix.debugElement.query(
-      By.css('.au-radio-group__fieldset legend'),
+      By.css('legend'),
     )!.nativeElement;
     expect(legend.textContent?.trim()).toBe('channel');
     expect(legend.classList.contains('au-sr-only')).toBe(true);
@@ -280,8 +311,8 @@ describe('AuRadioGroup', () => {
       f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
     });
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
-    ).toBe('Manual');
+      fix.debugElement.query(By.css('[role="alert"]'))?.nativeElement.textContent?.trim(),
+    ).toContain('Manual');
   });
 
   it('displayError empty when first error has no usable text', () => {
@@ -308,7 +339,7 @@ describe('AuRadioGroup', () => {
       applyFieldHarnessInputs(f, { label: 'Pick' });
       applyFieldHarnessInputs(f, { hint: 'Choose one option' });
     });
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(queryRadios(fix)[0]!.getAttribute('aria-describedby')).toBe(hint.id);
   });
 

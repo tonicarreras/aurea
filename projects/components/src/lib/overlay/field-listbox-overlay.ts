@@ -2,20 +2,18 @@ import { isPlatformBrowser } from '@angular/common';
 import type { DestroyRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
+import { AuPortalOverlay, PortalRepositionListener } from './portal-overlay';
+
 /**
  * Portals a field listbox to `document.body` with `position: fixed`, matching the
  * trigger width — same stacking behaviour as a native `<select>` popup (OS layer).
  */
 export class FieldListboxOverlay {
-  private anchor: Comment | null = null;
   private activeListbox: HTMLElement | null = null;
   private activeAnchor: HTMLElement | null = null;
 
-  private readonly onWindowChange = (): void => {
-    if (this.activeListbox && this.activeAnchor) {
-      this.position(this.activeListbox, this.activeAnchor);
-    }
-  };
+  private readonly portal: AuPortalOverlay;
+  private readonly reposition: PortalRepositionListener;
 
   constructor(
     private readonly document: Document,
@@ -23,6 +21,17 @@ export class FieldListboxOverlay {
     private readonly platformId: object,
     destroyRef: DestroyRef,
   ) {
+    this.portal = new AuPortalOverlay(
+      document,
+      renderer,
+      platformId,
+      'au-field-listbox-anchor',
+    );
+    this.reposition = new PortalRepositionListener(document, () => {
+      if (this.activeListbox && this.activeAnchor) {
+        this.position(this.activeListbox, this.activeAnchor);
+      }
+    });
     destroyRef.onDestroy(() => this.detach());
   }
 
@@ -34,15 +43,15 @@ export class FieldListboxOverlay {
       this.detach();
       return;
     }
-    this.ensurePortaled(listbox);
+    this.portal.attach(listbox);
     this.renderer.addClass(listbox, 'au-field-listbox--overlay');
     this.activeListbox = listbox;
     this.position(listbox, anchor);
-    this.bindReposition();
+    this.reposition.bind();
   }
 
   detach(): void {
-    this.unbindReposition();
+    this.reposition.unbind();
     const listbox = this.activeListbox;
     if (!listbox) {
       return;
@@ -58,27 +67,9 @@ export class FieldListboxOverlay {
     ]) {
       listbox.style.removeProperty(prop);
     }
-    if (this.anchor?.parentNode && listbox.isConnected) {
-      this.anchor.parentNode.insertBefore(listbox, this.anchor);
-      this.anchor.remove();
-      this.anchor = null;
-    } else if (listbox.parentElement === this.document.body) {
-      listbox.remove();
-    }
+    this.portal.detach(listbox);
     this.activeListbox = null;
     this.activeAnchor = null;
-  }
-
-  private ensurePortaled(listbox: HTMLElement): void {
-    if (listbox.parentElement === this.document.body) {
-      return;
-    }
-    const parent = listbox.parentNode;
-    if (parent) {
-      this.anchor = this.document.createComment('au-field-listbox-anchor');
-      parent.insertBefore(this.anchor, listbox);
-    }
-    this.renderer.appendChild(this.document.body, listbox);
   }
 
   private position(listbox: HTMLElement, anchor: HTMLElement): void {
@@ -94,17 +85,6 @@ export class FieldListboxOverlay {
     listbox.style.width = `${rect.width}px`;
     listbox.style.insetInlineStart = '';
     listbox.style.insetInlineEnd = '';
-  }
-
-  private bindReposition(): void {
-    this.unbindReposition();
-    this.document.defaultView?.addEventListener('scroll', this.onWindowChange, true);
-    this.document.defaultView?.addEventListener('resize', this.onWindowChange);
-  }
-
-  private unbindReposition(): void {
-    this.document.defaultView?.removeEventListener('scroll', this.onWindowChange, true);
-    this.document.defaultView?.removeEventListener('resize', this.onWindowChange);
   }
 }
 

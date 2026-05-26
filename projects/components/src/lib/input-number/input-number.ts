@@ -9,13 +9,13 @@ import {
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
 /** Numeric control; project inside {@link AuFormField}. */
@@ -50,8 +50,9 @@ export class AuInputNumber implements FormValueControl<number | null> {
   readonly blur = output<void>();
   readonly valueChange = output<number | null>();
 
+  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -129,6 +130,6 @@ export class AuInputNumber implements FormValueControl<number | null> {
   }
 
   focus(): void {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-input-number__input').focus();
+    this.inputEl().nativeElement.focus();
   }
 }

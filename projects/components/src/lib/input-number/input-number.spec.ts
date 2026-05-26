@@ -18,7 +18,7 @@ describe('AuInputNumber', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputNumberTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-number__input'))!
+    return fixture.debugElement.query(By.css('input[type="number"]'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -170,7 +170,7 @@ describe('AuInputNumber', () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[type="number"])'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
@@ -181,7 +181,7 @@ describe('AuInputNumber', () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[type="number"])'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('.au-input-number__control-row'))!
@@ -200,7 +200,7 @@ describe('AuInputNumber', () => {
     applyFieldHarnessInputs(fix, { label: 'N' });
     applyFieldHarnessInputs(fix, { hint: 'Numbers only' });
     fix.detectChanges();
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(queryInput(fix).getAttribute('aria-describedby')).toBe(hint.id);
   });
 

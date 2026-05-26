@@ -24,7 +24,7 @@ describe('AuSelect', () => {
   ];
 
   function queryTrigger(fixture: ComponentFixture<AuSelectTestHost>): HTMLButtonElement {
-    return fixture.debugElement.query(By.css('.au-select__trigger'))!
+    return fixture.debugElement.query(By.css('button[role="combobox"]'))!
       .nativeElement as HTMLButtonElement;
   }
 
@@ -36,6 +36,13 @@ describe('AuSelect', () => {
   function openListbox(fixture: ComponentFixture<AuSelectTestHost>): void {
     queryTrigger(fixture).click();
     fixture.detectChanges();
+  }
+
+  function queryActiveOption(fix: ComponentFixture<AuSelectTestHost>): HTMLElement | null {
+    const trigger = queryTrigger(fix);
+    const activeId = trigger.getAttribute('aria-activedescendant');
+    if (!activeId) return null;
+    return document.getElementById(activeId);
   }
 
   beforeEach(async () => {
@@ -50,7 +57,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!
+    const listbox = fix.debugElement.query(By.css('[role="listbox"]'))!
       .nativeElement as HTMLElement;
     expect(listbox.parentElement).toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(true);
@@ -73,7 +80,7 @@ describe('AuSelect', () => {
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
     row.classList.remove('au-select__control-row');
     openListbox(fix);
-    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!
+    const listbox = fix.debugElement.query(By.css('[role="listbox"]'))!
       .nativeElement as HTMLElement;
     expect(listbox.parentElement).not.toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
@@ -85,7 +92,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    const option = fix.debugElement.queryAll(By.css('.au-field-listbox__option'))[1]!.nativeElement;
+    const option = fix.debugElement.queryAll(By.css('[role="option"]'))[1]!.nativeElement;
     option.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     fix.detectChanges();
     expect(CONTROL(fix).value()).toBe('opt2');
@@ -116,7 +123,7 @@ describe('AuSelect', () => {
     queryTrigger(fix).click();
     fix.detectChanges();
     const placeholder = fix.debugElement.query(
-      By.css('.au-field-listbox__option--placeholder'),
+      By.css('[id*="-option-placeholder"]'),
     )!.nativeElement;
     placeholder.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     fix.detectChanges();
@@ -161,8 +168,8 @@ describe('AuSelect', () => {
     const trigger = queryTrigger(fix);
     expect(trigger.getAttribute('aria-invalid')).toBe('true');
     expect(trigger.getAttribute('aria-errormessage')).toBe('f-select-error');
-    const errText = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(errText?.nativeElement.textContent?.trim()).toBe('This field is required');
+    const errText = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(errText?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe('This field is required');
   });
 
   it('does not emit when disabled and changing', () => {
@@ -189,7 +196,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    const options = fix.debugElement.queryAll(By.css('.au-field-listbox__option'));
+    const options = fix.debugElement.queryAll(By.css('[role="option"]'));
     expect(options.length).toBe(4);
     expect(options[0].nativeElement.textContent?.trim()).toBe('Select one...');
   });
@@ -204,7 +211,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    const options = fix.debugElement.queryAll(By.css('.au-field-listbox__option'));
+    const options = fix.debugElement.queryAll(By.css('[role="option"]'));
     expect(options[1].nativeElement.getAttribute('aria-disabled')).toBe('true');
   });
 
@@ -212,7 +219,7 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       applyFieldHarnessInputs(f, { label: 'Choose option' });
     });
-    const label = fix.debugElement.query(By.css('.au-form-field__label'));
+    const label = fix.debugElement.query(By.css('label[for]'));
     expect(label?.nativeElement.textContent).toContain('Choose option');
   });
 
@@ -222,7 +229,7 @@ describe('AuSelect', () => {
       applyFieldHarnessInputs(f, { hint: 'Pick any' });
     });
     const trigger = queryTrigger(fix);
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(trigger.getAttribute('aria-describedby')).toBe(hint.id);
     expect(hint.textContent?.trim()).toBe('Pick any');
   });
@@ -261,8 +268,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
       f.componentInstance.errors = [{ kind: 'required', message: 'Field required' }] as any;
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('Field required');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe('Field required');
   });
 
   it('falls back to kind when message missing', () => {
@@ -270,8 +277,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
       f.componentInstance.errors = [{ kind: 'broken' }] as any;
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('broken');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe('broken');
   });
 
   it('marks aria-invalid when invalid without visible error', () => {
@@ -288,7 +295,7 @@ describe('AuSelect', () => {
       f.componentInstance.required = true;
       f.componentRef.setInput('ffShowRequired', false);
     });
-    const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     expect(label.textContent).not.toContain('*');
   });
 
@@ -298,7 +305,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(3);
+    expect(fix.debugElement.queryAll(By.css('[role="option"]')).length).toBe(3);
   });
 
   it('exposes autocomplete attribute input', () => {
@@ -360,8 +367,9 @@ describe('AuSelect', () => {
       applyFieldHarnessInputs(f, { errorMessage: 'Manual' });
       f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
     });
+    const alertEl = fix.debugElement.query(By.css('[role="alert"]'));
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
+      alertEl?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim(),
     ).toBe('Manual');
   });
 
@@ -405,7 +413,7 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     keydown(fix, ' ');
-    expect(document.querySelector('.au-field-listbox')).toBeTruthy();
+    expect(document.querySelector('[role="listbox"]')).toBeTruthy();
   });
 
   it('Escape closes open panel', () => {
@@ -414,7 +422,7 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     keydown(fix, 'Escape');
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('Home and End move highlight', () => {
@@ -424,15 +432,11 @@ describe('AuSelect', () => {
     openListbox(fix);
     keydown(fix, 'End');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Three');
     keydown(fix, 'Home');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option One');
   });
 
@@ -443,7 +447,7 @@ describe('AuSelect', () => {
     for (const key of ['Home', 'End', 'Escape']) {
       keydown(fix, key);
     }
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('ArrowUp opens panel and highlights last option', () => {
@@ -452,9 +456,7 @@ describe('AuSelect', () => {
     });
     keydown(fix, 'ArrowUp');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Three');
   });
 
@@ -465,9 +467,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     keydown(fix, 'ArrowDown');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Two');
   });
 
@@ -479,9 +479,7 @@ describe('AuSelect', () => {
     keydown(fix, 'End');
     keydown(fix, 'ArrowDown');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option One');
   });
 
@@ -493,9 +491,7 @@ describe('AuSelect', () => {
     keydown(fix, 'Home');
     keydown(fix, 'ArrowUp');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Three');
   });
 
@@ -510,9 +506,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     keydown(fix, 'ArrowDown');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Beta');
   });
 
@@ -523,7 +517,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     queryTrigger(fix).click();
     fix.detectChanges();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onKeydown is a no-op when disabled', () => {
@@ -532,7 +526,7 @@ describe('AuSelect', () => {
       f.componentInstance.disabled = true;
     });
     keydown(fix, 'ArrowDown');
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onKeydown is a no-op when readOnly', () => {
@@ -541,7 +535,7 @@ describe('AuSelect', () => {
       f.componentInstance.readOnly = true;
     });
     keydown(fix, 'ArrowDown');
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onTriggerClick is a no-op when disabled only', () => {
@@ -551,7 +545,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onTriggerClick is a no-op when readOnly only', () => {
@@ -561,7 +555,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('highlights placeholder row on pointer enter', () => {
@@ -573,9 +567,7 @@ describe('AuSelect', () => {
     CONTROL(fix).onOptionPointerEnter(0);
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Choose');
   });
 
@@ -586,7 +578,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fixDisabled).click();
     fixDisabled.detectChanges();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
 
     const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
@@ -594,7 +586,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fixReadOnly).click();
     fixReadOnly.detectChanges();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('openPanel is a no-op when disabled or readOnly', () => {
@@ -603,14 +595,14 @@ describe('AuSelect', () => {
       f.componentInstance.disabled = true;
     });
     (CONTROL(fixDisabled) as unknown as { openPanel(): void }).openPanel();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
 
     const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
     });
     (CONTROL(fixReadOnly) as unknown as { openPanel(): void }).openPanel();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('openPanel highlights current value when reopening', () => {
@@ -620,9 +612,7 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Two');
   });
 
@@ -660,13 +650,11 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     openListbox(fix);
-    const option = fix.debugElement.queryAll(By.css('.au-field-listbox__option'))[1]!.nativeElement;
+    const option = fix.debugElement.queryAll(By.css('[role="option"]'))[1]!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Two');
   });
 
@@ -678,7 +666,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     CONTROL(fix).onOptionPointerEnter(0, opts[0]!);
     fix.detectChanges();
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
+    expect(queryActiveOption(fix)).toBeNull();
   });
 
   it('ignores pointer enter when disabled or readOnly', () => {
@@ -693,7 +681,7 @@ describe('AuSelect', () => {
       f.componentInstance.readOnly = true;
     });
     CONTROL(fixReadOnly).onOptionPointerEnter(0, testOptions[0]!);
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('ignores mousedown on disabled option', () => {
@@ -721,11 +709,11 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
-    const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
+    const option = fix.debugElement.query(By.css('[role="option"]'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: option });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
-    expect(document.querySelector('.au-field-listbox')).toBeTruthy();
+    expect(document.querySelector('[role="listbox"]')).toBeTruthy();
   });
 
   it('triggerLabel is empty for unknown value', () => {
@@ -779,7 +767,7 @@ describe('AuSelect', () => {
       f.componentInstance.options = opts;
     });
     keydown(fix, 'ArrowUp');
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
+    expect(queryActiveOption(fix)).toBeNull();
   });
 
   it('ArrowDown on empty list keeps highlight unset', () => {
@@ -855,9 +843,7 @@ describe('AuSelect', () => {
     fix.detectChanges();
     keydown(fix, 'ArrowUp');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Three');
   });
 
@@ -909,7 +895,7 @@ describe('AuSelect', () => {
       f.componentInstance.readOnly = true;
     });
     CONTROL(fixReadOnly).onTriggerClick();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('onTriggerClick is a no-op when disabled and readOnly', () => {
@@ -920,7 +906,7 @@ describe('AuSelect', () => {
     });
     queryTrigger(fix).click();
     fix.detectChanges();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    expect(document.querySelector('[role="listbox"]')).toBeFalsy();
   });
 
   it('End highlights placeholder when it is the only list row', () => {
@@ -931,9 +917,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     keydown(fix, 'End');
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Pick one');
   });
 
@@ -958,9 +942,7 @@ describe('AuSelect', () => {
     CONTROL(fix).onOptionPointerEnter(2, testOptions[1]);
     fix.detectChanges();
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Option Two');
   });
 
@@ -1010,9 +992,7 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
+      queryActiveOption(fix)?.textContent?.trim(),
     ).toBe('Two');
   });
 });

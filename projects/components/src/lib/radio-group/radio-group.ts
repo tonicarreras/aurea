@@ -9,6 +9,7 @@ import {
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
@@ -48,8 +49,9 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
 
+  readonly fieldEl = viewChild.required<ElementRef<HTMLDivElement>>('fieldEl');
+
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -135,7 +137,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   }
 
   focus(): void {
-    const first = (this.host.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+    const first = this.fieldEl().nativeElement.querySelector<HTMLInputElement>(
       'input[type="radio"]:not(:disabled)',
     );
     first?.focus();

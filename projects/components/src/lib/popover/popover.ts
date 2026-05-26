@@ -16,6 +16,7 @@ import {
   viewChild,
 } from '@angular/core';
 
+import { bindDocumentDismiss } from '../overlay/document-dismiss';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_POPOVER } from './au-popover.token';
@@ -48,8 +49,6 @@ export function auPopoverSelfRef(): typeof AuPopover {
   providers: [{ provide: AU_POPOVER, useExisting: forwardRef(auPopoverSelfRef) }],
   host: {
     class: 'au-popover',
-    '(document:click)': 'onDocumentClick($event)',
-    '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
 export class AuPopover {
@@ -73,6 +72,33 @@ export class AuPopover {
 
   protected readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   protected readonly triggerHost = signal<HTMLElement | null>(null);
+
+  constructor() {
+    bindDocumentDismiss(this.document, this.renderer, this.destroyRef, {
+      onClick: (event) => this.onDocumentClick(event),
+      onKeydown: (event) => this.onDocumentKeydown(event),
+    });
+    this.bindScrollDismiss();
+  }
+
+  /**
+   * Closes the popover on window scroll — follows the same UX pattern as menu:
+   * overlays that are not tooltips dismiss when the user scrolls.
+   */
+  private bindScrollDismiss(): void {
+    const win = this.document.defaultView;
+    if (!win) {
+      return;
+    }
+    const unlisten = this.renderer.listen(win, 'scroll', () => {
+      if (!this.open()) {
+        return;
+      }
+      this.overlay.detach();
+      this.setOpen(false);
+    });
+    this.destroyRef.onDestroy(() => unlisten());
+  }
 
   private readonly syncPanelOverlay = afterRenderEffect(() => {
     const panel = this.panelRef()?.nativeElement;

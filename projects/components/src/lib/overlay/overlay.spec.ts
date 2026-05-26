@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { FieldListboxOverlay, focusLeftFieldControl } from './field-listbox-overlay';
+import { AuPortalOverlay } from './portal-overlay';
 import { computeTooltipPosition } from './tooltip-position';
 import { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
 
@@ -75,6 +76,59 @@ describe('computeTooltipPosition', () => {
     const bubble = new DOMRect(0, 0, 80, 32);
     const result = computeTooltipPosition(anchor, bubble, 'bottom', 6, viewport);
     expect(result.placement).toBe('top');
+  });
+});
+
+describe('AuPortalOverlay', () => {
+  let host: OverlayHost;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OverlayHost],
+    }).compileComponents();
+    host = TestBed.createComponent(OverlayHost).componentInstance;
+  });
+
+  function createPortal(platformId: object = 'browser' as unknown as object) {
+    return new AuPortalOverlay(
+      TestBed.inject(DOCUMENT),
+      host.renderer,
+      platformId,
+      'au-test-anchor',
+    );
+  }
+
+  it('attach is noop outside the browser', () => {
+    const wrap = document.createElement('div');
+    const el = document.createElement('div');
+    wrap.append(el);
+    document.body.append(wrap);
+    createPortal('server' as unknown as object).attach(el);
+    expect(el.parentElement).toBe(wrap);
+    wrap.remove();
+  });
+
+  it('attach moves element to body and detach restores it', () => {
+    const wrap = document.createElement('div');
+    const el = document.createElement('div');
+    wrap.append(el);
+    document.body.append(wrap);
+    const portal = createPortal();
+    portal.attach(el);
+    expect(el.parentElement).toBe(document.body);
+    portal.detach(el);
+    expect(el.parentElement).toBe(wrap);
+    wrap.remove();
+  });
+
+  it('detach removes orphan element from body when anchor is cleared', () => {
+    const el = document.createElement('div');
+    document.body.append(el);
+    const portal = createPortal();
+    portal.attach(el);
+    portal.clearAnchor();
+    portal.detach(el);
+    expect(document.body.contains(el)).toBe(false);
   });
 });
 
@@ -185,7 +239,7 @@ describe('TooltipOverlay', () => {
     document.body.append(anchor, bubble);
     const overlay = createOverlay();
     overlay.sync(bubble, anchor, 'top');
-    (overlay as unknown as { anchor: null }).anchor = null;
+    (overlay as unknown as { portal: AuPortalOverlay }).portal.clearAnchor();
     overlay.detach();
     expect(document.body.contains(bubble)).toBe(false);
     anchor.remove();
@@ -225,17 +279,6 @@ describe('TooltipOverlay', () => {
     Object.defineProperty(doc, 'defaultView', { configurable: true, value: originalView });
     overlay.detach();
     anchor.remove();
-  });
-
-  it('onWindowChange is a no-op without an active anchor', () => {
-    const overlay = createOverlay() as unknown as {
-      activeBubble: HTMLElement;
-      activeAnchor: null;
-      onWindowChange: () => void;
-    };
-    overlay.activeBubble = document.createElement('div');
-    overlay.activeAnchor = null;
-    expect(() => overlay.onWindowChange()).not.toThrow();
   });
 
   it('repositions on scroll and resize', () => {
@@ -470,14 +513,4 @@ describe('FieldListboxOverlay', () => {
     expect(() => overlay.detach()).not.toThrow();
   });
 
-  it('onWindowChange is a no-op without an active anchor', () => {
-    const overlay = createOverlay() as unknown as {
-      activeListbox: HTMLElement | null;
-      activeAnchor: HTMLElement | null;
-      onWindowChange: () => void;
-    };
-    overlay.activeListbox = document.createElement('ul');
-    overlay.activeAnchor = null;
-    expect(() => overlay.onWindowChange()).not.toThrow();
-  });
 });

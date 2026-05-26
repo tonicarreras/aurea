@@ -1,0 +1,6 @@
+@import url('../tokens/au-tokens.css');
+
+:host {
+  margin: 0;
+  color: var(--au-color-text-secondary);
+}

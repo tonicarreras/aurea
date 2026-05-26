@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import type { AuSize } from '../au-size';
 
 export type AuIconName = 'check-circle' | 'warning' | 'error' | 'info' | 'close' | 'spinner';
 
-export type AuIconSize = 'sm' | 'md' | 'lg';
+export type AuIconSize = AuSize;
 
 /**
  * Design-system **icon**: shared SVG glyphs (Material-style outlines).

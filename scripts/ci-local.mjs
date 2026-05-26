@@ -57,6 +57,7 @@ bunRun('build:components');
 bunRun('check:bundle');
 bunRun('validate:tokens');
 bunRun('verify:story-tags');
+bunRun('verify:stable-story-ids');
 bunRun('verify:i18n');
 bunRun('verify:visual-manifest');
 bunRun('test:coverage');

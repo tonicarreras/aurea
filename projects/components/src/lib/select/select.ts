@@ -13,13 +13,13 @@ import {
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
@@ -68,8 +68,9 @@ export class AuSelect implements FormValueControl<string | null> {
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
 
+  readonly triggerEl = viewChild.required<ElementRef<HTMLButtonElement>>('triggerEl');
+
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly highlightedIndex = signal(-1);
@@ -84,7 +85,7 @@ export class AuSelect implements FormValueControl<string | null> {
   );
 
   private readonly syncListboxOverlay = afterRenderEffect(() => {
-    const trigger = this.triggerNativeElement();
+    const trigger = this.triggerEl().nativeElement;
     const anchor = trigger.closest('.au-select__control-row');
     if (!(anchor instanceof HTMLElement)) {
       return;
@@ -281,7 +282,7 @@ export class AuSelect implements FormValueControl<string | null> {
     }
     this.setValue(null);
     this.closePanel();
-    this.triggerNativeElement().focus();
+    this.triggerEl().nativeElement.focus();
   }
 
   selectOption(option: AuSelectOption): void {
@@ -290,7 +291,7 @@ export class AuSelect implements FormValueControl<string | null> {
     }
     this.setValue(option.value);
     this.closePanel();
-    this.triggerNativeElement().focus();
+    this.triggerEl().nativeElement.focus();
   }
 
   onBlurHost(): void {
@@ -311,11 +312,7 @@ export class AuSelect implements FormValueControl<string | null> {
   }
 
   focus(): void {
-    this.triggerNativeElement().focus();
-  }
-
-  private triggerNativeElement(): HTMLButtonElement {
-    return queryFieldNative<HTMLButtonElement>(this.host, '.au-select__trigger');
+    this.triggerEl().nativeElement.focus();
   }
 
   private listboxNative(): HTMLUListElement | undefined {

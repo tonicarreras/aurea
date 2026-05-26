@@ -45,6 +45,9 @@ jobs:
       - name: Verify Storybook story tags
         run: bun run verify:story-tags
 
+      - name: Verify stable Storybook ids (axe CI)
+        run: bun run verify:stable-story-ids
+
       - name: Verify docs i18n parity (en/es)
         run: bun run verify:i18n
 

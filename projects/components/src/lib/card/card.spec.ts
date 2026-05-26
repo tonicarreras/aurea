@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AuCardBody } from './card-body.directive';
 import { AuCardFooter } from './card-footer.directive';
+import { AuCardHeader } from './card-header.directive';
 import { AuCard } from './card';
 
 describe('AuCard', () => {
@@ -136,7 +138,7 @@ class TestCardComponent {}
 
 @Component({
   selector: 'test-card-slots',
-  imports: [AuCard],
+  imports: [AuCard, AuCardHeader, AuCardBody],
   template: `
     <au-card>
       <h3 auCardHeader>Title</h3>
@@ -148,7 +150,7 @@ class TestCardSlotsComponent {}
 
 @Component({
   selector: 'test-card-footer',
-  imports: [AuCard, AuCardFooter],
+  imports: [AuCard, AuCardHeader, AuCardBody, AuCardFooter],
   template: `
     <au-card>
       <h3 auCardHeader>Title</h3>

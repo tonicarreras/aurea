@@ -3,11 +3,15 @@ import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import type { Type } from '@angular/core';
 
 import { AuButton } from '../button/button';
+import { AuCardBody } from './card-body.directive';
 import { AuCardFooter } from './card-footer.directive';
+import { AuCardHeader } from './card-header.directive';
+import { AuCardMedia } from './card-media.directive';
 import { AuCard } from './card';
 
-const storyImports = { imports: [AuCard] };
-const withFooterImports = { imports: [AuCard, AuButton, AuCardFooter] };
+const slotImports = [AuCard, AuCardHeader, AuCardBody, AuCardMedia] as const;
+const storyImports = { imports: [...slotImports] };
+const withFooterImports = { imports: [...slotImports, AuButton, AuCardFooter] };
 
 function cardRender(
   args: Record<string, unknown>,

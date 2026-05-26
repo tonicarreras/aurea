@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import type { DestroyRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
+import { AuPortalOverlay, PortalRepositionListener } from './portal-overlay';
 import { computeTooltipPosition, type AuTooltipPlacement } from './tooltip-position';
 
 /** Resolves a length custom property to pixels (handles `var()` chains). */
@@ -22,16 +23,12 @@ export function readCssLengthPx(
 
 /** Portals a tooltip bubble to `document.body` with `position: fixed`. */
 export class TooltipOverlay {
-  private anchor: Comment | null = null;
   private activeBubble: HTMLElement | null = null;
   private activeAnchor: HTMLElement | null = null;
   private resolvedPlacement: AuTooltipPlacement = 'top';
 
-  private readonly onWindowChange = (): void => {
-    if (this.activeBubble && this.activeAnchor) {
-      this.position(this.activeBubble, this.activeAnchor, this.resolvedPlacement);
-    }
-  };
+  private readonly portal: AuPortalOverlay;
+  private readonly reposition: PortalRepositionListener;
 
   constructor(
     private readonly document: Document,
@@ -39,6 +36,17 @@ export class TooltipOverlay {
     private readonly platformId: object,
     destroyRef: DestroyRef,
   ) {
+    this.portal = new AuPortalOverlay(
+      document,
+      renderer,
+      platformId,
+      'au-tooltip-anchor',
+    );
+    this.reposition = new PortalRepositionListener(document, () => {
+      if (this.activeBubble && this.activeAnchor) {
+        this.position(this.activeBubble, this.activeAnchor, this.resolvedPlacement);
+      }
+    });
     destroyRef.onDestroy(() => this.detach());
   }
 
@@ -54,16 +62,16 @@ export class TooltipOverlay {
       this.detach();
       return placement;
     }
-    this.ensurePortaled(bubble);
+    this.portal.attach(bubble);
     this.renderer.addClass(bubble, 'au-tooltip__bubble--overlay');
     this.activeBubble = bubble;
     const resolved = this.position(bubble, anchor, placement);
-    this.bindReposition();
+    this.reposition.bind();
     return resolved;
   }
 
   detach(): void {
-    this.unbindReposition();
+    this.reposition.unbind();
     const bubble = this.activeBubble;
     if (!bubble) {
       return;
@@ -72,27 +80,9 @@ export class TooltipOverlay {
     for (const prop of ['position', 'top', 'left', 'inset-inline-start', 'inset-inline-end']) {
       bubble.style.removeProperty(prop);
     }
-    if (this.anchor?.parentNode && bubble.isConnected) {
-      this.anchor.parentNode.insertBefore(bubble, this.anchor);
-      this.anchor.remove();
-      this.anchor = null;
-    } else if (bubble.parentElement === this.document.body) {
-      bubble.remove();
-    }
+    this.portal.detach(bubble);
     this.activeBubble = null;
     this.activeAnchor = null;
-  }
-
-  private ensurePortaled(bubble: HTMLElement): void {
-    if (bubble.parentElement === this.document.body) {
-      return;
-    }
-    const parent = bubble.parentNode;
-    if (parent) {
-      this.anchor = this.document.createComment('au-tooltip-anchor');
-      parent.insertBefore(this.anchor, bubble);
-    }
-    this.renderer.appendChild(this.document.body, bubble);
   }
 
   private position(
@@ -129,16 +119,5 @@ export class TooltipOverlay {
     bubble.style.left = '0px';
     void bubble.offsetHeight;
     return bubble.getBoundingClientRect();
-  }
-
-  private bindReposition(): void {
-    this.unbindReposition();
-    this.document.defaultView?.addEventListener('scroll', this.onWindowChange, true);
-    this.document.defaultView?.addEventListener('resize', this.onWindowChange);
-  }
-
-  private unbindReposition(): void {
-    this.document.defaultView?.removeEventListener('scroll', this.onWindowChange, true);
-    this.document.defaultView?.removeEventListener('resize', this.onWindowChange);
   }
 }

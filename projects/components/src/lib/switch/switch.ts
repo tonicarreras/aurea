@@ -4,11 +4,11 @@ import {
   ElementRef,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
@@ -16,7 +16,6 @@ import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { createStandaloneAuFormFieldContext, injectAuFormField } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
 /** Switch toggle; inline `label` on control; hint/error on {@link AuFormField}. */
@@ -49,8 +48,9 @@ export class AuSwitch implements FormCheckboxControl {
   readonly blur = output<void>();
   readonly checkedChange = output<boolean>();
 
+  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+
   protected readonly formField = injectAuFormField();
-  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -114,6 +114,6 @@ export class AuSwitch implements FormCheckboxControl {
   }
 
   focus(): void {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-switch__element').focus();
+    this.inputEl().nativeElement.focus();
   }
 }

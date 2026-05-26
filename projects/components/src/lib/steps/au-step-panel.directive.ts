@@ -1,11 +1,16 @@
-import { Directive, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { AuSteps } from './steps';
 
 /**
  * Step panel inside `au-steps`. Pair with a step button using the same key.
+ *
+ * Declared as `Component` (not `Directive`) to support scoped styles via `styleUrl`.
  */
-@Directive({
+@Component({
   selector: '[auStepPanel]',
+  template: '<ng-content />',
+  styleUrl: './au-step-panel.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-steps__panel',
     '[attr.role]': 'steps.layout() === "sections" ? "region" : "tabpanel"',
@@ -14,6 +19,7 @@ import { AuSteps } from './steps';
     '[attr.aria-labelledby]': 'stepId()',
     '[attr.hidden]': 'isHidden() ? "" : null',
     '[attr.tabindex]': 'isTabPanel() && isActive() ? 0 : null',
+    '[attr.data-au-layout]': 'steps.layout()',
   },
 })
 export class AuStepPanel {

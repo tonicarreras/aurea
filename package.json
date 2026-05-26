@@ -25,6 +25,8 @@
     "audit:spec-quality": "node scripts/audit-spec-quality.mjs",
     "check:bundle": "node scripts/check-bundle-size.mjs",
     "update:bundle-baseline": "node scripts/update-bundle-baseline.mjs",
+    "sync:stable-story-ids": "node scripts/sync-stable-story-ids.mjs",
+    "verify:stable-story-ids": "node scripts/verify-stable-story-ids.mjs",
     "verify:story-tags": "node scripts/verify-story-tags.mjs",
     "verify:i18n": "node scripts/verify-i18n-parity.mjs",
     "test:docs:e2e": "playwright test -c playwright.docs.config.ts",

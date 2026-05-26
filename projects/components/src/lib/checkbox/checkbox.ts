@@ -4,11 +4,11 @@ import {
   ElementRef,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
@@ -16,7 +16,6 @@ import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { createStandaloneAuFormFieldContext, injectAuFormField } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
 /** Checkbox; inline `label` on control; hint/error on {@link AuFormField}. */
@@ -53,13 +52,13 @@ export class AuCheckbox implements FormCheckboxControl {
   readonly blur = output<void>();
   readonly checkedChange = output<boolean>();
 
+  readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+
   protected readonly formField = injectAuFormField();
-  private readonly host = inject(ElementRef<HTMLElement>);
   protected readonly focusByTab = signal(false);
 
   private readonly syncIndeterminate = afterRenderEffect(() => {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-checkbox__element').indeterminate =
-      this.indeterminate();
+    this.inputEl().nativeElement.indeterminate = this.indeterminate();
   });
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -136,6 +135,6 @@ export class AuCheckbox implements FormCheckboxControl {
   }
 
   focus(): void {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-checkbox__element').focus();
+    this.inputEl().nativeElement.focus();
   }
 }

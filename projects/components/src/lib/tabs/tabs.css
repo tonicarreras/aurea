@@ -3,7 +3,7 @@
  */
 @import url('../tokens/au-tokens.css');
 
-au-tabs {
+:host {
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -18,10 +18,6 @@ au-tabs {
   max-width: 100%;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tab list */
-/* -------------------------------------------------------------------------- */
-
 .au-tabs__list {
   display: flex;
   flex-direction: row;
@@ -33,37 +29,35 @@ au-tabs {
   list-style: none;
 }
 
-au-tabs[data-au-orientation='vertical'] .au-tabs__root {
+:host([data-au-orientation='vertical']) .au-tabs__root {
   flex-direction: row;
   align-items: flex-start;
   gap: var(--au-space-4);
 }
 
-au-tabs[data-au-orientation='vertical'] .au-tabs__list {
+:host([data-au-orientation='vertical']) .au-tabs__list {
   flex-direction: column;
   flex-shrink: 0;
   min-width: 8rem;
 }
 
-au-tabs[data-au-orientation='vertical'] .au-tabs__panels {
+:host([data-au-orientation='vertical']) .au-tabs__panels {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-/* Line variant: underline rail */
-au-tabs[data-au-variant='line'] .au-tabs__list {
+:host([data-au-variant='line']) .au-tabs__list {
   border-bottom: 1px solid var(--au-color-border-subtle);
   gap: var(--au-space-1);
 }
 
-au-tabs[data-au-orientation='vertical'][data-au-variant='line'] .au-tabs__list {
+:host([data-au-orientation='vertical'][data-au-variant='line']) .au-tabs__list {
   border-bottom: none;
   border-right: 1px solid var(--au-color-border-subtle);
   padding-right: var(--au-space-2);
 }
 
-/* Contained: segmented track */
-au-tabs[data-au-variant='contained'] .au-tabs__list {
+:host([data-au-variant='contained']) .au-tabs__list {
   gap: var(--au-space-1);
   padding: var(--au-space-0-5);
   border-radius: var(--au-radius-md);
@@ -73,175 +67,7 @@ au-tabs[data-au-variant='contained'] .au-tabs__list {
   max-width: 100%;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tab button */
-/* -------------------------------------------------------------------------- */
-
-.au-tabs__tab {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  color: var(--au-color-text-secondary);
-  font: inherit;
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-tight);
-  letter-spacing: var(--au-tracking-ui);
-  white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
-  transition:
-    var(--au-transition-color), var(--au-transition-background), var(--au-transition-border),
-    var(--au-transition-shadow);
-}
-
-.au-tabs__tab:hover:not(:disabled):not(.au-tabs__tab--selected) {
-  color: var(--au-color-text-primary);
-  background: var(--au-color-surface-elevated);
-}
-
-.au-tabs__tab:disabled {
-  color: var(--au-color-text-disabled);
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.au-tabs__tab--selected {
-  color: var(--au-color-action-primary);
-  font-weight: var(--au-weight-semibold);
-}
-
-.au-tabs__tab:focus {
-  outline: none;
-}
-
-.au-tabs__tab--from-tab:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
-  border-radius: var(--au-radius-xs);
-}
-
-/* Sizes */
-au-tabs[data-au-size='sm'] .au-tabs__tab {
-  min-height: var(--au-size-field-h-sm);
-  padding: var(--au-space-2) var(--au-space-3);
-  font-size: var(--au-text-xs);
-}
-
-au-tabs[data-au-size='md'] .au-tabs__tab,
-au-tabs:not([data-au-size]) .au-tabs__tab {
-  min-height: var(--au-size-field-h-md);
-  padding: var(--au-space-2-5) var(--au-space-4);
-  font-size: var(--au-text-sm);
-}
-
-au-tabs[data-au-size='lg'] .au-tabs__tab {
-  min-height: var(--au-touch-target-min);
-  padding: var(--au-space-3) var(--au-space-5);
-  font-size: var(--au-text-md);
-}
-
-/* Line selected indicator */
-au-tabs[data-au-variant='line'] .au-tabs__tab--selected {
-  background: transparent;
-}
-
-au-tabs[data-au-variant='line'] .au-tabs__tab--selected::after {
-  content: '';
-  position: absolute;
-  left: var(--au-space-2);
-  right: var(--au-space-2);
-  bottom: 0;
-  height: 2px;
-  border-radius: var(--au-radius-pill);
-  background: var(--au-color-action-primary);
-}
-
-au-tabs[data-au-orientation='vertical'][data-au-variant='line'] .au-tabs__tab--selected::after {
-  top: var(--au-space-2);
-  bottom: var(--au-space-2);
-  left: auto;
-  right: 0;
-  width: 2px;
-  height: auto;
-}
-
-/* Contained selected pill */
-au-tabs[data-au-variant='contained'] .au-tabs__tab {
-  border-radius: var(--au-radius-sm);
-}
-
-au-tabs[data-au-variant='contained'] .au-tabs__tab--selected {
-  background: var(--au-color-surface-raised);
-  color: var(--au-color-text-primary);
-  box-shadow: var(--au-shadow-hairline);
-}
-
-au-tabs[data-au-variant='contained'] .au-tabs__tab--selected::after {
-  content: none;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Panels */
-/* -------------------------------------------------------------------------- */
-
 .au-tabs__panels {
   display: block;
   min-width: 0;
-}
-
-.au-tabs__panel {
-  margin: 0;
-  padding: var(--au-space-4) 0 0;
-  color: var(--au-color-text-primary);
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-normal);
-}
-
-.au-tabs__panel[hidden] {
-  display: none !important;
-}
-
-.au-tabs__panel--active:focus {
-  outline: none;
-}
-
-.au-tabs__panel--active:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 4px;
-  border-radius: var(--au-radius-xs);
-}
-
-au-tabs[data-au-orientation='vertical'] .au-tabs__panel {
-  padding-top: 0;
-}
-
-au-tabs[data-au-size='sm'] .au-tabs__panel {
-  padding-top: var(--au-space-3);
-  font-size: var(--au-text-xs);
-}
-
-au-tabs[data-au-size='lg'] .au-tabs__panel {
-  padding-top: var(--au-space-5);
-  font-size: var(--au-text-md);
-}
-
-/* Zero margins on projected headings / paragraphs */
-.au-tabs__panel :is(h1, h2, h3, h4, h5, h6, p):first-child {
-  margin-top: 0;
-}
-
-.au-tabs__panel :is(h1, h2, h3, h4, h5, h6, p):last-child {
-  margin-bottom: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-tabs__tab {
-    transition: none;
-  }
 }

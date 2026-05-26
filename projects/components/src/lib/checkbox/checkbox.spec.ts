@@ -23,9 +23,9 @@ describe('AuCheckbox standalone', () => {
     const fix = TestBed.createComponent(AuCheckbox);
     fix.componentRef.setInput('label', 'Accept terms');
     fix.detectChanges();
-    const input = fix.nativeElement.querySelector('.au-checkbox__element') as HTMLInputElement;
+    const input = fix.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
     expect(input.id).toMatch(/^au-field-\d+$/);
-    expect(fix.nativeElement.querySelector('.au-checkbox__label')?.textContent).toContain(
+    expect(fix.nativeElement.querySelector('label[for]')?.textContent).toContain(
       'Accept terms',
     );
   });
@@ -37,7 +37,7 @@ describe('AuCheckbox', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuCheckboxTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-checkbox__element'))!
+    return fixture.debugElement.query(By.css('input[type="checkbox"]'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -89,7 +89,7 @@ describe('AuCheckbox', () => {
       f.componentInstance.required = true;
       applyFieldHarnessInputs(f, { controlId: 'test-checkbox' });
     });
-    const label = fix.debugElement.query(By.css('.au-checkbox__label'));
+    const label = fix.debugElement.query(By.css('label[for]'));
     expect(label?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Accept terms');
     expect(label?.nativeElement.textContent).toContain('*');
     expect(label?.nativeElement.textContent).toContain('(required)');
@@ -112,7 +112,7 @@ describe('AuCheckbox', () => {
       f.componentInstance.required = true;
       f.componentInstance.showRequired = false;
     });
-    const label = fix.debugElement.query(By.css('.au-checkbox__label'));
+    const label = fix.debugElement.query(By.css('label[for]'));
     expect(label?.nativeElement.textContent?.trim()).toBe('Accept terms');
     expect(fix.nativeElement.querySelector('.au-checkbox__required')).toBeNull();
   });
@@ -139,7 +139,7 @@ describe('AuCheckbox', () => {
       f.componentInstance.description = 'Weekly updates';
     });
     const input = queryInput(fix);
-    const desc = fix.debugElement.query(By.css('.au-checkbox__description'));
+    const desc = fix.debugElement.query(By.css('[id$="-desc"]'));
     expect(desc?.nativeElement.id.length).toBeGreaterThan(0);
     expect(input.getAttribute('aria-describedby')).toBe(desc?.nativeElement.id);
     expect(desc?.nativeElement.textContent?.trim()).toBe('Weekly updates');
@@ -151,15 +151,13 @@ describe('AuCheckbox', () => {
       applyFieldHarnessInputs(f, { errorMessage: 'You must accept.' });
     });
     const input = queryInput(fix);
-    const err = fix.debugElement.query(By.css('.au-field-error'));
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-errormessage')).toBe(err?.nativeElement.id);
     expect(err?.nativeElement.getAttribute('role')).toBe('alert');
     expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain(
       'You must accept.',
     );
-    const wrap = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
-    expect(wrap.classList.contains('au-checkbox__wrapper--invalid')).toBe(true);
   });
 
   it('uses first signal-form errors entry when errorMessage is empty', () => {
@@ -167,7 +165,7 @@ describe('AuCheckbox', () => {
       f.componentInstance.label = 'Agree';
       f.componentInstance.errors = [{ kind: 'required', message: 'Required field' }];
     });
-    const err = fix.debugElement.query(By.css('.au-field-error'));
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
     expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Required field');
   });
 
@@ -176,8 +174,8 @@ describe('AuCheckbox', () => {
       f.componentInstance.label = 'Agree';
       f.componentInstance.errors = [{ kind: 'pattern' }] as any;
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('pattern');
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {
@@ -195,7 +193,7 @@ describe('AuCheckbox', () => {
     });
     const input = queryInput(fix);
     expect(input.getAttribute('aria-invalid')).toBe('true');
-    expect(fix.debugElement.query(By.css('.au-field-error'))).toBeNull();
+    expect(fix.debugElement.query(By.css('[role="alert"]'))).toBeNull();
     expect(input.getAttribute('aria-errormessage')).toMatch(/-error$/);
     expect(input.getAttribute('aria-describedby')).toMatch(/-error$/);
   });
@@ -215,7 +213,7 @@ describe('AuCheckbox', () => {
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    const row = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> input[type="checkbox"])'))!.nativeElement;
     const out = document.createElement('button');
     document.body.appendChild(out);
     const ev = new FocusEvent('focusout', { relatedTarget: out });
@@ -290,7 +288,7 @@ describe('AuCheckbox', () => {
       f.componentInstance.label = 'Agree';
       applyFieldHarnessInputs(f, { hint: 'Optional info' });
     });
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'));
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'));
     const input = queryInput(fix);
     expect(input.getAttribute('aria-describedby')).toContain(hint?.nativeElement.id);
   });
@@ -306,8 +304,8 @@ describe('AuCheckbox', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'X';
     });
-    const wrapper = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
-    const label = fix.debugElement.query(By.css('.au-checkbox__label'))!.nativeElement;
+    const wrapper = fix.debugElement.query(By.css('div:has(> input[type="checkbox"])'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: label });
     Object.defineProperty(ev, 'currentTarget', { value: wrapper, configurable: true });
     CONTROL(fix).onControlFocusout(ev);
@@ -324,7 +322,7 @@ describe('AuCheckbox', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'X';
     });
-    const wrapDe = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!;
+    const wrapDe = fix.debugElement.query(By.css('div:has(> input[type="checkbox"])'))!;
     const wrap = wrapDe.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     wrapDe.triggerEventHandler('focusin', new FocusEvent('focusin'));

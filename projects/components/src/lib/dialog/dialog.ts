@@ -1,16 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   ElementRef,
-  ViewEncapsulation,
   afterRenderEffect,
   computed,
+  contentChild,
   inject,
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from './dialog-footer.directive';
@@ -43,7 +41,6 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
   imports: [AuIcon],
   templateUrl: './dialog.html',
   styleUrl: './dialog.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-dialog',
@@ -72,15 +69,10 @@ export class AuDialog {
   readonly closeOnEscape = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg' | 'full'>('md');
 
-  private readonly footerPresent = signal(false);
-
-  @ContentChild(AuDialogFooter)
-  set footerSlot(slot: AuDialogFooter | undefined) {
-    this.footerPresent.set(slot != null);
-  }
+  private readonly footerSlot = contentChild(AuDialogFooter);
 
   /** True when `[auDialogFooter]` content is projected. */
-  readonly hasFooter = this.footerPresent.asReadonly();
+  readonly hasFooter = computed(() => this.footerSlot() != null);
 
   private readonly titleDomId = `au-dialog-title-${++AuDialog.nextTitleId}`;
 

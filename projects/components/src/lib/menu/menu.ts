@@ -16,6 +16,7 @@ import {
   viewChild,
 } from '@angular/core';
 
+import { bindDocumentDismiss } from '../overlay/document-dismiss';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_MENU } from './au-menu.token';
@@ -32,7 +33,7 @@ export function auMenuSelfRef(): typeof AuMenu {
  * - **Open state:** `[(open)]` with `openChange` output.
  * - **Trigger:** `auMenuTrigger` on the control that toggles the panel.
  * - **Items:** `au-menu-item` emits `select` and closes the menu.
- * - **Dismiss:** outside click and Escape.
+ * - **Dismiss:** outside click, Escape, and window scroll.
  *
  * @example
  * ```html
@@ -50,8 +51,6 @@ export function auMenuSelfRef(): typeof AuMenu {
   providers: [{ provide: AU_MENU, useExisting: forwardRef(auMenuSelfRef) }],
   host: {
     class: 'au-menu',
-    '(document:click)': 'onDocumentClick($event)',
-    '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
 export class AuMenu {
@@ -75,6 +74,33 @@ export class AuMenu {
 
   protected readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   protected readonly triggerHost = signal<HTMLElement | null>(null);
+
+  constructor() {
+    bindDocumentDismiss(this.document, this.renderer, this.destroyRef, {
+      onClick: (event) => this.onDocumentClick(event),
+      onKeydown: (event) => this.onDocumentKeydown(event),
+    });
+    this.bindScrollDismiss();
+  }
+
+  /**
+   * Closes the menu on window scroll — follows the standard UX pattern where
+   * menus dismiss on scroll instead of repositioning like a tooltip or select listbox.
+   */
+  private bindScrollDismiss(): void {
+    const win = this.document.defaultView;
+    if (!win) {
+      return;
+    }
+    const unlisten = this.renderer.listen(win, 'scroll', () => {
+      if (!this.open()) {
+        return;
+      }
+      this.overlay.detach();
+      this.setOpen(false);
+    });
+    this.destroyRef.onDestroy(() => unlisten());
+  }
 
   private readonly syncPanelOverlay = afterRenderEffect(() => {
     const panel = this.panelRef()?.nativeElement;

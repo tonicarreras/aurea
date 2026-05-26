@@ -18,7 +18,7 @@ describe('AuTextarea', () => {
   }
 
   function queryTextarea(fixture: ComponentFixture<AuTextareaTestHost>): HTMLTextAreaElement {
-    return fixture.debugElement.query(By.css('.au-textarea__input'))!
+    return fixture.debugElement.query(By.css('textarea'))!
       .nativeElement as HTMLTextAreaElement;
   }
 
@@ -80,8 +80,8 @@ describe('AuTextarea', () => {
     const ta = queryTextarea(fix);
     expect(ta.getAttribute('aria-invalid')).toBe('true');
     expect(ta.getAttribute('aria-errormessage')).toBe('f-bio-error');
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('Too short');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('Too short');
   });
 
   it('onControlRowFocusin runs', () => {
@@ -113,7 +113,7 @@ describe('AuTextarea', () => {
       applyFieldHarnessInputs(f, { hint: 'Max 500 chars' });
     });
     const ta = queryTextarea(fix);
-    const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
+    const hint = fix.debugElement.query(By.css('[id$="-hint"]'))!.nativeElement;
     expect(ta.getAttribute('aria-describedby')).toBe(hint.id);
   });
 
@@ -121,7 +121,7 @@ describe('AuTextarea', () => {
     const fix = createFieldFixture(AuTextareaTestHost, { label: 'Bio' }, (f) => {
       f.componentInstance.required = true;
     });
-    const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     expect(label.textContent?.replace(/\s+/g, ' ').trim()).toContain('*');
   });
 
@@ -131,7 +131,7 @@ describe('AuTextarea', () => {
       f.componentInstance.required = true;
       f.componentRef.setInput('ffShowRequired', false);
     });
-    const label = fix.debugElement.query(By.css('.au-form-field__label'))!.nativeElement;
+    const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     expect(label.textContent).not.toContain('*');
   });
 
@@ -186,16 +186,16 @@ describe('AuTextarea', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'maxLength', message: 'Too long' }] as any;
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('Too long');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('Too long');
   });
 
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'required' }] as any;
     });
-    const err = fix.debugElement.query(By.css('.au-field-error__text'));
-    expect(err?.nativeElement.textContent?.trim()).toBe('required');
+    const err = fix.debugElement.query(By.css('[role="alert"]'));
+    expect(err?.nativeElement.textContent?.trim()).toContain('required');
   });
 
   it('marks aria-invalid when invalid without message', () => {
@@ -238,7 +238,7 @@ describe('AuTextarea', () => {
   it('onControlRowFocusout returns when focus stays inside row', () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-textarea__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> textarea)'))!.nativeElement;
     const ta = queryTextarea(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: ta });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
@@ -251,14 +251,14 @@ describe('AuTextarea', () => {
       f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }] as any;
     });
     expect(
-      fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
-    ).toBe('Manual');
+      fix.debugElement.query(By.css('[role="alert"]'))?.nativeElement.textContent?.trim(),
+    ).toContain('Manual');
   });
 
   it('applies and clears from-tab on control row', () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-textarea__control-row'))!.nativeElement;
+    const row = fix.debugElement.query(By.css('div:has(> textarea)'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('.au-textarea__control-row'))!
