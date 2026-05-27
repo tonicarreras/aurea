@@ -1,5 +1,6 @@
 <div
   class="au-input-text__control-row"
+  part="field"
   [class.au-input-text__control-row--password]="hasPasswordUi()"
   [class.au-input-text__control-row--from-tab]="fieldFocusByTab()"
   (focusin)="onControlRowFocusin()"
@@ -8,6 +9,7 @@
   <input
     #inputEl
     class="au-input-text__input"
+    part="input"
     [id]="controlId()"
     [attr.name]="name() || null"
     [type]="effectiveInputType()"
@@ -31,6 +33,7 @@
     <button
       type="button"
       class="au-input-text__reveal"
+      part="reveal"
       [attr.aria-pressed]="passwordRevealed()"
       [attr.aria-label]="passwordRevealed() ? 'Hide password' : 'Show password'"
       (click)="togglePasswordVisibility()"

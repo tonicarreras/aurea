@@ -11,22 +11,22 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-snug);
-  color: var(--au-color-text-primary);
+  color: var(--au-menu-item-fg);
   text-align: start;
   cursor: pointer;
   transition: background-color var(--au-duration-short) var(--au-ease-in-out);
 }
 
 .au-menu-item__btn:hover:not(:disabled) {
-  background: var(--au-color-surface-sunken);
+  background: var(--au-menu-item-bg-hover);
 }
 
 .au-menu-item__btn:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-menu-item-focus-shadow);
 }
 
 .au-menu-item__btn:disabled {
-  color: var(--au-color-text-disabled);
+  color: var(--au-menu-item-fg-disabled);
   cursor: not-allowed;
 }

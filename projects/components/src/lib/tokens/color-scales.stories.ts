@@ -53,9 +53,14 @@ function stepNumberRow(): string {
   ).join('');
 }
 
-function swatchBlock(theme: 'light' | 'dark'): string {
+function swatchBlock(theme: 'light' | 'dark' | 'toolbar'): string {
   const themeAttr = theme === 'dark' ? `data-au-theme="dark"` : '';
-  const sectionLabel = theme === 'light' ? 'Light theme' : 'Dark theme';
+  const sectionLabel =
+    theme === 'toolbar'
+      ? 'Current toolbar theme'
+      : theme === 'light'
+        ? 'Light theme'
+        : 'Dark theme';
 
   const scaleRows = SCALE_NAMES.map(
     (scale) => `
@@ -118,7 +123,7 @@ export const AllScales: Story = {
     docs: {
       description: {
         story:
-          'All 6 twelve-step scales in **light** and **dark**, with **Radix-style column groups** (Backgrounds → Interactive → Borders → Solid → Accessible text). Hover a swatch for the CSS variable and step role.',
+          'All 6 twelve-step scales in **light** and **dark** side-by-side, with **Radix-style column groups** (Backgrounds → Interactive → Borders → Solid → Accessible text). This comparison is fixed and does not depend on the Storybook theme toolbar.',
       },
     },
   },
@@ -133,6 +138,28 @@ export const AllScales: Story = {
         </p>
         ${swatchBlock('light')}
         ${swatchBlock('dark')}
+      </div>
+    `,
+  }),
+};
+
+export const ToolbarThemeScale: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Single scale matrix bound to the active Storybook theme toolbar (`auTheme` + high-contrast). Use this story to validate that theme switching is applied.',
+      },
+    },
+  },
+  render: () => ({
+    moduleMetadata: { imports: [] },
+    template: `
+      <div style="font-family: var(--au-font-sans, system-ui, sans-serif); max-width: 100%;">
+        <p style="font-size: 13px; color: #5c6b7d; margin: 0 0 16px; max-width: 52rem;">
+          This table follows the current Storybook toolbar theme.
+        </p>
+        ${swatchBlock('toolbar')}
       </div>
     `,
   }),

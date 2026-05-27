@@ -2,13 +2,15 @@
  * Aurea Button — solid, outline, ghost variants with touch-friendly targets.
  * Size: `data-au-size` on host (sm | md | lg).
  * Variant: `data-au-variant` on host (primary | secondary | outline | ghost).
+ *
+ * Skin: `--au-button-*` tokens from `au-component-tokens.css` / `au-theme-skin.css`.
  */
 @import url('../tokens/au-tokens.css');
 
 :host {
   display: inline-flex;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-button-fg, inherit);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -21,8 +23,8 @@ button.au-button__element {
   position: relative;
   box-sizing: border-box;
   margin: 0;
-  border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border: var(--au-button-border-width) solid var(--au-button-border);
+  border-radius: var(--au-button-radius);
   font: inherit;
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
@@ -30,7 +32,9 @@ button.au-button__element {
   letter-spacing: var(--au-tracking-ui);
   cursor: pointer;
   user-select: none;
-  box-shadow: var(--au-shadow-button);
+  background: var(--au-button-bg);
+  color: var(--au-button-fg);
+  box-shadow: var(--au-button-shadow);
   transition:
     var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
     var(--au-transition-color), transform var(--au-duration-micro) var(--au-ease-out);
@@ -61,104 +65,18 @@ button.au-button__element {
   font-size: var(--au-text-md);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Variants */
-/* -------------------------------------------------------------------------- */
-
-/* Primary: solid accent background */
-:host([data-au-variant='primary']) .au-button__element {
-  background: var(--au-color-action-primary);
-  border-color: var(--au-color-action-primary);
-  color: var(--au-color-text-on-solid);
-  box-shadow: var(--au-shadow-button-primary);
+.au-button__element:hover:not(:disabled) {
+  background: var(--au-button-bg-hover);
+  border-color: var(--au-button-border-hover);
+  color: var(--au-button-fg-hover);
+  box-shadow: var(--au-button-shadow-hover);
 }
 
-:host([data-au-variant='primary']) .au-button__element:hover:not(:disabled) {
-  background: var(--au-color-action-primary-hover);
-  border-color: var(--au-color-action-primary-hover);
-  box-shadow: var(--au-shadow-button-hover);
-}
-
-:host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
-  background: var(--au-color-action-primary-pressed);
-  border-color: var(--au-color-action-primary-pressed);
-  transform: scale(0.97);
-}
-
-/* HC primary: ink frame on fill (no stacked shadow + fill border) */
-:host-context([data-au-theme='high-contrast']) :host([data-au-variant='primary']) .au-button__element,
-:host-context([data-au-theme='high-contrast'])
-  :host([data-au-variant='primary'])
-  .au-button__element:hover:not(:disabled),
-:host-context([data-au-theme='high-contrast'])
-  :host([data-au-variant='primary'])
-  .au-button__element:active:not(:disabled) {
-  border-width: 2px;
-  border-color: #000000;
-  box-shadow: none;
-}
-
-:host-context([data-au-theme='high-contrast-dark']) :host([data-au-variant='primary']) .au-button__element,
-:host-context([data-au-theme='high-contrast-dark'])
-  :host([data-au-variant='primary'])
-  .au-button__element:hover:not(:disabled),
-:host-context([data-au-theme='high-contrast-dark'])
-  :host([data-au-variant='primary'])
-  .au-button__element:active:not(:disabled) {
-  border-width: 2px;
-  border-color: #ffffff;
-  box-shadow: none;
-}
-
-/* Secondary: filled surface, accent text */
-:host([data-au-variant='secondary']) .au-button__element {
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-border-default);
-  color: var(--au-color-text-primary);
-}
-
-:host([data-au-variant='secondary']) .au-button__element:hover:not(:disabled) {
-  background: var(--au-color-surface-elevated);
-  border-color: var(--au-color-border-strong);
-  box-shadow: var(--au-shadow-button-hover);
-}
-
-:host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
-  background: var(--au-color-surface-sunken);
-  transform: scale(0.97);
-}
-
-/* Outline: border-only, transparent background */
-:host([data-au-variant='outline']) .au-button__element {
-  background: transparent;
-  border-color: var(--au-color-action-primary);
-  color: var(--au-color-action-primary);
-}
-
-:host([data-au-variant='outline']) .au-button__element:hover:not(:disabled) {
-  background: var(--au-color-surface-elevated);
-}
-
-:host([data-au-variant='outline']) .au-button__element:active:not(:disabled) {
-  background: var(--au-color-surface-sunken);
-  transform: scale(0.97);
-}
-
-/* Ghost: text-only, no border */
-:host([data-au-variant='ghost']) .au-button__element {
-  background: transparent;
-  border-color: transparent;
-  color: var(--au-color-action-primary);
-  box-shadow: none;
-}
-
-:host([data-au-variant='ghost']) .au-button__element:hover:not(:disabled) {
-  background: var(--au-color-surface-elevated);
-}
-
-:host([data-au-variant='ghost']) .au-button__element:active:not(:disabled) {
-  background: var(--au-color-surface-sunken);
-  transform: scale(0.97);
+.au-button__element:active:not(:disabled) {
+  background: var(--au-button-bg-active);
+  border-color: var(--au-button-border-active);
+  color: var(--au-button-fg-active);
+  transform: var(--au-button-active-transform);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -191,14 +109,13 @@ button.au-button__element {
 
 .au-button__element:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-control);
+  box-shadow: var(--au-button-focus-shadow);
 }
 
-/* Outer ring on Tab only (not :focus-visible, which fires on click too) */
 .au-button__element--from-tab:focus-visible {
   box-shadow: none;
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-button-focus-outline);
+  outline-offset: var(--au-button-focus-outline-offset);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -228,10 +145,6 @@ button.au-button__element {
   width: 1em;
   height: 1em;
 }
-
-/* -------------------------------------------------------------------------- */
-/* Motion: reduced motion support */
-/* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   .au-button__element {

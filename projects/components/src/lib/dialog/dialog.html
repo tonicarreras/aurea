@@ -1,6 +1,7 @@
 <dialog
   #dialog
   class="au-dialog__native"
+  part="dialog"
   [attr.aria-labelledby]="title() ? titleHeadingId() : null"
   [attr.aria-label]="!title() && ariaLabel().trim() ? ariaLabel().trim() : null"
   (cancel)="onDialogCancel($event)"
@@ -10,14 +11,19 @@
 >
   <div
     class="au-dialog__panel"
+    part="panel"
     (click)="$event.stopPropagation()"
   >
     @if (title() || showCloseButton()) {
-      <header class="au-dialog__header">
+      <header
+        class="au-dialog__header"
+        part="header"
+      >
         @if (title()) {
           <h2
             [id]="titleHeadingId()"
             class="au-dialog__title"
+            part="title"
           >
             {{ title() }}
           </h2>
@@ -26,6 +32,7 @@
           <button
             type="button"
             class="au-dialog__close"
+            part="close"
             aria-label="Close dialog"
             (click)="onCloseButtonClick()"
           >
@@ -38,14 +45,20 @@
       </header>
     }
 
-    <div class="au-dialog__body">
+    <div
+      class="au-dialog__body"
+      part="body"
+    >
       <div class="au-dialog__body-inner">
         <ng-content></ng-content>
       </div>
     </div>
 
     @if (hasFooter()) {
-      <footer class="au-dialog__footer">
+      <footer
+        class="au-dialog__footer"
+        part="footer"
+      >
         <ng-content select="[auDialogFooter]"></ng-content>
       </footer>
     }

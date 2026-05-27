@@ -2,6 +2,8 @@
  * Aurea Chip — compact tags, filters, and removable tokens.
  * Variant: `data-au-variant` (filled | outline | accent).
  * Size: `data-au-size` (sm | md).
+ *
+ * Skin: `--au-chip-*` tokens from `au-component-tokens.css` / `au-theme-skin.css`.
  */
 @import url('../tokens/au-tokens.css');
 
@@ -9,7 +11,7 @@
   display: inline-flex;
   max-width: 100%;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-chip-fg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -22,15 +24,15 @@
   box-sizing: border-box;
   max-width: 100%;
   margin: 0;
-  border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border: 1px solid var(--au-chip-border);
+  border-radius: var(--au-chip-radius);
   font: inherit;
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
   letter-spacing: var(--au-tracking-ui);
-  color: var(--au-color-text-primary);
-  background: var(--au-color-surface-elevated);
-  box-shadow: var(--au-shadow-control);
+  color: var(--au-chip-fg);
+  background: var(--au-chip-bg);
+  box-shadow: var(--au-chip-shadow);
   transition:
     var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
     var(--au-transition-color);
@@ -51,6 +53,30 @@ button.au-chip__surface {
   text-align: start;
 }
 
+/* Variant token wiring on :host (shadow-safe) */
+:host([data-au-variant='filled']),
+:host:not([data-au-variant]) {
+  --au-chip-bg: var(--au-color-surface-elevated);
+  --au-chip-border: var(--au-color-border-subtle);
+}
+
+:host([data-au-variant='outline']) {
+  --au-chip-bg: transparent;
+  --au-chip-border: var(--au-color-border-default);
+}
+
+:host([data-au-variant='accent']),
+:host([data-au-selected]) {
+  --au-chip-bg: var(--au-color-select-option-highlight-bg);
+  --au-chip-border: var(--au-color-select-option-highlight-marker);
+  --au-chip-fg: var(--au-color-select-option-highlight-text);
+}
+
+:host([data-au-variant='accent']) button.au-chip__surface:hover:not(:disabled),
+:host([data-au-selected]) button.au-chip__surface:hover:not(:disabled) {
+  --au-chip-border-hover: var(--au-color-action-primary-hover);
+}
+
 /* Sizes */
 :host([data-au-size='sm']) .au-chip__surface {
   min-height: 1.5rem;
@@ -67,52 +93,28 @@ button.au-chip__surface {
   font-size: var(--au-text-sm);
 }
 
-/* Variants */
-:host([data-au-variant='filled']) .au-chip__surface {
-  background: var(--au-color-surface-elevated);
-  border-color: var(--au-color-border-subtle);
-}
-
-:host([data-au-variant='outline']) .au-chip__surface {
-  background: transparent;
-  border-color: var(--au-color-border-default);
-}
-
-:host([data-au-variant='accent']) .au-chip__surface,
-:host([data-au-selected]) .au-chip__surface {
-  background: var(--au-color-select-option-highlight-bg);
-  border-color: var(--au-color-select-option-highlight-marker);
-  color: var(--au-color-select-option-highlight-text);
-}
-
 /* Selectable hover / pressed */
 button.au-chip__surface:hover:not(:disabled) {
-  background: var(--au-color-surface-sunken);
-  border-color: var(--au-color-border-default);
-}
-
-:host([data-au-variant='accent']) button.au-chip__surface:hover:not(:disabled),
-:host([data-au-selected]) button.au-chip__surface:hover:not(:disabled) {
-  background: var(--au-color-select-option-highlight-bg);
-  border-color: var(--au-color-action-primary-hover);
+  background: var(--au-chip-bg-hover);
+  border-color: var(--au-chip-border-hover);
 }
 
 button.au-chip__surface:active:not(:disabled) {
-  background: var(--au-color-surface-sunken);
+  background: var(--au-chip-bg-active);
 }
 
 :host([data-au-selected]) button.au-chip__surface[aria-pressed='true'] {
-  background: var(--au-color-select-option-highlight-bg);
-  border-color: var(--au-color-select-option-highlight-marker);
-  color: var(--au-color-select-option-highlight-text);
+  background: var(--au-chip-bg-selected);
+  border-color: var(--au-chip-border-selected);
+  color: var(--au-chip-fg-selected);
 }
 
 /* Disabled — explicit colors (opacity fails axe color-contrast on label text) */
 .au-chip__surface--disabled,
 button.au-chip__surface:disabled {
-  color: var(--au-color-text-secondary);
-  background: var(--au-color-form-disabled-surface);
-  border-color: var(--au-color-border-subtle);
+  color: var(--au-chip-fg-disabled);
+  background: var(--au-chip-bg-disabled);
+  border-color: var(--au-chip-border-disabled);
   cursor: not-allowed;
 }
 
@@ -153,12 +155,12 @@ button.au-chip__surface:disabled {
 }
 
 .au-chip__remove:hover:not(:disabled) {
-  background: var(--au-color-surface-sunken);
-  color: var(--au-color-text-primary);
+  background: var(--au-chip-remove-bg-hover);
+  color: var(--au-chip-remove-fg-hover);
 }
 
 .au-chip__remove:disabled {
-  color: var(--au-color-text-disabled);
+  color: var(--au-chip-remove-fg-disabled);
   cursor: not-allowed;
 }
 
@@ -170,14 +172,14 @@ button.au-chip__surface:focus,
 
 button.au-chip__surface:focus-visible,
 .au-chip__remove:focus-visible {
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-chip-focus-shadow);
 }
 
 button.au-chip__surface--from-tab:focus-visible,
 .au-chip__remove--from-tab:focus-visible {
   box-shadow: none;
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-chip-focus-outline);
+  outline-offset: var(--au-chip-focus-outline-offset);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,12 +1,14 @@
 /**
  * Snackbar — transient feedback toast aligned with Aurea surfaces.
+ *
+ * Skin: `--au-snackbar-*` tokens from `au-component-tokens.css` / `au-theme-skin.css`.
  */
 @import url('../tokens/au-tokens.css');
 
 :host {
   display: none;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-snackbar-fg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -56,6 +58,30 @@
   right: var(--au-space-4);
 }
 
+:host([data-au-variant='success']) {
+  --au-snackbar-bg: var(--au-color-feedback-success-bg);
+  --au-snackbar-border: var(--au-color-feedback-success-border);
+  --au-snackbar-accent: var(--au-color-semantic-success);
+}
+
+:host([data-au-variant='warning']) {
+  --au-snackbar-bg: var(--au-color-feedback-warning-bg);
+  --au-snackbar-border: var(--au-color-feedback-warning-border);
+  --au-snackbar-accent: var(--au-color-semantic-warning);
+}
+
+:host([data-au-variant='error']) {
+  --au-snackbar-bg: var(--au-color-feedback-error-bg);
+  --au-snackbar-border: var(--au-color-feedback-error-border);
+  --au-snackbar-accent: var(--au-color-semantic-error);
+}
+
+:host([data-au-variant='info']) {
+  --au-snackbar-bg: var(--au-color-feedback-info-bg);
+  --au-snackbar-border: var(--au-color-feedback-info-border);
+  --au-snackbar-accent: var(--au-color-semantic-info);
+}
+
 .au-snackbar__surface {
   display: flex;
   align-items: center;
@@ -63,39 +89,13 @@
   box-sizing: border-box;
   width: 100%;
   padding: var(--au-space-3) var(--au-space-4);
-  border: 1px solid var(--au-color-border-default);
-  border-radius: var(--au-radius-lg);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-float);
-  color: var(--au-color-text-primary);
+  border: 1px solid var(--au-snackbar-border);
+  border-radius: var(--au-snackbar-radius);
+  background: var(--au-snackbar-bg);
+  box-shadow: var(--au-snackbar-shadow);
+  color: var(--au-snackbar-fg);
   pointer-events: auto;
   animation: au-snackbar-in var(--au-motion-toast);
-}
-
-:host([data-au-variant='default']) .au-snackbar__surface,
-:host:not([data-au-variant]) .au-snackbar__surface {
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-border-default);
-}
-
-:host([data-au-variant='success']) .au-snackbar__surface {
-  background: var(--au-color-feedback-success-bg);
-  border-color: var(--au-color-feedback-success-border);
-}
-
-:host([data-au-variant='warning']) .au-snackbar__surface {
-  background: var(--au-color-feedback-warning-bg);
-  border-color: var(--au-color-feedback-warning-border);
-}
-
-:host([data-au-variant='error']) .au-snackbar__surface {
-  background: var(--au-color-feedback-error-bg);
-  border-color: var(--au-color-feedback-error-border);
-}
-
-:host([data-au-variant='info']) .au-snackbar__surface {
-  background: var(--au-color-feedback-info-bg);
-  border-color: var(--au-color-feedback-info-border);
 }
 
 .au-snackbar__icon {
@@ -103,23 +103,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  color: var(--au-snackbar-accent, var(--au-color-text-secondary));
-}
-
-:host([data-au-variant='success']) .au-snackbar__icon {
-  color: var(--au-color-semantic-success);
-}
-
-:host([data-au-variant='warning']) .au-snackbar__icon {
-  color: var(--au-color-semantic-warning);
-}
-
-:host([data-au-variant='error']) .au-snackbar__icon {
-  color: var(--au-color-semantic-error);
-}
-
-:host([data-au-variant='info']) .au-snackbar__icon {
-  color: var(--au-color-semantic-info);
+  color: var(--au-snackbar-accent, inherit);
 }
 
 .au-snackbar__body {
@@ -151,7 +135,7 @@
   border: none;
   border-radius: var(--au-radius-sm);
   background: transparent;
-  color: var(--au-color-link);
+  color: var(--au-snackbar-action-color);
   font-family: inherit;
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-semibold);
@@ -161,11 +145,11 @@
 }
 
 .au-snackbar__action:hover {
-  background: color-mix(in srgb, var(--au-color-link) 10%, transparent);
+  background: color-mix(in srgb, var(--au-snackbar-action-color) 10%, transparent);
 }
 
 .au-snackbar__action:focus-visible {
-  outline: var(--au-focus-ring-width) solid var(--au-color-focus-ring);
+  outline: var(--au-snackbar-focus-outline);
   outline-offset: var(--au-focus-ring-offset);
 }
 
@@ -180,18 +164,19 @@
   border: none;
   border-radius: var(--au-radius-sm);
   background: transparent;
-  color: var(--au-color-text-secondary);
+  color: inherit;
   cursor: pointer;
   transition: var(--au-transition-control);
+  opacity: 0.72;
 }
 
 .au-snackbar__close:hover {
-  background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
-  color: var(--au-color-text-primary);
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  opacity: 1;
 }
 
 .au-snackbar__close:focus-visible {
-  outline: var(--au-focus-ring-width) solid var(--au-color-focus-ring);
+  outline: var(--au-snackbar-focus-outline);
   outline-offset: var(--au-focus-ring-offset);
 }
 

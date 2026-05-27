@@ -1,6 +1,7 @@
 <div class="au-select__control-wrap">
   <div
     class="au-select__control-row"
+    part="field"
     [class.au-select__control-row--open]="listboxVisible()"
     [class.au-select__control-row--from-tab]="fieldFocusByTab()"
     (focusin)="onControlRowFocusin()"
@@ -10,6 +11,7 @@
       #triggerEl
       type="button"
       class="au-select__trigger"
+      part="trigger"
       role="combobox"
       [id]="controlId()"
       [attr.aria-expanded]="listboxVisible()"
@@ -26,6 +28,7 @@
     >
       <span
         class="au-select__value"
+        part="value"
         [class.au-select__value--placeholder]="showingPlaceholder()"
       >
         {{ triggerLabel() }}
@@ -34,6 +37,7 @@
 
     <span
       class="au-select__icon"
+      part="icon"
       aria-hidden="true"
     >
       <svg
@@ -59,6 +63,7 @@
       #listboxEl
       [id]="listboxId()"
       class="au-select__listbox au-field-listbox"
+      part="listbox"
       role="listbox"
       [attr.aria-label]="formField.label() || 'Options'"
     >
@@ -66,6 +71,7 @@
         <li
           [id]="placeholderOptionId()"
           class="au-field-listbox__option au-field-listbox__option--placeholder"
+          part="option option-placeholder"
           role="option"
           [attr.aria-selected]="value() === null"
           [class.au-field-listbox__option--active]="highlightedIndex() === placeholderOptionIndex()"
@@ -79,6 +85,7 @@
         <li
           [id]="optionId(i)"
           class="au-field-listbox__option"
+          part="option"
           role="option"
           [attr.aria-selected]="value() === opt.value"
           [attr.aria-disabled]="opt.disabled ? 'true' : null"

@@ -7,18 +7,17 @@
   --au-table-shell-pad: var(--au-space-4);
   --au-table-cell-x: var(--au-space-4);
   --au-table-cell-y: var(--au-space-3-5);
-  --au-table-header-bg: var(--au-color-surface-elevated);
-  --au-table-row-hover: var(--au-color-surface-elevated);
+  --au-table-row-hover: var(--au-table-header-bg);
   --au-table-row-stripe: color-mix(
     in srgb,
-    var(--au-color-surface-elevated) 55%,
-    var(--au-color-surface-raised)
+    var(--au-table-header-bg) 55%,
+    var(--au-table-shell-bg)
   );
 
   display: block;
   width: 100%;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-table-cell-fg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -32,10 +31,10 @@
 .au-table__shell {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--au-color-border-subtle);
+  border: 1px solid var(--au-table-shell-border);
   border-radius: var(--au-radius-lg);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-raised);
+  background: var(--au-table-shell-bg);
+  box-shadow: var(--au-table-shell-shadow);
   overflow: hidden;
 }
 
@@ -44,7 +43,7 @@
   flex-direction: column;
   gap: var(--au-space-1);
   padding: var(--au-table-shell-pad) var(--au-table-shell-pad) var(--au-space-3);
-  border-bottom: 1px solid var(--au-color-border-subtle);
+  border-bottom: 1px solid var(--au-table-row-border);
 }
 
 .au-table__title {
@@ -52,14 +51,14 @@
   font-size: var(--au-text-md);
   font-weight: var(--au-weight-semibold);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-primary);
+  color: var(--au-table-header-fg);
 }
 
 .au-table__description {
   margin: 0;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-secondary);
+  color: var(--au-table-cell-fg-secondary);
 }
 
 .au-table__scroll {
@@ -97,8 +96,8 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-secondary);
-  border-bottom: 1px solid var(--au-color-border-default);
+  color: var(--au-table-cell-fg-secondary);
+  border-bottom: 1px solid var(--au-table-row-border);
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -112,7 +111,7 @@
 }
 
 .au-table__header-cell--sorted {
-  color: var(--au-color-text-primary);
+  color: var(--au-table-header-fg);
 }
 
 :host([data-au-sticky-header]) .au-table__header-cell {
@@ -147,18 +146,18 @@
   display: inline-flex;
   width: 0.875rem;
   height: 0.875rem;
-  color: var(--au-color-text-tertiary);
+  color: var(--au-pagination-fg);
   opacity: 0.55;
 }
 
 .au-table__header-cell--sorted .au-table__sort-icon {
-  color: var(--au-color-action-primary);
+  color: var(--au-tab-indicator);
   opacity: 1;
 }
 
 .au-table__sort-btn:focus-visible {
-  outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  outline: var(--au-table-focus-outline);
+  outline-offset: 2px;
 }
 
 .au-table__sort-btn svg {
@@ -169,8 +168,8 @@
 
 .au-table__cell {
   padding: var(--au-table-cell-y) var(--au-table-cell-x);
-  color: var(--au-color-text-primary);
-  border-bottom: 1px solid var(--au-color-border-subtle);
+  color: var(--au-table-cell-fg);
+  border-bottom: 1px solid var(--au-table-row-border);
   vertical-align: middle;
 }
 
@@ -188,7 +187,7 @@
 }
 
 .au-table__cell--secondary {
-  color: var(--au-color-text-secondary);
+  color: var(--au-table-cell-fg-secondary);
 }
 
 .au-table__grid tbody tr:last-child .au-table__cell {
@@ -196,7 +195,7 @@
 }
 
 .au-table__grid tbody tr {
-  background: var(--au-color-surface-raised);
+  background: var(--au-table-shell-bg);
   transition: background-color var(--au-duration-short) var(--au-ease-out);
   outline: none;
   cursor: pointer;
@@ -207,8 +206,8 @@
 }
 
 .au-table__grid tbody tr:focus-visible {
-  outline: none;
-  box-shadow: inset var(--au-shadow-focus-ring);
+  outline: var(--au-table-focus-outline);
+  outline-offset: -2px;
 }
 
 :host([data-au-striped]) .au-table__grid tbody tr:nth-child(even) {
@@ -219,16 +218,16 @@
 .au-table__row--selected {
   background: color-mix(
     in srgb,
-    var(--au-color-action-primary) 8%,
-    var(--au-color-surface-raised)
+    var(--au-tab-indicator) 8%,
+    var(--au-table-shell-bg)
   ) !important;
-  box-shadow: inset 3px 0 0 var(--au-color-action-primary);
+  box-shadow: inset 3px 0 0 var(--au-tab-indicator);
 }
 
 .au-table__empty-row td {
   padding: var(--au-space-6) var(--au-table-cell-x);
   text-align: center;
-  color: var(--au-color-text-tertiary);
+  color: var(--au-pagination-fg);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6,9 +6,6 @@
 @import url('../tokens/au-tokens.css');
 
 :host {
-  --au-skeleton-base: var(--au-color-skeleton-base);
-  --au-skeleton-highlight: var(--au-color-skeleton-shimmer);
-
   display: block;
   position: relative;
   overflow: hidden;
@@ -17,7 +14,7 @@
   min-width: 0;
   box-sizing: border-box;
   background-color: var(--au-skeleton-base);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--au-color-text-primary) 6%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 6%, transparent);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -65,7 +62,7 @@
   }
 
   50% {
-    background-color: var(--au-skeleton-highlight);
+    background-color: var(--au-skeleton-shimmer);
   }
 }
 
@@ -82,9 +79,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in srgb, var(--au-skeleton-highlight) 55%, transparent) 42%,
-    var(--au-skeleton-highlight) 50%,
-    color-mix(in srgb, var(--au-skeleton-highlight) 55%, transparent) 58%,
+    color-mix(in srgb, var(--au-skeleton-shimmer) 55%, transparent) 42%,
+    var(--au-skeleton-shimmer) 50%,
+    color-mix(in srgb, var(--au-skeleton-shimmer) 55%, transparent) 58%,
     transparent 100%
   );
   animation: au-skeleton-wave 1.35s ease-in-out infinite;
@@ -111,6 +108,6 @@
   }
 
   :host([data-au-animation='pulse']) {
-    background-color: color-mix(in srgb, var(--au-skeleton-base) 65%, var(--au-skeleton-highlight));
+    background-color: color-mix(in srgb, var(--au-skeleton-base) 65%, var(--au-skeleton-shimmer));
   }
 }

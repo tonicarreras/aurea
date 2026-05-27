@@ -39,6 +39,10 @@
   ],
   "exports": {
     "./styles/au-tokens.css": "./styles/au-tokens.css",
+    "./styles/au-theme-default.css": "./styles/au-theme-default.css",
+    "./styles/au-primitives.css": "./styles/au-primitives.css",
+    "./styles/au-component-tokens.css": "./styles/au-component-tokens.css",
+    "./styles/au-theme-skin.css": "./styles/au-theme-skin.css",
     "./styles/au-field-error.css": "./styles/au-field-error.css",
     "./styles/au-field-listbox.css": "./styles/au-field-listbox.css"
   }

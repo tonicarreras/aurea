@@ -8,7 +8,7 @@
   border: none;
   border-radius: 0;
   background: transparent;
-  color: var(--au-color-text-secondary);
+  color: var(--au-step-fg);
   font: inherit;
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
@@ -33,20 +33,20 @@
 }
 
 :host:hover:not(:disabled) {
-  color: var(--au-color-text-primary);
-  background: color-mix(in srgb, var(--au-color-text-primary) 4%, transparent);
+  color: var(--au-step-fg-active);
+  background: color-mix(in srgb, var(--au-step-fg-active) 4%, transparent);
 }
 
 :host(.au-steps__step--selected) {
-  color: var(--au-color-action-primary);
+  color: var(--au-step-indicator);
 }
 
 :host(.au-steps__step--selected)::after {
-  background: var(--au-color-action-primary);
+  background: var(--au-step-indicator);
 }
 
 :host:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
+  outline: var(--au-step-focus-outline);
   outline-offset: -2px;
 }
 

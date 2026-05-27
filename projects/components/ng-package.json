@@ -29,6 +29,26 @@
       "glob": "au-field-listbox.css",
       "input": "src/lib/styles",
       "output": "styles"
+    },
+    {
+      "glob": "au-theme-default.css",
+      "input": "src/lib/styles",
+      "output": "styles"
+    },
+    {
+      "glob": "au-primitives.css",
+      "input": "src/lib/styles",
+      "output": "styles"
+    },
+    {
+      "glob": "au-component-tokens.css",
+      "input": "src/lib/styles",
+      "output": "styles"
+    },
+    {
+      "glob": "au-theme-skin.css",
+      "input": "src/lib/styles",
+      "output": "styles"
     }
   ]
 }

@@ -2,5 +2,5 @@
 
 :host {
   margin: 0;
-  color: var(--au-color-text-secondary);
+  color: var(--au-card-body-color);
 }

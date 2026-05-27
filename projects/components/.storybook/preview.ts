@@ -53,6 +53,20 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    auStyle: {
+      description:
+        'Modo visual global (`default` o `unstyled`) para separar primitivos de tema.',
+      defaultValue: 'default',
+      toolbar: {
+        title: 'Estilo',
+        icon: 'paintbrush',
+        items: [
+          { value: 'default', title: 'Default' },
+          { value: 'unstyled', title: 'Primitives' },
+        ],
+        dynamicTitle: true,
+      },
+    },
     docsLocale: {
       description: 'Idioma de Autodocs (overview desde la documentación)',
       defaultValue: 'en',
@@ -71,11 +85,12 @@ const preview: Preview = {
     auTheme: 'light',
     auHighContrast: 'off',
     auDensity: 'comfortable',
+    auStyle: 'default',
     docsLocale: 'en',
   },
   decorators: [
     (storyFn, context) => {
-      applyPreviewGlobals(context.globals as Record<string, unknown>);
+      applyPreviewGlobals(context.globals);
       return storyFn();
     },
   ],

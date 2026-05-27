@@ -1,0 +1,10 @@
+/**
+ * Aurea primitives / unstyled bundle.
+ *
+ * Import when you want scales + unstyled component token baselines only.
+ * Pair with `[auStyle]="'unstyled'"` or `data-au-style="unstyled"` on a container.
+ *
+ * For the full default look, use `au-theme-default.css` instead.
+ */
+@import './au-scales.css';
+@import './au-component-tokens.css';

@@ -7,7 +7,7 @@
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-field-text-color, inherit);
   color-scheme: inherit;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -49,12 +49,12 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
+  color: var(--au-field-label-color);
   letter-spacing: var(--au-tracking-ui);
 }
 
 .au-input-date__required {
-  color: var(--au-color-form-error);
+  color: var(--au-field-required-color);
   font-weight: var(--au-weight-semibold);
 }
 
@@ -66,48 +66,51 @@
   align-items: stretch;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  border: 1px solid var(--au-field-border);
+  border-radius: var(--au-field-radius);
+  background: var(--au-field-bg);
+  box-shadow: var(--au-field-shadow);
   transition: var(--au-transition-control);
 }
 
 .au-input-date__control-row:has(.au-input-date__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-field-border-hover);
 }
 
 .au-input-date__control-row:has(.au-input-date__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-bg);
 }
 
 .au-input-date__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-field-border-focus);
+  box-shadow: var(--au-field-shadow-focus);
 }
 
 .au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  box-shadow: var(--au-field-shadow-focus-error);
 }
 
 .au-input-date__control-row--from-tab:focus-within {
   box-shadow: none;
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  background: var(--au-field-focus-tab-bg);
+  border-color: var(--au-field-focus-tab-border);
+  outline: var(--au-field-focus-tab-outline);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-input-date__control-row--from-tab:focus-within:has(.au-input-date__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  outline: 2px solid var(--au-color-form-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  outline: 2px solid var(--au-field-error-border);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-input-date__control-row:has(.au-input-date__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-field-disabled-border);
+  background: var(--au-field-disabled-bg);
   box-shadow: none;
 }
 
@@ -125,11 +128,11 @@
   font-family: inherit;
   font-size: var(--au-size-field-text-md);
   line-height: var(--au-size-field-h-md);
-  color: var(--au-color-form-text);
-  caret-color: var(--au-color-form-caret);
+  color: var(--au-field-text-color);
+  caret-color: var(--au-field-caret-color);
   outline: none;
   color-scheme: inherit;
-  accent-color: var(--au-color-date-picker-accent);
+  accent-color: var(--au-date-picker-accent);
 }
 
 :host([data-au-size='sm']) .au-input-date__input {
@@ -156,14 +159,14 @@
 
 .au-input-date__input:disabled {
   cursor: not-allowed;
-  color: var(--au-color-form-disabled-foreground);
+  color: var(--au-field-disabled-fg);
   opacity: 0.9;
 }
 
 /* Inline date segments (Chromium / Safari) */
 .au-input-date__input::-webkit-datetime-edit {
   padding: 0;
-  color: var(--au-color-form-text);
+  color: var(--au-field-text-color);
 }
 
 .au-input-date__input::-webkit-datetime-edit-fields-wrapper {
@@ -171,7 +174,7 @@
 }
 
 .au-input-date__input::-webkit-datetime-edit-text {
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-hint-color);
   padding: 0 0.1em;
 }
 
@@ -180,14 +183,14 @@
 .au-input-date__input::-webkit-datetime-edit-year-field {
   padding: 0 0.15em;
   border-radius: var(--au-radius-xs);
-  color: var(--au-color-form-text);
+  color: var(--au-field-text-color);
 }
 
 .au-input-date__input::-webkit-datetime-edit-day-field:focus,
 .au-input-date__input::-webkit-datetime-edit-month-field:focus,
 .au-input-date__input::-webkit-datetime-edit-year-field:focus {
-  background-color: var(--au-color-date-picker-edit-highlight);
-  color: var(--au-color-form-text);
+  background-color: var(--au-date-picker-highlight);
+  color: var(--au-field-text-color);
   outline: none;
 }
 
@@ -201,7 +204,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  color: var(--au-color-date-picker-icon);
+  color: var(--au-date-picker-icon-color);
   transition: color var(--au-duration-short) var(--au-ease-in-out);
 }
 
@@ -225,15 +228,15 @@
 
 .au-input-date__control-row:has(.au-input-date__input:not(:disabled):hover) .au-input-date__icon,
 .au-input-date__control-row:focus-within .au-input-date__icon {
-  color: var(--au-color-date-picker-icon-hover);
+  color: var(--au-date-picker-icon-hover);
 }
 
 .au-input-date__control-row:focus-within .au-input-date__icon {
-  color: var(--au-color-date-picker-icon-active);
+  color: var(--au-date-picker-icon-active);
 }
 
 .au-input-date__control-row:has(.au-input-date__input:disabled) .au-input-date__icon {
-  color: var(--au-color-form-disabled-foreground);
+  color: var(--au-field-disabled-fg);
   opacity: 0.9;
 }
 
@@ -273,7 +276,7 @@
   margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-hint-color);
 }
 
 @media (prefers-reduced-motion: reduce) {

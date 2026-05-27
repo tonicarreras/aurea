@@ -6,7 +6,7 @@
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-tab-panel-fg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -47,13 +47,13 @@
 }
 
 :host([data-au-variant='line']) .au-tabs__list {
-  border-bottom: 1px solid var(--au-color-border-subtle);
+  border-bottom: 1px solid var(--au-tabs-list-border);
   gap: var(--au-space-1);
 }
 
 :host([data-au-orientation='vertical'][data-au-variant='line']) .au-tabs__list {
   border-bottom: none;
-  border-right: 1px solid var(--au-color-border-subtle);
+  border-right: 1px solid var(--au-tabs-list-border);
   padding-right: var(--au-space-2);
 }
 
@@ -61,8 +61,8 @@
   gap: var(--au-space-1);
   padding: var(--au-space-0-5);
   border-radius: var(--au-radius-md);
-  background: var(--au-color-surface-sunken);
-  border: 1px solid var(--au-color-border-subtle);
+  background: var(--au-tabs-list-bg);
+  border: 1px solid var(--au-tabs-list-border);
   width: fit-content;
   max-width: 100%;
 }

@@ -1,6 +1,8 @@
 /**
  * Aurea Message — inline callouts (default + semantic variants).
  * Variant: `data-au-variant` on host.
+ *
+ * Skin: `--au-message-*` tokens from `au-component-tokens.css` / `au-theme-skin.css`.
  */
 @import url('../tokens/au-tokens.css');
 
@@ -19,11 +21,11 @@
   gap: var(--au-space-3);
   box-sizing: border-box;
   padding: var(--au-space-3) var(--au-space-4);
-  border: 1px solid var(--au-message-border, var(--au-color-border-default));
-  border-radius: var(--au-radius-sm);
-  background: var(--au-message-bg, var(--au-color-surface-elevated));
-  color: var(--au-message-text, var(--au-color-text-primary));
-  box-shadow: var(--au-shadow-raised);
+  border: var(--au-message-border-width) solid var(--au-message-border);
+  border-radius: var(--au-message-radius);
+  background: var(--au-message-bg);
+  color: var(--au-message-fg);
+  box-shadow: var(--au-message-shadow);
 }
 
 .au-message__icon {
@@ -33,7 +35,7 @@
   justify-content: center;
   width: var(--au-message-line-height);
   height: var(--au-message-line-height);
-  color: var(--au-message-accent, var(--au-color-text-secondary));
+  color: var(--au-message-accent);
 }
 
 .au-message__icon au-icon {
@@ -50,14 +52,14 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-semibold);
   line-height: var(--au-leading-snug);
-  color: var(--au-message-title, var(--au-message-text, var(--au-color-text-primary)));
+  color: var(--au-message-fg);
 }
 
 .au-message__text {
   margin: 0;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-message-text, var(--au-color-text-primary));
+  color: var(--au-message-fg);
 }
 
 .au-message__text:empty {
@@ -85,7 +87,7 @@
 }
 
 .au-message__close:hover {
-  background: var(--au-color-surface-sunken);
+  background: var(--au-message-close-bg-hover);
 }
 
 .au-message__close:focus {
@@ -93,109 +95,70 @@
 }
 
 .au-message__close:focus-visible {
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-message-focus-shadow);
+  outline: var(--au-message-focus-outline);
+  outline-offset: var(--au-message-focus-outline-offset);
 }
 
-/* Variants */
-:host([data-au-variant='default']) .au-message__surface {
+/* Variant token wiring on :host (shadow-safe; theme-skin mirrors for document-level overrides) */
+:host([data-au-variant='default']) {
   --au-message-bg: var(--au-color-surface-elevated);
   --au-message-border: var(--au-color-border-default);
+  --au-message-fg: var(--au-color-text-primary);
   --au-message-accent: var(--au-color-text-secondary);
-  --au-message-text: var(--au-color-text-primary);
 }
 
-:host([data-au-variant='success']) .au-message__surface {
+:host([data-au-variant='success']) {
   --au-message-bg: var(--au-color-feedback-success-bg);
   --au-message-border: var(--au-color-feedback-success-border);
-  --au-message-ink: var(--au-color-feedback-success-title);
+  --au-message-fg: var(--au-color-feedback-success-title);
   --au-message-accent: var(--au-color-feedback-success-border);
 }
 
-:host([data-au-variant='warning']) .au-message__surface {
+:host([data-au-variant='warning']) {
   --au-message-bg: var(--au-color-feedback-warning-bg);
   --au-message-border: var(--au-color-feedback-warning-border);
-  --au-message-ink: var(--au-color-feedback-warning-title);
+  --au-message-fg: var(--au-color-feedback-warning-title);
   --au-message-accent: var(--au-color-feedback-warning-border);
 }
 
-:host([data-au-variant='error']) .au-message__surface {
+:host([data-au-variant='error']) {
   --au-message-bg: var(--au-color-feedback-error-bg);
   --au-message-border: var(--au-color-feedback-error-border);
-  --au-message-ink: var(--au-color-feedback-error-title);
+  --au-message-fg: var(--au-color-feedback-error-title);
   --au-message-accent: var(--au-color-feedback-error-border);
 }
 
-:host([data-au-variant='info']) .au-message__surface {
+:host([data-au-variant='info']) {
   --au-message-bg: var(--au-color-feedback-info-bg);
   --au-message-border: var(--au-color-feedback-info-border);
-  --au-message-ink: var(--au-color-feedback-info-title);
+  --au-message-fg: var(--au-color-feedback-info-title);
   --au-message-accent: var(--au-color-feedback-info-border);
 }
 
-:host([data-au-variant='success']) .au-message__title,
-:host([data-au-variant='success']) .au-message__text,
-:host([data-au-variant='warning']) .au-message__title,
-:host([data-au-variant='warning']) .au-message__text,
-:host([data-au-variant='error']) .au-message__title,
-:host([data-au-variant='error']) .au-message__text,
-:host([data-au-variant='info']) .au-message__title,
-:host([data-au-variant='info']) .au-message__text {
-  color: var(--au-message-ink);
-}
-
-:host([data-au-variant='success']) .au-message__surface,
-:host([data-au-variant='warning']) .au-message__surface,
-:host([data-au-variant='error']) .au-message__surface,
-:host([data-au-variant='info']) .au-message__surface {
-  color: var(--au-message-ink);
-}
-
-/* High contrast: stronger frame; semantic copy always uses feedback title ink */
-:host-context([data-au-theme='high-contrast']) .au-message__surface,
-:host-context([data-au-theme='high-contrast-dark']) .au-message__surface {
-  box-shadow: none;
-  border-width: 2px;
-}
-
-:host-context([data-au-theme='high-contrast']) :host([data-au-variant='default']) .au-message__surface {
+:host-context([data-au-theme='high-contrast']) :host([data-au-variant='default']),
+:host-context([data-au-theme='high-contrast-dark']) :host([data-au-variant='default']) {
   --au-message-bg: var(--au-color-surface-elevated);
   --au-message-border: var(--au-color-border-strong);
+  --au-message-fg: var(--au-color-text-primary);
   --au-message-accent: var(--au-color-text-primary);
-  --au-message-text: var(--au-color-text-primary);
+  --au-message-shadow: none;
+  --au-message-border-width: 2px;
 }
 
-:host-context([data-au-theme='high-contrast-dark']) :host([data-au-variant='default']) .au-message__surface {
-  --au-message-bg: var(--au-color-surface-elevated);
-  --au-message-border: var(--au-color-border-strong);
-  --au-message-accent: var(--au-color-text-primary);
-  --au-message-text: var(--au-color-text-primary);
+:host-context([data-au-theme='high-contrast']) :host:not([data-au-variant='default']),
+:host-context([data-au-theme='high-contrast-dark']) :host:not([data-au-variant='default']) {
+  --au-message-shadow: none;
+  --au-message-border-width: 2px;
 }
 
-:host-context([data-au-theme='high-contrast']) :host([data-au-variant='success']) .au-message__surface {
-  --au-message-ink: var(--au-color-feedback-success-title);
-}
-
-:host-context([data-au-theme='high-contrast']) :host([data-au-variant='warning']) .au-message__surface {
-  --au-message-ink: var(--au-color-feedback-warning-title);
-}
-
-:host-context([data-au-theme='high-contrast']) :host([data-au-variant='error']) .au-message__surface {
-  --au-message-ink: var(--au-color-feedback-error-title);
-}
-
-:host-context([data-au-theme='high-contrast']) :host([data-au-variant='info']) .au-message__surface {
-  --au-message-ink: var(--au-color-feedback-info-title);
-}
-
-:host-context([data-au-theme='high-contrast']) .au-message__close:hover,
-:host-context([data-au-theme='high-contrast-dark']) .au-message__close:hover {
+:host-context([data-au-theme='high-contrast']) :host .au-message__close:hover,
+:host-context([data-au-theme='high-contrast-dark']) :host .au-message__close:hover {
   background: color-mix(in srgb, currentColor 14%, transparent);
 }
 
-:host-context([data-au-theme='high-contrast']) .au-message__close:focus-visible,
-:host-context([data-au-theme='high-contrast-dark']) .au-message__close:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+:host-context([data-au-theme='high-contrast']) :host .au-message__close:focus-visible,
+:host-context([data-au-theme='high-contrast-dark']) :host .au-message__close:focus-visible {
   box-shadow: none;
 }
 

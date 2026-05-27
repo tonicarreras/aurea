@@ -4,7 +4,7 @@
   font-size: inherit;
   font-weight: var(--au-weight-medium);
   line-height: inherit;
-  color: var(--au-color-link);
+  color: var(--au-link-fg);
   text-decoration: underline;
   text-underline-offset: 0.15em;
   cursor: pointer;
@@ -12,21 +12,21 @@
 }
 
 :host(:hover) {
-  color: var(--au-color-link-hover);
+  color: var(--au-link-fg-hover);
 }
 
 :host(:focus-visible) {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-link-focus-shadow);
   border-radius: var(--au-radius-xs);
 }
 
 :host([data-au-variant='subtle']) {
-  color: var(--au-color-text-secondary);
+  color: var(--au-link-fg-muted);
   text-decoration: none;
 }
 
 :host([data-au-variant='subtle']:hover) {
-  color: var(--au-color-link);
+  color: var(--au-link-fg);
   text-decoration: underline;
 }

@@ -8,7 +8,7 @@
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-field-text-color, inherit);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   /* Min height aligned with approximate rows + comfortable touch on lg */
@@ -68,12 +68,12 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
+  color: var(--au-field-label-color);
   letter-spacing: var(--au-tracking-ui);
 }
 
 .au-textarea__required {
-  color: var(--au-color-form-error);
+  color: var(--au-field-required-color);
   font-weight: var(--au-weight-semibold);
 }
 
@@ -83,52 +83,52 @@
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  border: 1px solid var(--au-field-border);
+  border-radius: var(--au-field-radius);
+  background: var(--au-field-bg);
+  box-shadow: var(--au-field-shadow);
   transition: var(--au-transition-control);
 }
 
 .au-textarea__control-row:has(.au-textarea__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-field-border-hover);
 }
 
 .au-textarea__control-row:has(.au-textarea__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-bg);
 }
 
 .au-textarea__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-field-border-focus);
+  box-shadow: var(--au-field-shadow-focus);
 }
 
 .au-textarea__control-row:focus-within:has(.au-textarea__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  box-shadow: var(--au-field-shadow-focus-error);
 }
 
 .au-textarea__control-row--from-tab:focus-within {
   box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  background: var(--au-field-focus-tab-bg);
+  border-color: var(--au-field-focus-tab-border);
+  outline: var(--au-field-focus-tab-outline);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-textarea__control-row--from-tab:focus-within:has(.au-textarea__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
   box-shadow: none;
-  outline: 2px solid var(--au-color-form-error);
-  outline-offset: 2px;
+  outline: 2px solid var(--au-field-error-border);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-textarea__control-row:has(.au-textarea__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-field-disabled-border);
+  background: var(--au-field-disabled-bg);
   box-shadow: none;
 }
 
@@ -152,8 +152,8 @@
   border-bottom-left-radius: var(--au-radius-2xs);
   border-bottom-right-radius: var(--au-radius-2xs);
   background: transparent;
-  color: var(--au-color-form-text);
-  caret-color: var(--au-color-form-caret);
+  color: var(--au-field-text-color);
+  caret-color: var(--au-field-caret-color);
   font: inherit;
   line-height: var(--au-leading-normal);
   font-synthesis: none;
@@ -186,12 +186,12 @@
 }
 
 .au-textarea__input::placeholder {
-  color: var(--au-color-form-placeholder);
+  color: var(--au-field-placeholder-color);
   opacity: 1;
 }
 
 .au-textarea__input:disabled {
-  color: var(--au-color-form-disabled-foreground);
+  color: var(--au-field-disabled-fg);
   cursor: not-allowed;
   opacity: 0.9;
   background: transparent;
@@ -203,7 +203,7 @@
   margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-hint-color);
 }
 
 @media (prefers-reduced-motion: reduce) {

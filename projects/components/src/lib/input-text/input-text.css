@@ -8,7 +8,7 @@
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-field-text-color, inherit);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -54,12 +54,12 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
+  color: var(--au-field-label-color);
   letter-spacing: var(--au-tracking-ui);
 }
 
 .au-input-text__required {
-  color: var(--au-color-form-error);
+  color: var(--au-field-required-color);
   font-weight: var(--au-weight-semibold);
 }
 
@@ -73,22 +73,23 @@
   width: 100%;
   /* Align icons/button to the box; height comes from the input, not a large min-height */
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  border: 1px solid var(--au-field-border);
+  border-radius: var(--au-field-radius);
+  background: var(--au-field-bg);
+  box-shadow: var(--au-field-shadow);
   transition: var(--au-transition-control);
 }
 
 /* Hover: border only, no ring */
 .au-input-text__control-row:has(.au-input-text__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-field-border-hover);
+  background: var(--au-field-bg-hover);
 }
 
 /* Error (no focus) */
 .au-input-text__control-row:has(.au-input-text__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-bg);
 }
 
 /*
@@ -96,37 +97,37 @@
  * Tab-only focus: `.au-input-text__control-row--from-tab` (TS) → outward outline.
  */
 .au-input-text__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-field-border-focus);
+  box-shadow: var(--au-field-shadow-focus);
 }
 
 .au-input-text__control-row:focus-within:has(.au-input-text__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  box-shadow: var(--au-field-shadow-focus-error);
 }
 
 /* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
 .au-input-text__control-row--from-tab:focus-within {
   box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  background: var(--au-field-focus-tab-bg);
+  border-color: var(--au-field-focus-tab-border);
+  outline: var(--au-field-focus-tab-outline);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-input-text__control-row--from-tab:focus-within:has(.au-input-text__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
   box-shadow: none;
-  outline: 2px solid var(--au-color-form-error);
-  outline-offset: 2px;
+  outline: 2px solid var(--au-field-error-border);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 /* Disabled: whole row muted (<input> may still receive focus / AT per platform) */
 .au-input-text__control-row:has(.au-input-text__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-field-disabled-border);
+  background: var(--au-field-disabled-bg);
   box-shadow: none;
 }
 
@@ -154,8 +155,8 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--au-color-form-text);
-  caret-color: var(--au-color-form-caret);
+  color: var(--au-field-text-color);
+  caret-color: var(--au-field-caret-color);
   font: inherit;
   /* line-height = height → single-line placeholder/value, centered per UA (no height:100% in flex) */
   line-height: var(--au-size-field-h-md);
@@ -191,13 +192,13 @@
 }
 
 .au-input-text__input::placeholder {
-  color: var(--au-color-form-placeholder);
+  color: var(--au-field-placeholder-color);
   opacity: 1;
   line-height: inherit;
 }
 
 .au-input-text__input:disabled {
-  color: var(--au-color-form-disabled-foreground);
+  color: var(--au-field-disabled-fg);
   cursor: not-allowed;
   opacity: 0.9;
   background: transparent;
@@ -212,10 +213,10 @@
   margin: 0;
   padding: 0 0.65rem 0 0.5rem;
   border: 0;
-  border-left: 1px solid var(--au-color-border-subtle);
+  border-left: 1px solid var(--au-field-reveal-border);
   border-radius: 0;
   background: transparent;
-  color: var(--au-color-action-primary);
+  color: var(--au-field-reveal-color);
   font: inherit;
   font-size: var(--au-text-xs);
   font-weight: var(--au-weight-semibold);
@@ -228,13 +229,13 @@
 }
 
 .au-input-text__reveal:hover:not(:disabled) {
-  color: var(--au-color-action-primary-hover);
-  background: var(--au-color-surface-elevated);
+  color: var(--au-field-reveal-color-hover);
+  background: var(--au-field-reveal-bg-hover);
 }
 
 .au-input-text__reveal:active:not(:disabled) {
-  color: var(--au-color-action-primary-pressed);
-  background: var(--au-color-surface-sunken);
+  color: var(--au-field-reveal-color-active);
+  background: var(--au-field-reveal-bg-active);
 }
 
 .au-input-text__reveal:disabled {
@@ -250,7 +251,7 @@
   margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-hint-color);
 }
 
 /* -------------------------------------------------------------------------- */

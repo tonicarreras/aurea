@@ -1,0 +1,475 @@
+/**
+ * Aurea component skin tokens — unstyled baseline.
+ *
+ * Components consume only `--au-{component}-*` variables in their CSS.
+ * The default theme remaps these in `au-theme-skin.css` when not in primitives mode.
+ */
+
+:root {
+  /* ------------------------------------------------------------------------ */
+  /* Shared form field chrome                                                 */
+  /* ------------------------------------------------------------------------ */
+  --au-field-border: currentColor;
+  --au-field-bg: transparent;
+  --au-field-shadow: none;
+  --au-field-border-hover: currentColor;
+  --au-field-bg-hover: transparent;
+  --au-field-bg-hover-open: transparent;
+  --au-field-border-focus: currentColor;
+  --au-field-shadow-focus: none;
+  --au-field-shadow-focus-error: none;
+  --au-field-radius: 0;
+  --au-field-text-color: inherit;
+  --au-field-placeholder-color: color-mix(in srgb, currentColor 55%, transparent);
+  --au-field-caret-color: currentColor;
+  --au-field-label-color: inherit;
+  --au-field-required-color: currentColor;
+  --au-field-hint-color: color-mix(in srgb, currentColor 65%, transparent);
+  --au-field-error-border: currentColor;
+  --au-field-error-bg: transparent;
+  --au-field-error-focus-bg: transparent;
+  --au-field-disabled-border: currentColor;
+  --au-field-disabled-bg: transparent;
+  --au-field-disabled-fg: inherit;
+  --au-field-focus-tab-bg: transparent;
+  --au-field-focus-tab-border: currentColor;
+  --au-field-focus-tab-outline: 2px solid currentColor;
+  --au-field-focus-tab-outline-offset: 2px;
+  --au-field-reveal-color: inherit;
+  --au-field-reveal-color-hover: inherit;
+  --au-field-reveal-color-active: inherit;
+  --au-field-reveal-border: currentColor;
+  --au-field-reveal-bg-hover: transparent;
+  --au-field-reveal-bg-active: transparent;
+
+  /* Aliases (input-text / select contracts) */
+  --au-input-field-border: var(--au-field-border);
+  --au-input-field-bg: var(--au-field-bg);
+  --au-input-field-shadow: var(--au-field-shadow);
+  --au-input-field-border-hover: var(--au-field-border-hover);
+  --au-input-field-bg-hover: var(--au-field-bg-hover);
+  --au-input-field-border-focus: var(--au-field-border-focus);
+  --au-input-field-shadow-focus: var(--au-field-shadow-focus);
+  --au-input-field-radius: var(--au-field-radius);
+  --au-input-text-color: var(--au-field-text-color);
+  --au-input-placeholder-color: var(--au-field-placeholder-color);
+  --au-input-reveal-color: var(--au-field-reveal-color);
+  --au-input-reveal-color-hover: var(--au-field-reveal-color-hover);
+
+  --au-select-field-border: var(--au-field-border);
+  --au-select-field-bg: var(--au-field-bg);
+  --au-select-field-shadow: var(--au-field-shadow);
+  --au-select-field-border-hover: var(--au-field-border-hover);
+  --au-select-field-bg-hover: var(--au-field-bg-hover-open);
+  --au-select-field-border-focus: var(--au-field-border-focus);
+  --au-select-field-shadow-focus: var(--au-field-shadow-focus);
+  --au-select-field-radius: var(--au-field-radius);
+  --au-select-trigger-color: var(--au-field-text-color);
+  --au-select-placeholder-color: var(--au-field-placeholder-color);
+  --au-select-icon-color: inherit;
+  --au-select-icon-color-open: inherit;
+
+  /* ------------------------------------------------------------------------ */
+  /* Button                                                                   */
+  /* ------------------------------------------------------------------------ */
+  --au-button-bg: transparent;
+  --au-button-border: currentColor;
+  --au-button-fg: inherit;
+  --au-button-shadow: none;
+  --au-button-bg-hover: transparent;
+  --au-button-border-hover: currentColor;
+  --au-button-fg-hover: inherit;
+  --au-button-shadow-hover: none;
+  --au-button-bg-active: transparent;
+  --au-button-border-active: currentColor;
+  --au-button-fg-active: inherit;
+  --au-button-active-transform: none;
+  --au-button-radius: 0;
+  --au-button-border-width: 1px;
+  --au-button-focus-shadow: none;
+  --au-button-focus-outline: 2px solid currentColor;
+  --au-button-focus-outline-offset: 2px;
+
+  /* ------------------------------------------------------------------------ */
+  /* Checkbox                                                                 */
+  /* ------------------------------------------------------------------------ */
+  --au-checkbox-appearance: auto;
+  --au-checkbox-webkit-appearance: checkbox;
+  --au-checkbox-width: auto;
+  --au-checkbox-height: auto;
+  --au-checkbox-border-width: 0;
+  --au-checkbox-border-color: transparent;
+  --au-checkbox-border-color-hover: transparent;
+  --au-checkbox-border-radius: 0;
+  --au-checkbox-bg: transparent;
+  --au-checkbox-bg-hover: transparent;
+  --au-checkbox-bg-checked: transparent;
+  --au-checkbox-bg-checked-hover: transparent;
+  --au-checkbox-border-checked: transparent;
+  --au-checkbox-border-checked-hover: transparent;
+  --au-checkbox-shadow: none;
+  --au-checkbox-shadow-focus: none;
+  --au-checkbox-shadow-focus-tab: none;
+  --au-checkbox-focus-outline: 2px solid currentColor;
+  --au-checkbox-focus-outline-offset: 2px;
+  --au-checkbox-focus-border: transparent;
+  --au-checkbox-accent: currentColor;
+  --au-checkbox-mark-content: none;
+  --au-checkbox-indeterminate-mark-content: none;
+  --au-checkbox-mark-border-color: transparent;
+  --au-checkbox-indeterminate-mark-bg: transparent;
+  --au-checkbox-disabled-bg: transparent;
+  --au-checkbox-disabled-border: transparent;
+  --au-checkbox-disabled-checked-bg: transparent;
+  --au-checkbox-disabled-opacity: 1;
+  --au-checkbox-wrapper-gap: 0.5rem;
+  --au-checkbox-label-color: inherit;
+  --au-checkbox-description-color: inherit;
+  --au-checkbox-required-color: currentColor;
+  --au-checkbox-error-border: currentColor;
+  --au-checkbox-error-shadow: none;
+  --au-checkbox-error-checked-shadow: none;
+
+  /* ------------------------------------------------------------------------ */
+  /* Switch                                                                   */
+  /* ------------------------------------------------------------------------ */
+  --au-switch-appearance: auto;
+  --au-switch-webkit-appearance: checkbox;
+  --au-switch-width: auto;
+  --au-switch-height: auto;
+  --au-switch-border-width: 0;
+  --au-switch-border-radius: 0;
+  --au-switch-border-color: transparent;
+  --au-switch-bg: transparent;
+  --au-switch-bg-hover: transparent;
+  --au-switch-bg-checked: transparent;
+  --au-switch-border-checked: transparent;
+  --au-switch-thumb-display: none;
+  --au-switch-thumb-bg: transparent;
+  --au-switch-thumb-bg-checked: transparent;
+  --au-switch-thumb-shadow: none;
+  --au-switch-thumb-shadow-checked: none;
+  --au-switch-focus-shadow: none;
+  --au-switch-focus-border: transparent;
+  --au-switch-focus-outline: 2px solid currentColor;
+  --au-switch-focus-outline-offset: 2px;
+  --au-switch-error-border: currentColor;
+  --au-switch-error-shadow: none;
+  --au-switch-error-checked-shadow: none;
+  --au-switch-disabled-opacity: 1;
+  --au-switch-label-color: inherit;
+  --au-switch-required-color: currentColor;
+  --au-switch-hint-color: inherit;
+  --au-switch-accent: currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Radio                                                                    */
+  /* ------------------------------------------------------------------------ */
+  --au-radio-appearance: auto;
+  --au-radio-webkit-appearance: radio;
+  --au-radio-width: auto;
+  --au-radio-height: auto;
+  --au-radio-accent: currentColor;
+  --au-radio-label-color: inherit;
+  --au-radio-legend-color: inherit;
+  --au-radio-required-color: currentColor;
+  --au-radio-hint-color: inherit;
+  --au-radio-focus-shadow: none;
+  --au-radio-focus-outline: 2px solid currentColor;
+  --au-radio-focus-outline-offset: 2px;
+  --au-radio-error-outline: 1px solid currentColor;
+  --au-radio-error-shadow: none;
+  --au-radio-disabled-opacity: 1;
+
+  /* ------------------------------------------------------------------------ */
+  /* Dialog                                                                   */
+  /* ------------------------------------------------------------------------ */
+  --au-dialog-backdrop: color-mix(in srgb, currentColor 20%, transparent);
+  --au-dialog-panel-bg: transparent;
+  --au-dialog-panel-border: currentColor;
+  --au-dialog-panel-shadow: none;
+  --au-dialog-panel-radius: 0;
+  --au-dialog-header-border: currentColor;
+  --au-dialog-footer-border: currentColor;
+  --au-dialog-title-color: inherit;
+  --au-dialog-body-color: inherit;
+  --au-dialog-close-fg: inherit;
+  --au-dialog-close-fg-hover: inherit;
+  --au-dialog-close-bg-hover: transparent;
+  --au-dialog-close-border-hover: transparent;
+  --au-dialog-close-focus-border: currentColor;
+  --au-dialog-close-focus-shadow: none;
+
+  /* ------------------------------------------------------------------------ */
+  /* Listbox (select / autocomplete menu)                                     */
+  /* ------------------------------------------------------------------------ */
+  --au-listbox-border: currentColor;
+  --au-listbox-bg: transparent;
+  --au-listbox-fg: inherit;
+  --au-listbox-shadow: none;
+  --au-listbox-radius: 0;
+  --au-listbox-option-radius: 0;
+  --au-listbox-placeholder-color: color-mix(in srgb, currentColor 65%, transparent);
+  --au-listbox-highlight-bg: transparent;
+  --au-listbox-highlight-fg: inherit;
+  --au-listbox-highlight-marker: currentColor;
+  --au-listbox-selected-bg: transparent;
+  --au-listbox-selected-fg: inherit;
+  --au-listbox-selected-marker: currentColor;
+  --au-listbox-disabled-fg: color-mix(in srgb, currentColor 45%, transparent);
+
+  /* ------------------------------------------------------------------------ */
+  /* Chip                                                                     */
+  /* ------------------------------------------------------------------------ */
+  --au-chip-bg: transparent;
+  --au-chip-border: currentColor;
+  --au-chip-fg: inherit;
+  --au-chip-shadow: none;
+  --au-chip-radius: 0;
+  --au-chip-bg-hover: transparent;
+  --au-chip-border-hover: currentColor;
+  --au-chip-bg-active: transparent;
+  --au-chip-bg-selected: transparent;
+  --au-chip-border-selected: currentColor;
+  --au-chip-fg-selected: inherit;
+  --au-chip-bg-disabled: transparent;
+  --au-chip-border-disabled: currentColor;
+  --au-chip-fg-disabled: inherit;
+  --au-chip-remove-bg-hover: transparent;
+  --au-chip-remove-fg-hover: inherit;
+  --au-chip-remove-fg-disabled: color-mix(in srgb, currentColor 45%, transparent);
+  --au-chip-focus-shadow: none;
+  --au-chip-focus-outline: 2px solid currentColor;
+  --au-chip-focus-outline-offset: 2px;
+
+  /* ------------------------------------------------------------------------ */
+  /* Message                                                                  */
+  /* ------------------------------------------------------------------------ */
+  --au-message-bg: transparent;
+  --au-message-border: currentColor;
+  --au-message-fg: inherit;
+  --au-message-title-fg: inherit;
+  --au-message-accent: inherit;
+  --au-message-shadow: none;
+  --au-message-radius: 0;
+  --au-message-close-bg-hover: transparent;
+  --au-message-border-width: 1px;
+  --au-message-focus-shadow: none;
+  --au-message-focus-outline: 2px solid currentColor;
+  --au-message-focus-outline-offset: 2px;
+  --au-message-focus-outline-offset: 2px;
+
+  /* ------------------------------------------------------------------------ */
+  /* Snackbar                                                                 */
+  /* ------------------------------------------------------------------------ */
+  --au-snackbar-bg: transparent;
+  --au-snackbar-border: currentColor;
+  --au-snackbar-fg: inherit;
+  --au-snackbar-shadow: none;
+  --au-snackbar-radius: 0;
+  --au-snackbar-action-color: inherit;
+  --au-snackbar-accent: inherit;
+  --au-snackbar-focus-outline: 2px solid currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Badge                                                                    */
+  /* ------------------------------------------------------------------------ */
+  --au-badge-bg: transparent;
+  --au-badge-border: currentColor;
+  --au-badge-fg: inherit;
+  --au-badge-shadow: none;
+  --au-badge-radius: 0;
+
+  /* ------------------------------------------------------------------------ */
+  /* Card                                                                     */
+  /* ------------------------------------------------------------------------ */
+  --au-card-bg: transparent;
+  --au-card-border: currentColor;
+  --au-card-shadow: none;
+  --au-card-radius: 0;
+  --au-card-body-color: inherit;
+  --au-card-header-color: inherit;
+  --au-card-footer-border: currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Tabs                                                                     */
+  /* ------------------------------------------------------------------------ */
+  --au-tabs-list-border: currentColor;
+  --au-tabs-list-bg: transparent;
+  --au-tab-fg: inherit;
+  --au-tab-fg-hover: inherit;
+  --au-tab-fg-selected: inherit;
+  --au-tab-fg-disabled: color-mix(in srgb, currentColor 45%, transparent);
+  --au-tab-bg-hover: transparent;
+  --au-tab-bg-selected: transparent;
+  --au-tab-indicator: currentColor;
+  --au-tab-shadow-selected: none;
+  --au-tab-focus-outline: 2px solid currentColor;
+  --au-tab-panel-fg: inherit;
+  --au-tab-panel-focus-outline: 2px solid currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Steps                                                                    */
+  /* ------------------------------------------------------------------------ */
+  --au-steps-border: currentColor;
+  --au-step-fg: inherit;
+  --au-step-fg-active: inherit;
+  --au-step-indicator: currentColor;
+  --au-step-focus-outline: 2px solid currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Table                                                                    */
+  /* ------------------------------------------------------------------------ */
+  --au-table-shell-bg: transparent;
+  --au-table-shell-border: currentColor;
+  --au-table-shell-shadow: none;
+  --au-table-header-bg: transparent;
+  --au-table-header-fg: inherit;
+  --au-table-cell-fg: inherit;
+  --au-table-cell-fg-secondary: inherit;
+  --au-table-row-border: currentColor;
+  --au-table-focus-outline: 2px solid currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Skeleton / progress / pagination                                         */
+  /* ------------------------------------------------------------------------ */
+  --au-skeleton-base: color-mix(in srgb, currentColor 12%, transparent);
+  --au-skeleton-shimmer: color-mix(in srgb, currentColor 24%, transparent);
+  --au-progress-track-bg: transparent;
+  --au-progress-track-border: currentColor;
+  --au-progress-bar-bg: currentColor;
+  --au-pagination-fg: inherit;
+
+  /* ------------------------------------------------------------------------ */
+  /* Navigation / chrome                                                      */
+  /* ------------------------------------------------------------------------ */
+  --au-link-fg: inherit;
+  --au-link-fg-hover: inherit;
+  --au-link-fg-muted: inherit;
+  --au-link-focus-shadow: none;
+  --au-link-focus-outline: 2px solid currentColor;
+  --au-breadcrumb-fg: inherit;
+  --au-breadcrumb-fg-current: inherit;
+  --au-breadcrumb-separator: inherit;
+  --au-breadcrumb-link: inherit;
+  --au-breadcrumb-link-hover: inherit;
+  --au-breadcrumb-focus-shadow: none;
+  --au-menu-item-fg: inherit;
+  --au-menu-item-bg-hover: transparent;
+  --au-menu-item-fg-disabled: color-mix(in srgb, currentColor 45%, transparent);
+  --au-menu-item-focus-shadow: none;
+  --au-divider-fg: inherit;
+  --au-divider-line: currentColor;
+
+  /* ------------------------------------------------------------------------ */
+  /* Field error helper                                                       */
+  /* ------------------------------------------------------------------------ */
+  --au-field-error-fg: inherit;
+  --au-field-error-icon-border: currentColor;
+  --au-field-error-icon-bg: transparent;
+
+  /* ------------------------------------------------------------------------ */
+  /* Input date picker chrome                                                 */
+  /* ------------------------------------------------------------------------ */
+  --au-date-picker-accent: currentColor;
+  --au-date-picker-highlight: transparent;
+  --au-date-picker-icon-color: inherit;
+  --au-date-picker-icon-hover: inherit;
+  --au-date-picker-icon-active: inherit;
+}
+
+/*
+ * Semantic token reset for primitives mode.
+ */
+:root[data-au-style='unstyled'],
+[data-au-style='unstyled'] {
+  --au-color-surface-canvas: transparent;
+  --au-color-surface-raised: transparent;
+  --au-color-surface-elevated: transparent;
+  --au-color-surface-sunken: transparent;
+  --au-color-surface-inverted: currentColor;
+
+  --au-color-text-primary: inherit;
+  --au-color-text-secondary: inherit;
+  --au-color-text-tertiary: color-mix(in srgb, currentColor 65%, transparent);
+  --au-color-text-label: inherit;
+  --au-color-text-on-solid: inherit;
+  --au-color-text-disabled: color-mix(in srgb, currentColor 45%, transparent);
+
+  --au-color-border-subtle: currentColor;
+  --au-color-border-default: currentColor;
+  --au-color-border-strong: currentColor;
+
+  --au-color-action-primary: currentColor;
+  --au-color-action-primary-hover: currentColor;
+  --au-color-action-primary-pressed: currentColor;
+  --au-color-link: currentColor;
+  --au-color-link-hover: currentColor;
+  --au-color-focus-ring: currentColor;
+  --au-color-focus-inner: currentColor;
+
+  --au-color-form-border: currentColor;
+  --au-color-form-border-hover: currentColor;
+  --au-color-form-error: currentColor;
+  --au-color-form-error-bg: transparent;
+  --au-color-form-disabled-surface: transparent;
+  --au-color-form-disabled-foreground: inherit;
+  --au-color-form-text: inherit;
+  --au-color-form-placeholder: color-mix(in srgb, currentColor 55%, transparent);
+  --au-color-form-caret: currentColor;
+
+  --au-color-switch-track-off: transparent;
+  --au-color-switch-track-off-hover: transparent;
+  --au-color-switch-track-off-border: currentColor;
+  --au-color-switch-thumb-off: currentColor;
+
+  --au-color-select-menu-bg: transparent;
+  --au-color-select-menu-text: inherit;
+  --au-color-select-field-hover-bg: transparent;
+  --au-color-select-option-highlight-bg: transparent;
+  --au-color-select-option-highlight-text: inherit;
+  --au-color-select-option-highlight-marker: currentColor;
+  --au-color-select-option-selected-bg: transparent;
+  --au-color-select-option-selected-text: inherit;
+  --au-color-select-option-selected-marker: currentColor;
+  --au-color-select-option-disabled-text: color-mix(in srgb, currentColor 45%, transparent);
+
+  --au-color-feedback-success-bg: transparent;
+  --au-color-feedback-success-border: currentColor;
+  --au-color-feedback-success-title: inherit;
+  --au-color-feedback-warning-bg: transparent;
+  --au-color-feedback-warning-border: currentColor;
+  --au-color-feedback-warning-title: inherit;
+  --au-color-feedback-error-bg: transparent;
+  --au-color-feedback-error-border: currentColor;
+  --au-color-feedback-error-title: inherit;
+  --au-color-feedback-info-bg: transparent;
+  --au-color-feedback-info-border: currentColor;
+  --au-color-feedback-info-title: inherit;
+
+  --au-color-semantic-success: currentColor;
+  --au-color-semantic-warning: currentColor;
+  --au-color-semantic-error: currentColor;
+  --au-color-semantic-info: currentColor;
+
+  --au-color-skeleton-base: color-mix(in srgb, currentColor 12%, transparent);
+  --au-color-skeleton-shimmer: color-mix(in srgb, currentColor 24%, transparent);
+
+  --au-color-date-picker-accent: currentColor;
+  --au-color-date-picker-edit-highlight: transparent;
+  --au-color-date-picker-icon: inherit;
+  --au-color-date-picker-icon-hover: inherit;
+  --au-color-date-picker-icon-active: inherit;
+
+  --au-shadow-control: none;
+  --au-shadow-focus-control: none;
+  --au-shadow-focus-control-error: none;
+  --au-shadow-focus-ring: none;
+  --au-shadow-overlay: none;
+  --au-shadow-button: none;
+  --au-shadow-button-primary: none;
+  --au-shadow-button-hover: none;
+  --au-shadow-raised: none;
+  --au-shadow-float: none;
+  --au-shadow-hairline: none;
+}

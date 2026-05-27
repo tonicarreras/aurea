@@ -25,12 +25,12 @@
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: var(--au-scroll-smooth);
-  border: 1px solid var(--au-color-border-default);
-  border-radius: var(--au-radius-md);
-  background: var(--au-color-select-menu-bg);
-  color: var(--au-color-select-menu-text);
+  border: 1px solid var(--au-listbox-border);
+  border-radius: var(--au-listbox-radius);
+  background: var(--au-listbox-bg);
+  color: var(--au-listbox-fg);
   font-family: var(--au-font-sans);
-  box-shadow: var(--au-shadow-overlay);
+  box-shadow: var(--au-listbox-shadow);
 }
 
 /* Portaled to document.body (see overlay/field-listbox-overlay.ts) — top/width set in JS */
@@ -45,7 +45,7 @@
   position: relative;
   margin: 0;
   padding: var(--au-space-2) var(--au-space-3);
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-listbox-option-radius);
   font-size: var(--au-size-field-text-md);
   font-weight: var(--au-weight-regular);
   line-height: var(--au-leading-normal);
@@ -64,45 +64,45 @@
 }
 
 .au-field-listbox__option--placeholder {
-  color: var(--au-color-text-tertiary);
+  color: var(--au-listbox-placeholder-color);
   font-weight: var(--au-weight-regular);
 }
 
 .au-field-listbox__option--active:not(.au-field-listbox__option--disabled) {
-  background: var(--au-color-select-option-highlight-bg);
-  color: var(--au-color-select-option-highlight-text);
+  background: var(--au-listbox-highlight-bg);
+  color: var(--au-listbox-highlight-fg);
   font-weight: var(--au-weight-medium);
 }
 
 .au-field-listbox__option--active:not(.au-field-listbox__option--disabled)::before {
-  background: var(--au-color-select-option-highlight-marker);
+  background: var(--au-listbox-highlight-marker);
 }
 
 .au-field-listbox__option--selected:not(.au-field-listbox__option--disabled) {
-  background: var(--au-color-select-option-selected-bg);
-  color: var(--au-color-select-option-selected-text);
+  background: var(--au-listbox-selected-bg);
+  color: var(--au-listbox-selected-fg);
   font-weight: var(--au-weight-semibold);
 }
 
 .au-field-listbox__option--selected:not(.au-field-listbox__option--disabled)::before {
-  background: var(--au-color-select-option-selected-marker);
+  background: var(--au-listbox-selected-marker);
 }
 
 .au-field-listbox__option--selected.au-field-listbox__option--active:not(
     .au-field-listbox__option--disabled
   ) {
-  background: var(--au-color-select-option-selected-bg);
-  color: var(--au-color-select-option-selected-text);
+  background: var(--au-listbox-selected-bg);
+  color: var(--au-listbox-selected-fg);
 }
 
 .au-field-listbox__option--selected.au-field-listbox__option--active:not(
     .au-field-listbox__option--disabled
   )::before {
-  background: var(--au-color-select-option-selected-marker);
+  background: var(--au-listbox-selected-marker);
 }
 
 .au-field-listbox__option--disabled {
-  color: var(--au-color-select-option-disabled-text);
+  color: var(--au-listbox-disabled-fg);
   cursor: not-allowed;
 }
 
@@ -110,25 +110,25 @@
   .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
       .au-field-listbox__option--selected
     ) {
-    background: var(--au-color-select-option-highlight-bg);
-    color: var(--au-color-select-option-highlight-text);
+    background: var(--au-listbox-highlight-bg);
+    color: var(--au-listbox-highlight-fg);
     font-weight: var(--au-weight-medium);
   }
 
   .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
       .au-field-listbox__option--selected
     )::before {
-    background: var(--au-color-select-option-highlight-marker);
+    background: var(--au-listbox-highlight-marker);
   }
 
   .au-field-listbox__option--selected:hover:not(.au-field-listbox__option--disabled) {
-    background: var(--au-color-select-option-selected-bg);
-    color: var(--au-color-select-option-selected-text);
+    background: var(--au-listbox-selected-bg);
+    color: var(--au-listbox-selected-fg);
     font-weight: var(--au-weight-semibold);
   }
 
   .au-field-listbox__option--selected:hover:not(.au-field-listbox__option--disabled)::before {
-    background: var(--au-color-select-option-selected-marker);
+    background: var(--au-listbox-selected-marker);
   }
 }
 

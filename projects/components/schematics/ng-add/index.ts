@@ -2,6 +2,9 @@ import { Rule, SchematicContext, Tree, chain } from '@angular-devkit/schematics'
 import type { Schema as NgAddSchema } from './schema';
 
 const TOKEN_STYLE = 'node_modules/@aurea-design-system/components/styles/au-tokens.css';
+const THEME_DEFAULT_STYLE =
+  'node_modules/@aurea-design-system/components/styles/au-theme-default.css';
+const PRIMITIVES_STYLE = 'node_modules/@aurea-design-system/components/styles/au-primitives.css';
 const ERROR_STYLE = 'node_modules/@aurea-design-system/components/styles/au-field-error.css';
 const LISTBOX_STYLE = 'node_modules/@aurea-design-system/components/styles/au-field-listbox.css';
 
@@ -34,7 +37,7 @@ function addStylesToProject(options: NgAddSchema): Rule {
       return tree;
     }
 
-    const toAdd = [TOKEN_STYLE, ERROR_STYLE];
+    const toAdd = [THEME_DEFAULT_STYLE, ERROR_STYLE];
     if (options.includeListboxStyles !== false) {
       toAdd.push(LISTBOX_STYLE);
     }
@@ -58,9 +61,11 @@ Aurea ng-add complete.
 
 Next steps:
   1. Import components per feature: import { AuButton } from '@aurea-design-system/components';
-  2. Theme: set data-au-theme="light|dark|high-contrast|high-contrast-dark" on <html> or use AuTheme directive.
-  3. Density (optional): data-au-density="compact|comfortable|spacious" or auDensity on shell.
-  4. Signal forms: see https://aurea-ds.netlify.app/en/guides/signal-forms
+  2. Theme (default): use ${THEME_DEFAULT_STYLE} (includes semantic tokens + component skin).
+  3. Primitives mode (unstyled): import ${PRIMITIVES_STYLE} and set [auStyle]="'unstyled'" on a container.
+  4. Theme attribute: data-au-theme="light|dark|high-contrast|high-contrast-dark" or use AuTheme directive.
+  5. Density (optional): data-au-density="compact|comfortable|spacious" or auDensity on shell.
+  6. Signal forms: see https://aurea-ds.netlify.app/en/guides/signal-forms
 
 Docs: https://aurea-ds.netlify.app/
 `);

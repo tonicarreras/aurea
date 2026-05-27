@@ -1,4 +1,5 @@
 export { AuDensityDirective, type AuDensity } from './au-density';
+export { AuStyleDirective, type AuStyleMode } from './au-style';
 export type { AuThemeMode } from './au-theme';
 export { AuTheme } from './au-theme';
 export {

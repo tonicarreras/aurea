@@ -1,5 +1,7 @@
 /**
  * Radio group — fieldset + native radios (no outer field shell; aligned with checkbox).
+ *
+ * Skin: `--au-radio-*` tokens from `au-component-tokens.css` / `au-theme-skin.css`.
  */
 @import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
@@ -7,7 +9,7 @@
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-radio-label-color);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -57,12 +59,12 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
+  color: var(--au-radio-legend-color);
   letter-spacing: var(--au-tracking-ui);
 }
 
 .au-radio-group__required {
-  color: var(--au-color-form-error);
+  color: var(--au-radio-required-color);
   font-weight: var(--au-weight-semibold);
   margin-left: 0.125em;
 }
@@ -82,12 +84,14 @@
 }
 
 .au-radio-group__input {
+  appearance: var(--au-radio-appearance);
+  -webkit-appearance: var(--au-radio-webkit-appearance);
   flex: 0 0 auto;
   margin: 0.15rem 0 0 0;
-  width: 1rem;
-  height: 1rem;
+  width: var(--au-radio-width);
+  height: var(--au-radio-height);
   cursor: pointer;
-  accent-color: var(--au-color-action-primary);
+  accent-color: var(--au-radio-accent);
 }
 
 .au-radio-group__input:focus,
@@ -97,29 +101,29 @@
 
 .au-radio-group__shell:not(.au-radio-group__shell--from-tab):focus-within
   .au-radio-group__input:focus:not(:disabled) {
-  box-shadow: 0 0 0 2px var(--au-color-focus-ring);
+  box-shadow: var(--au-radio-focus-shadow);
 }
 
 .au-radio-group__shell--from-tab:focus-within .au-radio-group__input:focus:not(:disabled) {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-radio-focus-outline);
+  outline-offset: var(--au-radio-focus-outline-offset);
 }
 
 .au-radio-group__shell:has(.au-radio-group__input[aria-invalid='true'])
   .au-radio-group__input:not(:disabled) {
-  outline: 1px solid var(--au-color-form-error);
+  outline: var(--au-radio-error-outline);
   outline-offset: 1px;
 }
 
 .au-radio-group__shell:has(.au-radio-group__input[aria-invalid='true']):focus-within
   .au-radio-group__input:focus:not(:disabled) {
   outline: none;
-  box-shadow: 0 0 0 2px var(--au-color-form-error);
+  box-shadow: var(--au-radio-error-shadow);
 }
 
 .au-radio-group__input:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: var(--au-radio-disabled-opacity);
 }
 
 .au-radio-group__option-label {
@@ -127,7 +131,7 @@
   min-width: 0;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-primary);
+  color: var(--au-radio-label-color);
   cursor: pointer;
   user-select: none;
 }
@@ -144,5 +148,5 @@
   margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-radio-hint-color);
 }

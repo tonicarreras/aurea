@@ -10,7 +10,7 @@
   display: block;
   overflow: visible;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-select-trigger-color, inherit);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -72,12 +72,12 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
+  color: var(--au-field-label-color);
   letter-spacing: var(--au-tracking-ui);
 }
 
 .au-select__required {
-  color: var(--au-color-form-error);
+  color: var(--au-field-required-color);
   font-weight: var(--au-weight-semibold);
 }
 
@@ -90,23 +90,23 @@
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  border: 1px solid var(--au-select-field-border);
+  border-radius: var(--au-select-field-radius);
+  background: var(--au-select-field-bg);
+  box-shadow: var(--au-select-field-shadow);
   transition: var(--au-transition-control);
 }
 
 /* Hover: stronger border + subtle fill (distinct from default and from list highlight) */
 .au-select__control-row:has(.au-select__trigger:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-  background: var(--au-color-select-field-hover-bg);
+  border-color: var(--au-select-field-border-hover);
+  background: var(--au-select-field-bg-hover);
 }
 
 /* Error (no focus) */
 .au-select__control-row:has(.au-select__trigger[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-bg);
 }
 
 /*
@@ -114,41 +114,41 @@
  * Tab-only focus: `.au-select__control-row--from-tab` (TS) → outward outline.
  */
 .au-select__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-select-field-border-focus);
+  box-shadow: var(--au-select-field-shadow-focus);
 }
 
 .au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  box-shadow: var(--au-field-shadow-focus-error);
 }
 
 /* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
 .au-select__control-row--from-tab:focus-within {
   box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  background: var(--au-field-focus-tab-bg);
+  border-color: var(--au-field-focus-tab-border);
+  outline: var(--au-field-focus-tab-outline);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
   box-shadow: none;
-  outline: 2px solid var(--au-color-form-error);
-  outline-offset: 2px;
+  outline: 2px solid var(--au-field-error-border);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 /* Disabled: whole row muted */
 .au-select__control-row--open:not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-field-border-hover);
 }
 
 .au-select__control-row:has(.au-select__trigger:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-field-disabled-border);
+  background: var(--au-field-disabled-bg);
   box-shadow: none;
 }
 
@@ -163,7 +163,7 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--au-color-form-text);
+  color: var(--au-select-trigger-color);
   font: inherit;
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
@@ -186,11 +186,11 @@
 }
 
 .au-select__value--placeholder {
-  color: var(--au-color-text-tertiary);
+  color: var(--au-select-placeholder-color);
 }
 
 .au-select__trigger:disabled {
-  color: var(--au-color-form-disabled-foreground);
+  color: var(--au-field-disabled-fg);
   cursor: not-allowed;
   opacity: 0.9;
 }
@@ -227,7 +227,7 @@
 
 .au-select__control-row--open .au-select__icon {
   transform: translateY(-50%) rotate(180deg);
-  color: var(--au-color-text-secondary);
+  color: var(--au-select-icon-color-open);
 }
 
 /* Icon: custom dropdown arrow */
@@ -238,7 +238,7 @@
   transform: translateY(-50%);
   transition: transform var(--au-duration-fast) var(--au-ease-standard);
   pointer-events: none;
-  color: var(--au-color-text-tertiary);
+  color: var(--au-select-icon-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -260,7 +260,7 @@
   margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-hint-color);
 }
 
 /* -------------------------------------------------------------------------- */

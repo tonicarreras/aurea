@@ -1,6 +1,7 @@
 <button
   #buttonEl
   class="au-button__element"
+  part="control"
   [class.au-button__element--loading]="loading()"
   [class.au-button__element--from-tab]="focusByTab()"
   [attr.type]="type()"
@@ -16,6 +17,7 @@
   @if (loading()) {
     <span
       class="au-button__spinner"
+      part="spinner"
       aria-hidden="true"
     >
       <au-icon
@@ -26,6 +28,7 @@
   }
   <span
     class="au-button__content"
+    part="content"
     [class.au-button__content--hidden]="loading()"
     [attr.aria-hidden]="loading() ? 'true' : null"
   >

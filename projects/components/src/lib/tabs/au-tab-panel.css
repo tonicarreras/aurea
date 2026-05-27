@@ -3,7 +3,7 @@
 :host {
   margin: 0;
   padding: var(--au-space-4) 0 0;
-  color: var(--au-color-text-primary);
+  color: var(--au-tab-panel-fg);
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
 }
@@ -17,7 +17,7 @@
 }
 
 :host(.au-tabs__panel--active:focus-visible) {
-  outline: 2px solid var(--au-color-focus-ring);
+  outline: var(--au-tab-panel-focus-outline);
   outline-offset: 4px;
   border-radius: var(--au-radius-xs);
 }

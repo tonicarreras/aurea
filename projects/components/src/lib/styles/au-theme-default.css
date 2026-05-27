@@ -1,0 +1,13 @@
+/**
+ * Aurea default visual theme bundle.
+ *
+ * Import this file when you want the ready-to-use Aurea look:
+ * semantic tokens, component skin mapping, form error and listbox helpers.
+ *
+ * Published package: sibling `./au-tokens.css` (copied by ng-packagr).
+ */
+@import './au-tokens.css';
+@import './au-component-tokens.css';
+@import './au-theme-skin.css';
+@import './au-field-error.css';
+@import './au-field-listbox.css';

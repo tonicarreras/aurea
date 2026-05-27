@@ -6,5 +6,5 @@
   font-weight: var(--au-weight-semibold);
   line-height: var(--au-leading-tight);
   letter-spacing: var(--au-tracking-ui);
-  color: var(--au-color-text-primary);
+  color: var(--au-card-header-color);
 }

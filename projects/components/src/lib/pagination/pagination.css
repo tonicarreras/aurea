@@ -21,6 +21,6 @@
 
 .au-pagination__ellipsis {
   padding: 0 var(--au-space-1);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-pagination-fg);
   font-size: var(--au-text-sm);
 }

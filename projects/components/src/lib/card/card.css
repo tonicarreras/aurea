@@ -1,12 +1,14 @@
 /**
  * Card — grouped content with shared surface language as au-dialog.
+ *
+ * Skin: `--au-card-*` tokens from `au-component-tokens.css` / `au-theme-skin.css`.
  */
 @import url('../tokens/au-tokens.css');
 
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-card-header-color);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -15,26 +17,30 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-card-radius);
+  background: var(--au-card-bg);
+  border: 1px solid var(--au-card-border);
+  box-shadow: var(--au-card-shadow);
   transition: var(--au-transition-control);
 }
 
-:host([data-au-variant='elevated']) .au-card__container {
-  background: var(--au-color-surface-raised);
-  border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-float);
+:host([data-au-variant='elevated']),
+:host:not([data-au-variant]) {
+  --au-card-bg: var(--au-color-surface-raised);
+  --au-card-border: var(--au-color-border-subtle);
+  --au-card-shadow: var(--au-shadow-float);
 }
 
-:host([data-au-variant='outlined']) .au-card__container {
-  background: var(--au-color-surface-raised);
-  border: 1px solid var(--au-color-border-default);
-  box-shadow: var(--au-shadow-raised);
+:host([data-au-variant='outlined']) {
+  --au-card-bg: var(--au-color-surface-raised);
+  --au-card-border: var(--au-color-border-default);
+  --au-card-shadow: var(--au-shadow-raised);
 }
 
-:host([data-au-variant='filled']) .au-card__container {
-  background: var(--au-color-surface-elevated);
-  border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-control);
+:host([data-au-variant='filled']) {
+  --au-card-bg: var(--au-color-surface-elevated);
+  --au-card-border: var(--au-color-border-subtle);
+  --au-card-shadow: var(--au-shadow-control);
 }
 
 .au-card__inner {
@@ -68,7 +74,7 @@
   gap: var(--au-card-main-gap, var(--au-space-2));
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-secondary);
+  color: var(--au-card-body-color);
 }
 
 .au-card__main > * {
@@ -83,7 +89,7 @@
   gap: var(--au-space-3);
   margin: var(--au-card-footer-gap, var(--au-space-4)) 0 0;
   padding: var(--au-card-footer-gap, var(--au-space-4)) 0 0;
-  border-top: 1px solid var(--au-color-border-subtle);
+  border-top: 1px solid var(--au-card-footer-border);
 }
 
 @media (prefers-reduced-motion: reduce) {

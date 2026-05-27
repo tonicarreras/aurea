@@ -6,7 +6,7 @@
 :host {
   display: contents;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: inherit;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -32,7 +32,7 @@
 }
 
 .au-dialog__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
+  background: var(--au-dialog-backdrop);
   animation: au-dialog-backdrop-in var(--au-motion-modal);
 }
 
@@ -42,10 +42,10 @@
   width: 100%;
   max-height: min(90vh, calc(100vh - var(--au-space-8)));
   overflow: hidden;
-  background: var(--au-color-surface-raised);
-  border: 1px solid var(--au-color-border-subtle);
-  border-radius: var(--au-radius-md); /* 8px — more generous dialog corners */
-  box-shadow: var(--au-shadow-overlay);
+  background: var(--au-dialog-panel-bg);
+  border: 1px solid var(--au-dialog-panel-border);
+  border-radius: var(--au-dialog-panel-radius);
+  box-shadow: var(--au-dialog-panel-shadow);
   animation: au-dialog-panel-in var(--au-motion-modal);
 }
 
@@ -75,7 +75,7 @@
   height: 100%;
   max-height: none;
   min-height: 0;
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-dialog-panel-radius);
 }
 
 .au-dialog__header {
@@ -85,7 +85,7 @@
   justify-content: space-between;
   gap: var(--au-space-3);
   padding: var(--au-space-4) var(--au-space-4) var(--au-space-3);
-  border-bottom: 1px solid var(--au-color-border-subtle);
+  border-bottom: 1px solid var(--au-dialog-header-border);
 }
 
 .au-dialog__title {
@@ -95,7 +95,7 @@
   font-weight: var(--au-weight-semibold);
   line-height: var(--au-leading-tight);
   letter-spacing: var(--au-tracking-ui);
-  color: var(--au-color-text-primary);
+  color: var(--au-dialog-title-color);
 }
 
 .au-dialog__close {
@@ -110,7 +110,7 @@
   border: 1px solid transparent;
   border-radius: var(--au-radius-sm);
   background: transparent;
-  color: var(--au-color-text-secondary);
+  color: var(--au-dialog-close-fg);
   cursor: pointer;
   transition:
     var(--au-transition-background), var(--au-transition-border), var(--au-transition-color),
@@ -118,15 +118,15 @@
 }
 
 .au-dialog__close:hover {
-  background: var(--au-color-surface-elevated);
-  border-color: var(--au-color-border-subtle);
-  color: var(--au-color-text-primary);
+  background: var(--au-dialog-close-bg-hover);
+  border-color: var(--au-dialog-close-border-hover);
+  color: var(--au-dialog-close-fg-hover);
 }
 
 .au-dialog__close:focus-visible {
   outline: none;
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-ring);
+  border-color: var(--au-dialog-close-focus-border);
+  box-shadow: var(--au-dialog-close-focus-shadow);
 }
 
 .au-dialog__body {
@@ -136,7 +136,7 @@
   overflow-y: auto;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-secondary);
+  color: var(--au-dialog-body-color);
 }
 
 .au-dialog__body-inner > * {
@@ -155,7 +155,7 @@
   justify-content: flex-end;
   gap: var(--au-space-3);
   padding: var(--au-space-3) var(--au-space-4) var(--au-space-4);
-  border-top: 1px solid var(--au-color-border-subtle);
+  border-top: 1px solid var(--au-dialog-footer-border);
 }
 
 @keyframes au-dialog-backdrop-in {

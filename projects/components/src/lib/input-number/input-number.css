@@ -7,7 +7,7 @@
 :host {
   display: block;
   font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
+  color: var(--au-field-text-color, inherit);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -48,12 +48,12 @@
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
+  color: var(--au-field-label-color);
   letter-spacing: var(--au-tracking-ui);
 }
 
 .au-input-number__required {
-  color: var(--au-color-form-error);
+  color: var(--au-field-required-color);
   font-weight: var(--au-weight-semibold);
 }
 
@@ -65,50 +65,53 @@
   align-items: stretch;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  border: 1px solid var(--au-field-border);
+  border-radius: var(--au-field-radius);
+  background: var(--au-field-bg);
+  box-shadow: var(--au-field-shadow);
   transition: var(--au-transition-control);
 }
 
 .au-input-number__control-row:has(.au-input-number__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-field-border-hover);
 }
 
 .au-input-number__control-row:has(.au-input-number__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-bg);
 }
 
 .au-input-number__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-field-border-focus);
+  box-shadow: var(--au-field-shadow-focus);
 }
 
 .au-input-number__control-row:focus-within:has(.au-input-number__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  box-shadow: var(--au-field-shadow-focus-error);
 }
 
 .au-input-number__control-row--from-tab:focus-within {
   box-shadow: none;
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  background: var(--au-field-focus-tab-bg);
+  border-color: var(--au-field-focus-tab-border);
+  outline: var(--au-field-focus-tab-outline);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-input-number__control-row--from-tab:focus-within:has(
     .au-input-number__input[aria-invalid='true']
   ) {
-  border-color: var(--au-color-form-error);
-  outline: 2px solid var(--au-color-form-error);
+  border-color: var(--au-field-error-border);
+  background: var(--au-field-error-focus-bg);
+  outline: 2px solid var(--au-field-error-border);
+  outline-offset: var(--au-field-focus-tab-outline-offset, 2px);
 }
 
 .au-input-number__control-row:has(.au-input-number__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-field-disabled-border);
+  background: var(--au-field-disabled-bg);
   box-shadow: none;
 }
 
@@ -124,7 +127,7 @@
   font-family: inherit;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-primary);
+  color: var(--au-field-text-color);
   outline: none;
 }
 
@@ -139,11 +142,12 @@
 }
 
 .au-input-number__input::placeholder {
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-placeholder-color);
 }
 
 .au-input-number__input:disabled {
   cursor: not-allowed;
+  color: var(--au-field-disabled-fg);
   opacity: 0.55;
 }
 
@@ -151,7 +155,7 @@
   margin: 0;
   font-size: var(--au-text-xs);
   line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
+  color: var(--au-field-hint-color);
 }
 
 @media (prefers-reduced-motion: reduce) {
