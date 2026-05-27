@@ -44,7 +44,7 @@
   overflow: hidden;
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-subtle);
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-md); /* 8px — more generous, Radix-aligned */
   box-shadow: var(--au-shadow-overlay);
   animation: au-dialog-panel-in var(--au-motion-modal);
 }
@@ -170,7 +170,7 @@
 @keyframes au-dialog-panel-in {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(0.99);
+    transform: translateY(12px) scale(0.97);
   }
   to {
     opacity: 1;

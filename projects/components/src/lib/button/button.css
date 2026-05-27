@@ -33,7 +33,7 @@ button.au-button__element {
   box-shadow: var(--au-shadow-button);
   transition:
     var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
-    var(--au-transition-color);
+    var(--au-transition-color), transform var(--au-duration-micro) var(--au-ease-out);
   white-space: nowrap;
 }
 
@@ -82,6 +82,32 @@ button.au-button__element {
 :host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-action-primary-pressed);
   border-color: var(--au-color-action-primary-pressed);
+  transform: scale(0.97);
+}
+
+/* HC primary: ink frame on fill (no stacked shadow + fill border) */
+:host-context([data-au-theme='high-contrast']) :host([data-au-variant='primary']) .au-button__element,
+:host-context([data-au-theme='high-contrast'])
+  :host([data-au-variant='primary'])
+  .au-button__element:hover:not(:disabled),
+:host-context([data-au-theme='high-contrast'])
+  :host([data-au-variant='primary'])
+  .au-button__element:active:not(:disabled) {
+  border-width: 2px;
+  border-color: #000000;
+  box-shadow: none;
+}
+
+:host-context([data-au-theme='high-contrast-dark']) :host([data-au-variant='primary']) .au-button__element,
+:host-context([data-au-theme='high-contrast-dark'])
+  :host([data-au-variant='primary'])
+  .au-button__element:hover:not(:disabled),
+:host-context([data-au-theme='high-contrast-dark'])
+  :host([data-au-variant='primary'])
+  .au-button__element:active:not(:disabled) {
+  border-width: 2px;
+  border-color: #ffffff;
+  box-shadow: none;
 }
 
 /* Secondary: filled surface, accent text */
@@ -99,6 +125,7 @@ button.au-button__element {
 
 :host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
+  transform: scale(0.97);
 }
 
 /* Outline: border-only, transparent background */
@@ -114,6 +141,7 @@ button.au-button__element {
 
 :host([data-au-variant='outline']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
+  transform: scale(0.97);
 }
 
 /* Ghost: text-only, no border */
@@ -130,6 +158,7 @@ button.au-button__element {
 
 :host([data-au-variant='ghost']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
+  transform: scale(0.97);
 }
 
 /* -------------------------------------------------------------------------- */

@@ -66,15 +66,16 @@
 }
 
 /* Radii: one scale; fields use --au-radius-field (not pill) */
+/* Shifted up +2px (sm, md, lg, xl) for Radix-inspired softness */
 :root {
   --au-radius-2xs: 0.0625rem; /* 1px — nearly square */
   --au-radius-xs: 0.125rem; /* 2px */
-  --au-radius-sm: 0.25rem; /* 4 */
-  --au-radius-md: 0.375rem; /* 6 */
-  --au-radius-lg: 0.5rem; /* 8 */
-  --au-radius-xl: 0.75rem;
+  --au-radius-sm: 0.375rem; /* 6px — buttons, chips, menu items */
+  --au-radius-md: 0.5rem; /* 8px — menus, popovers, floating panels */
+  --au-radius-lg: 0.75rem; /* 12px — cards, dialogs, tables */
+  --au-radius-xl: 1rem; /* 16px — larger surfaces */
   --au-radius-pill: 9999px;
-  --au-radius-field: 0.125rem; /* 2px — sharp, matches current inputs */
+  --au-radius-field: 0.25rem; /* 4px — inputs, selects, textareas */
 }
 
 /* Focus: reusable rings (components: combine with border) */
@@ -90,11 +91,11 @@
 
 /* Elevation: readable depth, no neumorphism — scale control → raised → float → overlay */
 :root {
-  --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
-  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px rgba(15, 20, 26, 0.04);
-  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.08), 0 2px 8px rgba(15, 20, 26, 0.06);
-  --au-shadow-float: 0 4px 14px rgba(15, 20, 26, 0.1), 0 2px 4px rgba(15, 20, 26, 0.06);
-  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 12px 40px rgba(15, 20, 26, 0.14);
+  --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.04);
+  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.05), 0 0 0 1px rgba(15, 20, 26, 0.03);
+  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.05), 0 2px 8px rgba(15, 20, 26, 0.04);
+  --au-shadow-float: 0 4px 12px rgba(15, 20, 26, 0.07), 0 2px 4px rgba(15, 20, 26, 0.04);
+  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.04), 0 12px 36px rgba(15, 20, 26, 0.1);
   --au-shadow-button: var(--au-shadow-control);
   --au-shadow-button-primary:
     0 1px 2px color-mix(in srgb, var(--au-color-action-primary) 36%, transparent),
@@ -158,7 +159,9 @@
 .au-floating-panel {
   box-sizing: border-box;
   border-radius: var(--au-radius-md);
-  background: var(--au-color-surface-elevated);
+  background: var(--au-color-surface-raised-a);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--au-color-text-primary);
   border: 1px solid var(--au-color-border-subtle);
   box-shadow: var(--au-shadow-overlay);
@@ -194,7 +197,7 @@
   /* Motion intent (duration + easing) for overlays and micro-interactions */
   --au-motion-tap: var(--au-duration-micro) var(--au-ease-out);
   --au-motion-control: var(--au-duration-short) var(--au-ease-in-out);
-  --au-motion-modal: var(--au-duration-default) var(--au-ease-standard);
+  --au-motion-modal: var(--au-duration-default) var(--au-ease-emph);
   --au-motion-toast: var(--au-duration-slow) var(--au-ease-out);
   --au-transition-motion-tap:
     transform var(--au-motion-tap), box-shadow var(--au-motion-tap),
@@ -212,6 +215,9 @@
   --au-color-surface-canvas: #f1f2f4;
   --au-color-surface-raised: #ffffff;
   --au-color-surface-elevated: #f8f9fa;
+  /* Translucent variants for Radix-style blurred panels */
+  --au-color-surface-raised-a: color-mix(in srgb, var(--au-color-surface-raised) 85%, transparent);
+  --au-color-surface-elevated-a: color-mix(in srgb, var(--au-color-surface-elevated) 85%, transparent);
   --au-color-surface-sunken: #e9ebef;
   --au-color-surface-inverted: #101418;
   /* Skeleton: tuned for `surface-raised` panels (not sunken/elevated alone) */
@@ -414,6 +420,9 @@
   --au-color-surface-canvas: #0c0e12;
   --au-color-surface-raised: #13161c;
   --au-color-surface-elevated: #181b22;
+  /* Translucent variants for Radix-inspired blurred panels */
+  --au-color-surface-raised-a: color-mix(in srgb, var(--au-color-surface-raised) 80%, transparent);
+  --au-color-surface-elevated-a: color-mix(in srgb, var(--au-color-surface-elevated) 80%, transparent);
   --au-color-surface-sunken: #0a0c0f;
   --au-color-surface-inverted: #f0f2f4;
   /* Skeleton: lighter shimmer on dark raised surfaces */
@@ -539,11 +548,11 @@
   --au-color-date-picker-edit-highlight: rgba(110, 180, 255, 0.22);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */
-  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
-  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --au-shadow-float: 0 6px 18px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.28);
-  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 48px rgba(0, 0, 0, 0.48);
+  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.03);
+  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --au-shadow-float: 0 6px 16px rgba(0, 0, 0, 0.32), 0 2px 6px rgba(0, 0, 0, 0.24);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 48px rgba(0, 0, 0, 0.42);
   --au-shadow-button: var(--au-shadow-control);
   --au-shadow-button-primary:
     0 1px 3px color-mix(in srgb, var(--au-color-action-primary) 42%, transparent),
@@ -581,11 +590,12 @@
   --au-color-border-subtle: #000000;
   --au-color-border-default: #000000;
   --au-color-border-strong: #000000;
-  --au-color-action-primary: #0000ee;
-  --au-color-action-primary-hover: #0000cc;
-  --au-color-action-primary-pressed: #000099;
-  --au-color-link: #0000ee;
-  --au-color-link-hover: #0000cc;
+  /* Accent: same hue as light theme (passes AA with white on-solid); HC frame via shadows */
+  --au-color-action-primary: #1059c8;
+  --au-color-action-primary-hover: #0d4aa3;
+  --au-color-action-primary-pressed: #0a3a85;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
   --au-color-focus-ring: #000000;
   --au-color-focus-inner: #ffffff;
   --au-focus-ring-width: 3px;
@@ -611,7 +621,7 @@
   --au-color-feedback-warning-title: #5c4a00;
   --au-color-feedback-error-title: #5c0000;
   --au-color-feedback-info-title: #003d6b;
-  --au-color-selection: rgba(0, 0, 238, 0.28);
+  --au-color-selection: rgba(16, 89, 200, 0.28);
   --au-color-selection-text: var(--au-color-text-primary);
   --au-color-form-border: #000000;
   --au-color-form-border-hover: #000000;
@@ -632,8 +642,8 @@
   --au-color-select-field-hover-bg: #f0f0f0;
   --au-color-select-option-highlight-bg: #e8e8e8;
   --au-color-select-option-highlight-text: #000000;
-  --au-color-select-option-highlight-marker: #0000ee;
-  --au-color-select-option-selected-bg: #0000ee;
+  --au-color-select-option-highlight-marker: var(--au-color-action-primary);
+  --au-color-select-option-selected-bg: var(--au-color-action-primary);
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #ffffff;
   --au-color-select-option-disabled-text: var(--au-color-text-disabled);
@@ -641,7 +651,7 @@
   --au-color-date-picker-icon: var(--au-color-text-primary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(0, 0, 238, 0.2);
+  --au-color-date-picker-edit-highlight: rgba(16, 89, 200, 0.2);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   --au-shadow-hairline: 0 0 0 1px #000000;
   --au-shadow-control: 0 0 0 1px var(--au-color-form-border);
@@ -678,11 +688,12 @@
   --au-color-border-subtle: #ffffff;
   --au-color-border-default: #ffffff;
   --au-color-border-strong: #ffffff;
-  --au-color-action-primary: #00ffff;
-  --au-color-action-primary-hover: #80ffff;
-  --au-color-action-primary-pressed: #b3ffff;
-  --au-color-link: #00ffff;
-  --au-color-link-hover: #80ffff;
+  /* Accent: same sky blue as dark theme; black on-solid for filled controls */
+  --au-color-action-primary: #6eb4ff;
+  --au-color-action-primary-hover: #8ec5ff;
+  --au-color-action-primary-pressed: #b0d8ff;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
   --au-color-focus-ring: #ffffff;
   --au-color-focus-inner: #000000;
   --au-focus-ring-width: 3px;
@@ -707,7 +718,7 @@
   --au-color-feedback-warning-title: #ffff99;
   --au-color-feedback-error-title: #ffd6d6;
   --au-color-feedback-info-title: #b8e8ff;
-  --au-color-selection: rgba(0, 255, 255, 0.35);
+  --au-color-selection: rgba(110, 180, 255, 0.35);
   --au-color-selection-text: var(--au-color-text-primary);
   --au-color-form-border: #ffffff;
   --au-color-form-border-hover: #ffffff;
@@ -728,8 +739,8 @@
   --au-color-select-field-hover-bg: #1a1a1a;
   --au-color-select-option-highlight-bg: #262626;
   --au-color-select-option-highlight-text: #ffffff;
-  --au-color-select-option-highlight-marker: #00ffff;
-  --au-color-select-option-selected-bg: #00ffff;
+  --au-color-select-option-highlight-marker: var(--au-color-action-primary);
+  --au-color-select-option-selected-bg: var(--au-color-action-primary);
   --au-color-select-option-selected-text: #000000;
   --au-color-select-option-selected-marker: #000000;
   --au-color-select-option-disabled-text: var(--au-color-text-disabled);
@@ -737,7 +748,7 @@
   --au-color-date-picker-icon: var(--au-color-text-primary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(0, 255, 255, 0.25);
+  --au-color-date-picker-edit-highlight: rgba(110, 180, 255, 0.25);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   --au-shadow-hairline: 0 0 0 1px #ffffff;
   --au-shadow-control: 0 0 0 1px #ffffff;
