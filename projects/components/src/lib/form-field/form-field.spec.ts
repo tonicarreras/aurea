@@ -88,6 +88,23 @@ describe('AuFormField', () => {
     expect(hint.id).toBe('email-hint');
   });
 
+  it('uses dark error ink on high-contrast light (not white)', () => {
+    const tokensLink = document.createElement('link');
+    tokensLink.rel = 'stylesheet';
+    tokensLink.href = new URL('../tokens/au-tokens.css', import.meta.url).href;
+    document.head.append(tokensLink);
+    document.documentElement.setAttribute('data-au-theme', 'high-contrast');
+
+    fixture.componentRef.setInput('errorMessage', 'Required field');
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.querySelector('.au-field-error__text') as HTMLElement;
+    expect(getComputedStyle(text).color).not.toBe('rgb(255, 255, 255)');
+
+    document.documentElement.removeAttribute('data-au-theme');
+    tokensLink.remove();
+  });
+
   it('treats null errorMessage as empty', () => {
     fixture.componentRef.setInput('errorMessage', null as unknown as string);
     fixture.componentRef.setInput('invalid', true);

@@ -2,24 +2,9 @@ import type { Preview } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import docJson from '../documentation.json';
 
-import {
-  setStoryOverviewLocale,
-  type StoryOverviewLocale,
-} from '../src/lib/story-docs/get-story-overview';
+import { applyPreviewGlobals } from '../src/lib/storybook/apply-preview-globals';
 
 setCompodocJson(docJson);
-
-function applyAuThemeFromGlobals(globals: Record<string, unknown>): void {
-  const raw = globals['auTheme'];
-  const theme = raw === 'dark' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-au-theme', theme);
-}
-
-function applyDocsLocaleFromGlobals(globals: Record<string, unknown>): void {
-  const raw = globals['docsLocale'];
-  const locale: StoryOverviewLocale = raw === 'es' ? 'es' : 'en';
-  setStoryOverviewLocale(locale);
-}
 
 /**
  * a11y (addon 10): use `parameters.a11y` only.
@@ -28,14 +13,42 @@ function applyDocsLocaleFromGlobals(globals: Record<string, unknown>): void {
 const preview: Preview = {
   globalTypes: {
     auTheme: {
-      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',
+      description: 'Apariencia base (`light` / `dark`); combinable con alto contraste.',
       defaultValue: 'light',
       toolbar: {
         title: 'Tema',
-        icon: 'contrast',
+        icon: 'mirror',
         items: [
           { value: 'light', title: 'Claro', icon: 'sun' },
           { value: 'dark', title: 'Oscuro', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    auHighContrast: {
+      description:
+        'Paleta experimental WCAG: claro → `high-contrast`, oscuro → `high-contrast-dark`.',
+      defaultValue: 'off',
+      toolbar: {
+        title: 'Contraste',
+        icon: 'accessibility',
+        items: [
+          { value: 'off', title: 'Normal' },
+          { value: 'on', title: 'Alto contraste' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    auDensity: {
+      description: 'Escala de densidad en `document.documentElement` (`data-au-density`).',
+      defaultValue: 'comfortable',
+      toolbar: {
+        title: 'Espacio',
+        icon: 'grow',
+        items: [
+          { value: 'compact', title: 'Compacto' },
+          { value: 'comfortable', title: 'Cómodo' },
+          { value: 'spacious', title: 'Espacioso' },
         ],
         dynamicTitle: true,
       },
@@ -56,13 +69,13 @@ const preview: Preview = {
   },
   initialGlobals: {
     auTheme: 'light',
+    auHighContrast: 'off',
+    auDensity: 'comfortable',
     docsLocale: 'en',
   },
   decorators: [
     (storyFn, context) => {
-      const globals = context.globals as Record<string, unknown>;
-      applyAuThemeFromGlobals(globals);
-      applyDocsLocaleFromGlobals(globals);
+      applyPreviewGlobals(context.globals as Record<string, unknown>);
       return storyFn();
     },
   ],

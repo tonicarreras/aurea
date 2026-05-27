@@ -10,7 +10,8 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
   'form-field': [
     {
       concern: 'Label / hint / error',
-      examples: '`--au-color-text-label`, `--au-color-form-error`, `--au-color-text-tertiary`',
+      examples:
+        '`--au-color-text-label`, `--au-color-form-error`, `--au-color-form-error-foreground`, `--au-color-text-tertiary`',
     },
     { concern: 'Spacing', examples: '`--au-space-2`, `--au-text-sm`' },
   ],

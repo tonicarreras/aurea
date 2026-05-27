@@ -11,7 +11,7 @@
   margin: 0;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-semantic-error-contrast);
+  color: var(--au-color-form-error-foreground, var(--au-color-feedback-error-title));
   font-weight: var(--au-weight-regular);
 }
 
@@ -29,4 +29,15 @@
   flex: 1 1 auto;
   min-width: 0;
   font-weight: var(--au-weight-regular);
+  color: inherit;
+}
+
+/* HC light: ink on white canvas (avoid light semantic-error-contrast from dark palettes) */
+:host-context([data-au-theme='high-contrast']) .au-field-error,
+:host-context([data-au-theme='high-contrast']) .au-field-error__text {
+  color: var(--au-color-feedback-error-title);
+}
+
+:host-context([data-au-theme='high-contrast']) .au-field-error__glyph {
+  color: var(--au-color-feedback-error-border);
 }

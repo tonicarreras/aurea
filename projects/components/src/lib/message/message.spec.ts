@@ -130,6 +130,54 @@ describe('AuMessage', () => {
   });
 });
 
+describe('AuMessage high-contrast light ink', () => {
+  const variants = ['success', 'warning', 'error', 'info'] as const;
+  let fixture: ComponentFixture<AuMessage>;
+  let tokensLink: HTMLLinkElement;
+
+  beforeAll(() => {
+    tokensLink = document.createElement('link');
+    tokensLink.rel = 'stylesheet';
+    tokensLink.href = new URL('../tokens/au-tokens.css', import.meta.url).href;
+    document.head.append(tokensLink);
+  });
+
+  afterAll(() => {
+    tokensLink.remove();
+  });
+
+  beforeEach(async () => {
+    document.documentElement.setAttribute('data-au-theme', 'high-contrast');
+    await TestBed.configureTestingModule({
+      imports: [AuMessage],
+    }).compileComponents();
+    fixture = TestBed.createComponent(AuMessage);
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    document.documentElement.removeAttribute('data-au-theme');
+  });
+
+  for (const variant of variants) {
+    it(`does not render ${variant} copy as white on tinted surfaces`, () => {
+      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('title', 'Title');
+      fixture.componentRef.setInput('message', 'Body copy');
+      fixture.detectChanges();
+
+      const title = fixture.nativeElement.querySelector('.au-message__title') as HTMLElement;
+      const text = fixture.nativeElement.querySelector('.au-message__text') as HTMLElement;
+      const titleRgb = getComputedStyle(title).color;
+      const textRgb = getComputedStyle(text).color;
+
+      expect(titleRgb).not.toBe('rgb(255, 255, 255)');
+      expect(textRgb).not.toBe('rgb(255, 255, 255)');
+      expect(titleRgb).toBe(textRgb);
+    });
+  }
+});
+
 @Component({
   imports: [AuMessage],
   template: `<au-message variant="error">Projected body</au-message>`,

@@ -5,10 +5,18 @@
 - Utilities live in **`storybook/test`** (`expect`, `userEvent`, `within`, `fn` for output `args`). Stories use `play` for assertions on the **canvas** (same scope as [interaction testing](https://storybook.js.org/docs/writing-tests/interaction-testing), compatible with Docs mode).
 - In Storybook 10 **Interactions** is part of the runtime; you do not need a separate npm addon (the legacy `@storybook/addon-interactions` targets an 8.x line on the registry).
 
-## Tema (claro / oscuro)
+## Barra de herramientas (canvas global)
 
-- The toolbar includes **Theme** (global `auTheme`). It applies `data-au-theme` to `document.documentElement` so that tokens and the Docs canvas use `au-tokens.css` (same cascade as in the app with the `AuTheme` directive).
-- `main.ts` serves static files from `src/lib/tokens` → `/au-tokens/` and `src/lib/storybook` → `/au-storybook/` (`preview-head.html`).
+| Global | Atributo / efecto |
+|--------|-------------------|
+| **Tema** (`auTheme`) | `light` / `dark` — apariencia base |
+| **Contraste** (`auHighContrast`) | `off` / `on` — combina con tema → `high-contrast` o `high-contrast-dark` |
+| **Espacio** (`auDensity`) | `compact` / `comfortable` / `spacious` → `data-au-density` en `<html>` |
+| **Docs** (`docsLocale`) | `en` / `es` — overview de Autodocs |
+
+La lógica vive en `src/lib/storybook/apply-preview-globals.ts` (misma regla que `resolveDocsPreviewTheme` en la app de documentación).
+
+- `main.ts` sirve estáticos desde `src/lib/tokens` → `/au-tokens/` y `src/lib/storybook` → `/au-storybook/` (`preview-head.html`).
 
 ## Test runner (CI / headless)
 
