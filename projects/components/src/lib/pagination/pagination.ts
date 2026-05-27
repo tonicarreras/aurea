@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 
 import { AuButton } from '../button/button';
 
@@ -18,13 +18,11 @@ import { AuButton } from '../button/button';
   },
 })
 export class AuPagination {
-  /** Current page (1-based). */
-  readonly page = input(1);
+  /** Current page (1-based); two-way binding with `[(page)]`. */
+  readonly page = model(1);
   /** Total number of pages (≥ 1). */
-  readonly pageCount = input(1);
-  readonly disabled = input(false);
-
-  readonly pageChange = output<number>();
+  readonly pageCount = input<number>(1);
+  readonly disabled = input<boolean>(false);
 
   readonly safePageCount = computed(() => Math.max(1, this.pageCount()));
   readonly safePage = computed(() => Math.min(Math.max(1, this.page()), this.safePageCount()));
@@ -47,7 +45,7 @@ export class AuPagination {
     }
     const next = Math.min(Math.max(1, page), this.safePageCount());
     if (next !== this.safePage()) {
-      this.pageChange.emit(next);
+      this.page.set(next);
     }
   }
 

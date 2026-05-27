@@ -5,9 +5,9 @@ import {
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
 import { AuStep } from './au-step.directive';
+import { createChildRegistry } from '../shared/child-registry';
 
 export type AuStepsLayout = 'tabs' | 'sections';
 
@@ -43,8 +43,6 @@ export type AuStepsLayout = 'tabs' | 'sections';
 export class AuSteps {
   private static idCounter = 0;
 
-  private readonly stepRegistry = signal<readonly AuStep[]>([]);
-
   readonly value = model<string>('');
   readonly ariaLabel = input<string>('');
   readonly size = input<'sm' | 'md'>('md');
@@ -54,38 +52,49 @@ export class AuSteps {
   readonly valueChange = output<string>();
   readonly id = input<string>('');
 
+  /**
+   * Shared child registry managing step registration, selection,
+   * and keyboard navigation.
+   */
+  private readonly registry = createChildRegistry<AuStep>({
+    value: this.value,
+    onValueChange: (v) => this.applyValue(v),
+    itemKey: (s) => s.auStep(),
+    itemDisabled: (s) => s.auStepDisabled(),
+    focusItem: (s) => s.focus(),
+  });
+
   readonly resolvedId = computed(() => {
     const custom = this.id();
     return custom || `au-steps-${++AuSteps.idCounter}`;
   });
 
   registerStep(step: AuStep): void {
-    this.stepRegistry.update((list) => (list.includes(step) ? list : [...list, step]));
-    this.scheduleEnsureValidSelection();
+    this.registry.register(step);
   }
 
   unregisterStep(step: AuStep): void {
-    this.stepRegistry.update((list) => list.filter((s) => s !== step));
-    this.scheduleEnsureValidSelection();
-  }
-
-  private scheduleEnsureValidSelection(): void {
-    queueMicrotask(() => this.ensureValidSelection());
+    this.registry.unregister(step);
   }
 
   getEnabledSteps(): readonly AuStep[] {
-    return this.stepRegistry().filter((s) => !s.auStepDisabled());
+    return this.registry.enabledItems();
   }
 
   selectStep(next: string, options?: { scroll?: boolean }): void {
-    const changed = this.value() !== next;
-    if (changed) {
-      this.value.set(next);
-      this.valueChange.emit(next);
-    }
+    this.registry.select(next);
     if (options?.scroll && this.layout() === 'sections') {
       this.scrollToPanel(next);
     }
+  }
+
+  /** Updates model + emits `valueChange` when the key actually changes. */
+  private applyValue(next: string): void {
+    if (this.value() === next) {
+      return;
+    }
+    this.value.set(next);
+    this.valueChange.emit(next);
   }
 
   scrollToPanel(stepKey: string): void {
@@ -107,51 +116,6 @@ export class AuSteps {
   }
 
   onListKeydown(event: KeyboardEvent): void {
-    const enabled = this.getEnabledSteps();
-    if (enabled.length === 0) {
-      return;
-    }
-
-    const relevant = new Set(['ArrowLeft', 'ArrowRight', 'Home', 'End']);
-    if (!relevant.has(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const currentIndex = enabled.findIndex((s) => s.auStep() === this.value());
-    const start = currentIndex >= 0 ? currentIndex : 0;
-    let targetIndex = start;
-
-    switch (event.key) {
-      case 'ArrowRight':
-        targetIndex = (start + 1) % enabled.length;
-        break;
-      case 'ArrowLeft':
-        targetIndex = (start - 1 + enabled.length) % enabled.length;
-        break;
-      case 'Home':
-        targetIndex = 0;
-        break;
-      case 'End':
-        targetIndex = enabled.length - 1;
-        break;
-    }
-
-    const target = enabled[targetIndex];
-    this.selectStep(target.auStep());
-    target.focus();
-  }
-
-  private ensureValidSelection(): void {
-    const enabled = this.getEnabledSteps();
-    if (enabled.length === 0) {
-      return;
-    }
-    const current = this.value();
-    if (current && enabled.some((s) => s.auStep() === current)) {
-      return;
-    }
-    this.selectStep(enabled[0].auStep());
+    this.registry.onKeydown(event);
   }
 }

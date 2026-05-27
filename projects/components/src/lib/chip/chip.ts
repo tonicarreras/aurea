@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   computed,
+  effect,
   inject,
   input,
   model,
@@ -97,6 +98,16 @@ export class AuChip {
   protected readonly focusByTab = signal(false);
 
   private readonly host = inject(ElementRef<HTMLElement>);
+
+  constructor() {
+    effect(() => {
+      if (this.selectable() && this.removable()) {
+        console.warn(
+          '[AuChip] selectable and removable are mutually exclusive; both are ignored.',
+        );
+      }
+    });
+  }
 
   readonly removeAriaLabel = computed(() => {
     const custom = this.removeLabel().trim();

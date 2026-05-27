@@ -180,7 +180,7 @@ let nextFieldId = 0;
   host: {
     class: 'au-form-field',
   },
-  providers: [{ provide: AU_FORM_FIELD, useExisting: forwardRef(auFormFieldSelfRef) }],
+  providers: [{ provide: AU_FORM_FIELD, useExisting: forwardRef(() => AuFormField) }],
 })
 export class AuFormField implements AuFormFieldContext {
   private readonly autoId = `au-field-${++nextFieldId}`;
@@ -241,7 +241,4 @@ export class AuFormField implements AuFormFieldContext {
   }
 }
 
-/** Lazy ref for `useExisting` so the component class can register as its own `AU_FORM_FIELD`. */
-export function auFormFieldSelfRef(): typeof AuFormField {
-  return AuFormField;
-}
+

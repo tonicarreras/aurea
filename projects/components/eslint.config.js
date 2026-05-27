@@ -39,6 +39,7 @@ module.exports = defineConfig([
       '**/tabs/au-tab.directive.ts',
       '**/steps/au-step-panel.directive.ts',
       '**/steps/au-step.directive.ts',
+      '**/link/link.ts',
     ],
     rules: {
       '@angular-eslint/component-selector': [

@@ -44,3 +44,10 @@ export const External: Story = {
     template: `<a auLink href="https://angular.dev" [external]="true">Angular docs</a>`,
   }),
 };
+
+export const Subtle: Story = {
+  render: () => ({
+    moduleMetadata: { imports: [AuLink] },
+    template: `<p style="margin:0;color:var(--au-color-text-secondary)">See also <a auLink href="#" variant="subtle">related topics</a>.</p>`,
+  }),
+};

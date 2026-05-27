@@ -199,7 +199,7 @@
   background: var(--au-color-surface-raised);
   transition: background-color var(--au-duration-short) var(--au-ease-out);
   outline: none;
-  cursor: default;
+  cursor: pointer;
 }
 
 .au-table__grid tbody tr:hover {

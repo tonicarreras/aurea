@@ -22,38 +22,34 @@ describe('AuPagination', () => {
     expect(host.getAttribute('aria-label')).toBe('Pagination');
   });
 
-  it('emits pageChange when a page button is clicked', () => {
-    const emitted: number[] = [];
+  it('updates page model when a page button is clicked', () => {
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('pageCount', 5);
     fixture.detectChanges();
-    component.pageChange.subscribe((p) => emitted.push(p));
 
     const buttons = fixture.nativeElement.querySelectorAll('au-button');
     const page3 = [...buttons].find((b: HTMLElement) => b.textContent?.trim() === '3');
     page3?.querySelector('button')?.click();
     fixture.detectChanges();
-    expect(emitted).toEqual([3]);
+    expect(component.page()).toBe(3);
   });
 
-  it('does not emit when navigating to the current page', () => {
-    const emitted: number[] = [];
+  it('does not change page when navigating to the current page', () => {
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('pageCount', 5);
     fixture.detectChanges();
-    component.pageChange.subscribe((p) => emitted.push(p));
+    expect(component.page()).toBe(2);
     (component as unknown as { goTo: (p: number) => void }).goTo(2);
-    expect(emitted).toEqual([]);
+    expect(component.page()).toBe(2);
   });
 
-  it('does not emit when disabled', () => {
-    const emitted: number[] = [];
+  it('does not change page when disabled', () => {
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
-    component.pageChange.subscribe((p) => emitted.push(p));
+    expect(component.page()).toBe(2);
     (component as unknown as { goTo: (p: number) => void }).goTo(3);
-    expect(emitted).toEqual([]);
+    expect(component.page()).toBe(2);
   });
 
   it('clamps page and pageCount to safe bounds', () => {
@@ -93,14 +89,14 @@ describe('AuPagination', () => {
   });
 
   it('prev and next navigate by one page', () => {
-    const emitted: number[] = [];
     fixture.componentRef.setInput('page', 3);
     fixture.componentRef.setInput('pageCount', 5);
     fixture.detectChanges();
-    component.pageChange.subscribe((p) => emitted.push(p));
+    expect(component.page()).toBe(3);
     (component as unknown as { prev: () => void }).prev();
+    expect(component.page()).toBe(2);
     (component as unknown as { next: () => void }).next();
-    expect(emitted).toEqual([2, 4]);
+    expect(component.page()).toBe(3);
   });
 
   it('disables prev on first page and next on last', () => {

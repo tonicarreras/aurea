@@ -31,7 +31,7 @@ interface InputTextStoryArgs extends FieldChromeStoryArgs {
 }
 
 const meta: Meta<InputTextStoryArgs> = {
-  title: 'Aurea/InputText',
+  title: 'Aurea/Input text',
   component: AuInputText,
   tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('input-text'),

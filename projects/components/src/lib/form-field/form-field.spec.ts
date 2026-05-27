@@ -6,7 +6,6 @@ import { AuInputText } from '../input-text/input-text';
 import {
   AU_FORM_FIELD,
   AuFormField,
-  auFormFieldSelfRef,
   createStandaloneAuFormFieldContext,
   injectAuFormField,
   queryFieldNative,
@@ -63,10 +62,6 @@ describe('AuFormField', () => {
 
   it('creates', () => {
     expect(fixture.componentInstance).toBeTruthy();
-  });
-
-  it('auFormFieldSelfRef returns the component class', () => {
-    expect(auFormFieldSelfRef()).toBe(AuFormField);
   });
 
   it('renders label with for attribute', () => {

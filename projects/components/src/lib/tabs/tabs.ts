@@ -5,10 +5,10 @@ import {
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
 import type { AuSize } from '../au-size';
 import { AuTab } from './au-tab.directive';
+import { createChildRegistry, type ChildRegistry } from '../shared/child-registry';
 
 export type AuTabsVariant = 'line' | 'contained';
 export type AuTabsOrientation = 'horizontal' | 'vertical';
@@ -48,8 +48,6 @@ export type AuTabsSize = AuSize;
 export class AuTabs {
   private static idCounter = 0;
 
-  private readonly tabRegistry = signal<readonly AuTab[]>([]);
-
   /** Active tab key (matches `auTab` / `auTabPanel`). */
   readonly value = model<string>('');
   /** Accessible name for the tablist when no visible label wraps the control. */
@@ -63,30 +61,46 @@ export class AuTabs {
 
   readonly valueChange = output<string>();
 
+  private readonly tabKey = (tab: AuTab): string => tab.auTab();
+  private readonly tabDisabled = (tab: AuTab): boolean => tab.auTabDisabled();
+  private readonly focusTab = (tab: AuTab): void => tab.focus();
+
+  /**
+   * Shared child registry managing tab registration, selection,
+   * and keyboard navigation (respects orientation).
+   */
+  private readonly registry: ChildRegistry<AuTab> = createChildRegistry<AuTab>({
+    value: this.value,
+    onValueChange: (v) => this.applyValue(v),
+    itemKey: this.tabKey,
+    itemDisabled: this.tabDisabled,
+    orientation: this.orientation,
+    focusItem: this.focusTab,
+  });
+
   readonly resolvedId = computed(() => {
     const custom = this.id();
     return custom || `au-tabs-${++AuTabs.idCounter}`;
   });
 
   registerTab(tab: AuTab): void {
-    this.tabRegistry.update((list) => (list.includes(tab) ? list : [...list, tab]));
-    this.scheduleEnsureValidSelection();
+    this.registry.register(tab);
   }
 
   unregisterTab(tab: AuTab): void {
-    this.tabRegistry.update((list) => list.filter((t) => t !== tab));
-    this.scheduleEnsureValidSelection();
-  }
-
-  private scheduleEnsureValidSelection(): void {
-    queueMicrotask(() => this.ensureValidSelection());
+    this.registry.unregister(tab);
   }
 
   getEnabledTabs(): readonly AuTab[] {
-    return this.tabRegistry().filter((t) => !t.auTabDisabled());
+    return this.registry.enabledItems();
   }
 
   selectTab(next: string): void {
+    this.registry.select(next);
+  }
+
+  /** Updates model + emits `valueChange` when the key actually changes. */
+  private applyValue(next: string): void {
     if (this.value() === next) {
       return;
     }
@@ -103,54 +117,6 @@ export class AuTabs {
   }
 
   onListKeydown(event: KeyboardEvent): void {
-    const enabled = this.getEnabledTabs();
-    if (enabled.length === 0) {
-      return;
-    }
-
-    const horizontal = this.orientation() === 'horizontal';
-    const prevKey = horizontal ? 'ArrowLeft' : 'ArrowUp';
-    const nextKey = horizontal ? 'ArrowRight' : 'ArrowDown';
-    const relevant = new Set([prevKey, nextKey, 'Home', 'End']);
-    if (!relevant.has(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const currentIndex = enabled.findIndex((t) => t.auTab() === this.value());
-    const start = currentIndex >= 0 ? currentIndex : 0;
-    let targetIndex = start;
-
-    switch (event.key) {
-      case nextKey:
-        targetIndex = (start + 1) % enabled.length;
-        break;
-      case prevKey:
-        targetIndex = (start - 1 + enabled.length) % enabled.length;
-        break;
-      case 'Home':
-        targetIndex = 0;
-        break;
-      case 'End':
-        targetIndex = enabled.length - 1;
-        break;
-    }
-
-    const target = enabled[targetIndex];
-    this.selectTab(target.auTab());
-    target.focus();
-  }
-
-  private ensureValidSelection(): void {
-    const enabled = this.getEnabledTabs();
-    if (enabled.length === 0) {
-      return;
-    }
-    const current = this.value();
-    if (current && enabled.some((t) => t.auTab() === current)) {
-      return;
-    }
-    this.selectTab(enabled[0].auTab());
+    this.registry.onKeydown(event);
   }
 }

@@ -17,10 +17,7 @@ import {
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
-import { AU_FORM_FIELD } from '../form-field/form-field';
-import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
-import { syncFormFieldControlState } from '../form-field/form-field';
-import { tabFocusState } from '../au-tab-focus-state';
+import { AuFormControlBase } from '../shared/form-control-base';
 import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
 
@@ -50,16 +47,15 @@ export type AuAutocompleteOption = AuFieldOption;
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
   },
 })
-export class AuAutocomplete implements FormValueControl<string | null> {
+export class AuAutocomplete extends AuFormControlBase<string> implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
-
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
+  readonly disabled = input(false);
+  readonly required = input(false);
 
   readonly options = input<AuAutocompleteOption[]>([]);
-  readonly disabled = input(false);
   readonly readOnly = input(false);
-  readonly required = input(false);
 
   readonly name = input<string>('');
   readonly placeholder = input<string, string>('', {
@@ -78,13 +74,21 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     transform: (v) => (v == null ? '' : String(v)),
   });
 
-  readonly blur = output<void>();
   readonly valueChange = output<string | null>();
+  readonly blur = output<void>();
 
   readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-  protected readonly formField = inject(AU_FORM_FIELD);
-  protected readonly fieldFocusByTab = signal(false);
+  constructor() {
+    super();
+    this.initBase({
+      errors: this.errors,
+      invalid: this.invalid,
+      required: this.required,
+      value: this.value,
+    });
+  }
+
   protected readonly panelOpen = signal(false);
   protected readonly query = signal('');
   protected readonly highlightedIndex = signal(-1);
@@ -98,36 +102,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     inject(DestroyRef),
   );
 
-  readonly controlId = computed(() => this.formField.controlId());
   readonly listboxId = computed(() => `${this.controlId()}-listbox`);
-
-  readonly displayError = displayErrorFromErrors(this.errors);
-  readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
-    invalid: () => this.invalid(),
-    isInvalid: () => this.isInvalid(),
-  });
-
-  readonly ariaDescribedBy = computed((): string | null => {
-    const ids: string[] = [];
-    if (this.formField.hint().trim().length > 0) {
-      ids.push(this.formField.hintId());
-    }
-    if (this.effectiveInvalid()) {
-      ids.push(this.formField.errorId());
-    }
-    return ids.length > 0 ? ids.join(' ') : null;
-  });
-
-  constructor() {
-    afterRenderEffect(
-      syncFormFieldControlState(this.formField, {
-        displayError: () => this.displayError(),
-        effectiveInvalid: () => this.effectiveInvalid(),
-        required: () => this.required(),
-      }),
-    );
-  }
 
   readonly selectedOption = computed(() => {
     const v = this.value();
@@ -204,6 +179,10 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   optionId(index: number): string {
     return `${this.controlId()}-option-${index}`;
+  }
+
+  override onBlurHost(): void {
+    this.blur.emit();
   }
 
   onInput(event: Event): void {
@@ -331,16 +310,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     }
   }
 
-  onBlurHost(): void {
-    this.blur.emit();
-  }
-
-  onControlRowFocusin(): void {
-    tabFocusState.attach();
-    this.fieldFocusByTab.set(tabFocusState.takeNextFocusIsFromTab());
-  }
-
-  onControlRowFocusout(event: FocusEvent): void {
+  override onControlRowFocusout(event: FocusEvent): void {
     if (!focusLeftFieldControl(event, this.listboxNative())) {
       return;
     }
