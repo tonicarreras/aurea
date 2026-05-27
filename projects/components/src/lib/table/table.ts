@@ -3,24 +3,31 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  contentChildren,
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
 
 import { AuTableColumn } from './au-table-column';
-import type { AuTableSortDirection, AuTableSortState } from './table-types';
+import type { AuTableSelectionMode, AuTableSortDirection, AuTableSortState } from './table-types';
 
 export type {
   AuTableAlign,
   AuTableCellVariant,
+  AuTableSelectionMode,
   AuTableSortDirection,
   AuTableSortState,
 } from './table-types';
 
 /**
  * Data table with column definitions (`au-table-column`), Material-style.
+ * Columns are discovered automatically via `contentChildren` — the old
+ * `registerColumn` / `unregisterColumn` API has been removed in favour of
+ * Angular's built-in content query resolution.
+ *
+ * Supports client-side sorting, row selection, custom cell templates,
+ * striped / compact / sticky-header variants, and `trackByFn`.
  */
 @Component({
   selector: 'au-table',
@@ -36,8 +43,6 @@ export type {
   },
 })
 export class AuTable {
-  private readonly columnRegistry = signal<readonly AuTableColumn[]>([]);
-
   /** Row data rendered in the table body. */
   readonly data = input.required<readonly unknown[]>();
   readonly title = input('');
@@ -47,12 +52,36 @@ export class AuTable {
   readonly compact = input(false);
   readonly stickyHeader = input(false);
   readonly emptyMessage = input('No data');
+
+  /** Client-side sort state; two-way binding with `[(sort)]`. */
   readonly sort = model<AuTableSortState | null>(null);
   readonly clientSort = input(true);
-  readonly sortChange = output<AuTableSortState | null>();
+
+  /** Optional identity function — enables stable selection across data re-creations. */
   readonly trackByFn = input<((index: number, row: unknown) => unknown) | undefined>(undefined);
 
-  readonly columns = computed(() => this.columnRegistry());
+  // ── Row selection ──────────────────────────────────────────────────────────
+
+  /** Selection behavior. `single` (default) toggles one row, `multiple` keeps a set. */
+  readonly selectionMode = input<AuTableSelectionMode>('single');
+
+  /** Currently selected row (`null` = none). Two-way binding with `[(selectedRow)]`. */
+  readonly selectedRow = model<unknown>(null);
+  /** Selected rows for `multiple` mode. Two-way binding with `[(selectedRows)]`. */
+  readonly selectedRows = model<readonly unknown[]>([]);
+
+  /** Emits the clicked row on every click regardless of selection state. */
+  readonly rowClick = output<unknown>();
+
+  /** Identity function for row comparison. Defaults to reference equality (`===`). */
+  readonly rowIdentity = input<((row: unknown) => unknown) | undefined>(undefined);
+
+  // ── Columns ────────────────────────────────────────────────────────────────
+
+  /** Columns discovered via `contentChildren` — no manual registration needed. */
+  readonly columns = contentChildren(AuTableColumn, { descendants: false });
+
+  // ── Client sort ────────────────────────────────────────────────────────────
 
   readonly viewRows = computed(() => {
     const rows = this.data();
@@ -68,13 +97,44 @@ export class AuTable {
     return [...rows].sort((a, b) => dir * this.compareRows(col, a, b));
   });
 
-  registerColumn(column: AuTableColumn): void {
-    this.columnRegistry.update((list) => (list.includes(column) ? list : [...list, column]));
+  // ── Selection helpers ──────────────────────────────────────────────────────
+
+  protected isRowSelected(row: unknown): boolean {
+    if (this.selectionMode() === 'multiple') {
+      return this.selectedRows().some((selected) => this.sameRow(selected, row));
+    }
+    const selected = this.selectedRow();
+    return selected != null && this.sameRow(selected, row);
   }
 
-  unregisterColumn(column: AuTableColumn): void {
-    this.columnRegistry.update((list) => list.filter((c) => c !== column));
+  protected handleRowClick(row: unknown): void {
+    this.rowClick.emit(row);
+    if (this.selectionMode() === 'multiple') {
+      const current = this.selectedRows();
+      const alreadySelected = current.some((selected) => this.sameRow(selected, row));
+      const next = alreadySelected
+        ? current.filter((selected) => !this.sameRow(selected, row))
+        : [...current, row];
+      this.selectedRows.set(next);
+      this.selectedRow.set(next[0] ?? null);
+      return;
+    }
+
+    const current = this.selectedRow();
+    const isSame = current != null && this.sameRow(current, row);
+    const next = isSame ? null : row;
+    this.selectedRow.set(next);
+    this.selectedRows.set(next == null ? [] : [next]);
   }
+
+  protected handleRowKeydown(event: KeyboardEvent, row: unknown): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.handleRowClick(row);
+    }
+  }
+
+  // ── Templates ──────────────────────────────────────────────────────────────
 
   protected trackRow(index: number, row: unknown): unknown {
     const trackBy = this.trackByFn();
@@ -121,6 +181,8 @@ export class AuTable {
     return 'none';
   }
 
+  // ── Sort internals ─────────────────────────────────────────────────────────
+
   protected columnSortDirection(column: string): AuTableSortDirection {
     const state = this.sort();
     if (!state || state.column !== column) {
@@ -142,7 +204,6 @@ export class AuTable {
       next = { column, direction: 'asc' };
     }
     this.sort.set(next);
-    this.sortChange.emit(next);
   }
 
   protected cellContext(row: unknown): { $implicit: unknown; row: unknown } {
@@ -174,7 +235,18 @@ export class AuTable {
       return accessor(row);
     }
     if (row && typeof row === 'object') {
-      return (row as Record<string, unknown>)[col.name()];
+      const key = col.name();
+      const obj = row as Record<string, unknown>;
+      // Support nested keys like "address.city"
+      if (key.includes('.')) {
+        let cursor: unknown = obj;
+        for (const part of key.split('.')) {
+          if (cursor == null || typeof cursor !== 'object') return undefined;
+          cursor = (cursor as Record<string, unknown>)[part];
+        }
+        return cursor;
+      }
+      return obj[key];
     }
     return undefined;
   }
@@ -188,5 +260,10 @@ export class AuTable {
     return this.cellText(left).localeCompare(this.cellText(right), undefined, {
       numeric: true,
     });
+  }
+
+  private sameRow(a: unknown, b: unknown): boolean {
+    const id = this.rowIdentity();
+    return id ? id(a) === id(b) : a === b;
   }
 }

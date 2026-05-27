@@ -21,24 +21,20 @@ export class FieldListboxOverlay {
     private readonly platformId: object,
     destroyRef: DestroyRef,
   ) {
-    this.portal = new AuPortalOverlay(
-      document,
-      renderer,
-      platformId,
-      'au-field-listbox-anchor',
-    );
-    this.reposition = new PortalRepositionListener(document, () => {
-      if (this.activeListbox && this.activeAnchor) {
-        this.position(this.activeListbox, this.activeAnchor);
-      }
-    });
+    this.portal = new AuPortalOverlay(document, renderer, platformId, 'au-field-listbox-anchor');
+    this.reposition = new PortalRepositionListener(document, () => this.refreshPosition());
     destroyRef.onDestroy(() => this.detach());
   }
 
-  sync(listbox: HTMLElement | undefined, anchor: HTMLElement, open: boolean): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
+  /** @internal Re-positions the active overlay (scroll/resize handler). */
+  refreshPosition(): void {
+    if (this.activeListbox && this.activeAnchor) {
+      this.position(this.activeListbox, this.activeAnchor);
     }
+  }
+
+  sync(listbox: HTMLElement | undefined, anchor: HTMLElement, open: boolean): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!open || !listbox) {
       this.detach();
       return;

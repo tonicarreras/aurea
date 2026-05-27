@@ -23,7 +23,7 @@ import { AuTabs } from './tabs';
  * ```
  */
 @Component({
-  selector: 'button[auTab]',
+  selector: '[auTab]',
   template: '<ng-content />',
   styleUrl: './au-tab.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

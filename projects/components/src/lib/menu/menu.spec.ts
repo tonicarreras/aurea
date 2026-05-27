@@ -188,4 +188,18 @@ describe('AuMenu', () => {
     fixture.detectChanges();
     expect(fixture.componentInstance.open).toBe(true);
   });
+
+  it('handles SSR environment without defaultView', () => {
+    const originalView = Object.getOwnPropertyDescriptor(document, 'defaultView');
+    Object.defineProperty(document, 'defaultView', { configurable: true, value: null });
+    try {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      expect(fixture.componentInstance.open).toBe(false);
+    } finally {
+      if (originalView) {
+        Object.defineProperty(document, 'defaultView', originalView);
+      }
+    }
+  });
 });

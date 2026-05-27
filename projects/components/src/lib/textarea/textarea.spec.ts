@@ -18,8 +18,7 @@ describe('AuTextarea', () => {
   }
 
   function queryTextarea(fixture: ComponentFixture<AuTextareaTestHost>): HTMLTextAreaElement {
-    return fixture.debugElement.query(By.css('textarea'))!
-      .nativeElement as HTMLTextAreaElement;
+    return fixture.debugElement.query(By.css('textarea'))!.nativeElement as HTMLTextAreaElement;
   }
 
   beforeEach(async () => {

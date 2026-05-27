@@ -247,9 +247,7 @@ describe('AuRadioGroup', () => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: '' });
     });
-    const legend = fix.debugElement.query(
-      By.css('legend'),
-    )!.nativeElement;
+    const legend = fix.debugElement.query(By.css('legend'))!.nativeElement;
     expect(legend.textContent?.trim().length).toBeGreaterThan(0);
     expect(legend.classList.contains('au-sr-only')).toBe(true);
   });
@@ -279,9 +277,7 @@ describe('AuRadioGroup', () => {
       f.componentInstance.name = 'channel';
       applyFieldHarnessInputs(f, { label: '' });
     });
-    const legend = fix.debugElement.query(
-      By.css('legend'),
-    )!.nativeElement;
+    const legend = fix.debugElement.query(By.css('legend'))!.nativeElement;
     expect(legend.textContent?.trim()).toBe('channel');
     expect(legend.classList.contains('au-sr-only')).toBe(true);
   });

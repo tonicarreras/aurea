@@ -14,8 +14,7 @@ import { AuInputText } from './input-text';
 
 describe('AuInputText', () => {
   function queryInput(fixture: ComponentFixture<AuInputTextTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('input'))!
-      .nativeElement as HTMLInputElement;
+    return fixture.debugElement.query(By.css('input'))!.nativeElement as HTMLInputElement;
   }
 
   function control(fixture: ComponentFixture<AuInputTextTestHost>): AuInputText {

@@ -18,7 +18,7 @@ import { AuSteps } from './steps';
  * Declared as `Component` (not `Directive`) to support scoped styles via `styleUrl`.
  */
 @Component({
-  selector: 'button[auStep]',
+  selector: '[auStep]',
   template: '<ng-content />',
   styleUrl: './au-step.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

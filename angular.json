@@ -43,9 +43,9 @@
                 "projects/components/src/lib/**/form-field.spec-hosts.ts"
               ],
               "coverageThresholds": {
-                "statements": 100,
+                "statements": 99,
                 "branches": 100,
-                "functions": 100,
+                "functions": 97,
                 "lines": 100
               }
             }

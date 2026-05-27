@@ -6,7 +6,7 @@
     [attr.aria-orientation]="orientation()"
     (keydown)="onListKeydown($event)"
   >
-    <ng-content select="button[auTab]"></ng-content>
+    <ng-content select="[auTab]"></ng-content>
   </div>
   <div class="au-tabs__panels">
     <ng-content select="[auTabPanel]"></ng-content>

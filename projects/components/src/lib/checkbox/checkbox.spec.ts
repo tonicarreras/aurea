@@ -25,9 +25,7 @@ describe('AuCheckbox standalone', () => {
     fix.detectChanges();
     const input = fix.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
     expect(input.id).toMatch(/^au-field-\d+$/);
-    expect(fix.nativeElement.querySelector('label[for]')?.textContent).toContain(
-      'Accept terms',
-    );
+    expect(fix.nativeElement.querySelector('label[for]')?.textContent).toContain('Accept terms');
   });
 });
 
@@ -304,7 +302,9 @@ describe('AuCheckbox', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'X';
     });
-    const wrapper = fix.debugElement.query(By.css('div:has(> input[type="checkbox"])'))!.nativeElement;
+    const wrapper = fix.debugElement.query(
+      By.css('div:has(> input[type="checkbox"])'),
+    )!.nativeElement;
     const label = fix.debugElement.query(By.css('label[for]'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: label });
     Object.defineProperty(ev, 'currentTarget', { value: wrapper, configurable: true });

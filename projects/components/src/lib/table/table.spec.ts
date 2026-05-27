@@ -101,6 +101,56 @@ class AccessorHost {
   accessor: (row: unknown) => unknown = (row) => (row as { n: number }).n;
 }
 
+@Component({
+  imports: [AuTable, AuTableColumn],
+  template: `
+    <au-table
+      [data]="rows"
+      [(selectedRow)]="selected"
+      (rowClick)="onRowClick($event)"
+      [rowIdentity]="identityFn"
+    >
+      <au-table-column name="name" header="Name" />
+    </au-table>
+  `,
+})
+class SelectionHost {
+  rows = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+  ];
+  selected: unknown = null;
+  clicked: unknown[] = [];
+  identityFn = (row: unknown) => (row as { id: number }).id;
+
+  onRowClick(row: unknown): void {
+    this.clicked.push(row);
+  }
+}
+
+@Component({
+  imports: [AuTable, AuTableColumn],
+  template: `
+    <au-table
+      [data]="rows"
+      selectionMode="multiple"
+      [(selectedRows)]="selectedRows"
+      [rowIdentity]="identityFn"
+    >
+      <au-table-column name="name" header="Name" />
+    </au-table>
+  `,
+})
+class MultipleSelectionHost {
+  rows = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Carol' },
+  ];
+  selectedRows: unknown[] = [];
+  identityFn = (row: unknown) => (row as { id: number }).id;
+}
+
 function tableInstance(fixture: ComponentFixture<unknown>): AuTable {
   return fixture.debugElement.query(By.directive(AuTable)).componentInstance as AuTable;
 }
@@ -112,6 +162,20 @@ function sortButtons(root: HTMLElement): HTMLButtonElement[] {
 async function createTableHost(): Promise<ComponentFixture<TableHost>> {
   await TestBed.configureTestingModule({ imports: [TableHost] }).compileComponents();
   const fixture = TestBed.createComponent(TableHost);
+  fixture.detectChanges();
+  return fixture;
+}
+
+async function createSelectionHost(): Promise<ComponentFixture<SelectionHost>> {
+  await TestBed.configureTestingModule({ imports: [SelectionHost] }).compileComponents();
+  const fixture = TestBed.createComponent(SelectionHost);
+  fixture.detectChanges();
+  return fixture;
+}
+
+async function createMultipleSelectionHost(): Promise<ComponentFixture<MultipleSelectionHost>> {
+  await TestBed.configureTestingModule({ imports: [MultipleSelectionHost] }).compileComponents();
+  const fixture = TestBed.createComponent(MultipleSelectionHost);
   fixture.detectChanges();
   return fixture;
 }
@@ -131,6 +195,13 @@ describe('AuTable', () => {
     const cells = (fixture.nativeElement as HTMLElement).querySelectorAll('tbody td');
     expect(cells.length).toBe(8);
     expect(cells[0]?.textContent?.trim()).toBe('Grace');
+  });
+
+  it('discovers column children via contentChildren', async () => {
+    const fixture = await createTableHost();
+    const table = tableInstance(fixture);
+    expect(table.columns().length).toBe(4);
+    expect(table.columns().map((c) => c.name())).toEqual(['name', 'role', 'score', 'status']);
   });
 
   it('client-sorts text and numeric columns', async () => {
@@ -156,21 +227,30 @@ describe('AuTable', () => {
     expect(table.viewRows().map((r) => (r as { name: string }).name)).toEqual(['Grace', 'Ada']);
   });
 
-  it('cycles sort none → asc → desc → none and emits sortChange', async () => {
+  it('cycles sort none → asc → desc → none via model', async () => {
     const fixture = await createTableHost();
-    const root = fixture.nativeElement as HTMLElement;
-    const nameBtn = sortButtons(root)[0];
-    nameBtn.click();
-    nameBtn.click();
-    nameBtn.click();
+    const table = tableInstance(fixture);
+    const nameBtn = sortButtons(fixture.nativeElement as HTMLElement)[0];
+
+    // First click → asc
     nameBtn.click();
     fixture.detectChanges();
-    expect(fixture.componentInstance.sortChanges.map((s) => s?.direction ?? null)).toEqual([
-      'asc',
-      'desc',
-      null,
-      'asc',
-    ]);
+    expect(table.sort()).toEqual({ column: 'name', direction: 'asc' });
+
+    // Second click → desc
+    nameBtn.click();
+    fixture.detectChanges();
+    expect(table.sort()).toEqual({ column: 'name', direction: 'desc' });
+
+    // Third click → null
+    nameBtn.click();
+    fixture.detectChanges();
+    expect(table.sort()).toBeNull();
+
+    // Fourth click → asc again
+    nameBtn.click();
+    fixture.detectChanges();
+    expect(table.sort()).toEqual({ column: 'name', direction: 'asc' });
   });
 
   it('headerAriaSort reflects sortable column states', async () => {
@@ -224,16 +304,6 @@ describe('AuTable', () => {
     expect(host.getAttribute('data-au-striped')).toBe('');
     expect(host.getAttribute('data-au-compact')).toBe('');
     expect(host.getAttribute('data-au-sticky-header')).toBe('');
-  });
-
-  it('registerColumn skips duplicates and unregisterColumn removes columns', async () => {
-    const fixture = await createTableHost();
-    const table = tableInstance(fixture);
-    const col = table.columns()[0];
-    table.registerColumn(col);
-    expect(table.columns().length).toBe(4);
-    table.unregisterColumn(col);
-    expect(table.columns().length).toBe(3);
   });
 
   it('skips client sort when disabled', async () => {
@@ -323,6 +393,178 @@ describe('AuTable', () => {
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).querySelectorAll('tbody tr').length).toBe(2);
   });
+
+  it('reads nested cell keys with dot notation', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table [data]="rows">
+          <au-table-column name="address.city" header="City" />
+        </au-table>
+      `,
+    })
+    class NestedKeyHost {
+      rows = [{ address: { city: 'NYC' } }];
+    }
+
+    await TestBed.configureTestingModule({ imports: [NestedKeyHost] }).compileComponents();
+    const fixture = TestBed.createComponent(NestedKeyHost);
+    fixture.detectChanges();
+    const table = tableInstance(fixture);
+    const col = table.columns()[0];
+    expect(table['readCell'](col, { address: { city: 'NYC' } })).toBe('NYC');
+  });
+});
+
+describe('AuTable selection', () => {
+  async function rows(fixture: ComponentFixture<SelectionHost>): Promise<NodeListOf<HTMLTableRowElement>> {
+    return (fixture.nativeElement as HTMLElement).querySelectorAll('tbody tr');
+  }
+
+  async function selectedRows(fixture: ComponentFixture<SelectionHost>): Promise<HTMLTableRowElement[]> {
+    return [...(await rows(fixture))].filter((r) =>
+      r.classList.contains('au-table__row--selected'),
+    );
+  }
+
+  it('selects a row on click and marks it visually', async () => {
+    const fixture = await createSelectionHost();
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    expect(await selectedRows(fixture)).toHaveLength(1);
+    expect((await selectedRows(fixture))[0]).toBe(rowEls[0]);
+  });
+
+  it('deselects when clicking the same row again', async () => {
+    const fixture = await createSelectionHost();
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    (rowEls[0] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    expect(await selectedRows(fixture)).toHaveLength(0);
+  });
+
+  it('switches selection when clicking a different row', async () => {
+    const fixture = await createSelectionHost();
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    (rowEls[1] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    const sel = await selectedRows(fixture);
+    expect(sel).toHaveLength(1);
+    expect(sel[0]).toBe(rowEls[1]);
+  });
+
+  it('emits rowClick on every click', async () => {
+    const fixture = await createSelectionHost();
+    const host = fixture.componentInstance;
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    (rowEls[1] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    expect(host.clicked).toHaveLength(2);
+  });
+
+  it('selects via keyboard Enter and Space', async () => {
+    const fixture = await createSelectionHost();
+    const rowEls = await rows(fixture);
+    const row = rowEls[0] as HTMLTableRowElement;
+
+    row.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+    expect(await selectedRows(fixture)).toHaveLength(1);
+
+    // Space deselects (same row)
+    row.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+    fixture.detectChanges();
+    expect(await selectedRows(fixture)).toHaveLength(0);
+  });
+
+  it('reacts to selectedRow model set from outside', async () => {
+    const fixture = await createSelectionHost();
+    const table = tableInstance(fixture);
+    const row = fixture.componentInstance.rows[0];
+    table.selectedRow.set(row);
+    fixture.detectChanges();
+    const sel = await selectedRows(fixture);
+    expect(sel).toHaveLength(1);
+  });
+
+  it('sets aria-selected on the selected row', async () => {
+    const fixture = await createSelectionHost();
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    expect(rowEls[0].getAttribute('aria-selected')).toBe('true');
+    expect(rowEls[1].getAttribute('aria-selected')).toBeNull();
+  });
+
+  it('uses rowIdentity to compare rows across data re-creations', async () => {
+    const fixture = await createSelectionHost();
+    const table = tableInstance(fixture);
+    const original = fixture.componentInstance.rows[0];
+    table.selectedRow.set(original);
+    fixture.detectChanges();
+
+    // Re-create data with same id but different reference
+    fixture.componentInstance.rows = [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' },
+    ];
+    fixture.detectChanges();
+
+    const sel = await selectedRows(fixture);
+    expect(sel).toHaveLength(1);
+  });
+
+  it('does not select when no interactivity', async () => {
+    const fixture = await createSelectionHost();
+    expect(await selectedRows(fixture)).toHaveLength(0);
+  });
+});
+
+describe('AuTable multiple selection', () => {
+  async function rows(
+    fixture: ComponentFixture<MultipleSelectionHost>,
+  ): Promise<NodeListOf<HTMLTableRowElement>> {
+    return (fixture.nativeElement as HTMLElement).querySelectorAll('tbody tr');
+  }
+
+  async function selectedRows(
+    fixture: ComponentFixture<MultipleSelectionHost>,
+  ): Promise<HTMLTableRowElement[]> {
+    return [...(await rows(fixture))].filter((r) => r.classList.contains('au-table__row--selected'));
+  }
+
+  it('keeps multiple selected rows at the same time', async () => {
+    const fixture = await createMultipleSelectionHost();
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    (rowEls[1] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+    const selected = await selectedRows(fixture);
+    expect(selected).toHaveLength(2);
+    expect(rowEls[0].getAttribute('aria-selected')).toBe('true');
+    expect(rowEls[1].getAttribute('aria-selected')).toBe('true');
+  });
+
+  it('toggles only the clicked row in multiple mode', async () => {
+    const fixture = await createMultipleSelectionHost();
+    const rowEls = await rows(fixture);
+    (rowEls[0] as HTMLTableRowElement).click();
+    (rowEls[1] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+
+    (rowEls[0] as HTMLTableRowElement).click();
+    fixture.detectChanges();
+
+    const selected = await selectedRows(fixture);
+    expect(selected).toHaveLength(1);
+    expect(selected[0]).toBe(rowEls[1]);
+  });
 });
 
 describe('AuTable custom cell', () => {
@@ -344,14 +586,6 @@ describe('AuTable custom cell', () => {
 });
 
 describe('AuTableColumn', () => {
-  it('unregisters columns when the host is destroyed', async () => {
-    const fixture = await createTableHost();
-    const table = tableInstance(fixture);
-    const unregister = vi.spyOn(table, 'unregisterColumn');
-    fixture.destroy();
-    expect(unregister).toHaveBeenCalledTimes(4);
-  });
-
   it('coerces sortable boolean attribute', async () => {
     @Component({
       imports: [AuTable, AuTableColumn],

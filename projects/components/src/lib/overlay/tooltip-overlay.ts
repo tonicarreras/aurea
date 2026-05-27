@@ -36,18 +36,16 @@ export class TooltipOverlay {
     private readonly platformId: object,
     destroyRef: DestroyRef,
   ) {
-    this.portal = new AuPortalOverlay(
-      document,
-      renderer,
-      platformId,
-      'au-tooltip-anchor',
-    );
-    this.reposition = new PortalRepositionListener(document, () => {
-      if (this.activeBubble && this.activeAnchor) {
-        this.position(this.activeBubble, this.activeAnchor, this.resolvedPlacement);
-      }
-    });
+    this.portal = new AuPortalOverlay(document, renderer, platformId, 'au-tooltip-anchor');
+    this.reposition = new PortalRepositionListener(document, () => this.refreshPosition());
     destroyRef.onDestroy(() => this.detach());
+  }
+
+  /** @internal Re-positions the active tooltip (scroll/resize handler). */
+  refreshPosition(): void {
+    if (this.activeBubble && this.activeAnchor) {
+      this.position(this.activeBubble, this.activeAnchor, this.resolvedPlacement);
+    }
   }
 
   sync(
@@ -55,9 +53,7 @@ export class TooltipOverlay {
     anchor: HTMLElement,
     placement: AuTooltipPlacement,
   ): AuTooltipPlacement {
-    if (!isPlatformBrowser(this.platformId)) {
-      return placement;
-    }
+    if (!isPlatformBrowser(this.platformId)) return placement;
     if (!bubble) {
       this.detach();
       return placement;

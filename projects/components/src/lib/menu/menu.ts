@@ -89,9 +89,7 @@ export class AuMenu {
    */
   private bindScrollDismiss(): void {
     const win = this.document.defaultView;
-    if (!win) {
-      return;
-    }
+    if (!win) return;
     const unlisten = this.renderer.listen(win, 'scroll', () => {
       if (!this.open()) {
         return;

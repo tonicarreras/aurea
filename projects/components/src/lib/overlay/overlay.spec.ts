@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, DestroyRef, inject, Renderer2 } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, DestroyRef, inject, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -89,7 +89,7 @@ describe('AuPortalOverlay', () => {
     host = TestBed.createComponent(OverlayHost).componentInstance;
   });
 
-  function createPortal(platformId: object = 'browser' as unknown as object) {
+  function createPortal(platformId: object = TestBed.inject(PLATFORM_ID)) {
     return new AuPortalOverlay(
       TestBed.inject(DOCUMENT),
       host.renderer,
@@ -129,6 +129,20 @@ describe('AuPortalOverlay', () => {
     portal.clearAnchor();
     portal.detach(el);
     expect(document.body.contains(el)).toBe(false);
+  });
+
+  it('detach is noop outside the browser', () => {
+    const el = document.createElement('div');
+    const wrap = document.createElement('div');
+    wrap.append(el);
+    document.body.append(wrap);
+    const portal = createPortal('server' as unknown as object);
+    portal.attach(el);
+    // stays in its original parent
+    expect(el.parentElement).toBe(wrap);
+    portal.detach(el);
+    expect(el.parentElement).toBe(wrap);
+    wrap.remove();
   });
 });
 
@@ -172,7 +186,7 @@ describe('TooltipOverlay', () => {
     host = TestBed.createComponent(OverlayHost).componentInstance;
   });
 
-  function createOverlay(platformId: object = 'browser' as unknown as object) {
+  function createOverlay(platformId: object = TestBed.inject(PLATFORM_ID)) {
     return new TooltipOverlay(TestBed.inject(DOCUMENT), host.renderer, platformId, host.destroyRef);
   }
 
@@ -297,6 +311,27 @@ describe('TooltipOverlay', () => {
     anchor.remove();
     bubble.remove();
   });
+
+  it('reposition is noop when no tooltip is active', () => {
+    expect(() => createOverlay().refreshPosition()).not.toThrow();
+  });
+
+  it('reposition updates coordinates after anchor moves', () => {
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
+    const bubble = document.createElement('div');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
+    document.body.append(anchor, bubble);
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    expect(bubble.style.top).toBe('62px');
+    anchor.getBoundingClientRect = () => new DOMRect(20, 80, 40, 20);
+    overlay.refreshPosition();
+    expect(bubble.style.top).toBe('112px');
+    overlay.detach();
+    anchor.remove();
+    bubble.remove();
+  });
 });
 
 describe('focusLeftFieldControl', () => {
@@ -353,7 +388,7 @@ describe('FieldListboxOverlay', () => {
     host = TestBed.createComponent(OverlayHost).componentInstance;
   });
 
-  function createOverlay(platformId: object = 'browser' as unknown as object) {
+  function createOverlay(platformId: object = TestBed.inject(PLATFORM_ID)) {
     return new FieldListboxOverlay(
       TestBed.inject(DOCUMENT),
       host.renderer,
@@ -513,4 +548,34 @@ describe('FieldListboxOverlay', () => {
     expect(() => overlay.detach()).not.toThrow();
   });
 
+  it('reposition is noop when no overlay is active', () => {
+    expect(() => createOverlay().refreshPosition()).not.toThrow();
+  });
+
+  it('reposition updates coordinates after anchor moves', () => {
+    const anchor = document.createElement('div');
+    const listbox = document.createElement('ul');
+    document.body.append(anchor, listbox);
+    let rect = {
+      bottom: 40,
+      left: 12,
+      width: 200,
+      top: 16,
+      right: 212,
+      height: 24,
+      x: 12,
+      y: 16,
+      toJSON: () => ({}),
+    } as DOMRect;
+    anchor.getBoundingClientRect = () => rect;
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+    expect(listbox.style.top).toBe('44px');
+    rect = { ...rect, bottom: 80, top: 50 };
+    overlay.refreshPosition();
+    expect(listbox.style.top).toBe('84px');
+    overlay.detach();
+    anchor.remove();
+    listbox.remove();
+  });
 });

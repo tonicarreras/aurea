@@ -33,6 +33,25 @@ module.exports = defineConfig([
     },
   },
   {
+    files: [
+      '**/card/card-{header,body,media}.directive.ts',
+      '**/tabs/au-tab-panel.directive.ts',
+      '**/tabs/au-tab.directive.ts',
+      '**/steps/au-step-panel.directive.ts',
+      '**/steps/au-step.directive.ts',
+    ],
+    rules: {
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'au',
+          style: 'camelCase',
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.html'],
     rules: {},
   },

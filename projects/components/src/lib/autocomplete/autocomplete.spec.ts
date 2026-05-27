@@ -253,9 +253,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
     expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
-    expect(fix.debugElement.queryAll(By.css('[role="option"]')).length).toBeGreaterThan(
-      0,
-    );
+    expect(fix.debugElement.queryAll(By.css('[role="option"]')).length).toBeGreaterThan(0);
   });
 
   it('shows no-results row when filter matches nothing', () => {
@@ -333,9 +331,7 @@ describe('AuAutocomplete', () => {
     fix.detectChanges();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Beta');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Beta');
   });
 
   it('Home and End move highlight', () => {
@@ -347,14 +343,10 @@ describe('AuAutocomplete', () => {
     fix.detectChanges();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Valencia');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Valencia');
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Madrid');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Madrid');
   });
 
   it('onInput is a no-op when readOnly', () => {
@@ -513,9 +505,7 @@ describe('AuAutocomplete', () => {
     const option = fix.debugElement.query(By.css('[role="option"]'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Madrid');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Madrid');
   });
 
   it('ignores pointer enter on disabled option', () => {
@@ -548,9 +538,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
     expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Valencia');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Valencia');
   });
 
   it('keyboard no-ops when panel closed for Home, End, Enter, Escape', () => {
@@ -627,9 +615,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Madrid');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Madrid');
   });
 
   it('strictSelection false does not commit invalid text on blur', () => {
@@ -757,9 +743,9 @@ describe('AuAutocomplete', () => {
       f.componentInstance.required = true;
       f.componentRef.setInput('ffShowRequired', false);
     });
-    expect(
-      fix.debugElement.query(By.css('label[for]'))!.nativeElement.textContent,
-    ).not.toContain('*');
+    expect(fix.debugElement.query(By.css('label[for]'))!.nativeElement.textContent).not.toContain(
+      '*',
+    );
   });
 
   it('applies and clears from-tab on control row', () => {
@@ -816,9 +802,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Valencia');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Valencia');
   });
 
   it('lastHighlightableIndex is -1 when every option is disabled', () => {
@@ -917,9 +901,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
     expect(fix.debugElement.query(By.css('[role="listbox"]'))).toBeTruthy();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Madrid');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Madrid');
   });
 
   it('ArrowDown moves highlight when panel is already open', () => {
@@ -931,9 +913,7 @@ describe('AuAutocomplete', () => {
     fix.detectChanges();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Barcelona');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Barcelona');
   });
 
   it('ArrowUp from unset highlight uses nextHighlightableIndex', () => {
@@ -950,9 +930,7 @@ describe('AuAutocomplete', () => {
     fix.detectChanges();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Valencia');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Valencia');
   });
 
   it('ArrowDown on empty list keeps highlight unset', () => {

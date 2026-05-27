@@ -84,8 +84,15 @@
         </tr>
       </thead>
       <tbody>
-        @for (row of viewRows(); track trackRow($index, row)) {
-          <tr>
+        @for (row of viewRows(); track trackRow($index, row); let idx = $index) {
+          <tr
+            [class.au-table__row--selected]="isRowSelected(row)"
+            [attr.aria-selected]="isRowSelected(row) ? 'true' : null"
+            tabindex="0"
+            role="row"
+            (click)="handleRowClick(row)"
+            (keydown)="handleRowKeydown($event, row)"
+          >
             @for (col of columns(); track col.name()) {
               <td [class]="cellClasses(col)">
                 @if (col.cellDef()?.templateRef; as tpl) {

@@ -198,14 +198,31 @@
 .au-table__grid tbody tr {
   background: var(--au-color-surface-raised);
   transition: background-color var(--au-duration-short) var(--au-ease-out);
+  outline: none;
+  cursor: default;
 }
 
 .au-table__grid tbody tr:hover {
   background: var(--au-table-row-hover);
 }
 
+.au-table__grid tbody tr:focus-visible {
+  outline: none;
+  box-shadow: inset var(--au-shadow-focus-ring);
+}
+
 :host([data-au-striped]) .au-table__grid tbody tr:nth-child(even) {
   background: var(--au-table-row-stripe);
+}
+
+/* Selected row */
+.au-table__row--selected {
+  background: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 8%,
+    var(--au-color-surface-raised)
+  ) !important;
+  box-shadow: inset 3px 0 0 var(--au-color-action-primary);
 }
 
 .au-table__empty-row td {

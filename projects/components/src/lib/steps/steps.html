@@ -6,7 +6,7 @@
     [attr.aria-orientation]="layout() === 'sections' ? null : 'horizontal'"
     (keydown)="onListKeydown($event)"
   >
-    <ng-content select="button[auStep]"></ng-content>
+    <ng-content select="[auStep]"></ng-content>
   </div>
   <div class="au-steps__panels">
     <ng-content select="[auStepPanel]"></ng-content>

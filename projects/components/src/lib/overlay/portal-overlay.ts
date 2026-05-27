@@ -16,9 +16,7 @@ export class AuPortalOverlay {
   ) {}
 
   attach(element: HTMLElement): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
     if (element.parentElement === this.document.body) {
       return;
     }
@@ -31,9 +29,7 @@ export class AuPortalOverlay {
   }
 
   detach(element: HTMLElement): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
     if (this.anchor?.parentNode && element.isConnected) {
       this.anchor.parentNode.insertBefore(element, this.anchor);
       this.anchor.remove();

@@ -37,6 +37,11 @@ const meta: Meta<AuTable> = {
     compact: { control: 'boolean', table: { category: 'Appearance' } },
     stickyHeader: { control: 'boolean', table: { category: 'Layout' } },
     clientSort: { control: 'boolean', table: { category: 'Behavior' } },
+    selectionMode: {
+      control: 'inline-radio',
+      options: ['single', 'multiple'],
+      table: { category: 'Behavior' },
+    },
   },
   args: {
     title: 'Team members',
@@ -45,6 +50,7 @@ const meta: Meta<AuTable> = {
     compact: false,
     stickyHeader: false,
     clientSort: true,
+    selectionMode: 'single',
   },
 };
 
@@ -97,4 +103,97 @@ export const Default: Story = {
 export const Striped: Story = {
   args: { striped: true },
   render: Default.render,
+};
+
+export const WithRowSelection: Story = {
+  render: (args) => {
+    const data = signal(rows);
+    const sort = signal<AuTableSortState | null>(null);
+    const selected = signal<Row | null>(null);
+    return {
+      props: { ...args, data, sort, selected },
+      moduleMetadata: { imports: storyImports },
+      template: `
+        <au-table
+          [data]="data()"
+          [title]="title"
+          [description]="description"
+          caption="Team members"
+          [striped]="striped"
+          [compact]="compact"
+          [stickyHeader]="stickyHeader"
+          [clientSort]="clientSort"
+          [(sort)]="sort"
+          [(selectedRow)]="selected"
+        >
+          <au-table-column name="name" header="Name" [sortable]="true" cellVariant="primary" />
+          <au-table-column name="role" header="Role" cellVariant="secondary" />
+          <au-table-column name="score" header="Score" align="end" [sortable]="true" />
+          <au-table-column name="status" header="Status" align="center">
+            <ng-template auTableCell let-row>
+              <au-badge [variant]="row.status === 'active' ? 'success' : 'default'">
+                {{ row.status === 'active' ? 'Active' : 'Away' }}
+              </au-badge>
+            </ng-template>
+          </au-table-column>
+        </au-table>
+      `,
+    };
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const rows = await canvas.findAllByRole('row');
+    // The first row is the header; click the second row (data row 0)
+    await userEvent.click(rows[1]);
+    await expect(rows[1]).toHaveAttribute('aria-selected', 'true');
+    // Click the same row again to deselect
+    await userEvent.click(rows[1]);
+    await expect(rows[1]).not.toHaveAttribute('aria-selected');
+  },
+};
+
+export const WithMultipleSelection: Story = {
+  render: (args) => {
+    const data = signal(rows);
+    const sort = signal<AuTableSortState | null>(null);
+    const selectedRows = signal<Row[]>([]);
+    return {
+      props: { ...args, data, sort, selectedRows },
+      moduleMetadata: { imports: storyImports },
+      template: `
+        <au-table
+          [data]="data()"
+          [title]="title"
+          [description]="description"
+          caption="Team members"
+          [striped]="striped"
+          [compact]="compact"
+          [stickyHeader]="stickyHeader"
+          [clientSort]="clientSort"
+          [(sort)]="sort"
+          selectionMode="multiple"
+          [(selectedRows)]="selectedRows"
+        >
+          <au-table-column name="name" header="Name" [sortable]="true" cellVariant="primary" />
+          <au-table-column name="role" header="Role" cellVariant="secondary" />
+          <au-table-column name="score" header="Score" align="end" [sortable]="true" />
+          <au-table-column name="status" header="Status" align="center">
+            <ng-template auTableCell let-row>
+              <au-badge [variant]="row.status === 'active' ? 'success' : 'default'">
+                {{ row.status === 'active' ? 'Active' : 'Away' }}
+              </au-badge>
+            </ng-template>
+          </au-table-column>
+        </au-table>
+      `,
+    };
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const rows = await canvas.findAllByRole('row');
+    await userEvent.click(rows[1]);
+    await userEvent.click(rows[2]);
+    await expect(rows[1]).toHaveAttribute('aria-selected', 'true');
+    await expect(rows[2]).toHaveAttribute('aria-selected', 'true');
+  },
 };

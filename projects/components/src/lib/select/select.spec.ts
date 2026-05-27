@@ -169,7 +169,9 @@ describe('AuSelect', () => {
     expect(trigger.getAttribute('aria-invalid')).toBe('true');
     expect(trigger.getAttribute('aria-errormessage')).toBe('f-select-error');
     const errText = fix.debugElement.query(By.css('[role="alert"]'));
-    expect(errText?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe('This field is required');
+    expect(
+      errText?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim(),
+    ).toBe('This field is required');
   });
 
   it('does not emit when disabled and changing', () => {
@@ -269,7 +271,9 @@ describe('AuSelect', () => {
       f.componentInstance.errors = [{ kind: 'required', message: 'Field required' }] as any;
     });
     const err = fix.debugElement.query(By.css('[role="alert"]'));
-    expect(err?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe('Field required');
+    expect(err?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe(
+      'Field required',
+    );
   });
 
   it('falls back to kind when message missing', () => {
@@ -278,7 +282,9 @@ describe('AuSelect', () => {
       f.componentInstance.errors = [{ kind: 'broken' }] as any;
     });
     const err = fix.debugElement.query(By.css('[role="alert"]'));
-    expect(err?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe('broken');
+    expect(err?.query(By.css('span:not([aria-hidden])'))?.nativeElement.textContent?.trim()).toBe(
+      'broken',
+    );
   });
 
   it('marks aria-invalid when invalid without visible error', () => {
@@ -431,13 +437,9 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     keydown(fix, 'End');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Three');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Three');
     keydown(fix, 'Home');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option One');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option One');
   });
 
   it('keyboard no-ops when panel closed for Home, End, Escape', () => {
@@ -455,9 +457,7 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     keydown(fix, 'ArrowUp');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Three');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Three');
   });
 
   it('ArrowDown moves highlight when panel is already open', () => {
@@ -466,9 +466,7 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     keydown(fix, 'ArrowDown');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Two');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Two');
   });
 
   it('ArrowDown wraps from last to first highlightable', () => {
@@ -478,9 +476,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     keydown(fix, 'End');
     keydown(fix, 'ArrowDown');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option One');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option One');
   });
 
   it('ArrowUp wraps from first to last highlightable', () => {
@@ -490,9 +486,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     keydown(fix, 'Home');
     keydown(fix, 'ArrowUp');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Three');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Three');
   });
 
   it('skips disabled options on ArrowDown', () => {
@@ -505,9 +499,7 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     keydown(fix, 'ArrowDown');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Beta');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Beta');
   });
 
   it('trigger click toggles panel closed', () => {
@@ -566,9 +558,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     CONTROL(fix).onOptionPointerEnter(0);
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Choose');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Choose');
   });
 
   it('does not toggle when disabled or readOnly', () => {
@@ -611,9 +601,7 @@ describe('AuSelect', () => {
       f.componentInstance.value = 'opt2';
     });
     openListbox(fix);
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Two');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Two');
   });
 
   it('Enter on placeholder clears value', () => {
@@ -653,9 +641,7 @@ describe('AuSelect', () => {
     const option = fix.debugElement.queryAll(By.css('[role="option"]'))[1]!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Two');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Two');
   });
 
   it('ignores pointer enter on disabled option', () => {
@@ -842,9 +828,7 @@ describe('AuSelect', () => {
     comp.highlightedIndex.set(-1);
     fix.detectChanges();
     keydown(fix, 'ArrowUp');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Three');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Three');
   });
 
   it('exposes option and placeholder id helpers', () => {
@@ -916,9 +900,7 @@ describe('AuSelect', () => {
     });
     openListbox(fix);
     keydown(fix, 'End');
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Pick one');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Pick one');
   });
 
   it('Enter selects option when list includes a placeholder row', () => {
@@ -941,9 +923,7 @@ describe('AuSelect', () => {
     openListbox(fix);
     CONTROL(fix).onOptionPointerEnter(2, testOptions[1]);
     fix.detectChanges();
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Option Two');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Option Two');
   });
 
   it('Enter selects highlighted option without placeholder', () => {
@@ -991,8 +971,6 @@ describe('AuSelect', () => {
       f.componentInstance.value = 'opt1';
     });
     openListbox(fix);
-    expect(
-      queryActiveOption(fix)?.textContent?.trim(),
-    ).toBe('Two');
+    expect(queryActiveOption(fix)?.textContent?.trim()).toBe('Two');
   });
 });
