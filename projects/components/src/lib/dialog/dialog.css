@@ -44,7 +44,7 @@
   overflow: hidden;
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-subtle);
-  border-radius: var(--au-radius-md); /* 8px — more generous, Radix-aligned */
+  border-radius: var(--au-radius-md); /* 8px — more generous dialog corners */
   box-shadow: var(--au-shadow-overlay);
   animation: au-dialog-panel-in var(--au-motion-modal);
 }

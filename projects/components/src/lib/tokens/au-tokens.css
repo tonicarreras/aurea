@@ -1,3 +1,4 @@
+@import './au-scales.css';
 @import url('https://fonts.googleapis.com/css2?family=Onest:ital,wght@0,100..900;1,100..900&display=swap');
 
 /**
@@ -66,7 +67,7 @@
 }
 
 /* Radii: one scale; fields use --au-radius-field (not pill) */
-/* Shifted up +2px (sm, md, lg, xl) for Radix-inspired softness */
+/* Shifted up +2px for softer, more rounded corners */
 :root {
   --au-radius-2xs: 0.0625rem; /* 1px — nearly square */
   --au-radius-xs: 0.125rem; /* 2px */
@@ -212,14 +213,14 @@
 [data-au-theme='light'] {
   color-scheme: light;
   /* Surfaces: subtle elevation hierarchy */
-  --au-color-surface-canvas: #f1f2f4;
-  --au-color-surface-raised: #ffffff;
-  --au-color-surface-elevated: #f8f9fa;
-  /* Translucent variants for Radix-style blurred panels */
+  --au-color-surface-canvas: var(--au-scale-neutral-3);
+  --au-color-surface-raised: var(--au-scale-neutral-1);
+  --au-color-surface-elevated: var(--au-scale-neutral-2);
+  /* Translucent variants for blurred glass panels */
   --au-color-surface-raised-a: color-mix(in srgb, var(--au-color-surface-raised) 85%, transparent);
   --au-color-surface-elevated-a: color-mix(in srgb, var(--au-color-surface-elevated) 85%, transparent);
-  --au-color-surface-sunken: #e9ebef;
-  --au-color-surface-inverted: #101418;
+  --au-color-surface-sunken: var(--au-scale-neutral-4);
+  --au-color-surface-inverted: var(--au-scale-neutral-12);
   /* Skeleton: tuned for `surface-raised` panels (not sunken/elevated alone) */
   --au-color-skeleton-base: color-mix(
     in srgb,
@@ -232,72 +233,56 @@
     var(--au-color-surface-raised)
   );
   /* Text: primary, secondary, tertiary, on solid */
-  --au-color-text-primary: #101418;
-  --au-color-text-secondary: #3d4a5c;
-  --au-color-text-tertiary: #5c6b7d; /* AA vs canvas y raised (hints, placeholder) */
-  --au-color-text-placeholder: #8a98a8;
-  --au-color-text-disabled: #a8b0bc;
-  --au-color-text-label: #1e2935;
+  --au-color-text-primary: var(--au-scale-neutral-12);
+  --au-color-text-secondary: var(--au-scale-neutral-10);
+  --au-color-text-tertiary: var(--au-scale-neutral-9); /* AA vs canvas y raised (hints, placeholder) */
+  --au-color-text-placeholder: #8a98a8; /* scale-gap: between neutral-7/8 */
+  --au-color-text-disabled: #a8b0bc; /* scale-gap: between neutral-7/8 */
+  --au-color-text-label: var(--au-scale-neutral-11);
   /* Form label: slightly lower contrast than titles, higher than long body */
-  --au-color-text-on-solid: #ffffff;
+  --au-color-text-on-solid: var(--au-scale-neutral-1);
   /* Borders: subtle to strong */
-  --au-color-border-subtle: #e0e4ea;
-  --au-color-border-default: #c8ced7;
-  --au-color-border-strong: #8d98a6;
+  --au-color-border-subtle: var(--au-scale-neutral-5);
+  --au-color-border-default: var(--au-scale-neutral-6);
+  --au-color-border-strong: var(--au-scale-neutral-8);
   /* Accent / link / button */
-  --au-color-action-primary: #1059c8;
-  --au-color-action-primary-hover: #0d4aa3;
-  --au-color-action-primary-pressed: #0a3a85;
+  --au-color-action-primary: var(--au-scale-action-9);
+  --au-color-action-primary-hover: var(--au-scale-action-10);
+  --au-color-action-primary-pressed: var(--au-scale-action-11);
   --au-color-link: var(--au-color-action-primary);
   --au-color-link-hover: var(--au-color-action-primary-hover);
   /* Focus: ring color (action, not error) */
-  --au-color-focus-ring: #1059c8;
-  --au-color-focus-inner: #0a3a85;
+  --au-color-focus-ring: var(--au-scale-action-8);
+  --au-color-focus-inner: var(--au-scale-action-11);
   /* States (foreground + soft field surfaces; feedback tokens for message/snackbar) */
-  --au-color-semantic-error: #b42318;
-  --au-color-semantic-error-contrast: #5c0f0a;
-  --au-color-semantic-error-surface: #fff4f2;
-  --au-color-semantic-success: #047857;
-  --au-color-semantic-success-surface: #ecfdf5;
-  --au-color-semantic-warning: #b45309;
-  --au-color-semantic-warning-surface: #fffbeb;
-  --au-color-semantic-info: #0369a1;
-  --au-color-semantic-info-surface: #f0f9ff;
-  --au-color-feedback-success-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-success) 28%,
-    var(--au-color-surface-raised)
-  );
+  --au-color-semantic-error: var(--au-scale-error-9);
+  --au-color-semantic-error-contrast: var(--au-scale-error-11);
+  --au-color-semantic-error-surface: var(--au-scale-error-2);
+  --au-color-semantic-success: var(--au-scale-success-9);
+  --au-color-semantic-success-surface: var(--au-scale-success-2);
+  --au-color-semantic-warning: var(--au-scale-warning-9);
+  --au-color-semantic-warning-surface: var(--au-scale-warning-2);
+  --au-color-semantic-info: var(--au-scale-info-9);
+  --au-color-semantic-info-surface: var(--au-scale-info-2);
+  --au-color-feedback-success-bg: var(--au-scale-success-A5);
   --au-color-feedback-success-border: color-mix(
     in srgb,
     var(--au-color-semantic-success) 44%,
     var(--au-color-border-default)
   );
-  --au-color-feedback-warning-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-warning) 30%,
-    var(--au-color-surface-raised)
-  );
+  --au-color-feedback-warning-bg: var(--au-scale-warning-A5);
   --au-color-feedback-warning-border: color-mix(
     in srgb,
     var(--au-color-semantic-warning) 46%,
     var(--au-color-border-default)
   );
-  --au-color-feedback-error-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-error) 26%,
-    var(--au-color-surface-raised)
-  );
+  --au-color-feedback-error-bg: var(--au-scale-error-A5);
   --au-color-feedback-error-border: color-mix(
     in srgb,
     var(--au-color-semantic-error) 44%,
     var(--au-color-border-default)
   );
-  --au-color-feedback-info-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-info) 28%,
-    var(--au-color-surface-raised)
-  );
+  --au-color-feedback-info-bg: var(--au-scale-info-A5);
   --au-color-feedback-info-border: color-mix(
     in srgb,
     var(--au-color-semantic-info) 44%,
@@ -307,46 +292,46 @@
   --au-color-feedback-success-title: #065f46;
   --au-color-feedback-warning-title: #92400e;
   --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
-  --au-color-feedback-info-title: #075985;
+  --au-color-feedback-info-title: var(--au-scale-info-10);
   /* Text selection */
-  --au-color-selection: rgba(16, 89, 200, 0.2);
-  --au-color-selection-text: inherit;
+  --au-color-selection: var(--au-scale-action-A6);
+  --au-color-selection-text: var(--au-scale-neutral-12);
   /* Forms: aligned to surfaces, not accent (except focus) */
-  --au-color-form-border: #b8c0cc;
-  --au-color-form-border-hover: #8d98a6;
+  --au-color-form-border: var(--au-scale-neutral-7);
+  --au-color-form-border-hover: var(--au-scale-neutral-8);
   --au-color-form-text: var(--au-color-text-primary);
-  --au-color-form-placeholder: var(--au-color-text-tertiary);
-  --au-color-form-caret: var(--au-color-text-primary);
-  --au-color-form-error: var(--au-color-semantic-error);
-  --au-color-form-error-bg: var(--au-color-semantic-error-surface);
+  --au-color-form-placeholder: var(--au-scale-neutral-9);
+  --au-color-form-caret: var(--au-scale-neutral-12);
+  --au-color-form-error: var(--au-scale-error-9);
+  --au-color-form-error-bg: var(--au-scale-error-2);
   /* Validation copy on canvas / raised surfaces (not error-tinted field fill) */
-  --au-color-form-error-foreground: var(--au-color-feedback-error-title);
-  --au-color-form-disabled-foreground: #8d98a6;
-  --au-color-form-disabled-surface: #ebedf0;
+  --au-color-form-error-foreground: var(--au-scale-error-11);
+  --au-color-form-disabled-foreground: #8d98a6; /* scale-gap: between neutral-8/9 (light) / neutral-9 (dark) */
+  --au-color-form-disabled-surface: var(--au-scale-neutral-4);
   /* Switch (off): track vs thumb ≥ 3:1 (WCAG non-text UI) */
-  --au-color-switch-track-off: #8d98a6;
-  --au-color-switch-track-off-hover: #6b7785;
-  --au-color-switch-track-off-border: #5c6b7d;
-  --au-color-switch-thumb-off: #ffffff;
+  --au-color-switch-track-off: var(--au-scale-neutral-8);
+  --au-color-switch-track-off-hover: #6b7785; /* scale-gap: between neutral-8/9 */
+  --au-color-switch-track-off-border: var(--au-scale-neutral-9);
+  --au-color-switch-thumb-off: var(--au-scale-neutral-1);
   /* Native `<select>` dropdown list (`option`; browser support varies) */
-  --au-color-select-menu-bg: var(--au-color-surface-raised);
-  --au-color-select-menu-text: var(--au-color-form-text);
-  --au-color-select-field-hover-bg: #f4f7fb;
+  --au-color-select-menu-bg: var(--au-scale-neutral-1);
+  --au-color-select-menu-text: var(--au-scale-neutral-12);
+  --au-color-select-field-hover-bg: var(--au-scale-neutral-4);
   /* Highlight = row under pointer while the list is open (soft surface, not solid accent) */
-  --au-color-select-option-highlight-bg: #e3ecf8;
-  --au-color-select-option-highlight-text: #0a3a85;
-  --au-color-select-option-highlight-marker: #1059c8;
+  --au-color-select-option-highlight-bg: var(--au-scale-action-2);
+  --au-color-select-option-highlight-text: var(--au-scale-action-11);
+  --au-color-select-option-highlight-marker: var(--au-scale-action-9);
   /* Selected = committed value (solid accent; distinct from highlight) */
-  --au-color-select-option-selected-bg: #0d4aa3;
-  --au-color-select-option-selected-text: #ffffff;
-  --au-color-select-option-selected-marker: #7eb8ff;
-  --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
+  --au-color-select-option-selected-bg: var(--au-scale-action-10);
+  --au-color-select-option-selected-text: var(--au-scale-neutral-1);
+  --au-color-select-option-selected-marker: var(--au-scale-action-2);
+  --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground); /* scale-gap */
   /* Native `input[type="date"]` popup + accent (browser support varies) */
-  --au-color-date-picker-accent: var(--au-color-action-primary);
-  --au-color-date-picker-icon: var(--au-color-text-tertiary);
-  --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
-  --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(16, 89, 200, 0.14);
+  --au-color-date-picker-accent: var(--au-scale-action-9);
+  --au-color-date-picker-icon: var(--au-scale-neutral-9);
+  --au-color-date-picker-icon-hover: var(--au-scale-neutral-10);
+  --au-color-date-picker-icon-active: var(--au-scale-action-9);
+  --au-color-date-picker-edit-highlight: var(--au-scale-action-A5);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Ring shadow: single composition (components) */
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
@@ -417,14 +402,14 @@
 [data-au-theme='dark'] {
   color-scheme: dark;
   /* Surfaces */
-  --au-color-surface-canvas: #0c0e12;
-  --au-color-surface-raised: #13161c;
-  --au-color-surface-elevated: #181b22;
-  /* Translucent variants for Radix-inspired blurred panels */
+  --au-color-surface-canvas: var(--au-scale-neutral-1);
+  --au-color-surface-raised: var(--au-scale-neutral-2);
+  --au-color-surface-elevated: var(--au-scale-neutral-3);
+  /* Translucent variants for blurred glass panels */
   --au-color-surface-raised-a: color-mix(in srgb, var(--au-color-surface-raised) 80%, transparent);
   --au-color-surface-elevated-a: color-mix(in srgb, var(--au-color-surface-elevated) 80%, transparent);
-  --au-color-surface-sunken: #0a0c0f;
-  --au-color-surface-inverted: #f0f2f4;
+  --au-color-surface-sunken: var(--au-scale-neutral-4);
+  --au-color-surface-inverted: var(--au-scale-neutral-12);
   /* Skeleton: lighter shimmer on dark raised surfaces */
   --au-color-skeleton-base: color-mix(
     in srgb,
@@ -437,71 +422,55 @@
     var(--au-color-surface-raised)
   );
   /* Text */
-  --au-color-text-primary: #eef1f4;
-  --au-color-text-secondary: #a8b2bd;
-  --au-color-text-tertiary: #7a8794;
-  --au-color-text-placeholder: #5c6b7a;
-  --au-color-text-disabled: #5c6b7a;
-  --au-color-text-label: #dce0e5;
-  --au-color-text-on-solid: #0c0e12;
+  --au-color-text-primary: var(--au-scale-neutral-12);
+  --au-color-text-secondary: var(--au-scale-neutral-11);
+  --au-color-text-tertiary: var(--au-scale-neutral-10);
+  --au-color-text-placeholder: #5c6b7a; /* scale-gap: between neutral-7/8 */
+  --au-color-text-disabled: #5c6b7a; /* scale-gap: between neutral-7/8 */
+  --au-color-text-label: var(--au-scale-neutral-11);
+  --au-color-text-on-solid: var(--au-scale-neutral-1);
   /* Borders */
-  --au-color-border-subtle: #252a33;
-  --au-color-border-default: #343b46;
-  --au-color-border-strong: #4d5666;
+  --au-color-border-subtle: var(--au-scale-neutral-5);
+  --au-color-border-default: var(--au-scale-neutral-6);
+  --au-color-border-strong: var(--au-scale-neutral-8);
   /* Accent — lighter sky blue (readable on #0c–#18 surfaces; avoids light-mode #1059c8) */
-  --au-color-action-primary: #6eb4ff;
-  --au-color-action-primary-hover: #8ec5ff;
-  --au-color-action-primary-pressed: #b0d8ff;
+  --au-color-action-primary: var(--au-scale-action-9);
+  --au-color-action-primary-hover: var(--au-scale-action-10);
+  --au-color-action-primary-pressed: var(--au-scale-action-11);
   --au-color-link: var(--au-color-action-primary);
   --au-color-link-hover: var(--au-color-action-primary-hover);
   /* Focus */
-  --au-color-focus-ring: #6eb4ff;
-  --au-color-focus-inner: #b0d8ff;
+  --au-color-focus-ring: var(--au-scale-action-8);
+  --au-color-focus-inner: var(--au-scale-action-11);
   /* States */
-  --au-color-semantic-error: #f97066;
-  --au-color-semantic-error-contrast: #fec5c0;
-  --au-color-semantic-error-surface: rgba(150, 40, 32, 0.22);
-  --au-color-semantic-success: #4ade80;
-  --au-color-semantic-success-surface: rgba(34, 100, 55, 0.22);
-  --au-color-semantic-warning: #fbbf24;
-  --au-color-semantic-warning-surface: rgba(120, 80, 10, 0.2);
-  --au-color-semantic-info: #38bdf8;
-  --au-color-semantic-info-surface: rgba(15, 80, 120, 0.22);
-  --au-color-feedback-success-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-success) 24%,
-    var(--au-color-surface-elevated)
-  );
+  --au-color-semantic-error: var(--au-scale-error-9);
+  --au-color-semantic-error-contrast: var(--au-scale-error-11);
+  --au-color-semantic-error-surface: var(--au-scale-error-2);
+  --au-color-semantic-success: var(--au-scale-success-9);
+  --au-color-semantic-success-surface: var(--au-scale-success-2);
+  --au-color-semantic-warning: var(--au-scale-warning-9);
+  --au-color-semantic-warning-surface: var(--au-scale-warning-2);
+  --au-color-semantic-info: var(--au-scale-info-9);
+  --au-color-semantic-info-surface: var(--au-scale-info-2);
+  --au-color-feedback-success-bg: var(--au-scale-success-A5);
   --au-color-feedback-success-border: color-mix(
     in srgb,
     var(--au-color-semantic-success) 50%,
     var(--au-color-border-default)
   );
-  --au-color-feedback-warning-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-warning) 26%,
-    var(--au-color-surface-elevated)
-  );
+  --au-color-feedback-warning-bg: var(--au-scale-warning-A5);
   --au-color-feedback-warning-border: color-mix(
     in srgb,
     var(--au-color-semantic-warning) 52%,
     var(--au-color-border-default)
   );
-  --au-color-feedback-error-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-error) 24%,
-    var(--au-color-surface-elevated)
-  );
+  --au-color-feedback-error-bg: var(--au-scale-error-A5);
   --au-color-feedback-error-border: color-mix(
     in srgb,
     var(--au-color-semantic-error) 50%,
     var(--au-color-border-default)
   );
-  --au-color-feedback-info-bg: color-mix(
-    in srgb,
-    var(--au-color-semantic-info) 24%,
-    var(--au-color-surface-elevated)
-  );
+  --au-color-feedback-info-bg: var(--au-scale-info-A5);
   --au-color-feedback-info-border: color-mix(
     in srgb,
     var(--au-color-semantic-info) 50%,
@@ -511,41 +480,42 @@
   --au-color-feedback-success-title: #86efac;
   --au-color-feedback-warning-title: #fde68a;
   --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
-  --au-color-feedback-info-title: #bae6fd;
+  --au-color-feedback-info-title: var(--au-scale-info-11);
   /* Selection */
-  --au-color-selection: rgba(110, 180, 255, 0.28);
+  --au-color-selection: var(--au-scale-action-A7);
+  --au-color-selection-text: var(--au-scale-neutral-12);
   /* Form */
-  --au-color-form-border: #343b46;
-  --au-color-form-border-hover: #4d5666;
+  --au-color-form-border: var(--au-scale-neutral-7);
+  --au-color-form-border-hover: var(--au-scale-neutral-8);
   --au-color-form-text: var(--au-color-text-primary);
-  --au-color-form-placeholder: var(--au-color-text-tertiary);
-  --au-color-form-caret: var(--au-color-text-primary);
-  --au-color-form-error: var(--au-color-semantic-error);
-  --au-color-form-error-bg: var(--au-color-semantic-error-surface);
-  --au-color-form-error-foreground: var(--au-color-feedback-error-title);
-  --au-color-form-disabled-foreground: #5c6b7a;
-  --au-color-form-disabled-surface: #1a1e26;
+  --au-color-form-placeholder: var(--au-scale-neutral-9);
+  --au-color-form-caret: var(--au-scale-neutral-12);
+  --au-color-form-error: var(--au-scale-error-9);
+  --au-color-form-error-bg: var(--au-scale-error-2);
+  --au-color-form-error-foreground: var(--au-scale-error-11);
+  --au-color-form-disabled-foreground: #5c6b7a; /* scale-gap: between neutral-8/9 (light) / neutral-9 (dark) */
+  --au-color-form-disabled-surface: var(--au-scale-neutral-4);
   /* Switch (off) */
-  --au-color-switch-track-off: #4d5666;
-  --au-color-switch-track-off-hover: #5c6b7d;
-  --au-color-switch-track-off-border: #6b7785;
-  --au-color-switch-thumb-off: #f0f2f4;
+  --au-color-switch-track-off: var(--au-scale-neutral-8);
+  --au-color-switch-track-off-hover: #5c6b7d; /* scale-gap: between neutral-8/9 */
+  --au-color-switch-track-off-border: var(--au-scale-neutral-9);
+  --au-color-switch-thumb-off: var(--au-scale-neutral-1);
   /* Native `<select>` dropdown list */
-  --au-color-select-menu-bg: var(--au-color-surface-elevated);
-  --au-color-select-menu-text: var(--au-color-form-text);
-  --au-color-select-field-hover-bg: #1c222c;
-  --au-color-select-option-highlight-bg: #2a3340;
-  --au-color-select-option-highlight-text: #eef1f4;
-  --au-color-select-option-highlight-marker: #8ec5ff;
-  --au-color-select-option-selected-bg: #3d8fd4;
-  --au-color-select-option-selected-text: #ffffff;
-  --au-color-select-option-selected-marker: #cfe8ff;
-  --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
-  --au-color-date-picker-accent: var(--au-color-action-primary);
-  --au-color-date-picker-icon: var(--au-color-text-tertiary);
-  --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
-  --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(110, 180, 255, 0.22);
+  --au-color-select-menu-bg: var(--au-scale-neutral-3);
+  --au-color-select-menu-text: var(--au-scale-neutral-12);
+  --au-color-select-field-hover-bg: var(--au-scale-neutral-4);
+  --au-color-select-option-highlight-bg: var(--au-scale-action-2);
+  --au-color-select-option-highlight-text: var(--au-scale-action-11);
+  --au-color-select-option-highlight-marker: var(--au-scale-action-9);
+  --au-color-select-option-selected-bg: var(--au-scale-action-10);
+  --au-color-select-option-selected-text: var(--au-scale-neutral-1);
+  --au-color-select-option-selected-marker: var(--au-scale-action-2);
+  --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground); /* scale-gap */
+  --au-color-date-picker-accent: var(--au-scale-action-9);
+  --au-color-date-picker-icon: var(--au-scale-neutral-9);
+  --au-color-date-picker-icon-hover: var(--au-scale-neutral-10);
+  --au-color-date-picker-icon-active: var(--au-scale-action-9);
+  --au-color-date-picker-edit-highlight: var(--au-scale-action-A6);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.03);
@@ -621,7 +591,7 @@
   --au-color-feedback-warning-title: #5c4a00;
   --au-color-feedback-error-title: #5c0000;
   --au-color-feedback-info-title: #003d6b;
-  --au-color-selection: rgba(16, 89, 200, 0.28);
+  --au-color-selection: var(--au-scale-action-A7);
   --au-color-selection-text: var(--au-color-text-primary);
   --au-color-form-border: #000000;
   --au-color-form-border-hover: #000000;
@@ -651,7 +621,7 @@
   --au-color-date-picker-icon: var(--au-color-text-primary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(16, 89, 200, 0.2);
+  --au-color-date-picker-edit-highlight: var(--au-scale-action-A7);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   --au-shadow-hairline: 0 0 0 1px #000000;
   --au-shadow-control: 0 0 0 1px var(--au-color-form-border);
@@ -718,7 +688,7 @@
   --au-color-feedback-warning-title: #ffff99;
   --au-color-feedback-error-title: #ffd6d6;
   --au-color-feedback-info-title: #b8e8ff;
-  --au-color-selection: rgba(110, 180, 255, 0.35);
+  --au-color-selection: var(--au-scale-action-A8);
   --au-color-selection-text: var(--au-color-text-primary);
   --au-color-form-border: #ffffff;
   --au-color-form-border-hover: #ffffff;
@@ -748,7 +718,7 @@
   --au-color-date-picker-icon: var(--au-color-text-primary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(110, 180, 255, 0.25);
+  --au-color-date-picker-edit-highlight: var(--au-scale-action-A7);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   --au-shadow-hairline: 0 0 0 1px #ffffff;
   --au-shadow-control: 0 0 0 1px #ffffff;

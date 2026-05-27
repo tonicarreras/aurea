@@ -16,6 +16,11 @@
       "output": "styles"
     },
     {
+      "glob": "au-scales.css",
+      "input": "src/lib/tokens",
+      "output": "styles"
+    },
+    {
       "glob": "au-field-error.css",
       "input": "src/lib/styles",
       "output": "styles"
