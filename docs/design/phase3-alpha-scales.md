@@ -25,7 +25,7 @@ One-time generation tool. NOT a build dependency. Run once, paste output into `a
 ### Inputs
 
 ```js
-// Alpha progression (Radix-identical 12-step)
+// Alpha progression (12-step)
 const ALPHA = [0.012, 0.031, 0.051, 0.078, 0.122, 0.180, 0.278, 0.447, 0.651, 0.749, 0.878, 0.973];
 
 // Pure hue RGBs — one per scale × theme
