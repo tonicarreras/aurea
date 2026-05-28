@@ -88,6 +88,11 @@ const preview: Preview = {
     auStyle: 'default',
     docsLocale: 'en',
   },
+  loaders: [
+    async ({ globals }) => {
+      applyPreviewGlobals(globals);
+    },
+  ],
   decorators: [
     (storyFn, context) => {
       applyPreviewGlobals(context.globals);

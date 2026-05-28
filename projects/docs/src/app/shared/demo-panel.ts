@@ -67,18 +67,9 @@ import { DocsLocaleService } from '../core/docs-locale.service';
       transition: border-color var(--au-duration-default) var(--au-ease-in-out);
     }
 
-    :host-context([data-au-theme='dark']) .docs-demo__canvas {
-      border-color: var(--docs-border-fine);
-      background: var(--au-color-surface-elevated);
-    }
-
     @media (hover: hover) {
       .docs-demo__canvas:hover {
         border-color: color-mix(in srgb, var(--au-color-accent) 28%, transparent);
-      }
-
-      :host-context([data-au-theme='dark']) .docs-demo__canvas:hover {
-        border-color: color-mix(in srgb, var(--au-color-border-subtle) 55%, transparent);
       }
     }
   `,

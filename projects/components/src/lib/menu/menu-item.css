@@ -5,7 +5,7 @@
   margin: 0;
   padding: var(--au-space-2) var(--au-space-3);
   border: none;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-menu-item-radius);
   background: transparent;
   font-family: var(--au-font-sans);
   font-size: var(--au-text-sm);

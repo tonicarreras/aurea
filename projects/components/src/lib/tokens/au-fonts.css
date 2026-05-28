@@ -1,0 +1,14 @@
+/**
+ * Aurea — optional font-face / font-import for the default typeface.
+ * -----------------------------------------------------------------------------
+ * Onest (variable) is used in `--au-font-sans` and `--au-font-mono` tokens.
+ * Self-hosting is recommended for production (avoids FOIT / external dependency).
+ *
+ * Usage (app styles or global stylesheet):
+ *   @import '~@aurea/components/tokens/au-fonts.css';
+ *
+ * Or self-host the font and set `--au-font-sans` / `--au-font-mono` to your
+ * local family names — no import needed.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Onest:ital,wght@0,100..900;1,100..900&display=swap');

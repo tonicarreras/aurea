@@ -60,7 +60,7 @@
 :host([data-au-variant='contained']) .au-tabs__list {
   gap: var(--au-space-1);
   padding: var(--au-space-0-5);
-  border-radius: var(--au-radius-md);
+  border-radius: var(--au-tabs-list-radius);
   background: var(--au-tabs-list-bg);
   border: 1px solid var(--au-tabs-list-border);
   width: fit-content;

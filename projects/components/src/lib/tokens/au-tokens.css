@@ -1,5 +1,6 @@
 @import './au-scales.css';
-@import url('https://fonts.googleapis.com/css2?family=Onest:ital,wght@0,100..900;1,100..900&display=swap');
+@import '../overlay/overlay-styles.css';
+/* @import './au-fonts.css'; — uncomment to load Onest from Google Fonts (opt-in) */
 
 /**
  * Aurea — semantic tokens
@@ -114,7 +115,7 @@
   --au-z-sticky: 20;
   --au-z-popover: 30;
   /* Native-like field dropdowns (select / autocomplete listboxes) */
-  --au-z-dropdown: 9999;
+  --au-z-dropdown: 300;
   --au-z-header: 40;
   --au-z-drawer: 50;
   --au-z-modal: 100;
@@ -126,54 +127,7 @@
 :root {
   --au-tooltip-gap: 0.6rem;
 }
-
-.au-tooltip__bubble {
-  box-sizing: border-box;
-  max-width: min(16rem, calc(100vw - 2rem));
-  padding: var(--au-space-2) var(--au-space-3);
-  border-radius: var(--au-radius-sm);
-  background: var(--au-color-surface-inverted);
-  color: var(--au-color-text-on-solid);
-  font-family: var(--au-font-sans);
-  font-size: var(--au-text-sm);
-  font-weight: var(--au-weight-regular);
-  line-height: var(--au-leading-normal);
-  letter-spacing: var(--au-tracking-ui);
-  box-shadow: var(--au-shadow-overlay);
-  pointer-events: none;
-  z-index: var(--au-z-popover);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.au-tooltip__bubble--overlay {
-  position: fixed;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-tooltip__bubble {
-    transition: none;
-  }
-}
-
-/* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
-.au-floating-panel {
-  box-sizing: border-box;
-  border-radius: var(--au-radius-md);
-  background: var(--au-color-surface-raised-a);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--au-color-text-primary);
-  border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-overlay);
-  font-family: var(--au-font-sans);
-  z-index: var(--au-z-dropdown);
-  pointer-events: auto;
-}
-
-.au-floating-panel--overlay {
-  position: fixed;
-}
+/* .au-tooltip__bubble + .au-floating-panel rules live in ../overlay/overlay-styles.css */
 
 /* UI transitions: one easing for color, one “logical” for motion */
 :root {
@@ -238,7 +192,7 @@
   --au-color-text-tertiary: var(--au-scale-neutral-9); /* AA vs canvas y raised (hints, placeholder) */
   --au-color-text-placeholder: #8a98a8; /* scale-gap: between neutral-7/8 */
   --au-color-text-disabled: #a8b0bc; /* scale-gap: between neutral-7/8 */
-  --au-color-text-label: var(--au-scale-neutral-11);
+  --au-color-text-label: var(--au-color-text-primary);
   /* Form label: slightly lower contrast than titles, higher than long body */
   --au-color-text-on-solid: var(--au-scale-neutral-1);
   /* Borders: subtle to strong */
@@ -427,7 +381,7 @@
   --au-color-text-tertiary: var(--au-scale-neutral-10);
   --au-color-text-placeholder: #5c6b7a; /* scale-gap: between neutral-7/8 */
   --au-color-text-disabled: #5c6b7a; /* scale-gap: between neutral-7/8 */
-  --au-color-text-label: var(--au-scale-neutral-11);
+  --au-color-text-label: var(--au-color-text-primary);
   --au-color-text-on-solid: var(--au-scale-neutral-1);
   /* Borders */
   --au-color-border-subtle: var(--au-scale-neutral-5);

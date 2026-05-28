@@ -79,7 +79,7 @@
   margin-inline-start: calc(var(--au-space-1) * -1);
   padding: 0;
   border: 0;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-message-close-radius);
   background: transparent;
   color: inherit;
   cursor: pointer;

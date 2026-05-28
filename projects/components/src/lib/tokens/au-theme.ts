@@ -36,7 +36,9 @@ export class AuTheme {
     return this.prefersDark() ? 'dark' : 'light';
   });
 
-  private readonly systemColorSchemeBinding = this.bindSystemColorScheme();
+  constructor() {
+    this.bindSystemColorScheme();
+  }
 
   private bindSystemColorScheme(): void {
     if (typeof matchMedia === 'undefined') {

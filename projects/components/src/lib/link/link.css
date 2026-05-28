@@ -18,7 +18,7 @@
 :host(:focus-visible) {
   outline: none;
   box-shadow: var(--au-link-focus-shadow);
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-link-focus-radius);
 }
 
 :host([data-au-variant='subtle']) {

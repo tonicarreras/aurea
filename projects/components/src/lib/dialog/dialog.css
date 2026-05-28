@@ -108,7 +108,7 @@
   margin: 0;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-dialog-close-radius);
   background: transparent;
   color: var(--au-dialog-close-fg);
   cursor: pointer;

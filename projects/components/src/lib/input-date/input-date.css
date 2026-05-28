@@ -182,7 +182,7 @@
 .au-input-date__input::-webkit-datetime-edit-month-field,
 .au-input-date__input::-webkit-datetime-edit-year-field {
   padding: 0 0.15em;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-input-date-control-radius);
   color: var(--au-field-text-color);
 }
 

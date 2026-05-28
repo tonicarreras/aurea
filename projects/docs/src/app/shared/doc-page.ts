@@ -38,13 +38,8 @@ import { DocsInlineText } from './docs-inline-text';
 
     .docs-page__header {
       margin-bottom: var(--au-space-2);
-      padding-bottom: var(--au-space-6);
-      border-bottom: 1px solid var(--docs-border-fine);
-    }
-
-    :host-context([data-au-theme='dark']) .docs-page__header {
-      border-bottom: none;
       padding-bottom: var(--au-space-5);
+      border-bottom: 1px solid var(--docs-border-fine);
     }
 
     .docs-page__eyebrow {
@@ -99,10 +94,6 @@ import { DocsInlineText } from './docs-inline-text';
       animation: docs-fade-up 0.55s var(--au-ease-out) 0.16s both;
     }
 
-    :host-context([data-au-theme='light']) .docs-page__body {
-      opacity: 0.92;
-    }
-
     ::ng-deep .docs-page__body h2 {
       display: flex;
       align-items: center;
@@ -141,12 +132,6 @@ import { DocsInlineText } from './docs-inline-text';
       border: 1px solid var(--docs-border-fine);
       font-size: 0.9em;
       color: var(--au-color-text-primary);
-    }
-
-    :host-context([data-au-theme='dark']) ::ng-deep .docs-page__body p code,
-    :host-context([data-au-theme='dark']) ::ng-deep .docs-page__body li code {
-      border-color: transparent;
-      background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
     }
   `,
 })

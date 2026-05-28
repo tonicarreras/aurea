@@ -152,12 +152,13 @@ export class DocsShell {
 
   constructor() {
     this.syncResolvedTheme();
-    effect(() => {
+  effect(() => {
       const theme = this.resolvedTheme();
       if (typeof document === 'undefined') {
         return;
       }
       document.documentElement.setAttribute('data-au-theme', theme);
+      document.documentElement.style.colorScheme = theme;
     });
     if (typeof matchMedia !== 'undefined') {
       const mq = matchMedia('(prefers-color-scheme: dark)');

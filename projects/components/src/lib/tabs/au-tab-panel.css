@@ -19,7 +19,7 @@
 :host(.au-tabs__panel--active:focus-visible) {
   outline: var(--au-tab-panel-focus-outline);
   outline-offset: 4px;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-tab-panel-focus-radius);
 }
 
 :host([data-au-orientation='vertical']) {

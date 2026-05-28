@@ -257,17 +257,16 @@ import { DocsTokenList } from '../shared/docs-token-list';
     .docs-theme-preview {
       padding: var(--au-space-6);
       border-radius: var(--au-radius-lg);
-      border: 1px solid var(--au-color-border-subtle);
-      background: var(--au-color-surface-canvas);
+      border: 1px solid var(--docs-border-fine);
+      background: color-mix(
+        in srgb,
+        var(--au-color-surface-raised) 55%,
+        var(--au-color-surface-canvas)
+      );
       transition:
         background-color var(--au-duration-slow) var(--au-ease-in-out),
         border-color var(--au-duration-slow) var(--au-ease-in-out),
         box-shadow var(--au-duration-slow) var(--au-ease-in-out);
-    }
-
-    :host-context([data-au-theme='dark']) .docs-theme-preview {
-      border-color: var(--docs-border-fine);
-      background: var(--au-color-surface-raised);
     }
 
     .docs-theme-preview--dark {

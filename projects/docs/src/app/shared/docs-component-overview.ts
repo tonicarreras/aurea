@@ -161,11 +161,6 @@ import { DocsInlineText } from './docs-inline-text';
       );
     }
 
-    :host-context([data-au-theme='dark']) .docs-overview__intro {
-      border-color: var(--docs-border-fine);
-      background: var(--au-color-surface-raised);
-    }
-
     .docs-overview__intro-p {
       margin: 0;
       font-size: var(--au-text-md);
@@ -240,21 +235,12 @@ import { DocsInlineText } from './docs-inline-text';
       background: var(--au-color-surface-raised);
     }
 
-    :host-context([data-au-theme='dark']) .docs-overview__card {
-      border-color: var(--docs-border-fine);
-      background: var(--au-color-surface-raised);
-    }
-
     .docs-overview__card--alt {
       background: color-mix(
         in srgb,
         var(--au-color-surface-sunken) 40%,
         var(--au-color-surface-raised)
       );
-    }
-
-    :host-context([data-au-theme='dark']) .docs-overview__card--alt {
-      background: var(--au-color-surface-elevated);
     }
 
     .docs-overview__card-head {

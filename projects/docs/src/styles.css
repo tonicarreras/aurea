@@ -1,9 +1,11 @@
 @import '../../components/src/lib/tokens/au-tokens.css';
-@import './app/demos/shared/demo-preview.css';
+@import '../../components/src/lib/styles/au-component-tokens.css';
+@import '../../components/src/lib/styles/au-theme-skin.css';
 @import '../../components/src/lib/styles/au-field-error.css';
 @import '../../components/src/lib/styles/au-field-listbox.css';
+@import './app/demos/shared/demo-preview.css';
 
-/* Docs-only aliases (nav / links used legacy accent names) */
+/* Docs chrome — derived from Aurea semantic tokens (light / dark via data-au-theme) */
 :root {
   --au-color-accent: var(--au-color-action-primary);
   --au-color-accent-hover: var(--au-color-action-primary-hover);
@@ -22,16 +24,16 @@
   --docs-aurea-spiral-stroke: color-mix(in srgb, var(--au-color-action-primary) 10%, transparent);
   --docs-elevated-shadow: 0 4px 24px
     color-mix(in srgb, var(--au-color-text-primary) 5%, transparent);
-  --docs-code-bg: #f4f6f9;
-  --docs-code-fg: #1a2332;
-  --docs-token-comment: #64748b;
+  --docs-code-bg: var(--au-color-surface-sunken);
+  --docs-code-fg: var(--au-color-text-primary);
+  --docs-token-comment: var(--au-color-text-tertiary);
   --docs-token-keyword: var(--au-color-action-primary);
-  --docs-token-string: #047857;
-  --docs-token-function: #7c3aed;
-  --docs-token-punctuation: #475569;
-  --docs-token-tag: #0d4aa3;
-  --docs-token-attr: #b45309;
-  --docs-token-builtin: #0e7490;
+  --docs-token-string: var(--au-color-semantic-success);
+  --docs-token-function: var(--au-color-semantic-info);
+  --docs-token-punctuation: var(--au-color-text-secondary);
+  --docs-token-tag: var(--au-color-link);
+  --docs-token-attr: var(--au-color-semantic-warning);
+  --docs-token-builtin: var(--au-color-text-secondary);
 }
 
 /* Referencias inline (`nombre`, `[prop]`) en prosa de la documentación */
@@ -47,40 +49,6 @@
   white-space: normal;
   vertical-align: baseline;
   text-wrap: wrap;
-}
-
-[data-au-theme='dark'] .docs-inline-code {
-  border-color: var(--docs-border-fine);
-  background: var(--au-color-surface-elevated);
-  color: var(--au-color-text-primary);
-}
-
-[data-au-theme='dark'] {
-  /* Paleta docs: oscuro suave (más contraste entre capas, menos negro puro) */
-  --au-color-surface-canvas: #161a22;
-  --au-color-surface-raised: #1f2430;
-  --au-color-surface-elevated: #272d3b;
-  --au-color-surface-sunken: #12151c;
-  --au-color-border-subtle: #343b4a;
-  --au-color-border-default: #434c5c;
-  --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent);
-  --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 22%, transparent);
-  --docs-aurea-box-stroke: color-mix(in srgb, var(--au-color-border-default) 24%, transparent);
-  --docs-aurea-spiral-stroke: color-mix(in srgb, var(--au-color-action-primary) 12%, transparent);
-  --docs-glow: transparent;
-  --docs-mesh-1: color-mix(in srgb, var(--au-color-action-primary) 7%, transparent);
-  --docs-mesh-2: color-mix(in srgb, #c9a227 5%, transparent);
-  --docs-elevated-shadow: 0 4px 24px color-mix(in srgb, #000 28%, transparent);
-  --docs-code-bg: #1c2230;
-  --docs-code-fg: #e8edf4;
-  --docs-token-comment: #8b9cb0;
-  --docs-token-keyword: var(--au-color-action-primary);
-  --docs-token-string: #4ade80;
-  --docs-token-function: #c4b5fd;
-  --docs-token-punctuation: #94a3b8;
-  --docs-token-tag: #93c5fd;
-  --docs-token-attr: #fcd34d;
-  --docs-token-builtin: #67e8f9;
 }
 
 *,
@@ -103,19 +71,11 @@ body {
   background-color: var(--au-color-surface-canvas);
   background-image: radial-gradient(
     110% 85% at 50% -12%,
-    color-mix(in srgb, var(--au-color-action-primary) 7%, transparent),
+    color-mix(in srgb, var(--au-color-action-primary) 8%, transparent),
     transparent 58%
   );
   background-repeat: no-repeat;
   background-attachment: fixed;
-}
-
-[data-au-theme='dark'] body {
-  background-image: radial-gradient(
-    110% 85% at 50% -12%,
-    color-mix(in srgb, var(--au-color-action-primary) 10%, transparent),
-    transparent 62%
-  );
 }
 
 ::selection {
@@ -141,7 +101,19 @@ pre {
   outline-offset: 2px;
 }
 
-/* ---- Motion primitives ---- */
+/* Demo / toolbar labels — always use field label token */
+.au-form-field__label,
+.au-input-text__label,
+.au-textarea__label,
+.au-select__label,
+.au-autocomplete__label,
+.au-input-number__label,
+.au-input-date__label,
+.au-checkbox__label,
+.au-switch__label,
+.au-radio-group__legend {
+  color: var(--au-field-label-color, var(--au-color-text-primary));
+}
 
 @keyframes docs-fade-up {
   from {

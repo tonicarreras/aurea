@@ -18,7 +18,7 @@
   --au-field-text-color: var(--au-color-form-text);
   --au-field-placeholder-color: var(--au-color-form-placeholder);
   --au-field-caret-color: var(--au-color-form-caret);
-  --au-field-label-color: var(--au-color-text-label);
+  --au-field-label-color: var(--au-color-text-primary);
   --au-field-required-color: var(--au-color-form-error);
   --au-field-hint-color: var(--au-color-text-tertiary);
   --au-field-error-border: var(--au-color-form-error);
@@ -118,7 +118,7 @@
   --au-switch-error-shadow: 0 0 0 1px var(--au-color-form-error);
   --au-switch-error-checked-shadow: 0 0 0 2px var(--au-color-form-error);
   --au-switch-disabled-opacity: 0.55;
-  --au-switch-label-color: var(--au-color-text-label);
+  --au-switch-label-color: var(--au-color-text-primary);
   --au-switch-required-color: var(--au-color-form-error);
   --au-switch-hint-color: var(--au-color-text-tertiary);
   --au-switch-accent: var(--au-color-action-primary);
@@ -130,7 +130,7 @@
   --au-radio-height: 1rem;
   --au-radio-accent: var(--au-color-action-primary);
   --au-radio-label-color: var(--au-color-text-primary);
-  --au-radio-legend-color: var(--au-color-text-label);
+  --au-radio-legend-color: var(--au-color-text-primary);
   --au-radio-required-color: var(--au-color-form-error);
   --au-radio-hint-color: var(--au-color-text-tertiary);
   --au-radio-focus-shadow: 0 0 0 2px var(--au-color-focus-ring);
@@ -301,6 +301,12 @@
   --au-date-picker-icon-color: var(--au-color-date-picker-icon);
   --au-date-picker-icon-hover: var(--au-color-date-picker-icon-hover);
   --au-date-picker-icon-active: var(--au-color-date-picker-icon-active);
+
+  /* Sub-control geometry */
+  --au-hit-radius: var(--au-radius-sm);
+  --au-surface-radius: var(--au-radius-lg);
+  --au-tab-indicator-radius: var(--au-radius-pill);
+  --au-progress-radius: var(--au-radius-pill);
 }
 
 /* Button variants */

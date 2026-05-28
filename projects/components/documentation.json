@@ -1473,6 +1473,16 @@
                 "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuIcon] },\n    template: `\n      <div style=\"display:flex;flex-wrap:wrap;gap:1rem;align-items:center;color:var(--au-color-text-primary);\">\n        @for (n of names; track n) {\n          <div style=\"display:flex;flex-direction:column;align-items:center;gap:0.25rem;font-size:0.75rem;\">\n            <au-icon [name]=\"n\" size=\"md\" />\n            <span>{{ n }}</span>\n          </div>\n        }\n      </div>\n    `,\n    props: { names },\n  }),\n}"
             },
             {
+                "name": "AllScales",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'All 6 twelve-step scales in **light** and **dark** side-by-side, with **Radix-style column groups** (Backgrounds → Interactive → Borders → Solid → Accessible text). This comparison is fixed and does not depend on the Storybook theme toolbar.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [] },\n    template: `\n      <div style=\"font-family: var(--au-font-sans, system-ui, sans-serif); max-width: 100%;\">\n        <p style=\"font-size: 13px; color: #5c6b7d; margin: 0 0 16px; max-width: 52rem;\">\n          Steps 1–12 follow the same functional roles as\n          <a href=\"https://www.radix-ui.com/colors\" target=\"_blank\" rel=\"noopener noreferrer\">Radix Colors</a>.\n          Semantic tokens in <code>au-tokens.css</code> pick specific steps (e.g. action-9 for primary buttons).\n        </p>\n        ${swatchBlock('light')}\n        ${swatchBlock('dark')}\n      </div>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "AllVariants",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1620,7 +1630,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "StorybookConfig",
-                "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
+                "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/styles', to: '/au-styles' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
                 "rawdescription": "In Storybook 10 the **Interactions** panel (debug `play`) lives in the manager by default;\nyou do not need `@storybook/addon-interactions` (still a separate v8/9 package on npm).",
                 "description": "<p>In Storybook 10 the <strong>Interactions</strong> panel (debug <code>play</code>) lives in the manager by default;\nyou do not need <code>@storybook/addon-interactions</code> (still a separate v8/9 package on npm).</p>\n"
             },
@@ -2480,16 +2490,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuPagination>",
-                "defaultValue": "{\n  title: 'Aurea/Pagination',\n  component: AuPagination,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('pagination'),\n  argTypes: {\n    page: {\n      control: { type: 'number', min: 1 },\n      description: 'Current page (1-based).',\n      table: { category: 'State' },\n    },\n    pageCount: {\n      control: { type: 'number', min: 1 },\n      description: 'Total number of pages.',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables prev, next, and page buttons.',\n      table: { category: 'State' },\n    },\n    pageChange: {\n      description: 'Emits the selected page (1-based).',\n      table: { category: 'Events' },\n    },\n  },\n  args: { page: 3, pageCount: 12, disabled: false },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/popover/popover.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2505,6 +2505,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuProgress>",
                 "defaultValue": "{\n  title: 'Aurea/Progress',\n  component: AuProgress,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('progress'),\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: ['determinate', 'indeterminate'],\n      description: 'Determinate shows a fill ratio; indeterminate animates.',\n      table: { category: 'Behavior' },\n    },\n    value: {\n      control: { type: 'range', min: 0, max: 100 },\n      description: 'Current value (determinate only).',\n      table: { category: 'State' },\n    },\n    max: {\n      control: 'number',\n      description: 'Maximum value (determinate only).',\n      table: { category: 'State' },\n    },\n    label: {\n      control: 'text',\n      description: 'Accessible name and `aria-valuetext` when non-empty.',\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: { mode: 'determinate', value: 45, max: 100, label: '' },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuPagination>",
+                "defaultValue": "{\n  title: 'Aurea/Pagination',\n  component: AuPagination,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('pagination'),\n  argTypes: {\n    page: {\n      control: { type: 'number', min: 1 },\n      description: 'Current page (1-based).',\n      table: { category: 'State' },\n    },\n    pageCount: {\n      control: { type: 'number', min: 1 },\n      description: 'Total number of pages.',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables prev, next, and page buttons.',\n      table: { category: 'State' },\n    },\n    pageChange: {\n      description: 'Emits the selected page (1-based).',\n      table: { category: 'Events' },\n    },\n  },\n  args: { page: 3, pageCount: 12, disabled: false },\n}"
             },
             {
                 "name": "meta",
@@ -2595,6 +2605,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<TextareaStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Textarea',\n  component: AuTextarea,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('textarea'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  } as Meta<TextareaStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    rows: 4,\n    cols: undefined,\n    resize: 'vertical',\n    wrap: 'soft',\n    spellcheck: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTextarea],\n      args,\n      `<au-textarea\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [rows]=\"rows\"\n  [cols]=\"cols\"\n  [resize]=\"resize\"\n  [wrap]=\"wrap\"\n  [spellcheck]=\"spellcheck\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta",
+                "defaultValue": "{\n  title: 'Aurea/Color Scales',\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('color-scales' as never),\n}"
             },
             {
                 "name": "meta",
@@ -2714,7 +2734,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Apariencia base (`light` / `dark`); combinable con alto contraste.',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'mirror',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auHighContrast: {\n      description:\n        'Paleta experimental WCAG: claro → `high-contrast`, oscuro → `high-contrast-dark`.',\n      defaultValue: 'off',\n      toolbar: {\n        title: 'Contraste',\n        icon: 'accessibility',\n        items: [\n          { value: 'off', title: 'Normal' },\n          { value: 'on', title: 'Alto contraste' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Escala de densidad en `document.documentElement` (`data-au-density`).',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Espacio',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacto' },\n          { value: 'comfortable', title: 'Cómodo' },\n          { value: 'spacious', title: 'Espacioso' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auStyle: {\n      description:\n        'Modo visual global (`default` o `unstyled`) para separar primitivos de tema.',\n      defaultValue: 'default',\n      toolbar: {\n        title: 'Estilo',\n        icon: 'paintbrush',\n        items: [\n          { value: 'default', title: 'Default' },\n          { value: 'unstyled', title: 'Primitives' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auHighContrast: 'off',\n    auDensity: 'comfortable',\n    auStyle: 'default',\n    docsLocale: 'en',\n  },\n  loaders: [\n    async ({ globals }) => {\n      applyPreviewGlobals(globals);\n    },\n  ],\n  decorators: [\n    (storyFn, context) => {\n      applyPreviewGlobals(context.globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                 "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                 "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
             },
@@ -2847,6 +2867,26 @@
                 "deprecationMessage": "",
                 "type": "AuSelectOption[]",
                 "defaultValue": "[\n  { value: 'option1', label: 'Option One' },\n  { value: 'option2', label: 'Option Two' },\n  { value: 'option3', label: 'Option Three' },\n  { value: 'option4', label: 'Option Four' },\n]"
+            },
+            {
+                "name": "SCALE_LABELS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Record<string, string>",
+                "defaultValue": "{\n  neutral: 'Neutral (slate-gray)',\n  action: 'Action (blue)',\n  error: 'Error (red)',\n  success: 'Success (green)',\n  warning: 'Warning (amber)',\n  info: 'Info (sky-blue)',\n}"
+            },
+            {
+                "name": "SCALE_NAMES",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "['neutral', 'action', 'error', 'success', 'warning', 'info'] as const"
             },
             {
                 "name": "Secondary",
@@ -3097,6 +3137,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 0.5rem;\">\n        <au-skeleton\n          [variant]=\"variant\"\n          [animation]=\"animation\"\n          [size]=\"size\"\n          [width]=\"width\"\n          [height]=\"height\"\n          [radius]=\"radius\"\n        />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"75%\" />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"50%\" />\n      </div>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "ToolbarThemeScale",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Single scale matrix bound to the active Storybook theme toolbar (`auTheme` + high-contrast). Use this story to validate that theme switching is applied.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [] },\n    template: `\n      <div style=\"font-family: var(--au-font-sans, system-ui, sans-serif); max-width: 100%;\">\n        <p style=\"font-size: 13px; color: #5c6b7d; margin: 0 0 16px; max-width: 52rem;\">\n          This table follows the current Storybook toolbar theme.\n        </p>\n        ${swatchBlock('toolbar')}\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "TopEnd",
@@ -3441,64 +3491,6 @@
         ],
         "functions": [
             {
-                "name": "applyAuThemeFromGlobals",
-                "file": "projects/components/.storybook/preview.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "args": [
-                    {
-                        "name": "globals",
-                        "type": "Record",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "returnType": "void",
-                "jsdoctags": [
-                    {
-                        "name": "globals",
-                        "type": "Record",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "applyDocsLocaleFromGlobals",
-                "file": "projects/components/.storybook/preview.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "args": [
-                    {
-                        "name": "globals",
-                        "type": "Record",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "returnType": "void",
-                "jsdoctags": [
-                    {
-                        "name": "globals",
-                        "type": "Record",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            {
                 "name": "buttonRender",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "ctype": "miscellaneous",
@@ -3765,6 +3757,17 @@
                 ]
             },
             {
+                "name": "groupHeaderRow",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "string"
+            },
+            {
                 "name": "snackbarStory",
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "ctype": "miscellaneous",
@@ -3789,6 +3792,44 @@
                         "deprecated": false,
                         "deprecationMessage": "",
                         "optional": true,
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "stepNumberRow",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "string"
+            },
+            {
+                "name": "swatchBlock",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "theme",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "string",
+                "jsdoctags": [
+                    {
+                        "name": "theme",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -4077,17 +4118,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuPagination>",
-                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj",
                 "file": "projects/components/src/lib/popover/popover.stories.ts",
                 "deprecated": false,
@@ -4101,6 +4131,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuProgress>",
                 "file": "projects/components/src/lib/progress/progress.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuPagination>",
+                "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4209,6 +4250,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj",
+                "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<TooltipStoryArgs>",
                 "file": "projects/components/src/lib/tooltip/tooltip.stories.ts",
                 "deprecated": false,
@@ -4280,6 +4332,58 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuIcon] },\n    template: `\n      <div style=\"display:flex;gap:1.5rem;align-items:flex-end;color:var(--au-color-text-primary);\">\n        @for (s of sizes; track s) {\n          <div style=\"display:flex;flex-direction:column;align-items:center;gap:0.35rem;font-size:0.75rem;\">\n            <au-icon name=\"info\" [size]=\"s\" />\n            <span>{{ s }}</span>\n          </div>\n        }\n      </div>\n    `,\n    props: { sizes: ['sm', 'md', 'lg'] as const },\n  }),\n}"
+                }
+            ],
+            "projects/components/src/lib/tokens/color-scales.stories.ts": [
+                {
+                    "name": "AllScales",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'All 6 twelve-step scales in **light** and **dark** side-by-side, with **Radix-style column groups** (Backgrounds → Interactive → Borders → Solid → Accessible text). This comparison is fixed and does not depend on the Storybook theme toolbar.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [] },\n    template: `\n      <div style=\"font-family: var(--au-font-sans, system-ui, sans-serif); max-width: 100%;\">\n        <p style=\"font-size: 13px; color: #5c6b7d; margin: 0 0 16px; max-width: 52rem;\">\n          Steps 1–12 follow the same functional roles as\n          <a href=\"https://www.radix-ui.com/colors\" target=\"_blank\" rel=\"noopener noreferrer\">Radix Colors</a>.\n          Semantic tokens in <code>au-tokens.css</code> pick specific steps (e.g. action-9 for primary buttons).\n        </p>\n        ${swatchBlock('light')}\n        ${swatchBlock('dark')}\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta",
+                    "defaultValue": "{\n  title: 'Aurea/Color Scales',\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('color-scales' as never),\n}"
+                },
+                {
+                    "name": "SCALE_LABELS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Record<string, string>",
+                    "defaultValue": "{\n  neutral: 'Neutral (slate-gray)',\n  action: 'Action (blue)',\n  error: 'Error (red)',\n  success: 'Success (green)',\n  warning: 'Warning (amber)',\n  info: 'Info (sky-blue)',\n}"
+                },
+                {
+                    "name": "SCALE_NAMES",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "['neutral', 'action', 'error', 'success', 'warning', 'info'] as const"
+                },
+                {
+                    "name": "ToolbarThemeScale",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Single scale matrix bound to the active Storybook theme toolbar (`auTheme` + high-contrast). Use this story to validate that theme switching is applied.',\n      },\n    },\n  },\n  render: () => ({\n    moduleMetadata: { imports: [] },\n    template: `\n      <div style=\"font-family: var(--au-font-sans, system-ui, sans-serif); max-width: 100%;\">\n        <p style=\"font-size: 13px; color: #5c6b7d; margin: 0 0 16px; max-width: 52rem;\">\n          This table follows the current Storybook toolbar theme.\n        </p>\n        ${swatchBlock('toolbar')}\n      </div>\n    `,\n  }),\n}"
                 }
             ],
             "projects/components/src/lib/button/button.stories.ts": [
@@ -5199,7 +5303,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "StorybookConfig",
-                    "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
+                    "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/styles', to: '/au-styles' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
                     "rawdescription": "In Storybook 10 the **Interactions** panel (debug `play`) lives in the manager by default;\nyou do not need `@storybook/addon-interactions` (still a separate v8/9 package on npm).",
                     "description": "<p>In Storybook 10 the <strong>Interactions</strong> panel (debug <code>play</code>) lives in the manager by default;\nyou do not need <code>@storybook/addon-interactions</code> (still a separate v8/9 package on npm).</p>\n"
                 }
@@ -6271,73 +6375,13 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Apariencia base (`light` / `dark`); combinable con alto contraste.',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'mirror',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auHighContrast: {\n      description:\n        'Paleta experimental WCAG: claro → `high-contrast`, oscuro → `high-contrast-dark`.',\n      defaultValue: 'off',\n      toolbar: {\n        title: 'Contraste',\n        icon: 'accessibility',\n        items: [\n          { value: 'off', title: 'Normal' },\n          { value: 'on', title: 'Alto contraste' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Escala de densidad en `document.documentElement` (`data-au-density`).',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Espacio',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacto' },\n          { value: 'comfortable', title: 'Cómodo' },\n          { value: 'spacious', title: 'Espacioso' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auStyle: {\n      description:\n        'Modo visual global (`default` o `unstyled`) para separar primitivos de tema.',\n      defaultValue: 'default',\n      toolbar: {\n        title: 'Estilo',\n        icon: 'paintbrush',\n        items: [\n          { value: 'default', title: 'Default' },\n          { value: 'unstyled', title: 'Primitives' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auHighContrast: 'off',\n    auDensity: 'comfortable',\n    auStyle: 'default',\n    docsLocale: 'en',\n  },\n  loaders: [\n    async ({ globals }) => {\n      applyPreviewGlobals(globals);\n    },\n  ],\n  decorators: [\n    (storyFn, context) => {\n      applyPreviewGlobals(context.globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                     "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                     "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
                 }
             ]
         },
         "groupedFunctions": {
-            "projects/components/.storybook/preview.ts": [
-                {
-                    "name": "applyAuThemeFromGlobals",
-                    "file": "projects/components/.storybook/preview.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "args": [
-                        {
-                            "name": "globals",
-                            "type": "Record",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "returnType": "void",
-                    "jsdoctags": [
-                        {
-                            "name": "globals",
-                            "type": "Record",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "applyDocsLocaleFromGlobals",
-                    "file": "projects/components/.storybook/preview.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "args": [
-                        {
-                            "name": "globals",
-                            "type": "Record",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "returnType": "void",
-                    "jsdoctags": [
-                        {
-                            "name": "globals",
-                            "type": "Record",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                }
-            ],
             "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "buttonRender",
@@ -6605,6 +6649,57 @@
                         },
                         {
                             "name": "name",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "projects/components/src/lib/tokens/color-scales.stories.ts": [
+                {
+                    "name": "groupHeaderRow",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "string"
+                },
+                {
+                    "name": "stepNumberRow",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "string"
+                },
+                {
+                    "name": "swatchBlock",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "theme",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "string",
+                    "jsdoctags": [
+                        {
+                            "name": "theme",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -6979,19 +7074,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/pagination/pagination.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuPagination>",
-                    "file": "projects/components/src/lib/pagination/pagination.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/popover/popover.stories.ts": [
                 {
                     "name": "Story",
@@ -7012,6 +7094,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuProgress>",
                     "file": "projects/components/src/lib/progress/progress.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/pagination/pagination.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuPagination>",
+                    "file": "projects/components/src/lib/pagination/pagination.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7133,6 +7228,19 @@
                     "kind": 193
                 }
             ],
+            "projects/components/src/lib/tokens/color-scales.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj",
+                    "file": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/tooltip/tooltip.stories.ts": [
                 {
                     "name": "Story",
@@ -7166,26 +7274,6 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
-            },
-            {
-                "filePath": "projects/components/.storybook/preview.ts",
-                "type": "function",
-                "linktype": "miscellaneous",
-                "linksubtype": "function",
-                "name": "applyAuThemeFromGlobals",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/components/.storybook/preview.ts",
-                "type": "function",
-                "linktype": "miscellaneous",
-                "linksubtype": "function",
-                "name": "applyDocsLocaleFromGlobals",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
             },
             {
                 "filePath": "projects/components/.storybook/preview.ts",
@@ -9593,6 +9681,96 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
                 "name": "TextareaResize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "groupHeaderRow",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "stepNumberRow",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "swatchBlock",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AllScales",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SCALE_LABELS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SCALE_NAMES",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ToolbarThemeScale",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tokens/color-scales.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

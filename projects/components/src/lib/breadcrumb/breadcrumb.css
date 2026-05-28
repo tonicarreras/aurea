@@ -36,7 +36,7 @@
 .au-breadcrumb__link:focus-visible {
   outline: none;
   box-shadow: var(--au-breadcrumb-focus-shadow);
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-breadcrumb-focus-radius);
 }
 
 .au-breadcrumb__current {

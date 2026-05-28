@@ -46,7 +46,7 @@
 :host(.au-tabs__tab--from-tab:focus-visible) {
   outline: var(--au-tab-focus-outline);
   outline-offset: 2px;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-tab-focus-radius);
 }
 
 :host([data-au-size='sm']) {
@@ -78,7 +78,7 @@
   right: var(--au-space-2);
   bottom: 0;
   height: 2px;
-  border-radius: var(--au-radius-pill);
+  border-radius: var(--au-tab-indicator-radius);
   background: var(--au-tab-indicator);
 }
 
@@ -92,7 +92,7 @@
 }
 
 :host([data-au-variant='contained']) {
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-tab-contained-radius);
 }
 
 :host([data-au-variant='contained'].au-tabs__tab--selected) {

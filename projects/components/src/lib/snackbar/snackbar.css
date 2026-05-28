@@ -133,7 +133,7 @@
   flex-shrink: 0;
   padding: var(--au-space-1) var(--au-space-2);
   border: none;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-snackbar-control-radius);
   background: transparent;
   color: var(--au-snackbar-action-color);
   font-family: inherit;
@@ -162,7 +162,7 @@
   height: var(--au-space-8);
   padding: 0;
   border: none;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-snackbar-control-radius);
   background: transparent;
   color: inherit;
   cursor: pointer;

@@ -132,7 +132,7 @@ button.au-chip__surface:disabled {
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-chip-remove-radius);
   background: transparent;
   color: inherit;
   cursor: pointer;

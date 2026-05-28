@@ -1,0 +1,711 @@
+/**
+ * Aurea primitives chrome — monochrome, translucent surfaces (Apple-like).
+ *
+ * Active when `data-au-style="unstyled"` is set on an ancestor (typically `html`).
+ * Layered on top of `au-component-tokens.css` baselines; theme-skin stays off.
+ */
+
+:root[data-au-style='unstyled'],
+[data-au-style='unstyled'] {
+  color-scheme: light;
+
+  /* ------------------------------------------------------------------------ */
+  /* Primitive palette (light)                                                  */
+  /* ------------------------------------------------------------------------ */
+  --au-primitive-ink: #1d1d1f;
+  --au-primitive-ink-secondary: #6e6e73;
+  --au-primitive-ink-tertiary: #86868b;
+  --au-primitive-ink-muted: #aeaeb2;
+  --au-primitive-surface: color-mix(in srgb, #ffffff 78%, transparent);
+  --au-primitive-surface-hover: color-mix(in srgb, #ffffff 92%, transparent);
+  --au-primitive-surface-muted: color-mix(in srgb, #f5f5f7 82%, transparent);
+  --au-primitive-surface-sunken: color-mix(in srgb, #000000 4%, transparent);
+  --au-primitive-line: color-mix(in srgb, #000000 8%, transparent);
+  --au-primitive-line-strong: color-mix(in srgb, #000000 14%, transparent);
+  --au-primitive-fill: #1d1d1f;
+  --au-primitive-fill-hover: #333336;
+  --au-primitive-on-fill: #ffffff;
+  --au-primitive-focus: #1d1d1f;
+  --au-primitive-canvas: #ebebef;
+
+  --au-primitive-shadow-hairline: 0 1px 0 color-mix(in srgb, #000000 5%, transparent);
+  --au-primitive-shadow-control:
+    0 1px 2px color-mix(in srgb, #000000 6%, transparent),
+    0 0 0 1px color-mix(in srgb, #000000 5%, transparent);
+  --au-primitive-shadow-float:
+    0 8px 28px color-mix(in srgb, #000000 8%, transparent),
+    0 2px 8px color-mix(in srgb, #000000 4%, transparent);
+  --au-primitive-shadow-focus:
+    0 0 0 1px color-mix(in srgb, #000000 12%, transparent),
+    0 0 0 3px color-mix(in srgb, #000000 8%, transparent);
+
+  --au-radius-primitive: 0.625rem; /* 10px — single Apple-like corner language */
+  --au-radius-primitive-pill: 9999px; /* switch track only */
+
+  /* Align hardcoded --au-radius-* refs in component CSS */
+  --au-radius-2xs: calc(var(--au-radius-primitive) * 0.25);
+  --au-radius-xs: calc(var(--au-radius-primitive) * 0.4);
+  --au-radius-sm: var(--au-radius-primitive);
+  --au-radius-md: var(--au-radius-primitive);
+  --au-radius-lg: var(--au-radius-primitive);
+  --au-radius-xl: var(--au-radius-primitive);
+  --au-radius-field: var(--au-radius-primitive);
+  --au-radius-pill: var(--au-radius-primitive);
+
+  /* ------------------------------------------------------------------------ */
+  /* Semantic → mono palette                                                    */
+  /* ------------------------------------------------------------------------ */
+  --au-color-surface-canvas: var(--au-primitive-canvas);
+  --au-color-surface-raised: var(--au-primitive-surface);
+  --au-color-surface-elevated: var(--au-primitive-surface-hover);
+  --au-color-surface-sunken: var(--au-primitive-surface-sunken);
+  --au-color-surface-inverted: var(--au-primitive-fill);
+
+  --au-color-text-primary: var(--au-primitive-ink);
+  --au-color-text-secondary: var(--au-primitive-ink-secondary);
+  --au-color-text-tertiary: var(--au-primitive-ink-tertiary);
+  --au-color-text-label: var(--au-color-text-primary);
+  --au-color-text-on-solid: var(--au-primitive-on-fill);
+  --au-color-text-disabled: var(--au-primitive-ink-muted);
+
+  --au-color-border-subtle: var(--au-primitive-line);
+  --au-color-border-default: var(--au-primitive-line-strong);
+  --au-color-border-strong: color-mix(in srgb, #000000 22%, transparent);
+
+  --au-color-action-primary: var(--au-primitive-fill);
+  --au-color-action-primary-hover: var(--au-primitive-fill-hover);
+  --au-color-action-primary-pressed: #000000;
+  --au-color-link: var(--au-primitive-ink);
+  --au-color-link-hover: var(--au-primitive-fill-hover);
+  --au-color-focus-ring: var(--au-primitive-focus);
+  --au-color-focus-inner: var(--au-primitive-on-fill);
+
+  --au-color-form-border: var(--au-primitive-line-strong);
+  --au-color-form-border-hover: color-mix(in srgb, #000000 20%, transparent);
+  --au-color-form-error: #ff3b30;
+  --au-color-form-error-bg: color-mix(in srgb, #ff3b30 8%, transparent);
+  --au-color-form-disabled-surface: color-mix(in srgb, #000000 3%, transparent);
+  --au-color-form-disabled-foreground: var(--au-primitive-ink-muted);
+  --au-color-form-text: var(--au-primitive-ink);
+  --au-color-form-placeholder: var(--au-primitive-ink-tertiary);
+  --au-color-form-caret: var(--au-primitive-ink);
+
+  --au-color-switch-track-off: color-mix(in srgb, #000000 8%, transparent);
+  --au-color-switch-track-off-hover: color-mix(in srgb, #000000 12%, transparent);
+  --au-color-switch-track-off-border: transparent;
+  --au-color-switch-thumb-off: #ffffff;
+
+  --au-color-select-menu-bg: var(--au-primitive-surface-hover);
+  --au-color-select-menu-text: var(--au-primitive-ink);
+  --au-color-select-field-hover-bg: var(--au-primitive-surface-hover);
+  --au-color-select-option-highlight-bg: color-mix(in srgb, #000000 6%, transparent);
+  --au-color-select-option-highlight-text: var(--au-primitive-ink);
+  --au-color-select-option-highlight-marker: var(--au-primitive-fill);
+  --au-color-select-option-selected-bg: color-mix(in srgb, #000000 10%, transparent);
+  --au-color-select-option-selected-text: var(--au-primitive-ink);
+  --au-color-select-option-selected-marker: var(--au-primitive-fill);
+  --au-color-select-option-disabled-text: var(--au-primitive-ink-muted);
+
+  --au-color-feedback-success-bg: color-mix(in srgb, #000000 5%, transparent);
+  --au-color-feedback-success-border: var(--au-primitive-line-strong);
+  --au-color-feedback-success-title: var(--au-primitive-ink);
+  --au-color-feedback-warning-bg: color-mix(in srgb, #000000 5%, transparent);
+  --au-color-feedback-warning-border: var(--au-primitive-line-strong);
+  --au-color-feedback-warning-title: var(--au-primitive-ink);
+  --au-color-feedback-error-bg: color-mix(in srgb, #ff3b30 8%, transparent);
+  --au-color-feedback-error-border: color-mix(in srgb, #ff3b30 35%, transparent);
+  --au-color-feedback-error-title: var(--au-primitive-ink);
+  --au-color-feedback-info-bg: color-mix(in srgb, #000000 5%, transparent);
+  --au-color-feedback-info-border: var(--au-primitive-line-strong);
+  --au-color-feedback-info-title: var(--au-primitive-ink);
+
+  --au-color-semantic-success: var(--au-primitive-ink-secondary);
+  --au-color-semantic-warning: var(--au-primitive-ink-secondary);
+  --au-color-semantic-error: #ff3b30;
+  --au-color-semantic-info: var(--au-primitive-ink-secondary);
+  --au-color-semantic-success-surface: color-mix(in srgb, #000000 5%, transparent);
+  --au-color-semantic-warning-surface: color-mix(in srgb, #000000 5%, transparent);
+  --au-color-semantic-error-surface: color-mix(in srgb, #ff3b30 8%, transparent);
+  --au-color-semantic-info-surface: color-mix(in srgb, #000000 5%, transparent);
+  --au-color-semantic-error-contrast: #ff3b30;
+
+  --au-color-form-error-foreground: #ff3b30;
+  --au-color-date-picker-accent: var(--au-primitive-fill);
+  --au-color-date-picker-icon: var(--au-primitive-ink-secondary);
+  --au-color-date-picker-icon-hover: var(--au-primitive-ink);
+  --au-color-date-picker-icon-active: var(--au-primitive-fill);
+  --au-color-date-picker-edit-highlight: color-mix(in srgb, #000000 8%, transparent);
+  --au-color-selection: color-mix(in srgb, #000000 12%, transparent);
+  --au-color-selection-text: var(--au-primitive-ink);
+
+  --au-color-skeleton-base: color-mix(in srgb, #000000 6%, transparent);
+  --au-color-skeleton-shimmer: color-mix(in srgb, #000000 12%, transparent);
+
+  --au-shadow-control: var(--au-primitive-shadow-control);
+  --au-shadow-focus-control: var(--au-primitive-shadow-focus);
+  --au-shadow-focus-control-error: 0 0 0 3px color-mix(in srgb, #ff3b30 22%, transparent);
+  --au-shadow-focus-ring: var(--au-primitive-shadow-focus);
+  --au-shadow-overlay: var(--au-primitive-shadow-float);
+  --au-shadow-button: var(--au-primitive-shadow-control);
+  --au-shadow-button-primary: var(--au-primitive-shadow-control);
+  --au-shadow-button-hover: var(--au-primitive-shadow-float);
+  --au-shadow-raised: var(--au-primitive-shadow-control);
+  --au-shadow-float: var(--au-primitive-shadow-float);
+  --au-shadow-hairline: var(--au-primitive-shadow-hairline);
+
+  /* ------------------------------------------------------------------------ */
+  /* Component skin (glass mono)                                                */
+  /* ------------------------------------------------------------------------ */
+  --au-field-border: var(--au-primitive-line-strong);
+  --au-field-bg: var(--au-primitive-surface);
+  --au-field-shadow: var(--au-primitive-shadow-control);
+  --au-field-border-hover: color-mix(in srgb, #000000 18%, transparent);
+  --au-field-bg-hover: var(--au-primitive-surface-hover);
+  --au-field-bg-hover-open: var(--au-primitive-surface-hover);
+  --au-field-border-focus: var(--au-primitive-fill);
+  --au-field-shadow-focus: var(--au-primitive-shadow-focus);
+  --au-field-shadow-focus-error: var(--au-shadow-focus-control-error);
+  --au-field-radius: var(--au-radius-primitive);
+  --au-field-text-color: var(--au-primitive-ink);
+  --au-field-placeholder-color: var(--au-primitive-ink-tertiary);
+  --au-field-caret-color: var(--au-primitive-ink);
+  --au-field-label-color: var(--au-color-text-primary);
+  --au-field-required-color: #ff3b30;
+  --au-field-hint-color: var(--au-primitive-ink-tertiary);
+  --au-field-error-border: #ff3b30;
+  --au-field-error-bg: color-mix(in srgb, #ff3b30 8%, transparent);
+  --au-field-error-focus-bg: var(--au-primitive-surface-hover);
+  --au-field-disabled-border: var(--au-primitive-line);
+  --au-field-disabled-bg: color-mix(in srgb, #000000 3%, transparent);
+  --au-field-disabled-fg: var(--au-primitive-ink-muted);
+  --au-field-focus-tab-outline: 2px solid var(--au-primitive-fill);
+  --au-field-reveal-color: var(--au-primitive-ink-secondary);
+  --au-field-reveal-color-hover: var(--au-primitive-ink);
+  --au-field-reveal-border: var(--au-primitive-line);
+  --au-field-reveal-bg-hover: var(--au-primitive-surface-sunken);
+  --au-field-reveal-bg-active: color-mix(in srgb, #000000 6%, transparent);
+  --au-field-focus-tab-bg: var(--au-primitive-surface);
+  --au-field-focus-tab-border: var(--au-primitive-line-strong);
+
+  --au-select-icon-color: var(--au-primitive-ink-tertiary);
+  --au-select-icon-color-open: var(--au-primitive-ink-secondary);
+  --au-select-placeholder-color: var(--au-primitive-ink-tertiary);
+
+  --au-button-bg: var(--au-primitive-surface);
+  --au-button-border: var(--au-primitive-line-strong);
+  --au-button-fg: var(--au-primitive-ink);
+  --au-button-shadow: var(--au-primitive-shadow-control);
+  --au-button-bg-hover: var(--au-primitive-surface-hover);
+  --au-button-border-hover: color-mix(in srgb, #000000 18%, transparent);
+  --au-button-fg-hover: var(--au-primitive-ink);
+  --au-button-shadow-hover: var(--au-primitive-shadow-float);
+  --au-button-bg-active: var(--au-primitive-surface-sunken);
+  --au-button-border-active: color-mix(in srgb, #000000 22%, transparent);
+  --au-button-fg-active: var(--au-primitive-ink);
+  --au-button-active-transform: scale(0.985);
+  --au-button-radius: var(--au-radius-primitive);
+  --au-button-focus-shadow: var(--au-primitive-shadow-focus);
+  --au-button-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-checkbox-appearance: none;
+  --au-checkbox-webkit-appearance: none;
+  --au-checkbox-width: var(--au-checkbox-size-md);
+  --au-checkbox-height: var(--au-checkbox-size-md);
+  --au-checkbox-border-width: 1px;
+  --au-checkbox-border-color: var(--au-primitive-line-strong);
+  --au-checkbox-border-color-hover: color-mix(in srgb, #000000 20%, transparent);
+  --au-checkbox-border-radius: calc(var(--au-radius-primitive) * 0.5);
+  --au-checkbox-bg: var(--au-primitive-surface);
+  --au-checkbox-bg-hover: var(--au-primitive-surface-hover);
+  --au-checkbox-bg-checked: var(--au-primitive-fill);
+  --au-checkbox-bg-checked-hover: var(--au-primitive-fill-hover);
+  --au-checkbox-border-checked: var(--au-primitive-fill);
+  --au-checkbox-border-checked-hover: var(--au-primitive-fill-hover);
+  --au-checkbox-shadow: var(--au-primitive-shadow-control);
+  --au-checkbox-shadow-focus: var(--au-primitive-shadow-focus);
+  --au-checkbox-focus-outline: 2px solid var(--au-primitive-fill);
+  --au-checkbox-focus-border: color-mix(in srgb, #000000 20%, transparent);
+  --au-checkbox-accent: var(--au-primitive-fill);
+  --au-checkbox-mark-content: '';
+  --au-checkbox-indeterminate-mark-content: '';
+  --au-checkbox-mark-border-color: var(--au-primitive-on-fill);
+  --au-checkbox-indeterminate-mark-bg: var(--au-primitive-on-fill);
+  --au-checkbox-label-color: var(--au-color-text-primary);
+  --au-checkbox-description-color: var(--au-primitive-ink-tertiary);
+  --au-checkbox-wrapper-gap: var(--au-space-2-5);
+  --au-checkbox-required-color: #ff3b30;
+  --au-checkbox-error-border: #ff3b30;
+  --au-checkbox-error-shadow: 0 0 0 1px #ff3b30;
+  --au-checkbox-error-checked-shadow: 0 0 0 2px #ff3b30;
+  --au-checkbox-disabled-bg: color-mix(in srgb, #000000 3%, transparent);
+  --au-checkbox-disabled-border: var(--au-primitive-line);
+  --au-checkbox-disabled-checked-bg: var(--au-primitive-ink-muted);
+  --au-checkbox-disabled-opacity: 0.55;
+
+  --au-switch-width: 2.75rem;
+  --au-switch-height: 1.5rem;
+  --au-switch-appearance: none;
+  --au-switch-border-width: 1px;
+  --au-switch-border-radius: var(--au-radius-primitive-pill);
+  --au-switch-webkit-appearance: none;
+  --au-switch-border-color: transparent;
+  --au-switch-bg: color-mix(in srgb, #000000 10%, transparent);
+  --au-switch-bg-hover: color-mix(in srgb, #000000 14%, transparent);
+  --au-switch-bg-checked: var(--au-primitive-fill);
+  --au-switch-border-checked: var(--au-primitive-fill);
+  --au-switch-thumb-display: block;
+  --au-switch-thumb-bg: #ffffff;
+  --au-switch-thumb-bg-checked: #ffffff;
+  --au-switch-thumb-shadow: 0 1px 3px color-mix(in srgb, #000000 18%, transparent);
+  --au-switch-focus-outline: 2px solid var(--au-primitive-fill);
+  --au-switch-label-color: var(--au-color-text-primary);
+  --au-switch-hint-color: var(--au-primitive-ink-tertiary);
+  --au-switch-required-color: #ff3b30;
+  --au-switch-accent: var(--au-primitive-fill);
+  --au-switch-focus-shadow: 0 0 0 1px var(--au-primitive-fill);
+  --au-switch-focus-border: var(--au-primitive-fill);
+  --au-switch-thumb-shadow-checked: 0 1px 2px color-mix(in srgb, #000000 22%, transparent);
+  --au-switch-error-border: #ff3b30;
+  --au-switch-error-shadow: 0 0 0 1px #ff3b30;
+  --au-switch-error-checked-shadow: 0 0 0 2px #ff3b30;
+  --au-switch-disabled-opacity: 0.55;
+
+  --au-radio-appearance: auto;
+  --au-radio-webkit-appearance: radio;
+  --au-radio-width: 1rem;
+  --au-radio-height: 1rem;
+  --au-radio-accent: var(--au-primitive-fill);
+  --au-radio-label-color: var(--au-color-text-primary);
+  --au-radio-legend-color: var(--au-color-text-primary);
+  --au-radio-hint-color: var(--au-primitive-ink-tertiary);
+  --au-radio-required-color: #ff3b30;
+  --au-radio-focus-outline: 2px solid var(--au-primitive-fill);
+  --au-radio-focus-shadow: 0 0 0 2px color-mix(in srgb, #000000 8%, transparent);
+  --au-radio-error-outline: 1px solid #ff3b30;
+  --au-radio-error-shadow: 0 0 0 2px color-mix(in srgb, #ff3b30 22%, transparent);
+  --au-radio-disabled-opacity: 0.55;
+
+  --au-dialog-header-border: var(--au-primitive-line);
+  --au-dialog-footer-border: var(--au-primitive-line);
+  --au-dialog-close-fg: var(--au-primitive-ink-secondary);
+  --au-dialog-close-fg-hover: var(--au-primitive-ink);
+  --au-dialog-close-bg-hover: var(--au-primitive-surface-sunken);
+  --au-dialog-close-border-hover: var(--au-primitive-line);
+  --au-dialog-close-focus-border: var(--au-primitive-fill);
+  --au-dialog-close-focus-shadow: var(--au-primitive-shadow-focus);
+
+  --au-listbox-fg: var(--au-primitive-ink);
+  --au-listbox-placeholder-color: var(--au-primitive-ink-tertiary);
+  --au-listbox-highlight-bg: color-mix(in srgb, #000000 6%, transparent);
+  --au-listbox-highlight-fg: var(--au-primitive-ink);
+  --au-listbox-highlight-marker: var(--au-primitive-fill);
+  --au-listbox-selected-bg: color-mix(in srgb, #000000 10%, transparent);
+  --au-listbox-selected-fg: var(--au-primitive-ink);
+  --au-listbox-selected-marker: var(--au-primitive-fill);
+  --au-listbox-disabled-fg: var(--au-primitive-ink-muted);
+
+  --au-chip-border-hover: color-mix(in srgb, #000000 18%, transparent);
+  --au-chip-bg-active: var(--au-primitive-surface-sunken);
+  --au-chip-bg-disabled: color-mix(in srgb, #000000 3%, transparent);
+  --au-chip-border-disabled: var(--au-primitive-line);
+  --au-chip-fg-disabled: var(--au-primitive-ink-muted);
+  --au-chip-remove-bg-hover: var(--au-primitive-surface-sunken);
+  --au-chip-remove-fg-hover: var(--au-primitive-ink);
+  --au-chip-remove-fg-disabled: var(--au-primitive-ink-muted);
+  --au-chip-focus-shadow: var(--au-primitive-shadow-focus);
+  --au-chip-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-message-title-fg: var(--au-primitive-ink);
+  --au-message-accent: var(--au-primitive-ink-secondary);
+  --au-message-close-bg-hover: var(--au-primitive-surface-sunken);
+  --au-message-focus-shadow: var(--au-primitive-shadow-focus);
+  --au-message-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-snackbar-action-color: var(--au-primitive-ink);
+  --au-snackbar-accent: var(--au-primitive-ink-secondary);
+  --au-snackbar-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-badge-shadow: var(--au-primitive-shadow-control);
+
+  --au-card-footer-border: var(--au-primitive-line);
+
+  --au-dialog-backdrop: color-mix(in srgb, #000000 28%, transparent);
+  --au-dialog-panel-bg: var(--au-primitive-surface-hover);
+  --au-dialog-panel-border: var(--au-primitive-line);
+  --au-dialog-panel-shadow: var(--au-primitive-shadow-float);
+  --au-dialog-panel-radius: var(--au-radius-primitive);
+  --au-dialog-title-color: var(--au-primitive-ink);
+  --au-dialog-body-color: var(--au-primitive-ink-secondary);
+
+  --au-listbox-border: var(--au-primitive-line);
+  --au-listbox-bg: var(--au-primitive-surface-hover);
+  --au-listbox-shadow: var(--au-primitive-shadow-float);
+  --au-listbox-radius: var(--au-radius-primitive);
+  --au-listbox-option-radius: calc(var(--au-radius-primitive) - 0.125rem);
+
+  --au-chip-bg: var(--au-primitive-surface);
+  --au-chip-border: var(--au-primitive-line-strong);
+  --au-chip-fg: var(--au-primitive-ink);
+  --au-chip-shadow: var(--au-primitive-shadow-control);
+  --au-chip-radius: var(--au-radius-primitive);
+  --au-chip-bg-hover: var(--au-primitive-surface-hover);
+  --au-chip-bg-selected: color-mix(in srgb, #000000 10%, transparent);
+  --au-chip-border-selected: var(--au-primitive-fill);
+  --au-chip-fg-selected: var(--au-primitive-ink);
+
+  --au-message-bg: var(--au-primitive-surface);
+  --au-message-border: var(--au-primitive-line-strong);
+  --au-message-fg: var(--au-primitive-ink);
+  --au-message-shadow: var(--au-primitive-shadow-control);
+  --au-message-radius: var(--au-radius-primitive);
+
+  --au-snackbar-bg: var(--au-primitive-surface-hover);
+  --au-snackbar-border: var(--au-primitive-line);
+  --au-snackbar-fg: var(--au-primitive-ink);
+  --au-snackbar-shadow: var(--au-primitive-shadow-float);
+  --au-snackbar-radius: var(--au-radius-primitive);
+
+  --au-badge-bg: color-mix(in srgb, #000000 6%, transparent);
+  --au-badge-border: var(--au-primitive-line);
+  --au-badge-fg: var(--au-primitive-ink-secondary);
+  --au-badge-radius: var(--au-radius-primitive);
+
+  --au-card-bg: var(--au-primitive-surface);
+  --au-card-border: var(--au-primitive-line);
+  --au-card-shadow: var(--au-primitive-shadow-float);
+  --au-card-radius: var(--au-radius-primitive);
+  --au-card-body-color: var(--au-primitive-ink-secondary);
+  --au-card-header-color: var(--au-primitive-ink);
+
+  --au-tabs-list-bg: color-mix(in srgb, #000000 4%, transparent);
+  --au-tabs-list-border: var(--au-primitive-line);
+  --au-tab-fg: var(--au-primitive-ink-secondary);
+  --au-tab-fg-hover: var(--au-primitive-ink);
+  --au-tab-fg-selected: var(--au-primitive-ink);
+  --au-tab-bg-hover: var(--au-primitive-surface);
+  --au-tab-bg-selected: var(--au-primitive-surface-hover);
+  --au-tab-indicator: var(--au-primitive-fill);
+  --au-tab-shadow-selected: var(--au-primitive-shadow-hairline);
+  --au-tab-fg-disabled: var(--au-primitive-ink-muted);
+  --au-tab-focus-outline: 2px solid var(--au-primitive-fill);
+  --au-tab-panel-fg: var(--au-primitive-ink);
+  --au-tab-panel-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-steps-border: var(--au-primitive-line);
+  --au-step-fg: var(--au-primitive-ink-secondary);
+  --au-step-fg-active: var(--au-primitive-ink);
+  --au-step-indicator: var(--au-primitive-fill);
+  --au-step-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-table-shell-bg: var(--au-primitive-surface);
+  --au-table-shell-border: var(--au-primitive-line);
+  --au-table-shell-shadow: var(--au-primitive-shadow-control);
+  --au-table-header-bg: color-mix(in srgb, #000000 4%, transparent);
+  --au-table-header-fg: var(--au-primitive-ink);
+  --au-table-cell-fg: var(--au-primitive-ink);
+  --au-table-cell-fg-secondary: var(--au-primitive-ink-secondary);
+  --au-table-row-border: var(--au-primitive-line);
+  --au-table-focus-outline: 2px solid var(--au-primitive-fill);
+
+  --au-skeleton-base: var(--au-color-skeleton-base);
+  --au-skeleton-shimmer: var(--au-color-skeleton-shimmer);
+  --au-progress-track-bg: color-mix(in srgb, #000000 4%, transparent);
+  --au-progress-track-border: var(--au-primitive-line);
+  --au-progress-bar-bg: var(--au-primitive-fill);
+  --au-pagination-fg: var(--au-primitive-ink-tertiary);
+
+  --au-link-fg: var(--au-primitive-ink);
+  --au-link-fg-hover: var(--au-primitive-fill-hover);
+  --au-link-fg-muted: var(--au-primitive-ink-secondary);
+  --au-link-focus-shadow: var(--au-primitive-shadow-focus);
+
+  --au-breadcrumb-fg: var(--au-primitive-ink-secondary);
+  --au-breadcrumb-fg-current: var(--au-primitive-ink);
+  --au-breadcrumb-separator: var(--au-primitive-ink-tertiary);
+  --au-breadcrumb-link: var(--au-primitive-ink);
+  --au-breadcrumb-link-hover: var(--au-primitive-fill-hover);
+  --au-breadcrumb-focus-shadow: var(--au-primitive-shadow-focus);
+
+  --au-menu-item-fg: var(--au-primitive-ink);
+  --au-menu-item-bg-hover: var(--au-primitive-surface-sunken);
+  --au-menu-item-fg-disabled: var(--au-primitive-ink-muted);
+  --au-menu-item-focus-shadow: var(--au-primitive-shadow-focus);
+
+  --au-divider-fg: var(--au-primitive-ink-secondary);
+  --au-divider-line: var(--au-primitive-line);
+
+  --au-field-error-fg: #ff3b30;
+  --au-field-error-icon-border: #ff3b30;
+  --au-field-error-icon-bg: color-mix(in srgb, #ff3b30 8%, transparent);
+
+  --au-date-picker-accent: var(--au-primitive-fill);
+  --au-date-picker-highlight: color-mix(in srgb, #000000 8%, transparent);
+  --au-date-picker-icon-color: var(--au-primitive-ink-secondary);
+  --au-date-picker-icon-hover: var(--au-primitive-ink);
+  --au-date-picker-icon-active: var(--au-primitive-fill);
+
+  --au-hit-radius: var(--au-radius-primitive);
+  --au-surface-radius: var(--au-radius-primitive);
+  --au-tab-indicator-radius: var(--au-radius-primitive);
+  --au-progress-radius: var(--au-radius-primitive-pill);
+}
+
+/* Button variants — mono fills */
+:root[data-au-style='unstyled'] au-button[data-au-variant='primary'] {
+  --au-button-bg: var(--au-primitive-fill);
+  --au-button-border: var(--au-primitive-fill);
+  --au-button-fg: var(--au-primitive-on-fill);
+  --au-button-bg-hover: var(--au-primitive-fill-hover);
+  --au-button-border-hover: var(--au-primitive-fill-hover);
+  --au-button-fg-hover: var(--au-primitive-on-fill);
+  --au-button-bg-active: #000000;
+  --au-button-border-active: #000000;
+  --au-button-fg-active: var(--au-primitive-on-fill);
+}
+
+:root[data-au-theme='dark'][data-au-style='unstyled'] au-button[data-au-variant='primary'] {
+  --au-button-bg-active: #ffffff;
+  --au-button-border-active: #ffffff;
+  --au-button-fg-active: var(--au-primitive-on-fill);
+}
+
+:root[data-au-style='unstyled'] au-button[data-au-variant='outline'] {
+  --au-button-bg: transparent;
+  --au-button-border: var(--au-primitive-line-strong);
+  --au-button-fg: var(--au-primitive-ink);
+}
+
+:root[data-au-style='unstyled'] au-button[data-au-variant='ghost'] {
+  --au-button-bg: transparent;
+  --au-button-border: transparent;
+  --au-button-fg: var(--au-primitive-ink-secondary);
+  --au-button-fg-hover: var(--au-primitive-ink);
+}
+
+:root[data-au-style='unstyled'] au-button[data-au-variant='secondary'] {
+  --au-button-bg: var(--au-primitive-surface-muted);
+  --au-button-border: var(--au-primitive-line);
+  --au-button-fg: var(--au-primitive-ink);
+  --au-button-bg-hover: var(--au-primitive-surface-hover);
+  --au-button-border-hover: var(--au-primitive-line-strong);
+  --au-button-bg-active: var(--au-primitive-surface-sunken);
+}
+
+:root[data-au-style='unstyled'] au-checkbox[data-au-size='sm'] {
+  --au-checkbox-width: var(--au-checkbox-size-sm);
+  --au-checkbox-height: var(--au-checkbox-size-sm);
+}
+
+:root[data-au-style='unstyled'] au-checkbox[data-au-size='lg'] {
+  --au-checkbox-width: var(--au-checkbox-size-lg);
+  --au-checkbox-height: var(--au-checkbox-size-lg);
+}
+
+:root[data-au-style='unstyled'] au-switch[data-au-size='sm'] {
+  --au-switch-width: 2.25rem;
+  --au-switch-height: 1.25rem;
+}
+
+:root[data-au-style='unstyled'] au-switch[data-au-size='lg'] {
+  --au-switch-width: 3.25rem;
+  --au-switch-height: 1.75rem;
+}
+
+/* Chip variants — mono glass */
+:root[data-au-style='unstyled'] au-chip[data-au-variant='filled'],
+:root[data-au-style='unstyled'] au-chip:not([data-au-variant]) {
+  --au-chip-bg: var(--au-primitive-surface);
+  --au-chip-border: var(--au-primitive-line-strong);
+}
+
+:root[data-au-style='unstyled'] au-chip[data-au-variant='outline'] {
+  --au-chip-bg: transparent;
+  --au-chip-border: var(--au-primitive-line-strong);
+}
+
+:root[data-au-style='unstyled'] au-chip[data-au-variant='accent'],
+:root[data-au-style='unstyled'] au-chip[data-au-selected] {
+  --au-chip-bg: color-mix(in srgb, #000000 10%, transparent);
+  --au-chip-border: var(--au-primitive-fill);
+  --au-chip-fg: var(--au-primitive-ink);
+}
+
+:root[data-au-style='unstyled'] au-chip[data-au-variant='accent']:hover,
+:root[data-au-style='unstyled'] au-chip[data-au-selected]:hover {
+  --au-chip-border-hover: var(--au-primitive-fill-hover);
+}
+
+/* Card variants */
+:root[data-au-style='unstyled'] au-card[data-au-variant='elevated'],
+:root[data-au-style='unstyled'] au-card:not([data-au-variant]) {
+  --au-card-bg: var(--au-primitive-surface);
+  --au-card-border: var(--au-primitive-line);
+  --au-card-shadow: var(--au-primitive-shadow-float);
+}
+
+:root[data-au-style='unstyled'] au-card[data-au-variant='outlined'] {
+  --au-card-bg: var(--au-primitive-surface);
+  --au-card-border: var(--au-primitive-line-strong);
+  --au-card-shadow: var(--au-primitive-shadow-control);
+}
+
+:root[data-au-style='unstyled'] au-card[data-au-variant='filled'] {
+  --au-card-bg: var(--au-primitive-surface-hover);
+  --au-card-border: var(--au-primitive-line);
+  --au-card-shadow: var(--au-primitive-shadow-control);
+}
+
+/* Message variants — mono; error keeps red tint via semantic tokens */
+:root[data-au-style='unstyled'] au-message[data-au-variant='default'] {
+  --au-message-bg: var(--au-primitive-surface-hover);
+  --au-message-border: var(--au-primitive-line-strong);
+  --au-message-fg: var(--au-primitive-ink);
+  --au-message-accent: var(--au-primitive-ink-secondary);
+}
+
+:root[data-au-style='unstyled'] au-message[data-au-variant='success'],
+:root[data-au-style='unstyled'] au-message[data-au-variant='warning'],
+:root[data-au-style='unstyled'] au-message[data-au-variant='info'] {
+  --au-message-bg: color-mix(in srgb, #000000 5%, transparent);
+  --au-message-border: var(--au-primitive-line-strong);
+  --au-message-fg: var(--au-primitive-ink);
+  --au-message-accent: var(--au-primitive-ink-secondary);
+}
+
+:root[data-au-style='unstyled'] au-message[data-au-variant='error'] {
+  --au-message-bg: var(--au-color-feedback-error-bg);
+  --au-message-border: var(--au-color-feedback-error-border);
+  --au-message-fg: var(--au-primitive-ink);
+  --au-message-accent: var(--au-color-semantic-error);
+}
+
+/* Snackbar variants */
+:root[data-au-style='unstyled'] au-snackbar[data-au-variant='success'],
+:root[data-au-style='unstyled'] au-snackbar[data-au-variant='warning'],
+:root[data-au-style='unstyled'] au-snackbar[data-au-variant='info'] {
+  --au-snackbar-bg: var(--au-primitive-surface-hover);
+  --au-snackbar-border: var(--au-primitive-line-strong);
+  --au-snackbar-accent: var(--au-primitive-ink-secondary);
+}
+
+:root[data-au-style='unstyled'] au-snackbar[data-au-variant='error'] {
+  --au-snackbar-bg: var(--au-color-feedback-error-bg);
+  --au-snackbar-border: var(--au-color-feedback-error-border);
+  --au-snackbar-accent: var(--au-color-semantic-error);
+}
+
+/* Badge variants — mono pills; error keeps red */
+:root[data-au-style='unstyled'] au-badge[data-au-variant='accent'] {
+  --au-badge-bg: color-mix(in srgb, #000000 8%, transparent);
+  --au-badge-fg: var(--au-primitive-ink);
+  --au-badge-border: var(--au-primitive-line-strong);
+}
+
+:root[data-au-style='unstyled'] au-badge[data-au-variant='success'],
+:root[data-au-style='unstyled'] au-badge[data-au-variant='warning'],
+:root[data-au-style='unstyled'] au-badge[data-au-variant='info'] {
+  --au-badge-bg: color-mix(in srgb, #000000 6%, transparent);
+  --au-badge-fg: var(--au-primitive-ink-secondary);
+  --au-badge-border: var(--au-primitive-line);
+}
+
+:root[data-au-style='unstyled'] au-badge[data-au-variant='error'] {
+  --au-badge-bg: var(--au-color-semantic-error-surface);
+  --au-badge-fg: var(--au-color-semantic-error);
+  --au-badge-border: color-mix(in srgb, #ff3b30 35%, transparent);
+}
+
+/* Floating panels — menu, popover, autocomplete list */
+:root[data-au-style='unstyled'] .au-floating-panel {
+  background: var(--au-primitive-surface-hover);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  color: var(--au-primitive-ink);
+  border-color: var(--au-primitive-line);
+  box-shadow: var(--au-primitive-shadow-float);
+  border-radius: var(--au-surface-radius);
+}
+
+/* Dark primitives — frosted charcoal glass */
+:root[data-au-theme='dark'][data-au-style='unstyled'],
+[data-au-theme='dark'][data-au-style='unstyled'] {
+  color-scheme: dark;
+
+  --au-primitive-ink: #f5f5f7;
+  --au-primitive-ink-secondary: #a1a1a6;
+  --au-primitive-ink-tertiary: #86868b;
+  --au-primitive-ink-muted: #636366;
+  --au-primitive-surface: color-mix(in srgb, #ffffff 10%, transparent);
+  --au-primitive-surface-hover: color-mix(in srgb, #ffffff 16%, transparent);
+  --au-primitive-surface-muted: color-mix(in srgb, #ffffff 6%, transparent);
+  --au-primitive-surface-sunken: color-mix(in srgb, #000000 22%, transparent);
+  --au-primitive-line: color-mix(in srgb, #ffffff 10%, transparent);
+  --au-primitive-line-strong: color-mix(in srgb, #ffffff 18%, transparent);
+  --au-primitive-fill: #f5f5f7;
+  --au-primitive-fill-hover: #ffffff;
+  --au-primitive-on-fill: #1d1d1f;
+  --au-primitive-focus: #f5f5f7;
+  /* Match default dark canvas (au-tokens → --au-scale-neutral-1), not Apple grey */
+  --au-primitive-canvas: var(--au-scale-neutral-1);
+
+  /* Re-sync semantic + label tokens after palette swap (same contract as default theme) */
+  --au-color-surface-canvas: var(--au-primitive-canvas);
+  --au-color-surface-raised: var(--au-primitive-surface);
+  --au-color-surface-elevated: var(--au-primitive-surface-hover);
+  --au-color-surface-sunken: var(--au-primitive-surface-sunken);
+  --au-color-text-primary: var(--au-primitive-ink);
+  --au-color-text-secondary: var(--au-primitive-ink-secondary);
+  --au-color-text-tertiary: var(--au-primitive-ink-tertiary);
+  --au-color-text-label: var(--au-color-text-primary);
+  --au-field-label-color: var(--au-color-text-primary);
+  --au-field-text-color: var(--au-color-text-primary);
+  --au-checkbox-label-color: var(--au-color-text-primary);
+  --au-switch-label-color: var(--au-color-text-primary);
+  --au-radio-label-color: var(--au-color-text-primary);
+  --au-radio-legend-color: var(--au-color-text-primary);
+
+  /* Same corner language as light primitives */
+  --au-radius-primitive: 0.625rem;
+  --au-radius-primitive-pill: 9999px;
+  --au-radius-2xs: calc(var(--au-radius-primitive) * 0.25);
+  --au-radius-xs: calc(var(--au-radius-primitive) * 0.4);
+  --au-radius-sm: var(--au-radius-primitive);
+  --au-radius-md: var(--au-radius-primitive);
+  --au-radius-lg: var(--au-radius-primitive);
+  --au-radius-xl: var(--au-radius-primitive);
+  --au-radius-field: var(--au-radius-primitive);
+  --au-radius-pill: var(--au-radius-primitive);
+
+  --au-primitive-shadow-hairline: 0 1px 0 color-mix(in srgb, #ffffff 6%, transparent);
+  --au-primitive-shadow-control:
+    0 1px 2px color-mix(in srgb, #000000 40%, transparent),
+    0 0 0 1px color-mix(in srgb, #ffffff 8%, transparent);
+  --au-primitive-shadow-float:
+    0 12px 40px color-mix(in srgb, #000000 55%, transparent),
+    0 0 0 1px color-mix(in srgb, #ffffff 6%, transparent);
+  --au-primitive-shadow-focus:
+    0 0 0 1px color-mix(in srgb, #ffffff 20%, transparent),
+    0 0 0 3px color-mix(in srgb, #ffffff 12%, transparent);
+
+  --au-color-form-error: #ff453a;
+  --au-color-feedback-error-bg: color-mix(in srgb, #ff453a 12%, transparent);
+  --au-color-feedback-error-border: color-mix(in srgb, #ff453a 40%, transparent);
+  --au-color-semantic-error: #ff453a;
+  --au-field-required-color: #ff453a;
+  --au-field-error-border: #ff453a;
+  --au-field-error-bg: color-mix(in srgb, #ff453a 12%, transparent);
+  --au-switch-thumb-bg: #ffffff;
+  --au-switch-bg: color-mix(in srgb, #ffffff 14%, transparent);
+  --au-switch-bg-hover: color-mix(in srgb, #ffffff 20%, transparent);
+
+  --au-color-form-error-foreground: #ff453a;
+  --au-color-semantic-error-surface: color-mix(in srgb, #ff453a 12%, transparent);
+  --au-field-error-fg: #ff453a;
+  --au-field-error-icon-border: #ff453a;
+  --au-checkbox-required-color: #ff453a;
+  --au-checkbox-error-border: #ff453a;
+  --au-switch-required-color: #ff453a;
+  --au-switch-error-border: #ff453a;
+  --au-radio-required-color: #ff453a;
+  --au-radio-error-outline: 1px solid #ff453a;
+}

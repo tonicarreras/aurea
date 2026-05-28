@@ -136,10 +136,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       vector-effect: non-scaling-stroke;
     }
 
-    :host-context([data-au-theme='dark']) .docs-landing-lines__box {
-      stroke-width: 1.05;
-    }
-
     @media (max-width: 48rem) {
       .docs-landing-lines__svg {
         width: min(176vmin, 50rem);

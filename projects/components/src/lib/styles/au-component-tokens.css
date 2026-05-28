@@ -257,7 +257,6 @@
   --au-message-focus-shadow: none;
   --au-message-focus-outline: 2px solid currentColor;
   --au-message-focus-outline-offset: 2px;
-  --au-message-focus-outline-offset: 2px;
 
   /* ------------------------------------------------------------------------ */
   /* Snackbar                                                                 */
@@ -376,100 +375,27 @@
   --au-date-picker-icon-color: inherit;
   --au-date-picker-icon-hover: inherit;
   --au-date-picker-icon-active: inherit;
-}
 
-/*
- * Semantic token reset for primitives mode.
- */
-:root[data-au-style='unstyled'],
-[data-au-style='unstyled'] {
-  --au-color-surface-canvas: transparent;
-  --au-color-surface-raised: transparent;
-  --au-color-surface-elevated: transparent;
-  --au-color-surface-sunken: transparent;
-  --au-color-surface-inverted: currentColor;
-
-  --au-color-text-primary: inherit;
-  --au-color-text-secondary: inherit;
-  --au-color-text-tertiary: color-mix(in srgb, currentColor 65%, transparent);
-  --au-color-text-label: inherit;
-  --au-color-text-on-solid: inherit;
-  --au-color-text-disabled: color-mix(in srgb, currentColor 45%, transparent);
-
-  --au-color-border-subtle: currentColor;
-  --au-color-border-default: currentColor;
-  --au-color-border-strong: currentColor;
-
-  --au-color-action-primary: currentColor;
-  --au-color-action-primary-hover: currentColor;
-  --au-color-action-primary-pressed: currentColor;
-  --au-color-link: currentColor;
-  --au-color-link-hover: currentColor;
-  --au-color-focus-ring: currentColor;
-  --au-color-focus-inner: currentColor;
-
-  --au-color-form-border: currentColor;
-  --au-color-form-border-hover: currentColor;
-  --au-color-form-error: currentColor;
-  --au-color-form-error-bg: transparent;
-  --au-color-form-disabled-surface: transparent;
-  --au-color-form-disabled-foreground: inherit;
-  --au-color-form-text: inherit;
-  --au-color-form-placeholder: color-mix(in srgb, currentColor 55%, transparent);
-  --au-color-form-caret: currentColor;
-
-  --au-color-switch-track-off: transparent;
-  --au-color-switch-track-off-hover: transparent;
-  --au-color-switch-track-off-border: currentColor;
-  --au-color-switch-thumb-off: currentColor;
-
-  --au-color-select-menu-bg: transparent;
-  --au-color-select-menu-text: inherit;
-  --au-color-select-field-hover-bg: transparent;
-  --au-color-select-option-highlight-bg: transparent;
-  --au-color-select-option-highlight-text: inherit;
-  --au-color-select-option-highlight-marker: currentColor;
-  --au-color-select-option-selected-bg: transparent;
-  --au-color-select-option-selected-text: inherit;
-  --au-color-select-option-selected-marker: currentColor;
-  --au-color-select-option-disabled-text: color-mix(in srgb, currentColor 45%, transparent);
-
-  --au-color-feedback-success-bg: transparent;
-  --au-color-feedback-success-border: currentColor;
-  --au-color-feedback-success-title: inherit;
-  --au-color-feedback-warning-bg: transparent;
-  --au-color-feedback-warning-border: currentColor;
-  --au-color-feedback-warning-title: inherit;
-  --au-color-feedback-error-bg: transparent;
-  --au-color-feedback-error-border: currentColor;
-  --au-color-feedback-error-title: inherit;
-  --au-color-feedback-info-bg: transparent;
-  --au-color-feedback-info-border: currentColor;
-  --au-color-feedback-info-title: inherit;
-
-  --au-color-semantic-success: currentColor;
-  --au-color-semantic-warning: currentColor;
-  --au-color-semantic-error: currentColor;
-  --au-color-semantic-info: currentColor;
-
-  --au-color-skeleton-base: color-mix(in srgb, currentColor 12%, transparent);
-  --au-color-skeleton-shimmer: color-mix(in srgb, currentColor 24%, transparent);
-
-  --au-color-date-picker-accent: currentColor;
-  --au-color-date-picker-edit-highlight: transparent;
-  --au-color-date-picker-icon: inherit;
-  --au-color-date-picker-icon-hover: inherit;
-  --au-color-date-picker-icon-active: inherit;
-
-  --au-shadow-control: none;
-  --au-shadow-focus-control: none;
-  --au-shadow-focus-control-error: none;
-  --au-shadow-focus-ring: none;
-  --au-shadow-overlay: none;
-  --au-shadow-button: none;
-  --au-shadow-button-primary: none;
-  --au-shadow-button-hover: none;
-  --au-shadow-raised: none;
-  --au-shadow-float: none;
-  --au-shadow-hairline: none;
+  /* ------------------------------------------------------------------------ */
+  /* Shared sub-control geometry (close buttons, menu rows, tab chrome, …)   */
+  /* ------------------------------------------------------------------------ */
+  --au-hit-radius: 0;
+  --au-surface-radius: 0;
+  --au-message-close-radius: var(--au-hit-radius);
+  --au-snackbar-control-radius: var(--au-hit-radius);
+  --au-chip-remove-radius: var(--au-hit-radius);
+  --au-dialog-close-radius: var(--au-hit-radius);
+  --au-tabs-list-radius: var(--au-surface-radius);
+  --au-tab-contained-radius: var(--au-hit-radius);
+  --au-tab-focus-radius: var(--au-hit-radius);
+  --au-tab-indicator-radius: var(--au-hit-radius);
+  --au-tab-panel-focus-radius: var(--au-hit-radius);
+  --au-table-shell-radius: var(--au-surface-radius);
+  --au-table-focus-radius: var(--au-hit-radius);
+  --au-menu-item-radius: var(--au-hit-radius);
+  --au-link-focus-radius: var(--au-hit-radius);
+  --au-breadcrumb-focus-radius: var(--au-hit-radius);
+  --au-input-date-control-radius: var(--au-hit-radius);
+  --au-textarea-resize-radius: var(--au-hit-radius);
+  --au-progress-radius: var(--au-hit-radius);
 }

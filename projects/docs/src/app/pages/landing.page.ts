@@ -229,24 +229,6 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       z-index: 1;
     }
 
-    :host-context([data-au-theme='dark']) .landing-overview {
-      background-color: var(--au-color-surface-raised);
-      background-image: radial-gradient(
-        120% 90% at 18% -8%,
-        color-mix(in srgb, var(--au-color-action-primary) 14%, transparent),
-        transparent 65%
-      );
-      box-shadow: 0 8px 32px color-mix(in srgb, #000 22%, transparent);
-    }
-
-    :host-context([data-au-theme='dark']) .landing-overview::before {
-      background: radial-gradient(
-        95% 75% at 88% 105%,
-        color-mix(in srgb, #c9a227 8%, transparent),
-        transparent 70%
-      );
-    }
-
     .landing-principles {
       margin: 0;
       padding: 0;

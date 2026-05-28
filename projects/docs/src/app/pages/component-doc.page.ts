@@ -210,10 +210,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
       z-index: calc(var(--au-z-sticky) - 2);
       margin: 0 0 var(--au-space-4);
       padding-block: var(--au-space-2);
-    }
-
-    :host-context([data-au-theme='dark']) .docs-component-steps {
-      background: var(--au-color-surface-canvas);
+      background: color-mix(in srgb, var(--au-color-surface-canvas) 92%, transparent);
     }
 
     .docs-component-step:not([hidden]) {
@@ -276,11 +273,6 @@ import { DocsTokenList } from '../shared/docs-token-list';
       line-height: 1;
       white-space: nowrap;
       flex-shrink: 0;
-    }
-
-    :host-context([data-au-theme='dark']) .docs-meta__item {
-      border-color: var(--docs-border-fine);
-      background: var(--au-color-surface-elevated);
     }
 
     .docs-meta__label {

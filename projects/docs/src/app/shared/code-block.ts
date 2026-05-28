@@ -73,16 +73,8 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
       transition: border-color var(--au-duration-short) var(--au-ease-in-out);
     }
 
-    :host-context([data-au-theme='dark']) .docs-code-panel {
-      background: var(--au-color-surface-raised);
-    }
-
     .docs-code-panel--open {
       border-color: color-mix(in srgb, var(--au-color-accent) 28%, transparent);
-    }
-
-    :host-context([data-au-theme='dark']) .docs-code-panel--open {
-      border-color: color-mix(in srgb, var(--au-color-border-subtle) 55%, transparent);
     }
 
     .docs-code-panel__bar {
@@ -94,10 +86,6 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
       background: color-mix(in srgb, var(--au-color-surface-subtle) 70%, transparent);
       border-bottom: 1px solid transparent;
       transition: border-color var(--au-duration-short) var(--au-ease-in-out);
-    }
-
-    :host-context([data-au-theme='dark']) .docs-code-panel__copy {
-      border-color: color-mix(in srgb, var(--au-color-border-subtle) 45%, transparent);
     }
 
     .docs-code-panel--open .docs-code-panel__bar {

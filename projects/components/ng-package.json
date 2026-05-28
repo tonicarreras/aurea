@@ -49,6 +49,11 @@
       "glob": "au-theme-skin.css",
       "input": "src/lib/styles",
       "output": "styles"
+    },
+    {
+      "glob": "au-primitives-chrome.css",
+      "input": "src/lib/styles",
+      "output": "styles"
     }
   ]
 }

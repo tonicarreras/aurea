@@ -147,10 +147,10 @@
   border: 0;
   border-radius: 0;
   /* Inner corners consistent with host outline */
-  border-top-left-radius: var(--au-radius-2xs);
-  border-top-right-radius: var(--au-radius-2xs);
-  border-bottom-left-radius: var(--au-radius-2xs);
-  border-bottom-right-radius: var(--au-radius-2xs);
+  border-top-left-radius: var(--au-textarea-resize-radius);
+  border-top-right-radius: var(--au-textarea-resize-radius);
+  border-bottom-left-radius: var(--au-textarea-resize-radius);
+  border-bottom-right-radius: var(--au-textarea-resize-radius);
   background: transparent;
   color: var(--au-field-text-color);
   caret-color: var(--au-field-caret-color);

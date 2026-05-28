@@ -5,8 +5,8 @@
       "canvas": { "$value": "#0c0e12", "$type": "color" },
       "raised": { "$value": "#13161c", "$type": "color" },
       "elevated": { "$value": "#181b22", "$type": "color" },
-      "sunken": { "$value": "#0a0c0f", "$type": "color" },
-      "inverted": { "$value": "#f0f2f4", "$type": "color" }
+      "sunken": { "$value": "#1a1e26", "$type": "color" },
+      "inverted": { "$value": "#eef1f4", "$type": "color" }
     },
     "text": {
       "primary": { "$value": "#eef1f4", "$type": "color" },

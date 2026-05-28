@@ -1,0 +1,58 @@
+/**
+ * Aurea — overlay / floating-panel / tooltip component styles
+ * -----------------------------------------------------------------------------
+ * Extracted from `au-tokens.css` to keep tokens pure and component CSS in the
+ * overlay module.  Imported via `au-tokens.css` → `@import '../overlay/overlay-styles.css'`
+ * so consumers get them automatically.
+ *
+ * All tokens referenced are defined in `au-tokens.css` (`--au-*`).
+ */
+
+/* Tooltip — portaled bubble (must set font on the bubble; not inherited from host) */
+.au-tooltip__bubble {
+  box-sizing: border-box;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: var(--au-space-2) var(--au-space-3);
+  border-radius: var(--au-radius-sm);
+  background: var(--au-color-surface-inverted);
+  color: var(--au-color-text-on-solid);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  letter-spacing: var(--au-tracking-ui);
+  box-shadow: var(--au-shadow-overlay);
+  pointer-events: none;
+  z-index: var(--au-z-popover);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-tooltip__bubble--overlay {
+  position: fixed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-tooltip__bubble {
+    transition: none;
+  }
+}
+
+/* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
+.au-floating-panel {
+  box-sizing: border-box;
+  border-radius: var(--au-radius-md);
+  background: var(--au-color-surface-raised-a);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--au-color-text-primary);
+  border: 1px solid var(--au-color-border-subtle);
+  box-shadow: var(--au-shadow-overlay);
+  font-family: var(--au-font-sans);
+  z-index: var(--au-z-dropdown);
+  pointer-events: auto;
+}
+
+.au-floating-panel--overlay {
+  position: fixed;
+}

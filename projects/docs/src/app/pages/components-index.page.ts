@@ -162,13 +162,6 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
         transform: translate(4px, -4px);
         opacity: 1;
       }
-
-      :host-context([data-au-theme='dark'])
-        .docs-components-index__link:hover
-        .docs-components-index__card {
-        transform: none;
-        border-color: color-mix(in srgb, var(--au-color-border-subtle) 70%, transparent);
-      }
     }
 
     .docs-components-index__export {
