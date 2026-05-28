@@ -3,35 +3,35 @@
   "color": {
     "surface": {
       "canvas": { "$value": "#0c0e12", "$type": "color" },
-      "raised": { "$value": "#13161c", "$type": "color" },
-      "elevated": { "$value": "#181b22", "$type": "color" },
-      "sunken": { "$value": "#1a1e26", "$type": "color" },
-      "inverted": { "$value": "#eef1f4", "$type": "color" }
+      "raised": { "$value": "#1a1a1e", "$type": "color" },
+      "elevated": { "$value": "#242428", "$type": "color" },
+      "sunken": { "$value": "#2c2c30", "$type": "color" },
+      "inverted": { "$value": "#f5f5f7", "$type": "color" }
     },
     "text": {
-      "primary": { "$value": "#eef1f4", "$type": "color" },
-      "secondary": { "$value": "#a8b2bd", "$type": "color" },
-      "tertiary": { "$value": "#7a8794", "$type": "color" },
+      "primary": { "$value": "#f5f5f7", "$type": "color" },
+      "secondary": { "$value": "#a1a1a6", "$type": "color" },
+      "tertiary": { "$value": "#86868b", "$type": "color" },
       "on-solid": { "$value": "#0c0e12", "$type": "color" }
     },
     "border": {
-      "subtle": { "$value": "#252a33", "$type": "color" },
-      "default": { "$value": "#343b46", "$type": "color" },
-      "strong": { "$value": "#4d5666", "$type": "color" }
+      "subtle": { "$value": "#424248", "$type": "color" },
+      "default": { "$value": "#515158", "$type": "color" },
+      "strong": { "$value": "#787880", "$type": "color" }
     },
     "action": {
-      "primary": { "$value": "#6eb4ff", "$type": "color" },
-      "primary-hover": { "$value": "#8ec5ff", "$type": "color" },
-      "primary-pressed": { "$value": "#b0d8ff", "$type": "color" }
+      "primary": { "$value": "#f5f5f7", "$type": "color" },
+      "primary-hover": { "$value": "#ffffff", "$type": "color" },
+      "primary-pressed": { "$value": "#d0d0d0", "$type": "color" }
     },
     "semantic": {
       "error": { "$value": "#f97066", "$type": "color" },
-      "success": { "$value": "#4ade80", "$type": "color" },
-      "warning": { "$value": "#fbbf24", "$type": "color" },
-      "info": { "$value": "#38bdf8", "$type": "color" }
+      "success": { "$value": "#787880", "$type": "color" },
+      "warning": { "$value": "#787880", "$type": "color" },
+      "info": { "$value": "#787880", "$type": "color" }
     },
     "focus": {
-      "ring": { "$value": "#6eb4ff", "$type": "color" }
+      "ring": { "$value": "#f5f5f7", "$type": "color" }
     }
   }
 }

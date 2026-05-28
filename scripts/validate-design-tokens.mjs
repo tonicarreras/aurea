@@ -4,7 +4,7 @@
  *
  * Architecture: JSON represents DESIGN VALUES → CSS maps them as scale steps
  * or semantic tokens.  This check ensures no value in the JSON has drifted
- * from the CSS source of truth (au-tokens.css + au-scales.css).
+ * from the CSS source of truth (au-tokens.css + au-primitives.css).
  *
  * Checks:
  * - Color hex values (light + dark) — checked against both CSS files
@@ -16,10 +16,10 @@ import { join } from 'node:path';
 
 const root = process.cwd();
 
-// Source of truth: semantic tokens + primitive scales
+// Source of truth: infra tokens + default theme scales
 const cssFiles = [
   'projects/components/src/lib/tokens/au-tokens.css',
-  'projects/components/src/lib/tokens/au-scales.css',
+  'projects/components/src/lib/styles/au-primitives.css',
 ];
 const cssContent = cssFiles
   .map((f) => readFileSync(join(root, f), 'utf8'))
@@ -96,4 +96,4 @@ if (failed > 0) {
   console.error(`\n✗ ${failed} validation error(s) — update JSON or CSS to match.`);
   process.exit(1);
 }
-console.log('✓ Design tokens JSON values confirmed in au-tokens.css / au-scales.css.');
+console.log('✓ Design tokens JSON values confirmed in au-tokens.css / au-primitives.css.');

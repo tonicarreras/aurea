@@ -2,36 +2,36 @@
   "$schema": "https://design-tokens.org/schemas/2025-10/format.json",
   "color": {
     "surface": {
-      "canvas": { "$value": "#f1f2f4", "$type": "color" },
+      "canvas": { "$value": "#dcdce1", "$type": "color" },
       "raised": { "$value": "#ffffff", "$type": "color" },
-      "elevated": { "$value": "#f8f9fa", "$type": "color" },
-      "sunken": { "$value": "#e9ebef", "$type": "color" },
-      "inverted": { "$value": "#101418", "$type": "color" }
+      "elevated": { "$value": "#f5f5f7", "$type": "color" },
+      "sunken": { "$value": "#d1d1d6", "$type": "color" },
+      "inverted": { "$value": "#1d1d1f", "$type": "color" }
     },
     "text": {
-      "primary": { "$value": "#101418", "$type": "color" },
-      "secondary": { "$value": "#3d4a5c", "$type": "color" },
-      "tertiary": { "$value": "#5c6b7d", "$type": "color" },
+      "primary": { "$value": "#1d1d1f", "$type": "color" },
+      "secondary": { "$value": "#5a5a60", "$type": "color" },
+      "tertiary": { "$value": "#6e6e73", "$type": "color" },
       "on-solid": { "$value": "#ffffff", "$type": "color" }
     },
     "border": {
-      "subtle": { "$value": "#e0e4ea", "$type": "color" },
-      "default": { "$value": "#c8ced7", "$type": "color" },
-      "strong": { "$value": "#8d98a6", "$type": "color" }
+      "subtle": { "$value": "#c7c7cc", "$type": "color" },
+      "default": { "$value": "#aeaeb2", "$type": "color" },
+      "strong": { "$value": "#6e6e73", "$type": "color" }
     },
     "action": {
-      "primary": { "$value": "#1059c8", "$type": "color" },
-      "primary-hover": { "$value": "#0d4aa3", "$type": "color" },
-      "primary-pressed": { "$value": "#0a3a85", "$type": "color" }
+      "primary": { "$value": "#1d1d1f", "$type": "color" },
+      "primary-hover": { "$value": "#333336", "$type": "color" },
+      "primary-pressed": { "$value": "#222226", "$type": "color" }
     },
     "semantic": {
       "error": { "$value": "#b42318", "$type": "color" },
-      "success": { "$value": "#047857", "$type": "color" },
-      "warning": { "$value": "#b45309", "$type": "color" },
-      "info": { "$value": "#0369a1", "$type": "color" }
+      "success": { "$value": "#6e6e73", "$type": "color" },
+      "warning": { "$value": "#6e6e73", "$type": "color" },
+      "info": { "$value": "#6e6e73", "$type": "color" }
     },
     "focus": {
-      "ring": { "$value": "#1059c8", "$type": "color" }
+      "ring": { "$value": "#1d1d1f", "$type": "color" }
     }
   },
   "fontFamily": {
@@ -60,10 +60,10 @@
     "8": { "$value": "2rem", "$type": "dimension" }
   },
   "borderRadius": {
-    "sm": { "$value": "0.25rem", "$type": "dimension" },
-    "md": { "$value": "0.375rem", "$type": "dimension" },
-    "lg": { "$value": "0.5rem", "$type": "dimension" },
-    "field": { "$value": "0.125rem", "$type": "dimension" },
+    "sm": { "$value": "0.5rem", "$type": "dimension" },
+    "md": { "$value": "0.625rem", "$type": "dimension" },
+    "lg": { "$value": "0.75rem", "$type": "dimension" },
+    "field": { "$value": "0.375rem", "$type": "dimension" },
     "pill": { "$value": "9999px", "$type": "dimension" }
   }
 }

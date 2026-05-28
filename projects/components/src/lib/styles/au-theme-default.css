@@ -2,12 +2,12 @@
  * Aurea default visual theme bundle.
  *
  * Import this file when you want the ready-to-use Aurea look:
- * semantic tokens, component skin mapping, form error and listbox helpers.
+ * default theme, field error helpers, and listbox helpers.
  *
- * Published package: sibling `./au-tokens.css` (copied by ng-packagr).
+ * The default theme (`au-primitives.css`) is an Apple-monochrome design
+ * that activates at `:root`. Override by setting a `data-au-style` attribute
+ * (e.g. `data-au-style="aurea-blue"`) on a container.
  */
-@import './au-tokens.css';
-@import './au-component-tokens.css';
-@import './au-theme-skin.css';
+@import './au-primitives.css';
 @import './au-field-error.css';
 @import './au-field-listbox.css';

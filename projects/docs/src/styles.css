@@ -1,8 +1,4 @@
-@import '../../components/src/lib/tokens/au-tokens.css';
-@import '../../components/src/lib/styles/au-component-tokens.css';
-@import '../../components/src/lib/styles/au-theme-skin.css';
-@import '../../components/src/lib/styles/au-field-error.css';
-@import '../../components/src/lib/styles/au-field-listbox.css';
+@import '../../components/src/lib/styles/au-theme-default.css';
 @import './app/demos/shared/demo-preview.css';
 
 /* Docs chrome — derived from Aurea semantic tokens (light / dark via data-au-theme) */

@@ -1,10 +1,16 @@
 /**
- * Aurea default theme — maps semantic tokens to component skin tokens.
- * Only active when not in primitives / unstyled mode.
+ * Aurea theme base — shared semantic-to-component mapping layer.
+ *
+ * Maps `--au-color-*` semantic tokens → component `--au-{component}-*` tokens.
+ * All themes import this file so the mapping is shared and consistent.
+ * Self-contained: no scale/radius/shadow values — those come from the theme file.
+ *
+ * Architecture:
+ *   THEME FILE (--au-scale-* → --au-color-*) → THEME BASE (--au-{component}-*) → COMPONENT CSS
  */
 
-:root:not([data-au-style='unstyled']) {
-  /* Shared field chrome */
+:root {
+  /* ── Shared field chrome ───────────────────────────────────── */
   --au-field-border: var(--au-color-form-border);
   --au-field-bg: var(--au-color-surface-raised);
   --au-field-shadow: var(--au-shadow-control);
@@ -41,7 +47,7 @@
   --au-select-icon-color-open: var(--au-color-text-secondary);
   --au-select-placeholder-color: var(--au-color-text-tertiary);
 
-  /* Button base */
+  /* ── Button base ──────────────────────────────────────────── */
   --au-button-bg: var(--au-color-surface-raised);
   --au-button-border: var(--au-color-border-default);
   --au-button-fg: var(--au-color-text-primary);
@@ -58,7 +64,7 @@
   --au-button-focus-shadow: var(--au-shadow-focus-control);
   --au-button-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Checkbox */
+  /* ── Checkbox ─────────────────────────────────────────────── */
   --au-checkbox-appearance: none;
   --au-checkbox-webkit-appearance: none;
   --au-checkbox-width: var(--au-checkbox-size-md);
@@ -94,7 +100,7 @@
   --au-checkbox-error-shadow: 0 0 0 1px var(--au-color-form-error);
   --au-checkbox-error-checked-shadow: 0 0 0 2px var(--au-color-form-error);
 
-  /* Switch */
+  /* ── Switch ───────────────────────────────────────────────── */
   --au-switch-appearance: none;
   --au-switch-webkit-appearance: none;
   --au-switch-width: 2.75rem;
@@ -123,7 +129,7 @@
   --au-switch-hint-color: var(--au-color-text-tertiary);
   --au-switch-accent: var(--au-color-action-primary);
 
-  /* Radio */
+  /* ── Radio ─────────────────────────────────────────────────── */
   --au-radio-appearance: auto;
   --au-radio-webkit-appearance: radio;
   --au-radio-width: 1rem;
@@ -139,7 +145,7 @@
   --au-radio-error-shadow: 0 0 0 2px var(--au-color-form-error);
   --au-radio-disabled-opacity: 0.55;
 
-  /* Dialog */
+  /* ── Dialog ────────────────────────────────────────────────── */
   --au-dialog-backdrop: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
   --au-dialog-panel-bg: var(--au-color-surface-raised);
   --au-dialog-panel-border: var(--au-color-border-subtle);
@@ -156,7 +162,7 @@
   --au-dialog-close-focus-border: var(--au-color-focus-ring);
   --au-dialog-close-focus-shadow: var(--au-shadow-focus-ring);
 
-  /* Listbox */
+  /* ── Listbox ───────────────────────────────────────────────── */
   --au-listbox-border: var(--au-color-border-default);
   --au-listbox-bg: var(--au-color-select-menu-bg);
   --au-listbox-fg: var(--au-color-select-menu-text);
@@ -172,7 +178,7 @@
   --au-listbox-selected-marker: var(--au-color-select-option-selected-marker);
   --au-listbox-disabled-fg: var(--au-color-select-option-disabled-text);
 
-  /* Chip base */
+  /* ── Chip ──────────────────────────────────────────────────── */
   --au-chip-bg: var(--au-color-surface-elevated);
   --au-chip-border: var(--au-color-border-subtle);
   --au-chip-fg: var(--au-color-text-primary);
@@ -193,7 +199,7 @@
   --au-chip-focus-shadow: var(--au-shadow-focus-ring);
   --au-chip-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Message default */
+  /* ── Message ───────────────────────────────────────────────── */
   --au-message-bg: var(--au-color-surface-elevated);
   --au-message-border: var(--au-color-border-default);
   --au-message-fg: var(--au-color-text-primary);
@@ -205,7 +211,7 @@
   --au-message-focus-shadow: var(--au-shadow-focus-ring);
   --au-message-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Snackbar default */
+  /* ── Snackbar ──────────────────────────────────────────────── */
   --au-snackbar-bg: var(--au-color-surface-raised);
   --au-snackbar-border: var(--au-color-border-default);
   --au-snackbar-fg: var(--au-color-text-primary);
@@ -215,14 +221,14 @@
   --au-snackbar-accent: var(--au-color-text-secondary);
   --au-snackbar-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Badge default */
+  /* ── Badge ─────────────────────────────────────────────────── */
   --au-badge-bg: var(--au-color-surface-sunken);
   --au-badge-border: var(--au-color-border-subtle);
   --au-badge-fg: var(--au-color-text-secondary);
   --au-badge-shadow: var(--au-shadow-control);
   --au-badge-radius: var(--au-radius-pill);
 
-  /* Card default (elevated) */
+  /* ── Card ──────────────────────────────────────────────────── */
   --au-card-bg: var(--au-color-surface-raised);
   --au-card-border: var(--au-color-border-subtle);
   --au-card-shadow: var(--au-shadow-float);
@@ -231,7 +237,7 @@
   --au-card-header-color: var(--au-color-text-primary);
   --au-card-footer-border: var(--au-color-border-subtle);
 
-  /* Tabs */
+  /* ── Tabs ──────────────────────────────────────────────────── */
   --au-tabs-list-border: var(--au-color-border-subtle);
   --au-tabs-list-bg: var(--au-color-surface-sunken);
   --au-tab-fg: var(--au-color-text-secondary);
@@ -246,14 +252,14 @@
   --au-tab-panel-fg: var(--au-color-text-primary);
   --au-tab-panel-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Steps */
+  /* ── Steps ─────────────────────────────────────────────────── */
   --au-steps-border: var(--au-color-border-subtle);
   --au-step-fg: var(--au-color-text-secondary);
   --au-step-fg-active: var(--au-color-text-primary);
   --au-step-indicator: var(--au-color-action-primary);
   --au-step-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Table */
+  /* ── Table ─────────────────────────────────────────────────── */
   --au-table-shell-bg: var(--au-color-surface-raised);
   --au-table-shell-border: var(--au-color-border-subtle);
   --au-table-shell-shadow: var(--au-shadow-raised);
@@ -264,7 +270,7 @@
   --au-table-row-border: var(--au-color-border-subtle);
   --au-table-focus-outline: 2px solid var(--au-color-focus-ring);
 
-  /* Skeleton / progress / pagination */
+  /* ── Skeleton / progress / pagination ──────────────────────── */
   --au-skeleton-base: var(--au-color-skeleton-base);
   --au-skeleton-shimmer: var(--au-color-skeleton-shimmer);
   --au-progress-track-bg: var(--au-color-surface-sunken);
@@ -272,7 +278,7 @@
   --au-progress-bar-bg: var(--au-color-action-primary);
   --au-pagination-fg: var(--au-color-text-tertiary);
 
-  /* Link / breadcrumb / menu / divider */
+  /* ── Link / breadcrumb / menu / divider ────────────────────── */
   --au-link-fg: var(--au-color-link);
   --au-link-fg-hover: var(--au-color-link-hover);
   --au-link-fg-muted: var(--au-color-text-secondary);
@@ -290,259 +296,21 @@
   --au-divider-fg: var(--au-color-text-secondary);
   --au-divider-line: var(--au-color-border-subtle);
 
-  /* Field error */
+  /* ── Field error ───────────────────────────────────────────── */
   --au-field-error-fg: var(--au-color-form-error-foreground, var(--au-color-feedback-error-title));
   --au-field-error-icon-border: var(--au-color-form-error, var(--au-color-feedback-error-border));
   --au-field-error-icon-bg: var(--au-color-form-error-bg, var(--au-color-feedback-error-bg));
 
-  /* Date picker */
+  /* ── Date picker ───────────────────────────────────────────── */
   --au-date-picker-accent: var(--au-color-date-picker-accent);
   --au-date-picker-highlight: var(--au-color-date-picker-edit-highlight);
   --au-date-picker-icon-color: var(--au-color-date-picker-icon);
   --au-date-picker-icon-hover: var(--au-color-date-picker-icon-hover);
   --au-date-picker-icon-active: var(--au-color-date-picker-icon-active);
 
-  /* Sub-control geometry */
+  /* ── Sub-control geometry ──────────────────────────────────── */
   --au-hit-radius: var(--au-radius-sm);
   --au-surface-radius: var(--au-radius-lg);
   --au-tab-indicator-radius: var(--au-radius-pill);
   --au-progress-radius: var(--au-radius-pill);
-}
-
-/* Button variants */
-:root:not([data-au-style='unstyled']) au-button[data-au-variant='primary'] {
-  --au-button-bg: var(--au-color-action-primary);
-  --au-button-border: var(--au-color-action-primary);
-  --au-button-fg: var(--au-color-text-on-solid);
-  --au-button-shadow: var(--au-shadow-button-primary);
-  --au-button-bg-hover: var(--au-color-action-primary-hover);
-  --au-button-border-hover: var(--au-color-action-primary-hover);
-  --au-button-shadow-hover: var(--au-shadow-button-hover);
-  --au-button-bg-active: var(--au-color-action-primary-pressed);
-  --au-button-border-active: var(--au-color-action-primary-pressed);
-  --au-button-fg-hover: var(--au-color-text-on-solid);
-  --au-button-fg-active: var(--au-color-text-on-solid);
-}
-
-:root:not([data-au-style='unstyled']) au-button[data-au-variant='secondary'] {
-  --au-button-bg: var(--au-color-surface-raised);
-  --au-button-border: var(--au-color-border-default);
-  --au-button-fg: var(--au-color-text-primary);
-  --au-button-shadow: var(--au-shadow-button);
-  --au-button-bg-hover: var(--au-color-surface-elevated);
-  --au-button-border-hover: var(--au-color-border-strong);
-  --au-button-shadow-hover: var(--au-shadow-button-hover);
-  --au-button-bg-active: var(--au-color-surface-sunken);
-}
-
-:root:not([data-au-style='unstyled']) au-button[data-au-variant='outline'] {
-  --au-button-bg: transparent;
-  --au-button-border: var(--au-color-action-primary);
-  --au-button-fg: var(--au-color-action-primary);
-  --au-button-shadow: var(--au-shadow-button);
-  --au-button-bg-hover: var(--au-color-surface-elevated);
-  --au-button-bg-active: var(--au-color-surface-sunken);
-  --au-button-fg-hover: var(--au-color-action-primary);
-  --au-button-fg-active: var(--au-color-action-primary);
-}
-
-:root:not([data-au-style='unstyled']) au-button[data-au-variant='ghost'] {
-  --au-button-bg: transparent;
-  --au-button-border: transparent;
-  --au-button-fg: var(--au-color-action-primary);
-  --au-button-shadow: none;
-  --au-button-bg-hover: var(--au-color-surface-elevated);
-  --au-button-bg-active: var(--au-color-surface-sunken);
-  --au-button-border-hover: transparent;
-  --au-button-border-active: transparent;
-  --au-button-fg-hover: var(--au-color-action-primary);
-  --au-button-fg-active: var(--au-color-action-primary);
-}
-
-[data-au-theme='high-contrast']:not([data-au-style='unstyled']) au-button[data-au-variant='primary'],
-[data-au-theme='high-contrast-dark']:not([data-au-style='unstyled']) au-button[data-au-variant='primary'] {
-  --au-button-shadow: none;
-  --au-button-shadow-hover: none;
-  --au-button-border-width: 2px;
-}
-
-[data-au-theme='high-contrast']:not([data-au-style='unstyled']) au-button[data-au-variant='primary'] {
-  --au-button-border: #000000;
-  --au-button-border-hover: #000000;
-  --au-button-border-active: #000000;
-}
-
-[data-au-theme='high-contrast-dark']:not([data-au-style='unstyled']) au-button[data-au-variant='primary'] {
-  --au-button-border: #ffffff;
-  --au-button-border-hover: #ffffff;
-  --au-button-border-active: #ffffff;
-}
-
-:root:not([data-au-style='unstyled']) au-checkbox[data-au-size='sm'] {
-  --au-checkbox-width: var(--au-checkbox-size-sm);
-  --au-checkbox-height: var(--au-checkbox-size-sm);
-}
-
-:root:not([data-au-style='unstyled']) au-checkbox[data-au-size='lg'] {
-  --au-checkbox-width: var(--au-checkbox-size-lg);
-  --au-checkbox-height: var(--au-checkbox-size-lg);
-}
-
-:root:not([data-au-style='unstyled']) au-switch[data-au-size='sm'] {
-  --au-switch-width: 2.25rem;
-  --au-switch-height: 1.25rem;
-}
-
-:root:not([data-au-style='unstyled']) au-switch[data-au-size='lg'] {
-  --au-switch-width: 3.25rem;
-  --au-switch-height: 1.75rem;
-}
-
-/* Chip variants */
-:root:not([data-au-style='unstyled']) au-chip[data-au-variant='filled'],
-:root:not([data-au-style='unstyled']) au-chip:not([data-au-variant]) {
-  --au-chip-bg: var(--au-color-surface-elevated);
-  --au-chip-border: var(--au-color-border-subtle);
-}
-
-:root:not([data-au-style='unstyled']) au-chip[data-au-variant='outline'] {
-  --au-chip-bg: transparent;
-  --au-chip-border: var(--au-color-border-default);
-}
-
-:root:not([data-au-style='unstyled']) au-chip[data-au-variant='accent'],
-:root:not([data-au-style='unstyled']) au-chip[data-au-selected] {
-  --au-chip-bg: var(--au-color-select-option-highlight-bg);
-  --au-chip-border: var(--au-color-select-option-highlight-marker);
-  --au-chip-fg: var(--au-color-select-option-highlight-text);
-}
-
-:root:not([data-au-style='unstyled']) au-chip[data-au-variant='accent']:hover,
-:root:not([data-au-style='unstyled']) au-chip[data-au-selected]:hover {
-  --au-chip-border-hover: var(--au-color-action-primary-hover);
-}
-
-/* Card variants */
-:root:not([data-au-style='unstyled']) au-card[data-au-variant='elevated'],
-:root:not([data-au-style='unstyled']) au-card:not([data-au-variant]) {
-  --au-card-bg: var(--au-color-surface-raised);
-  --au-card-border: var(--au-color-border-subtle);
-  --au-card-shadow: var(--au-shadow-float);
-}
-
-:root:not([data-au-style='unstyled']) au-card[data-au-variant='outlined'] {
-  --au-card-bg: var(--au-color-surface-raised);
-  --au-card-border: var(--au-color-border-default);
-  --au-card-shadow: var(--au-shadow-raised);
-}
-
-:root:not([data-au-style='unstyled']) au-card[data-au-variant='filled'] {
-  --au-card-bg: var(--au-color-surface-elevated);
-  --au-card-border: var(--au-color-border-subtle);
-  --au-card-shadow: var(--au-shadow-control);
-}
-
-/* Message variants */
-:root:not([data-au-style='unstyled']) au-message[data-au-variant='success'] {
-  --au-message-bg: var(--au-color-feedback-success-bg);
-  --au-message-border: var(--au-color-feedback-success-border);
-  --au-message-fg: var(--au-color-feedback-success-title);
-  --au-message-title-fg: var(--au-color-feedback-success-title);
-  --au-message-accent: var(--au-color-feedback-success-border);
-}
-
-:root:not([data-au-style='unstyled']) au-message[data-au-variant='warning'] {
-  --au-message-bg: var(--au-color-feedback-warning-bg);
-  --au-message-border: var(--au-color-feedback-warning-border);
-  --au-message-fg: var(--au-color-feedback-warning-title);
-  --au-message-title-fg: var(--au-color-feedback-warning-title);
-  --au-message-accent: var(--au-color-feedback-warning-border);
-}
-
-:root:not([data-au-style='unstyled']) au-message[data-au-variant='error'] {
-  --au-message-bg: var(--au-color-feedback-error-bg);
-  --au-message-border: var(--au-color-feedback-error-border);
-  --au-message-fg: var(--au-color-feedback-error-title);
-  --au-message-title-fg: var(--au-color-feedback-error-title);
-  --au-message-accent: var(--au-color-feedback-error-border);
-}
-
-:root:not([data-au-style='unstyled']) au-message[data-au-variant='info'] {
-  --au-message-bg: var(--au-color-feedback-info-bg);
-  --au-message-border: var(--au-color-feedback-info-border);
-  --au-message-fg: var(--au-color-feedback-info-title);
-  --au-message-title-fg: var(--au-color-feedback-info-title);
-  --au-message-accent: var(--au-color-feedback-info-border);
-}
-
-[data-au-theme='high-contrast']:not([data-au-style='unstyled']) au-message[data-au-variant='default'],
-[data-au-theme='high-contrast-dark']:not([data-au-style='unstyled']) au-message[data-au-variant='default'] {
-  --au-message-bg: var(--au-color-surface-elevated);
-  --au-message-border: var(--au-color-border-strong);
-  --au-message-accent: var(--au-color-text-primary);
-  --au-message-fg: var(--au-color-text-primary);
-  --au-message-shadow: none;
-  --au-message-border-width: 2px;
-}
-
-[data-au-theme='high-contrast']:not([data-au-style='unstyled']) au-message:not([data-au-variant='default']),
-[data-au-theme='high-contrast-dark']:not([data-au-style='unstyled']) au-message:not([data-au-variant='default']) {
-  --au-message-shadow: none;
-  --au-message-border-width: 2px;
-}
-
-/* Snackbar variants */
-:root:not([data-au-style='unstyled']) au-snackbar[data-au-variant='success'] {
-  --au-snackbar-bg: var(--au-color-feedback-success-bg);
-  --au-snackbar-border: var(--au-color-feedback-success-border);
-  --au-snackbar-accent: var(--au-color-semantic-success);
-}
-
-:root:not([data-au-style='unstyled']) au-snackbar[data-au-variant='warning'] {
-  --au-snackbar-bg: var(--au-color-feedback-warning-bg);
-  --au-snackbar-border: var(--au-color-feedback-warning-border);
-  --au-snackbar-accent: var(--au-color-semantic-warning);
-}
-
-:root:not([data-au-style='unstyled']) au-snackbar[data-au-variant='error'] {
-  --au-snackbar-bg: var(--au-color-feedback-error-bg);
-  --au-snackbar-border: var(--au-color-feedback-error-border);
-  --au-snackbar-accent: var(--au-color-semantic-error);
-}
-
-:root:not([data-au-style='unstyled']) au-snackbar[data-au-variant='info'] {
-  --au-snackbar-bg: var(--au-color-feedback-info-bg);
-  --au-snackbar-border: var(--au-color-feedback-info-border);
-  --au-snackbar-accent: var(--au-color-semantic-info);
-}
-
-/* Badge variants */
-:root:not([data-au-style='unstyled']) au-badge[data-au-variant='accent'] {
-  --au-badge-bg: color-mix(in srgb, var(--au-color-action-primary) 16%, var(--au-color-surface-raised));
-  --au-badge-fg: var(--au-color-action-primary);
-  --au-badge-border: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
-}
-
-:root:not([data-au-style='unstyled']) au-badge[data-au-variant='success'] {
-  --au-badge-bg: var(--au-color-semantic-success-surface);
-  --au-badge-fg: var(--au-color-semantic-success);
-  --au-badge-border: color-mix(in srgb, var(--au-color-semantic-success) 40%, transparent);
-}
-
-:root:not([data-au-style='unstyled']) au-badge[data-au-variant='warning'] {
-  --au-badge-bg: var(--au-color-semantic-warning-surface);
-  --au-badge-fg: var(--au-color-semantic-warning);
-  --au-badge-border: color-mix(in srgb, var(--au-color-semantic-warning) 40%, transparent);
-}
-
-:root:not([data-au-style='unstyled']) au-badge[data-au-variant='error'] {
-  --au-badge-bg: var(--au-color-semantic-error-surface);
-  --au-badge-fg: var(--au-color-semantic-error);
-  --au-badge-border: color-mix(in srgb, var(--au-color-semantic-error) 40%, transparent);
-}
-
-:root:not([data-au-style='unstyled']) au-badge[data-au-variant='info'] {
-  --au-badge-bg: var(--au-color-semantic-info-surface);
-  --au-badge-fg: var(--au-color-semantic-info);
-  --au-badge-border: color-mix(in srgb, var(--au-color-semantic-info) 40%, transparent);
 }
