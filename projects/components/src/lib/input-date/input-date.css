@@ -166,7 +166,7 @@
 .au-input-date__input::-webkit-datetime-edit-month-field,
 .au-input-date__input::-webkit-datetime-edit-year-field {
   padding: 0 0.15em;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   color: var(--au-color-form-text);
 }
 

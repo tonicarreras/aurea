@@ -37,6 +37,11 @@ const meta: Meta<AuTable> = {
     compact: { control: 'boolean', table: { category: 'Appearance' } },
     stickyHeader: { control: 'boolean', table: { category: 'Layout' } },
     clientSort: { control: 'boolean', table: { category: 'Behavior' } },
+    selectionMode: {
+      control: 'select',
+      options: ['none', 'single', 'multiple'],
+      table: { category: 'Behavior' },
+    },
   },
   args: {
     title: 'Team members',
@@ -75,9 +80,10 @@ export const Default: Story = {
           <au-table-column name="score" header="Score" align="end" [sortable]="true" />
           <au-table-column name="status" header="Status" align="center">
             <ng-template auTableCell let-row>
-              <au-badge [variant]="row.status === 'active' ? 'success' : 'default'">
-                {{ row.status === 'active' ? 'Active' : 'Away' }}
-              </au-badge>
+              <au-badge
+                [variant]="row.status === 'active' ? 'success' : 'warning'"
+                [label]="row.status === 'active' ? 'Active' : 'Away'"
+              />
             </ng-template>
           </au-table-column>
         </au-table>
@@ -97,4 +103,78 @@ export const Default: Story = {
 export const Striped: Story = {
   args: { striped: true },
   render: Default.render,
+};
+
+export const SingleSelect: Story = {
+  render: (args) => {
+    const data = signal(rows);
+    const selection = signal<readonly unknown[]>([]);
+    return {
+      props: { ...args, data, selection },
+      moduleMetadata: { imports: storyImports },
+      template: `
+        <au-table
+          [data]="data()"
+          title="Pick one member"
+          description="Single selection; only one row can be checked at a time."
+          caption="Team members"
+          selectionMode="single"
+          [(selection)]="selection"
+          [striped]="striped"
+        >
+          <au-table-column name="name" header="Name" [sortable]="true" cellVariant="primary" />
+          <au-table-column name="role" header="Role" cellVariant="secondary" />
+          <au-table-column name="score" header="Score" align="end" />
+        </au-table>
+      `,
+    };
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const checks = await canvas.findAllByRole('checkbox', { name: /select row/i });
+    await userEvent.click(checks[0]);
+    await expect(canvas.getByRole('row', { selected: true })).toBeVisible();
+  },
+};
+
+export const MultipleSelect: Story = {
+  render: (args) => {
+    const data = signal(rows);
+    const selection = signal<readonly unknown[]>([]);
+    return {
+      props: { ...args, data, selection },
+      moduleMetadata: { imports: storyImports },
+      template: `
+        <au-table
+          [data]="data()"
+          title="Team members"
+          description="Multi-select with header checkbox and row checkboxes."
+          caption="Team members"
+          selectionMode="multiple"
+          [(selection)]="selection"
+          [striped]="true"
+        >
+          <au-table-column name="name" header="Name" cellVariant="primary" />
+          <au-table-column name="role" header="Role" cellVariant="secondary" />
+          <au-table-column name="score" header="Score" align="end" [sortable]="true" />
+          <au-table-column name="status" header="Status" align="center">
+            <ng-template auTableCell let-row>
+              <au-badge
+                [variant]="row.status === 'active' ? 'success' : 'warning'"
+                [label]="row.status === 'active' ? 'Active' : 'Away'"
+              />
+            </ng-template>
+          </au-table-column>
+        </au-table>
+      `,
+    };
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const selectAll = await canvas.findByRole('checkbox', { name: /select all rows/i });
+    await userEvent.click(selectAll);
+    const rowChecks = await canvas.findAllByRole('checkbox', { name: /^select row$/i });
+    await expect(rowChecks[0]).toBeChecked();
+    await expect(rowChecks[1]).toBeChecked();
+  },
 };

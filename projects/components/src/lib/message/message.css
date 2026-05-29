@@ -20,7 +20,7 @@
   box-sizing: border-box;
   padding: var(--au-space-3) var(--au-space-4);
   border: 1px solid var(--au-message-border, var(--au-color-border-default));
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   background: var(--au-message-bg, var(--au-color-surface-elevated));
   color: var(--au-message-text, var(--au-color-text-primary));
   box-shadow: var(--au-shadow-raised);
@@ -79,7 +79,7 @@
   margin-inline-start: calc(var(--au-space-1) * -1);
   padding: 0;
   border: 0;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   background: transparent;
   color: inherit;
   cursor: pointer;

@@ -25,7 +25,7 @@
   overflow-x: hidden;
   scroll-behavior: var(--au-scroll-smooth);
   border: 1px solid var(--au-color-border-default);
-  border-radius: var(--au-radius-md);
+  border-radius: var(--au-radius-surface);
   background: var(--au-color-select-menu-bg);
   color: var(--au-color-select-menu-text);
   font-family: var(--au-font-sans);
@@ -45,7 +45,7 @@
   position: relative;
   margin: 0;
   padding: var(--au-space-2) var(--au-space-3);
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   font-size: var(--au-size-field-text-md);
   font-weight: var(--au-weight-regular);
   line-height: var(--au-leading-normal);
@@ -133,7 +133,7 @@
   height: 0.875rem;
   border: 2px solid var(--au-color-border-subtle);
   border-top-color: var(--au-color-accent);
-  border-radius: 50%;
+  border-radius: var(--au-radius-dot);
   animation: au-field-listbox-spin 0.6s linear infinite;
 }
 

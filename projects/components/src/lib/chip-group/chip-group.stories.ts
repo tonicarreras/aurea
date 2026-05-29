@@ -5,7 +5,7 @@ import { AuChip } from '../chip/chip';
 import { AuChipGroup } from './chip-group';
 
 const meta: Meta<AuChipGroup> = {
-  title: 'Aurea/Chip group',
+  title: 'Aurea/ChipGroup',
   component: AuChipGroup,
   tags: ['autodocs', 'au', 'beta'],
   parameters: storyMetaParameters('chip-group'),

@@ -315,12 +315,12 @@
         },
         {
             "name": "FormFieldStoryArgs",
-            "id": "interface-FormFieldStoryArgs-cbfbbd863b275125ccc1751878705a7ed3e0a6623f9d8da3704154fdf27b2ad2a22f53512fa10c0e4d9d7ab38f551e432d3eb1f00868bd1c0450c10110dce39a",
+            "id": "interface-FormFieldStoryArgs-253c0a76e325c1e4ee9cd77fa6a5d28ad5d06aa9d1d2557eb15f22d94107f25606ca08e6cbc0366e9df793b729a382a7886266642ee239d244029202c96bc9a0",
             "file": "projects/components/src/lib/form-field/form-field.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuInputText } from '../input-text/input-text';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/Form field',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <au-form-field\n        [label]=\"label\"\n        [hint]=\"hint\"\n        [errorMessage]=\"errorMessage\"\n        [invalid]=\"invalid\"\n        [required]=\"required\"\n        [controlIdInput]=\"controlIdInput\"\n      >\n        <au-input-text placeholder=\"you@example.com\" />\n      </au-form-field>\n    `,\n  }),\n};\n\nexport const WithError: Story = {\n  args: {\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuInputText } from '../input-text/input-text';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <au-form-field\n        [label]=\"label\"\n        [hint]=\"hint\"\n        [errorMessage]=\"errorMessage\"\n        [invalid]=\"invalid\"\n        [required]=\"required\"\n        [controlIdInput]=\"controlIdInput\"\n      >\n        <au-input-text placeholder=\"you@example.com\" />\n      </au-form-field>\n    `,\n  }),\n};\n\nexport const WithError: Story = {\n  args: {\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n",
             "properties": [
                 {
                     "name": "controlIdInput",
@@ -392,12 +392,12 @@
         },
         {
             "name": "InputDateStoryArgs",
-            "id": "interface-InputDateStoryArgs-adfd2c977e29232290a06258276fc4e48ee6440f7975d9df4b53180df7460141a452451a2b1d7fe818d6cc98ee4b661077f143cc508008b6083b57b7fda0a371",
+            "id": "interface-InputDateStoryArgs-6481471d9d7d2ea261e8d0fa855bde1180735c6d49c6a656429bbc4abe81ff327e466c17d3fcd2bfbecd88506f163e5aea90cdbc8dbb5d00cf6bef93e4d0c7b6",
             "file": "projects/components/src/lib/input-date/input-date.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputDate } from './input-date';\n\ninterface InputDateStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  minDate: string | undefined;\n  maxDate: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  size: 'sm' | 'md' | 'lg';\n}\n\nconst meta: Meta<InputDateStoryArgs> = {\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-date'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputDateStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n};\n\nexport const WithBounds: Story = {\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n};\n\nexport const CalendarTheming: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputDate } from './input-date';\n\ninterface InputDateStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  minDate: string | undefined;\n  maxDate: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  size: 'sm' | 'md' | 'lg';\n}\n\nconst meta: Meta<InputDateStoryArgs> = {\n  title: 'Aurea/InputDate',\n  component: AuInputDate,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-date'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputDateStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Start date',\n    value: '',\n    hint: 'Uses the native date picker where available.',\n  },\n};\n\nexport const WithBounds: Story = {\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n};\n\nexport const CalendarTheming: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -519,12 +519,12 @@
         },
         {
             "name": "InputNumberStoryArgs",
-            "id": "interface-InputNumberStoryArgs-b26816ffbc8d5ed1a7f81e82e408ba5643b04448b4d3d11e402d06dcbe673cecb110843b7817abc7f0bcaa0e1c0c7c30a56af6349bca19aeadb9c8a8ed4607cf",
+            "id": "interface-InputNumberStoryArgs-7c4829e77487e8de41984fc2cb5eeda19c2530a58e33e5d8c581b1ab6615ebe85a8aa73a318aadb40c657a79e37a2fe6a4aabfe6b5ded0bf7c97e4b3eec1c35f",
             "file": "projects/components/src/lib/input-number/input-number.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputNumber } from './input-number';\n\ninterface InputNumberStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: number | null;\n  placeholder: string;\n  min: number | undefined;\n  max: number | undefined;\n  step: number | 'any';\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  size: 'sm' | 'md' | 'lg';\n}\n\nconst meta: Meta<InputNumberStoryArgs> = {\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-number'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputNumberStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n};\n\nexport const WithBounds: Story = {\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputNumber } from './input-number';\n\ninterface InputNumberStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: number | null;\n  placeholder: string;\n  min: number | undefined;\n  max: number | undefined;\n  step: number | 'any';\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  size: 'sm' | 'md' | 'lg';\n}\n\nconst meta: Meta<InputNumberStoryArgs> = {\n  title: 'Aurea/InputNumber',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-number'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputNumberStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Quantity',\n    placeholder: '0',\n    value: null,\n  },\n};\n\nexport const WithBounds: Story = {\n  args: {\n    label: 'Port',\n    min: 1,\n    max: 65535,\n    step: 1,\n    value: 8080,\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -813,12 +813,12 @@
         },
         {
             "name": "RadioGroupStoryArgs",
-            "id": "interface-RadioGroupStoryArgs-e964a664339928eb06d026399764d4f2f6f082aaab80a9afc0372bc3cf8f75f544cc60dedaf1f3a3714169db7d62b8fa8cf2203e5e0df52aedfe970732642ef3",
+            "id": "interface-RadioGroupStoryArgs-57988ec7bf5259e82e8a8ccd77c3f480c231976a8e7506e2a7003008809cb6460e6af2f47c94d1a2f3429dfab23995ee5761b59ea647b51b8d262283a22a933c",
             "file": "projects/components/src/lib/radio-group/radio-group.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuRadioGroup, type AuRadioOption } from './radio-group';\n\nconst sample: AuRadioOption[] = [\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n];\n\ninterface RadioGroupStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  options: AuRadioOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<RadioGroupStoryArgs> = {\n  title: 'Aurea/Radio group',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('radio-group'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    options: { control: false, table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n  } as Meta<RadioGroupStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuRadioGroup],\n      args,\n      `<au-radio-group\n          [(value)]=\"value\"\n          [options]=\"options\"\n          [disabled]=\"disabled\"\n          [readOnly]=\"readOnly\"\n          [required]=\"required\"\n          [name]=\"name\"\n          [size]=\"size\"\n          [invalid]=\"invalid\"\n          [errors]=\"$any(errors)\"\n        />`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<RadioGroupStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n};\n\nexport const Required: Story = {\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuRadioGroup, type AuRadioOption } from './radio-group';\n\nconst sample: AuRadioOption[] = [\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n];\n\ninterface RadioGroupStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  options: AuRadioOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<RadioGroupStoryArgs> = {\n  title: 'Aurea/RadioGroup',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('radio-group'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    options: { control: false, table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n  } as Meta<RadioGroupStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuRadioGroup],\n      args,\n      `<au-radio-group\n          [(value)]=\"value\"\n          [options]=\"options\"\n          [disabled]=\"disabled\"\n          [readOnly]=\"readOnly\"\n          [required]=\"required\"\n          [name]=\"name\"\n          [size]=\"size\"\n          [invalid]=\"invalid\"\n          [errors]=\"$any(errors)\"\n        />`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<RadioGroupStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Contact preference',\n    value: 'email',\n  },\n};\n\nexport const Required: Story = {\n  args: {\n    label: 'Pick one',\n    required: true,\n    value: '',\n  },\n};\n",
             "properties": [
                 {
                     "name": "blur",
@@ -1530,7 +1530,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading card\"\n        style=\"\n          width: 100%;\n          max-width: 22rem;\n          box-sizing: border-box;\n          padding: 1rem;\n          border-radius: var(--au-radius-lg);\n          border: 1px solid var(--au-color-border-default);\n          background: var(--au-color-surface-raised);\n          display: flex;\n          flex-direction: column;\n          gap: 0.75rem;\n          overflow: hidden;\n        \"\n      >\n        <au-skeleton variant=\"rounded\" animation=\"wave\" height=\"9rem\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"55%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"80%\" />\n        <div\n          style=\"\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.5rem;\n            margin-top: 0.25rem;\n            width: 100%;\n            min-width: 0;\n          \"\n        >\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"5.5rem\" />\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"4rem\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading card\"\n        style=\"\n          width: 100%;\n          max-width: 22rem;\n          box-sizing: border-box;\n          padding: 1rem;\n          border-radius: var(--au-radius-surface);\n          border: 1px solid var(--au-color-border-default);\n          background: var(--au-color-surface-raised);\n          display: flex;\n          flex-direction: column;\n          gap: 0.75rem;\n          overflow: hidden;\n        \"\n      >\n        <au-skeleton variant=\"rounded\" animation=\"wave\" height=\"9rem\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"55%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"80%\" />\n        <div\n          style=\"\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.5rem;\n            margin-top: 0.25rem;\n            width: 100%;\n            min-width: 0;\n          \"\n        >\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"5.5rem\" />\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"4rem\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Checked",
@@ -1690,21 +1690,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic checkbox with label. The **play** function clicks the checkbox.',\n      },\n    },\n  },\n  args: {\n    label: 'Accept terms',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const checkbox = el.getByRole('checkbox');\n    await userEvent.click(checkbox);\n    await expect(checkbox).toBeChecked();\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "Default",
@@ -1864,7 +1864,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
+                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2220,21 +2220,21 @@
                 "name": "LargeSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
-            },
-            {
-                "name": "LargeSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"lg\"`** (`data-au-size=\"lg\"`) — 24x24 target (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    label: 'Large touch target',\n    size: 'lg',\n  },\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "LargeSize",
@@ -2330,21 +2330,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuCard>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<CheckboxStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Checkbox',\n  component: AuCheckbox,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('checkbox'),\n  argTypes: {\n    ...fieldChromeHintOnlyArgTypes,\n    checked: {\n      control: 'boolean',\n      description:\n        'Current checked state (`ModelSignal<boolean>`). Use `[(checked)]` or bind with `[formField]` on a boolean field.',\n      table: { category: 'Value' },\n    },\n    checkedChange: {\n      description: 'Emits the new checked state on each change when not disabled.',\n      table: { category: 'Events' },\n    },\n    label: {\n      control: 'text',\n      description: 'Inline label on the checkbox control.',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      description: 'Supporting description; `aria-describedby` when non-empty.',\n      table: { category: 'Content' },\n    },\n    indeterminate: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses `checkedChange`.',\n      table: { category: 'State' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Appearance' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      control: 'object',\n      description: 'Validation errors from `[formField]` / signal forms.',\n      table: { category: 'Validation' },\n    },\n  } as Meta<CheckboxStoryArgs>['argTypes'],\n  args: {\n    label: '',\n    description: '',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: false,\n    controlIdInput: '',\n    showRequired: true,\n    checked: false,\n    indeterminate: false,\n    disabled: false,\n    name: '',\n    size: 'md',\n    errors: [],\n    checkedChange: fn(),\n  },\n  render: (args) =>\n    formFieldHintOnlyRender(\n      [AuFormField, AuCheckbox],\n      args,\n      `<au-checkbox\n  [(checked)]=\"checked\"\n  [label]=\"label\"\n  [description]=\"description\"\n  [disabled]=\"disabled\"\n  [required]=\"required\"\n  [showRequired]=\"showRequired\"\n  [indeterminate]=\"indeterminate\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuCard>",
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2364,7 +2364,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuChipGroup>",
-                "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('chip-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/ChipGroup',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('chip-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2394,7 +2394,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<FormFieldStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Form field',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2414,7 +2414,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputDateStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-date'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+                "defaultValue": "{\n  title: 'Aurea/InputDate',\n  component: AuInputDate,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-date'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -2424,7 +2424,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputNumberStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-number'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+                "defaultValue": "{\n  title: 'Aurea/InputNumber',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-number'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -2514,7 +2514,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<RadioGroupStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('radio-group'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    options: { control: false, table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n  } as Meta<RadioGroupStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuRadioGroup],\n      args,\n      `<au-radio-group\n          [(value)]=\"value\"\n          [options]=\"options\"\n          [disabled]=\"disabled\"\n          [readOnly]=\"readOnly\"\n          [required]=\"required\"\n          [name]=\"name\"\n          [size]=\"size\"\n          [invalid]=\"invalid\"\n          [errors]=\"$any(errors)\"\n        />`,\n    ),\n}"
+                "defaultValue": "{\n  title: 'Aurea/RadioGroup',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('radio-group'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    options: { control: false, table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n  } as Meta<RadioGroupStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuRadioGroup],\n      args,\n      `<au-radio-group\n          [(value)]=\"value\"\n          [options]=\"options\"\n          [disabled]=\"disabled\"\n          [readOnly]=\"readOnly\"\n          [required]=\"required\"\n          [name]=\"name\"\n          [size]=\"size\"\n          [invalid]=\"invalid\"\n          [errors]=\"$any(errors)\"\n        />`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -2574,7 +2574,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuTable>",
-                "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('table'),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('table'),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n    selectionMode: {\n      control: 'select',\n      options: ['none', 'single', 'multiple'],\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2615,6 +2615,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n}"
+            },
+            {
+                "name": "MultipleSelect",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Team members\"\n          description=\"Multi-select with header checkbox and row checkboxes.\"\n          caption=\"Team members\"\n          selectionMode=\"multiple\"\n          [(selection)]=\"selection\"\n          [striped]=\"true\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const selectAll = await canvas.findByRole('checkbox', { name: /select all rows/i });\n    await userEvent.click(selectAll);\n    const rowChecks = await canvas.findAllByRole('checkbox', { name: /^select row$/i });\n    await expect(rowChecks[0]).toBeChecked();\n    await expect(rowChecks[1]).toBeChecked();\n  },\n}"
             },
             {
                 "name": "names",
@@ -2879,6 +2889,16 @@
                 "defaultValue": "{\n  args: {\n    label: 'Published',\n    selectable: true,\n    selected: true,\n    variant: 'accent',\n  },\n}"
             },
             {
+                "name": "SingleSelect",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Pick one member\"\n          description=\"Single selection; only one row can be checked at a time.\"\n          caption=\"Team members\"\n          selectionMode=\"single\"\n          [(selection)]=\"selection\"\n          [striped]=\"striped\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const checks = await canvas.findAllByRole('checkbox', { name: /select row/i });\n    await userEvent.click(checks[0]);\n    await expect(canvas.getByRole('row', { selected: true })).toBeVisible();\n  },\n}"
+            },
+            {
                 "name": "Sizes",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2912,21 +2932,21 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
-            },
-            {
-                "name": "SmallSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Compact checkbox',\n    size: 'sm',\n  },\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "SmallSize",
@@ -3901,8 +3921,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuCard>",
-                "file": "projects/components/src/lib/card/card.stories.ts",
+                "rawtype": "StoryObj<CheckboxStoryArgs>",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3912,8 +3932,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<CheckboxStoryArgs>",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "rawtype": "StoryObj<AuCard>",
+                "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4534,7 +4554,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading card\"\n        style=\"\n          width: 100%;\n          max-width: 22rem;\n          box-sizing: border-box;\n          padding: 1rem;\n          border-radius: var(--au-radius-lg);\n          border: 1px solid var(--au-color-border-default);\n          background: var(--au-color-surface-raised);\n          display: flex;\n          flex-direction: column;\n          gap: 0.75rem;\n          overflow: hidden;\n        \"\n      >\n        <au-skeleton variant=\"rounded\" animation=\"wave\" height=\"9rem\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"55%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"80%\" />\n        <div\n          style=\"\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.5rem;\n            margin-top: 0.25rem;\n            width: 100%;\n            min-width: 0;\n          \"\n        >\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"5.5rem\" />\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"4rem\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div\n        role=\"status\"\n        aria-busy=\"true\"\n        aria-label=\"Loading card\"\n        style=\"\n          width: 100%;\n          max-width: 22rem;\n          box-sizing: border-box;\n          padding: 1rem;\n          border-radius: var(--au-radius-surface);\n          border: 1px solid var(--au-color-border-default);\n          background: var(--au-color-surface-raised);\n          display: flex;\n          flex-direction: column;\n          gap: 0.75rem;\n          overflow: hidden;\n        \"\n      >\n        <au-skeleton variant=\"rounded\" animation=\"wave\" height=\"9rem\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"55%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"100%\" />\n        <au-skeleton variant=\"text\" animation=\"wave\" width=\"80%\" />\n        <div\n          style=\"\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.5rem;\n            margin-top: 0.25rem;\n            width: 100%;\n            min-width: 0;\n          \"\n        >\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"5.5rem\" />\n          <au-skeleton variant=\"button\" size=\"md\" animation=\"pulse\" width=\"4rem\" />\n        </div>\n      </div>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "Circular",
@@ -4626,7 +4646,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<InputDateStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/Input date',\n  component: AuInputDate,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-date'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+                    "defaultValue": "{\n  title: 'Aurea/InputDate',\n  component: AuInputDate,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-date'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minDate: { control: 'text', table: { category: 'Field' } },\n    maxDate: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputDateStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minDate: undefined,\n    maxDate: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputDate],\n      args,\n      `<au-input-date\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minDate]=\"minDate\"\n  [maxDate]=\"maxDate\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
                 },
                 {
                     "name": "WithBounds",
@@ -5650,7 +5670,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<InputNumberStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/Input number',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-number'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+                    "defaultValue": "{\n  title: 'Aurea/InputNumber',\n  component: AuInputNumber,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-number'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'number', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    min: { control: 'number', table: { category: 'Field' } },\n    max: { control: 'number', table: { category: 'Field' } },\n    step: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputNumberStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    min: undefined,\n    max: undefined,\n    step: 1,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputNumber],\n      args,\n      `<au-input-number\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [min]=\"min\"\n  [max]=\"max\"\n  [step]=\"step\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
                 },
                 {
                     "name": "WithBounds",
@@ -5768,7 +5788,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<RadioGroupStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/Radio group',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('radio-group'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    options: { control: false, table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n  } as Meta<RadioGroupStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuRadioGroup],\n      args,\n      `<au-radio-group\n          [(value)]=\"value\"\n          [options]=\"options\"\n          [disabled]=\"disabled\"\n          [readOnly]=\"readOnly\"\n          [required]=\"required\"\n          [name]=\"name\"\n          [size]=\"size\"\n          [invalid]=\"invalid\"\n          [errors]=\"$any(errors)\"\n        />`,\n    ),\n}"
+                    "defaultValue": "{\n  title: 'Aurea/RadioGroup',\n  component: AuRadioGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('radio-group'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    options: { control: false, table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n  } as Meta<RadioGroupStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    options: sample,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuRadioGroup],\n      args,\n      `<au-radio-group\n          [(value)]=\"value\"\n          [options]=\"options\"\n          [disabled]=\"disabled\"\n          [readOnly]=\"readOnly\"\n          [required]=\"required\"\n          [name]=\"name\"\n          [size]=\"size\"\n          [invalid]=\"invalid\"\n          [errors]=\"$any(errors)\"\n        />`,\n    ),\n}"
                 },
                 {
                     "name": "Required",
@@ -5914,7 +5934,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge [variant]=\"row.status === 'active' ? 'success' : 'default'\">\n                {{ row.status === 'active' ? 'Active' : 'Away' }}\n              </au-badge>\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
+                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -5924,7 +5944,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuTable>",
-                    "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('table'),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('table'),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n    selectionMode: {\n      control: 'select',\n      options: ['none', 'single', 'multiple'],\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n}"
+                },
+                {
+                    "name": "MultipleSelect",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Team members\"\n          description=\"Multi-select with header checkbox and row checkboxes.\"\n          caption=\"Team members\"\n          selectionMode=\"multiple\"\n          [(selection)]=\"selection\"\n          [striped]=\"true\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const selectAll = await canvas.findByRole('checkbox', { name: /select all rows/i });\n    await userEvent.click(selectAll);\n    const rowChecks = await canvas.findAllByRole('checkbox', { name: /^select row$/i });\n    await expect(rowChecks[0]).toBeChecked();\n    await expect(rowChecks[1]).toBeChecked();\n  },\n}"
                 },
                 {
                     "name": "rows",
@@ -5935,6 +5965,16 @@
                     "deprecationMessage": "",
                     "type": "Row[]",
                     "defaultValue": "[\n  { name: 'Ada Lovelace', role: 'Engineer', score: 98, status: 'active' },\n  { name: 'Grace Hopper', role: 'Admiral', score: 94, status: 'active' },\n  { name: 'Katherine Johnson', role: 'Mathematician', score: 97, status: 'away' },\n]"
+                },
+                {
+                    "name": "SingleSelect",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Pick one member\"\n          description=\"Single selection; only one row can be checked at a time.\"\n          caption=\"Team members\"\n          selectionMode=\"single\"\n          [(selection)]=\"selection\"\n          [striped]=\"striped\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const checks = await canvas.findAllByRole('checkbox', { name: /select row/i });\n    await userEvent.click(checks[0]);\n    await expect(canvas.getByRole('row', { selected: true })).toBeVisible();\n  },\n}"
                 },
                 {
                     "name": "storyImports",
@@ -6154,7 +6194,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuChipGroup>",
-                    "defaultValue": "{\n  title: 'Aurea/Chip group',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('chip-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/ChipGroup',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('chip-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
                 }
             ],
             "projects/components/src/lib/popover/popover.stories.ts": [
@@ -6188,7 +6228,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<FormFieldStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/Form field',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: '',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
                 },
                 {
                     "name": "WithError",
@@ -6775,19 +6815,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/card/card.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuCard>",
-                    "file": "projects/components/src/lib/card/card.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Story",
@@ -6795,6 +6822,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<CheckboxStoryArgs>",
                     "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/card/card.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuCard>",
+                    "file": "projects/components/src/lib/card/card.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -9331,7 +9371,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "MultipleSelect",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "rows",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SingleSelect",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

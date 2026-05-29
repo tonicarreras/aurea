@@ -144,7 +144,7 @@ export class ProfileEmailComponent {
 
 ### Manual validation (no `form()`)
 
-Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → _With error_ and **Aurea/Form field**.
+Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → _With error_ and **Aurea/FormField**.
 
 ---
 

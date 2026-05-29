@@ -366,4 +366,14 @@ describe('AuCheckbox', () => {
     expect(CONTROL(fix).label()).toBe('1');
     expect(CONTROL(fix).description()).toBe('2');
   });
+
+  it('applies sr-only to label content when hideLabel is true', () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.label = 'Pick me';
+      f.componentInstance.hideLabel = true;
+    });
+    fix.detectChanges();
+    const content = fix.nativeElement.querySelector('.au-checkbox__content') as HTMLElement;
+    expect(content.classList.contains('au-sr-only')).toBe(true);
+  });
 });

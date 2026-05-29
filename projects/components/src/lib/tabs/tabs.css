@@ -65,7 +65,7 @@ au-tabs[data-au-orientation='vertical'][data-au-variant='line'] .au-tabs__list {
 au-tabs[data-au-variant='contained'] .au-tabs__list {
   gap: var(--au-space-1);
   padding: var(--au-space-0-5);
-  border-radius: var(--au-radius-md);
+  border-radius: var(--au-radius-control);
   background: var(--au-color-surface-sunken);
   border: 1px solid var(--au-color-border-subtle);
   width: fit-content;
@@ -122,7 +122,7 @@ au-tabs[data-au-variant='contained'] .au-tabs__list {
 .au-tabs__tab--from-tab:focus-visible {
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 2px;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
 }
 
 /* Sizes */
@@ -156,7 +156,7 @@ au-tabs[data-au-variant='line'] .au-tabs__tab--selected::after {
   inset-inline: var(--au-space-2);
   bottom: 0;
   height: 2px;
-  border-radius: var(--au-radius-pill);
+  border-radius: var(--au-radius-full);
   background: var(--au-color-action-primary);
 }
 
@@ -171,7 +171,7 @@ au-tabs[data-au-orientation='vertical'][data-au-variant='line'] .au-tabs__tab--s
 
 /* Contained selected pill */
 au-tabs[data-au-variant='contained'] .au-tabs__tab {
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
 }
 
 au-tabs[data-au-variant='contained'] .au-tabs__tab--selected {
@@ -212,7 +212,7 @@ au-tabs[data-au-variant='contained'] .au-tabs__tab--selected::after {
 .au-tabs__panel--active:focus-visible {
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 4px;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
 }
 
 au-tabs[data-au-orientation='vertical'] .au-tabs__panel {

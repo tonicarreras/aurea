@@ -22,7 +22,7 @@
   max-width: 100%;
   margin: 0;
   border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   font: inherit;
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
@@ -79,9 +79,9 @@ button.au-chip__surface {
 
 :host([data-au-variant='accent']) .au-chip__surface,
 :host([data-au-selected]) .au-chip__surface {
-  background: var(--au-color-select-option-highlight-bg);
-  border-color: var(--au-color-select-option-highlight-marker);
-  color: var(--au-color-select-option-highlight-text);
+  background: var(--au-color-accent-surface);
+  border-color: var(--au-color-accent-border);
+  color: var(--au-color-accent-foreground);
 }
 
 /* Selectable hover / pressed */
@@ -92,7 +92,7 @@ button.au-chip__surface:hover:not(:disabled) {
 
 :host([data-au-variant='accent']) button.au-chip__surface:hover:not(:disabled),
 :host([data-au-selected]) button.au-chip__surface:hover:not(:disabled) {
-  background: var(--au-color-select-option-highlight-bg);
+  background: var(--au-color-accent-surface);
   border-color: var(--au-color-action-primary-hover);
 }
 
@@ -101,9 +101,9 @@ button.au-chip__surface:active:not(:disabled) {
 }
 
 :host([data-au-selected]) button.au-chip__surface[aria-pressed='true'] {
-  background: var(--au-color-select-option-highlight-bg);
-  border-color: var(--au-color-select-option-highlight-marker);
-  color: var(--au-color-select-option-highlight-text);
+  background: var(--au-color-accent-surface);
+  border-color: var(--au-color-accent-border);
+  color: var(--au-color-accent-foreground);
 }
 
 /* Disabled — explicit colors (opacity fails axe color-contrast on label text) */
@@ -129,7 +129,7 @@ button.au-chip__surface:disabled {
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   background: transparent;
   color: inherit;
   cursor: pointer;

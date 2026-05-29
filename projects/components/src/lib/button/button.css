@@ -5,7 +5,7 @@
  */
 
 :host {
-  --au-button-radius: var(--au-radius-sm);
+  --au-button-radius: var(--au-radius-control);
   --au-button-height-sm: var(--au-size-field-h-sm);
   --au-button-height-md: var(--au-size-field-h-md);
   --au-button-height-lg: var(--au-size-field-h-lg);

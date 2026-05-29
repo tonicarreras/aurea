@@ -1,8 +1,13 @@
+/**
+ * Badge — compact status/count label.
+ * Variants use shared semantic + accent tokens from au-tokens.css.
+ */
+
 :host {
   --au-badge-bg: var(--au-color-surface-sunken);
   --au-badge-color: var(--au-color-text-secondary);
   --au-badge-border: 1px solid var(--au-color-border-subtle);
-  --au-badge-radius: var(--au-radius-pill);
+  --au-badge-radius: var(--au-radius-full);
   --au-badge-font-size: var(--au-text-xs);
 
   display: inline-flex;
@@ -33,37 +38,33 @@
 }
 
 :host([data-au-variant='accent']) {
-  background: color-mix(
-    in srgb,
-    var(--au-color-action-primary) 16%,
-    var(--au-color-surface-raised)
-  );
-  color: var(--au-color-action-primary);
-  border-color: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
+  background: var(--au-color-accent-surface);
+  color: var(--au-color-accent-foreground);
+  border-color: var(--au-color-accent-border);
 }
 
 :host([data-au-variant='success']) {
   background: var(--au-color-semantic-success-surface);
   color: var(--au-color-semantic-success);
-  border-color: color-mix(in srgb, var(--au-color-semantic-success) 40%, transparent);
+  border-color: var(--au-color-semantic-success-border);
 }
 
 :host([data-au-variant='warning']) {
   background: var(--au-color-semantic-warning-surface);
   color: var(--au-color-semantic-warning);
-  border-color: color-mix(in srgb, var(--au-color-semantic-warning) 40%, transparent);
+  border-color: var(--au-color-semantic-warning-border);
 }
 
 :host([data-au-variant='error']) {
   background: var(--au-color-semantic-error-surface);
   color: var(--au-color-semantic-error);
-  border-color: color-mix(in srgb, var(--au-color-semantic-error) 40%, transparent);
+  border-color: var(--au-color-semantic-error-border);
 }
 
 :host([data-au-variant='info']) {
   background: var(--au-color-semantic-info-surface);
   color: var(--au-color-semantic-info);
-  border-color: color-mix(in srgb, var(--au-color-semantic-info) 40%, transparent);
+  border-color: var(--au-color-semantic-info-border);
 }
 
 .au-badge__label {

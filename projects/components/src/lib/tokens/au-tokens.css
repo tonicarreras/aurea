@@ -65,16 +65,22 @@
   --au-touch-target-min: 2.75rem; /* 44px — WCAG 2.5.5 reference; use with `size="lg"` or buttons */
 }
 
-/* Radii: one scale; fields use --au-radius-field (not pill) */
+/* Radii: scale + semantic tiers (components use tiers, not raw sm/md/lg) */
 :root {
   --au-radius-2xs: 0.0625rem; /* 1px — nearly square */
   --au-radius-xs: 0.125rem; /* 2px */
-  --au-radius-sm: 0.25rem; /* 4 */
-  --au-radius-md: 0.375rem; /* 6 */
-  --au-radius-lg: 0.5rem; /* 8 */
-  --au-radius-xl: 0.75rem;
+  --au-radius-sm: 0.25rem; /* 4px */
+  --au-radius-md: 0.375rem; /* 6px — legacy; prefer tiers below */
+  --au-radius-lg: 0.5rem; /* 8px */
+  --au-radius-xl: 0.75rem; /* 12px */
   --au-radius-pill: 9999px;
-  --au-radius-field: 0.125rem; /* 2px — sharp, matches current inputs */
+  /* Semantic tiers */
+  --au-radius-field: var(--au-radius-xs); /* inputs, checkbox */
+  --au-radius-control: var(--au-radius-sm); /* buttons, chips, menu rows, tabs */
+  --au-radius-surface: var(--au-radius-lg); /* cards, tables, overlays, snackbar */
+  --au-radius-modal: var(--au-radius-xl); /* dialogs */
+  --au-radius-full: var(--au-radius-pill); /* badge, progress, switch track */
+  --au-radius-dot: 50%; /* thumbs, spinners */
 }
 
 /* Focus: reusable rings (components: combine with border) */
@@ -129,7 +135,7 @@
   box-sizing: border-box;
   max-width: min(16rem, calc(100vw - 2rem));
   padding: var(--au-space-2) var(--au-space-3);
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   background: var(--au-color-surface-inverted);
   color: var(--au-color-text-on-solid);
   font-family: var(--au-font-sans);
@@ -162,7 +168,7 @@
   position: relative;
   box-sizing: border-box;
   overflow: visible;
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-radius-surface);
   background: var(--au-floating-panel-bg);
   color: var(--au-color-text-primary);
   border: 1px solid var(--au-floating-panel-border);
@@ -427,6 +433,52 @@
   --au-color-feedback-warning-title: #92400e;
   --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
   --au-color-feedback-info-title: #075985;
+  /* Accent chips/badges (brand tint, not feedback callout) */
+  --au-color-accent-surface: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 16%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-accent-border: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
+  --au-color-accent-foreground: var(--au-color-action-primary);
+  /* Compact semantic borders (badges, tags) */
+  --au-color-semantic-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 40%,
+    transparent
+  );
+  --au-color-semantic-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 40%,
+    transparent
+  );
+  --au-color-semantic-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 40%,
+    transparent
+  );
+  --au-color-semantic-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 40%,
+    transparent
+  );
+  /* Selection / active rows */
+  --au-color-state-selected: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 10%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 14%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-accent: var(--au-color-action-primary);
+  --au-color-state-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 8%,
+    var(--au-color-surface-sunken)
+  );
   /* Text selection */
   --au-color-selection: rgba(16, 89, 200, 0.2);
   --au-color-selection-text: inherit;
@@ -626,6 +678,49 @@
   --au-color-feedback-warning-title: #fde68a;
   --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
   --au-color-feedback-info-title: #bae6fd;
+  --au-color-accent-surface: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 22%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-accent-border: color-mix(in srgb, var(--au-color-action-primary) 45%, transparent);
+  --au-color-accent-foreground: var(--au-color-action-primary);
+  --au-color-semantic-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 45%,
+    transparent
+  );
+  --au-color-semantic-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 45%,
+    transparent
+  );
+  --au-color-semantic-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 45%,
+    transparent
+  );
+  --au-color-semantic-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 45%,
+    transparent
+  );
+  --au-color-state-selected: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 14%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 20%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-accent: var(--au-color-action-primary);
+  --au-color-state-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 12%,
+    var(--au-color-surface-sunken)
+  );
   /* Selection */
   --au-color-selection: rgba(110, 180, 255, 0.28);
   /* Form */

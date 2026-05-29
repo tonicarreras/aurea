@@ -5,7 +5,7 @@
   margin: 0;
   padding: var(--au-space-2-5) var(--au-space-3);
   border: none;
-  border-radius: var(--au-radius-md);
+  border-radius: var(--au-radius-control);
   background: transparent;
   font-family: var(--au-font-sans);
   font-size: var(--au-text-sm);
@@ -22,7 +22,7 @@
 }
 
 .au-menu-item__btn:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--au-color-action-primary) 8%, var(--au-color-surface-sunken));
+  background: var(--au-color-state-hover);
   transform: translateX(2px);
 }
 

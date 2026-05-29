@@ -3,7 +3,7 @@
  */
 
 au-dialog {
-  --au-dialog-radius: var(--au-radius-xl);
+  --au-dialog-radius: var(--au-radius-modal);
   --au-dialog-bg: var(--au-color-surface-raised);
   --au-dialog-border: 1px solid var(--au-color-border-subtle);
   --au-dialog-shadow: var(--au-shadow-overlay);
@@ -84,7 +84,7 @@ au-dialog[data-au-size='full'] .au-dialog__panel {
   height: 100%;
   max-height: none;
   min-height: 0;
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-radius-surface);
 }
 
 au-dialog .au-dialog__header {
@@ -117,7 +117,7 @@ au-dialog .au-dialog__close {
   margin: 0;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   background: transparent;
   color: var(--au-color-text-secondary);
   cursor: pointer;

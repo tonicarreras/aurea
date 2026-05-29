@@ -62,7 +62,7 @@
   padding: 0;
   box-sizing: border-box;
   border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
   box-shadow: var(--au-shadow-control);
   cursor: pointer;

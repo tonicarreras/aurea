@@ -18,6 +18,26 @@
       }
       <thead>
         <tr>
+          @if (selectionMode() !== 'none') {
+            <th
+              scope="col"
+              class="au-table__header-cell au-table__header-cell--select"
+            >
+              @if (selectionMode() === 'multiple') {
+                <au-checkbox
+                  class="au-table__select-checkbox"
+                  size="sm"
+                  [hideLabel]="true"
+                  [showRequired]="false"
+                  [label]="selectAllLabel()"
+                  [checked]="selectAllChecked()"
+                  [indeterminate]="selectAllIndeterminate()"
+                  (click)="$event.stopPropagation()"
+                  (checkedChange)="setSelectAll($event)"
+                />
+              }
+            </th>
+          }
           @for (col of columns(); track col.name()) {
             <th
               scope="col"
@@ -86,7 +106,7 @@
       <tbody>
         @if (loading()) {
           <tr class="au-table__loading-row">
-            <td [attr.colspan]="columns().length">
+            <td [attr.colspan]="columnSpan()">
               <span
                 class="au-table__loading-indicator"
                 aria-hidden="true"
@@ -96,7 +116,25 @@
           </tr>
         } @else {
           @for (row of viewRows(); track trackRow($index, row)) {
-            <tr>
+            <tr
+              [class]="rowClasses(row)"
+              [attr.aria-selected]="rowAriaSelected(row)"
+              (click)="onRowClick(row, $event)"
+            >
+              @if (selectionMode() !== 'none') {
+                <td class="au-table__cell au-table__cell--select">
+                  <au-checkbox
+                    class="au-table__select-checkbox"
+                    size="sm"
+                    [hideLabel]="true"
+                    [showRequired]="false"
+                    [label]="selectRowLabel()"
+                    [checked]="isRowSelected(row)"
+                    (click)="$event.stopPropagation()"
+                    (checkedChange)="setRowSelected(row, $event)"
+                  />
+                </td>
+              }
               @for (col of columns(); track col.name()) {
                 <td [class]="cellClasses(col)">
                   @if (col.cellDef()?.templateRef; as tpl) {
@@ -112,7 +150,7 @@
             </tr>
           } @empty {
             <tr class="au-table__empty-row">
-              <td [attr.colspan]="columns().length">{{ emptyMessage() }}</td>
+              <td [attr.colspan]="columnSpan()">{{ emptyMessage() }}</td>
             </tr>
           }
         }

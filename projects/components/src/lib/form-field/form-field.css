@@ -55,7 +55,7 @@
 
 .au-form-field__hint {
   margin: 0;
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-tight);
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
   color: var(--au-color-text-tertiary);
 }

@@ -10,12 +10,14 @@ import {
   signal,
 } from '@angular/core';
 
+import { AuCheckbox } from '../checkbox/checkbox';
 import { AuTableColumn } from './au-table-column';
-import type { AuTableSortDirection, AuTableSortState } from './table-types';
+import type { AuTableSelectionMode, AuTableSortDirection, AuTableSortState } from './table-types';
 
 export type {
   AuTableAlign,
   AuTableCellVariant,
+  AuTableSelectionMode,
   AuTableSortDirection,
   AuTableSortState,
 } from './table-types';
@@ -29,13 +31,14 @@ export type {
   styleUrl: './table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NgTemplateOutlet],
+  imports: [AuCheckbox, NgTemplateOutlet],
   host: {
     class: 'au-table',
     '[attr.data-au-striped]': 'striped() ? "" : null',
     '[attr.data-au-compact]': 'compact() ? "" : null',
     '[attr.data-au-sticky-header]': 'stickyHeader() ? "" : null',
     '[attr.data-au-loading]': 'loading() ? "" : null',
+    '[attr.data-au-selection]': 'selectionMode() !== "none" ? selectionMode() : null',
     '[attr.aria-busy]': 'loading() ? "true" : null',
   },
 })
@@ -58,6 +61,16 @@ export class AuTable {
   readonly sortChange = output<AuTableSortState | null>();
   readonly trackByFn = input<((index: number, row: unknown) => unknown) | undefined>(undefined);
 
+  /** Row selection: `none`, one row (`single`), or many (`multiple`). */
+  readonly selectionMode = input<AuTableSelectionMode>('none');
+  /** Selected row objects (0–1 item when `selectionMode` is `single`). */
+  readonly selection = model<readonly unknown[]>([]);
+  readonly selectionChange = output<readonly unknown[]>();
+  /** Equality for matching rows in `selection`. */
+  readonly compareSelection = input<(a: unknown, b: unknown) => boolean>((a, b) => a === b);
+  readonly selectAllLabel = input('Select all rows');
+  readonly selectRowLabel = input('Select row');
+
   readonly columns = computed(() => this.columnRegistry());
 
   readonly viewRows = computed(() => {
@@ -72,6 +85,11 @@ export class AuTable {
     }
     const dir = state.direction === 'asc' ? 1 : -1;
     return [...rows].sort((a, b) => dir * this.compareRows(col, a, b));
+  });
+
+  readonly columnSpan = computed(() => {
+    const count = this.columns().length;
+    return this.selectionMode() === 'none' ? count : count + 1;
   });
 
   registerColumn(column: AuTableColumn): void {
@@ -108,6 +126,16 @@ export class AuTable {
       align === 'center' ? 'au-table__cell--center' : '',
       variant === 'primary' ? 'au-table__cell--primary' : '',
       variant === 'secondary' ? 'au-table__cell--secondary' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  protected rowClasses(row: unknown): string {
+    return [
+      'au-table__row',
+      this.selectionMode() !== 'none' ? 'au-table__row--selectable' : '',
+      this.isRowSelected(row) ? 'au-table__row--selected' : '',
     ]
       .filter(Boolean)
       .join(' ');
@@ -151,12 +179,90 @@ export class AuTable {
     this.sortChange.emit(next);
   }
 
+  protected isRowSelected(row: unknown): boolean {
+    const compare = this.compareSelection();
+    return this.selection().some((selected) => compare(selected, row));
+  }
+
+  protected selectAllChecked(): boolean {
+    const rows = this.viewRows();
+    if (rows.length === 0) {
+      return false;
+    }
+    return rows.every((row) => this.isRowSelected(row));
+  }
+
+  protected selectAllIndeterminate(): boolean {
+    const rows = this.viewRows();
+    const selectedCount = rows.filter((row) => this.isRowSelected(row)).length;
+    return selectedCount > 0 && selectedCount < rows.length;
+  }
+
+  protected setSelectAll(checked: boolean): void {
+    if (this.selectionMode() !== 'multiple') {
+      return;
+    }
+    const rows = this.viewRows();
+    this.setSelection(checked ? [...rows] : []);
+  }
+
+  protected setRowSelected(row: unknown, checked: boolean): void {
+    const mode = this.selectionMode();
+    if (mode === 'none') {
+      return;
+    }
+
+    const current = this.selection();
+    const compare = this.compareSelection();
+    const isSelected = current.some((selected) => compare(selected, row));
+
+    if (checked) {
+      if (isSelected) {
+        return;
+      }
+      if (mode === 'single') {
+        this.setSelection([row]);
+      } else {
+        this.setSelection([...current, row]);
+      }
+      return;
+    }
+
+    if (isSelected) {
+      this.setSelection(current.filter((selected) => !compare(selected, row)));
+    }
+  }
+
+  protected toggleRowSelection(row: unknown): void {
+    this.setRowSelected(row, !this.isRowSelected(row));
+  }
+
+  protected onRowClick(row: unknown, event: MouseEvent): void {
+    if (this.selectionMode() === 'none') {
+      return;
+    }
+    const target = event.target as HTMLElement;
+    if (target.closest('button, a, input, select, textarea, label, [role="button"], au-checkbox')) {
+      return;
+    }
+    this.toggleRowSelection(row);
+  }
+
+  protected rowAriaSelected(row: unknown): 'true' | 'false' | null {
+    return this.selectionMode() === 'none' ? null : this.isRowSelected(row) ? 'true' : 'false';
+  }
+
   protected cellContext(row: unknown): { $implicit: unknown; row: unknown } {
     return { $implicit: row, row };
   }
 
   protected formatCell(col: AuTableColumn, row: unknown): string {
     return this.cellText(this.readCell(col, row));
+  }
+
+  private setSelection(next: readonly unknown[]): void {
+    this.selection.set(next);
+    this.selectionChange.emit(next);
   }
 
   private cellText(value: unknown): string {
