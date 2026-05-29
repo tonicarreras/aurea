@@ -383,8 +383,14 @@ describe('AuTable extra branches', () => {
     @Component({
       imports: [AuTable, AuTableColumn],
       template: `
-        <au-table [data]="[{ a: 1 }]" [loading]="true">
-          <au-table-column name="a" header="A" />
+        <au-table
+          [data]="[{ a: 1 }]"
+          [loading]="true"
+        >
+          <au-table-column
+            name="a"
+            header="A"
+          />
         </au-table>
       `,
     })
@@ -416,8 +422,14 @@ describe('AuTable extra branches', () => {
     @Component({
       imports: [AuTable, AuTableColumn],
       template: `
-        <au-table [data]="[{ a: 1 }]" title="People">
-          <au-table-column name="a" header="A" />
+        <au-table
+          [data]="[{ a: 1 }]"
+          title="People"
+        >
+          <au-table-column
+            name="a"
+            header="A"
+          />
         </au-table>
       `,
     })

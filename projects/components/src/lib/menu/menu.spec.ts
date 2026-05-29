@@ -17,7 +17,11 @@ import { AuMenuItem, AuMenuTrigger } from './index';
       <au-button auMenuTrigger>Open</au-button>
       <au-menu-item (select)="selected = true">Action</au-menu-item>
       <au-menu-item (select)="onSecond()">Second</au-menu-item>
-      <au-menu-item (select)="onThird()" [disabled]="thirdDisabled">Third</au-menu-item>
+      <au-menu-item
+        (select)="onThird()"
+        [disabled]="thirdDisabled"
+        >Third</au-menu-item
+      >
     </au-menu>
   `,
 })
@@ -331,7 +335,8 @@ describe('AuMenu', () => {
       const fixture = TestBed.createComponent(HostNoItems);
       fixture.componentInstance.open = true;
       fixture.detectChanges();
-      const menu = fixture.debugElement.query(By.directive(AuMenu)).componentInstance as unknown as {
+      const menu = fixture.debugElement.query(By.directive(AuMenu))
+        .componentInstance as unknown as {
         onPanelKeydown: (e: KeyboardEvent) => void;
       };
       menu.onPanelKeydown.call(menu, new KeyboardEvent('keydown', { key: 'ArrowDown' }));
@@ -353,9 +358,11 @@ describe('AuMenu', () => {
         configurable: true,
         get: () => null,
       });
-      const idx = (menu as unknown as {
-        findFocusedItemIndex: (items: unknown[]) => number;
-      }).findFocusedItemIndex(items);
+      const idx = (
+        menu as unknown as {
+          findFocusedItemIndex: (items: unknown[]) => number;
+        }
+      ).findFocusedItemIndex(items);
       expect(idx).toBe(-1);
       // Restore
       if (origDescriptor) {

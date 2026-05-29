@@ -1049,7 +1049,8 @@ describe('AuSelect', () => {
     const fix = TestBed.createComponent(SelectLoadingHost);
     fix.detectChanges();
     // Open the listbox
-    const trigger = fix.debugElement.query(By.css('.au-select__trigger'))!.nativeElement as HTMLElement;
+    const trigger = fix.debugElement.query(By.css('.au-select__trigger'))!
+      .nativeElement as HTMLElement;
     trigger.click();
     fix.detectChanges();
     const loadingEl = fix.debugElement.query(By.css('.au-field-listbox__item--loading'));

@@ -1109,9 +1109,12 @@ describe('AuAutocomplete', () => {
       options: AuAutocompleteOption[] = [{ value: 'mad', label: 'Madrid' }];
     }
 
-    await TestBed.configureTestingModule({ imports: [AutocompleteLoadingHost] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [AutocompleteLoadingHost],
+    }).compileComponents();
     const fix = TestBed.createComponent(AutocompleteLoadingHost);
-    const input = fix.debugElement.query(By.css('.au-autocomplete__input'))!.nativeElement as HTMLInputElement;
+    const input = fix.debugElement.query(By.css('.au-autocomplete__input'))!
+      .nativeElement as HTMLInputElement;
     input.focus();
     input.value = 'm';
     input.dispatchEvent(new Event('input'));
