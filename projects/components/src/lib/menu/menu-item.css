@@ -15,7 +15,7 @@
   color: var(--au-color-text-primary);
   text-align: start;
   cursor: pointer;
-  transition: background-color var(--au-duration-short) var(--au-ease-in-out);
+  transition: var(--au-transition-background);
 }
 
 .au-menu-item__btn:hover:not(:disabled) {

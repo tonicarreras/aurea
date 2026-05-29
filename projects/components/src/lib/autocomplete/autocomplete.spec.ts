@@ -260,7 +260,7 @@ describe('AuAutocomplete', () => {
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const empty = fix.debugElement.query(By.css('.au-autocomplete__empty'));
+    const empty = fix.debugElement.query(By.css('.au-field-listbox__item--empty'));
     expect(empty?.nativeElement.textContent?.trim()).toBe('No results');
   });
 

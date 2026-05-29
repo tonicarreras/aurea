@@ -8,6 +8,7 @@ import {
   PLATFORM_ID,
   Renderer2,
   afterRenderEffect,
+  computed,
   inject,
   input,
   model,
@@ -19,6 +20,7 @@ import {
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_MENU } from './au-menu.token';
+import type { AuMenuItem } from './menu-item';
 
 /** Used by `forwardRef` in component providers (testable factory). */
 export function auMenuSelfRef(): typeof AuMenu {
@@ -33,6 +35,8 @@ export function auMenuSelfRef(): typeof AuMenu {
  * - **Trigger:** `auMenuTrigger` on the control that toggles the panel.
  * - **Items:** `au-menu-item` emits `select` and closes the menu.
  * - **Dismiss:** outside click and Escape.
+ * - **Keyboard:** Arrow keys cycle items; Home/End jump to ends; Enter/Space activates; Escape closes.
+ * - **Focus:** moves to the first item on open, returns to the trigger on close.
  *
  * @example
  * ```html
@@ -76,20 +80,24 @@ export class AuMenu {
   protected readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   protected readonly triggerHost = signal<HTMLElement | null>(null);
 
-  private readonly syncPanelOverlay = afterRenderEffect(() => {
-    const panel = this.panelRef()?.nativeElement;
-    const trigger = this.triggerHost();
-    if (!this.open() || !panel || !trigger) {
-      this.overlay.detach();
-      return;
-    }
-    this.renderer.addClass(panel, 'au-floating-panel');
-    this.renderer.addClass(panel, 'au-menu__panel');
-    this.overlay.sync(panel, trigger, this.placement());
-  });
+  /** Registered menu items for keyboard navigation. */
+  private readonly menuItems = signal<AuMenuItem[]>([]);
+  private savedTrigger: HTMLElement | null = null;
+
+  protected readonly enabledMenuItems = computed(() =>
+    this.menuItems().filter((item) => !item.disabled()),
+  );
 
   registerTrigger(el: HTMLElement): void {
     this.triggerHost.set(el);
+  }
+
+  registerMenuItem(item: AuMenuItem): void {
+    this.menuItems.update((list) => (list.includes(item) ? list : [...list, item]));
+  }
+
+  unregisterMenuItem(item: AuMenuItem): void {
+    this.menuItems.update((list) => list.filter((i) => i !== item));
   }
 
   toggle(): void {
@@ -111,6 +119,80 @@ export class AuMenu {
     this.openChange.emit(value);
   }
 
+  private readonly syncPanelOverlay = afterRenderEffect(() => {
+    const panel = this.panelRef()?.nativeElement;
+    const trigger = this.triggerHost();
+    const isOpen = this.open();
+
+    if (!isOpen || !panel || !trigger) {
+      if (!isOpen && this.savedTrigger && this.savedTrigger.isConnected) {
+        this.savedTrigger.focus();
+        this.savedTrigger = null;
+      }
+      this.overlay.detach();
+      return;
+    }
+
+    this.renderer.addClass(panel, 'au-floating-panel');
+    this.renderer.addClass(panel, 'au-menu__panel');
+    this.overlay.sync(panel, trigger, this.placement());
+
+    // Focus first enabled item on open
+    const items = this.enabledMenuItems();
+    if (items.length > 0 && !panel.contains(document.activeElement)) {
+      this.savedTrigger = trigger;
+      items[0].focus();
+    }
+  });
+
+  protected onPanelKeydown(event: KeyboardEvent): void {
+    if (!this.open()) {
+      return;
+    }
+
+    const items = this.enabledMenuItems();
+    if (items.length === 0) {
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown': {
+        event.preventDefault();
+        const cur = this.findFocusedItemIndex(items);
+        const next = cur < 0 ? 0 : (cur + 1) % items.length;
+        items[next].focus();
+        return;
+      }
+      case 'ArrowUp': {
+        event.preventDefault();
+        const cur = this.findFocusedItemIndex(items);
+        const prev = cur < 0 ? items.length - 1 : (cur - 1 + items.length) % items.length;
+        items[prev].focus();
+        return;
+      }
+      case 'Home': {
+        event.preventDefault();
+        items[0].focus();
+        return;
+      }
+      case 'End': {
+        event.preventDefault();
+        items[items.length - 1].focus();
+        return;
+      }
+      default:
+        return;
+    }
+  }
+
+  private findFocusedItemIndex(items: AuMenuItem[]): number {
+    const active = this.document.activeElement;
+    if (!active) {
+      return -1;
+    }
+    return items.findIndex((item) => item.containsElement(active));
+  }
+
   protected onDocumentClick(event: MouseEvent): void {
     if (!this.open()) {
       return;
@@ -128,10 +210,13 @@ export class AuMenu {
   }
 
   protected onDocumentKeydown(event: KeyboardEvent): void {
-    if (!this.open() || event.key !== 'Escape') {
+    if (!this.open()) {
       return;
     }
-    event.preventDefault();
-    this.close();
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.close();
+      return;
+    }
   }
 }

@@ -3,11 +3,34 @@
  */
 
 au-dialog {
+  --au-dialog-radius: var(--au-radius-xl);
+  --au-dialog-bg: var(--au-color-surface-raised);
+  --au-dialog-border: 1px solid var(--au-color-border-subtle);
+  --au-dialog-shadow: var(--au-shadow-overlay);
+  --au-dialog-padding: var(--au-space-6);
+  --au-dialog-gap: var(--au-space-5);
+  --au-dialog-max-width-sm: 24rem;
+  --au-dialog-max-width-md: 35rem;
+  --au-dialog-max-width-lg: 45rem;
+
   display: contents;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+au-dialog[data-au-size='sm'] .au-dialog__panel {
+  max-width: var(--au-dialog-max-width-sm);
+}
+
+au-dialog[data-au-size='md'] .au-dialog__panel,
+au-dialog:not([data-au-size]) .au-dialog__panel {
+  max-width: var(--au-dialog-max-width-md);
+}
+
+au-dialog[data-au-size='lg'] .au-dialog__panel {
+  max-width: var(--au-dialog-max-width-lg);
 }
 
 au-dialog .au-dialog__native {
@@ -41,24 +64,11 @@ au-dialog .au-dialog__panel {
   width: 100%;
   max-height: min(90vh, calc(100vh - var(--au-space-8)));
   overflow: hidden;
-  background: var(--au-color-surface-raised);
-  border: 1px solid var(--au-color-border-subtle);
-  border-radius: var(--au-radius-sm);
-  box-shadow: var(--au-shadow-overlay);
+  background: var(--au-dialog-bg);
+  border: var(--au-dialog-border);
+  border-radius: var(--au-dialog-radius);
+  box-shadow: var(--au-dialog-shadow);
   animation: au-dialog-panel-in var(--au-motion-modal);
-}
-
-au-dialog[data-au-size='sm'] .au-dialog__panel {
-  max-width: 24rem;
-}
-
-au-dialog[data-au-size='md'] .au-dialog__panel,
-au-dialog:not([data-au-size]) .au-dialog__panel {
-  max-width: 35rem;
-}
-
-au-dialog[data-au-size='lg'] .au-dialog__panel {
-  max-width: 45rem;
 }
 
 au-dialog[data-au-size='full'] .au-dialog__native {

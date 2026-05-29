@@ -6,7 +6,6 @@ import {
   ElementRef,
   PLATFORM_ID,
   Renderer2,
-  ViewEncapsulation,
   afterRenderEffect,
   computed,
   inject,
@@ -59,7 +58,6 @@ export type AuSnackbarPosition =
   imports: [AuIcon],
   templateUrl: './snackbar.html',
   styleUrl: './snackbar.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-snackbar',

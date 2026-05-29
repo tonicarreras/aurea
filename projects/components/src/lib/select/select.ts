@@ -45,6 +45,8 @@ export type AuSelectOption = AuFieldOption;
     class: 'au-select',
     '[attr.data-au-size]': 'size()',
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
+    '[attr.data-au-loading]': 'loading() ? "" : null',
+    '[attr.data-au-empty]': 'showEmpty() ? "" : null',
   },
 })
 export class AuSelect implements FormValueControl<string | null> {
@@ -54,6 +56,8 @@ export class AuSelect implements FormValueControl<string | null> {
   readonly invalid = input(false);
 
   readonly options = input<AuSelectOption[]>([]);
+  readonly loading = input(false);
+  readonly emptyMessage = input('No options');
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
@@ -146,6 +150,14 @@ export class AuSelect implements FormValueControl<string | null> {
   );
 
   readonly listboxVisible = computed(() => this.panelOpen());
+
+  readonly showEmpty = computed(
+    () =>
+      this.listboxVisible() &&
+      this.options().length === 0 &&
+      !this.hasPlaceholder() &&
+      !this.loading(),
+  );
 
   readonly listLength = computed(() => this.options().length + (this.hasPlaceholder() ? 1 : 0));
 

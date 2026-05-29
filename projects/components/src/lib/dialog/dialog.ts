@@ -3,7 +3,6 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  ViewEncapsulation,
   afterRenderEffect,
   computed,
   inject,
@@ -43,7 +42,6 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
   imports: [AuIcon],
   templateUrl: './dialog.html',
   styleUrl: './dialog.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-dialog',

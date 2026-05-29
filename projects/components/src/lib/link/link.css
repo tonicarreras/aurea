@@ -9,7 +9,7 @@
   text-decoration: underline;
   text-underline-offset: 0.15em;
   cursor: pointer;
-  transition: color var(--au-duration-short) var(--au-ease-in-out);
+  transition: var(--au-transition-color);
 }
 
 :host(:hover) {

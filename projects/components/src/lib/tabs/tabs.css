@@ -153,8 +153,7 @@ au-tabs[data-au-variant='line'] .au-tabs__tab--selected {
 au-tabs[data-au-variant='line'] .au-tabs__tab--selected::after {
   content: '';
   position: absolute;
-  left: var(--au-space-2);
-  right: var(--au-space-2);
+  inset-inline: var(--au-space-2);
   bottom: 0;
   height: 2px;
   border-radius: var(--au-radius-pill);
@@ -164,8 +163,8 @@ au-tabs[data-au-variant='line'] .au-tabs__tab--selected::after {
 au-tabs[data-au-orientation='vertical'][data-au-variant='line'] .au-tabs__tab--selected::after {
   top: var(--au-space-2);
   bottom: var(--au-space-2);
-  left: auto;
-  right: 0;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
   width: 2px;
   height: auto;
 }

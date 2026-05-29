@@ -13,17 +13,7 @@
   text-rendering: optimizeLegibility;
 }
 
-.au-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
+
 
 .au-autocomplete__field {
   display: flex;
@@ -215,13 +205,6 @@
 
 :host([data-au-size='lg']) .au-autocomplete__icon {
   inset-inline-end: var(--au-space-4);
-}
-
-.au-autocomplete__empty {
-  margin: 0;
-  padding: var(--au-space-2) var(--au-space-3);
-  font-size: var(--au-text-sm);
-  color: var(--au-color-text-tertiary);
 }
 
 .au-autocomplete__hint {

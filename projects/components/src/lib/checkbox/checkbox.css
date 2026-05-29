@@ -111,7 +111,7 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 6px;
   height: 10px;
   border: solid var(--au-color-text-on-solid);
@@ -134,7 +134,7 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 10px;
   height: 2px;
   background: var(--au-color-text-on-solid);
@@ -222,7 +222,7 @@
 .au-checkbox__required {
   color: var(--au-color-form-error);
   font-weight: var(--au-weight-semibold);
-  margin-left: 0.125em;
+  margin-inline-start: 0.125em;
 }
 
 /* -------------------------------------------------------------------------- */

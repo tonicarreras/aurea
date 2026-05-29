@@ -1,5 +1,10 @@
-
 :host {
+  --au-badge-bg: var(--au-color-surface-sunken);
+  --au-badge-color: var(--au-color-text-secondary);
+  --au-badge-border: 1px solid var(--au-color-border-subtle);
+  --au-badge-radius: var(--au-radius-pill);
+  --au-badge-font-size: var(--au-text-xs);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -7,16 +12,16 @@
   min-width: 1.25rem;
   height: 1.25rem;
   padding: 0 0.4em;
-  border-radius: var(--au-radius-pill);
+  border-radius: var(--au-badge-radius);
   font-family: var(--au-font-sans);
-  font-size: var(--au-text-xs);
+  font-size: var(--au-badge-font-size);
   font-weight: var(--au-weight-semibold);
   line-height: 1;
   white-space: nowrap;
   vertical-align: middle;
-  background: var(--au-color-surface-sunken);
-  color: var(--au-color-text-secondary);
-  border: 1px solid var(--au-color-border-subtle);
+  background: var(--au-badge-bg);
+  color: var(--au-badge-color);
+  border: var(--au-badge-border);
   box-shadow: var(--au-shadow-control);
 }
 

@@ -2,7 +2,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewEncapsulation,
   computed,
   input,
   model,
@@ -28,13 +27,14 @@ export type {
   templateUrl: './table.html',
   styleUrl: './table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   imports: [NgTemplateOutlet],
   host: {
     class: 'au-table',
     '[attr.data-au-striped]': 'striped() ? "" : null',
     '[attr.data-au-compact]': 'compact() ? "" : null',
     '[attr.data-au-sticky-header]': 'stickyHeader() ? "" : null',
+    '[attr.data-au-loading]': 'loading() ? "" : null',
+    '[attr.aria-busy]': 'loading() ? "true" : null',
   },
 })
 export class AuTable {
@@ -48,6 +48,8 @@ export class AuTable {
   readonly striped = input(false);
   readonly compact = input(false);
   readonly stickyHeader = input(false);
+  readonly loading = input(false);
+  readonly loadingMessage = input('Loading…');
   readonly emptyMessage = input('No data');
   readonly sort = model<AuTableSortState | null>(null);
   readonly clientSort = input(true);

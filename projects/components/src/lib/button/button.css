@@ -5,6 +5,15 @@
  */
 
 :host {
+  --au-button-radius: var(--au-radius-sm);
+  --au-button-height-sm: var(--au-size-field-h-sm);
+  --au-button-height-md: var(--au-size-field-h-md);
+  --au-button-height-lg: var(--au-size-field-h-lg);
+  --au-button-font-size-sm: var(--au-text-xs);
+  --au-button-font-size-md: var(--au-text-sm);
+  --au-button-font-size-lg: var(--au-text-sm);
+  --au-button-gap: var(--au-space-2);
+
   display: inline-flex;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -16,12 +25,12 @@ button.au-button__element {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--au-space-2);
+  gap: var(--au-button-gap);
   position: relative;
   box-sizing: border-box;
   margin: 0;
   border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-button-radius);
   font: inherit;
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
@@ -41,23 +50,23 @@ button.au-button__element {
 /* -------------------------------------------------------------------------- */
 
 :host([data-au-size='sm']) .au-button__element {
-  height: var(--au-size-field-h-sm);
+  height: var(--au-button-height-sm);
   padding: 0 var(--au-size-field-px-sm);
-  font-size: var(--au-text-xs);
+  font-size: var(--au-button-font-size-sm);
 }
 
 :host([data-au-size='md']) .au-button__element,
 :host(:not([data-au-size])) .au-button__element {
-  height: var(--au-size-field-h-md);
+  height: var(--au-button-height-md);
   padding: 0 var(--au-size-field-px-md);
-  font-size: var(--au-text-sm);
+  font-size: var(--au-button-font-size-md);
 }
 
 :host([data-au-size='lg']) .au-button__element {
-  height: var(--au-touch-target-min);
+  height: var(--au-button-height-lg);
   min-width: var(--au-touch-target-min);
   padding: 0 var(--au-space-5);
-  font-size: var(--au-text-md);
+  font-size: var(--au-button-font-size-lg);
 }
 
 /* -------------------------------------------------------------------------- */

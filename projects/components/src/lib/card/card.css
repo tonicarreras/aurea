@@ -3,6 +3,13 @@
  */
 
 au-card {
+  --au-card-bg: var(--au-color-surface-raised);
+  --au-card-border: 1px solid var(--au-color-border-subtle);
+  --au-card-radius: var(--au-radius-lg);
+  --au-card-shadow: var(--au-shadow-float);
+  --au-card-padding: var(--au-space-5);
+  --au-card-gap: var(--au-space-4);
+
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);

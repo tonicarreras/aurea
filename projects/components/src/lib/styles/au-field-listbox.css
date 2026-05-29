@@ -105,6 +105,50 @@
   cursor: not-allowed;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Status items: empty state, loading state                                  */
+/* -------------------------------------------------------------------------- */
+
+.au-field-listbox__item {
+  margin: 0;
+  padding: var(--au-space-3) var(--au-space-4);
+  font-size: var(--au-size-field-text-md);
+  color: var(--au-color-text-tertiary);
+  text-align: center;
+  cursor: default;
+  user-select: none;
+}
+
+.au-field-listbox__item--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-space-2);
+}
+
+.au-field-listbox__loading-indicator {
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 2px solid var(--au-color-border-subtle);
+  border-top-color: var(--au-color-accent);
+  border-radius: 50%;
+  animation: au-field-listbox-spin 0.6s linear infinite;
+}
+
+@keyframes au-field-listbox-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-field-listbox__loading-indicator {
+    animation: none;
+    border-top-color: var(--au-color-border-subtle);
+  }
+}
+
 @media (hover: hover) {
   .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
       .au-field-listbox__option--selected
