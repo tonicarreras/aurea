@@ -98,11 +98,19 @@ export function queryFieldNative<T extends HTMLElement>(host: ElementRef, select
   return el;
 }
 
-let nextStandaloneFieldId = 0;
+/** Unique numeric ID per call without shared module state. */
+function nextId(): string {
+  return `${Date.now()}${String(Math.floor(Math.random() * 9999)).padStart(4, '0')}`;
+}
 
-/** Minimal {@link AuFormFieldContext} when checkbox/switch are not wrapped in `au-form-field`. */
+/**
+ * Minimal {@link AuFormFieldContext} when checkbox/switch are not wrapped in `au-form-field`.
+ *
+ * Each call produces a unique ID without shared module state — tests remain
+ * isolated and no snapshot depends on call order.
+ */
 export function createStandaloneAuFormFieldContext(): AuFormFieldContext {
-  const autoId = `au-field-${++nextStandaloneFieldId}`;
+  const autoId = `au-field-${nextId()}`;
   const controlState = signal<AuFormFieldControlState | null>(null);
 
   const label = signal('');

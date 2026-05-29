@@ -1,12 +1,11 @@
 import {
   afterRenderEffect,
   computed,
-  inject,
   signal,
   type Signal,
 } from '@angular/core';
 import type { ValidationError } from '@angular/forms/signals';
-import { AU_FORM_FIELD, displayErrorFromErrors, effectiveInvalidWithField, type AuFormFieldContext } from '../form-field/form-field';
+import { displayErrorFromErrors, effectiveInvalidWithField, injectAuFormField, type AuFormFieldContext } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 
@@ -15,6 +14,8 @@ export interface AuFormControlParams<T> {
   invalid: Signal<boolean>;
   required: Signal<boolean>;
   value: Signal<T | null>;
+  /** When true, the group renders its own `<legend>`; suppress the wrapper label. */
+  usesLegend?: Signal<boolean>;
 }
 
 /**
@@ -25,7 +26,7 @@ export interface AuFormControlParams<T> {
  */
 export abstract class AuFormControlBase<T> {
   /* ---- Injections (available before initBase) ---- */
-  protected readonly formField: AuFormFieldContext = inject(AU_FORM_FIELD);
+  protected readonly formField: AuFormFieldContext = injectAuFormField();
   protected readonly fieldFocusByTab = signal(false);
 
   /* ---- Set by initBase() — call it in subclass constructor ---- */
@@ -82,6 +83,7 @@ export abstract class AuFormControlBase<T> {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),
         required: () => params.required(),
+        usesLegend: params.usesLegend as (() => boolean) | undefined,
       }),
     );
   }

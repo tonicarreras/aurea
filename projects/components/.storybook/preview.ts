@@ -53,16 +53,15 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
-    auStyle: {
-      description:
-        'Modo visual global (`default` o `unstyled`) para separar primitivos de tema.',
-      defaultValue: 'default',
+    auColor: {
+      description: 'Paleta de color para la escala action (data-au-color).',
+      defaultValue: 'monochrome',
       toolbar: {
-        title: 'Estilo',
+        title: 'Color',
         icon: 'paintbrush',
         items: [
-          { value: 'default', title: 'Default' },
-          { value: 'unstyled', title: 'Primitives' },
+          { value: 'monochrome', title: 'Monocromo', icon: 'circlehollow' },
+          { value: 'blue', title: 'Azul', icon: 'circle' },
         ],
         dynamicTitle: true,
       },
@@ -85,7 +84,7 @@ const preview: Preview = {
     auTheme: 'light',
     auHighContrast: 'off',
     auDensity: 'comfortable',
-    auStyle: 'default',
+    auColor: 'monochrome',
     docsLocale: 'en',
   },
   loaders: [

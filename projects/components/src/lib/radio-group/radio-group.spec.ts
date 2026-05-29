@@ -198,14 +198,14 @@ describe('AuRadioGroup', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('onShellFocusin runs', () => {
+  it('onControlRowFocusin runs', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
     });
-    CONTROL(fix).onShellFocusin();
+    CONTROL(fix).onControlRowFocusin();
   });
 
-  it('emits blur when focus leaves shell', () => {
+  it('emits blur when focus leaves control row', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -216,17 +216,17 @@ describe('AuRadioGroup', () => {
     const shell = fix.debugElement.query(By.css('div:has(> fieldset)'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: shell, configurable: true });
-    CONTROL(fix).onShellFocusout(out);
+    CONTROL(fix).onControlRowFocusout(out);
     expect(n).toBe(1);
   });
 
-  it('onShellFocusout returns early for non-HTMLElement', () => {
+  it('onControlRowFocusout returns early for non-HTMLElement', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost);
     fix.detectChanges();
-    CONTROL(fix).onShellFocusout({ currentTarget: {} } as FocusEvent);
+    CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onShellFocusout returns when focus stays inside shell', () => {
+  it('onControlRowFocusout returns when focus stays inside control row', () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -238,7 +238,7 @@ describe('AuRadioGroup', () => {
     const inner = queryRadios(fix)[0]!;
     const ev = new FocusEvent('focusout', { relatedTarget: inner });
     Object.defineProperty(ev, 'currentTarget', { value: shell, configurable: true });
-    CONTROL(fix).onShellFocusout(ev);
+    CONTROL(fix).onControlRowFocusout(ev);
     expect(n).toBe(0);
   });
 

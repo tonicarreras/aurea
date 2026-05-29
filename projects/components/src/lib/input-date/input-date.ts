@@ -6,11 +6,11 @@ import {
   input,
   model,
   output,
+  type Signal,
   viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
-import { displayErrorFromErrors } from '../form-field/form-field';
 import { AuFormControlBase } from '../shared/form-control-base';
 
 /** Date control; project inside {@link AuFormField}. */
@@ -24,7 +24,7 @@ import { AuFormControlBase } from '../shared/form-control-base';
     '[attr.data-au-size]': 'size()',
   },
 })
-export class AuInputDate extends AuFormControlBase<string> implements FormValueControl<string | null> {
+export class AuInputDate extends AuFormControlBase<string | null> implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
@@ -46,40 +46,34 @@ export class AuInputDate extends AuFormControlBase<string> implements FormValueC
 
   readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-  /** Error message when the current value is outside minDate / maxDate range. */
-  private readonly dateRangeError = computed((): string => {
+  /** Merged errors: upstream signal-form errors + inline date range validation. */
+  private readonly mergedErrors: Signal<readonly ValidationError.WithOptionalFieldTree[]> = computed(() => {
+    const base = this.errors();
     const val = this.value();
     if (!val) {
-      return '';
+      return base;
     }
     const min = this.minDate();
     const max = this.maxDate();
+    let rangeMsg = '';
     if (min && val < min) {
-      return `Date must be on or after ${min}`;
+      rangeMsg = `Date must be on or after ${min}`;
+    } else if (max && val > max) {
+      rangeMsg = `Date must be on or before ${max}`;
     }
-    if (max && val > max) {
-      return `Date must be on or before ${max}`;
+    if (!rangeMsg) {
+      return base;
     }
-    return '';
+    return [{ message: rangeMsg, kind: 'date-range' } as ValidationError.WithOptionalFieldTree, ...base];
   });
 
   constructor() {
     super();
     this.initBase({
-      errors: this.errors,
+      errors: this.mergedErrors,
       invalid: this.invalid,
       required: this.required,
       value: this.value,
-    });
-    // Override displayError from initBase to include date range validation.
-    // This works because isInvalid/effectiveInvalid read this.displayError()
-    // lazily — they pick up the reassigned signal at evaluation time.
-    this.displayError = computed(() => {
-      const range = this.dateRangeError();
-      if (range) {
-        return range;
-      }
-      return displayErrorFromErrors(this.errors)();
     });
   }
 

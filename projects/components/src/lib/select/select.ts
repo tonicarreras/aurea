@@ -17,11 +17,8 @@ import {
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
-import { AU_FORM_FIELD } from '../form-field/form-field';
-import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
-import { syncFormFieldControlState } from '../form-field/form-field';
-import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
+import { AuFormControlBase } from '../shared/form-control-base';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
 
 export type AuSelectOption = AuFieldOption;
@@ -47,7 +44,7 @@ export type AuSelectOption = AuFieldOption;
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
   },
 })
-export class AuSelect implements FormValueControl<string | null> {
+export class AuSelect extends AuFormControlBase<string | null> implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
@@ -70,8 +67,6 @@ export class AuSelect implements FormValueControl<string | null> {
 
   readonly triggerEl = viewChild.required<ElementRef<HTMLButtonElement>>('triggerEl');
 
-  protected readonly formField = inject(AU_FORM_FIELD);
-  protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly highlightedIndex = signal(-1);
 
@@ -93,46 +88,19 @@ export class AuSelect implements FormValueControl<string | null> {
     this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
   });
 
-  readonly controlId = computed(() => this.formField.controlId());
   readonly listboxId = computed(() => `${this.controlId()}-listbox`);
 
-  readonly displayError = displayErrorFromErrors(this.errors);
-  readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
-    invalid: () => this.invalid(),
-    isInvalid: () => this.isInvalid(),
-  });
-
-  readonly ariaDescribedBy = computed((): string | null => {
-    const ids: string[] = [];
-    if (this.formField.hint().trim().length > 0) {
-      ids.push(this.formField.hintId());
-    }
-    if (this.effectiveInvalid()) {
-      ids.push(this.formField.errorId());
-    }
-    return ids.length > 0 ? ids.join(' ') : null;
-  });
-
   constructor() {
-    afterRenderEffect(
-      syncFormFieldControlState(this.formField, {
-        displayError: () => this.displayError(),
-        effectiveInvalid: () => this.effectiveInvalid(),
-        required: () => this.required(),
-      }),
-    );
+    super();
+    this.initBase({
+      errors: this.errors,
+      invalid: this.invalid,
+      required: this.required,
+      value: this.value,
+    });
   }
 
   readonly hasPlaceholder = computed(() => this.placeholder().trim().length > 0);
-
-  readonly inputDisplay = computed(() => {
-    const v = this.value();
-    if (v === null || v === undefined) {
-      return '';
-    }
-    return v;
-  });
 
   readonly triggerLabel = computed(() => {
     const v = this.value();
@@ -294,16 +262,11 @@ export class AuSelect implements FormValueControl<string | null> {
     this.triggerEl().nativeElement.focus();
   }
 
-  onBlurHost(): void {
+  override onBlurHost(): void {
     this.blur.emit();
   }
 
-  onControlRowFocusin(): void {
-    tabFocusState.attach();
-    this.fieldFocusByTab.set(tabFocusState.takeNextFocusIsFromTab());
-  }
-
-  onControlRowFocusout(event: FocusEvent): void {
+  override onControlRowFocusout(event: FocusEvent): void {
     if (!focusLeftFieldControl(event, this.listboxNative())) {
       return;
     }

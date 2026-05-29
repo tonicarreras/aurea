@@ -32,7 +32,7 @@ type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search'
     '[attr.data-au-size]': 'size()',
   },
 })
-export class AuInputText extends AuFormControlBase<string> implements FormValueControl<string | null> {
+export class AuInputText extends AuFormControlBase<string | null> implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);

@@ -61,11 +61,10 @@ Aurea ng-add complete.
 
 Next steps:
   1. Import components per feature: import { AuButton } from '@aurea-design-system/components';
-  2. Theme (default): use ${THEME_DEFAULT_STYLE} (includes semantic tokens + component skin).
-  3. Primitives mode (unstyled): import ${PRIMITIVES_STYLE} and set [auStyle]="'unstyled'" on a container.
-  4. Theme attribute: data-au-theme="light|dark|high-contrast|high-contrast-dark" or use AuTheme directive.
-  5. Density (optional): data-au-density="compact|comfortable|spacious" or auDensity on shell.
-  6. Signal forms: see https://aurea-ds.netlify.app/en/guides/signal-forms
+   2. Theme: use ${THEME_DEFAULT_STYLE} (imports scale tokens + component skin).
+   3. Theme attribute: data-au-theme="light|dark|high-contrast|high-contrast-dark" or use AuTheme directive.
+   4. Density (optional): data-au-density="compact|comfortable|spacious" or auDensity on shell.
+   5. Signal forms: see https://aurea-ds.netlify.app/en/guides/signal-forms
 
 Docs: https://aurea-ds.netlify.app/
 `);

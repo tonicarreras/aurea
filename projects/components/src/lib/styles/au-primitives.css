@@ -1,16 +1,11 @@
 /**
- * Aurea primitives — default visual theme (Apple monochrome).
+ * Aurea — visual theme.
  *
- * Active at `:root` — always on by default. Override by setting a
- * `data-au-style` attribute (e.g. `data-au-style="aurea-blue"`) on a container.
- *
- * Self-contained: import this single file to get the full default look.
- *
- * @import chain:
- *   1. au-tokens.css       — infra (typography, spacing, z-index, transitions, density, focus, HC)
+ * Import this single file to get the full look:
+ *   1. au-tokens.css       — infra (typography, spacing, z-index, radii, shadows, density, etc.)
  *   2. au-component-tokens.css — component baseline tokens
  *   3. au-theme-base.css   — shared --au-color-* → --au-{component}-* mapping
- *   4. This file           — scale values, radii, shadows, dark mode, variant blocks
+ *   4. This file           — scale values, semantic colors, dark mode, component variant blocks
  */
 @import '../tokens/au-tokens.css';
 @import './au-component-tokens.css';
@@ -66,47 +61,47 @@
   --au-scale-error-11: #5c0f0a;
   --au-scale-error-12: #3a0805;
 
-  /* Success (monochrome) */
-  --au-scale-success-1: #ffffff;
-  --au-scale-success-2: #f5f5f7;
-  --au-scale-success-3: #e8e8ed;
-  --au-scale-success-4: #dcdce1;
-  --au-scale-success-5: #d1d1d6;
-  --au-scale-success-6: #c7c7cc;
-  --au-scale-success-7: #aeaeb2;
-  --au-scale-success-8: #8e8e93;
-  --au-scale-success-9: #6e6e73;
-  --au-scale-success-10: #5a5a60;
-  --au-scale-success-11: #38383d;
-  --au-scale-success-12: #1d1d1f;
+  /* Success (green-tinted) */
+  --au-scale-success-1: #fafbfa;
+  --au-scale-success-2: #f0f6f2;
+  --au-scale-success-3: #e2efe7;
+  --au-scale-success-4: #d3e6db;
+  --au-scale-success-5: #c0dacc;
+  --au-scale-success-6: #a9ccb7;
+  --au-scale-success-7: #8db99f;
+  --au-scale-success-8: #68a37a;
+  --au-scale-success-9: #30a45c;
+  --au-scale-success-10: #268a4b;
+  --au-scale-success-11: #1b6838;
+  --au-scale-success-12: #0f4223;
 
-  /* Warning (monochrome) */
-  --au-scale-warning-1: #ffffff;
-  --au-scale-warning-2: #f5f5f7;
-  --au-scale-warning-3: #e8e8ed;
-  --au-scale-warning-4: #dcdce1;
-  --au-scale-warning-5: #d1d1d6;
-  --au-scale-warning-6: #c7c7cc;
-  --au-scale-warning-7: #aeaeb2;
-  --au-scale-warning-8: #8e8e93;
-  --au-scale-warning-9: #6e6e73;
-  --au-scale-warning-10: #5a5a60;
-  --au-scale-warning-11: #38383d;
-  --au-scale-warning-12: #1d1d1f;
+  /* Warning (amber-tinted) */
+  --au-scale-warning-1: #fcfaf5;
+  --au-scale-warning-2: #f9f5ea;
+  --au-scale-warning-3: #f2edd9;
+  --au-scale-warning-4: #e9e2c5;
+  --au-scale-warning-5: #ddd4ae;
+  --au-scale-warning-6: #cdc294;
+  --au-scale-warning-7: #b9ac78;
+  --au-scale-warning-8: #9e905b;
+  --au-scale-warning-9: #b8860b;
+  --au-scale-warning-10: #9a7209;
+  --au-scale-warning-11: #755607;
+  --au-scale-warning-12: #4a3504;
 
-  /* Info (monochrome) */
-  --au-scale-info-1: #ffffff;
-  --au-scale-info-2: #f5f5f7;
-  --au-scale-info-3: #e8e8ed;
-  --au-scale-info-4: #dcdce1;
-  --au-scale-info-5: #d1d1d6;
-  --au-scale-info-6: #c7c7cc;
-  --au-scale-info-7: #aeaeb2;
-  --au-scale-info-8: #8e8e93;
-  --au-scale-info-9: #6e6e73;
-  --au-scale-info-10: #5a5a60;
-  --au-scale-info-11: #38383d;
-  --au-scale-info-12: #1d1d1f;
+  /* Info (sky-blue-tinted) */
+  --au-scale-info-1: #f6fafd;
+  --au-scale-info-2: #eaf4fa;
+  --au-scale-info-3: #d9ecf6;
+  --au-scale-info-4: #c6e1f0;
+  --au-scale-info-5: #b0d4e8;
+  --au-scale-info-6: #96c3dd;
+  --au-scale-info-7: #78aecf;
+  --au-scale-info-8: #5295bd;
+  --au-scale-info-9: #0284c7;
+  --au-scale-info-10: #0270a8;
+  --au-scale-info-11: #015581;
+  --au-scale-info-12: #003555;
 
   /* ========================================================================
      Alpha scales (8-digit hex, light)
@@ -195,18 +190,6 @@
   --au-scale-info-A10: #000000bf;
   --au-scale-info-A11: #000000e0;
   --au-scale-info-A12: #000000f8;
-
-  /* ========================================================================
-     Radii (Apple consistent corner language)
-     ======================================================================== */
-  --au-radius-2xs: 0.125rem;    /* 2px — fine details */
-  --au-radius-xs: 0.25rem;      /* 4px — checkboxes */
-  --au-radius-sm: 0.5rem;       /* 8px — buttons, chips, inputs */
-  --au-radius-md: 0.625rem;     /* 10px — menus, popovers */
-  --au-radius-lg: 0.75rem;      /* 12px — cards, dialogs */
-  --au-radius-xl: 1rem;         /* 16px — larger surfaces */
-  --au-radius-pill: 9999px;
-  --au-radius-field: 0.375rem;  /* 6px — form fields */
 
   /* ========================================================================
      Shadows (light)
@@ -420,47 +403,47 @@
   --au-scale-error-11: #fec5c0;
   --au-scale-error-12: #ffe5e2;
 
-  /* Success (monochrome, dark) */
-  --au-scale-success-1: #0c0e12;
-  --au-scale-success-2: #1a1a1e;
-  --au-scale-success-3: #242428;
-  --au-scale-success-4: #2c2c30;
-  --au-scale-success-5: #36363a;
-  --au-scale-success-6: #424248;
-  --au-scale-success-7: #515158;
-  --au-scale-success-8: #636366;
-  --au-scale-success-9: #787880;
-  --au-scale-success-10: #86868b;
-  --au-scale-success-11: #a1a1a6;
-  --au-scale-success-12: #f5f5f7;
+  /* Success (green-tinted, dark) */
+  --au-scale-success-1: #0c1112;
+  --au-scale-success-2: #121e19;
+  --au-scale-success-3: #192b22;
+  --au-scale-success-4: #20372b;
+  --au-scale-success-5: #284636;
+  --au-scale-success-6: #335844;
+  --au-scale-success-7: #416f57;
+  --au-scale-success-8: #548c6e;
+  --au-scale-success-9: #4ade7f;
+  --au-scale-success-10: #62df92;
+  --au-scale-success-11: #84e5a8;
+  --au-scale-success-12: #acedc4;
 
-  /* Warning (monochrome, dark) */
-  --au-scale-warning-1: #0c0e12;
-  --au-scale-warning-2: #1a1a1e;
-  --au-scale-warning-3: #242428;
-  --au-scale-warning-4: #2c2c30;
-  --au-scale-warning-5: #36363a;
-  --au-scale-warning-6: #424248;
-  --au-scale-warning-7: #515158;
-  --au-scale-warning-8: #636366;
-  --au-scale-warning-9: #787880;
-  --au-scale-warning-10: #86868b;
-  --au-scale-warning-11: #a1a1a6;
-  --au-scale-warning-12: #f5f5f7;
+  /* Warning (amber-tinted, dark) */
+  --au-scale-warning-1: #12100c;
+  --au-scale-warning-2: #1f1c15;
+  --au-scale-warning-3: #2b271d;
+  --au-scale-warning-4: #363125;
+  --au-scale-warning-5: #423c2e;
+  --au-scale-warning-6: #504938;
+  --au-scale-warning-7: #645b47;
+  --au-scale-warning-8: #7d7359;
+  --au-scale-warning-9: #fbbf24;
+  --au-scale-warning-10: #fcc94d;
+  --au-scale-warning-11: #fdd87a;
+  --au-scale-warning-12: #fee7ab;
 
-  /* Info (monochrome, dark) */
-  --au-scale-info-1: #0c0e12;
-  --au-scale-info-2: #1a1a1e;
-  --au-scale-info-3: #242428;
-  --au-scale-info-4: #2c2c30;
-  --au-scale-info-5: #36363a;
-  --au-scale-info-6: #424248;
-  --au-scale-info-7: #515158;
-  --au-scale-info-8: #636366;
-  --au-scale-info-9: #787880;
-  --au-scale-info-10: #86868b;
-  --au-scale-info-11: #a1a1a6;
-  --au-scale-info-12: #f5f5f7;
+  /* Info (sky-blue-tinted, dark) */
+  --au-scale-info-1: #0c1115;
+  --au-scale-info-2: #131e24;
+  --au-scale-info-3: #1a2b33;
+  --au-scale-info-4: #223842;
+  --au-scale-info-5: #2b4653;
+  --au-scale-info-6: #365667;
+  --au-scale-info-7: #456c80;
+  --au-scale-info-8: #58879e;
+  --au-scale-info-9: #38bdf8;
+  --au-scale-info-10: #5fcbfa;
+  --au-scale-info-11: #8cd9fc;
+  --au-scale-info-12: #b8e7fd;
 
   /* Alpha scales (dark) */
   --au-scale-neutral-A1: #ffffff03;
@@ -901,4 +884,37 @@
   --au-badge-bg: var(--au-color-semantic-info-surface);
   --au-badge-fg: var(--au-color-semantic-info);
   --au-badge-border: color-mix(in srgb, var(--au-color-semantic-info) 40%, transparent);
+}
+
+/* ==========================================================================
+   Palette: Blue action (Apple blue accent, light)
+   ========================================================================== */
+:root[data-au-color='blue'] {
+  --au-scale-action-1: #f5f8fd;
+  --au-scale-action-2: #e5edf9;
+  --au-scale-action-3: #d0def5;
+  --au-scale-action-4: #b3ccf0;
+  --au-scale-action-5: #91b6ea;
+  --au-scale-action-6: #699de1;
+  --au-scale-action-7: #3e81d6;
+  --au-scale-action-8: #1a66c8;
+  --au-scale-action-9: #0071e3;
+  --au-scale-action-10: #005bb5;
+  --au-scale-action-11: #004080;
+  --au-scale-action-12: #002a5c;
+}
+
+:root[data-au-color='blue'][data-au-theme='dark'] {
+  --au-scale-action-1: #101a2b;
+  --au-scale-action-2: #1a2740;
+  --au-scale-action-3: #243655;
+  --au-scale-action-4: #2f466b;
+  --au-scale-action-5: #3d5984;
+  --au-scale-action-6: #4d6fa1;
+  --au-scale-action-7: #6289c1;
+  --au-scale-action-8: #7ba7e5;
+  --au-scale-action-9: #409cff;
+  --au-scale-action-10: #66b0ff;
+  --au-scale-action-11: #93c8ff;
+  --au-scale-action-12: #bedbff;
 }

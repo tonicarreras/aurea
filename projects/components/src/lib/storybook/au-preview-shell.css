@@ -25,32 +25,7 @@ body,
     color var(--au-duration-default) var(--au-ease-in-out);
 }
 
-/* Primitives canvas — light keeps studio backdrop; dark matches default theme canvas */
-html[data-au-style='unstyled']:not([data-au-theme='dark']) {
-  background-color: var(--au-color-surface-canvas);
-  background-image:
-    radial-gradient(ellipse 90% 60% at 12% 18%, color-mix(in srgb, #ffffff 85%, transparent), transparent 58%),
-    radial-gradient(ellipse 70% 50% at 88% 78%, color-mix(in srgb, #000000 6%, transparent), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 100%, color-mix(in srgb, #86868b 12%, transparent), transparent 50%);
-}
-
-html[data-au-theme='dark'][data-au-style='unstyled'] {
-  background-color: var(--au-color-surface-canvas);
-  background-image: radial-gradient(
-    110% 85% at 50% -12%,
-    color-mix(in srgb, var(--au-color-action-primary) 8%, transparent),
-    transparent 58%
-  );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-html[data-au-style='unstyled'] #storybook-root,
-html[data-au-style='unstyled'] .sb-main-padded {
-  background: transparent;
-}
-
-/* Canvas de Docs: hereda tokens del tema activo (default o primitives) */
+/* Canvas de Docs: hereda tokens del tema activo */
 .sbdocs-wrapper {
   color: var(--au-color-text-primary);
   background: var(--au-color-surface-canvas);

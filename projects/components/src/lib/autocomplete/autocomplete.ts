@@ -47,7 +47,7 @@ export type AuAutocompleteOption = AuFieldOption;
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
   },
 })
-export class AuAutocomplete extends AuFormControlBase<string> implements FormValueControl<string | null> {
+export class AuAutocomplete extends AuFormControlBase<string | null> implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);

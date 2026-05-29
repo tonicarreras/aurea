@@ -2,21 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
-  signal,
   viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
-import { AU_FORM_FIELD } from '../form-field/form-field';
-import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
-import { syncFormFieldControlState } from '../form-field/form-field';
-import { tabFocusState } from '../au-tab-focus-state';
+import { AuFormControlBase } from '../shared/form-control-base';
 import type { AuFieldOption } from '../field-option';
 
 export type AuRadioOption = AuFieldOption;
@@ -32,7 +26,7 @@ export type AuRadioOption = AuFieldOption;
     '[attr.data-au-size]': 'size()',
   },
 })
-export class AuRadioGroup implements FormValueControl<string | null> {
+export class AuRadioGroup extends AuFormControlBase<string | null> implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
 
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
@@ -51,10 +45,6 @@ export class AuRadioGroup implements FormValueControl<string | null> {
 
   readonly fieldEl = viewChild.required<ElementRef<HTMLDivElement>>('fieldEl');
 
-  protected readonly formField = inject(AU_FORM_FIELD);
-  protected readonly fieldFocusByTab = signal(false);
-
-  readonly controlId = computed(() => this.formField.controlId());
   readonly legendId = computed(() => `${this.controlId()}-legend`);
 
   readonly groupName = computed(() => {
@@ -74,33 +64,15 @@ export class AuRadioGroup implements FormValueControl<string | null> {
     return n || 'Options';
   });
 
-  readonly displayError = displayErrorFromErrors(this.errors);
-  readonly isInvalid = computed(() => this.displayError().length > 0);
-  readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
-    invalid: () => this.invalid(),
-    isInvalid: () => this.isInvalid(),
-  });
-
-  readonly ariaDescribedBy = computed((): string | null => {
-    const ids: string[] = [];
-    if (this.formField.hint().trim().length > 0) {
-      ids.push(this.formField.hintId());
-    }
-    if (this.effectiveInvalid()) {
-      ids.push(this.formField.errorId());
-    }
-    return ids.length > 0 ? ids.join(' ') : null;
-  });
-
   constructor() {
-    afterRenderEffect(
-      syncFormFieldControlState(this.formField, {
-        displayError: () => this.displayError(),
-        effectiveInvalid: () => this.effectiveInvalid(),
-        required: () => this.required(),
-        usesLegend: () => true,
-      }),
-    );
+    super();
+    this.initBase({
+      errors: this.errors,
+      invalid: this.invalid,
+      required: this.required,
+      value: this.value,
+      usesLegend: computed(() => true),
+    });
   }
 
   optionInputId(optionValue: string): string {
@@ -119,12 +91,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
     }
   }
 
-  onShellFocusin(): void {
-    tabFocusState.attach();
-    this.fieldFocusByTab.set(tabFocusState.takeNextFocusIsFromTab());
-  }
-
-  onShellFocusout(event: FocusEvent): void {
+  override onControlRowFocusout(event: FocusEvent): void {
     if (!(event.currentTarget instanceof HTMLElement)) {
       return;
     }
