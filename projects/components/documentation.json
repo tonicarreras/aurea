@@ -1690,6 +1690,16 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1705,16 +1715,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Design system',\n    variant: 'filled',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "Default",
@@ -1790,21 +1790,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/message/message.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    variant: 'default',\n    message: 'Neutral callout without a leading icon — only semantic variants show one.',\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/menu/menu.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <au-button auMenuTrigger variant=\"outline\">Actions</au-button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/message/message.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'default',\n    message: 'Neutral callout without a leading icon — only semantic variants show one.',\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2220,21 +2220,21 @@
                 "name": "LargeSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"lg\"`** (`data-au-size=\"lg\"`) — 24x24 target (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    label: 'Large touch target',\n    size: 'lg',\n  },\n}"
-            },
-            {
-                "name": "LargeSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
+                "name": "LargeSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"lg\"`** (`data-au-size=\"lg\"`) — 24x24 target (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    label: 'Large touch target',\n    size: 'lg',\n  },\n}"
             },
             {
                 "name": "LargeSize",
@@ -2320,6 +2320,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuCard>",
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2345,16 +2355,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuChip>",
                 "defaultValue": "{\n  title: 'Aurea/Chip',\n  component: AuChip,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('chip'),\n  argTypes: {\n    label: {\n      control: 'text',\n      description: 'Visible chip text (or use projected content when empty).',\n      table: { category: 'Content' },\n    },\n    variant: {\n      control: 'select',\n      options: ['filled', 'outline', 'accent'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'State' },\n    },\n    removable: {\n      control: 'boolean',\n      description: 'Shows a remove button; emits `removed`.',\n      table: { category: 'Behavior' },\n    },\n    selectable: {\n      control: 'boolean',\n      description: 'Toggle filter chip with `aria-pressed` and `[(selected)]`.',\n      table: { category: 'Behavior' },\n    },\n    selected: {\n      control: 'boolean',\n      table: { category: 'Value' },\n    },\n    removeLabel: {\n      control: 'text',\n      description: 'Accessible name for the remove control.',\n      table: { category: 'Accessibility' },\n    },\n    removed: { table: { category: 'Events' } },\n    selectedChange: { table: { category: 'Events' } },\n    click: { table: { category: 'Events' } },\n  },\n  args: {\n    label: 'Design system',\n    removed: fn(),\n    selectedChange: fn(),\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuCard>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2460,21 +2460,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/message/message.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuMessage>",
-                "defaultValue": "{\n  title: 'Aurea/Message',\n  component: AuMessage,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('message'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: variants,\n      table: { category: 'Appearance' },\n    },\n    title: { control: 'text', table: { category: 'Content' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    dismissible: { control: 'boolean', table: { category: 'Behavior' } },\n    showIcon: {\n      control: 'boolean',\n      description: 'Semantic icon only (success, warning, error, info). Default never shows one.',\n      table: { category: 'Appearance' },\n    },\n    closeAriaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    variant: 'info',\n    title: '',\n    message: 'Your session will expire in 10 minutes.',\n    dismissible: false,\n    showIcon: true,\n    closeAriaLabel: 'Dismiss message',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/menu/menu.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuMenu>",
                 "defaultValue": "{\n  title: 'Aurea/Menu',\n  component: AuMenu,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('menu'),\n  argTypes: {\n    open: {\n      control: 'boolean',\n      description: 'Whether the panel is open (`[(open)]`).',\n      table: { category: 'State' },\n    },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'left', 'right'],\n      description: 'Preferred panel position; flips when needed.',\n      table: { category: 'Layout' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Prevents opening the menu.',\n      table: { category: 'State' },\n    },\n    openChange: {\n      description: 'Emits when open state changes.',\n      table: { category: 'Events' },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/message/message.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuMessage>",
+                "defaultValue": "{\n  title: 'Aurea/Message',\n  component: AuMessage,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('message'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: variants,\n      table: { category: 'Appearance' },\n    },\n    title: { control: 'text', table: { category: 'Content' } },\n    message: { control: 'text', table: { category: 'Content' } },\n    dismissible: { control: 'boolean', table: { category: 'Behavior' } },\n    showIcon: {\n      control: 'boolean',\n      description: 'Semantic icon only (success, warning, error, info). Default never shows one.',\n      table: { category: 'Appearance' },\n    },\n    closeAriaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    variant: 'info',\n    title: '',\n    message: 'Your session will expire in 10 minutes.',\n    dismissible: false,\n    showIcon: true,\n    closeAriaLabel: 'Dismiss message',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2932,6 +2932,16 @@
                 "name": "SmallSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
+                "name": "SmallSize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/checkbox/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2947,16 +2957,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    label: 'Compact',\n    size: 'sm',\n  },\n}"
-            },
-            {
-                "name": "SmallSize",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "SmallSize",
@@ -2982,21 +2982,21 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{ imports: [AuButton] }"
-            },
-            {
-                "name": "storyImports",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuCard] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{ imports: [AuButton] }"
             },
             {
                 "name": "storyImports",
@@ -3910,6 +3910,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuCard>",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuButton>",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
@@ -3934,17 +3945,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuChip>",
                 "file": "projects/components/src/lib/chip/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuCard>",
-                "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4064,8 +4064,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuMessage>",
-                "file": "projects/components/src/lib/message/message.stories.ts",
+                "rawtype": "StoryObj",
+                "file": "projects/components/src/lib/menu/menu.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4075,8 +4075,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj",
-                "file": "projects/components/src/lib/menu/menu.stories.ts",
+                "rawtype": "StoryObj<AuMessage>",
+                "file": "projects/components/src/lib/message/message.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6802,6 +6802,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/card/card.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuCard>",
+                    "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
@@ -6835,19 +6848,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuChip>",
                     "file": "projects/components/src/lib/chip/chip.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/card/card.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuCard>",
-                    "file": "projects/components/src/lib/card/card.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -6971,19 +6971,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/message/message.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuMessage>",
-                    "file": "projects/components/src/lib/message/message.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/menu/menu.stories.ts": [
                 {
                     "name": "Story",
@@ -6991,6 +6978,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj",
                     "file": "projects/components/src/lib/menu/menu.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/message/message.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuMessage>",
+                    "file": "projects/components/src/lib/message/message.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

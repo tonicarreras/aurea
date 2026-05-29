@@ -45,7 +45,7 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-text-label', description: 'Visible label above the field.' },
     { token: '--au-color-form-error', description: 'Border and message on error.' },
     { token: '--au-color-form-error-bg', description: 'Shell background in invalid state.' },
-    { token: '--au-radius-field', description: 'Field box radius (2px by default).' },
+    { token: '--au-radius-field', description: 'Field box radius (4px by default).' },
     {
       token: '--au-size-field-h-md',
       description: 'Control height; sm/lg use the matching size tokens.',

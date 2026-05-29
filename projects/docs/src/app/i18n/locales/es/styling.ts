@@ -48,7 +48,7 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-text-label', description: 'Etiqueta visible encima del campo.' },
     { token: '--au-color-form-error', description: 'Borde y mensaje cuando hay error.' },
     { token: '--au-color-form-error-bg', description: 'Fondo del shell en estado inválido.' },
-    { token: '--au-radius-field', description: 'Radio de la caja del campo (2px por defecto).' },
+    { token: '--au-radius-field', description: 'Radio de la caja del campo (4px por defecto).' },
     {
       token: '--au-size-field-h-md',
       description: 'Altura del control; sm/lg usan las variantes homónimas.',

@@ -67,18 +67,18 @@
 
 /* Radii: scale + semantic tiers (components use tiers, not raw sm/md/lg) */
 :root {
-  --au-radius-2xs: 0.0625rem; /* 1px — nearly square */
-  --au-radius-xs: 0.125rem; /* 2px */
-  --au-radius-sm: 0.25rem; /* 4px */
-  --au-radius-md: 0.375rem; /* 6px — legacy; prefer tiers below */
-  --au-radius-lg: 0.5rem; /* 8px */
-  --au-radius-xl: 0.75rem; /* 12px */
+  --au-radius-2xs: 0.125rem; /* 2px — nearly square */
+  --au-radius-xs: 0.25rem; /* 4px */
+  --au-radius-sm: 0.375rem; /* 6px */
+  --au-radius-md: 0.5rem; /* 8px — legacy; prefer tiers below */
+  --au-radius-lg: 0.75rem; /* 12px */
+  --au-radius-xl: 1rem; /* 16px */
   --au-radius-pill: 9999px;
   /* Semantic tiers */
-  --au-radius-field: var(--au-radius-xs); /* inputs, checkbox */
-  --au-radius-control: var(--au-radius-sm); /* buttons, chips, menu rows, tabs */
-  --au-radius-surface: var(--au-radius-lg); /* cards, tables, overlays, snackbar */
-  --au-radius-modal: var(--au-radius-xl); /* dialogs */
+  --au-radius-field: var(--au-radius-xs); /* inputs, checkbox — 4px */
+  --au-radius-control: var(--au-radius-sm); /* buttons, chips, menu rows, tabs — 6px */
+  --au-radius-surface: var(--au-radius-lg); /* cards, tables, overlays, snackbar — 12px */
+  --au-radius-modal: var(--au-radius-xl); /* dialogs — 16px */
   --au-radius-full: var(--au-radius-pill); /* badge, progress, switch track */
   --au-radius-dot: 50%; /* thumbs, spinners */
 }
