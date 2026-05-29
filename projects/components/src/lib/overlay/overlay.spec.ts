@@ -139,6 +139,7 @@ describe('TooltipOverlay', () => {
     const anchor = document.createElement('span');
     anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
     const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
     bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
     wrap.append(anchor, bubble);
     document.body.append(wrap);
@@ -148,7 +149,9 @@ describe('TooltipOverlay', () => {
     expect(placement).toBe('bottom');
     expect(bubble.classList.contains('au-tooltip__bubble--overlay')).toBe(true);
     expect(bubble.style.position).toBe('fixed');
+    expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
     overlay.detach();
+    expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).toBe('');
     wrap.remove();
   });
 

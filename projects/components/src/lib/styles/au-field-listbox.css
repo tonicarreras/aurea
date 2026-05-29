@@ -38,6 +38,7 @@
   z-index: var(--au-z-dropdown);
   inset-inline: auto;
   top: auto;
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
 }
 
 .au-field-listbox__option {
@@ -178,5 +179,9 @@
 @media (prefers-reduced-motion: reduce) {
   .au-field-listbox {
     scroll-behavior: auto;
+  }
+
+  .au-field-listbox--overlay {
+    animation: none;
   }
 }

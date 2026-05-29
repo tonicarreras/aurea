@@ -7,11 +7,6 @@
     "project": {
       "type": "string",
       "description": "Angular project name (defaults to defaultProject or first app)"
-    },
-    "includeListboxStyles": {
-      "type": "boolean",
-      "description": "Also add au-field-listbox.css for select/autocomplete",
-      "default": true
     }
   }
 }

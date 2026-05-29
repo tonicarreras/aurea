@@ -39,7 +39,6 @@
   ],
   "exports": {
     "./styles/au-tokens.css": "./styles/au-tokens.css",
-    "./styles/au-field-error.css": "./styles/au-field-error.css",
-    "./styles/au-field-listbox.css": "./styles/au-field-listbox.css"
+    "./styles/aurea-global.css": "./styles/aurea-global.css"
   }
 }

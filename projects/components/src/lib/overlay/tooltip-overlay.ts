@@ -72,6 +72,9 @@ export class TooltipOverlay {
     for (const prop of ['position', 'top', 'left', 'inset-inline-start', 'inset-inline-end']) {
       bubble.style.removeProperty(prop);
     }
+    bubble.style.removeProperty('--au-floating-arrow-x');
+    bubble.style.removeProperty('--au-floating-arrow-y');
+    bubble.removeAttribute('data-au-placement');
     if (this.anchor?.parentNode && bubble.isConnected) {
       this.anchor.parentNode.insertBefore(bubble, this.anchor);
       this.anchor.remove();
@@ -102,7 +105,10 @@ export class TooltipOverlay {
   ): AuTooltipPlacement {
     this.activeAnchor = anchor;
     this.resolvedPlacement = placement;
-    const gap = readCssLengthPx(this.document, '--au-tooltip-gap', 12);
+    const isFloatingPanel = bubble.classList.contains('au-floating-panel');
+    const gap = isFloatingPanel
+      ? readCssLengthPx(this.document, '--au-floating-gap', 10)
+      : readCssLengthPx(this.document, '--au-tooltip-gap', 12);
     const anchorRect = anchor.getBoundingClientRect();
     const bubbleRect = this.measureBubble(bubble);
     const view = this.document.defaultView;
@@ -119,7 +125,26 @@ export class TooltipOverlay {
     bubble.style.insetInlineStart = '';
     bubble.style.insetInlineEnd = '';
     bubble.setAttribute('data-au-placement', result.placement);
+    if (isFloatingPanel) {
+      this.syncFloatingArrow(bubble, anchorRect, result, bubbleRect);
+    }
     return result.placement;
+  }
+
+  private syncFloatingArrow(
+    bubble: HTMLElement,
+    anchorRect: DOMRect,
+    coords: { top: number; left: number },
+    bubbleRect: DOMRect,
+  ): void {
+    const arrowSize = readCssLengthPx(this.document, '--au-floating-arrow-size', 10);
+    const inset = arrowSize + 12;
+    const anchorCenterX = anchorRect.left + anchorRect.width / 2;
+    const anchorCenterY = anchorRect.top + anchorRect.height / 2;
+    const x = clampValue(anchorCenterX - coords.left, inset, bubbleRect.width - inset);
+    const y = clampValue(anchorCenterY - coords.top, inset, bubbleRect.height - inset);
+    bubble.style.setProperty('--au-floating-arrow-x', `${x}px`);
+    bubble.style.setProperty('--au-floating-arrow-y', `${y}px`);
   }
 
   private measureBubble(bubble: HTMLElement): DOMRect {
@@ -141,4 +166,11 @@ export class TooltipOverlay {
     this.document.defaultView?.removeEventListener('scroll', this.onWindowChange, true);
     this.document.defaultView?.removeEventListener('resize', this.onWindowChange);
   }
+}
+
+function clampValue(value: number, min: number, max: number): number {
+  if (max < min) {
+    return (min + max) / 2;
+  }
+  return Math.min(Math.max(value, min), max);
 }

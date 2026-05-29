@@ -42,13 +42,7 @@ In `angular.json` → `styles`, or in `src/styles.scss`:
 
 ```scss
 @import '@aurea-design-system/components/styles/au-tokens.css';
-```
-
-Optional (form/listbox overlays):
-
-```scss
-@import '@aurea-design-system/components/styles/au-field-error.css';
-@import '@aurea-design-system/components/styles/au-field-listbox.css';
+@import '@aurea-design-system/components/styles/aurea-global.css';
 ```
 
 ### 2. Schematic (optional)

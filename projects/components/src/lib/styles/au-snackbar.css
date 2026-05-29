@@ -1,5 +1,6 @@
 /**
- * Snackbar — transient feedback toast aligned with Aurea surfaces.
+ * Snackbar — portaled to document.body.
+ * Included in aurea-global.css; also loaded via au-snackbar styleUrl.
  */
 
 au-snackbar {
@@ -65,10 +66,10 @@ au-snackbar .au-snackbar__surface {
   border: 1px solid var(--au-color-border-default);
   border-radius: var(--au-radius-lg);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-float);
+  box-shadow: var(--au-shadow-floating, var(--au-shadow-float));
   color: var(--au-color-text-primary);
   pointer-events: auto;
-  animation: au-snackbar-in var(--au-motion-toast);
+  animation: au-snackbar-in var(--au-motion-toast) both;
 }
 
 au-snackbar[data-au-variant='default'] .au-snackbar__surface,
@@ -199,12 +200,12 @@ au-snackbar .au-snackbar__close:focus-visible {
 @keyframes au-snackbar-in {
   from {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(0.75rem) scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -215,12 +216,12 @@ au-snackbar[data-au-position^='top'] .au-snackbar__surface {
 @keyframes au-snackbar-in-top {
   from {
     opacity: 0;
-    transform: translateY(-0.5rem);
+    transform: translateY(-0.75rem) scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 

@@ -40,8 +40,11 @@ button.au-button__element {
   user-select: none;
   box-shadow: var(--au-shadow-button);
   transition:
-    var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
-    var(--au-transition-color);
+    var(--au-transition-background),
+    var(--au-transition-border),
+    var(--au-transition-shadow),
+    var(--au-transition-color),
+    transform var(--au-motion-control);
   white-space: nowrap;
 }
 
@@ -85,11 +88,13 @@ button.au-button__element {
   background: var(--au-color-action-primary-hover);
   border-color: var(--au-color-action-primary-hover);
   box-shadow: var(--au-shadow-button-hover);
+  transform: translateY(-1px);
 }
 
 :host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-action-primary-pressed);
   border-color: var(--au-color-action-primary-pressed);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Secondary: filled surface, accent text */
@@ -103,10 +108,12 @@ button.au-button__element {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-strong);
   box-shadow: var(--au-shadow-button-hover);
+  transform: translateY(-1px);
 }
 
 :host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Outline: border-only, transparent background */
@@ -214,6 +221,13 @@ button.au-button__element {
 
 @media (prefers-reduced-motion: reduce) {
   .au-button__element {
-    transition: none;
+    transition:
+      var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
+      var(--au-transition-color);
+  }
+
+  .au-button__element:hover:not(:disabled),
+  .au-button__element:active:not(:disabled) {
+    transform: none;
   }
 }

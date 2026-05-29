@@ -116,8 +116,8 @@
   --au-z-header: 40;
   --au-z-drawer: 50;
   --au-z-modal: 100;
-  --au-z-toast: 200;
-  --au-z-max: 9999;
+  --au-z-toast: 10000;
+  --au-z-max: 10000;
 }
 
 /* Tooltip — portaled bubble (must set font on the bubble; not inherited from host) */
@@ -156,19 +156,137 @@
 
 /* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
 .au-floating-panel {
+  --au-floating-panel-bg: color-mix(in srgb, var(--au-color-surface-raised) 90%, transparent);
+  --au-floating-panel-border: color-mix(in srgb, var(--au-color-border-subtle) 88%, transparent);
+
+  position: relative;
   box-sizing: border-box;
-  border-radius: var(--au-radius-md);
-  background: var(--au-color-surface-elevated);
+  overflow: visible;
+  border-radius: var(--au-radius-lg);
+  background: var(--au-floating-panel-bg);
   color: var(--au-color-text-primary);
-  border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-overlay);
+  border: 1px solid var(--au-floating-panel-border);
+  box-shadow: var(--au-shadow-floating);
   font-family: var(--au-font-sans);
   z-index: var(--au-z-dropdown);
   pointer-events: auto;
+  -webkit-backdrop-filter: blur(var(--au-floating-blur)) saturate(1.15);
+  backdrop-filter: blur(var(--au-floating-blur)) saturate(1.15);
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay {
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='top'] {
+  animation-name: au-floating-enter-top;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='start'] {
+  animation-name: au-floating-enter-start;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='end'] {
+  animation-name: au-floating-enter-end;
+}
+
+/* Caret — points at trigger; position from overlay JS (--au-floating-arrow-x/y) */
+.au-floating-panel.au-tooltip__bubble--overlay::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: var(--au-floating-arrow-size);
+  height: var(--au-floating-arrow-size);
+  box-sizing: border-box;
+  background: var(--au-floating-panel-bg);
+  border: 1px solid var(--au-floating-panel-border);
+  pointer-events: none;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='bottom']::before {
+  left: var(--au-floating-arrow-x, 50%);
+  top: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='top']::before {
+  left: var(--au-floating-arrow-x, 50%);
+  bottom: 0;
+  transform: translate(-50%, 50%) rotate(45deg);
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='start']::before {
+  top: var(--au-floating-arrow-y, 50%);
+  right: 0;
+  transform: translate(50%, -50%) rotate(45deg);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='end']::before {
+  top: var(--au-floating-arrow-y, 50%);
+  left: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-top-color: transparent;
+  border-right-color: transparent;
 }
 
 .au-floating-panel--overlay {
   position: fixed;
+}
+
+@keyframes au-floating-enter-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes au-floating-enter-top {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes au-floating-enter-start {
+  from {
+    opacity: 0;
+    transform: translateX(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes au-floating-enter-end {
+  from {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-floating-panel.au-tooltip__bubble--overlay {
+    animation: none;
+  }
 }
 
 /* UI transitions: one easing for color, one “logical” for motion */
@@ -196,6 +314,13 @@
   --au-motion-control: var(--au-duration-short) var(--au-ease-in-out);
   --au-motion-modal: var(--au-duration-default) var(--au-ease-standard);
   --au-motion-toast: var(--au-duration-slow) var(--au-ease-out);
+  --au-motion-floating: 240ms var(--au-ease-emph);
+  --au-floating-gap: 0.625rem;
+  --au-floating-arrow-size: 0.625rem;
+  --au-floating-blur: 14px;
+  --au-shadow-floating:
+    0 0 0 1px color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent),
+    0 2px 4px -1px rgba(15, 20, 26, 0.06), 0 14px 36px -6px rgba(15, 20, 26, 0.14);
   --au-transition-motion-tap:
     transform var(--au-motion-tap), box-shadow var(--au-motion-tap),
     background-color var(--au-motion-tap), border-color var(--au-motion-tap);
@@ -541,6 +666,9 @@
   --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
   --au-shadow-float: 0 6px 18px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.28);
   --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 48px rgba(0, 0, 0, 0.48);
+  --au-shadow-floating:
+    0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.36),
+    0 18px 40px -8px rgba(0, 0, 0, 0.52);
   --au-shadow-button: var(--au-shadow-control);
   --au-shadow-button-primary:
     0 1px 3px color-mix(in srgb, var(--au-color-action-primary) 42%, transparent),

@@ -1620,7 +1620,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "StorybookConfig",
-                "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
+                "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/styles', to: '/au-styles' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
                 "rawdescription": "In Storybook 10 the **Interactions** panel (debug `play`) lives in the manager by default;\nyou do not need `@storybook/addon-interactions` (still a separate v8/9 package on npm).",
                 "description": "<p>In Storybook 10 the <strong>Interactions</strong> panel (debug <code>play</code>) lives in the manager by default;\nyou do not need <code>@storybook/addon-interactions</code> (still a separate v8/9 package on npm).</p>\n"
             },
@@ -5188,7 +5188,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "StorybookConfig",
-                    "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
+                    "defaultValue": "{\n  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],\n  staticDirs: [\n    { from: '../src/lib/tokens', to: '/au-tokens' },\n    { from: '../src/lib/styles', to: '/au-styles' },\n    { from: '../src/lib/storybook', to: '/au-storybook' },\n  ],\n  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-onboarding'],\n  framework: '@storybook/angular',\n}",
                     "rawdescription": "In Storybook 10 the **Interactions** panel (debug `play`) lives in the manager by default;\nyou do not need `@storybook/addon-interactions` (still a separate v8/9 package on npm).",
                     "description": "<p>In Storybook 10 the <strong>Interactions</strong> panel (debug <code>play</code>) lives in the manager by default;\nyou do not need <code>@storybook/addon-interactions</code> (still a separate v8/9 package on npm).</p>\n"
                 }
