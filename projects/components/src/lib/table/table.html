@@ -35,6 +35,8 @@
                   (click)="$event.stopPropagation()"
                   (checkedChange)="setSelectAll($event)"
                 />
+              } @else {
+                <span class="au-table__caption--sr">{{ selectRowLabel() }}</span>
               }
             </th>
           }
