@@ -71,8 +71,10 @@
   justify-content: center;
   align-self: flex-start;
   box-sizing: border-box;
-  width: var(--au-message-line-height);
-  height: var(--au-message-line-height);
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   margin: 0;
   margin-inline-start: calc(var(--au-space-1) * -1);
   padding: 0;

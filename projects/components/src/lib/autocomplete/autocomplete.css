@@ -13,8 +13,6 @@
   text-rendering: optimizeLegibility;
 }
 
-
-
 .au-autocomplete__field {
   display: flex;
   flex-direction: column;

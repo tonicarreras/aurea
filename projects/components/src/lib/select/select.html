@@ -61,7 +61,10 @@
         class="au-field-listbox__item au-field-listbox__item--loading"
         role="status"
       >
-        <span class="au-field-listbox__loading-indicator" aria-hidden="true"></span>
+        <span
+          class="au-field-listbox__loading-indicator"
+          aria-hidden="true"
+        ></span>
         Loading…
       </div>
     } @else if (showEmpty()) {
@@ -85,7 +88,9 @@
             class="au-field-listbox__option au-field-listbox__option--placeholder"
             role="option"
             [attr.aria-selected]="value() === null"
-            [class.au-field-listbox__option--active]="highlightedIndex() === placeholderOptionIndex()"
+            [class.au-field-listbox__option--active]="
+              highlightedIndex() === placeholderOptionIndex()
+            "
             (mouseenter)="onOptionPointerEnter(placeholderOptionIndex())"
             (mousedown)="onPlaceholderPointerDown($event)"
           >

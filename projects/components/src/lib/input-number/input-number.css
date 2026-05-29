@@ -11,8 +11,6 @@
   text-rendering: optimizeLegibility;
 }
 
-
-
 .au-input-number__field {
   display: flex;
   flex-direction: column;

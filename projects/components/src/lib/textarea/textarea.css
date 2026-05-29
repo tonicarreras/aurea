@@ -29,8 +29,6 @@
   --au-textarea-pad-y: 0.6rem;
 }
 
-
-
 .au-textarea__field {
   display: flex;
   flex-direction: column;

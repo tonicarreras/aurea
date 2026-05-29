@@ -137,14 +137,18 @@ button.au-chip__surface:disabled {
 }
 
 :host([data-au-size='sm']) .au-chip__remove {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
 }
 
 :host([data-au-size='md']) .au-chip__remove,
 :host(:not([data-au-size])) .au-chip__remove {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
 }
 
 .au-chip__remove au-icon {

@@ -146,6 +146,8 @@ au-snackbar .au-snackbar__actions {
 
 au-snackbar .au-snackbar__action {
   flex-shrink: 0;
+  min-width: 2rem;
+  min-height: 2rem;
   padding: var(--au-space-1) var(--au-space-2);
   border: none;
   border-radius: var(--au-radius-sm);

@@ -44,7 +44,7 @@ describe('AuTabs', () => {
     const list = fix.debugElement.query(By.css('.au-tabs__list'))!.nativeElement;
     expect(list.getAttribute('role')).toBe('tablist');
     expect(list.getAttribute('aria-label')).toBe('Demo tabs');
-    expect(list.getAttribute('aria-orientation')).toBe('horizontal');
+    expect(list.getAttribute('aria-orientation')).toBeNull();
   });
 
   it('selects first tab when value is empty', async () => {
