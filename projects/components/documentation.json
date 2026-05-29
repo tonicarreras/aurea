@@ -2714,7 +2714,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                 "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                 "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
             },
@@ -3400,6 +3400,35 @@
             }
         ],
         "functions": [
+            {
+                "name": "applyAuDensityFromGlobals",
+                "file": "projects/components/.storybook/preview.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "globals",
+                        "type": "Record",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "void",
+                "jsdoctags": [
+                    {
+                        "name": "globals",
+                        "type": "Record",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
             {
                 "name": "applyAuThemeFromGlobals",
                 "file": "projects/components/.storybook/preview.ts",
@@ -6191,7 +6220,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                     "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
                     "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
                 }
@@ -6199,6 +6228,35 @@
         },
         "groupedFunctions": {
             "projects/components/.storybook/preview.ts": [
+                {
+                    "name": "applyAuDensityFromGlobals",
+                    "file": "projects/components/.storybook/preview.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "globals",
+                            "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "void",
+                    "jsdoctags": [
+                        {
+                            "name": "globals",
+                            "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "applyAuThemeFromGlobals",
                     "file": "projects/components/.storybook/preview.ts",
@@ -7086,6 +7144,16 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "projects/components/.storybook/preview.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "applyAuDensityFromGlobals",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "projects/components/.storybook/preview.ts",

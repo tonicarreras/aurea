@@ -1,7 +1,6 @@
 /**
  * Switch — pill toggle from native checkbox + role="switch".
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {

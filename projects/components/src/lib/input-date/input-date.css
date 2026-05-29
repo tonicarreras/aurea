@@ -1,7 +1,6 @@
 /**
  * Input date — same field chrome as au-input-number.
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {

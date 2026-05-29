@@ -1,7 +1,6 @@
 /**
  * Radio group — fieldset + native radios (no outer field shell; aligned with checkbox).
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {

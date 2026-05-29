@@ -1,7 +1,6 @@
 /**
  * Snackbar — transient feedback toast aligned with Aurea surfaces.
  */
-@import url('../tokens/au-tokens.css');
 
 au-snackbar {
   display: none;

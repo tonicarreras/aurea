@@ -1,7 +1,6 @@
 /**
  * Input number — same field chrome as au-input-text, native type="number".
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {

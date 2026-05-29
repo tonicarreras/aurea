@@ -1,7 +1,6 @@
 /**
  * Aurea Table — Material-style column API; encapsulation None.
  */
-@import url('../tokens/au-tokens.css');
 
 au-table {
   --au-table-shell-pad: var(--au-space-4);

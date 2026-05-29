@@ -2,7 +2,6 @@
  * Input text — built from scratch: crisp border, no faux-3D fill.
  * Size: `data-au-size` on host (sm | md | lg).
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {
