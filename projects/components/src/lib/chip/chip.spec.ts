@@ -230,11 +230,30 @@ describe('AuChip', () => {
   it('applies from-tab class on remove control after Tab focus', () => {
     fixture.componentRef.setInput('removable', true);
     fixture.detectChanges();
-    const removeDe = fixture.debugElement.query(By.css('.au-chip__remove'))!;
+    // Dispatch Tab first so tabFocusState sets the flag
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    removeDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    const remove = fixture.nativeElement.querySelector('.au-chip__remove') as HTMLButtonElement;
+    remove.dispatchEvent(new FocusEvent('focusin'));
     fixture.detectChanges();
-    expect(removeDe.nativeElement.classList.contains('au-chip__remove--from-tab')).toBe(true);
+    expect(remove.classList.contains('au-chip__remove--from-tab')).toBe(true);
+  });
+
+  it('renders ng-content fallback when label is empty', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.detectChanges();
+    // Static chip (non-selectable, non-removable) with empty label
+    expect(component.resolvedLabel()).toBe('');
+    const labelSpan = fixture.nativeElement.querySelector('.au-chip__label');
+    expect(labelSpan).toBeTruthy();
+  });
+
+  it('renders ng-content fallback in selectable chip when label is empty', () => {
+    fixture.componentRef.setInput('selectable', true);
+    fixture.componentRef.setInput('label', '');
+    fixture.detectChanges();
+    expect(component.resolvedLabel()).toBe('');
+    const labelSpan = fixture.nativeElement.querySelector('.au-chip__label');
+    expect(labelSpan).toBeTruthy();
   });
 });
 

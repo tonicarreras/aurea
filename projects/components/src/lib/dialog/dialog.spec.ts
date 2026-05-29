@@ -150,6 +150,18 @@ describe('AuDialog', () => {
     expect(emitted).toBe(true);
   });
 
+  it('triggers onDialogClose via native dialog close event', () => {
+    const fix = TestBed.createComponent(AuDialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    let emitted = false;
+    fix.componentInstance.close.subscribe(() => (emitted = true));
+    const dialogDe = fix.debugElement.query(By.css('.au-dialog__native'))!;
+    dialogDe.triggerEventHandler('close', new Event('close'));
+    fix.detectChanges();
+    expect(emitted).toBe(true);
+  });
+
   it('emits close on Escape via cancel when closeOnEscape is true', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);

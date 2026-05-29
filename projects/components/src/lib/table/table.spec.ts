@@ -378,6 +378,59 @@ describe('AuTableColumn', () => {
   });
 });
 
+describe('AuTable extra branches', () => {
+  it('shows loading row', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table [data]="[{ a: 1 }]" [loading]="true">
+          <au-table-column name="a" header="A" />
+        </au-table>
+      `,
+    })
+    class LoadingHost {}
+
+    await TestBed.configureTestingModule({ imports: [LoadingHost] }).compileComponents();
+    const fixture = TestBed.createComponent(LoadingHost);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.au-table__loading-row')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.au-table__loading-text')?.textContent).toContain(
+      'Loading',
+    );
+  });
+
+  it('renders sort desc icon', async () => {
+    const fixture = await createTableHost();
+    const root = fixture.nativeElement as HTMLElement;
+    const nameBtn = sortButtons(root)[0];
+    nameBtn.click(); // → asc
+    fixture.detectChanges();
+    nameBtn.click(); // → desc
+    fixture.detectChanges();
+    // desc SVG uses path: "M8 13V3..."
+    const svg = root.querySelector('.au-table__sort-icon svg path') as SVGPathElement;
+    expect(svg?.getAttribute('d')).toContain('M8 13');
+  });
+
+  it('renders without description when description is unset', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table [data]="[{ a: 1 }]" title="People">
+          <au-table-column name="a" header="A" />
+        </au-table>
+      `,
+    })
+    class NoDescHost {}
+
+    await TestBed.configureTestingModule({ imports: [NoDescHost] }).compileComponents();
+    const fix = TestBed.createComponent(NoDescHost);
+    fix.detectChanges();
+    expect(fix.nativeElement.querySelector('.au-table__title')?.textContent?.trim()).toBe('People');
+    expect(fix.nativeElement.querySelector('.au-table__description')).toBeFalsy();
+  });
+});
+
 describe('AuTable accessor column', () => {
   it('uses accessor for numeric sort compare', async () => {
     await TestBed.configureTestingModule({ imports: [AccessorHost] }).compileComponents();

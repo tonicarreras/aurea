@@ -171,9 +171,21 @@ describe('AuCheckbox', () => {
     expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Required field');
   });
 
+  it('renders only description when label is empty', () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.label = '';
+      f.componentInstance.description = 'Just description';
+    });
+    const content = fix.debugElement.query(By.css('.au-checkbox__content'));
+    expect(content).toBeTruthy();
+    const label = fix.debugElement.query(By.css('.au-checkbox__label'));
+    expect(label).toBeNull();
+    const desc = fix.debugElement.query(By.css('.au-checkbox__description'));
+    expect(desc?.nativeElement.textContent?.trim()).toBe('Just description');
+  });
+
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
-      f.componentInstance.label = 'Agree';
       f.componentInstance.errors = [{ kind: 'pattern' }] as any;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));

@@ -6,7 +6,6 @@ import {
   inject,
   input,
   output,
-  viewChild,
 } from '@angular/core';
 
 import { AU_MENU } from './au-menu.token';
@@ -30,24 +29,28 @@ import { AU_MENU } from './au-menu.token';
 export class AuMenuItem {
   private readonly menu = inject(AU_MENU);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly host = inject(ElementRef<HTMLElement>);
 
   readonly disabled = input(false);
   readonly select = output<void>();
-
-  protected readonly btnRef = viewChild<ElementRef<HTMLButtonElement>>('buttonEl');
 
   constructor() {
     this.menu.registerMenuItem(this);
     this.destroyRef.onDestroy(() => this.menu.unregisterMenuItem(this));
   }
 
+  private buttonEl(): HTMLButtonElement {
+    return (this.host.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
+      '.au-menu-item__btn',
+    )!;
+  }
+
   focus(): void {
-    this.btnRef()?.nativeElement.focus();
+    this.buttonEl().focus();
   }
 
   containsElement(el: Node): boolean {
-    const btn = this.btnRef()?.nativeElement;
-    return btn?.contains(el) ?? false;
+    return this.buttonEl().contains(el);
   }
 
   protected onClick(event: MouseEvent): void {

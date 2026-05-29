@@ -1,10 +1,11 @@
-import { Injector, runInInjectionContext } from '@angular/core';
+import { Component, Injector, runInInjectionContext } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuSelect, AuSelectOption } from './select';
+import { AuFormField } from '../form-field/form-field';
 import {
   AuSelectTestHost,
   applyFieldHarnessInputs,
@@ -1014,5 +1015,45 @@ describe('AuSelect', () => {
         .query(By.css('.au-field-listbox__option--active'))
         ?.nativeElement.textContent?.trim(),
     ).toBe('Two');
+  });
+
+  it('renders hidden input with empty value when value is null', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.name = 'country';
+    });
+    const hidden = fix.debugElement.query(By.css('input[type="hidden"]'))
+      .nativeElement as HTMLInputElement;
+    expect(hidden.name).toBe('country');
+    expect(hidden.value).toBe('');
+  });
+
+  it('shows loading indicator when loading and listbox visible', async () => {
+    @Component({
+      imports: [AuFormField, AuSelect],
+      template: `
+        <au-form-field>
+          <au-select
+            [options]="options"
+            [loading]="true"
+            [placeholder]="'Pick'"
+          />
+        </au-form-field>
+      `,
+    })
+    class SelectLoadingHost {
+      options = testOptions;
+    }
+
+    await TestBed.configureTestingModule({ imports: [SelectLoadingHost] }).compileComponents();
+    const fix = TestBed.createComponent(SelectLoadingHost);
+    fix.detectChanges();
+    // Open the listbox
+    const trigger = fix.debugElement.query(By.css('.au-select__trigger'))!.nativeElement as HTMLElement;
+    trigger.click();
+    fix.detectChanges();
+    const loadingEl = fix.debugElement.query(By.css('.au-field-listbox__item--loading'));
+    expect(loadingEl).toBeTruthy();
+    expect(loadingEl.nativeElement.textContent).toContain('Loading');
   });
 });

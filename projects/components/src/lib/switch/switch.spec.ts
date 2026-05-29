@@ -182,4 +182,14 @@ describe('AuSwitch', () => {
     control(fix).onBlurHost();
     expect(n).toBe(1);
   });
+
+  it('shows required asterisk', () => {
+    const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
+      f.componentInstance.required = true;
+      f.componentInstance.label = 'Accept';
+    });
+    const switchEl = fix.debugElement.query(By.css('.au-switch')).nativeElement as HTMLElement;
+    expect(switchEl.textContent).toContain('*');
+    expect(switchEl.textContent).toContain('(required)');
+  });
 });
