@@ -1,3 +1,9 @@
-@if (hasLabel()) {
-  <span class="au-badge__label">{{ resolvedLabel() }}</span>
+@if (!dot()) {
+  <span class="au-badge__label">
+    @if (hasLabel()) {
+      {{ resolvedLabel() }}
+    } @else {
+      <ng-content />
+    }
+  </span>
 }

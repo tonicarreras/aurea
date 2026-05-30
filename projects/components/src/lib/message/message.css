@@ -2,7 +2,6 @@
  * Aurea Message — inline callouts (default + semantic variants).
  * Variant: `data-au-variant` on host.
  */
-@import url('../tokens/au-tokens.css');
 
 :host {
   display: block;
@@ -13,18 +12,22 @@
 }
 
 .au-message__surface {
-  --au-message-line-height: calc(var(--au-text-sm) * var(--au-leading-snug));
+  --au-message-icon-size: 1.25rem;
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--au-space-3);
   box-sizing: border-box;
   padding: var(--au-space-3) var(--au-space-4);
   border: 1px solid var(--au-message-border, var(--au-color-border-default));
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   background: var(--au-message-bg, var(--au-color-surface-elevated));
   color: var(--au-message-text, var(--au-color-text-primary));
   box-shadow: var(--au-shadow-raised);
+}
+
+:host(:has(.au-message__title)) .au-message__surface {
+  align-items: flex-start;
 }
 
 .au-message__icon {
@@ -32,9 +35,13 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: var(--au-message-line-height);
-  height: var(--au-message-line-height);
   color: var(--au-message-accent, var(--au-color-text-secondary));
+}
+
+:host(:has(.au-message__title)) .au-message__icon {
+  margin-block-start: calc(
+    (var(--au-text-sm) * var(--au-leading-snug) - var(--au-message-icon-size)) / 2
+  );
 }
 
 .au-message__icon au-icon {
@@ -70,19 +77,26 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
+  align-self: center;
   box-sizing: border-box;
-  width: var(--au-message-line-height);
-  height: var(--au-message-line-height);
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   margin: 0;
   margin-inline-start: calc(var(--au-space-1) * -1);
   padding: 0;
   border: 0;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   background: transparent;
   color: inherit;
   cursor: pointer;
   transition: var(--au-transition-background), var(--au-transition-color);
+}
+
+:host(:has(.au-message__title)) .au-message__close {
+  align-self: flex-start;
+  margin-block-start: calc((var(--au-text-sm) * var(--au-leading-snug) - 1.5rem) / 2);
 }
 
 .au-message__close:hover {

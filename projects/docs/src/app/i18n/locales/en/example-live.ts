@@ -165,4 +165,36 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     endText: 'Appears at the end (inline-end)',
     endButton: 'End',
   },
+  table: {
+    caption: 'Team members',
+    colName: 'Name',
+    colRole: 'Role',
+    colScore: 'Score',
+    colStatus: 'Status',
+    row1Name: 'Ada Lovelace',
+    row1Role: 'Engineer',
+    row2Name: 'Grace Hopper',
+    row2Role: 'Admiral',
+    row3Name: 'Katherine Johnson',
+    row3Role: 'Mathematician',
+    statusActive: 'Active',
+    statusAway: 'Away',
+    singleSelect: {
+      title: 'Pick one member',
+      description: 'Single selection — only one row can be checked at a time.',
+    },
+    multipleSelect: {
+      title: 'Team members',
+      description: 'Multi-select with header checkbox and indeterminate state.',
+    },
+    customCell: {
+      title: 'Team members',
+      description: 'Rich cells with `auTableCell` templates (badges, menus, etc.).',
+    },
+    loading: {
+      title: 'Team members',
+      description: 'Loading state while data is fetched.',
+      message: 'Loading team…',
+    },
+  },
 };

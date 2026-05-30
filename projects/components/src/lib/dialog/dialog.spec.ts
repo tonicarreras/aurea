@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuDialog } from './dialog';
 import { AuDialogFooter } from './dialog-footer.directive';
+import { resetPageScrollLockForTests } from '../overlay/page-scroll-lock';
 import {
   focusInitialInDialogPanel,
   getDialogFocusableElements,
@@ -33,6 +34,11 @@ describe('AuDialog', () => {
     await TestBed.configureTestingModule({
       imports: [AuDialog],
     }).compileComponents();
+    resetPageScrollLockForTests();
+  });
+
+  afterEach(() => {
+    resetPageScrollLockForTests();
   });
 
   it('keeps native dialog closed when open is false', () => {
@@ -47,6 +53,18 @@ describe('AuDialog', () => {
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
+  });
+
+  it('locks page scroll while open', () => {
+    const fix = TestBed.createComponent(AuDialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.documentElement.style.overflow).toBe('hidden');
+    fix.componentRef.setInput('open', false);
+    fix.detectChanges();
+    expect(document.body.style.overflow).toBe('');
+    expect(document.documentElement.style.overflow).toBe('');
   });
 
   it('renders with md size by default', () => {
@@ -147,6 +165,18 @@ describe('AuDialog', () => {
     fix.componentInstance.close.subscribe(() => (emitted = true));
     const closeBtn = fix.debugElement.query(By.css('.au-dialog__close'))!;
     closeBtn.triggerEventHandler('click', new MouseEvent('click'));
+    expect(emitted).toBe(true);
+  });
+
+  it('triggers onDialogClose via native dialog close event', () => {
+    const fix = TestBed.createComponent(AuDialog);
+    fix.componentRef.setInput('open', true);
+    fix.detectChanges();
+    let emitted = false;
+    fix.componentInstance.close.subscribe(() => (emitted = true));
+    const dialogDe = fix.debugElement.query(By.css('.au-dialog__native'))!;
+    dialogDe.triggerEventHandler('close', new Event('close'));
+    fix.detectChanges();
     expect(emitted).toBe(true);
   });
 
@@ -556,6 +586,19 @@ describe('AuDialog', () => {
     const saved = inst.savedFocus;
     inst.openDialogElement(dialog);
     expect(inst.savedFocus).toBe(saved);
+  });
+
+  it('skips redundant scroll lock acquisition', () => {
+    const fix = TestBed.createComponent(AuDialog);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      scrollLocked: boolean;
+      acquireScrollLock: () => void;
+    };
+    document.body.style.overflow = 'auto';
+    inst.scrollLocked = true;
+    inst.acquireScrollLock();
+    expect(document.body.style.overflow).toBe('auto');
   });
 
   it('savedFocus is null when activeElement is not an HTMLElement', () => {

@@ -18,6 +18,12 @@ import { DocsInlineText } from './docs-inline-text';
     </ul>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
     .docs-token-list {
       margin: 0;
       padding: 0;

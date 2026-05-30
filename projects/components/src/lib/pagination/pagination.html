@@ -5,7 +5,7 @@
     type="button"
     [disabled]="!canPrev()"
     (click)="prev()"
-    aria-label="Previous page"
+    [label]="'Previous page'"
   >
     Prev
   </au-button>
@@ -28,7 +28,7 @@
           [disabled]="disabled()"
           (click)="goTo(p)"
           [attr.aria-current]="p === safePage() ? 'page' : null"
-          [attr.aria-label]="'Page ' + p"
+          [label]="'Page ' + p"
         >
           {{ p }}
         </au-button>
@@ -42,7 +42,7 @@
     type="button"
     [disabled]="!canNext()"
     (click)="next()"
-    aria-label="Next page"
+    [label]="'Next page'"
   >
     Next
   </au-button>

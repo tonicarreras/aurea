@@ -114,4 +114,20 @@ describe('AuPagination', () => {
     expect(component.canPrev()).toBe(true);
     expect(component.canNext()).toBe(false);
   });
+
+  it('clicking Prev and Next buttons triggers navigation', () => {
+    const emitted: number[] = [];
+    fixture.componentRef.setInput('page', 3);
+    fixture.componentRef.setInput('pageCount', 5);
+    fixture.detectChanges();
+    component.pageChange.subscribe((p) => emitted.push(p));
+
+    const buttons = fixture.nativeElement.querySelectorAll('au-button');
+    const prevBtn = [...buttons].find((b: HTMLElement) => b.textContent?.trim() === 'Prev');
+    const nextBtn = [...buttons].find((b: HTMLElement) => b.textContent?.trim() === 'Next');
+    prevBtn?.querySelector('button')?.click();
+    expect(emitted).toEqual([2]);
+    nextBtn?.querySelector('button')?.click();
+    expect(emitted).toEqual([2, 4]);
+  });
 });

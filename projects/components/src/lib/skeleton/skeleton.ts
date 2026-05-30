@@ -108,15 +108,15 @@ export class AuSkeleton {
     }
     switch (this.variant()) {
       case 'circular':
-        return '50%';
+        return 'var(--au-radius-dot)';
       case 'rounded':
-        return 'var(--au-radius-lg)';
+        return 'var(--au-radius-surface)';
       case 'button':
-        return 'var(--au-radius-sm)';
+        return 'var(--au-radius-control)';
       case 'text':
-        return 'var(--au-radius-xs)';
+        return 'var(--au-radius-field)';
       case 'rectangular':
-        return 'var(--au-radius-sm)';
+        return 'var(--au-radius-control)';
     }
   });
 

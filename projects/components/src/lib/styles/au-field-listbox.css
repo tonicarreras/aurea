@@ -5,7 +5,6 @@
  * Hosts set `data-au-listbox-open` while the panel is visible so the whole
  * component stacks above sibling fields (not only the listbox node).
  */
-@import url('../tokens/au-tokens.css');
 
 :host([data-au-listbox-open]) {
   position: relative;
@@ -26,7 +25,7 @@
   overflow-x: hidden;
   scroll-behavior: var(--au-scroll-smooth);
   border: 1px solid var(--au-color-border-default);
-  border-radius: var(--au-radius-md);
+  border-radius: var(--au-radius-surface);
   background: var(--au-color-select-menu-bg);
   color: var(--au-color-select-menu-text);
   font-family: var(--au-font-sans);
@@ -39,13 +38,14 @@
   z-index: var(--au-z-dropdown);
   inset-inline: auto;
   top: auto;
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
 }
 
 .au-field-listbox__option {
   position: relative;
   margin: 0;
   padding: var(--au-space-2) var(--au-space-3);
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   font-size: var(--au-size-field-text-md);
   font-weight: var(--au-weight-regular);
   line-height: var(--au-leading-normal);
@@ -106,6 +106,27 @@
   cursor: not-allowed;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Status items: empty state, loading state                                  */
+/* -------------------------------------------------------------------------- */
+
+.au-field-listbox__item {
+  margin: 0;
+  padding: var(--au-space-3) var(--au-space-4);
+  font-size: var(--au-size-field-text-md);
+  color: var(--au-color-text-tertiary);
+  text-align: center;
+  cursor: default;
+  user-select: none;
+}
+
+.au-field-listbox__item--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-space-2);
+}
+
 @media (hover: hover) {
   .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
       .au-field-listbox__option--selected
@@ -135,5 +156,9 @@
 @media (prefers-reduced-motion: reduce) {
   .au-field-listbox {
     scroll-behavior: auto;
+  }
+
+  .au-field-listbox--overlay {
+    animation: none;
   }
 }

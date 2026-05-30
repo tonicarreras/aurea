@@ -40,7 +40,7 @@ describe('AuSkeleton', () => {
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('circular');
     expect(host.style.height).toBe('3rem');
-    expect(host.style.borderRadius).toBe('50%');
+    expect(host.style.borderRadius).toBe('var(--au-radius-dot)');
   });
 
   it('applies custom width and height overrides', () => {
@@ -59,7 +59,7 @@ describe('AuSkeleton', () => {
     fixture.detectChanges();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.style.height).toBe('var(--au-size-field-h-sm)');
-    expect(host.style.borderRadius).toBe('var(--au-radius-sm)');
+    expect(host.style.borderRadius).toBe('var(--au-radius-control)');
   });
 
   it('supports wave animation and none', () => {
@@ -75,7 +75,7 @@ describe('AuSkeleton', () => {
   it('applies rounded variant radius preset', () => {
     fixture.componentRef.setInput('variant', 'rounded');
     fixture.detectChanges();
-    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-lg)');
+    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-surface)');
   });
 
   it('applies custom radius override', () => {
@@ -88,7 +88,7 @@ describe('AuSkeleton', () => {
     fixture.componentRef.setInput('variant', 'text');
     fixture.componentRef.setInput('radius', null as unknown as string);
     fixture.detectChanges();
-    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-xs)');
+    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-field)');
   });
 
   it('treats empty width input as undefined', () => {
@@ -144,12 +144,12 @@ describe('AuSkeleton', () => {
     fixture.componentRef.setInput('variant', 'rectangular');
     fixture.detectChanges();
     expect(fixture.nativeElement.style.height).toBe('5rem');
-    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-sm)');
+    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-control)');
   });
 
   it('applies text variant radius preset', () => {
     fixture.componentRef.setInput('variant', 'text');
     fixture.detectChanges();
-    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-xs)');
+    expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-field)');
   });
 });

@@ -33,10 +33,17 @@ import { DemoPanel } from './demo-panel';
     </article>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
     .docs-example {
       display: flex;
       flex-direction: column;
       gap: var(--au-space-4);
+      width: 100%;
     }
 
     .docs-example__header {
@@ -54,7 +61,7 @@ import { DemoPanel } from './demo-panel';
 
     .docs-example__desc {
       margin: 0;
-      max-width: min(62rem, 100%);
+      max-width: min(var(--docs-prose-max), 100%);
       color: var(--au-color-text-secondary);
       font-size: var(--au-text-sm);
       line-height: var(--au-leading-relaxed);

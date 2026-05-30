@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuBadge } from './badge';
@@ -53,5 +54,20 @@ describe('AuBadge', () => {
     fixture.componentRef.setInput('variant', 'success');
     fixture.detectChanges();
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');
+  });
+
+  it('renders projected content when label is empty', () => {
+    @Component({
+      imports: [AuBadge],
+      template: `<au-badge variant="success">Active</au-badge>`,
+    })
+    class ProjectedHost {}
+
+    const projected = TestBed.createComponent(ProjectedHost);
+    projected.detectChanges();
+    expect(projected.nativeElement.textContent).toContain('Active');
+    expect(projected.nativeElement.querySelector('au-badge')?.getAttribute('data-au-variant')).toBe(
+      'success',
+    );
   });
 });

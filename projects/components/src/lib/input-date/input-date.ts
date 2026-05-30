@@ -17,6 +17,7 @@ import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
+import { AuIcon } from '../icon/icon';
 
 /** Date control; project inside {@link AuFormField}. */
 @Component({
@@ -24,6 +25,7 @@ import { tabFocusState } from '../au-tab-focus-state';
   templateUrl: './input-date.html',
   styleUrl: './input-date.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuIcon],
   host: {
     class: 'au-input-date',
     '[attr.data-au-size]': 'size()',

@@ -94,6 +94,7 @@ jobs:
           test -f dist/components/LICENSE
           test -f dist/components/fesm2022/aurea-design-system-components.mjs
           test -f dist/components/styles/au-tokens.css
+          test -f dist/components/styles/aurea-global.css
           BUILT=$(node -p "require('./dist/components/package.json').version")
           PKG=$(node -p "require('./dist/components/package.json').name")
           EXPECTED="${{ steps.publish_version.outputs.version }}"

@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-export type AuIconName = 'check-circle' | 'warning' | 'error' | 'info' | 'close' | 'spinner';
+import type { AuIconName, AuIconSize } from './icon-glyphs';
 
-export type AuIconSize = 'sm' | 'md' | 'lg';
+export type { AuIconName, AuIconSize } from './icon-glyphs';
+export { AU_ICON_NAMES } from './icon-glyphs';
 
 /**
- * Design-system **icon**: shared SVG glyphs (Material-style outlines).
+ * Design-system **icon**: shared SVG glyphs (consistent 24×24 outline set).
  *
  * @remarks
  * Decorative by default (`aria-hidden`). Use on buttons with an accessible name on the control.
@@ -25,11 +26,4 @@ export type AuIconSize = 'sm' | 'md' | 'lg';
 export class AuIcon {
   readonly name = input.required<AuIconName>();
   readonly size = input<AuIconSize>('md');
-
-  /** Scales warning triangle only; exclamation stays fixed in the glyph. */
-  readonly warningScale = input(1.1);
-
-  readonly warningTransform = computed(
-    () => `translate(12 12) scale(${this.warningScale()}) translate(-12 -12)`,
-  );
 }

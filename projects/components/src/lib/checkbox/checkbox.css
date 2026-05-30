@@ -3,7 +3,6 @@
  * Size: `data-au-size` on host (sm | md | lg).
  * Accessibility: WCAG 2.2 AA — focus rings, 24x24 target, 4.5:1 contrast.
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {
@@ -63,7 +62,7 @@
   padding: 0;
   box-sizing: border-box;
   border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
   box-shadow: var(--au-shadow-control);
   cursor: pointer;
@@ -112,7 +111,7 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 6px;
   height: 10px;
   border: solid var(--au-color-text-on-solid);
@@ -135,7 +134,7 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
+  inset-inline-start: 50%;
   width: 10px;
   height: 2px;
   background: var(--au-color-text-on-solid);
@@ -223,7 +222,7 @@
 .au-checkbox__required {
   color: var(--au-color-form-error);
   font-weight: var(--au-weight-semibold);
-  margin-left: 0.125em;
+  margin-inline-start: 0.125em;
 }
 
 /* -------------------------------------------------------------------------- */

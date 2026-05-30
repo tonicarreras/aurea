@@ -22,7 +22,10 @@
   />
 
   @if (label() || description().trim()) {
-    <div class="au-checkbox__content">
+    <div
+      class="au-checkbox__content"
+      [class.au-sr-only]="hideLabel()"
+    >
       @if (label()) {
         <label
           class="au-checkbox__label"

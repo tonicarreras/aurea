@@ -2,7 +2,6 @@
  * Select — combobox with shared field listbox (same hover as au-autocomplete).
  * Size: `data-au-size` on host (sm | md | lg).
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 @import url('../styles/au-field-listbox.css');
 
@@ -13,18 +12,6 @@
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-.au-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -242,6 +229,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.au-select__icon au-icon {
+  width: 0.75rem;
+  height: 0.75rem;
 }
 
 :host([data-au-size='sm']) .au-select__icon {

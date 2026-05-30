@@ -18,6 +18,28 @@
       }
       <thead>
         <tr>
+          @if (selectionMode() !== 'none') {
+            <th
+              scope="col"
+              class="au-table__header-cell au-table__header-cell--select"
+            >
+              @if (selectionMode() === 'multiple') {
+                <au-checkbox
+                  class="au-table__select-checkbox"
+                  size="sm"
+                  [hideLabel]="true"
+                  [showRequired]="false"
+                  [label]="selectAllLabel()"
+                  [checked]="selectAllChecked()"
+                  [indeterminate]="selectAllIndeterminate()"
+                  (click)="$event.stopPropagation()"
+                  (checkedChange)="setSelectAll($event)"
+                />
+              } @else {
+                <span class="au-table__caption--sr">{{ selectRowLabel() }}</span>
+              }
+            </th>
+          }
           @for (col of columns(); track col.name()) {
             <th
               scope="col"
@@ -38,40 +60,22 @@
                   >
                     @switch (columnSortDirection(col.name())) {
                       @case ('asc') {
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M8 3v10M4.5 6.5 8 3l3.5 3.5" />
-                        </svg>
+                        <au-icon
+                          name="sort-asc"
+                          size="xs"
+                        />
                       }
                       @case ('desc') {
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M8 13V3M4.5 9.5 8 13l3.5-3.5" />
-                        </svg>
+                        <au-icon
+                          name="sort-desc"
+                          size="xs"
+                        />
                       }
                       @default {
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M5.5 6 8 3.5 10.5 6M5.5 10 8 12.5 10.5 10" />
-                        </svg>
+                        <au-icon
+                          name="sort-neutral"
+                          size="xs"
+                        />
                       }
                     }
                   </span>
@@ -84,25 +88,54 @@
         </tr>
       </thead>
       <tbody>
-        @for (row of viewRows(); track trackRow($index, row)) {
-          <tr>
-            @for (col of columns(); track col.name()) {
-              <td [class]="cellClasses(col)">
-                @if (col.cellDef()?.templateRef; as tpl) {
-                  <ng-container
-                    [ngTemplateOutlet]="tpl"
-                    [ngTemplateOutletContext]="cellContext(row)"
+        @if (loading()) {
+          <tr class="au-table__loading-row">
+            <td [attr.colspan]="columnSpan()">
+              <au-spinner
+                size="sm"
+                [label]="loadingMessage()"
+              />
+            </td>
+          </tr>
+        } @else {
+          @for (row of viewRows(); track trackRow($index, row)) {
+            <tr
+              [class]="rowClasses(row)"
+              [attr.aria-selected]="rowAriaSelected(row)"
+              (click)="onRowClick(row, $event)"
+            >
+              @if (selectionMode() !== 'none') {
+                <td class="au-table__cell au-table__cell--select">
+                  <au-checkbox
+                    class="au-table__select-checkbox"
+                    size="sm"
+                    [hideLabel]="true"
+                    [showRequired]="false"
+                    [label]="selectRowLabel()"
+                    [checked]="isRowSelected(row)"
+                    (click)="$event.stopPropagation()"
+                    (checkedChange)="setRowSelected(row, $event)"
                   />
-                } @else {
-                  {{ formatCell(col, row) }}
-                }
-              </td>
-            }
-          </tr>
-        } @empty {
-          <tr class="au-table__empty-row">
-            <td [attr.colspan]="columns().length">{{ emptyMessage() }}</td>
-          </tr>
+                </td>
+              }
+              @for (col of columns(); track col.name()) {
+                <td [class]="cellClasses(col)">
+                  @if (col.cellDef()?.templateRef; as tpl) {
+                    <ng-container
+                      [ngTemplateOutlet]="tpl"
+                      [ngTemplateOutletContext]="cellContext(row)"
+                    />
+                  } @else {
+                    {{ formatCell(col, row) }}
+                  }
+                </td>
+              }
+            </tr>
+          } @empty {
+            <tr class="au-table__empty-row">
+              <td [attr.colspan]="columnSpan()">{{ emptyMessage() }}</td>
+            </tr>
+          }
         }
       </tbody>
     </table>

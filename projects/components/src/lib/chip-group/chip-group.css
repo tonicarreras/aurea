@@ -1,5 +1,3 @@
-@import url('../tokens/au-tokens.css');
-
 :host {
   display: flex;
   flex-wrap: wrap;

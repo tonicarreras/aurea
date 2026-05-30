@@ -5,33 +5,49 @@ All notable changes to **@aurea-design-system/components** are documented here.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).  
 Versioning follows [Semantic Versioning](https://semver.org/) — see [VERSIONING.md](./docs/VERSIONING.md).
 
+Git tags for library releases use the prefix **`components-v`** (monorepo convention — see [RELEASE.md](./docs/RELEASE.md)).
+
 ## [Unreleased]
 
-## [0.9.2] - 2026-05-26
+## [1.0.0] - 2026-05-30
+
+First **stable** release. Meets [V1_CRITERIA.md](./docs/V1_CRITERIA.md). The documented public API in `public-api.ts`, Storybook, and the docs catalog is semver-stable from this version forward; breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR** bump.
 
 ### Added
 
-- **`AuTheme`:** `high-contrast-dark` palette mode (`data-au-theme="high-contrast-dark"`).
-- **Storybook:** `docsLocale` toolbar (en/es) for Autodocs overviews aligned with the docs site.
-- **Tooling:** `bun run ci` / `ci:fast` — local parity with `.github/workflows/test.yml`.
+- **`AuSpinner`** — accessible loading indicator (`size`, optional `label`, `decorative` for embedded use). Storybook, docs (EN/ES), and visual smoke coverage.
+- Public exports `lockPageScroll` / `unlockPageScroll` for custom overlay flows.
 
 ### Changed
 
-- Semantic shadow tokens (`--au-shadow-control`, `--au-shadow-button`, `--au-shadow-overlay`) applied across stable controls and overlays.
-- Switch and radio-group layout and focus styling refinements (update visual snapshots after upgrade).
-- Governance and design docs moved from repo root to [docs/](./docs/) (index: [docs/README.md](./docs/README.md)). Root keeps README, CHANGELOG, CONTRIBUTING, SECURITY.
-- Docs site and Storybook: refreshed component guides, maturity badges, and stable-story visual manifest sync in CI.
+- **`AuButton`** loading state uses `au-spinner` (`decorative`, size aligned to button size).
+- **`AuTable`**, **`AuSelect`**, and **`AuAutocomplete`** loading UI uses `au-spinner`.
+- Shared overlay stack: portaled panels inherit theme context; scroll dismiss and focus behavior aligned across **menu**, **popover**, and **dialog**.
+- Governance and design docs moved from repo root to [docs/](./docs/) (index: [docs/README.md](./docs/README.md)).
 
 ### Fixed
 
-- Spec quality report generation formats with Prettier so `format:check` passes in CI.
-- Visual story manifest generator matches Prettier table layout for `verify:visual-manifest`.
+- Page scroll lock when opening modals/menus (body overflow restored correctly).
+- Menu keyboard navigation, scroll-inside-panel dismiss, and overlay detach on destroy.
+- Tooltip and card spec assertions; overlay edge cases covered to 100% unit coverage.
+
+### Migration from 0.9.x
+
+No breaking API changes since **0.9.0**. Patch releases **0.9.1** and **0.9.2** on npm were internal/doc fixes without changelog sections; upgrade directly to **1.0.0**:
+
+```bash
+bun add @aurea-design-system/components@1.0.0
+```
+
+Optional: replace ad-hoc loading markup in app code with `<au-spinner />` where you mirror library loading patterns. Existing component selectors, inputs, and CSS tokens from **0.9.x** remain compatible.
+
+**Beta** components (`autocomplete`, `tabs`, `chip-group`, `list`, `input-date`, `steps`) are unchanged in maturity — usable but not on the docs landing carousel.
 
 ## [0.9.0] - 2026-05-22
 
 ### API freeze candidate
 
-From this release, the **documented public API** in `public-api.ts`, Storybook, and the docs catalog is treated as frozen until **1.0.0**, except for:
+From this release, the **documented public API** in `public-api.ts`, Storybook, and the docs catalog was treated as frozen until **1.0.0**, except for:
 
 - New **optional** inputs on existing components
 - New components in **MINOR** releases
@@ -87,9 +103,9 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v0.9.2...HEAD
-[0.9.2]: https://github.com/tonicarreras/aurea/compare/components-v0.9.0...components-v0.9.2
-[0.9.0]: https://github.com/tonicarreras/aurea/compare/v0.3.0...v0.9.0
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.0.0...HEAD
+[1.0.0]: https://github.com/tonicarreras/aurea/compare/components-v0.9.0...components-v1.0.0
+[0.9.0]: https://github.com/tonicarreras/aurea/compare/v0.3.0...components-v0.9.0
 [0.3.0]: https://github.com/tonicarreras/aurea/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/tonicarreras/aurea/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/tonicarreras/aurea/releases/tag/v0.1.0

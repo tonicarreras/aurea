@@ -50,11 +50,18 @@ function readStableSlugs() {
   return slugs.sort();
 }
 
-function slugToPrefix(slug) {
-  if (slug === 'input-text') {
-    return 'aurea-inputtext';
+function readStoryTitle(storiesPath) {
+  const content = readFileSync(storiesPath, 'utf8');
+  const match = content.match(/title:\s*['"]([^'"]+)['"]/);
+  if (!match) {
+    throw new Error(`No title in ${storiesPath}`);
   }
-  return `aurea-${slug}`;
+  return match[1];
+}
+
+/** Storybook story id prefix from meta title (e.g. `Aurea/InputDate` → `aurea-inputdate`). */
+function titleToStoryIdPrefix(title) {
+  return title.toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-');
 }
 
 function exportNameToKebab(name) {
@@ -119,7 +126,8 @@ function main() {
       console.warn(`Skip ${slug}: no Story exports`);
       continue;
     }
-    const id = `${slugToPrefix(slug)}--${exportNameToKebab(storyExport)}`;
+    const title = readStoryTitle(storiesPath);
+    const id = `${titleToStoryIdPrefix(title)}--${exportNameToKebab(storyExport)}`;
     entries.push({ name: `${slug}-${exportNameToKebab(storyExport)}`, id, slug });
   }
 

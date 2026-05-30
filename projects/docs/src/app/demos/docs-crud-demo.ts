@@ -1,17 +1,22 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormField, form, required } from '@angular/forms/signals';
 import {
+  AuBadge,
   AuBreadcrumb,
   AuButton,
+  AuChip,
   AuDensityDirective,
   AuDialog,
   AuDialogFooter,
+  AuDivider,
   AuFormField,
   AuInputText,
   AuMenu,
   AuMenuItem,
   AuMenuTrigger,
+  AuMessage,
   AuPagination,
+  AuSelect,
   AuSnackbar,
   AuSwitch,
   AuTable,
@@ -20,6 +25,7 @@ import {
   AuTheme,
   type AuBreadcrumbItem,
   type AuDensity,
+  type AuSelectOption,
   type AuTableSortState,
 } from '@aurea-design-system/components';
 
@@ -28,37 +34,56 @@ import { resolveDocsPreviewTheme, type DocsAppearanceTheme } from '../core/docs-
 
 const PAGE_SIZE = 3;
 
+const PERSON_ROLES = [
+  'Engineer',
+  'Admiral',
+  'Mathematician',
+  'Inventor',
+  'Researcher',
+  'Cryptographer',
+] as const;
+
+type PersonStatus = 'active' | 'away';
+
 interface PersonRow {
   id: string;
   name: string;
   role: string;
+  status: PersonStatus;
 }
 
 const SEED: PersonRow[] = [
-  { id: '1', name: 'Ada Lovelace', role: 'Engineer' },
-  { id: '2', name: 'Grace Hopper', role: 'Admiral' },
-  { id: '3', name: 'Katherine Johnson', role: 'Mathematician' },
-  { id: '4', name: 'Margaret Hamilton', role: 'Engineer' },
-  { id: '5', name: 'Radia Perlman', role: 'Inventor' },
-  { id: '6', name: 'Barbara Liskov', role: 'Researcher' },
-  { id: '7', name: 'Shafi Goldwasser', role: 'Cryptographer' },
+  { id: '1', name: 'Ada Lovelace', role: 'Engineer', status: 'active' },
+  { id: '2', name: 'Grace Hopper', role: 'Admiral', status: 'active' },
+  { id: '3', name: 'Katherine Johnson', role: 'Mathematician', status: 'away' },
+  { id: '4', name: 'Margaret Hamilton', role: 'Engineer', status: 'active' },
+  { id: '5', name: 'Radia Perlman', role: 'Inventor', status: 'active' },
+  { id: '6', name: 'Barbara Liskov', role: 'Researcher', status: 'away' },
+  { id: '7', name: 'Shafi Goldwasser', role: 'Cryptographer', status: 'active' },
+  { id: '8', name: 'Frances Allen', role: 'Researcher', status: 'active' },
+  { id: '9', name: 'Mary Allen Wilkes', role: 'Engineer', status: 'away' },
 ];
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'docs-crud-demo',
   imports: [
+    AuBadge,
     AuBreadcrumb,
     AuButton,
+    AuChip,
     AuDensityDirective,
     AuDialog,
     AuDialogFooter,
+    AuDivider,
     AuFormField,
     AuInputText,
     AuMenu,
     AuMenuItem,
     AuMenuTrigger,
+    AuMessage,
     AuPagination,
+    AuSelect,
     AuSnackbar,
     AuSwitch,
     AuTable,
@@ -162,20 +187,70 @@ const SEED: PersonRow[] = [
           </header>
 
           <div class="docs-crud-app__toolbar">
-            <au-form-field [label]="t().filterLabel">
-              <au-input-text
-                type="search"
-                [placeholder]="t().filterPlaceholder"
-                [value]="filter()"
-                (valueChange)="onFilterChange($event)"
-              />
-            </au-form-field>
-            <au-button
-              type="button"
-              (click)="openCreate()"
-              >{{ t().newPerson }}</au-button
-            >
+            <div class="docs-crud-app__toolbar-filters">
+              <au-form-field [label]="t().filterLabel">
+                <au-input-text
+                  type="search"
+                  [placeholder]="t().filterPlaceholder"
+                  [value]="filter()"
+                  (valueChange)="onFilterChange($event)"
+                />
+              </au-form-field>
+              <au-form-field [label]="t().roleFilterLabel">
+                <au-select
+                  [options]="roleFilterOptions()"
+                  [value]="roleFilter() || null"
+                  (valueChange)="onRoleFilterChange($event)"
+                />
+              </au-form-field>
+              @if (filter() || roleFilter()) {
+                <au-divider orientation="vertical" />
+              }
+              @if (filter(); as query) {
+                <au-chip
+                  [label]="query"
+                  [removable]="true"
+                  (removed)="onFilterChange('')"
+                />
+              }
+              @if (roleFilter(); as role) {
+                <au-chip
+                  [label]="role"
+                  [removable]="true"
+                  (removed)="onRoleFilterChange(null)"
+                />
+              }
+            </div>
+            <div class="docs-crud-app__toolbar-actions">
+              <au-button
+                type="button"
+                (click)="openCreate()"
+                >{{ t().newPerson }}</au-button
+              >
+            </div>
           </div>
+
+          @if (tableSelection().length > 0) {
+            <au-message variant="info">
+              <div class="docs-crud-app__selection-bar">
+                <span>{{ selectedCountMessage() }}</span>
+                <au-button
+                  size="sm"
+                  variant="outline"
+                  type="button"
+                  (click)="clearSelection()"
+                  >{{ t().clearSelection }}</au-button
+                >
+                <au-button
+                  size="sm"
+                  variant="secondary"
+                  type="button"
+                  (click)="bulkDelete()"
+                  >{{ t().bulkDelete }}</au-button
+                >
+              </div>
+            </au-message>
+          }
 
           <section
             class="docs-crud-app__panel"
@@ -192,6 +267,10 @@ const SEED: PersonRow[] = [
               [striped]="true"
               [caption]="t().pageTitle"
               [clientSort]="false"
+              [loading]="tableLoading()"
+              selectionMode="multiple"
+              [(selection)]="tableSelection"
+              [compareSelection]="comparePersonRow"
               [(sort)]="tableSort"
               (sortChange)="page.set(1)"
               emptyMessage="—"
@@ -205,8 +284,31 @@ const SEED: PersonRow[] = [
               <au-table-column
                 name="role"
                 [header]="t().colRole"
-                cellVariant="secondary"
-              />
+              >
+                <ng-template
+                  auTableCell
+                  let-row
+                >
+                  <au-badge
+                    variant="accent"
+                    [label]="row.role"
+                  />
+                </ng-template>
+              </au-table-column>
+              <au-table-column
+                name="status"
+                [header]="t().colStatus"
+              >
+                <ng-template
+                  auTableCell
+                  let-row
+                >
+                  <au-badge
+                    [variant]="row.status === 'active' ? 'success' : 'warning'"
+                    [label]="row.status === 'active' ? t().statusActive : t().statusAway"
+                  />
+                </ng-template>
+              </au-table-column>
               <au-table-column
                 name="actions"
                 [header]="t().colActions"
@@ -244,8 +346,8 @@ const SEED: PersonRow[] = [
 
         <au-dialog
           [(open)]="editOpen"
-          [title]="t().editTitle"
-          size="sm"
+          [title]="editingId() ? t().editTitle : t().createTitle"
+          size="md"
         >
           <au-form-field
             [label]="t().colName"
@@ -260,7 +362,19 @@ const SEED: PersonRow[] = [
             [label]="t().colRole"
             [required]="true"
           >
-            <au-input-text [formField]="editForm.role" />
+            <au-select
+              [formField]="editForm.role"
+              [options]="roleEditOptions()"
+            />
+          </au-form-field>
+          <au-form-field
+            [label]="t().colStatus"
+            [required]="true"
+          >
+            <au-select
+              [formField]="editForm.status"
+              [options]="statusEditOptions()"
+            />
           </au-form-field>
           <div auDialogFooter>
             <au-button
@@ -478,10 +592,42 @@ const SEED: PersonRow[] = [
       justify-content: space-between;
     }
 
-    .docs-crud-app__toolbar au-form-field {
-      flex: 1 1 14rem;
-      min-width: 12rem;
-      max-width: 20rem;
+    .docs-crud-app__toolbar-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: var(--au-space-3);
+      flex: 1 1 auto;
+    }
+
+    .docs-crud-app__toolbar-filters au-form-field {
+      flex: 1 1 12rem;
+      min-width: 10rem;
+      max-width: 16rem;
+    }
+
+    .docs-crud-app__toolbar-filters au-divider {
+      align-self: stretch;
+      min-height: 2.25rem;
+    }
+
+    .docs-crud-app__toolbar-filters au-chip {
+      align-self: center;
+    }
+
+    .docs-crud-app__toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--au-space-2);
+      flex-shrink: 0;
+    }
+
+    .docs-crud-app__selection-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--au-space-3);
     }
 
     .docs-crud-app__panel {
@@ -517,6 +663,7 @@ const SEED: PersonRow[] = [
 })
 export class DocsCrudDemo {
   private readonly i18n = inject(DocsLocaleService);
+  private loadingTimer: ReturnType<typeof setTimeout> | undefined;
 
   readonly t = computed(() => this.i18n.messages().ecosystem.crudDemo);
 
@@ -532,8 +679,11 @@ export class DocsCrudDemo {
 
   readonly rows = signal<PersonRow[]>([...SEED]);
   readonly filter = signal('');
+  readonly roleFilter = signal('');
   readonly page = signal(1);
   readonly tableSort = signal<AuTableSortState | null>(null);
+  readonly tableLoading = signal(false);
+  readonly tableSelection = signal<readonly PersonRow[]>([]);
 
   readonly editOpen = signal(false);
   readonly deleteOpen = signal(false);
@@ -543,17 +693,44 @@ export class DocsCrudDemo {
   readonly snackOpen = signal(false);
   readonly snackMessage = signal('');
 
-  readonly editModel = signal({ name: '', role: '' });
+  readonly editModel = signal<{ name: string; role: string | null; status: PersonStatus | null }>({
+    name: '',
+    role: null,
+    status: 'active',
+  });
   readonly editForm = form(this.editModel, (m) => {
     required(m.name, { message: 'Required' });
     required(m.role, { message: 'Required' });
+    required(m.status, { message: 'Required' });
   });
+
+  readonly roleFilterOptions = computed((): AuSelectOption[] => [
+    { value: '', label: this.t().roleFilterAll },
+    ...PERSON_ROLES.map((role) => ({ value: role, label: role })),
+  ]);
+
+  readonly roleEditOptions = computed((): AuSelectOption[] =>
+    PERSON_ROLES.map((role) => ({ value: role, label: role })),
+  );
+
+  readonly statusEditOptions = computed((): AuSelectOption[] => [
+    { value: 'active', label: this.t().statusActive },
+    { value: 'away', label: this.t().statusAway },
+  ]);
+
+  readonly selectedCountMessage = computed(() =>
+    this.t().selectedCount.replace('{{count}}', String(this.tableSelection().length)),
+  );
 
   readonly filteredRows = computed(() => {
     const q = this.filter().trim().toLowerCase();
+    const role = this.roleFilter();
     let list = this.rows();
     if (q) {
       list = list.filter((r) => r.name.toLowerCase().includes(q));
+    }
+    if (role) {
+      list = list.filter((r) => r.role === role);
     }
     const sort = this.tableSort();
     if (sort?.column === 'name' && sort.direction) {
@@ -574,20 +751,34 @@ export class DocsCrudDemo {
     return this.filteredRows().slice(start, start + PAGE_SIZE);
   });
 
+  protected readonly comparePersonRow = (a: unknown, b: unknown): boolean =>
+    (a as PersonRow).id === (b as PersonRow).id;
+
   protected onFilterChange(value: string | null): void {
+    this.triggerTableLoading();
     this.filter.set(value ?? '');
     this.page.set(1);
   }
 
+  protected onRoleFilterChange(value: string | null): void {
+    this.triggerTableLoading();
+    this.roleFilter.set(value ?? '');
+    this.page.set(1);
+  }
+
+  protected clearSelection(): void {
+    this.tableSelection.set([]);
+  }
+
   protected openCreate(): void {
     this.editingId.set(null);
-    this.editModel.set({ name: '', role: '' });
+    this.editModel.set({ name: '', role: null, status: 'active' });
     this.editOpen.set(true);
   }
 
   protected openEdit(row: PersonRow): void {
     this.editingId.set(row.id);
-    this.editModel.set({ name: row.name, role: row.role });
+    this.editModel.set({ name: row.name, role: row.role, status: row.status });
     this.editOpen.set(true);
   }
 
@@ -601,12 +792,15 @@ export class DocsCrudDemo {
     if (!this.editForm().valid()) {
       return;
     }
-    const { name, role } = this.editModel();
+    const { name, role, status } = this.editModel();
+    if (!role || !status) {
+      return;
+    }
     const id = this.editingId();
     if (id) {
-      this.rows.update((list) => list.map((r) => (r.id === id ? { ...r, name, role } : r)));
+      this.rows.update((list) => list.map((r) => (r.id === id ? { ...r, name, role, status } : r)));
     } else {
-      this.rows.update((list) => [...list, { id: crypto.randomUUID(), name, role }]);
+      this.rows.update((list) => [...list, { id: crypto.randomUUID(), name, role, status }]);
     }
     this.editOpen.set(false);
     this.showSnack(this.t().snackbarSaved);
@@ -618,10 +812,28 @@ export class DocsCrudDemo {
       return;
     }
     this.rows.update((list) => list.filter((r) => r.id !== target.id));
+    this.tableSelection.update((selected) => selected.filter((r) => r.id !== target.id));
     this.deleteOpen.set(false);
     this.deleteTarget.set(null);
     this.page.set(Math.min(this.page(), this.pageCount()));
     this.showSnack(this.t().snackbarDeleted);
+  }
+
+  protected bulkDelete(): void {
+    const ids = new Set(this.tableSelection().map((row) => row.id));
+    if (ids.size === 0) {
+      return;
+    }
+    this.rows.update((list) => list.filter((r) => !ids.has(r.id)));
+    this.tableSelection.set([]);
+    this.page.set(Math.min(this.page(), this.pageCount()));
+    this.showSnack(this.t().snackbarBulkDeleted);
+  }
+
+  private triggerTableLoading(): void {
+    this.tableLoading.set(true);
+    clearTimeout(this.loadingTimer);
+    this.loadingTimer = setTimeout(() => this.tableLoading.set(false), 350);
   }
 
   private showSnack(message: string): void {

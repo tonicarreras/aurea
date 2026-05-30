@@ -1,7 +1,7 @@
 @import '../../components/src/lib/tokens/au-tokens.css';
 @import './app/demos/shared/demo-preview.css';
-@import '../../components/src/lib/styles/au-field-error.css';
-@import '../../components/src/lib/styles/au-field-listbox.css';
+@import './app/layout/docs-component-layout.css';
+@import '../../components/src/lib/styles/aurea-global.css';
 
 /* Docs-only aliases (nav / links used legacy accent names) */
 :root {
@@ -12,11 +12,17 @@
   --docs-mesh-1: color-mix(in srgb, var(--au-color-action-primary) 18%, transparent);
   --docs-mesh-2: color-mix(in srgb, #c9a227 14%, transparent);
   --docs-nav-inset: clamp(var(--au-space-4), 3vw, 2rem);
-  --docs-header-height: 3.75rem;
-  --docs-layout-gap: var(--au-space-6);
-  --docs-content-max: 112rem;
+  --docs-nav-rail-width: 16rem;
+  --docs-main-width: 80%;
+  /* Content column width follows .docs-main (80%); prose uses full column */
+  --docs-page-max: 100%;
+  --docs-prose-max: 100%;
   --docs-sidebar-breakpoint: 68rem;
   --docs-border-fine: color-mix(in srgb, var(--au-color-border-subtle) 65%, transparent);
+  --docs-section-marker-width: 3px;
+  --docs-section-marker-min-height: 1.25rem;
+  --docs-section-marker-bg: var(--au-color-action-primary);
+  --docs-section-marker-bg-muted: var(--au-color-text-tertiary);
   --docs-grid-line: color-mix(in srgb, var(--au-color-border-subtle) 35%, transparent);
   --docs-aurea-box-stroke: color-mix(in srgb, var(--au-color-border-default) 28%, transparent);
   --docs-aurea-spiral-stroke: color-mix(in srgb, var(--au-color-action-primary) 10%, transparent);

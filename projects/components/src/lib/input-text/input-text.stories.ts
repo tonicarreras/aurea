@@ -224,7 +224,7 @@ export const Password: Story = {
     docs: {
       description: {
         story:
-          'Password toggle is a **button** with `aria-pressed` and an explicit **Show password** / **Hide password** label. Tab into the field vs click to see different focus ring treatments.',
+          'Password toggle is an **icon button** with `aria-pressed` and **Show password** / **Hide password** labels. Tab into the field vs click to see different focus ring treatments.',
       },
     },
   },

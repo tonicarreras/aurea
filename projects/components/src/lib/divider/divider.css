@@ -1,7 +1,6 @@
 /**
  * Aurea Divider — section separator.
  */
-@import url('../tokens/au-tokens.css');
 
 :host {
   box-sizing: border-box;

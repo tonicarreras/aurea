@@ -23,6 +23,7 @@ import * as icon from './icon/index';
 import * as radioGroup from './radio-group/index';
 import * as select from './select/index';
 import * as skeleton from './skeleton/index';
+import * as spinner from './spinner/index';
 import * as snackbar from './snackbar/index';
 import * as switchMod from './switch/index';
 import * as table from './table/index';
@@ -64,6 +65,7 @@ describe('library barrel exports', () => {
     expect(radioGroup.AuRadioGroup).toBeDefined();
     expect(select.AuSelect).toBeDefined();
     expect(skeleton.AuSkeleton).toBeDefined();
+    expect(spinner.AuSpinner).toBeDefined();
     expect(snackbar.AuSnackbar).toBeDefined();
     expect(switchMod.AuSwitch).toBeDefined();
     expect(table.AuTable).toBeDefined();

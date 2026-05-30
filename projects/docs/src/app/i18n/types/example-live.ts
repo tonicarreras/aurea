@@ -166,4 +166,23 @@ export interface ExampleLiveMessages {
     endText: string;
     endButton: string;
   };
+  table: {
+    caption: string;
+    colName: string;
+    colRole: string;
+    colScore: string;
+    colStatus: string;
+    row1Name: string;
+    row1Role: string;
+    row2Name: string;
+    row2Role: string;
+    row3Name: string;
+    row3Role: string;
+    statusActive: string;
+    statusAway: string;
+    singleSelect: { title: string; description: string };
+    multipleSelect: { title: string; description: string };
+    customCell: { title: string; description: string };
+    loading: { title: string; description: string; message: string };
+  };
 }

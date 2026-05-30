@@ -40,7 +40,23 @@ import { DocPage } from '../shared/doc-page';
       list-style: none;
       display: grid;
       gap: var(--au-space-5);
-      grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+      width: 100%;
+      max-width: 100%;
+      container-type: inline-size;
+    }
+
+    @container (min-width: 32rem) {
+      .docs-adoption-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @container (min-width: 48rem) {
+      .docs-adoption-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--au-space-6);
+      }
     }
 
     .docs-adoption-grid__link {

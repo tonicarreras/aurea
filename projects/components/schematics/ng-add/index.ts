@@ -2,17 +2,15 @@ import { Rule, SchematicContext, Tree, chain } from '@angular-devkit/schematics'
 import type { Schema as NgAddSchema } from './schema';
 
 const TOKEN_STYLE = 'node_modules/@aurea-design-system/components/styles/au-tokens.css';
-const ERROR_STYLE = 'node_modules/@aurea-design-system/components/styles/au-field-error.css';
-const LISTBOX_STYLE = 'node_modules/@aurea-design-system/components/styles/au-field-listbox.css';
+const GLOBAL_STYLE = 'node_modules/@aurea-design-system/components/styles/aurea-global.css';
 
-function addStylesToProject(options: NgAddSchema): Rule {
+function addStylesToProject(_options: NgAddSchema): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const angularJson = tree.read('angular.json');
     if (!angularJson) {
       context.logger.warn(
         'No angular.json found. Add these styles manually to your global stylesheet:\n' +
-          `  ${TOKEN_STYLE}\n  ${ERROR_STYLE}` +
-          (options.includeListboxStyles !== false ? `\n  ${LISTBOX_STYLE}` : ''),
+          `  ${TOKEN_STYLE}\n  ${GLOBAL_STYLE}`,
       );
       return tree;
     }
@@ -23,7 +21,7 @@ function addStylesToProject(options: NgAddSchema): Rule {
     };
 
     const projectName =
-      options.project ?? config.defaultProject ?? Object.keys(config.projects ?? {})[0];
+      _options.project ?? config.defaultProject ?? Object.keys(config.projects ?? {})[0];
 
     const project = config.projects?.[projectName];
     const styles = project?.architect?.build?.options?.styles;
@@ -34,12 +32,7 @@ function addStylesToProject(options: NgAddSchema): Rule {
       return tree;
     }
 
-    const toAdd = [TOKEN_STYLE, ERROR_STYLE];
-    if (options.includeListboxStyles !== false) {
-      toAdd.push(LISTBOX_STYLE);
-    }
-
-    for (const path of toAdd) {
+    for (const path of [TOKEN_STYLE, GLOBAL_STYLE]) {
       if (!styles.includes(path)) {
         styles.push(path);
       }

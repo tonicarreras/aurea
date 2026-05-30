@@ -23,6 +23,8 @@ import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
+import { AuIcon } from '../icon/icon';
+import { AuSpinner } from '../spinner/spinner';
 
 export type AuAutocompleteOption = AuFieldOption;
 
@@ -44,10 +46,13 @@ export type AuAutocompleteOption = AuFieldOption;
   templateUrl: './autocomplete.html',
   styleUrl: './autocomplete.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuIcon, AuSpinner],
   host: {
     class: 'au-autocomplete',
     '[attr.data-au-size]': 'size()',
     '[attr.data-au-listbox-open]': 'listboxVisible() ? "" : null',
+    '[attr.data-au-loading]': 'loading() ? "" : null',
+    '[attr.data-au-empty]': 'showNoResults() ? "" : null',
   },
 })
 export class AuAutocomplete implements FormValueControl<string | null> {
@@ -57,6 +62,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly invalid = input(false);
 
   readonly options = input<AuAutocompleteOption[]>([]);
+  readonly loading = input(false);
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
@@ -177,7 +183,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly listboxVisible = computed(() => this.panelOpen() && this.meetsMinFilterLength());
 
   readonly showNoResults = computed(
-    () => this.listboxVisible() && this.filteredOptions().length === 0,
+    () => !this.loading() && this.listboxVisible() && this.filteredOptions().length === 0,
   );
 
   readonly activeDescendantId = computed((): string | null => {

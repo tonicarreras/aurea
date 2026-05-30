@@ -1,0 +1,110 @@
+:host {
+  --au-spinner-duration: var(--au-duration-spinner, 0.9s);
+  --au-spinner-arc: currentColor;
+  --au-spinner-track: color-mix(in srgb, currentColor 22%, transparent);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-space-2);
+  color: var(--au-spinner-arc);
+  line-height: 0;
+}
+
+:host(.au-spinner--decorative) {
+  gap: 0;
+}
+
+:host(.au-spinner--labeled) {
+  font: var(--au-text-sm) / var(--au-leading-normal) var(--au-font-sans);
+  line-height: var(--au-leading-normal);
+}
+
+:host([data-au-size='sm']) {
+  width: auto;
+  min-width: 1em;
+  height: 1em;
+  font-size: inherit;
+}
+
+:host([data-au-size='sm']:not(.au-spinner--labeled)) {
+  width: 1em;
+}
+
+:host([data-au-size='md']) {
+  width: auto;
+  min-width: 1.375rem;
+  height: 1.375rem;
+}
+
+:host([data-au-size='md']:not(.au-spinner--labeled)) {
+  width: 1.375rem;
+}
+
+:host([data-au-size='lg']) {
+  width: auto;
+  min-width: 1.75rem;
+  height: 1.75rem;
+}
+
+:host([data-au-size='lg']:not(.au-spinner--labeled)) {
+  width: 1.75rem;
+}
+
+.au-spinner__svg {
+  display: block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  transform-origin: center;
+  animation: au-spinner-rotate var(--au-spinner-duration) linear infinite;
+}
+
+:host([data-au-size='md']) .au-spinner__svg {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+:host([data-au-size='lg']) .au-spinner__svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.au-spinner__track,
+.au-spinner__arc {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.au-spinner__track {
+  stroke: var(--au-spinner-track);
+}
+
+.au-spinner__arc {
+  stroke: currentColor;
+  stroke-dasharray: 28 72;
+}
+
+.au-spinner__label {
+  color: var(--au-color-text-secondary);
+  line-height: var(--au-leading-normal);
+}
+
+@keyframes au-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-spinner__svg {
+    animation: none;
+  }
+
+  .au-spinner__arc {
+    opacity: 0.75;
+  }
+}

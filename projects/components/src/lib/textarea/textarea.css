@@ -2,7 +2,6 @@
  * Textarea — same control grammar as input-text (border, Tab focus, × error).
  * Multiline: readable line-height; default `resize` vertical (attribute in template).
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {
@@ -28,18 +27,6 @@
 
 :host([data-au-size='lg']) {
   --au-textarea-pad-y: 0.6rem;
-}
-
-.au-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .au-textarea__field {

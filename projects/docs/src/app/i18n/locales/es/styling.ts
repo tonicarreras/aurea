@@ -48,7 +48,7 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-text-label', description: 'Etiqueta visible encima del campo.' },
     { token: '--au-color-form-error', description: 'Borde y mensaje cuando hay error.' },
     { token: '--au-color-form-error-bg', description: 'Fondo del shell en estado inválido.' },
-    { token: '--au-radius-field', description: 'Radio de la caja del campo (2px por defecto).' },
+    { token: '--au-radius-field', description: 'Radio de la caja del campo (4px por defecto).' },
     {
       token: '--au-size-field-h-md',
       description: 'Altura del control; sm/lg usan las variantes homónimas.',
@@ -226,6 +226,15 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-xs / sm / lg', description: 'Esquinas por variante.' },
     { token: '--au-size-field-h-md', description: 'Altura de barra tipo botón (md).' },
   ],
+  spinner: [
+    { token: 'data-au-size', description: 'sm / md / lg — tamaño del host.' },
+    { token: '--au-spinner-track', description: 'Anillo tenue detrás del arco activo.' },
+    { token: '--au-spinner-arc', description: 'Color del trazo (por defecto: `currentColor`).' },
+    {
+      token: '--au-duration-spinner',
+      description: 'Periodo de rotación (~0,9 s).',
+    },
+  ],
   steps: [
     { token: '--au-color-border-subtle', description: 'Línea bajo los pasos.' },
     { token: '--au-color-action-primary', description: 'Paso activo e indicador.' },
@@ -308,7 +317,17 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       token: '--au-table-cell-x / --au-table-cell-y',
       description: 'Padding de celdas (host; compact lo reduce).',
     },
+    { token: '--au-table-header-bg', description: 'Fondo de cabecera (override en host).' },
     { token: '--au-table-row-hover', description: 'Fondo al pasar el ratón (override en host).' },
+    { token: '--au-table-row-stripe', description: 'Fondo de filas alternas con `striped`.' },
+    {
+      token: '--au-table-row-selected',
+      description: 'Fondo de fila seleccionada con `selectionMode` activo.',
+    },
+    {
+      token: 'data-au-selection',
+      description: 'Attr del host: `single` o `multiple` cuando hay selección de filas.',
+    },
   ],
   tooltip: [
     { token: '--au-color-surface-inverted', description: 'Fondo del globo (clase `.au-tooltip`).' },

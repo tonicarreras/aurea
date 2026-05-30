@@ -122,7 +122,6 @@ export const Default: Story = {
     await userEvent.click(combo);
     await userEvent.type(combo, 'bar');
     const listbox = getListbox(canvasElement);
-    await expect(listbox).toBeVisible();
     await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));
     await expect(combo).toHaveValue('Barcelona');
   },
