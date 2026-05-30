@@ -404,7 +404,7 @@ describe('AuTable extra branches', () => {
     const fixture = TestBed.createComponent(LoadingHost);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.au-table__loading-row')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.au-table__loading-text')?.textContent).toContain(
+    expect(fixture.nativeElement.querySelector('.au-spinner__label')?.textContent).toContain(
       'Loading',
     );
   });

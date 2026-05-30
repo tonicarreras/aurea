@@ -24,6 +24,7 @@ import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
 import { AuIcon } from '../icon/icon';
+import { AuSpinner } from '../spinner/spinner';
 
 export type AuAutocompleteOption = AuFieldOption;
 
@@ -45,7 +46,7 @@ export type AuAutocompleteOption = AuFieldOption;
   templateUrl: './autocomplete.html',
   styleUrl: './autocomplete.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuIcon],
+  imports: [AuIcon, AuSpinner],
   host: {
     class: 'au-autocomplete',
     '[attr.data-au-size]': 'size()',

@@ -32,6 +32,7 @@ export const COMPONENT_NAV_LABELS: Record<string, string> = {
   message: 'Message',
   icon: 'Icon',
   skeleton: 'Skeleton',
+  spinner: 'Spinner',
   steps: 'Steps',
   divider: 'Divider',
   tooltip: 'Tooltip',

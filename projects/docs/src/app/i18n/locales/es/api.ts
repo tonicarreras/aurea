@@ -63,7 +63,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           ),
           i('size', "'sm' | 'md' | 'lg'", 'Altura y padding; `lg` ≥ 44px.', "'md'"),
           i('disabled', 'boolean', 'Desactiva el botón.', 'false'),
-          i('loading', 'boolean', 'Spinner y `aria-busy`; bloquea click.', 'false'),
+          i('loading', 'boolean', '`au-spinner` decorativo y `aria-busy`; bloquea click.', 'false'),
           i('type', "'button' | 'submit' | 'reset'", 'Tipo nativo.', "'button'"),
           i('name', 'string', 'Atributo `name` para envío de formulario.', "''"),
           i('label', 'string', 'Texto accesible si el contenido es solo icono.', "''"),
@@ -579,6 +579,20 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  spinner: {
+    importNames: ['AuSpinner'],
+    sections: [
+      {
+        title: 'AuSpinner',
+        description: 'Región viva para carga inline; label visible opcional.',
+        rows: [
+          i('size', "'sm' | 'md' | 'lg'", 'Tamaño del glifo.', "'md'"),
+          i('decorative', 'boolean', 'Solo glifo cuando el padre nombra la espera.', 'false'),
+          i('label', 'string', 'Copy visible; omítelo para solo glifo (`aria-label="Loading"`).'),
+        ],
+      },
+    ],
+  },
   divider: {
     importNames: ['AuDivider'],
     sections: [
@@ -721,7 +735,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('compact', 'boolean', 'Padding reducido en celdas.', 'false'),
           i('stickyHeader', 'boolean', 'Cabecera fija al hacer scroll.', 'false'),
           i('loading', 'boolean', 'Muestra fila de carga y pone `aria-busy`.', 'false'),
-          i('loadingMessage', 'string', 'Texto en la fila de carga.', "'Loading…'"),
+          i('loadingMessage', 'string', 'Copy visible del `au-spinner` en la fila de carga (`label`).', "'Loading…'"),
           i('clientSort', 'boolean', 'Ordena filas al pulsar cabeceras.', 'true'),
           m('sort', 'AuTableSortState | null', 'Columna y dirección de orden activas.', 'null'),
           o('sortChange', 'AuTableSortState | null', 'Al alternar el orden.'),

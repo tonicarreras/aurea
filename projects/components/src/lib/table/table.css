@@ -254,38 +254,14 @@ au-table .au-table__empty-row td {
 au-table .au-table__loading-row td {
   padding: var(--au-space-6) var(--au-table-cell-x);
   text-align: center;
-  color: var(--au-color-text-tertiary);
 }
 
-au-table .au-table__loading-indicator {
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  margin-inline-end: var(--au-space-2);
-  vertical-align: middle;
-  border: 2px solid var(--au-color-border-subtle);
-  border-top-color: var(--au-color-action-primary);
-  border-radius: var(--au-radius-dot);
-  animation: au-table-spin 0.6s linear infinite;
-}
-
-au-table .au-table__loading-text {
-  vertical-align: middle;
-}
-
-@keyframes au-table-spin {
-  to {
-    rotate: 360deg;
-  }
+au-table .au-table__loading-row au-spinner {
+  color: var(--au-color-action-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
   au-table .au-table__grid tbody tr {
     transition: none;
-  }
-
-  au-table .au-table__loading-indicator {
-    animation: none;
-    border-top-color: var(--au-color-border-subtle);
   }
 }

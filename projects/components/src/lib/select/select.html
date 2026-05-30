@@ -43,15 +43,11 @@
 
   @if (listboxVisible()) {
     @if (loading()) {
-      <div
-        class="au-field-listbox__item au-field-listbox__item--loading"
-        role="status"
-      >
-        <span
-          class="au-field-listbox__loading-indicator"
-          aria-hidden="true"
-        ></span>
-        Loading…
+      <div class="au-field-listbox__item au-field-listbox__item--loading">
+        <au-spinner
+          size="sm"
+          label="Loading…"
+        />
       </div>
     } @else if (showEmpty()) {
       <div

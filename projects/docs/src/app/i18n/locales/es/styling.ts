@@ -226,6 +226,15 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-xs / sm / lg', description: 'Esquinas por variante.' },
     { token: '--au-size-field-h-md', description: 'Altura de barra tipo botón (md).' },
   ],
+  spinner: [
+    { token: 'data-au-size', description: 'sm / md / lg — tamaño del host.' },
+    { token: '--au-spinner-track', description: 'Anillo tenue detrás del arco activo.' },
+    { token: '--au-spinner-arc', description: 'Color del trazo (por defecto: `currentColor`).' },
+    {
+      token: '--au-duration-spinner',
+      description: 'Periodo de rotación (~0,9 s).',
+    },
+  ],
   steps: [
     { token: '--au-color-border-subtle', description: 'Línea bajo los pasos.' },
     { token: '--au-color-action-primary', description: 'Paso activo e indicador.' },

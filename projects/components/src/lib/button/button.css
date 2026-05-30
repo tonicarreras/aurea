@@ -208,11 +208,13 @@ button.au-button__element {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  color: inherit;
 }
 
-.au-button__spinner au-icon {
-  width: 1em;
-  height: 1em;
+.au-button__spinner au-spinner {
+  flex-shrink: 0;
+  --au-spinner-arc: currentColor;
+  --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
 /* -------------------------------------------------------------------------- */

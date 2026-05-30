@@ -127,29 +127,6 @@
   gap: var(--au-space-2);
 }
 
-.au-field-listbox__loading-indicator {
-  display: inline-block;
-  width: 0.875rem;
-  height: 0.875rem;
-  border: 2px solid var(--au-color-border-subtle);
-  border-top-color: var(--au-color-accent);
-  border-radius: var(--au-radius-dot);
-  animation: au-field-listbox-spin 0.6s linear infinite;
-}
-
-@keyframes au-field-listbox-spin {
-  to {
-    rotate: 360deg;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-field-listbox__loading-indicator {
-    animation: none;
-    border-top-color: var(--au-color-border-subtle);
-  }
-}
-
 @media (hover: hover) {
   .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
       .au-field-listbox__option--selected

@@ -22,6 +22,7 @@ import {
   ProgressDemo,
   IconDemo,
   SkeletonDemo,
+  SpinnerDemo,
   StepsDemo,
   DialogDemo,
   DividerDemo,
@@ -484,6 +485,17 @@ options: AuSelectOption[] = [
     snippet: `import { AuProgress } from '@aurea-design-system/components';
 
 <au-progress [value]="45" [max]="100" />`,
+  },
+  {
+    slug: 'spinner',
+    title: 'Spinner',
+    exportName: 'AuSpinner',
+    selector: 'au-spinner',
+    summary: 'Carga inline; `label` opcional para texto visible.',
+    demoComponent: SpinnerDemo,
+    snippet: `import { AuSpinner } from '@aurea-design-system/components';
+
+<au-spinner size="md" />`,
   },
   {
     slug: 'table',

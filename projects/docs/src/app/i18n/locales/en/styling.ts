@@ -229,6 +229,12 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-xs / sm / lg', description: 'Corners per variant preset.' },
     { token: '--au-size-field-h-md', description: 'Button bar height (md).' },
   ],
+  spinner: [
+    { token: 'data-au-size', description: 'sm / md / lg — host footprint.' },
+    { token: '--au-spinner-track', description: 'Muted ring behind the active arc.' },
+    { token: '--au-spinner-arc', description: 'Stroke color (default: `currentColor`).' },
+    { token: '--au-duration-spinner', description: 'Rotation period (~0.9s).' },
+  ],
   steps: [
     { token: '--au-color-border-subtle', description: 'Underline rail under step buttons.' },
     { token: '--au-color-action-primary', description: 'Active step text and indicator.' },

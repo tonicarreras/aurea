@@ -302,6 +302,7 @@
   --au-duration-short: 120ms;
   --au-duration-default: 200ms;
   --au-duration-slow: 300ms;
+  --au-duration-spinner: 0.9s;
   /* Easings: standard (settle), out, emphasis for micro-interactions */
   --au-ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --au-ease-out: cubic-bezier(0, 0, 0.2, 1);

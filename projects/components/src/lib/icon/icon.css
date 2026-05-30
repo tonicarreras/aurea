@@ -40,7 +40,7 @@
 }
 
 .au-icon__svg--spinner {
-  animation: au-icon-spin var(--au-duration-slow) linear infinite;
+  animation: au-icon-spin var(--au-duration-spinner, 0.9s) linear infinite;
 }
 
 @keyframes au-icon-spin {

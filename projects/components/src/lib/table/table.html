@@ -91,11 +91,10 @@
         @if (loading()) {
           <tr class="au-table__loading-row">
             <td [attr.colspan]="columnSpan()">
-              <span
-                class="au-table__loading-indicator"
-                aria-hidden="true"
-              ></span>
-              <span class="au-table__loading-text">{{ loadingMessage() }}</span>
+              <au-spinner
+                size="sm"
+                [label]="loadingMessage()"
+              />
             </td>
           </tr>
         } @else {

@@ -1,0 +1,26 @@
+<svg
+  class="au-spinner__svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  aria-hidden="true"
+>
+  <circle
+    class="au-spinner__track"
+    cx="12"
+    cy="12"
+    r="9"
+  />
+  <circle
+    class="au-spinner__arc"
+    cx="12"
+    cy="12"
+    r="9"
+    pathLength="100"
+  />
+</svg>
+@if (showsLabel()) {
+  <span
+    class="au-spinner__label"
+    [id]="labelId"
+  >{{ resolvedLabel() }}</span>
+}

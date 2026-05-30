@@ -10,7 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import type { AuSize } from '../au-size';
-import { AuIcon } from '../icon/icon';
+import { AuSpinner } from '../spinner/spinner';
 import { tabFocusState } from '../au-tab-focus-state';
 
 export type AuButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
@@ -37,7 +37,7 @@ export type AuButtonType = 'button' | 'submit' | 'reset';
  */
 @Component({
   selector: 'au-button',
-  imports: [AuIcon],
+  imports: [AuSpinner],
   templateUrl: './button.html',
   styleUrl: './button.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,6 +56,10 @@ export class AuButton {
   readonly disabled = input(false);
   /** Shows a spinner and suppresses clicks; communicates async processing. */
   readonly loading = input(false);
+
+  /** Spinner footprint inside the loading button. */
+  protected readonly spinnerSize = computed((): AuSize => (this.size() === 'lg' ? 'md' : 'sm'));
+
   /** Native HTML type: 'button', 'submit', 'reset'. */
   readonly type = input<AuButtonType>('button');
   /** Native `name` attribute for form submission. */

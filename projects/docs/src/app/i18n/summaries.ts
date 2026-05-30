@@ -106,6 +106,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Determinate or indeterminate progressbar.',
     'Barra de progreso determinada o indeterminada.',
   ),
+  spinner: L(
+    'Inline loading; optional `label` for visible copy.',
+    'Carga inline; `label` opcional para texto visible.',
+  ),
   breadcrumb: L(
     'Hierarchical navigation trail with optional links.',
     'Ruta jerárquica con enlaces opcionales.',

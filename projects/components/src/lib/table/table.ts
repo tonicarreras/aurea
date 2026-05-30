@@ -12,6 +12,7 @@ import {
 
 import { AuCheckbox } from '../checkbox/checkbox';
 import { AuIcon } from '../icon/icon';
+import { AuSpinner } from '../spinner/spinner';
 import { AuTableColumn } from './au-table-column';
 import type { AuTableSelectionMode, AuTableSortDirection, AuTableSortState } from './table-types';
 
@@ -32,7 +33,7 @@ export type {
   styleUrl: './table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [AuCheckbox, AuIcon, NgTemplateOutlet],
+  imports: [AuCheckbox, AuIcon, AuSpinner, NgTemplateOutlet],
   host: {
     class: 'au-table',
     '[attr.data-au-striped]': 'striped() ? "" : null',

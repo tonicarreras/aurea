@@ -33,7 +33,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Cargando',
-    description: 'Muestra un indicador y establece `aria-busy` en el botón.',
+    description: 'Muestra un `au-spinner` decorativo y establece `aria-busy` en el botón.',
     demoComponent: ExampleButtonLoadingDemo,
     code: `<au-button variant="primary" [loading]="true">Guardando…</au-button>`,
   },
