@@ -54,8 +54,7 @@ function sliceItBody(content, startIndex) {
   const nextIt = tail.search(/\n\s*it\s*\(/);
   const nextDescribe = tail.search(/\n\s*describe\s*\(/);
   const offsets = [nextIt, nextDescribe].filter((i) => i >= 0).sort((a, b) => a - b);
-  const end =
-    offsets.length > 0 ? startIndex + 1 + offsets[0] : content.length;
+  const end = offsets.length > 0 ? startIndex + 1 + offsets[0] : content.length;
   return content.slice(startIndex, end);
 }
 
@@ -164,7 +163,11 @@ if (format.status !== 0) {
 console.log(`Wrote ${outPath} (${rows.length} stable components, ${flagged.length} flagged)`);
 
 if (flagged.length > 0) {
-  const names = flagged.map((r) => `${r.componentSlug} (${(r.ratio * 100).toFixed(0)}%)`).join(', ');
-  console.error(`\n✗ ${flagged.length} stable component(s) exceed 50% smoke-like tests: ${names}\n`);
+  const names = flagged
+    .map((r) => `${r.componentSlug} (${(r.ratio * 100).toFixed(0)}%)`)
+    .join(', ');
+  console.error(
+    `\n✗ ${flagged.length} stable component(s) exceed 50% smoke-like tests: ${names}\n`,
+  );
   process.exit(1);
 }
