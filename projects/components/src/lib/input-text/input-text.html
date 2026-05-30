@@ -35,19 +35,10 @@
       [attr.aria-label]="passwordRevealed() ? 'Hide password' : 'Show password'"
       (click)="togglePasswordVisibility()"
     >
-      @if (passwordRevealed()) {
-        <span
-          class="au-input-text__reveal-text"
-          aria-hidden="true"
-          >Hide</span
-        >
-      } @else {
-        <span
-          class="au-input-text__reveal-text"
-          aria-hidden="true"
-          >Show</span
-        >
-      }
+      <au-icon
+        [name]="passwordRevealed() ? 'eye-off' : 'eye'"
+        size="sm"
+      />
     </button>
   }
 </div>

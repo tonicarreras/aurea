@@ -76,7 +76,7 @@ export function formFieldControlRender(
   return {
     props: args,
     moduleMetadata: { imports: moduleImports },
-    template: `<au-form-field
+    template: `<div class="au-story-field"><au-form-field
   [label]="label"
   [hint]="hint"
   [errorMessage]="errorMessage"
@@ -86,7 +86,7 @@ export function formFieldControlRender(
   [controlIdInput]="controlIdInput"
 >
 ${controlTemplate}
-</au-form-field>`,
+</au-form-field></div>`,
   };
 }
 
@@ -99,7 +99,7 @@ export function formFieldHintOnlyRender(
   return {
     props: args,
     moduleMetadata: { imports: moduleImports },
-    template: `<au-form-field
+    template: `<div class="au-story-field"><au-form-field
   [hint]="hint"
   [errorMessage]="errorMessage"
   [invalid]="invalid"
@@ -108,6 +108,6 @@ export function formFieldHintOnlyRender(
   [controlIdInput]="controlIdInput"
 >
 ${controlTemplate}
-</au-form-field>`,
+</au-form-field></div>`,
   };
 }

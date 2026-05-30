@@ -110,7 +110,7 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: [
         'Accessible name via visible label or external `aria-label`.',
         'Errors linked with `aria-errormessage`; hints with `aria-describedby`.',
-        'Password toggle with `aria-pressed` and Show/Hide labels.',
+        'Password toggle with `aria-pressed`, eye icons, and Show/Hide labels.',
       ],
       keyboard: [
         'Tab enters the field with outer ring (`--from-tab`); click uses inner ring.',

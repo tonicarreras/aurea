@@ -175,7 +175,7 @@ au-table .au-table__sort-btn:focus-visible {
   box-shadow: var(--au-shadow-focus-ring);
 }
 
-au-table .au-table__sort-btn svg {
+au-table .au-table__sort-btn au-icon {
   display: block;
   width: 100%;
   height: 100%;

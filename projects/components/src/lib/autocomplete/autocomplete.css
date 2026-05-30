@@ -192,6 +192,11 @@
     transform var(--au-duration-short) var(--au-ease-in-out);
 }
 
+.au-autocomplete__icon au-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
 .au-autocomplete__control-row--open .au-autocomplete__icon {
   transform: translateY(-50%) rotate(180deg);
   color: var(--au-color-text-secondary);

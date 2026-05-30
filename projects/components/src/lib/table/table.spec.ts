@@ -417,9 +417,8 @@ describe('AuTable extra branches', () => {
     fixture.detectChanges();
     nameBtn.click(); // → desc
     fixture.detectChanges();
-    // desc SVG uses path: "M8 13V3..."
-    const svg = root.querySelector('.au-table__sort-icon svg path') as SVGPathElement;
-    expect(svg?.getAttribute('d')).toContain('M8 13');
+    const icon = root.querySelector('.au-table__sort-icon au-icon') as HTMLElement;
+    expect(icon?.getAttribute('data-au-icon')).toBe('sort-desc');
   });
 
   it('renders without description when description is unset', async () => {

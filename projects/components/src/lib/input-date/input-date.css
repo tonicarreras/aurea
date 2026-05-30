@@ -200,14 +200,19 @@
   inset-inline-end: var(--au-space-4);
 }
 
-:host([data-au-size='sm']) .au-input-date__icon-svg {
+:host([data-au-size='sm']) .au-input-date__icon au-icon {
   width: 0.875rem;
   height: 0.875rem;
 }
 
-:host([data-au-size='lg']) .au-input-date__icon-svg {
+:host([data-au-size='lg']) .au-input-date__icon au-icon {
   width: 1.125rem;
   height: 1.125rem;
+}
+
+.au-input-date__icon au-icon {
+  width: 1rem;
+  height: 1rem;
 }
 
 .au-input-date__control-row:has(.au-input-date__input:not(:disabled):hover) .au-input-date__icon,

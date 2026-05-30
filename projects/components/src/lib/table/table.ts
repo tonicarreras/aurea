@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 
 import { AuCheckbox } from '../checkbox/checkbox';
+import { AuIcon } from '../icon/icon';
 import { AuTableColumn } from './au-table-column';
 import type { AuTableSelectionMode, AuTableSortDirection, AuTableSortState } from './table-types';
 
@@ -31,7 +32,7 @@ export type {
   styleUrl: './table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [AuCheckbox, NgTemplateOutlet],
+  imports: [AuCheckbox, AuIcon, NgTemplateOutlet],
   host: {
     class: 'au-table',
     '[attr.data-au-striped]': 'striped() ? "" : null',

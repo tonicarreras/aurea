@@ -524,8 +524,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         description: 'Decorative (`aria-hidden`). Name the parent for screen readers.',
         rows: [
           { name: 'name', type: 'AuIconName (required)', description: 'Glyph identifier.' },
-          i('size', "'sm' | 'md' | 'lg'", 'Dimensions.', "'md'"),
-          i('warningScale', 'number', 'Scales warning triangle only.', '1.1'),
+          i('size', "'xs' | 'sm' | 'md' | 'lg'", 'Dimensions.', "'md'"),
         ],
       },
     ],

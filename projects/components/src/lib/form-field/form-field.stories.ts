@@ -46,16 +46,18 @@ export const WithInput: Story = {
     props: args,
     moduleMetadata: { imports: [AuFormField, AuInputText] },
     template: `
-      <au-form-field
-        [label]="label"
-        [hint]="hint"
-        [errorMessage]="errorMessage"
-        [invalid]="invalid"
-        [required]="required"
-        [controlIdInput]="controlIdInput"
-      >
-        <au-input-text placeholder="you@example.com" />
-      </au-form-field>
+      <div class="au-story-field">
+        <au-form-field
+          [label]="label"
+          [hint]="hint"
+          [errorMessage]="errorMessage"
+          [invalid]="invalid"
+          [required]="required"
+          [controlIdInput]="controlIdInput"
+        >
+          <au-input-text placeholder="you@example.com" />
+        </au-form-field>
+      </div>
     `,
   }),
 };

@@ -17,6 +17,7 @@ import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
+import { AuIcon } from '../icon/icon';
 
 type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
@@ -32,6 +33,7 @@ type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search'
   templateUrl: './input-text.html',
   styleUrl: './input-text.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuIcon],
   host: {
     class: 'au-input-text',
     '[attr.data-au-size]': 'size()',

@@ -190,38 +190,32 @@
   background: transparent;
 }
 
-/* Password action: text, not a pill */
+/* Password reveal: icon button */
 .au-input-text__reveal {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
+  justify-content: center;
   align-self: stretch;
   margin: 0;
-  padding-block: 0;
-  padding-inline: 0.5rem 0.65rem;
+  padding-inline: var(--au-space-2-5);
   border: 0;
   border-inline-start: 1px solid var(--au-color-border-subtle);
   border-radius: 0;
   background: transparent;
-  color: var(--au-color-action-primary);
-  font: inherit;
-  font-size: var(--au-text-xs);
-  font-weight: var(--au-weight-semibold);
-  letter-spacing: var(--au-tracking-caps);
-  text-transform: uppercase;
-  line-height: 1;
+  color: var(--au-color-text-tertiary);
   cursor: pointer;
   user-select: none;
   transition: var(--au-transition-glyph), var(--au-transition-background);
 }
 
 .au-input-text__reveal:hover:not(:disabled) {
-  color: var(--au-color-action-primary-hover);
+  color: var(--au-color-text-secondary);
   background: var(--au-color-surface-elevated);
 }
 
 .au-input-text__reveal:active:not(:disabled) {
-  color: var(--au-color-action-primary-pressed);
+  color: var(--au-color-text-primary);
   background: var(--au-color-surface-sunken);
 }
 

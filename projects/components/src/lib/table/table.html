@@ -60,40 +60,22 @@
                   >
                     @switch (columnSortDirection(col.name())) {
                       @case ('asc') {
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M8 3v10M4.5 6.5 8 3l3.5 3.5" />
-                        </svg>
+                        <au-icon
+                          name="sort-asc"
+                          size="xs"
+                        />
                       }
                       @case ('desc') {
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M8 13V3M4.5 9.5 8 13l3.5-3.5" />
-                        </svg>
+                        <au-icon
+                          name="sort-desc"
+                          size="xs"
+                        />
                       }
                       @default {
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M5.5 6 8 3.5 10.5 6M5.5 10 8 12.5 10.5 10" />
-                        </svg>
+                        <au-icon
+                          name="sort-neutral"
+                          size="xs"
+                        />
                       }
                     }
                   </span>

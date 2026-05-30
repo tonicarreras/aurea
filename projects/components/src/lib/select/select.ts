@@ -23,6 +23,7 @@ import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
+import { AuIcon } from '../icon/icon';
 
 export type AuSelectOption = AuFieldOption;
 
@@ -41,6 +42,7 @@ export type AuSelectOption = AuFieldOption;
   templateUrl: './select.html',
   styleUrl: './select.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuIcon],
   host: {
     class: 'au-select',
     '[attr.data-au-size]': 'size()',

@@ -552,8 +552,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           'Decorativo (`aria-hidden`). Nombra el control padre para lectores de pantalla.',
         rows: [
           { name: 'name', type: 'AuIconName (requerido)', description: 'Identificador del glifo.' },
-          i('size', "'sm' | 'md' | 'lg'", 'Tamaño.', "'md'"),
-          i('warningScale', 'number', 'Escala solo el triángulo de warning.', '1.1'),
+          i('size', "'xs' | 'sm' | 'md' | 'lg'", 'Tamaño.', "'md'"),
         ],
       },
     ],

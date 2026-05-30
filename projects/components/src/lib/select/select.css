@@ -231,6 +231,11 @@
   justify-content: center;
 }
 
+.au-select__icon au-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
 :host([data-au-size='sm']) .au-select__icon {
   right: var(--au-space-2-5);
 }
