@@ -79,16 +79,14 @@ export class AuMenu {
     this.destroyRef,
   );
 
-  constructor() {
-    this.destroyRef.onDestroy(() => releaseOpenMenu(this));
-  }
-
   protected readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   protected readonly triggerHost = signal<HTMLElement | null>(null);
 
   /** Registered menu items for keyboard navigation. */
   private readonly menuItems = signal<AuMenuItem[]>([]);
   private savedTrigger: HTMLElement | null = null;
+
+  private readonly releaseMenuOnDestroy = this.destroyRef.onDestroy(() => releaseOpenMenu(this));
 
   protected readonly enabledMenuItems = computed(() =>
     this.menuItems().filter((item) => !item.disabled()),

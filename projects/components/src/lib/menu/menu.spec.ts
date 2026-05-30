@@ -133,6 +133,10 @@ describe('AuMenu', () => {
     trigger.click();
     fixture.detectChanges();
     expect(fixture.componentInstance.open).toBe(true);
+    const menu = menuInstance(fixture) as unknown as {
+      panelRef: () => { nativeElement: HTMLElement } | undefined;
+    };
+    expect(menu.panelRef()?.nativeElement.classList.contains('au-menu__panel')).toBe(true);
     const item = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement | null;
     expect(item).toBeTruthy();
     item!.click();
@@ -449,6 +453,36 @@ describe('AuMenu', () => {
       document.dispatchEvent(new Event('scroll'));
       fixture.detectChanges();
       expect(fixture.componentInstance.open).toBe(false);
+    });
+
+    it('stays open when scrolling inside the panel', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const panel = document.body.querySelector('.au-menu__panel') as HTMLElement;
+      panel.dispatchEvent(new Event('scroll', { bubbles: true }));
+      fixture.detectChanges();
+      expect(fixture.componentInstance.open).toBe(true);
+    });
+
+    it('unregisterMenuItem removes items from keyboard navigation', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture) as unknown as {
+        unregisterMenuItem: (item: AuMenuItem) => void;
+        enabledMenuItems: () => AuMenuItem[];
+      };
+      const items = menu.enabledMenuItems();
+      expect(items.length).toBeGreaterThan(0);
+      menu.unregisterMenuItem(items[0]);
+      expect(menu.enabledMenuItems()).toHaveLength(items.length - 1);
+    });
+
+    it('cleans up listeners when destroyed while open', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      expect(() => fixture.destroy()).not.toThrow();
     });
   });
 });

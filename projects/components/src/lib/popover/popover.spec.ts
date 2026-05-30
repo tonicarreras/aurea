@@ -156,4 +156,14 @@ describe('AuPopover', () => {
     fixture.detectChanges();
     expect(fixture.componentInstance.open).toBe(false);
   });
+
+  it('stays open when scrolling inside the panel', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    const panel = document.body.querySelector('.au-popover__panel') as HTMLElement;
+    panel.dispatchEvent(new Event('scroll', { bubbles: true }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.open).toBe(true);
+  });
 });

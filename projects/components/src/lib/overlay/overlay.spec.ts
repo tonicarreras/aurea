@@ -3,7 +3,7 @@ import { Component, DestroyRef, inject, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { FieldListboxOverlay, focusLeftFieldControl } from './field-listbox-overlay';
+import { FieldListboxOverlay, focusLeftFieldControl, resolveFieldListboxPortalRoot } from './field-listbox-overlay';
 import { computeTooltipPosition } from './tooltip-position';
 import { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
 
@@ -389,6 +389,40 @@ describe('FieldListboxOverlay', () => {
     dialog.remove();
   });
 
+  it('detach removes listbox from a non-body portal when the anchor is missing', () => {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'au-dialog__native';
+    dialog.setAttribute('open', '');
+    const panel = document.createElement('div');
+    panel.className = 'au-dialog__panel';
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    wrap.append(anchor, listbox);
+    panel.append(wrap);
+    dialog.append(panel);
+    document.body.append(dialog);
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+    expect(listbox.parentElement).toBe(dialog);
+    (overlay as unknown as { anchor: Comment | null }).anchor = null;
+    overlay.detach();
+    expect(dialog.contains(listbox)).toBe(false);
+    dialog.remove();
+  });
+
   it('portals listbox to body, positions it, and restores on detach', () => {
     const wrap = document.createElement('div');
     const anchor = document.createElement('div');
@@ -526,6 +560,25 @@ describe('FieldListboxOverlay', () => {
   it('detach is noop when nothing is active', () => {
     const overlay = createOverlay();
     expect(() => overlay.detach()).not.toThrow();
+  });
+
+  it('resolveFieldListboxPortalRoot prefers an open modal dialog', () => {
+    const dialog = document.createElement('dialog') as HTMLDialogElement;
+    Object.defineProperty(dialog, 'open', { value: true, configurable: true });
+    document.body.append(dialog);
+    const anchor = document.createElement('div');
+    dialog.append(anchor);
+    expect(resolveFieldListboxPortalRoot(anchor, document)).toBe(dialog);
+    dialog.remove();
+  });
+
+  it('resolveFieldListboxPortalRoot falls back to body for closed dialogs', () => {
+    const dialog = document.createElement('dialog');
+    const anchor = document.createElement('div');
+    dialog.append(anchor);
+    document.body.append(dialog);
+    expect(resolveFieldListboxPortalRoot(anchor, document)).toBe(document.body);
+    dialog.remove();
   });
 
   it('onWindowChange is a no-op without an active anchor', () => {

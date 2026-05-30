@@ -588,6 +588,19 @@ describe('AuDialog', () => {
     expect(inst.savedFocus).toBe(saved);
   });
 
+  it('skips redundant scroll lock acquisition', () => {
+    const fix = TestBed.createComponent(AuDialog);
+    fix.detectChanges();
+    const inst = fix.componentInstance as unknown as {
+      scrollLocked: boolean;
+      acquireScrollLock: () => void;
+    };
+    document.body.style.overflow = 'auto';
+    inst.scrollLocked = true;
+    inst.acquireScrollLock();
+    expect(document.body.style.overflow).toBe('auto');
+  });
+
   it('savedFocus is null when activeElement is not an HTMLElement', () => {
     const fix = TestBed.createComponent(AuDialog);
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

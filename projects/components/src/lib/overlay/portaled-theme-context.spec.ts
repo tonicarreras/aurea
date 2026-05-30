@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   bindPortaledThemeContextObserver,
@@ -44,5 +44,47 @@ describe('portaled-theme-context', () => {
 
     unbind();
     clearPortaledThemeContext(target);
+  });
+
+  it('removes copied attrs when themed ancestors are missing or empty', () => {
+    const anchor = document.createElement('span');
+    const target = document.createElement('div');
+    target.setAttribute('data-au-theme', 'dark');
+    document.body.append(anchor, target);
+
+    syncPortaledThemeContext(target, anchor);
+    expect(target.hasAttribute('data-au-theme')).toBe(false);
+
+    document.body.replaceChildren();
+    const shell = document.createElement('div');
+    shell.setAttribute('data-au-theme', '');
+    const emptyAnchor = document.createElement('span');
+    const emptyTarget = document.createElement('div');
+    shell.append(emptyAnchor);
+    document.body.append(shell, emptyTarget);
+    syncPortaledThemeContext(emptyTarget, emptyAnchor);
+    expect(emptyTarget.hasAttribute('data-au-theme')).toBe(false);
+  });
+
+  it('bindPortaledThemeContextObserver returns noop without MutationObserver', () => {
+    const anchor = document.createElement('span');
+    const target = document.createElement('div');
+    document.body.append(anchor, target);
+    const observer = globalThis.MutationObserver;
+    vi.stubGlobal('MutationObserver', undefined);
+
+    const unbind = bindPortaledThemeContextObserver(target, anchor);
+    expect(() => unbind()).not.toThrow();
+
+    vi.stubGlobal('MutationObserver', observer);
+  });
+
+  it('bindPortaledThemeContextObserver returns noop without theme sources', () => {
+    const anchor = document.createElement('span');
+    const target = document.createElement('div');
+    document.body.append(anchor, target);
+
+    const unbind = bindPortaledThemeContextObserver(target, anchor);
+    expect(() => unbind()).not.toThrow();
   });
 });

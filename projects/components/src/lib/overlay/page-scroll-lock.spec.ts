@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   lockPageScroll,
@@ -31,5 +31,14 @@ describe('page-scroll-lock', () => {
     expect(document.body.style.overflow).toBe('hidden');
     unlockPageScroll();
     expect(document.body.style.overflow).toBe('');
+  });
+
+  it('is a noop when document is unavailable', () => {
+    const doc = globalThis.document;
+    vi.stubGlobal('document', undefined);
+    expect(() => lockPageScroll()).not.toThrow();
+    expect(() => unlockPageScroll()).not.toThrow();
+    expect(() => resetPageScrollLockForTests()).not.toThrow();
+    vi.stubGlobal('document', doc);
   });
 });
