@@ -21,6 +21,7 @@ import {
   setSnackbarStackSurface,
   unregisterSnackbarStackEntry,
 } from './snackbar-stack';
+import { clearPortaledThemeContext, syncPortaledThemeContext } from '../overlay/portaled-theme-context';
 
 export type AuSnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 export type AuSnackbarPosition =
@@ -201,6 +202,7 @@ export class AuSnackbar {
       this.bodyAnchor = this.document.createComment('au-snackbar-anchor');
       parent.insertBefore(this.bodyAnchor, host);
     }
+    syncPortaledThemeContext(host, host);
     this.renderer.appendChild(this.document.body, host);
   }
 
@@ -249,6 +251,7 @@ export class AuSnackbar {
     }
     const host = this.host.nativeElement as HTMLElement;
     if (host.parentElement === this.document.body) {
+      clearPortaledThemeContext(host);
       this.bodyAnchor.parentNode?.insertBefore(host, this.bodyAnchor);
       this.bodyAnchor.remove();
       this.bodyAnchor = null;

@@ -17,16 +17,19 @@ export const routes: Routes = [
       {
         path: 'get-started',
         loadComponent: () => import('./pages/get-started.page').then((m) => m.GetStartedPage),
+        data: { docsLayout: 'reading' },
       },
       {
         path: 'guides/adoption',
         loadComponent: () =>
           import('./pages/guides-adoption.page').then((m) => m.GuidesAdoptionPage),
+        data: { docsLayout: 'reading' },
       },
       {
         path: 'guides/signal-forms',
         loadComponent: () =>
           import('./pages/guide-signal-forms.page').then((m) => m.GuideSignalFormsPage),
+        data: { docsLayout: 'reading' },
       },
       {
         path: 'guides/crud-demo',
@@ -37,11 +40,13 @@ export const routes: Routes = [
         path: 'maturity',
         loadComponent: () =>
           import('./pages/ecosystem-maturity.page').then((m) => m.EcosystemMaturityPage),
+        data: { docsLayout: 'ecosystem' },
       },
       {
         path: 'design-tokens',
         loadComponent: () =>
           import('./pages/ecosystem-design-tokens.page').then((m) => m.EcosystemDesignTokensPage),
+        data: { docsLayout: 'ecosystem' },
       },
       {
         path: 'themes',
@@ -55,6 +60,7 @@ export const routes: Routes = [
       {
         path: 'components/:slug',
         loadComponent: () => import('./pages/component-doc.page').then((m) => m.ComponentDocPage),
+        data: { docsLayout: 'component' },
       },
     ],
   },

@@ -7,13 +7,71 @@
   display: inline-flex;
 }
 
-/* Panel base when portaled — complements .au-floating-panel in au-tokens.css */
+/**
+ * Menu dropdown — flat surface aligned with field listboxes (not glassy floating chrome).
+ * Portaled with `.au-floating-panel`; caret from shared floating tokens.
+ */
+.au-menu__panel.au-floating-panel {
+  --au-floating-panel-bg: var(--au-color-surface-raised);
+  --au-floating-panel-border: var(--au-color-border-subtle);
+  --au-menu-panel-shadow:
+    0 1px 2px color-mix(in srgb, var(--au-color-surface-inverted) 8%, transparent),
+    0 2px 6px color-mix(in srgb, var(--au-color-surface-inverted) 4%, transparent);
+
+  overflow: visible;
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-surface);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-menu-panel-shadow);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.au-menu__panel.au-floating-panel.au-tooltip__bubble--overlay {
+  animation: au-menu-panel-enter var(--au-duration-short) var(--au-ease-out) both;
+}
+
+.au-menu__panel.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='top'] {
+  animation-name: au-menu-panel-enter-top;
+}
+
+@keyframes au-menu-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes au-menu-panel-enter-top {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .au-menu__panel {
   display: flex;
   flex-direction: column;
   gap: var(--au-space-0-5);
-  min-width: 11rem;
-  max-width: 20rem;
-  padding: var(--au-space-1-5);
+  min-width: 10rem;
+  max-width: 18rem;
+  padding: var(--au-space-1);
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-menu__panel.au-floating-panel.au-tooltip__bubble--overlay {
+    animation: none;
+  }
 }

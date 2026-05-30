@@ -831,14 +831,17 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   table: {
     intro: [
-      'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-      'Celdas custom: `ng-template[auTableCell] let-row` en la columna. Orden: `sortable` + `[(sort)]` o `clientSort`.',
+      'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader` y `loading`.',
+      'Orden con columnas `sortable`, `[(sort)]` y `clientSort`. Los iconos de orden usan `au-icon` (`sort-asc`, `sort-desc`, `sort-neutral`).',
+      'Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `au-checkbox`.',
+      'Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
       items: [
         'Datos tabulares con cabeceras y filas.',
-        'Columnas ordenables cuando el padre posee el estado de orden.',
+        'Columnas ordenables cuando el padre posee o delega el estado de orden.',
+        'Elegir una o varias filas para acciones masivas, paneles de detalle o comparación.',
       ],
     },
     whenNotToUse: {
@@ -851,19 +854,30 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     anatomy: [
       {
         region: '`au-table`',
-        detail: 'Cabecera, `<table>` y cuerpo desde `[data]` + columnas hijas.',
+        detail:
+          'Shell, cabecera, `<table>`, cuerpo, filas loading/vacío. Host: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+      },
+      {
+        region: 'Columna de selección',
+        detail:
+          'Se antepone si `selectionMode` ≠ `none`: checkbox en cabecera (multiple) o etiqueta sr-only (single), checkboxes por fila, `aria-selected` en filas.',
       },
       {
         region: '`au-table-column`',
-        detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`.',
+        detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`, `accessor` opcional.',
       },
       { region: '`auTableCell`', detail: 'Plantilla opcional para celdas ricas (badges, menús).' },
     ],
     accessibility: [
       'Conserva semántica nativa (`thead`, `tbody`, `th scope`).',
-      'Botones de orden son botones reales con `aria-sort` según dirección.',
+      'Botones de orden reales con `aria-sort` e iconos `au-icon`.',
+      'Checkboxes con `selectAllLabel` / `selectRowLabel`; filas con `aria-selected`.',
+      'Loading pone `aria-busy="true"` en el host.',
     ],
-    keyboard: ['Tab a botones de orden; Enter/Espacio alternan el ciclo de orden.'],
+    keyboard: [
+      'Tab a botones de orden; Enter/Espacio alternan el ciclo.',
+      'Tab a checkboxes de fila; Espacio alterna selección. Clic en fila también alterna si hay selección.',
+    ],
     relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
   },
   tooltip: {

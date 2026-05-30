@@ -65,6 +65,12 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
     </section>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
     .docs-code-panel {
       border: 1px solid var(--docs-border-fine);
       border-radius: var(--au-radius-lg);

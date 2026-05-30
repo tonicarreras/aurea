@@ -1,0 +1,133 @@
+/**
+ * Component doc pages (Overview / API / Styling / Examples): one column width.
+ * Imported from styles.css — applies inside docs-page + au-steps.
+ */
+
+.docs-page__body au-steps,
+.docs-component-steps {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.docs-component-steps .au-steps__root,
+.docs-component-steps .au-steps__panels,
+.docs-component-steps .au-steps__panel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.docs-component-step:not([hidden]) {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.docs-component-step > *,
+.docs-overview-block,
+.docs-overview-demo,
+.docs-examples,
+docs-component-overview,
+docs-token-list,
+docs-code-block,
+docs-component-example,
+docs-demo-panel,
+.docs-api-section {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.docs-component-step__lead,
+.docs-component-step__note,
+.docs-api-section__lead {
+  max-width: min(var(--docs-prose-max), 100%);
+}
+
+.docs-examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-10);
+}
+
+docs-demo-panel {
+  display: block;
+}
+
+.docs-demo,
+.docs-demo__canvas {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.docs-demo__canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: var(--au-space-6) var(--au-space-5);
+}
+
+/* Examples: field-width demos; wide blocks stretch full step */
+.docs-demo--compact .docs-demo__canvas > * {
+  align-self: flex-start;
+  width: min(100%, var(--docs-demo-field-max));
+}
+
+.docs-demo--compact .docs-demo__canvas > *:is(
+    :has(au-table),
+    :has(au-tabs),
+    :has(au-steps),
+    :has(au-card),
+    :has(au-dialog),
+    :has(au-menu),
+    :has(au-pagination),
+    :has(au-breadcrumb),
+    :has(au-chip-group),
+    :has(.docs-demo-row)
+  ) {
+  align-self: stretch;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Overview preview: full-width panel, field previews stay narrow (see demo-preview.css) */
+.docs-demo:not(.docs-demo--compact) .docs-demo__canvas {
+  align-items: center;
+}
+
+.docs-demo:not(.docs-demo--compact) .docs-demo__canvas > *:is(
+    :has(au-table),
+    :has(au-tabs),
+    :has(au-steps),
+    :has(au-pagination),
+    :has(au-breadcrumb),
+    :has(.docs-preview--wide),
+    :has(.docs-preview--row),
+    :has(.docs-preview--inline)
+  ) {
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+}
+
+docs-code-block {
+  display: block;
+}
+
+.docs-code-panel {
+  width: 100%;
+  max-width: 100%;
+}
+
+.docs-api-table-wrap {
+  width: 100%;
+  max-width: 100%;
+}
+
+.docs-overview {
+  width: 100%;
+  max-width: 100%;
+}

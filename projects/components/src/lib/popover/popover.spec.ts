@@ -147,4 +147,13 @@ describe('AuPopover', () => {
     popover.close();
     expect(fixture.componentInstance.open).toBe(false);
   });
+
+  it('closes when the page scrolls outside the panel', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    document.dispatchEvent(new Event('scroll'));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.open).toBe(false);
+  });
 });

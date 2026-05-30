@@ -1,5 +1,6 @@
 /**
  * Dialog — modal panel aligned with au-card surface and spacing.
+ * ViewEncapsulation.None: host tokens and ::backdrop on native <dialog>.
  */
 
 au-dialog {
@@ -165,6 +166,16 @@ au-dialog .au-dialog__footer {
   gap: var(--au-space-3);
   padding: var(--au-space-3) var(--au-space-4) var(--au-space-4);
   border-top: 1px solid var(--au-color-border-subtle);
+}
+
+au-dialog .au-dialog__footer [auDialogFooter],
+au-dialog [auDialogFooter] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--au-space-3);
+  width: 100%;
 }
 
 @keyframes au-dialog-backdrop-in {

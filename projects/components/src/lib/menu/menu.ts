@@ -20,6 +20,7 @@ import {
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_MENU } from './au-menu.token';
+import { claimOpenMenu, releaseOpenMenu } from './menu-open-registry';
 import type { AuMenuItem } from './menu-item';
 
 /** Used by `forwardRef` in component providers (testable factory). */
@@ -35,6 +36,7 @@ export function auMenuSelfRef(): typeof AuMenu {
  * - **Trigger:** `auMenuTrigger` on the control that toggles the panel.
  * - **Items:** `au-menu-item` emits `select` and closes the menu.
  * - **Dismiss:** outside click and Escape.
+ * - **Exclusive open:** opening one menu closes any other open menu on the page.
  * - **Keyboard:** Arrow keys cycle items; Home/End jump to ends; Enter/Space activates; Escape closes.
  * - **Focus:** moves to the first item on open, returns to the trigger on close.
  *
@@ -77,6 +79,10 @@ export class AuMenu {
     this.destroyRef,
   );
 
+  constructor() {
+    this.destroyRef.onDestroy(() => releaseOpenMenu(this));
+  }
+
   protected readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   protected readonly triggerHost = signal<HTMLElement | null>(null);
 
@@ -115,6 +121,11 @@ export class AuMenu {
   }
 
   private setOpen(value: boolean): void {
+    if (value) {
+      claimOpenMenu(this);
+    } else {
+      releaseOpenMenu(this);
+    }
     this.open.set(value);
     this.openChange.emit(value);
   }
@@ -143,6 +154,26 @@ export class AuMenu {
       this.savedTrigger = trigger;
       items[0].focus();
     }
+  });
+
+  private readonly dismissOnScroll = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    const onScroll = (event: Event): void => {
+      const panel = this.panelRef()?.nativeElement;
+      const target = event.target;
+      if (panel && target instanceof Node && panel.contains(target)) {
+        return;
+      }
+      this.close();
+    };
+
+    this.document.addEventListener('scroll', onScroll, { capture: true, passive: true });
+    onCleanup(() => {
+      this.document.removeEventListener('scroll', onScroll, { capture: true });
+    });
   });
 
   protected onPanelKeydown(event: KeyboardEvent): void {

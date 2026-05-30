@@ -110,7 +110,7 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: [
         'Accessible name via visible label or external `aria-label`.',
         'Errors linked with `aria-errormessage`; hints with `aria-describedby`.',
-        'Password toggle with `aria-pressed`, eye icons, and Show/Hide labels.',
+        'Password toggle with `aria-pressed` and Show/Hide labels.',
       ],
       keyboard: [
         'Tab enters the field with outer ring (`--from-tab`); click uses inner ring.',
@@ -846,12 +846,15 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     table: {
       intro: [
-        'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-        'Custom cells: `ng-template[auTableCell] let-row` inside a column. Sort with `sortable` + `[(sort)]` or `clientSort`.',
+        'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`, and `loading`.',
+        'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
+        'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
+        'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
       ],
       whenToUse: [
         'Tabular data with headers and body rows.',
-        'Sortable columns when the parent owns sort state.',
+        'Sortable columns when the parent owns or delegates sort state.',
+        'Pick one or many rows for bulk actions, detail panels, or comparison.',
       ],
       whenNotToUse: [
         'Layout-only grids → CSS grid, not tables.',
@@ -860,11 +863,18 @@ export const STORY_OVERVIEW_SOURCE = {
       anatomy: [
         {
           region: '`au-table`',
-          detail: 'Renders header, `<table>`, and body from `[data]` + column children.',
+          detail:
+            'Shell, header, `<table>`, body, loading/empty rows. Host attrs: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+        },
+        {
+          region: 'Selection column',
+          detail:
+            'Prepended when `selectionMode` is not `none`: header checkbox (multiple) or sr-only label (single), row checkboxes, `aria-selected` on rows.',
         },
         {
           region: '`au-table-column`',
-          detail: 'Defines `name`, `header`, `sortable`, `align`, `cellVariant`.',
+          detail:
+            'Defines `name`, `header`, `sortable`, `align`, `cellVariant`, optional `accessor`.',
         },
         {
           region: '`auTableCell`',
@@ -873,9 +883,14 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: [
         'Preserve native table semantics (`thead`, `tbody`, `th scope`).',
-        'Sort buttons are real buttons with `aria-sort` reflecting direction.',
+        'Sort buttons are real buttons with `aria-sort` and `au-icon` indicators.',
+        'Selection checkboxes expose `selectAllLabel` / `selectRowLabel`; rows use `aria-selected`.',
+        'Loading sets `aria-busy="true"` on the host.',
       ],
-      keyboard: ['Tab to sort buttons; Enter/Space toggles sort cycle.'],
+      keyboard: [
+        'Tab to sort buttons; Enter/Space toggles sort cycle.',
+        'Tab to row checkboxes; Space toggles selection. Row click also toggles when selection is enabled.',
+      ],
     },
     tooltip: {
       intro: [
@@ -1743,12 +1758,15 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     table: {
       intro: [
-        'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-        'Celdas custom: `ng-template[auTableCell] let-row` en la columna. Orden: `sortable` + `[(sort)]` o `clientSort`.',
+        'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader` y `loading`.',
+        'Orden con columnas `sortable`, `[(sort)]` y `clientSort`. Los iconos de orden usan `au-icon` (`sort-asc`, `sort-desc`, `sort-neutral`).',
+        'Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `au-checkbox`.',
+        'Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.',
       ],
       whenToUse: [
         'Datos tabulares con cabeceras y filas.',
-        'Columnas ordenables cuando el padre posee el estado de orden.',
+        'Columnas ordenables cuando el padre posee o delega el estado de orden.',
+        'Elegir una o varias filas para acciones masivas, paneles de detalle o comparación.',
       ],
       whenNotToUse: [
         'Rejillas solo de maquetación → CSS grid, no tablas.',
@@ -1757,11 +1775,18 @@ export const STORY_OVERVIEW_SOURCE = {
       anatomy: [
         {
           region: '`au-table`',
-          detail: 'Cabecera, `<table>` y cuerpo desde `[data]` + columnas hijas.',
+          detail:
+            'Shell, cabecera, `<table>`, cuerpo, filas loading/vacío. Host: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+        },
+        {
+          region: 'Columna de selección',
+          detail:
+            'Se antepone si `selectionMode` ≠ `none`: checkbox en cabecera (multiple) o etiqueta sr-only (single), checkboxes por fila, `aria-selected` en filas.',
         },
         {
           region: '`au-table-column`',
-          detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`.',
+          detail:
+            'Define `name`, `header`, `sortable`, `align`, `cellVariant`, `accessor` opcional.',
         },
         {
           region: '`auTableCell`',
@@ -1770,9 +1795,14 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: [
         'Conserva semántica nativa (`thead`, `tbody`, `th scope`).',
-        'Botones de orden son botones reales con `aria-sort` según dirección.',
+        'Botones de orden reales con `aria-sort` e iconos `au-icon`.',
+        'Checkboxes con `selectAllLabel` / `selectRowLabel`; filas con `aria-selected`.',
+        'Loading pone `aria-busy="true"` en el host.',
       ],
-      keyboard: ['Tab a botones de orden; Enter/Espacio alternan el ciclo de orden.'],
+      keyboard: [
+        'Tab a botones de orden; Enter/Espacio alternan el ciclo.',
+        'Tab a checkboxes de fila; Espacio alterna selección. Clic en fila también alterna si hay selección.',
+      ],
     },
     tooltip: {
       intro: [

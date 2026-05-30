@@ -29,7 +29,7 @@ export function auPopoverSelfRef(): typeof AuPopover {
  * Lightweight panel anchored to a trigger (filters, help, compact forms).
  *
  * @remarks
- * - Same overlay model as {@link AuMenu}: portaled panel, `[(open)]`, outside click, Escape.
+ * - Same overlay model as {@link AuMenu}: portaled panel, `[(open)]`, outside click, Escape, scroll dismiss.
  * - **Trigger:** `auPopoverTrigger`; `aria-haspopup="dialog"` on the trigger.
  *
  * @example
@@ -84,6 +84,26 @@ export class AuPopover {
     this.renderer.addClass(panel, 'au-floating-panel');
     this.renderer.addClass(panel, 'au-popover__panel');
     this.overlay.sync(panel, trigger, this.placement());
+  });
+
+  private readonly dismissOnScroll = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    const onScroll = (event: Event): void => {
+      const panel = this.panelRef()?.nativeElement;
+      const target = event.target;
+      if (panel && target instanceof Node && panel.contains(target)) {
+        return;
+      }
+      this.close();
+    };
+
+    this.document.addEventListener('scroll', onScroll, { capture: true, passive: true });
+    onCleanup(() => {
+      this.document.removeEventListener('scroll', onScroll, { capture: true });
+    });
   });
 
   registerTrigger(el: HTMLElement): void {

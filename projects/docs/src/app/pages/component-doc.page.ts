@@ -204,6 +204,12 @@ import { DocsTokenList } from '../shared/docs-token-list';
     }
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
     .docs-component-steps {
       position: sticky;
       top: calc(var(--docs-header-height) + var(--au-space-3));
@@ -239,7 +245,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
     .docs-component-step__lead {
       margin: 0;
-      max-width: min(62rem, 100%);
+      max-width: min(var(--docs-prose-max), 100%);
       color: var(--au-color-text-secondary);
       line-height: var(--au-leading-relaxed);
     }
@@ -326,17 +332,14 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
     .docs-api-section__lead {
       margin: 0;
-      max-width: min(62rem, 100%);
+      max-width: min(var(--docs-prose-max), 100%);
       color: var(--au-color-text-secondary);
       font-size: var(--au-text-sm);
       line-height: var(--au-leading-relaxed);
     }
 
     .docs-examples {
-      display: flex;
-      flex-direction: column;
       gap: var(--au-space-10);
-      max-width: 100%;
     }
 
     @media (max-width: 40rem) {

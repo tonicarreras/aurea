@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { AuButton } from '../button/button';
 import { AuMenu, auMenuSelfRef } from './menu';
 import { AuMenuItem, AuMenuTrigger } from './index';
+import { resetOpenMenuForTests } from './menu-open-registry';
 
 @Component({
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
@@ -53,6 +54,24 @@ class HostNoItems {
   open = false;
 }
 
+@Component({
+  imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
+  template: `
+    <au-menu [(open)]="openA">
+      <au-button auMenuTrigger>Menu A</au-button>
+      <au-menu-item>Action A</au-menu-item>
+    </au-menu>
+    <au-menu [(open)]="openB">
+      <au-button auMenuTrigger>Menu B</au-button>
+      <au-menu-item>Action B</au-menu-item>
+    </au-menu>
+  `,
+})
+class TwoMenusHost {
+  openA = false;
+  openB = false;
+}
+
 function menuInstance(fixture: ReturnType<typeof TestBed.createComponent<Host>>): AuMenu {
   return fixture.debugElement.query(By.directive(AuMenu)).componentInstance as AuMenu;
 }
@@ -66,7 +85,23 @@ describe('AuMenu provider', () => {
 
 describe('AuMenu', () => {
   beforeEach(() => {
+    resetOpenMenuForTests();
     document.body.querySelectorAll('.au-menu__panel').forEach((el) => el.remove());
+  });
+
+  it('closes the previously open menu when another opens', () => {
+    const fixture = TestBed.createComponent(TwoMenusHost);
+    fixture.detectChanges();
+    const triggers = fixture.nativeElement.querySelectorAll('button');
+    (triggers[0] as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.openA).toBe(true);
+    expect(fixture.componentInstance.openB).toBe(false);
+
+    (triggers[1] as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.openA).toBe(false);
+    expect(fixture.componentInstance.openB).toBe(true);
   });
 
   it('emits openChange when toggled', () => {
@@ -405,6 +440,15 @@ describe('AuMenu', () => {
       // Register the first item again — signal should dedupe
       menu.registerMenuItem(items[0]);
       expect(menu.enabledMenuItems().length).toBe(items.length);
+    });
+
+    it('closes when the page scrolls outside the panel', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      document.dispatchEvent(new Event('scroll'));
+      fixture.detectChanges();
+      expect(fixture.componentInstance.open).toBe(false);
     });
   });
 });

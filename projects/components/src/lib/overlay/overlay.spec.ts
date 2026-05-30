@@ -134,6 +134,27 @@ describe('TooltipOverlay', () => {
     wrap.remove();
   });
 
+  it('copies data-au-theme and data-au-density from anchor subtree onto portaled bubble', () => {
+    const shell = document.createElement('div');
+    shell.setAttribute('data-au-theme', 'dark');
+    shell.setAttribute('data-au-density', 'compact');
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
+    const bubble = document.createElement('div');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
+    shell.append(anchor, bubble);
+    document.body.append(shell);
+
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    expect(bubble.getAttribute('data-au-theme')).toBe('dark');
+    expect(bubble.getAttribute('data-au-density')).toBe('compact');
+    overlay.detach();
+    expect(bubble.hasAttribute('data-au-theme')).toBe(false);
+    expect(bubble.hasAttribute('data-au-density')).toBe(false);
+    shell.remove();
+  });
+
   it('portals bubble to body and sets fixed coordinates', () => {
     const wrap = document.createElement('div');
     const anchor = document.createElement('span');
@@ -332,6 +353,40 @@ describe('FieldListboxOverlay', () => {
     overlay.sync(listbox, anchor, true);
     expect(listbox.parentElement).toBe(wrap);
     wrap.remove();
+  });
+
+  it('portals listbox into open modal dialog instead of document.body', () => {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'au-dialog__native';
+    dialog.setAttribute('open', '');
+    const panel = document.createElement('div');
+    panel.className = 'au-dialog__panel';
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    wrap.append(anchor, listbox);
+    panel.append(wrap);
+    dialog.append(panel);
+    document.body.append(dialog);
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+    expect(listbox.parentElement).toBe(dialog);
+    expect(listbox.parentElement).not.toBe(document.body);
+    overlay.detach();
+    expect(listbox.parentElement).toBe(wrap);
+    dialog.remove();
   });
 
   it('portals listbox to body, positions it, and restores on detach', () => {

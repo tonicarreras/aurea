@@ -311,7 +311,17 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
       token: '--au-table-cell-x / --au-table-cell-y',
       description: 'Cell padding (host; compact tightens both).',
     },
+    { token: '--au-table-header-bg', description: 'Header row background (host override).' },
     { token: '--au-table-row-hover', description: 'Row hover background (host override).' },
+    { token: '--au-table-row-stripe', description: 'Striped row background when `striped`.' },
+    {
+      token: '--au-table-row-selected',
+      description: 'Selected row background when `selectionMode` is set.',
+    },
+    {
+      token: 'data-au-selection',
+      description: 'Host attr: `single` or `multiple` when row selection is enabled.',
+    },
   ],
   tooltip: [
     {

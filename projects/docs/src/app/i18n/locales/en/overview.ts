@@ -818,14 +818,17 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   table: {
     intro: [
-      'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-      'Custom cells: `ng-template[auTableCell] let-row` inside a column. Sort with `sortable` + `[(sort)]` or `clientSort`.',
+      'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`, and `loading`.',
+      'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
+      'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
+      'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
     ],
     whenToUse: {
       title: 'When to use',
       items: [
         'Tabular data with headers and body rows.',
-        'Sortable columns when the parent owns sort state.',
+        'Sortable columns when the parent owns or delegates sort state.',
+        'Pick one or many rows for bulk actions, detail panels, or comparison.',
       ],
     },
     whenNotToUse: {
@@ -838,11 +841,18 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     anatomy: [
       {
         region: '`au-table`',
-        detail: 'Renders header, `<table>`, and body from `[data]` + column children.',
+        detail:
+          'Shell, header, `<table>`, body, loading/empty rows. Host attrs: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+      },
+      {
+        region: 'Selection column',
+        detail:
+          'Prepended when `selectionMode` is not `none`: header checkbox (multiple) or sr-only label (single), row checkboxes, `aria-selected` on rows.',
       },
       {
         region: '`au-table-column`',
-        detail: 'Defines `name`, `header`, `sortable`, `align`, `cellVariant`.',
+        detail:
+          'Defines `name`, `header`, `sortable`, `align`, `cellVariant`, optional `accessor`.',
       },
       {
         region: '`auTableCell`',
@@ -851,9 +861,14 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Preserve native table semantics (`thead`, `tbody`, `th scope`).',
-      'Sort buttons are real buttons with `aria-sort` reflecting direction.',
+      'Sort buttons are real buttons with `aria-sort` and `au-icon` indicators.',
+      'Selection checkboxes expose `selectAllLabel` / `selectRowLabel`; rows use `aria-selected`.',
+      'Loading sets `aria-busy="true"` on the host.',
     ],
-    keyboard: ['Tab to sort buttons; Enter/Space toggles sort cycle.'],
+    keyboard: [
+      'Tab to sort buttons; Enter/Space toggles sort cycle.',
+      'Tab to row checkboxes; Space toggles selection. Row click also toggles when selection is enabled.',
+    ],
     relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
   },
   tooltip: {

@@ -132,7 +132,8 @@ import { DocsInlineText } from './docs-inline-text';
       display: flex;
       flex-direction: column;
       gap: var(--au-space-8);
-      max-width: min(62rem, 100%);
+      width: 100%;
+      max-width: 100%;
     }
 
     .docs-overview__sr-only {
@@ -268,15 +269,15 @@ import { DocsInlineText } from './docs-inline-text';
 
     .docs-overview__card-marker {
       flex-shrink: 0;
-      width: 3px;
       align-self: stretch;
-      min-height: 1.25rem;
+      width: var(--docs-section-marker-width);
+      min-height: var(--docs-section-marker-min-height);
       border-radius: var(--au-radius-pill);
-      background: var(--au-color-action-primary);
+      background: var(--docs-section-marker-bg);
     }
 
     .docs-overview__card-marker--alt {
-      background: var(--au-color-text-tertiary);
+      background: var(--docs-section-marker-bg-muted);
     }
 
     .docs-overview__card-title {

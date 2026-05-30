@@ -174,7 +174,7 @@ export type GetStartedStep =
 
     .docs-get-started-next {
       margin-top: var(--au-space-8);
-      max-width: min(52rem, 100%);
+      max-width: 100%;
       font-size: var(--au-text-sm);
       line-height: var(--au-leading-relaxed);
       color: var(--au-color-text-secondary);

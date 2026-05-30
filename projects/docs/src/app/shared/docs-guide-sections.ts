@@ -39,7 +39,7 @@ import { DocsInlineText } from './docs-inline-text';
 
     .docs-guide-section p {
       margin: 0 0 var(--au-space-4);
-      max-width: min(62rem, 100%);
+      max-width: 100%;
       line-height: var(--au-leading-relaxed);
     }
   `,

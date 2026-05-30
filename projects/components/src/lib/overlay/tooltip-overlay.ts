@@ -3,6 +3,11 @@ import type { DestroyRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
 import { computeTooltipPosition, type AuTooltipPlacement } from './tooltip-position';
+import {
+  bindPortaledThemeContextObserver,
+  clearPortaledThemeContext,
+  syncPortaledThemeContext,
+} from './portaled-theme-context';
 
 /** Resolves a length custom property to pixels (handles `var()` chains). */
 export function readCssLengthPx(
@@ -26,6 +31,7 @@ export class TooltipOverlay {
   private activeBubble: HTMLElement | null = null;
   private activeAnchor: HTMLElement | null = null;
   private resolvedPlacement: AuTooltipPlacement = 'top';
+  private unbindThemeContext: (() => void) | null = null;
 
   private readonly onWindowChange = (): void => {
     if (this.activeBubble && this.activeAnchor) {
@@ -55,6 +61,9 @@ export class TooltipOverlay {
       return placement;
     }
     this.ensurePortaled(bubble);
+    syncPortaledThemeContext(bubble, anchor);
+    this.unbindThemeContext?.();
+    this.unbindThemeContext = bindPortaledThemeContextObserver(bubble, anchor);
     this.renderer.addClass(bubble, 'au-tooltip__bubble--overlay');
     this.activeBubble = bubble;
     const resolved = this.position(bubble, anchor, placement);
@@ -64,11 +73,14 @@ export class TooltipOverlay {
 
   detach(): void {
     this.unbindReposition();
+    this.unbindThemeContext?.();
+    this.unbindThemeContext = null;
     const bubble = this.activeBubble;
     if (!bubble) {
       return;
     }
     this.renderer.removeClass(bubble, 'au-tooltip__bubble--overlay');
+    clearPortaledThemeContext(bubble);
     for (const prop of ['position', 'top', 'left', 'inset-inline-start', 'inset-inline-end']) {
       bubble.style.removeProperty(prop);
     }
