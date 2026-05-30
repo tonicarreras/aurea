@@ -10,7 +10,7 @@ export interface ComponentMaturityMeta {
 }
 
 /**
- * Catálogo v0.9.x — actualizar al cambiar APIs o promover componentes.
+ * Catálogo v1.x — actualizar al cambiar APIs o promover componentes.
  * @see projects/components/COMPONENT_DONE.md
  */
 export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
@@ -44,7 +44,7 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
   message: { level: 'stable', since: '0.1.0' },
   icon: { level: 'stable', since: '0.1.0' },
   skeleton: { level: 'stable', since: '0.2.0' },
-  spinner: { level: 'stable', since: '0.9.0' },
+  spinner: { level: 'stable', since: '1.0.0' },
   divider: { level: 'stable', since: '0.1.0' },
   tooltip: { level: 'stable', since: '0.2.0' },
   badge: { level: 'stable', since: '0.4.0' },
