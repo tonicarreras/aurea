@@ -7,9 +7,25 @@ Versioning follows [Semantic Versioning](https://semver.org/) — see [VERSIONIN
 
 ## [Unreleased]
 
+## [0.9.2] - 2026-05-26
+
+### Added
+
+- **`AuTheme`:** `high-contrast-dark` palette mode (`data-au-theme="high-contrast-dark"`).
+- **Storybook:** `docsLocale` toolbar (en/es) for Autodocs overviews aligned with the docs site.
+- **Tooling:** `bun run ci` / `ci:fast` — local parity with `.github/workflows/test.yml`.
+
 ### Changed
 
+- Semantic shadow tokens (`--au-shadow-control`, `--au-shadow-button`, `--au-shadow-overlay`) applied across stable controls and overlays.
+- Switch and radio-group layout and focus styling refinements (update visual snapshots after upgrade).
 - Governance and design docs moved from repo root to [docs/](./docs/) (index: [docs/README.md](./docs/README.md)). Root keeps README, CHANGELOG, CONTRIBUTING, SECURITY.
+- Docs site and Storybook: refreshed component guides, maturity badges, and stable-story visual manifest sync in CI.
+
+### Fixed
+
+- Spec quality report generation formats with Prettier so `format:check` passes in CI.
+- Visual story manifest generator matches Prettier table layout for `verify:visual-manifest`.
 
 ## [0.9.0] - 2026-05-22
 
@@ -71,7 +87,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v0.9.2...HEAD
+[0.9.2]: https://github.com/tonicarreras/aurea/compare/components-v0.9.0...components-v0.9.2
 [0.9.0]: https://github.com/tonicarreras/aurea/compare/v0.3.0...v0.9.0
 [0.3.0]: https://github.com/tonicarreras/aurea/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/tonicarreras/aurea/compare/v0.1.0...v0.2.0
