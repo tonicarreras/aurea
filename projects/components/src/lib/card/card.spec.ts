@@ -57,7 +57,6 @@ describe('AuCard', () => {
     const fix = TestBed.createComponent(TestCardComponent);
     fix.detectChanges();
     const content = fix.debugElement.query(By.css('.test-content'))!;
-    expect(content).toBeTruthy();
     expect(content.nativeElement.textContent).toBe('Projected content');
   });
 
@@ -99,7 +98,6 @@ describe('AuCard', () => {
     const fix = TestBed.createComponent(TestCardWithFooterComponent);
     fix.detectChanges();
     const footer = fix.nativeElement.querySelector('.au-card__footer');
-    expect(footer).toBeTruthy();
     expect(footer?.textContent).toContain('Save');
   });
 

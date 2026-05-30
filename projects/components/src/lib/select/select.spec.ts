@@ -1054,7 +1054,6 @@ describe('AuSelect', () => {
     trigger.click();
     fix.detectChanges();
     const loadingEl = fix.debugElement.query(By.css('.au-field-listbox__item--loading'));
-    expect(loadingEl).toBeTruthy();
-    expect(loadingEl.nativeElement.textContent).toContain('Loading');
+    expect(loadingEl?.nativeElement.textContent).toContain('Loading');
   });
 });
