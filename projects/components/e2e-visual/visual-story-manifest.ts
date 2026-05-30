@@ -26,6 +26,7 @@ export const VISUAL_STORIES: {
   { name: 'select-default', id: 'aurea-select--default', slug: 'select' },
   { name: 'skeleton-text', id: 'aurea-skeleton--text', slug: 'skeleton' },
   { name: 'snackbar-default', id: 'aurea-snackbar--default', slug: 'snackbar' },
+  { name: 'spinner-default', id: 'aurea-spinner--default', slug: 'spinner' },
   { name: 'switch-default', id: 'aurea-switch--default', slug: 'switch' },
   { name: 'table-default', id: 'aurea-table--default', slug: 'table' },
   { name: 'textarea-default', id: 'aurea-textarea--default', slug: 'textarea' },
