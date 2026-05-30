@@ -46,6 +46,8 @@ export class AuCheckbox implements FormCheckboxControl {
   readonly required = input(false);
   readonly showRequired = input(true);
   readonly indeterminate = input(false);
+  /** Visually hide label/description while keeping them available to assistive tech. */
+  readonly hideLabel = input(false);
 
   readonly size = input<AuSize>('md');
   readonly name = input<string>('');

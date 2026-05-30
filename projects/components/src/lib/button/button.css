@@ -3,9 +3,17 @@
  * Size: `data-au-size` on host (sm | md | lg).
  * Variant: `data-au-variant` on host (primary | secondary | outline | ghost).
  */
-@import url('../tokens/au-tokens.css');
 
 :host {
+  --au-button-radius: var(--au-radius-control);
+  --au-button-height-sm: var(--au-size-field-h-sm);
+  --au-button-height-md: var(--au-size-field-h-md);
+  --au-button-height-lg: var(--au-size-field-h-lg);
+  --au-button-font-size-sm: var(--au-text-xs);
+  --au-button-font-size-md: var(--au-text-sm);
+  --au-button-font-size-lg: var(--au-text-sm);
+  --au-button-gap: var(--au-space-2);
+
   display: inline-flex;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -17,12 +25,12 @@ button.au-button__element {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--au-space-2);
+  gap: var(--au-button-gap);
   position: relative;
   box-sizing: border-box;
   margin: 0;
   border: 1px solid transparent;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-button-radius);
   font: inherit;
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
@@ -32,8 +40,11 @@ button.au-button__element {
   user-select: none;
   box-shadow: var(--au-shadow-button);
   transition:
-    var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
-    var(--au-transition-color);
+    var(--au-transition-background),
+    var(--au-transition-border),
+    var(--au-transition-shadow),
+    var(--au-transition-color),
+    transform var(--au-motion-control);
   white-space: nowrap;
 }
 
@@ -42,23 +53,23 @@ button.au-button__element {
 /* -------------------------------------------------------------------------- */
 
 :host([data-au-size='sm']) .au-button__element {
-  height: var(--au-size-field-h-sm);
+  height: var(--au-button-height-sm);
   padding: 0 var(--au-size-field-px-sm);
-  font-size: var(--au-text-xs);
+  font-size: var(--au-button-font-size-sm);
 }
 
 :host([data-au-size='md']) .au-button__element,
 :host(:not([data-au-size])) .au-button__element {
-  height: var(--au-size-field-h-md);
+  height: var(--au-button-height-md);
   padding: 0 var(--au-size-field-px-md);
-  font-size: var(--au-text-sm);
+  font-size: var(--au-button-font-size-md);
 }
 
 :host([data-au-size='lg']) .au-button__element {
-  height: var(--au-touch-target-min);
+  height: var(--au-button-height-lg);
   min-width: var(--au-touch-target-min);
   padding: 0 var(--au-space-5);
-  font-size: var(--au-text-md);
+  font-size: var(--au-button-font-size-lg);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -77,11 +88,13 @@ button.au-button__element {
   background: var(--au-color-action-primary-hover);
   border-color: var(--au-color-action-primary-hover);
   box-shadow: var(--au-shadow-button-hover);
+  transform: translateY(-1px);
 }
 
 :host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-action-primary-pressed);
   border-color: var(--au-color-action-primary-pressed);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Secondary: filled surface, accent text */
@@ -95,10 +108,12 @@ button.au-button__element {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-strong);
   box-shadow: var(--au-shadow-button-hover);
+  transform: translateY(-1px);
 }
 
 :host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Outline: border-only, transparent background */
@@ -193,11 +208,13 @@ button.au-button__element {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  color: inherit;
 }
 
-.au-button__spinner au-icon {
-  width: 1em;
-  height: 1em;
+.au-button__spinner au-spinner {
+  flex-shrink: 0;
+  --au-spinner-arc: currentColor;
+  --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -206,6 +223,13 @@ button.au-button__element {
 
 @media (prefers-reduced-motion: reduce) {
   .au-button__element {
-    transition: none;
+    transition:
+      var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
+      var(--au-transition-color);
+  }
+
+  .au-button__element:hover:not(:disabled),
+  .au-button__element:active:not(:disabled) {
+    transform: none;
   }
 }

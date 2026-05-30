@@ -25,9 +25,10 @@ ng serve docs
 4. Run before push (same order as `.github/workflows/test.yml`):
 
 ```bash
+bun run ci:full                 # idéntico a GitHub Actions (install + todo)
 bun run ci                      # full pipeline (audit, build, tests, lint, E2E)
 bun run ci:fast                 # same without Playwright / Storybook test-runner
-bun run ci -- --install         # also run bun install --frozen-lockfile
+bun run ci -- --install         # alias de ci:full
 ```
 
 Individual steps (e.g. `bun run test:coverage`, `bun run verify:i18n`) remain available in `package.json` when debugging one check.

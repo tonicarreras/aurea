@@ -22,6 +22,7 @@ import {
   ProgressDemo,
   IconDemo,
   SkeletonDemo,
+  SpinnerDemo,
   StepsDemo,
   DialogDemo,
   DividerDemo,
@@ -486,15 +487,26 @@ options: AuSelectOption[] = [
 <au-progress [value]="45" [max]="100" />`,
   },
   {
+    slug: 'spinner',
+    title: 'Spinner',
+    exportName: 'AuSpinner',
+    selector: 'au-spinner',
+    summary: 'Carga inline; `label` opcional para texto visible.',
+    demoComponent: SpinnerDemo,
+    snippet: `import { AuSpinner } from '@aurea-design-system/components';
+
+<au-spinner size="md" />`,
+  },
+  {
     slug: 'table',
     title: 'Table',
     exportName: 'AuTable',
     selector: 'au-table',
-    summary: 'Tabla semántica con modos striped/compact y cabeceras ordenables.',
+    summary: 'Tabla con orden, selección de filas, carga y celdas custom.',
     demoComponent: TableDemo,
     snippet: `import { AuTable, AuTableColumn } from '@aurea-design-system/components';
 
-<au-table [data]="rows" title="Team">
+<au-table [data]="rows" title="Team" selectionMode="multiple" [(selection)]="selection">
   <au-table-column name="name" header="Name" sortable cellVariant="primary" />
   <au-table-column name="role" header="Role" />
 </au-table>`,

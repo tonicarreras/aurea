@@ -27,7 +27,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Visible focus ring when tabbing (`--au-color-focus-ring`).',
-      '`loading` sets `aria-busy` and blocks click.',
+      '`loading` sets `aria-busy`, shows a decorative `au-spinner`, and blocks click.',
       'Size `lg` respects `--au-touch-target-min` (44px).',
     ],
     keyboard: [
@@ -536,6 +536,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       items: [
         'Custom brand icons → your own SVG.',
         'Icon-only button → set `label` on `au-button`.',
+        'Standalone loading → `au-spinner`.',
       ],
     },
     anatomy: [{ region: 'SVG', detail: '`data-au-icon` + `data-au-size` on host.' }],
@@ -554,12 +555,50 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Spinner on a button → `au-icon` spinner.',
+        'Spinner on a button → `au-button` `loading`.',
+        'Inline loading indicator → `au-spinner`.',
         'Empty state → visible copy, not skeleton.',
       ],
     },
     anatomy: [{ region: 'Host', detail: '`role="presentation"`; size from variant + `size`.' }],
     accessibility: ['Decorative only; pair with `aria-busy` on the loading region.'],
+  },
+  spinner: {
+    intro: [
+      'Inline loading indicator with `role="status"` and `aria-busy="true"`.',
+      'Dual-ring SVG: muted track and rotating arc (~0.9s). Glyph uses `currentColor`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Table or panel loading rows while data fetches.',
+        'Visible status copy via `label` when the wait needs context.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Button in-flight state → `au-button` `loading`.',
+        'Known completion ratio → `au-progress`.',
+        'Content placeholders → `au-skeleton`.',
+      ],
+    },
+    anatomy: [
+      {
+        region: 'Host `au-spinner`',
+        detail: '`role="status"`; `data-au-size` sets sm/md/lg footprint.',
+      },
+      {
+        region: 'Rings',
+        detail: 'Decorative SVG track and animated arc (`aria-hidden`).',
+      },
+      { region: 'Label', detail: 'Optional visible copy when `label` is set (`aria-labelledby`).' },
+    ],
+    accessibility: [
+      'Omit `label` for glyph-only waits (`aria-label="Loading"`).',
+      'Set `label` to show visible copy and name the live region.',
+      'Use `decorative` inside buttons or other controls that already expose busy state.',
+    ],
   },
   steps: {
     intro: [
@@ -818,14 +857,17 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   table: {
     intro: [
-      'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-      'Custom cells: `ng-template[auTableCell] let-row` inside a column. Sort with `sortable` + `[(sort)]` or `clientSort`.',
+      'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`, and `loading`.',
+      'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
+      'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
+      'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
     ],
     whenToUse: {
       title: 'When to use',
       items: [
         'Tabular data with headers and body rows.',
-        'Sortable columns when the parent owns sort state.',
+        'Sortable columns when the parent owns or delegates sort state.',
+        'Pick one or many rows for bulk actions, detail panels, or comparison.',
       ],
     },
     whenNotToUse: {
@@ -838,11 +880,18 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     anatomy: [
       {
         region: '`au-table`',
-        detail: 'Renders header, `<table>`, and body from `[data]` + column children.',
+        detail:
+          'Shell, header, `<table>`, body, loading/empty rows. Host attrs: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+      },
+      {
+        region: 'Selection column',
+        detail:
+          'Prepended when `selectionMode` is not `none`: header checkbox (multiple) or sr-only label (single), row checkboxes, `aria-selected` on rows.',
       },
       {
         region: '`au-table-column`',
-        detail: 'Defines `name`, `header`, `sortable`, `align`, `cellVariant`.',
+        detail:
+          'Defines `name`, `header`, `sortable`, `align`, `cellVariant`, optional `accessor`.',
       },
       {
         region: '`auTableCell`',
@@ -851,9 +900,14 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Preserve native table semantics (`thead`, `tbody`, `th scope`).',
-      'Sort buttons are real buttons with `aria-sort` reflecting direction.',
+      'Sort buttons are real buttons with `aria-sort` and `au-icon` indicators.',
+      'Selection checkboxes expose `selectAllLabel` / `selectRowLabel`; rows use `aria-selected`.',
+      'Loading sets `aria-busy` on the host; the row uses `au-spinner` with `loadingMessage` as `label`.',
     ],
-    keyboard: ['Tab to sort buttons; Enter/Space toggles sort cycle.'],
+    keyboard: [
+      'Tab to sort buttons; Enter/Space toggles sort cycle.',
+      'Tab to row checkboxes; Space toggles selection. Row click also toggles when selection is enabled.',
+    ],
     relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
   },
   tooltip: {

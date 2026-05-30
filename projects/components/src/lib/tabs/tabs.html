@@ -3,7 +3,7 @@
     class="au-tabs__list"
     role="tablist"
     [attr.aria-label]="ariaLabel().trim() || null"
-    [attr.aria-orientation]="orientation()"
+    [attr.aria-orientation]="orientation() === 'vertical' ? 'vertical' : null"
     (keydown)="onListKeydown($event)"
   >
     <ng-content select="button[auTab]"></ng-content>

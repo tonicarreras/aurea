@@ -15,6 +15,8 @@ import {
   AuFormField,
   AuIcon,
   AuSelect,
+  lockPageScroll,
+  unlockPageScroll,
   type AuSelectOption,
 } from '@aurea-design-system/components';
 
@@ -146,15 +148,37 @@ export class DocsShellMobileMenu {
   });
 
   constructor() {
-    effect(() => {
+    effect((onCleanup) => {
       if (typeof document === 'undefined') {
         return;
       }
-      document.body.style.overflow = this.menu.open() ? 'hidden' : '';
+      if (this.menu.open()) {
+        lockPageScroll();
+        onCleanup(() => unlockPageScroll());
+      }
     });
+
+    effect((onCleanup) => {
+      if (typeof document === 'undefined' || !this.menu.open()) {
+        return;
+      }
+
+      const onScroll = (event: Event): void => {
+        const panel = document.getElementById('docs-toolbar-menu');
+        const target = event.target;
+        if (panel && target instanceof Node && panel.contains(target)) {
+          return;
+        }
+        this.menu.close();
+      };
+
+      document.addEventListener('scroll', onScroll, { capture: true, passive: true });
+      onCleanup(() => document.removeEventListener('scroll', onScroll, { capture: true }));
+    });
+
     this.destroyRef.onDestroy(() => {
-      if (typeof document !== 'undefined') {
-        document.body.style.overflow = '';
+      if (typeof document !== 'undefined' && this.menu.open()) {
+        unlockPageScroll();
       }
     });
   }

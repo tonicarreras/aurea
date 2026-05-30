@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { AuButton } from '../button/button';
 import { AuMenu, auMenuSelfRef } from './menu';
 import { AuMenuItem, AuMenuTrigger } from './index';
+import { resetOpenMenuForTests } from './menu-open-registry';
 
 @Component({
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
@@ -16,6 +17,12 @@ import { AuMenuItem, AuMenuTrigger } from './index';
     >
       <au-button auMenuTrigger>Open</au-button>
       <au-menu-item (select)="selected = true">Action</au-menu-item>
+      <au-menu-item (select)="onSecond()">Second</au-menu-item>
+      <au-menu-item
+        (select)="onThird()"
+        [disabled]="thirdDisabled"
+        >Third</au-menu-item
+      >
     </au-menu>
   `,
 })
@@ -23,6 +30,46 @@ class Host {
   open = false;
   disabled = false;
   selected = false;
+  thirdDisabled = false;
+  secondSelected = false;
+
+  onSecond(): void {
+    this.secondSelected = true;
+  }
+
+  onThird(): void {
+    // no-op for coverage
+  }
+}
+
+@Component({
+  imports: [AuMenu, AuMenuTrigger, AuButton],
+  template: `
+    <au-menu [(open)]="open">
+      <au-button auMenuTrigger>Open</au-button>
+    </au-menu>
+  `,
+})
+class HostNoItems {
+  open = false;
+}
+
+@Component({
+  imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
+  template: `
+    <au-menu [(open)]="openA">
+      <au-button auMenuTrigger>Menu A</au-button>
+      <au-menu-item>Action A</au-menu-item>
+    </au-menu>
+    <au-menu [(open)]="openB">
+      <au-button auMenuTrigger>Menu B</au-button>
+      <au-menu-item>Action B</au-menu-item>
+    </au-menu>
+  `,
+})
+class TwoMenusHost {
+  openA = false;
+  openB = false;
 }
 
 function menuInstance(fixture: ReturnType<typeof TestBed.createComponent<Host>>): AuMenu {
@@ -38,7 +85,23 @@ describe('AuMenu provider', () => {
 
 describe('AuMenu', () => {
   beforeEach(() => {
+    resetOpenMenuForTests();
     document.body.querySelectorAll('.au-menu__panel').forEach((el) => el.remove());
+  });
+
+  it('closes the previously open menu when another opens', () => {
+    const fixture = TestBed.createComponent(TwoMenusHost);
+    fixture.detectChanges();
+    const triggers = fixture.nativeElement.querySelectorAll('button');
+    (triggers[0] as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.openA).toBe(true);
+    expect(fixture.componentInstance.openB).toBe(false);
+
+    (triggers[1] as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.openA).toBe(false);
+    expect(fixture.componentInstance.openB).toBe(true);
   });
 
   it('emits openChange when toggled', () => {
@@ -70,6 +133,10 @@ describe('AuMenu', () => {
     trigger.click();
     fixture.detectChanges();
     expect(fixture.componentInstance.open).toBe(true);
+    const menu = menuInstance(fixture) as unknown as {
+      panelRef: () => { nativeElement: HTMLElement } | undefined;
+    };
+    expect(menu.panelRef()?.nativeElement.classList.contains('au-menu__panel')).toBe(true);
     const item = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement | null;
     expect(item).toBeTruthy();
     item!.click();
@@ -170,5 +237,252 @@ describe('AuMenu', () => {
     menuHost.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     fixture.detectChanges();
     expect(fixture.componentInstance.open).toBe(true);
+  });
+
+  describe('keyboard navigation', () => {
+    function getPanel(_fixture: ReturnType<typeof TestBed.createComponent<Host>>): HTMLElement {
+      return document.body.querySelector('.au-menu__panel')!;
+    }
+
+    function getMenuItems(
+      _fixture: ReturnType<typeof TestBed.createComponent<Host>>,
+    ): HTMLButtonElement[] {
+      return Array.from(
+        document.body.querySelectorAll('.au-menu-item__btn'),
+      ) as HTMLButtonElement[];
+    }
+
+    it('moves focus on ArrowDown', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      expect(btn[0]).toBe(document.activeElement);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[1]);
+    });
+
+    it('moves focus on ArrowUp and wraps around', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      btn[1].focus();
+      fixture.detectChanges();
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('wraps ArrowDown from last to first', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      btn[btn.length - 1].focus();
+      fixture.detectChanges();
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('wraps ArrowUp from first to last', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      expect(document.activeElement).toBe(btn[0]);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[btn.length - 1]);
+    });
+
+    it('moves to first item on Home', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      btn[1].focus();
+      fixture.detectChanges();
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('moves to last item on End', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      expect(document.activeElement).toBe(btn[0]);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[btn.length - 1]);
+    });
+
+    it('skips disabled items on arrow navigation', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.thirdDisabled = true;
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      // Only 2 enabled items (first and second, third is disabled)
+      expect(document.activeElement).toBe(btn[0]);
+      const panel = getPanel(fixture);
+      // ArrowDown from first -> second (skip disabled third)
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[1]);
+      // ArrowDown from second -> wraps to first (skip disabled third)
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('ignores non-navigation keys', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      expect(document.activeElement).toBe(btn[0]);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      fixture.detectChanges();
+      // Focus should remain on first item (no change)
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('no-ops panel keydown when closed (direct call)', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture);
+      const handler = (menu as unknown as { onPanelKeydown: (e: KeyboardEvent) => void })
+        .onPanelKeydown;
+      handler.call(menu, new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      // Should not throw
+      expect(fixture.componentInstance.open).toBe(false);
+    });
+
+    it('no-ops panel keydown with empty item list (direct call)', () => {
+      const fixture = TestBed.createComponent(HostNoItems);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const menu = fixture.debugElement.query(By.directive(AuMenu))
+        .componentInstance as unknown as {
+        onPanelKeydown: (e: KeyboardEvent) => void;
+      };
+      menu.onPanelKeydown.call(menu, new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      // Should not throw — items.length === 0 branch (line 155)
+      expect(fixture.componentInstance.open).toBe(true);
+    });
+
+    it('findFocusedItemIndex returns -1 when activeElement is null', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture) as unknown as {
+        findFocusedItemIndex: (items: unknown[]) => number;
+        enabledMenuItems: () => unknown[];
+      };
+      const items = (menu as unknown as { enabledMenuItems: () => unknown[] }).enabledMenuItems();
+      // Simulate document.activeElement === null to hit the !active guard
+      const origDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'activeElement');
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => null,
+      });
+      const idx = (
+        menu as unknown as {
+          findFocusedItemIndex: (items: unknown[]) => number;
+        }
+      ).findFocusedItemIndex(items);
+      expect(idx).toBe(-1);
+      // Restore
+      if (origDescriptor) {
+        Object.defineProperty(document, 'activeElement', origDescriptor);
+      }
+    });
+
+    it('no-ops panel keydown when activeElement is null', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const origDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'activeElement');
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => null,
+      });
+      const panel = document.body.querySelector('.au-menu__panel') as HTMLElement;
+      // ArrowDown: cur < 0 → 0 (line 162)
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+      // ArrowUp: cur < 0 → items.length - 1 (line 169)
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+      fixture.detectChanges();
+      // Both should not throw
+      expect(fixture.componentInstance.open).toBe(true);
+      if (origDescriptor) {
+        Object.defineProperty(document, 'activeElement', origDescriptor);
+      }
+    });
+
+    it('registerMenuItem handles duplicate registration', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture) as unknown as {
+        registerMenuItem: (item: unknown) => void;
+        enabledMenuItems: () => unknown[];
+      };
+      const items = menu.enabledMenuItems();
+      expect(items.length).toBeGreaterThan(0);
+      // Register the first item again — signal should dedupe
+      menu.registerMenuItem(items[0]);
+      expect(menu.enabledMenuItems().length).toBe(items.length);
+    });
+
+    it('closes when the page scrolls outside the panel', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      document.dispatchEvent(new Event('scroll'));
+      fixture.detectChanges();
+      expect(fixture.componentInstance.open).toBe(false);
+    });
+
+    it('stays open when scrolling inside the panel', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const panel = document.body.querySelector('.au-menu__panel') as HTMLElement;
+      panel.dispatchEvent(new Event('scroll', { bubbles: true }));
+      fixture.detectChanges();
+      expect(fixture.componentInstance.open).toBe(true);
+    });
+
+    it('unregisterMenuItem removes items from keyboard navigation', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture) as unknown as {
+        unregisterMenuItem: (item: AuMenuItem) => void;
+        enabledMenuItems: () => AuMenuItem[];
+      };
+      const items = menu.enabledMenuItems();
+      expect(items.length).toBeGreaterThan(0);
+      menu.unregisterMenuItem(items[0]);
+      expect(menu.enabledMenuItems()).toHaveLength(items.length - 1);
+    });
+
+    it('cleans up listeners when destroyed while open', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      expect(() => fixture.destroy()).not.toThrow();
+    });
   });
 });

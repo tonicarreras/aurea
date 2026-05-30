@@ -26,9 +26,17 @@ import { DocsInlineText } from './docs-inline-text';
     </article>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
     .docs-page {
       width: 100%;
       max-width: 100%;
+      margin-inline: auto;
       animation: docs-fade-up 0.6s var(--au-ease-out) both;
     }
 
@@ -84,7 +92,7 @@ import { DocsInlineText } from './docs-inline-text';
 
     .docs-page__lead {
       margin: 0;
-      max-width: min(52rem, 100%);
+      max-width: min(var(--docs-prose-max), 100%);
       font-size: var(--au-text-lg);
       color: var(--au-color-text-secondary);
       line-height: var(--au-leading-relaxed);
@@ -96,7 +104,15 @@ import { DocsInlineText } from './docs-inline-text';
       flex-direction: column;
       gap: var(--au-space-7);
       padding-top: var(--au-space-2);
+      width: 100%;
+      max-width: 100%;
       animation: docs-fade-up 0.55s var(--au-ease-out) 0.16s both;
+    }
+
+    :host ::ng-deep .docs-page__body > * {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     :host-context([data-au-theme='light']) .docs-page__body {
@@ -115,21 +131,26 @@ import { DocsInlineText } from './docs-inline-text';
 
     ::ng-deep .docs-page__body h2::before {
       content: '';
-      width: 0.35rem;
-      height: 1.1em;
-      border-radius: var(--au-radius-pill);
-      background: linear-gradient(180deg, var(--au-color-accent), #c026d3);
       flex-shrink: 0;
+      align-self: stretch;
+      width: var(--docs-section-marker-width);
+      min-height: var(--docs-section-marker-min-height);
+      border-radius: var(--au-radius-pill);
+      background: var(--docs-section-marker-bg);
     }
 
-    ::ng-deep .docs-page__body p,
-    ::ng-deep .docs-page__body ul {
+    ::ng-deep .docs-page__body p {
       margin: 0 0 var(--au-space-4);
       color: var(--au-color-text-secondary);
-      max-width: min(62rem, 100%);
+      max-width: min(var(--docs-prose-max), 100%);
     }
 
-    ::ng-deep .docs-page__body ul:not(.docs-requirements) {
+    ::ng-deep
+      .docs-page__body
+      > ul:not(.docs-requirements, .docs-adoption-grid, .docs-components-index) {
+      margin: 0 0 var(--au-space-4);
+      color: var(--au-color-text-secondary);
+      max-width: min(var(--docs-prose-max), 100%);
       padding-left: var(--au-space-5);
     }
 

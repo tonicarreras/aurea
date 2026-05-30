@@ -23,6 +23,12 @@ import { DocsLocaleService } from '../core/docs-locale.service';
     </section>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
     .docs-demo {
       animation: docs-fade-up 0.5s var(--au-ease-out) both;
     }
@@ -55,12 +61,7 @@ import { DocsLocaleService } from '../core/docs-locale.service';
       text-transform: uppercase;
     }
 
-    .docs-demo--compact .docs-demo__canvas {
-      padding: var(--au-space-6) var(--au-space-5);
-    }
-
     .docs-demo__canvas {
-      padding: var(--au-space-8) var(--au-space-6);
       border: 1px solid var(--docs-border-fine);
       border-radius: var(--au-radius-lg);
       background: var(--au-color-surface-raised);

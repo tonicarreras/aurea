@@ -11,7 +11,7 @@ module.exports = defineConfig([
       '**/dist/**',
       '**/coverage/**',
       '**/node_modules/**',
-      'storybook-static/**',
+      '**/storybook-static/**',
       'projects/components/documentation.json',
     ],
   },

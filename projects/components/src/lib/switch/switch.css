@@ -1,7 +1,6 @@
 /**
  * Switch — pill toggle from native checkbox + role="switch".
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {
@@ -102,7 +101,7 @@
   box-sizing: border-box;
   width: 2.75rem;
   height: 1.5rem;
-  border-radius: 999px;
+  border-radius: var(--au-radius-full);
   border: 1px solid var(--au-color-switch-track-off-border);
   background: var(--au-color-switch-track-off);
   transition:
@@ -140,10 +139,10 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 3px;
+  inset-inline-start: 3px;
   width: 18px;
   height: 18px;
-  border-radius: 50%;
+  border-radius: var(--au-radius-dot);
   background: var(--au-color-switch-thumb-off);
   box-shadow:
     0 1px 2px rgb(0 0 0 / 18%),
@@ -155,25 +154,37 @@
 :host([data-au-size='sm']) .au-switch__element::after {
   width: 14px;
   height: 14px;
-  left: 2px;
+  inset-inline-start: 2px;
 }
 
 :host([data-au-size='lg']) .au-switch__element::after {
   width: 22px;
   height: 22px;
-  left: 3px;
+  inset-inline-start: 3px;
 }
 
 .au-switch__element:checked::after {
   transform: translate(1.25rem, -50%);
 }
 
+:host-context([dir='rtl']) .au-switch__element:checked::after {
+  transform: translate(-1.25rem, -50%);
+}
+
 :host([data-au-size='sm']) .au-switch__element:checked::after {
   transform: translate(0.85rem, -50%);
 }
 
+:host-context([dir='rtl']):host([data-au-size='sm']) .au-switch__element:checked::after {
+  transform: translate(-0.85rem, -50%);
+}
+
 :host([data-au-size='lg']) .au-switch__element:checked::after {
   transform: translate(1.55rem, -50%);
+}
+
+:host-context([dir='rtl']):host([data-au-size='lg']) .au-switch__element:checked::after {
+  transform: translate(-1.55rem, -50%);
 }
 
 .au-switch__element:focus,

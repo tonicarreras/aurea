@@ -56,6 +56,12 @@ import { DocsInlineText } from './docs-inline-text';
     </div>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
     .docs-api-table-wrap {
       overflow-x: auto;
       margin: 0;

@@ -45,7 +45,7 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-text-label', description: 'Visible label above the field.' },
     { token: '--au-color-form-error', description: 'Border and message on error.' },
     { token: '--au-color-form-error-bg', description: 'Shell background in invalid state.' },
-    { token: '--au-radius-field', description: 'Field box radius (2px by default).' },
+    { token: '--au-radius-field', description: 'Field box radius (4px by default).' },
     {
       token: '--au-size-field-h-md',
       description: 'Control height; sm/lg use the matching size tokens.',
@@ -229,6 +229,12 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-xs / sm / lg', description: 'Corners per variant preset.' },
     { token: '--au-size-field-h-md', description: 'Button bar height (md).' },
   ],
+  spinner: [
+    { token: 'data-au-size', description: 'sm / md / lg — host footprint.' },
+    { token: '--au-spinner-track', description: 'Muted ring behind the active arc.' },
+    { token: '--au-spinner-arc', description: 'Stroke color (default: `currentColor`).' },
+    { token: '--au-duration-spinner', description: 'Rotation period (~0.9s).' },
+  ],
   steps: [
     { token: '--au-color-border-subtle', description: 'Underline rail under step buttons.' },
     { token: '--au-color-action-primary', description: 'Active step text and indicator.' },
@@ -311,7 +317,17 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
       token: '--au-table-cell-x / --au-table-cell-y',
       description: 'Cell padding (host; compact tightens both).',
     },
+    { token: '--au-table-header-bg', description: 'Header row background (host override).' },
     { token: '--au-table-row-hover', description: 'Row hover background (host override).' },
+    { token: '--au-table-row-stripe', description: 'Striped row background when `striped`.' },
+    {
+      token: '--au-table-row-selected',
+      description: 'Selected row background when `selectionMode` is set.',
+    },
+    {
+      token: 'data-au-selection',
+      description: 'Host attr: `single` or `multiple` when row selection is enabled.',
+    },
   ],
   tooltip: [
     {

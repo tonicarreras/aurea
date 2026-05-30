@@ -19,6 +19,7 @@ import { examples as snackbarExamples } from './snackbar';
 import { examples as messageExamples } from './message';
 import { examples as iconExamples } from './icon';
 import { examples as skeletonExamples } from './skeleton';
+import { examples as spinnerExamples } from './spinner';
 import { examples as stepsExamples } from './steps';
 import { examples as badgeExamples } from './badge';
 import { examples as breadcrumbExamples } from './breadcrumb';
@@ -56,6 +57,7 @@ export const COMPONENT_DOC_EXAMPLES_ES: Record<string, ComponentDocExample[]> = 
   message: messageExamples,
   icon: iconExamples,
   skeleton: skeletonExamples,
+  spinner: spinnerExamples,
   steps: stepsExamples,
   divider: dividerExamples,
   badge: badgeExamples,

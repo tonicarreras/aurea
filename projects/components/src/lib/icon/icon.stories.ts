@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
-import { AuIcon, type AuIconName } from './icon';
+import { AuIcon, AU_ICON_NAMES } from './icon';
 
-const names: AuIconName[] = ['check-circle', 'warning', 'error', 'info', 'close', 'spinner'];
+const semanticNames = AU_ICON_NAMES.filter((n) =>
+  ['check-circle', 'check', 'warning', 'error', 'info', 'close', 'spinner'].includes(n),
+);
+const uiNames = AU_ICON_NAMES.filter((n) => !semanticNames.includes(n));
 
 const meta: Meta<AuIcon> = {
   title: 'Aurea/Icon',
@@ -11,8 +14,12 @@ const meta: Meta<AuIcon> = {
   tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('icon'),
   argTypes: {
-    name: { control: 'select', options: names, table: { category: 'Content' } },
-    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Appearance' } },
+    name: { control: 'select', options: [...AU_ICON_NAMES], table: { category: 'Content' } },
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+    },
   },
   args: {
     name: 'info',
@@ -38,11 +45,11 @@ export const Sizes: Story = {
         }
       </div>
     `,
-    props: { sizes: ['sm', 'md', 'lg'] as const },
+    props: { sizes: ['xs', 'sm', 'md', 'lg'] as const },
   }),
 };
 
-export const AllGlyphs: Story = {
+export const SemanticGlyphs: Story = {
   render: () => ({
     moduleMetadata: { imports: [AuIcon] },
     template: `
@@ -55,6 +62,23 @@ export const AllGlyphs: Story = {
         }
       </div>
     `,
-    props: { names },
+    props: { names: semanticNames },
+  }),
+};
+
+export const UiGlyphs: Story = {
+  render: () => ({
+    moduleMetadata: { imports: [AuIcon] },
+    template: `
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;color:var(--au-color-text-primary);">
+        @for (n of names; track n) {
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0.25rem;font-size:0.75rem;">
+            <au-icon [name]="n" size="md" />
+            <span>{{ n }}</span>
+          </div>
+        }
+      </div>
+    `,
+    props: { names: uiNames },
   }),
 };

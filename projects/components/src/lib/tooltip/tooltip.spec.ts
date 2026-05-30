@@ -58,16 +58,11 @@ describe('AuTooltip', () => {
     fixture.detectChanges();
   }
 
-  it('creates', () => {
-    expect(fixture.debugElement.query(By.directive(AuTooltip))).toBeTruthy();
-  });
-
   it('shows and hides the tooltip on hover', async () => {
     await showTooltip();
-    expect(bubble()).toBeTruthy();
     expect(bubble()?.textContent?.trim()).toBe('Help text');
     expect(bubble()?.getAttribute('role')).toBe('tooltip');
-    expect(trigger().getAttribute('aria-describedby')).toBeTruthy();
+    expect(trigger().getAttribute('aria-describedby')).toMatch(/^au-tooltip-/);
 
     trigger().dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
     fixture.detectChanges();
@@ -81,7 +76,7 @@ describe('AuTooltip', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
-    expect(bubble()).toBeTruthy();
+    expect(bubble()?.textContent?.trim()).toBe('Help text');
 
     trigger().dispatchEvent(
       new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
@@ -109,7 +104,9 @@ describe('AuTooltip', () => {
     delayed.detectChanges();
     await delayed.whenStable();
     delayed.detectChanges();
-    expect(document.body.querySelector('.au-tooltip__bubble')).toBeTruthy();
+    expect(document.body.querySelector('.au-tooltip__bubble')?.textContent?.trim()).toBe(
+      'Help text',
+    );
 
     delayedTrigger.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
     await vi.advanceTimersByTimeAsync(50);
@@ -154,7 +151,7 @@ describe('AuTooltip', () => {
     await showTooltip();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fixture.detectChanges();
-    expect(bubble()).toBeTruthy();
+    expect(bubble()?.textContent?.trim()).toBe('Help text');
   });
 
   it('does not hide when focus moves within the host', async () => {
@@ -167,7 +164,7 @@ describe('AuTooltip', () => {
     host.append(inner);
     host.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: inner }));
     fixture.detectChanges();
-    expect(bubble()).toBeTruthy();
+    expect(bubble()?.textContent?.trim()).toBe('Help text');
     inner.remove();
   });
 
@@ -185,7 +182,9 @@ describe('AuTooltip', () => {
     delayedTrigger.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
     await vi.advanceTimersByTimeAsync(100);
     delayed.detectChanges();
-    expect(document.body.querySelector('.au-tooltip__bubble')).toBeTruthy();
+    expect(document.body.querySelector('.au-tooltip__bubble')?.textContent?.trim()).toBe(
+      'Help text',
+    );
     delayed.destroy();
     vi.useRealTimers();
   });

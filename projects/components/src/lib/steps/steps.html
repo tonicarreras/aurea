@@ -3,7 +3,6 @@
     class="au-steps__list"
     [attr.role]="layout() === 'sections' ? 'navigation' : 'tablist'"
     [attr.aria-label]="ariaLabel().trim() || null"
-    [attr.aria-orientation]="layout() === 'sections' ? null : 'horizontal'"
     (keydown)="onListKeydown($event)"
   >
     <ng-content select="button[auStep]"></ng-content>

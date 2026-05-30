@@ -1,7 +1,6 @@
 /**
  * Radio group — fieldset + native radios (no outer field shell; aligned with checkbox).
  */
-@import url('../tokens/au-tokens.css');
 @import url('../styles/au-field-error.css');
 
 :host {
@@ -53,7 +52,8 @@
 .au-radio-group__legend {
   float: left;
   width: 100%;
-  padding: 0 0 var(--au-space-2) 0;
+  padding-block: 0 var(--au-space-2);
+  padding-inline: 0;
   font-size: var(--au-text-sm);
   font-weight: var(--au-weight-medium);
   line-height: var(--au-leading-tight);
@@ -64,7 +64,7 @@
 .au-radio-group__required {
   color: var(--au-color-form-error);
   font-weight: var(--au-weight-semibold);
-  margin-left: 0.125em;
+  margin-inline-start: 0.125em;
 }
 
 .au-radio-group__options {

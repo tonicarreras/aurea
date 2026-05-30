@@ -1,7 +1,7 @@
 /**
- * Snackbar — transient feedback toast aligned with Aurea surfaces.
+ * Snackbar — portaled to document.body.
+ * Included in aurea-global.css; also loaded via au-snackbar styleUrl.
  */
-@import url('../tokens/au-tokens.css');
 
 au-snackbar {
   display: none;
@@ -26,34 +26,34 @@ au-snackbar.au-snackbar--open {
 
 au-snackbar.au-snackbar--open[data-au-position='bottom-center'] {
   bottom: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
 }
 
 au-snackbar.au-snackbar--open[data-au-position='bottom-start'] {
   bottom: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
-  left: var(--au-space-4);
+  inset-inline-start: var(--au-space-4);
 }
 
 au-snackbar.au-snackbar--open[data-au-position='bottom-end'] {
   bottom: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
-  right: var(--au-space-4);
+  inset-inline-end: var(--au-space-4);
 }
 
 au-snackbar.au-snackbar--open[data-au-position='top-center'] {
   top: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
 }
 
 au-snackbar.au-snackbar--open[data-au-position='top-start'] {
   top: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
-  left: var(--au-space-4);
+  inset-inline-start: var(--au-space-4);
 }
 
 au-snackbar.au-snackbar--open[data-au-position='top-end'] {
   top: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
-  right: var(--au-space-4);
+  inset-inline-end: var(--au-space-4);
 }
 
 au-snackbar .au-snackbar__surface {
@@ -64,12 +64,12 @@ au-snackbar .au-snackbar__surface {
   width: 100%;
   padding: var(--au-space-3) var(--au-space-4);
   border: 1px solid var(--au-color-border-default);
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-float);
+  box-shadow: var(--au-shadow-floating, var(--au-shadow-float));
   color: var(--au-color-text-primary);
   pointer-events: auto;
-  animation: au-snackbar-in var(--au-motion-toast);
+  animation: au-snackbar-in var(--au-motion-toast) both;
 }
 
 au-snackbar[data-au-variant='default'] .au-snackbar__surface,
@@ -111,19 +111,19 @@ au-snackbar .au-snackbar__icon au-icon {
 }
 
 au-snackbar[data-au-variant='success'] .au-snackbar__icon {
-  color: var(--au-color-semantic-success);
+  color: var(--au-color-feedback-success-title);
 }
 
 au-snackbar[data-au-variant='warning'] .au-snackbar__icon {
-  color: var(--au-color-semantic-warning);
+  color: var(--au-color-feedback-warning-title);
 }
 
 au-snackbar[data-au-variant='error'] .au-snackbar__icon {
-  color: var(--au-color-semantic-error);
+  color: var(--au-color-feedback-error-title);
 }
 
 au-snackbar[data-au-variant='info'] .au-snackbar__icon {
-  color: var(--au-color-semantic-info);
+  color: var(--au-color-feedback-info-title);
 }
 
 au-snackbar .au-snackbar__body {
@@ -147,9 +147,11 @@ au-snackbar .au-snackbar__actions {
 
 au-snackbar .au-snackbar__action {
   flex-shrink: 0;
+  min-width: 2rem;
+  min-height: 2rem;
   padding: var(--au-space-1) var(--au-space-2);
   border: none;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   background: transparent;
   color: var(--au-color-link);
   font-family: inherit;
@@ -178,7 +180,7 @@ au-snackbar .au-snackbar__close {
   height: var(--au-space-8);
   padding: 0;
   border: none;
-  border-radius: var(--au-radius-sm);
+  border-radius: var(--au-radius-control);
   background: transparent;
   color: var(--au-color-text-secondary);
   cursor: pointer;
@@ -198,12 +200,12 @@ au-snackbar .au-snackbar__close:focus-visible {
 @keyframes au-snackbar-in {
   from {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(0.75rem) scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -214,12 +216,12 @@ au-snackbar[data-au-position^='top'] .au-snackbar__surface {
 @keyframes au-snackbar-in-top {
   from {
     opacity: 0;
-    transform: translateY(-0.5rem);
+    transform: translateY(-0.75rem) scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 

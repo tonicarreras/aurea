@@ -50,7 +50,7 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
       { token: '--au-color-form-error', description: 'Borde y texto de error.' },
       { token: '--au-color-form-error-bg', description: 'Fondo del shell inválido.' },
       { token: '--au-color-form-disabled-surface', description: 'Fondo deshabilitado.' },
-      { token: '--au-radius-field', description: 'Radio de campos (2px por defecto).' },
+      { token: '--au-radius-field', description: 'Radio de campos (4px por defecto).' },
       {
         token: '--au-size-field-h-sm / md / lg',
         description: 'Alturas de controles de formulario.',

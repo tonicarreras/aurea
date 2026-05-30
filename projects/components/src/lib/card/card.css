@@ -1,9 +1,15 @@
 /**
  * Card — grouped content with shared surface language as au-dialog.
  */
-@import url('../tokens/au-tokens.css');
 
 au-card {
+  --au-card-bg: var(--au-color-surface-raised);
+  --au-card-border: 1px solid var(--au-color-border-subtle);
+  --au-card-radius: var(--au-radius-surface);
+  --au-card-shadow: var(--au-shadow-float);
+  --au-card-padding: var(--au-space-5);
+  --au-card-gap: var(--au-space-4);
+
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -15,7 +21,7 @@ au-card .au-card__container {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-radius-surface);
   transition: var(--au-transition-control);
 }
 
@@ -23,6 +29,15 @@ au-card[data-au-variant='elevated'] .au-card__container {
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-subtle);
   box-shadow: var(--au-shadow-float);
+  transition:
+    var(--au-transition-control),
+    transform var(--au-motion-control),
+    box-shadow var(--au-duration-default) var(--au-ease-out);
+}
+
+au-card[data-au-variant='elevated']:hover .au-card__container {
+  transform: translateY(-2px);
+  box-shadow: var(--au-shadow-floating);
 }
 
 au-card[data-au-variant='outlined'] .au-card__container {
@@ -113,5 +128,10 @@ au-card .au-card__footer {
 @media (prefers-reduced-motion: reduce) {
   au-card .au-card__container {
     transition: none;
+  }
+
+  au-card[data-au-variant='elevated']:hover .au-card__container {
+    transform: none;
+    box-shadow: var(--au-shadow-float);
   }
 }

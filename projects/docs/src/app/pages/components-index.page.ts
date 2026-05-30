@@ -74,24 +74,20 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
       grid-template-columns: 1fr;
       gap: var(--au-space-5);
       width: 100%;
+      max-width: 100%;
+      container-type: inline-size;
     }
 
-    @media (min-width: 36rem) {
+    @container (min-width: 28rem) {
       .docs-components-index {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--au-space-6);
       }
     }
 
-    @media (min-width: 56rem) {
+    @container (min-width: 42rem) {
       .docs-components-index {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 80rem) {
-      .docs-components-index {
-        gap: var(--au-space-7);
       }
     }
 
@@ -121,7 +117,7 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
 
     .docs-components-index__legend {
       margin: 0 0 var(--au-space-5);
-      max-width: min(52rem, 100%);
+      max-width: 100%;
       font-size: var(--au-text-sm);
       color: var(--au-color-text-secondary);
       line-height: var(--au-leading-relaxed);

@@ -330,7 +330,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
     .docs-theme-group__lead {
       margin: 0 0 var(--au-space-4);
-      max-width: min(62rem, 100%);
+      max-width: 100%;
       color: var(--au-color-text-secondary);
       font-size: var(--au-text-sm);
       line-height: var(--au-leading-relaxed);
@@ -348,7 +348,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
     .docs-theme-override p {
       margin: 0;
-      max-width: min(62rem, 100%);
+      max-width: 100%;
       line-height: var(--au-leading-relaxed);
       color: var(--au-color-text-secondary);
     }
@@ -361,7 +361,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
 
     .docs-theme-host__lead {
       margin: 0 0 var(--au-space-4);
-      max-width: min(62rem, 100%);
+      max-width: 100%;
       color: var(--au-color-text-secondary);
       line-height: var(--au-leading-relaxed);
     }

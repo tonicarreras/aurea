@@ -1,10 +1,11 @@
-import { Injector, runInInjectionContext } from '@angular/core';
+import { Component, Injector, runInInjectionContext } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
+import { AuFormField } from '../form-field/form-field';
 import {
   AuAutocompleteTestHost,
   applyFieldHarnessInputs,
@@ -260,7 +261,7 @@ describe('AuAutocomplete', () => {
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
     fix.detectChanges();
-    const empty = fix.debugElement.query(By.css('.au-autocomplete__empty'));
+    const empty = fix.debugElement.query(By.css('.au-field-listbox__item--empty'));
     expect(empty?.nativeElement.textContent?.trim()).toBe('No results');
   });
 
@@ -1090,5 +1091,34 @@ describe('AuAutocomplete', () => {
     });
     expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
     expect(fix.debugElement.query(By.css('.au-form-field__required'))).toBeTruthy();
+  });
+
+  it('shows loading indicator when loading and listbox visible', async () => {
+    @Component({
+      imports: [AuFormField, AuAutocomplete],
+      template: `
+        <au-form-field>
+          <au-autocomplete
+            [options]="options"
+            [loading]="true"
+          />
+        </au-form-field>
+      `,
+    })
+    class AutocompleteLoadingHost {
+      options: AuAutocompleteOption[] = [{ value: 'mad', label: 'Madrid' }];
+    }
+
+    await TestBed.configureTestingModule({
+      imports: [AutocompleteLoadingHost],
+    }).compileComponents();
+    const fix = TestBed.createComponent(AutocompleteLoadingHost);
+    const input = fix.debugElement.query(By.css('.au-autocomplete__input'))!
+      .nativeElement as HTMLInputElement;
+    input.focus();
+    input.value = 'm';
+    input.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(fix.debugElement.query(By.css('.au-field-listbox__item--loading'))).toBeTruthy();
   });
 });

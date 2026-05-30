@@ -169,4 +169,36 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     endText: 'Aparece al final (inline-end)',
     endButton: 'Derecha',
   },
+  table: {
+    caption: 'Miembros del equipo',
+    colName: 'Nombre',
+    colRole: 'Rol',
+    colScore: 'Puntuación',
+    colStatus: 'Estado',
+    row1Name: 'Ada Lovelace',
+    row1Role: 'Ingeniera',
+    row2Name: 'Grace Hopper',
+    row2Role: 'Almirante',
+    row3Name: 'Katherine Johnson',
+    row3Role: 'Matemática',
+    statusActive: 'Activo',
+    statusAway: 'Ausente',
+    singleSelect: {
+      title: 'Elige un miembro',
+      description: 'Selección única — solo una fila puede estar marcada.',
+    },
+    multipleSelect: {
+      title: 'Miembros del equipo',
+      description: 'Multi-selección con checkbox en cabecera e estado indeterminado.',
+    },
+    customCell: {
+      title: 'Miembros del equipo',
+      description: 'Celdas ricas con plantillas `auTableCell` (badges, menús, etc.).',
+    },
+    loading: {
+      title: 'Miembros del equipo',
+      description: 'Estado de carga mientras se obtienen los datos.',
+      message: 'Cargando equipo…',
+    },
+  },
 };

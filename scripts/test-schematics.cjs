@@ -51,6 +51,10 @@ async function main() {
     console.error('FAIL: au-tokens.css not added');
     failed++;
   }
+  if (!styles.includes('node_modules/@aurea-design-system/components/styles/aurea-global.css')) {
+    console.error('FAIL: aurea-global.css not added');
+    failed++;
+  }
 
   result = await runner.runSchematic('ng-add', {}, result);
   const tokenCount = readStyles(result).filter((s) => s.includes('au-tokens.css')).length;

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Heuristic audit: flags spec files whose tests look like smoke-only (create + detectChanges + toBeTruthy).
- * Writes spec-quality-report.md and exits 1 if any stable component has >50% smoke tests.
+ * Heuristic audit: flags spec files whose tests look like smoke-only
+ * (create + detectChanges + toBeTruthy/toBeDefined, without interaction or value assertions).
+ * Writes spec-quality-report.md and exits 1 in CI when any stable component exceeds 50% smoke tests.
  */
 import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
@@ -47,15 +48,29 @@ function walkSpecs(dir, files = []) {
   return files;
 }
 
+/** Slice a single `it(...)` body (handles indented tests). */
+function sliceItBody(content, startIndex) {
+  const tail = content.slice(startIndex + 1);
+  const nextIt = tail.search(/\n\s*it\s*\(/);
+  const nextDescribe = tail.search(/\n\s*describe\s*\(/);
+  const offsets = [nextIt, nextDescribe].filter((i) => i >= 0).sort((a, b) => a - b);
+  const end = offsets.length > 0 ? startIndex + 1 + offsets[0] : content.length;
+  return content.slice(startIndex, end);
+}
+
 function isSmokeTest(body) {
   const normalized = body.replace(/\s+/g, ' ').toLowerCase();
-  const hasCreate = /createcomponent|testbed\.create/.test(normalized);
+  const hasCreate = /createcomponent|testbed\.create|createfieldfixture/.test(normalized);
   const hasDetect = /detectchanges/.test(normalized);
-  const hasTruthy = /tobetruthy|tobedefined/.test(normalized);
-  const hasBehavior =
-    /click|keydown|keyup|input|toggle|emit|expect\(.*\)\.(to|not\.)/.test(normalized) &&
-    !/tobetruthy|tobedefined/.test(normalized);
-  return hasCreate && hasDetect && hasTruthy && !hasBehavior;
+  const hasTruthy = /\.(tobetruthy|tobedefined)\(/.test(normalized);
+  const hasInteraction =
+    /\.(click|dispatchEvent)\(|keydown|keyup|keypress|\.input\(|\.toggle\(|\.emit\(/.test(
+      normalized,
+    );
+  const hasMeaningfulExpect = /expect\([^)]*\)\.(not\.)?to(?!betruthy|bedefined)[a-z]/.test(
+    normalized,
+  );
+  return hasCreate && hasDetect && hasTruthy && !hasInteraction && !hasMeaningfulExpect;
 }
 
 function analyzeSpec(path) {
@@ -66,44 +81,49 @@ function analyzeSpec(path) {
   const smokeNames = [];
   for (const match of tests) {
     total++;
-    const start = match.index ?? 0;
-    const nextIt = content.indexOf('\nit(', start + 1);
-    const nextDescribe = content.indexOf('\ndescribe(', start + 1);
-    const end = [nextIt, nextDescribe, content.length]
-      .filter((i) => i > start)
-      .sort((a, b) => a - b)[0];
-    const body = content.slice(start, end);
+    const body = sliceItBody(content, match.index ?? 0);
     if (isSmokeTest(body)) {
       smoke++;
       smokeNames.push(match[1]);
     }
   }
-  return { total, smoke, smokeNames };
+  return { total, smoke, smokeNames, specFile: basename(path) };
 }
 
 const stable = readStableSlugs();
-const rows = [];
-let flagged = 0;
+const byComponent = new Map();
 
 for (const specPath of walkSpecs(libRoot)) {
   const slug = basename(specPath, '.spec.ts');
-  if (slug.includes('-') && !stable.has(slug)) {
-    const folder = basename(join(specPath, '..'));
-    if (!stable.has(folder)) continue;
-  }
   const folderSlug = basename(join(specPath, '..'));
   const componentSlug = stable.has(folderSlug) ? folderSlug : slug;
   if (!stable.has(componentSlug)) continue;
 
-  const { total, smoke, smokeNames } = analyzeSpec(specPath);
-  if (total === 0) continue;
-  const ratio = smoke / total;
-  const flag = ratio > 0.5;
-  if (flag) flagged++;
-  rows.push({ componentSlug, total, smoke, ratio, smokeNames, flag });
+  const result = analyzeSpec(specPath);
+  if (result.total === 0) continue;
+
+  const existing = byComponent.get(componentSlug) ?? {
+    componentSlug,
+    total: 0,
+    smoke: 0,
+    smokeNames: [],
+    specFiles: [],
+  };
+  existing.total += result.total;
+  existing.smoke += result.smoke;
+  existing.smokeNames.push(...result.smokeNames);
+  existing.specFiles.push(result.specFile);
+  byComponent.set(componentSlug, existing);
 }
 
+const rows = [...byComponent.values()].map((entry) => {
+  const ratio = entry.smoke / entry.total;
+  return { ...entry, ratio, flag: ratio > 0.5 };
+});
+
 rows.sort((a, b) => b.ratio - a.ratio);
+
+const flagged = rows.filter((r) => r.flag);
 
 const md = [
   '# Spec quality audit',
@@ -111,17 +131,28 @@ const md = [
   `Generated: ${new Date().toISOString()}`,
   '',
   '| Component | Tests | Smoke-like | Ratio | Flag |',
-  '| --------- | ----- | ------------ | ----- | ---- |',
+  '| --------- | ----- | ---------- | ----- | ---- |',
   ...rows.map(
     (r) =>
       `| \`${r.componentSlug}\` | ${r.total} | ${r.smoke} | ${(r.ratio * 100).toFixed(0)}% | ${r.flag ? '⚠' : '✓'} |`,
   ),
   '',
-  'Smoke-like = createComponent + detectChanges + toBeTruthy/defined without interaction assertions.',
+  'Smoke-like = create + detectChanges + only `toBeTruthy`/`toBeDefined`, no clicks/keyboard or value assertions.',
   '',
-].join('\n');
+];
 
-writeFileSync(outPath, md);
+if (flagged.length > 0) {
+  md.push('## Flagged smoke tests', '');
+  for (const row of flagged) {
+    md.push(`### \`${row.componentSlug}\` (${row.specFiles.join(', ')})`, '');
+    for (const name of row.smokeNames) {
+      md.push(`- ${name}`);
+    }
+    md.push('');
+  }
+}
+
+writeFileSync(outPath, md.join('\n'));
 
 const format = spawnSync('bunx', ['prettier', '--write', outPath], { encoding: 'utf8' });
 if (format.status !== 0) {
@@ -129,8 +160,14 @@ if (format.status !== 0) {
   process.exit(format.status ?? 1);
 }
 
-console.log(`Wrote ${outPath} (${rows.length} stable specs, ${flagged} flagged)`);
+console.log(`Wrote ${outPath} (${rows.length} stable components, ${flagged.length} flagged)`);
 
-if (process.env['CI'] === 'true' && flagged > 0) {
-  console.warn(`${flagged} stable component(s) exceed 50% smoke-like tests (warning only).`);
+if (flagged.length > 0) {
+  const names = flagged
+    .map((r) => `${r.componentSlug} (${(r.ratio * 100).toFixed(0)}%)`)
+    .join(', ');
+  console.error(
+    `\n✗ ${flagged.length} stable component(s) exceed 50% smoke-like tests: ${names}\n`,
+  );
+  process.exit(1);
 }

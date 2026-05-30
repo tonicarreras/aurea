@@ -15,6 +15,13 @@ function applyAuThemeFromGlobals(globals: Record<string, unknown>): void {
   document.documentElement.setAttribute('data-au-theme', theme);
 }
 
+function applyAuDensityFromGlobals(globals: Record<string, unknown>): void {
+  const raw = globals['auDensity'];
+  const density: 'compact' | 'comfortable' | 'spacious' =
+    raw === 'compact' ? 'compact' : raw === 'spacious' ? 'spacious' : 'comfortable';
+  document.documentElement.setAttribute('data-au-density', density);
+}
+
 function applyDocsLocaleFromGlobals(globals: Record<string, unknown>): void {
   const raw = globals['docsLocale'];
   const locale: StoryOverviewLocale = raw === 'es' ? 'es' : 'en';
@@ -40,6 +47,20 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    auDensity: {
+      description: 'Densidad visual (`data-au-density` en el documento)',
+      defaultValue: 'comfortable',
+      toolbar: {
+        title: 'Densidad',
+        icon: 'grow',
+        items: [
+          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },
+          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },
+          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },
+        ],
+        dynamicTitle: true,
+      },
+    },
     docsLocale: {
       description: 'Idioma de Autodocs (overview desde la documentación)',
       defaultValue: 'en',
@@ -56,12 +77,14 @@ const preview: Preview = {
   },
   initialGlobals: {
     auTheme: 'light',
+    auDensity: 'comfortable',
     docsLocale: 'en',
   },
   decorators: [
     (storyFn, context) => {
       const globals = context.globals as Record<string, unknown>;
       applyAuThemeFromGlobals(globals);
+      applyAuDensityFromGlobals(globals);
       applyDocsLocaleFromGlobals(globals);
       return storyFn();
     },

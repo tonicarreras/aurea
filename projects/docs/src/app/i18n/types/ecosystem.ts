@@ -42,18 +42,28 @@ export interface EcosystemMessages {
     pageSubtitle: string;
     filterLabel: string;
     filterPlaceholder: string;
+    roleFilterLabel: string;
+    roleFilterAll: string;
     colName: string;
     colRole: string;
+    colStatus: string;
     colActions: string;
+    statusActive: string;
+    statusAway: string;
     newPerson: string;
     edit: string;
     delete: string;
+    bulkDelete: string;
+    clearSelection: string;
+    selectedCount: string;
     editTitle: string;
+    createTitle: string;
     deleteTitle: string;
     deleteBody: string;
     cancel: string;
     save: string;
     snackbarSaved: string;
     snackbarDeleted: string;
+    snackbarBulkDeleted: string;
   };
 }

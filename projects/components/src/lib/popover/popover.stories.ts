@@ -50,9 +50,11 @@ export const Filters: Story = {
       template: `
         <au-popover [(open)]="open">
           <au-button auPopoverTrigger variant="outline">Filters</au-button>
-          <au-form-field label="Search">
-            <au-input-text placeholder="Name…" />
-          </au-form-field>
+          <div class="au-story-field">
+            <au-form-field label="Search">
+              <au-input-text placeholder="Name…" />
+            </au-form-field>
+          </div>
         </au-popover>
       `,
     };

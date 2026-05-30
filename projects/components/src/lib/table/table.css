@@ -1,7 +1,7 @@
 /**
- * Aurea Table — Material-style column API; encapsulation None.
+ * Table — data grid with column definitions and optional client sort.
+ * ViewEncapsulation.None: host token overrides on au-table.
  */
-@import url('../tokens/au-tokens.css');
 
 au-table {
   --au-table-shell-pad: var(--au-space-4);
@@ -9,6 +9,7 @@ au-table {
   --au-table-cell-y: var(--au-space-3-5);
   --au-table-header-bg: var(--au-color-surface-elevated);
   --au-table-row-hover: var(--au-color-surface-elevated);
+  --au-table-row-selected: var(--au-color-state-selected);
   --au-table-row-stripe: color-mix(
     in srgb,
     var(--au-color-surface-elevated) 55%,
@@ -33,7 +34,7 @@ au-table .au-table__shell {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--au-color-border-subtle);
-  border-radius: var(--au-radius-lg);
+  border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
   box-shadow: var(--au-shadow-raised);
   overflow: hidden;
@@ -115,6 +116,19 @@ au-table .au-table__header-cell--sorted {
   color: var(--au-color-text-primary);
 }
 
+au-table .au-table__header-cell--select,
+au-table .au-table__cell--select {
+  width: 2.75rem;
+  padding-inline: var(--au-space-3);
+  text-align: center;
+  vertical-align: middle;
+}
+
+au-table .au-table__select-checkbox {
+  display: inline-flex;
+  justify-content: center;
+}
+
 au-table[data-au-sticky-header] .au-table__header-cell {
   position: sticky;
   top: 0;
@@ -129,7 +143,7 @@ au-table .au-table__sort-btn {
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: var(--au-radius-xs);
+  border-radius: var(--au-radius-field);
   background: transparent;
   font: inherit;
   font-size: inherit;
@@ -161,7 +175,7 @@ au-table .au-table__sort-btn:focus-visible {
   box-shadow: var(--au-shadow-focus-ring);
 }
 
-au-table .au-table__sort-btn svg {
+au-table .au-table__sort-btn au-icon {
   display: block;
   width: 100%;
   height: 100%;
@@ -197,14 +211,37 @@ au-table .au-table__grid tbody tr:last-child .au-table__cell {
 
 au-table .au-table__grid tbody tr {
   background: var(--au-color-surface-raised);
-  transition: background-color var(--au-duration-short) var(--au-ease-out);
+  transition:
+    background-color var(--au-duration-short) var(--au-ease-out),
+    box-shadow var(--au-duration-short) var(--au-ease-out);
 }
 
-au-table .au-table__grid tbody tr:hover {
+au-table .au-table__row--selectable {
+  cursor: pointer;
+}
+
+au-table .au-table__row--selected {
+  background: var(--au-table-row-selected);
+  box-shadow: inset 3px 0 0 var(--au-color-state-selected-accent);
+}
+
+au-table .au-table__row--selected:hover {
+  background: var(--au-color-state-selected-hover);
+}
+
+au-table[data-au-striped] .au-table__row--selected:nth-child(even) {
+  background: color-mix(
+    in srgb,
+    var(--au-color-state-selected-accent) 12%,
+    var(--au-table-row-stripe)
+  );
+}
+
+au-table .au-table__grid tbody tr:hover:not(.au-table__row--selected) {
   background: var(--au-table-row-hover);
 }
 
-au-table[data-au-striped] .au-table__grid tbody tr:nth-child(even) {
+au-table[data-au-striped] .au-table__grid tbody tr:nth-child(even):not(.au-table__row--selected) {
   background: var(--au-table-row-stripe);
 }
 
@@ -212,6 +249,15 @@ au-table .au-table__empty-row td {
   padding: var(--au-space-6) var(--au-table-cell-x);
   text-align: center;
   color: var(--au-color-text-tertiary);
+}
+
+au-table .au-table__loading-row td {
+  padding: var(--au-space-6) var(--au-table-cell-x);
+  text-align: center;
+}
+
+au-table .au-table__loading-row au-spinner {
+  color: var(--au-color-action-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {

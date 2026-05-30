@@ -160,7 +160,7 @@ export const CardPlaceholder: Story = {
           max-width: 22rem;
           box-sizing: border-box;
           padding: 1rem;
-          border-radius: var(--au-radius-lg);
+          border-radius: var(--au-radius-surface);
           border: 1px solid var(--au-color-border-default);
           background: var(--au-color-surface-raised);
           display: flex;

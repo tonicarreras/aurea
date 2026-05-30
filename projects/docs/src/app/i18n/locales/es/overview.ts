@@ -27,7 +27,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Anillo de foco visible al tabular (`--au-color-focus-ring`).',
-      '`loading` activa `aria-busy` y bloquea el click.',
+      '`loading` activa `aria-busy`, muestra un `au-spinner` decorativo y bloquea el click.',
       'Tamaño `lg` respeta `--au-touch-target-min` (44px).',
     ],
     keyboard: [
@@ -541,7 +541,11 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Iconos de marca → SVG propio.', 'Botón solo icono → `label` en `au-button`.'],
+      items: [
+        'Iconos de marca → SVG propio.',
+        'Botón solo icono → `label` en `au-button`.',
+        'Carga standalone → `au-spinner`.',
+      ],
     },
     anatomy: [{ region: 'SVG', detail: '`data-au-icon` y `data-au-size` en el host.' }],
     accessibility: ['Host con `aria-hidden="true"`.'],
@@ -558,10 +562,54 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Spinner en botón → `au-icon` spinner.', 'Estado vacío → texto visible.'],
+      items: [
+        'Spinner en botón → `au-button` `loading`.',
+        'Indicador inline → `au-spinner`.',
+        'Estado vacío → texto visible.',
+      ],
     },
     anatomy: [{ region: 'Host', detail: '`role="presentation"`; tamaño por variant + `size`.' }],
     accessibility: ['Solo decorativo; combina con `aria-busy` en la región de carga.'],
+  },
+  spinner: {
+    intro: [
+      'Indicador de carga inline con `role="status"` y `aria-busy="true"`.',
+      'SVG de doble anillo: pista tenue y arco animado (~0,9 s). El glifo usa `currentColor`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Filas o paneles mientras llegan datos.',
+        'Copy de estado visible con `label` cuando hace falta contexto.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Estado de botón en vuelo → `au-button` `loading`.',
+        'Porcentaje conocido → `au-progress`.',
+        'Placeholders de contenido → `au-skeleton`.',
+      ],
+    },
+    anatomy: [
+      {
+        region: 'Host `au-spinner`',
+        detail: '`role="status"`; `data-au-size` define la escala sm/md/lg.',
+      },
+      {
+        region: 'Anillos',
+        detail: 'SVG decorativo con pista + arco animado (`aria-hidden`).',
+      },
+      {
+        region: 'Label',
+        detail: 'Copy visible opcional cuando se define `label` (`aria-labelledby`).',
+      },
+    ],
+    accessibility: [
+      'Omite `label` para esperas solo con glifo (`aria-label="Loading"`).',
+      'Define `label` para mostrar copy visible y nombrar la región viva.',
+      'Usa `decorative` dentro de botones u otros controles que ya exponen estado busy.',
+    ],
   },
   steps: {
     intro: [
@@ -831,14 +879,17 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   table: {
     intro: [
-      'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-      'Celdas custom: `ng-template[auTableCell] let-row` en la columna. Orden: `sortable` + `[(sort)]` o `clientSort`.',
+      'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader` y `loading`.',
+      'Orden con columnas `sortable`, `[(sort)]` y `clientSort`. Los iconos de orden usan `au-icon` (`sort-asc`, `sort-desc`, `sort-neutral`).',
+      'Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `au-checkbox`.',
+      'Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
       items: [
         'Datos tabulares con cabeceras y filas.',
-        'Columnas ordenables cuando el padre posee el estado de orden.',
+        'Columnas ordenables cuando el padre posee o delega el estado de orden.',
+        'Elegir una o varias filas para acciones masivas, paneles de detalle o comparación.',
       ],
     },
     whenNotToUse: {
@@ -851,19 +902,30 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     anatomy: [
       {
         region: '`au-table`',
-        detail: 'Cabecera, `<table>` y cuerpo desde `[data]` + columnas hijas.',
+        detail:
+          'Shell, cabecera, `<table>`, cuerpo, filas loading/vacío. Host: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+      },
+      {
+        region: 'Columna de selección',
+        detail:
+          'Se antepone si `selectionMode` ≠ `none`: checkbox en cabecera (multiple) o etiqueta sr-only (single), checkboxes por fila, `aria-selected` en filas.',
       },
       {
         region: '`au-table-column`',
-        detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`.',
+        detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`, `accessor` opcional.',
       },
       { region: '`auTableCell`', detail: 'Plantilla opcional para celdas ricas (badges, menús).' },
     ],
     accessibility: [
       'Conserva semántica nativa (`thead`, `tbody`, `th scope`).',
-      'Botones de orden son botones reales con `aria-sort` según dirección.',
+      'Botones de orden reales con `aria-sort` e iconos `au-icon`.',
+      'Checkboxes con `selectAllLabel` / `selectRowLabel`; filas con `aria-selected`.',
+      'Loading pone `aria-busy` en el host; la fila usa `au-spinner` con `loadingMessage` como `label`.',
     ],
-    keyboard: ['Tab a botones de orden; Enter/Espacio alternan el ciclo de orden.'],
+    keyboard: [
+      'Tab a botones de orden; Enter/Espacio alternan el ciclo.',
+      'Tab a checkboxes de fila; Espacio alterna selección. Clic en fila también alterna si hay selección.',
+    ],
     relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
   },
   tooltip: {

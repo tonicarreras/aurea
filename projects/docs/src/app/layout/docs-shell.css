@@ -1,6 +1,5 @@
 :host {
-  --docs-nav-width: 13.5rem;
-  --docs-nav-gap: var(--au-space-7);
+  --docs-nav-width: var(--docs-nav-rail-width);
   display: block;
   min-height: 100dvh;
   background: var(--au-color-surface-canvas);
@@ -169,21 +168,31 @@
   z-index: 1;
   display: grid;
   grid-template-columns: var(--docs-nav-width) minmax(0, 1fr);
-  column-gap: var(--docs-nav-gap);
+  column-gap: 0;
   align-items: start;
-  width: min(100%, var(--docs-content-max));
+  width: 100%;
+  max-width: none;
   min-height: calc(100dvh - var(--docs-header-height));
-  margin-inline: auto;
-  padding: var(--au-space-6) var(--docs-nav-inset) var(--au-space-12);
+  margin-inline: 0;
+  padding: 0;
 }
 
 .docs-nav {
   position: sticky;
-  top: calc(var(--docs-header-height) + var(--au-space-3));
+  top: var(--docs-header-height);
   width: var(--docs-nav-width);
-  max-height: calc(100dvh - var(--docs-header-height) - var(--au-space-6));
-  padding: 0;
+  max-height: calc(100dvh - var(--docs-header-height));
+  padding: var(--au-space-6) var(--au-space-5) var(--au-space-10) var(--au-space-4);
   overflow: auto;
+  border: none;
+  border-radius: 0;
+  border-inline-end: 1px solid var(--docs-border-fine);
+  background: color-mix(
+    in srgb,
+    var(--au-color-surface-sunken) 35%,
+    var(--au-color-surface-canvas)
+  );
+  box-shadow: none;
   scrollbar-width: thin;
   scrollbar-color: var(--au-color-border-default) transparent;
   animation: docs-fade-in 0.5s var(--au-ease-out) 0.05s both;
@@ -257,10 +266,24 @@
 .docs-main {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   min-width: 0;
-  width: 100%;
-  padding: 0;
+  width: var(--docs-main-width);
+  max-width: var(--docs-main-width);
+  margin-inline: auto;
+  --docs-page-max: 100%;
+  --docs-prose-max: 100%;
+  padding: var(--au-space-6) clamp(var(--au-space-5), 4vw, var(--au-space-10)) var(--au-space-12);
   animation: docs-fade-up 0.55s var(--au-ease-out) 0.08s both;
+}
+
+.docs-main > :not(router-outlet) {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .docs-main--landing {
@@ -286,13 +309,33 @@
     grid-template-columns: minmax(0, 1fr);
     row-gap: var(--docs-layout-gap);
     padding-block: var(--au-space-5) var(--au-space-10);
+    padding-inline: var(--docs-nav-inset);
   }
 
   .docs-nav {
     position: static;
     width: 100%;
     max-height: none;
+    padding: 0 0 var(--au-space-4);
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--docs-border-fine);
+    border-inline-end: none;
+    background: transparent;
+    box-shadow: none;
     padding-top: var(--au-space-1);
+  }
+
+  .docs-main {
+    width: 100%;
+    max-width: 100%;
+    align-items: stretch;
+    padding: var(--au-space-2) var(--docs-nav-inset) 0;
+  }
+
+  .docs-main > :not(router-outlet) {
+    width: 100%;
+    max-width: 100%;
   }
 
   .docs-nav__list {

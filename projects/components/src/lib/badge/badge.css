@@ -1,4 +1,15 @@
+/**
+ * Badge — compact status/count label.
+ * Variants use shared semantic + accent tokens from au-tokens.css.
+ */
+
 :host {
+  --au-badge-bg: var(--au-color-surface-sunken);
+  --au-badge-color: var(--au-color-text-secondary);
+  --au-badge-border: 1px solid var(--au-color-border-subtle);
+  --au-badge-radius: var(--au-radius-full);
+  --au-badge-font-size: var(--au-text-xs);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -6,16 +17,16 @@
   min-width: 1.25rem;
   height: 1.25rem;
   padding: 0 0.4em;
-  border-radius: var(--au-radius-pill);
+  border-radius: var(--au-badge-radius);
   font-family: var(--au-font-sans);
-  font-size: var(--au-text-xs);
+  font-size: var(--au-badge-font-size);
   font-weight: var(--au-weight-semibold);
   line-height: 1;
   white-space: nowrap;
   vertical-align: middle;
-  background: var(--au-color-surface-sunken);
-  color: var(--au-color-text-secondary);
-  border: 1px solid var(--au-color-border-subtle);
+  background: var(--au-badge-bg);
+  color: var(--au-badge-color);
+  border: var(--au-badge-border);
   box-shadow: var(--au-shadow-control);
 }
 
@@ -27,37 +38,33 @@
 }
 
 :host([data-au-variant='accent']) {
-  background: color-mix(
-    in srgb,
-    var(--au-color-action-primary) 16%,
-    var(--au-color-surface-raised)
-  );
-  color: var(--au-color-action-primary);
-  border-color: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
+  background: var(--au-color-accent-surface);
+  color: var(--au-color-accent-foreground);
+  border-color: var(--au-color-accent-border);
 }
 
 :host([data-au-variant='success']) {
   background: var(--au-color-semantic-success-surface);
   color: var(--au-color-semantic-success);
-  border-color: color-mix(in srgb, var(--au-color-semantic-success) 40%, transparent);
+  border-color: var(--au-color-semantic-success-border);
 }
 
 :host([data-au-variant='warning']) {
   background: var(--au-color-semantic-warning-surface);
   color: var(--au-color-semantic-warning);
-  border-color: color-mix(in srgb, var(--au-color-semantic-warning) 40%, transparent);
+  border-color: var(--au-color-semantic-warning-border);
 }
 
 :host([data-au-variant='error']) {
   background: var(--au-color-semantic-error-surface);
   color: var(--au-color-semantic-error);
-  border-color: color-mix(in srgb, var(--au-color-semantic-error) 40%, transparent);
+  border-color: var(--au-color-semantic-error-border);
 }
 
 :host([data-au-variant='info']) {
   background: var(--au-color-semantic-info-surface);
   color: var(--au-color-semantic-info);
-  border-color: color-mix(in srgb, var(--au-color-semantic-info) 40%, transparent);
+  border-color: var(--au-color-semantic-info-border);
 }
 
 .au-badge__label {

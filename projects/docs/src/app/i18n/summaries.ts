@@ -106,6 +106,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Determinate or indeterminate progressbar.',
     'Barra de progreso determinada o indeterminada.',
   ),
+  spinner: L(
+    'Inline loading; optional `label` for visible copy.',
+    'Carga inline; `label` opcional para texto visible.',
+  ),
   breadcrumb: L(
     'Hierarchical navigation trail with optional links.',
     'Ruta jerárquica con enlaces opcionales.',
@@ -127,7 +131,7 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Panel anclado para filtros o contenido compacto.',
   ),
   table: L(
-    'Table shell with striped/compact modes and sortable headers.',
-    'Tabla con modos striped/compact y cabeceras ordenables.',
+    'Data table with sort, row selection, loading, and custom cells.',
+    'Tabla con orden, selección de filas, carga y celdas custom.',
   ),
 };

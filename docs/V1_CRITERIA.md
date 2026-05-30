@@ -2,7 +2,7 @@
 
 Checklist before tagging **`@aurea-design-system/components@1.0.0`**.
 
-Last audit: **2026-05-22** (post Phase 4 + 0.9.0 API freeze candidate).
+Last audit: **2026-05-30** (`1.0.0` shipped).
 
 ## Product
 
@@ -38,8 +38,6 @@ Last audit: **2026-05-22** (post Phase 4 + 0.9.0 API freeze candidate).
 
 ---
 
-## Ready for 1.0.0?
+## 1.0.0 shipped
 
-When GitHub Release notes and npm provenance are in place (automated via publish workflow), tag **`components-v1.0.0`**, publish to npm, and add a migration section from **`0.9.x`** in [CHANGELOG.md](../CHANGELOG.md).
-
-**Current candidate:** `0.9.0` — API freeze for the documented public surface; beta components remain usable but are not promoted on the landing carousel.
+**`@aurea-design-system/components@1.0.0`** (2026-05-30) — tag **`components-v1.0.0`**, migration notes in [CHANGELOG.md](../CHANGELOG.md#100---2026-05-30). Beta components remain usable but are not promoted on the landing carousel.

@@ -3,7 +3,11 @@ import { Component, DestroyRef, inject, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { FieldListboxOverlay, focusLeftFieldControl } from './field-listbox-overlay';
+import {
+  FieldListboxOverlay,
+  focusLeftFieldControl,
+  resolveFieldListboxPortalRoot,
+} from './field-listbox-overlay';
 import { computeTooltipPosition } from './tooltip-position';
 import { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
 
@@ -134,11 +138,33 @@ describe('TooltipOverlay', () => {
     wrap.remove();
   });
 
+  it('copies data-au-theme and data-au-density from anchor subtree onto portaled bubble', () => {
+    const shell = document.createElement('div');
+    shell.setAttribute('data-au-theme', 'dark');
+    shell.setAttribute('data-au-density', 'compact');
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
+    const bubble = document.createElement('div');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
+    shell.append(anchor, bubble);
+    document.body.append(shell);
+
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    expect(bubble.getAttribute('data-au-theme')).toBe('dark');
+    expect(bubble.getAttribute('data-au-density')).toBe('compact');
+    overlay.detach();
+    expect(bubble.hasAttribute('data-au-theme')).toBe(false);
+    expect(bubble.hasAttribute('data-au-density')).toBe(false);
+    shell.remove();
+  });
+
   it('portals bubble to body and sets fixed coordinates', () => {
     const wrap = document.createElement('div');
     const anchor = document.createElement('span');
     anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
     const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
     bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
     wrap.append(anchor, bubble);
     document.body.append(wrap);
@@ -148,7 +174,9 @@ describe('TooltipOverlay', () => {
     expect(placement).toBe('bottom');
     expect(bubble.classList.contains('au-tooltip__bubble--overlay')).toBe(true);
     expect(bubble.style.position).toBe('fixed');
+    expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
     overlay.detach();
+    expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).toBe('');
     wrap.remove();
   });
 
@@ -331,6 +359,74 @@ describe('FieldListboxOverlay', () => {
     wrap.remove();
   });
 
+  it('portals listbox into open modal dialog instead of document.body', () => {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'au-dialog__native';
+    dialog.setAttribute('open', '');
+    const panel = document.createElement('div');
+    panel.className = 'au-dialog__panel';
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    wrap.append(anchor, listbox);
+    panel.append(wrap);
+    dialog.append(panel);
+    document.body.append(dialog);
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+    expect(listbox.parentElement).toBe(dialog);
+    expect(listbox.parentElement).not.toBe(document.body);
+    overlay.detach();
+    expect(listbox.parentElement).toBe(wrap);
+    dialog.remove();
+  });
+
+  it('detach removes listbox from a non-body portal when the anchor is missing', () => {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'au-dialog__native';
+    dialog.setAttribute('open', '');
+    const panel = document.createElement('div');
+    panel.className = 'au-dialog__panel';
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    wrap.append(anchor, listbox);
+    panel.append(wrap);
+    dialog.append(panel);
+    document.body.append(dialog);
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+    expect(listbox.parentElement).toBe(dialog);
+    (overlay as unknown as { anchor: Comment | null }).anchor = null;
+    overlay.detach();
+    expect(dialog.contains(listbox)).toBe(false);
+    dialog.remove();
+  });
+
   it('portals listbox to body, positions it, and restores on detach', () => {
     const wrap = document.createElement('div');
     const anchor = document.createElement('div');
@@ -468,6 +564,25 @@ describe('FieldListboxOverlay', () => {
   it('detach is noop when nothing is active', () => {
     const overlay = createOverlay();
     expect(() => overlay.detach()).not.toThrow();
+  });
+
+  it('resolveFieldListboxPortalRoot prefers an open modal dialog', () => {
+    const dialog = document.createElement('dialog') as HTMLDialogElement;
+    Object.defineProperty(dialog, 'open', { value: true, configurable: true });
+    document.body.append(dialog);
+    const anchor = document.createElement('div');
+    dialog.append(anchor);
+    expect(resolveFieldListboxPortalRoot(anchor, document)).toBe(dialog);
+    dialog.remove();
+  });
+
+  it('resolveFieldListboxPortalRoot falls back to body for closed dialogs', () => {
+    const dialog = document.createElement('dialog');
+    const anchor = document.createElement('div');
+    dialog.append(anchor);
+    document.body.append(dialog);
+    expect(resolveFieldListboxPortalRoot(anchor, document)).toBe(document.body);
+    dialog.remove();
   });
 
   it('onWindowChange is a no-op without an active anchor', () => {

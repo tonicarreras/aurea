@@ -26,7 +26,7 @@ interface InputDateStoryArgs extends FieldChromeStoryArgs {
 }
 
 const meta: Meta<InputDateStoryArgs> = {
-  title: 'Aurea/Input date',
+  title: 'Aurea/InputDate',
   component: AuInputDate,
   tags: ['autodocs', 'au', 'beta'],
   parameters: storyMetaParameters('input-date'),

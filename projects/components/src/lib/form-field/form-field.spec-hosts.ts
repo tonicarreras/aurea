@@ -299,6 +299,7 @@ export class AuSwitchTestHost {
         [required]="required"
         [showRequired]="showRequired"
         [indeterminate]="indeterminate"
+        [hideLabel]="hideLabel"
         [name]="name"
         [size]="size"
       />
@@ -322,6 +323,7 @@ export class AuCheckboxTestHost {
   required = false;
   showRequired = true;
   indeterminate = false;
+  hideLabel = false;
   name = '';
   size: 'sm' | 'md' | 'lg' = 'md';
 }

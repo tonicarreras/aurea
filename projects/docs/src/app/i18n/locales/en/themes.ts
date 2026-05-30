@@ -50,7 +50,7 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       { token: '--au-color-form-error', description: 'Error border and text.' },
       { token: '--au-color-form-error-bg', description: 'Invalid shell background.' },
       { token: '--au-color-form-disabled-surface', description: 'Disabled background.' },
-      { token: '--au-radius-field', description: 'Field corner radius (2px default).' },
+      { token: '--au-radius-field', description: 'Field corner radius (4px default).' },
       { token: '--au-size-field-h-sm / md / lg', description: 'Form control heights.' },
       { token: '--au-shadow-control', description: 'Resting shadow on field shells.' },
       {

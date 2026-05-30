@@ -16,12 +16,7 @@
       "output": "styles"
     },
     {
-      "glob": "au-field-error.css",
-      "input": "src/lib/styles",
-      "output": "styles"
-    },
-    {
-      "glob": "au-field-listbox.css",
+      "glob": "*.css",
       "input": "src/lib/styles",
       "output": "styles"
     }

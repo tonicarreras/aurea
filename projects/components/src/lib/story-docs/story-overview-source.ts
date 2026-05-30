@@ -31,7 +31,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: [
         'Visible focus ring when tabbing (`--au-color-focus-ring`).',
-        '`loading` sets `aria-busy` and blocks click.',
+        '`loading` sets `aria-busy`, shows a decorative `au-spinner`, and blocks click.',
         'Size `lg` respects `--au-touch-target-min` (44px).',
       ],
       keyboard: [
@@ -548,6 +548,7 @@ export const STORY_OVERVIEW_SOURCE = {
       whenNotToUse: [
         'Custom brand icons → your own SVG.',
         'Icon-only button → set `label` on `au-button`.',
+        'Standalone loading → `au-spinner`.',
       ],
       anatomy: [
         {
@@ -564,7 +565,8 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       whenToUse: ['Card/list loading states.', 'Profile header placeholder.'],
       whenNotToUse: [
-        'Spinner on a button → `au-icon` spinner.',
+        'Spinner on a button → `au-button` `loading`.',
+        'Inline loading indicator → `au-spinner`.',
         'Empty state → visible copy, not skeleton.',
       ],
       anatomy: [
@@ -574,6 +576,40 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['Decorative only; pair with `aria-busy` on the loading region.'],
+    },
+    spinner: {
+      intro: [
+        'Inline loading indicator with `role="status"` and `aria-busy="true"`.',
+        'Dual-ring SVG: muted track and rotating arc (~0.9s). Glyph uses `currentColor`.',
+      ],
+      whenToUse: [
+        'Table or panel loading rows while data fetches.',
+        'Visible status copy via `label` when the wait needs context.',
+      ],
+      whenNotToUse: [
+        'Button in-flight state → `au-button` `loading`.',
+        'Known completion ratio → `au-progress`.',
+        'Content placeholders → `au-skeleton`.',
+      ],
+      anatomy: [
+        {
+          region: 'Host `au-spinner`',
+          detail: '`role="status"`; `data-au-size` sets sm/md/lg footprint.',
+        },
+        {
+          region: 'Rings',
+          detail: 'Decorative SVG track and animated arc (`aria-hidden`).',
+        },
+        {
+          region: 'Label',
+          detail: 'Optional visible copy when `label` is set (`aria-labelledby`).',
+        },
+      ],
+      accessibility: [
+        'Omit `label` for glyph-only waits (`aria-label="Loading"`).',
+        'Set `label` to show visible copy and name the live region.',
+        'Use `decorative` inside buttons or other controls that already expose busy state.',
+      ],
     },
     steps: {
       intro: [
@@ -846,12 +882,15 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     table: {
       intro: [
-        'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-        'Custom cells: `ng-template[auTableCell] let-row` inside a column. Sort with `sortable` + `[(sort)]` or `clientSort`.',
+        'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`, and `loading`.',
+        'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
+        'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
+        'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
       ],
       whenToUse: [
         'Tabular data with headers and body rows.',
-        'Sortable columns when the parent owns sort state.',
+        'Sortable columns when the parent owns or delegates sort state.',
+        'Pick one or many rows for bulk actions, detail panels, or comparison.',
       ],
       whenNotToUse: [
         'Layout-only grids → CSS grid, not tables.',
@@ -860,11 +899,18 @@ export const STORY_OVERVIEW_SOURCE = {
       anatomy: [
         {
           region: '`au-table`',
-          detail: 'Renders header, `<table>`, and body from `[data]` + column children.',
+          detail:
+            'Shell, header, `<table>`, body, loading/empty rows. Host attrs: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+        },
+        {
+          region: 'Selection column',
+          detail:
+            'Prepended when `selectionMode` is not `none`: header checkbox (multiple) or sr-only label (single), row checkboxes, `aria-selected` on rows.',
         },
         {
           region: '`au-table-column`',
-          detail: 'Defines `name`, `header`, `sortable`, `align`, `cellVariant`.',
+          detail:
+            'Defines `name`, `header`, `sortable`, `align`, `cellVariant`, optional `accessor`.',
         },
         {
           region: '`auTableCell`',
@@ -873,9 +919,14 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: [
         'Preserve native table semantics (`thead`, `tbody`, `th scope`).',
-        'Sort buttons are real buttons with `aria-sort` reflecting direction.',
+        'Sort buttons are real buttons with `aria-sort` and `au-icon` indicators.',
+        'Selection checkboxes expose `selectAllLabel` / `selectRowLabel`; rows use `aria-selected`.',
+        'Loading sets `aria-busy` on the host; the row uses `au-spinner` with `loadingMessage` as `label`.',
       ],
-      keyboard: ['Tab to sort buttons; Enter/Space toggles sort cycle.'],
+      keyboard: [
+        'Tab to sort buttons; Enter/Space toggles sort cycle.',
+        'Tab to row checkboxes; Space toggles selection. Row click also toggles when selection is enabled.',
+      ],
     },
     tooltip: {
       intro: [
@@ -930,7 +981,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: [
         'Anillo de foco visible al tabular (`--au-color-focus-ring`).',
-        '`loading` activa `aria-busy` y bloquea el click.',
+        '`loading` activa `aria-busy`, muestra un `au-spinner` decorativo y bloquea el click.',
         'Tamaño `lg` respeta `--au-touch-target-min` (44px).',
       ],
       keyboard: [
@@ -1443,7 +1494,11 @@ export const STORY_OVERVIEW_SOURCE = {
         'Dentro de `au-message`, chips removibles, botones en carga.',
         'Iconografía coherente en el DS.',
       ],
-      whenNotToUse: ['Iconos de marca → SVG propio.', 'Botón solo icono → `label` en `au-button`.'],
+      whenNotToUse: [
+        'Iconos de marca → SVG propio.',
+        'Botón solo icono → `label` en `au-button`.',
+        'Carga standalone → `au-spinner`.',
+      ],
       anatomy: [
         {
           region: 'SVG',
@@ -1458,7 +1513,11 @@ export const STORY_OVERVIEW_SOURCE = {
         'Animación pulse o wave; el padre debe marcar `aria-busy` mientras carga.',
       ],
       whenToUse: ['Estados de carga en tarjetas o listas.', 'Cabecera de perfil provisional.'],
-      whenNotToUse: ['Spinner en botón → `au-icon` spinner.', 'Estado vacío → texto visible.'],
+      whenNotToUse: [
+        'Spinner en botón → `au-button` `loading`.',
+        'Indicador inline → `au-spinner`.',
+        'Estado vacío → texto visible.',
+      ],
       anatomy: [
         {
           region: 'Host',
@@ -1466,6 +1525,40 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['Solo decorativo; combina con `aria-busy` en la región de carga.'],
+    },
+    spinner: {
+      intro: [
+        'Indicador de carga inline con `role="status"` y `aria-busy="true"`.',
+        'SVG de doble anillo: pista tenue y arco animado (~0,9 s). El glifo usa `currentColor`.',
+      ],
+      whenToUse: [
+        'Filas o paneles mientras llegan datos.',
+        'Copy de estado visible con `label` cuando hace falta contexto.',
+      ],
+      whenNotToUse: [
+        'Estado de botón en vuelo → `au-button` `loading`.',
+        'Porcentaje conocido → `au-progress`.',
+        'Placeholders de contenido → `au-skeleton`.',
+      ],
+      anatomy: [
+        {
+          region: 'Host `au-spinner`',
+          detail: '`role="status"`; `data-au-size` define la escala sm/md/lg.',
+        },
+        {
+          region: 'Anillos',
+          detail: 'SVG decorativo con pista + arco animado (`aria-hidden`).',
+        },
+        {
+          region: 'Label',
+          detail: 'Copy visible opcional cuando se define `label` (`aria-labelledby`).',
+        },
+      ],
+      accessibility: [
+        'Omite `label` para esperas solo con glifo (`aria-label="Loading"`).',
+        'Define `label` para mostrar copy visible y nombrar la región viva.',
+        'Usa `decorative` dentro de botones u otros controles que ya exponen estado busy.',
+      ],
     },
     steps: {
       intro: [
@@ -1743,12 +1836,15 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     table: {
       intro: [
-        'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader`.',
-        'Celdas custom: `ng-template[auTableCell] let-row` en la columna. Orden: `sortable` + `[(sort)]` o `clientSort`.',
+        'Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader` y `loading`.',
+        'Orden con columnas `sortable`, `[(sort)]` y `clientSort`. Los iconos de orden usan `au-icon` (`sort-asc`, `sort-desc`, `sort-neutral`).',
+        'Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `au-checkbox`.',
+        'Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.',
       ],
       whenToUse: [
         'Datos tabulares con cabeceras y filas.',
-        'Columnas ordenables cuando el padre posee el estado de orden.',
+        'Columnas ordenables cuando el padre posee o delega el estado de orden.',
+        'Elegir una o varias filas para acciones masivas, paneles de detalle o comparación.',
       ],
       whenNotToUse: [
         'Rejillas solo de maquetación → CSS grid, no tablas.',
@@ -1757,11 +1853,18 @@ export const STORY_OVERVIEW_SOURCE = {
       anatomy: [
         {
           region: '`au-table`',
-          detail: 'Cabecera, `<table>` y cuerpo desde `[data]` + columnas hijas.',
+          detail:
+            'Shell, cabecera, `<table>`, cuerpo, filas loading/vacío. Host: `data-au-striped`, `data-au-compact`, `data-au-sticky-header`, `data-au-loading`, `data-au-selection`.',
+        },
+        {
+          region: 'Columna de selección',
+          detail:
+            'Se antepone si `selectionMode` ≠ `none`: checkbox en cabecera (multiple) o etiqueta sr-only (single), checkboxes por fila, `aria-selected` en filas.',
         },
         {
           region: '`au-table-column`',
-          detail: 'Define `name`, `header`, `sortable`, `align`, `cellVariant`.',
+          detail:
+            'Define `name`, `header`, `sortable`, `align`, `cellVariant`, `accessor` opcional.',
         },
         {
           region: '`auTableCell`',
@@ -1770,9 +1873,14 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: [
         'Conserva semántica nativa (`thead`, `tbody`, `th scope`).',
-        'Botones de orden son botones reales con `aria-sort` según dirección.',
+        'Botones de orden reales con `aria-sort` e iconos `au-icon`.',
+        'Checkboxes con `selectAllLabel` / `selectRowLabel`; filas con `aria-selected`.',
+        'Loading pone `aria-busy` en el host; la fila usa `au-spinner` con `loadingMessage` como `label`.',
       ],
-      keyboard: ['Tab a botones de orden; Enter/Espacio alternan el ciclo de orden.'],
+      keyboard: [
+        'Tab a botones de orden; Enter/Espacio alternan el ciclo.',
+        'Tab a checkboxes de fila; Espacio alterna selección. Clic en fila también alterna si hay selección.',
+      ],
     },
     tooltip: {
       intro: [

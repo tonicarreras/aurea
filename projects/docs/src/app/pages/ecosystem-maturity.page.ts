@@ -46,7 +46,7 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
   styles: `
     .docs-maturity-page__legend {
       margin: 0 0 var(--au-space-6);
-      max-width: min(62rem, 100%);
+      max-width: 100%;
       line-height: var(--au-leading-relaxed);
       color: var(--au-color-text-secondary);
     }

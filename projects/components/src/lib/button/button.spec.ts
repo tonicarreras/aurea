@@ -205,4 +205,14 @@ describe('AuButton loading with projected text', () => {
     expect(button.getAttribute('aria-label')).toBe('Save changes');
     expect(fix.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
   });
+
+  it('uses md spinner size on lg loading buttons', () => {
+    const fixture = TestBed.createComponent(AuButton);
+    fixture.componentRef.setInput('size', 'lg');
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size')).toBe(
+      'md',
+    );
+  });
 });

@@ -24,6 +24,7 @@
       [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
       [attr.aria-describedby]="ariaDescribedBy() ?? null"
       [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-busy]="loading() ? 'true' : null"
       [disabled]="disabled()"
       [readOnly]="readOnly()"
       [attr.required]="required() ? true : null"
@@ -37,56 +38,50 @@
       class="au-autocomplete__icon"
       aria-hidden="true"
     >
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 12 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 4.5L6 7.5L9 4.5"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <au-icon name="chevron-down" />
     </span>
   </div>
 
   @if (listboxVisible()) {
-    <ul
-      #listboxEl
-      [id]="listboxId()"
-      class="au-autocomplete__listbox au-field-listbox"
-      role="listbox"
-      [attr.aria-label]="formField.label() || 'Suggestions'"
-    >
-      @for (opt of filteredOptions(); track opt.value; let i = $index) {
-        <li
-          [id]="optionId(i)"
-          class="au-field-listbox__option"
-          role="option"
-          [attr.aria-selected]="value() === opt.value"
-          [attr.aria-disabled]="opt.disabled ? 'true' : null"
-          [class.au-field-listbox__option--active]="highlightedIndex() === i"
-          [class.au-field-listbox__option--selected]="value() === opt.value"
-          [class.au-field-listbox__option--disabled]="opt.disabled"
-          (mouseenter)="onOptionPointerEnter(i, opt)"
-          (mousedown)="onOptionPointerDown($event, opt)"
-        >
-          {{ opt.label }}
-        </li>
-      }
-      @if (showNoResults()) {
-        <li
-          class="au-autocomplete__empty"
-          role="status"
-        >
-          {{ noResultsText() }}
-        </li>
-      }
-    </ul>
+    @if (loading()) {
+      <div class="au-field-listbox__item au-field-listbox__item--loading">
+        <au-spinner
+          size="sm"
+          label="Loading…"
+        />
+      </div>
+    } @else if (showNoResults()) {
+      <div
+        class="au-field-listbox__item au-field-listbox__item--empty"
+        role="status"
+      >
+        {{ noResultsText() }}
+      </div>
+    } @else {
+      <ul
+        #listboxEl
+        [id]="listboxId()"
+        class="au-autocomplete__listbox au-field-listbox"
+        role="listbox"
+        [attr.aria-label]="formField.label() || 'Suggestions'"
+      >
+        @for (opt of filteredOptions(); track opt.value; let i = $index) {
+          <li
+            [id]="optionId(i)"
+            class="au-field-listbox__option"
+            role="option"
+            [attr.aria-selected]="value() === opt.value"
+            [attr.aria-disabled]="opt.disabled ? 'true' : null"
+            [class.au-field-listbox__option--active]="highlightedIndex() === i"
+            [class.au-field-listbox__option--selected]="value() === opt.value"
+            [class.au-field-listbox__option--disabled]="opt.disabled"
+            (mouseenter)="onOptionPointerEnter(i, opt)"
+            (mousedown)="onOptionPointerDown($event, opt)"
+          >
+            {{ opt.label }}
+          </li>
+        }
+      </ul>
+    }
   }
 </div>

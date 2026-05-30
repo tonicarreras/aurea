@@ -52,6 +52,12 @@ body,
   min-height: 10rem;
 }
 
+/* Ancho típico de campo en canvas/docs (los controles siguen siendo block-level). */
+.au-story-field {
+  box-sizing: border-box;
+  width: min(100%, 20rem);
+}
+
 /* Open combobox hosts above sibling fields / docs preview chrome */
 au-select[data-au-listbox-open],
 au-autocomplete[data-au-listbox-open] {
