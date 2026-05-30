@@ -584,7 +584,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Host `au-spinner`', detail: '`role="status"`; `data-au-size` sets sm/md/lg footprint.' },
+      {
+        region: 'Host `au-spinner`',
+        detail: '`role="status"`; `data-au-size` sets sm/md/lg footprint.',
+      },
       {
         region: 'Rings',
         detail: 'Decorative SVG track and animated arc (`aria-hidden`).',

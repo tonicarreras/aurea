@@ -21,7 +21,10 @@ import {
   setSnackbarStackSurface,
   unregisterSnackbarStackEntry,
 } from './snackbar-stack';
-import { clearPortaledThemeContext, syncPortaledThemeContext } from '../overlay/portaled-theme-context';
+import {
+  clearPortaledThemeContext,
+  syncPortaledThemeContext,
+} from '../overlay/portaled-theme-context';
 
 export type AuSnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 export type AuSnackbarPosition =

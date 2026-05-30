@@ -211,6 +211,8 @@ describe('AuButton loading with projected text', () => {
     fixture.componentRef.setInput('size', 'lg');
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size')).toBe('md');
+    expect(fixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size')).toBe(
+      'md',
+    );
   });
 });

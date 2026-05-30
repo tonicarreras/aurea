@@ -600,7 +600,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
         region: 'Anillos',
         detail: 'SVG decorativo con pista + arco animado (`aria-hidden`).',
       },
-      { region: 'Label', detail: 'Copy visible opcional cuando se define `label` (`aria-labelledby`).' },
+      {
+        region: 'Label',
+        detail: 'Copy visible opcional cuando se define `label` (`aria-labelledby`).',
+      },
     ],
     accessibility: [
       'Omite `label` para esperas solo con glifo (`aria-label="Loading"`).',

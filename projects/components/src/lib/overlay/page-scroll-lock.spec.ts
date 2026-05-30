@@ -1,10 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  lockPageScroll,
-  resetPageScrollLockForTests,
-  unlockPageScroll,
-} from './page-scroll-lock';
+import { lockPageScroll, resetPageScrollLockForTests, unlockPageScroll } from './page-scroll-lock';
 
 describe('page-scroll-lock', () => {
   afterEach(() => {

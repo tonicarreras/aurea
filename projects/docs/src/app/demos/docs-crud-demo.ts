@@ -798,9 +798,7 @@ export class DocsCrudDemo {
     }
     const id = this.editingId();
     if (id) {
-      this.rows.update((list) =>
-        list.map((r) => (r.id === id ? { ...r, name, role, status } : r)),
-      );
+      this.rows.update((list) => list.map((r) => (r.id === id ? { ...r, name, role, status } : r)));
     } else {
       this.rows.update((list) => [...list, { id: crypto.randomUUID(), name, role, status }]);
     }

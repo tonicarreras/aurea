@@ -135,7 +135,10 @@ export class FieldListboxOverlay {
 }
 
 /** Portal target for field listboxes — modal dialogs require top-layer placement. */
-export function resolveFieldListboxPortalRoot(anchor: HTMLElement, document: Document): HTMLElement {
+export function resolveFieldListboxPortalRoot(
+  anchor: HTMLElement,
+  document: Document,
+): HTMLElement {
   const dialog = anchor.closest('dialog');
   if (dialog instanceof HTMLDialogElement && isModalDialogOpen(dialog)) {
     return dialog;

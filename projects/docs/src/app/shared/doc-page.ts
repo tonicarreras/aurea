@@ -145,11 +145,9 @@ import { DocsInlineText } from './docs-inline-text';
       max-width: min(var(--docs-prose-max), 100%);
     }
 
-    ::ng-deep .docs-page__body > ul:not(
-        .docs-requirements,
-        .docs-adoption-grid,
-        .docs-components-index
-      ) {
+    ::ng-deep
+      .docs-page__body
+      > ul:not(.docs-requirements, .docs-adoption-grid, .docs-components-index) {
       margin: 0 0 var(--au-space-4);
       color: var(--au-color-text-secondary);
       max-width: min(var(--docs-prose-max), 100%);

@@ -76,7 +76,9 @@ docs-demo-panel {
   width: min(100%, var(--docs-demo-field-max));
 }
 
-.docs-demo--compact .docs-demo__canvas > *:is(
+.docs-demo--compact
+  .docs-demo__canvas
+  > *:is(
     :has(au-table),
     :has(au-tabs),
     :has(au-steps),
@@ -98,7 +100,9 @@ docs-demo-panel {
   align-items: center;
 }
 
-.docs-demo:not(.docs-demo--compact) .docs-demo__canvas > *:is(
+.docs-demo:not(.docs-demo--compact)
+  .docs-demo__canvas
+  > *:is(
     :has(au-table),
     :has(au-tabs),
     :has(au-steps),

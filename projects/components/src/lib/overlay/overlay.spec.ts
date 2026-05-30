@@ -3,7 +3,11 @@ import { Component, DestroyRef, inject, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { FieldListboxOverlay, focusLeftFieldControl, resolveFieldListboxPortalRoot } from './field-listbox-overlay';
+import {
+  FieldListboxOverlay,
+  focusLeftFieldControl,
+  resolveFieldListboxPortalRoot,
+} from './field-listbox-overlay';
 import { computeTooltipPosition } from './tooltip-position';
 import { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
 

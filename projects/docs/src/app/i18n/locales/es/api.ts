@@ -735,7 +735,12 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('compact', 'boolean', 'Padding reducido en celdas.', 'false'),
           i('stickyHeader', 'boolean', 'Cabecera fija al hacer scroll.', 'false'),
           i('loading', 'boolean', 'Muestra fila de carga y pone `aria-busy`.', 'false'),
-          i('loadingMessage', 'string', 'Copy visible del `au-spinner` en la fila de carga (`label`).', "'Loading…'"),
+          i(
+            'loadingMessage',
+            'string',
+            'Copy visible del `au-spinner` en la fila de carga (`label`).',
+            "'Loading…'",
+          ),
           i('clientSort', 'boolean', 'Ordena filas al pulsar cabeceras.', 'true'),
           m('sort', 'AuTableSortState | null', 'Columna y dirección de orden activas.', 'null'),
           o('sortChange', 'AuTableSortState | null', 'Al alternar el orden.'),

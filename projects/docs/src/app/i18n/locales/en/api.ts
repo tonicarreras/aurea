@@ -63,7 +63,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           ),
           i('size', "'sm' | 'md' | 'lg'", 'Height and padding; `lg` ≥ 44px.', "'md'"),
           i('disabled', 'boolean', 'Disables the button.', 'false'),
-          i('loading', 'boolean', 'Decorative `au-spinner` and `aria-busy`; blocks click.', 'false'),
+          i(
+            'loading',
+            'boolean',
+            'Decorative `au-spinner` and `aria-busy`; blocks click.',
+            'false',
+          ),
           i('type', "'button' | 'submit' | 'reset'", 'Native `type`.', "'button'"),
           i('name', 'string', 'Native `name` for form submission.', "''"),
           i('label', 'string', 'Accessible name when content is icon-only.', "''"),
@@ -560,7 +565,11 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         rows: [
           i('size', "'sm' | 'md' | 'lg'", 'Spinner glyph size.', "'md'"),
           i('decorative', 'boolean', 'Glyph only inside a parent that names the wait.', 'false'),
-          i('label', 'string', 'Visible status copy; omit for glyph-only (`aria-label="Loading"`).'),
+          i(
+            'label',
+            'string',
+            'Visible status copy; omit for glyph-only (`aria-label="Loading"`).',
+          ),
         ],
       },
     ],
@@ -735,7 +744,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           i('compact', 'boolean', 'Reduced cell padding.', 'false'),
           i('stickyHeader', 'boolean', 'Sticky header while scrolling.', 'false'),
           i('loading', 'boolean', 'Shows a loading row and sets `aria-busy`.', 'false'),
-          i('loadingMessage', 'string', 'Visible copy on the loading-row `au-spinner` (`label`).', "'Loading…'"),
+          i(
+            'loadingMessage',
+            'string',
+            'Visible copy on the loading-row `au-spinner` (`label`).',
+            "'Loading…'",
+          ),
           i(
             'clientSort',
             'boolean',
