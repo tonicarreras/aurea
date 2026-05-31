@@ -7,7 +7,7 @@ import { AuFileUpload } from './file-upload';
 const meta: Meta<AuFileUpload> = {
   title: 'Aurea/FileUpload',
   component: AuFileUpload,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('file-upload'),
   argTypes: {
     multiple: { control: 'boolean', table: { category: 'Behavior' } },

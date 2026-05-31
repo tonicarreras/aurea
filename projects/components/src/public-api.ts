@@ -10,6 +10,8 @@ export {
 } from './lib/component-maturity';
 export type { AuSize } from './lib/au-size';
 export type { AuFieldOption } from './lib/field-option';
+export * from './lib/avatar';
+export * from './lib/drawer';
 export * from './lib/accordion';
 export * from './lib/fieldset';
 export * from './lib/file-upload';

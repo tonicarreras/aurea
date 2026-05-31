@@ -7,10 +7,12 @@ import { examples as switchExamples } from './switch';
 import { examples as selectExamples } from './select';
 import { examples as accordionExamples } from './accordion';
 import { examples as autocompleteExamples } from './autocomplete';
+import { examples as avatarExamples } from './avatar';
 import { examples as radioGroupExamples } from './radio-group';
 import { examples as inputNumberExamples } from './input-number';
 import { examples as inputDateExamples } from './input-date';
 import { examples as dialogExamples } from './dialog';
+import { examples as drawerExamples } from './drawer';
 import { examples as cardExamples } from './card';
 import { examples as tabsExamples } from './tabs';
 import { examples as chipExamples } from './chip';
@@ -50,10 +52,12 @@ export const COMPONENT_DOC_EXAMPLES_ES: Record<string, ComponentDocExample[]> = 
   switch: switchExamples,
   select: selectExamples,
   autocomplete: autocompleteExamples,
+  avatar: avatarExamples,
   'radio-group': radioGroupExamples,
   'input-number': inputNumberExamples,
   'input-date': inputDateExamples,
   dialog: dialogExamples,
+  drawer: drawerExamples,
   card: cardExamples,
   tabs: tabsExamples,
   chip: chipExamples,

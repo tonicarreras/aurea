@@ -3,6 +3,8 @@
  * Slugs match folder names under src/lib/ and COMPONENT_MATURITY.
  */
 export const STABLE_STORY_PREFIXES = [
+  'aurea-accordion--',
+  'aurea-avatar--',
   'aurea-badge--',
   'aurea-breadcrumb--',
   'aurea-button--',
@@ -11,6 +13,10 @@ export const STABLE_STORY_PREFIXES = [
   'aurea-chip--',
   'aurea-dialog--',
   'aurea-divider--',
+  'aurea-drawer--',
+  'aurea-emptystate--',
+  'aurea-fieldset--',
+  'aurea-fileupload--',
   'aurea-formfield--',
   'aurea-icon--',
   'aurea-inputnumber--',
@@ -25,7 +31,9 @@ export const STABLE_STORY_PREFIXES = [
   'aurea-radiogroup--',
   'aurea-select--',
   'aurea-skeleton--',
+  'aurea-slider--',
   'aurea-snackbar--',
+  'aurea-spinner--',
   'aurea-switch--',
   'aurea-textarea--',
   'aurea-tooltip--',

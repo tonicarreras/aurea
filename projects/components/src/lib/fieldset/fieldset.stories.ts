@@ -6,7 +6,7 @@ import { AuFieldset } from './fieldset';
 const meta: Meta<AuFieldset> = {
   title: 'Aurea/Fieldset',
   component: AuFieldset,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('fieldset'),
   argTypes: {
     legend: { control: 'text', table: { category: 'Content' } },

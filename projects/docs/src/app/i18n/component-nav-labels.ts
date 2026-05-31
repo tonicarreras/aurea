@@ -4,6 +4,7 @@
  */
 export const COMPONENT_NAV_LABELS: Record<string, string> = {
   accordion: 'Accordion',
+  avatar: 'Avatar',
   badge: 'Badge',
   breadcrumb: 'Breadcrumb',
   button: 'Button',
@@ -20,6 +21,7 @@ export const COMPONENT_NAV_LABELS: Record<string, string> = {
   slider: 'Slider',
   'input-date': 'Input date',
   dialog: 'Dialog',
+  drawer: 'Drawer',
   card: 'Card',
   tabs: 'Tabs',
   chip: 'Chip',

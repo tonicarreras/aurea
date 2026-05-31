@@ -9,6 +9,56 @@ Git tags for library releases use the prefix **`components-v`** (monorepo conven
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-05-31
+
+### Changed
+
+- Promoted to **stable** (since 1.3.0 beta): **`AuAvatar`**, **`AuDrawer`** — after a11y audit and docs review.
+- **`AuAvatar`** — `shape` values are `circle` (default) and `square` (rounded corners; replaces confusing `rounded`).
+- **`AuDrawer`** — full-viewport overlay (`inset: 0`, `overflow: clip`); panel flush to edge; scroll lock before `showModal()`.
+
+### Migration from 1.3.0
+
+No breaking API changes. If you used `shape="rounded"` on `au-avatar`, rename to **`shape="square"`**.
+
+```bash
+bun add @aurea-design-system/components@1.4.0
+```
+
+## [1.3.0] - 2026-05-29
+
+### Added
+
+- **`AuAvatar`** (beta) — user image with `alt`, or initials fallback from `name`; sizes xs–xl; `circle` (default) or `square` shape.
+- **`AuDrawer`** (beta) — side panel overlay on native `<dialog>` with `start`/`end` position, focus trap, scroll lock, and `[auDrawerFooter]` actions slot.
+
+### Changed
+
+- **`AuDialogFooter`** — selector extended to `[auDrawerFooter]` for drawer footers.
+
+### Migration from 1.2.0
+
+No breaking changes. New components are **beta**.
+
+```bash
+bun add @aurea-design-system/components@1.3.0
+```
+
+## [1.2.0] - 2026-05-29
+
+### Changed
+
+- Promoted to **stable** (since 1.1.0 beta): **`AuEmptyState`**, **`AuAccordion`**, **`AuFieldset`**, **`AuSlider`**, **`AuFileUpload`** — after a11y audit and docs review.
+- **`AuMenu`** — roving `tabindex` on items and first-character typeahead (closes **A11Y-004**).
+
+### Migration from 1.1.0
+
+No breaking API changes. Beta components from **1.1.0** are now **stable**; update maturity badges in your internal catalogs if you gate on `beta`.
+
+```bash
+bun add @aurea-design-system/components@1.2.0
+```
+
 ## [1.1.0] - 2026-05-31
 
 ### Added

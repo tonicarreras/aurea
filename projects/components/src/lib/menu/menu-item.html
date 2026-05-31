@@ -4,6 +4,8 @@
   role="menuitem"
   class="au-menu-item__btn"
   [disabled]="disabled()"
+  [attr.tabindex]="tabIndexAttr()"
+  (focus)="onFocus()"
   (click)="onClick($event)"
 >
   <ng-content />

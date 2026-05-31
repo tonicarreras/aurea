@@ -10,7 +10,7 @@ const storyImports = [AuAccordion, AuAccordionItem, AuAccordionPanel];
 const meta: Meta<AuAccordion> = {
   title: 'Aurea/Accordion',
   component: AuAccordion,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('accordion'),
   argTypes: {
     multiple: { control: 'boolean', table: { category: 'Behavior' } },

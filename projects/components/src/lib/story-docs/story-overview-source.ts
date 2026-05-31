@@ -285,6 +285,35 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: ['Combobox with listbox; open state on `data-au-listbox-open`.'],
       keyboard: ['Same as select; typing filters options.'],
     },
+    avatar: {
+      intro: [
+        'Displays a user photo or initials derived from `name` when no image is available.',
+        'Sizes xs–xl; `circle` (default, fully round) or `square` (rounded corners).',
+      ],
+      whenToUse: [
+        'Profile headers, comment authors, or assignee chips in lists.',
+        'Initials fallback when no photo URL is available.',
+      ],
+      whenNotToUse: [
+        'Loading placeholder → `au-skeleton` variant circular.',
+        'Decorative brand mark without a person → `au-icon` or custom SVG.',
+      ],
+      anatomy: [
+        {
+          region: 'Image',
+          detail: '`<img>` when `src` is set; requires `alt`.',
+        },
+        {
+          region: 'Initials',
+          detail: 'Two-letter fallback from first/last word of `name`.',
+        },
+      ],
+      accessibility: [
+        'With image: accessible name from `alt`.',
+        'Initials-only: host `role="img"` and `aria-label` from `name`.',
+        'Use `decorative` when a parent row exposes the person name.',
+      ],
+    },
     accordion: {
       intro: [
         'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `[auAccordionPanel]` regions share a string key.',
@@ -475,6 +504,35 @@ export const STORY_OVERVIEW_SOURCE = {
         'Tab cycles within the dialog.',
       ],
       keyboard: ['Escape closes when `closeOnEscape`.', 'Tab / Shift+Tab trapped in the panel.'],
+    },
+    drawer: {
+      intro: [
+        'Side panel on native `<dialog>`: slides from `start` or `end`, with the same focus trap and scroll lock as `au-dialog`.',
+        'Project body content and optional footer actions with `[auDrawerFooter]`.',
+      ],
+      whenToUse: [
+        'Mobile navigation, filter panels, or detail without leaving the page.',
+        'Secondary workflows that need more width than a popover.',
+      ],
+      whenNotToUse: [
+        'Centered confirmation → `au-dialog`.',
+        'Non-modal contextual panel → `au-popover`.',
+      ],
+      anatomy: [
+        {
+          region: 'Backdrop',
+          detail: 'Dimmed overlay; click closes when enabled.',
+        },
+        {
+          region: 'Panel',
+          detail: 'Header, scrollable body, optional footer.',
+        },
+      ],
+      accessibility: [
+        '`aria-labelledby` with `title` or `aria-label`.',
+        'Focus moves into the panel on open; restored on close.',
+      ],
+      keyboard: ['Escape closes when `closeOnEscape`.', 'Tab trapped within the panel.'],
     },
     card: {
       intro: [
@@ -1410,6 +1468,35 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: ['Combobox con listbox; estado abierto en `data-au-listbox-open`.'],
       keyboard: ['Igual que select; escritura filtra opciones.'],
     },
+    avatar: {
+      intro: [
+        'Muestra una foto de usuario o iniciales derivadas de `name` cuando no hay imagen.',
+        'Tamaños xs–xl; `circle` (por defecto, circular) o `square` (cuadrado con esquinas redondeadas).',
+      ],
+      whenToUse: [
+        'Cabeceras de perfil, autores de comentarios o asignados en listas.',
+        'Iniciales cuando no hay URL de foto.',
+      ],
+      whenNotToUse: [
+        'Placeholder de carga → `au-skeleton` variante circular.',
+        'Marca decorativa sin persona → `au-icon` o SVG propio.',
+      ],
+      anatomy: [
+        {
+          region: 'Imagen',
+          detail: '`<img>` con `src`; requiere `alt`.',
+        },
+        {
+          region: 'Iniciales',
+          detail: 'Dos letras desde la primera/última palabra de `name`.',
+        },
+      ],
+      accessibility: [
+        'Con imagen: nombre accesible en `alt`.',
+        'Solo iniciales: host `role="img"` y `aria-label` desde `name`.',
+        'Usa `decorative` cuando la fila padre expone el nombre.',
+      ],
+    },
     accordion: {
       intro: [
         'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y regiones `[auAccordionPanel]` comparten una clave string.',
@@ -1602,6 +1689,35 @@ export const STORY_OVERVIEW_SOURCE = {
         'Tab cicla dentro del diálogo.',
       ],
       keyboard: ['Escape cierra si `closeOnEscape`.', 'Tab / Shift+Tab atrapados en el panel.'],
+    },
+    drawer: {
+      intro: [
+        'Panel lateral sobre `<dialog>` nativo: entra desde `start` o `end`, con trampa de foco y bloqueo de scroll como `au-dialog`.',
+        'Proyecta contenido y pie opcional con `[auDrawerFooter]`.',
+      ],
+      whenToUse: [
+        'Navegación móvil, filtros o detalle sin cambiar de ruta.',
+        'Flujos secundarios que necesitan más ancho que un popover.',
+      ],
+      whenNotToUse: [
+        'Confirmación centrada → `au-dialog`.',
+        'Panel contextual no modal → `au-popover`.',
+      ],
+      anatomy: [
+        {
+          region: 'Backdrop',
+          detail: 'Overlay atenuado; clic cierra si está habilitado.',
+        },
+        {
+          region: 'Panel',
+          detail: 'Cabecera, cuerpo con scroll, pie opcional.',
+        },
+      ],
+      accessibility: [
+        '`aria-labelledby` con `title` o `aria-label`.',
+        'El foco entra al panel al abrir; se restaura al cerrar.',
+      ],
+      keyboard: ['Escape cierra con `closeOnEscape`.', 'Tab atrapado dentro del panel.'],
     },
     card: {
       intro: [

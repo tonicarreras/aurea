@@ -9,6 +9,11 @@ export const PREVIEWS_EN: PreviewMessages = {
     billingPanel: 'Manage payment methods.',
   },
   badge: { accent: 'New', count: '3' },
+  avatar: {
+    name: 'Jane Doe',
+    alt: 'Portrait of Jane Doe',
+    src: 'https://i.pravatar.cc/128?img=5',
+  },
   breadcrumb: { home: 'Home', components: 'Components', table: 'Table' },
   button: { primary: 'Primary', secondary: 'Secondary', outline: 'Outline', ghost: 'Ghost' },
   card: {
@@ -30,6 +35,13 @@ export const PREVIEWS_EN: PreviewMessages = {
     body: 'This action cannot be undone.',
     cancel: 'Cancel',
     confirm: 'Confirm',
+  },
+  drawer: {
+    open: 'Open drawer',
+    title: 'Filters',
+    body: 'Adjust filters for this view.',
+    cancel: 'Cancel',
+    apply: 'Apply',
   },
   divider: { top: 'Top section', label: 'or', bottom: 'Bottom section' },
   fieldset: {

@@ -73,6 +73,13 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     emailPlaceholder: 'tu@correo.com',
     save: 'Guardar',
   },
+  drawer: {
+    trigger: 'Abrir filtros',
+    title: 'Filtros',
+    body: 'Ajusta los filtros de esta vista.',
+    cancel: 'Cancelar',
+    apply: 'Aplicar',
+  },
   divider: { above: 'Arriba', below: 'Abajo', label: 'o continúa con' },
   fieldset: {
     legend: 'Dirección de envío',

@@ -1,0 +1,14 @@
+@if (showImage()) {
+  <img
+    class="au-avatar__img"
+    [src]="src()"
+    [alt]="alt()"
+    (error)="onImageError()"
+  />
+} @else {
+  <span
+    class="au-avatar__initials"
+    aria-hidden="true"
+    >{{ initials() }}</span
+  >
+}

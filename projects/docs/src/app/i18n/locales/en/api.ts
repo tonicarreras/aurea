@@ -231,6 +231,28 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  avatar: {
+    importNames: ['AuAvatar'],
+    sections: [
+      {
+        title: 'AuAvatar',
+        description: 'User image or initials fallback.',
+        rows: [
+          i('src', 'string', 'Image URL.', "''"),
+          i('alt', 'string', 'Alternative text when `src` is set.', "''"),
+          i('name', 'string', 'Display name for initials and `aria-label`.', "''"),
+          i('size', "'xs' | 'sm' | 'md' | 'lg' | 'xl'", 'Diameter.', "'md'"),
+          i(
+            'shape',
+            "'circle' | 'square'",
+            'Circle (default) or square with rounded corners.',
+            "'circle'",
+          ),
+          i('decorative', 'boolean', 'Hide from accessibility tree.', 'false'),
+        ],
+      },
+    ],
+  },
   accordion: {
     importNames: ['AuAccordion', 'AuAccordionItem', 'AuAccordionPanel'],
     sections: [
@@ -410,6 +432,37 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
             name: 'auDialogFooter',
             type: 'directive',
             description: 'Footer action slot.',
+          },
+        ],
+      },
+    ],
+  },
+  drawer: {
+    importNames: ['AuDrawer', 'AuDialogFooter', 'AuButton'],
+    sections: [
+      {
+        title: 'AuDrawer',
+        description: 'Side panel on native `<dialog>`.',
+        rows: [
+          m('open', 'ModelSignal<boolean>', 'Visibility.'),
+          i('title', 'string', 'Visible title.', "''"),
+          i('ariaLabel', 'string', 'Accessible name without title.', "''"),
+          i('position', "'start' | 'end'", 'Slide-in edge (LTR: start=left, end=right).', "'end'"),
+          i('size', "'sm' | 'md' | 'lg' | 'full'", 'Panel width.', "'md'"),
+          i('showCloseButton', 'boolean', 'Header close button.', 'true'),
+          i('closeOnBackdrop', 'boolean', 'Close on backdrop click.', 'true'),
+          i('closeOnEscape', 'boolean', 'Close on Escape.', 'true'),
+          o('close', 'void', 'After dismiss.'),
+        ],
+      },
+      {
+        title: 'AuDialogFooter / auDrawerFooter',
+        description: 'Project `<div auDrawerFooter>` or `<div auDialogFooter>` for actions.',
+        rows: [
+          {
+            name: 'auDrawerFooter',
+            type: 'directive',
+            description: 'Footer slot (alias of AuDialogFooter).',
           },
         ],
       },

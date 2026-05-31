@@ -66,6 +66,13 @@ export interface ExampleLiveMessages {
     emailPlaceholder: string;
     save: string;
   };
+  drawer: {
+    trigger: string;
+    title: string;
+    body: string;
+    cancel: string;
+    apply: string;
+  };
   divider: {
     above: string;
     below: string;
