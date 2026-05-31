@@ -1,6 +1,17 @@
 import type { ExampleLiveMessages } from '../../types/example-live';
 
 export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
+  accordion: {
+    ariaLabel: 'Ajustes de cuenta',
+    profile: 'Perfil',
+    profilePanel: 'Actualiza nombre y avatar.',
+    billing: 'Facturación',
+    billingPanel: 'Gestiona métodos de pago.',
+    sectionOne: 'Sección uno',
+    sectionOnePanel: 'Contenido del panel uno.',
+    sectionTwo: 'Sección dos',
+    sectionTwoPanel: 'Contenido del panel dos.',
+  },
   autocomplete: {
     basic: { label: 'Ciudad', placeholder: 'Buscar…' },
     error: {
@@ -63,6 +74,20 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     save: 'Guardar',
   },
   divider: { above: 'Arriba', below: 'Abajo', label: 'o continúa con' },
+  fieldset: {
+    legend: 'Dirección de envío',
+    description: 'Dónde entregamos tu pedido.',
+    streetLabel: 'Calle',
+    streetPlaceholder: 'Calle Mayor 1',
+    cityLabel: 'Ciudad',
+    cityPlaceholder: 'Madrid',
+  },
+  fileUpload: {
+    basicLabel: 'Adjuntos',
+    hint: 'PDF o imágenes de hasta 10 MB.',
+    singleLabel: 'Imagen de portada',
+    singleDropLabel: 'Arrastra un archivo o explora',
+  },
   formField: {
     emailLabel: 'Email',
     emailPlaceholder: 'tu@correo.com',
@@ -122,6 +147,12 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     errorMessage: 'Selecciona un país.',
     hintLabel: 'País de residencia',
     hint: 'Usado para facturación y envíos.',
+  },
+  slider: {
+    basicLabel: 'Volumen',
+    hint: 'Ajusta el nivel del altavoz.',
+    errorLabel: 'Volumen',
+    errorMessage: 'Valor fuera de rango.',
   },
   snackbar: {
     showSuccess: 'Mostrar éxito',
@@ -199,6 +230,13 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
       title: 'Miembros del equipo',
       description: 'Estado de carga mientras se obtienen los datos.',
       message: 'Cargando equipo…',
+    },
+    empty: {
+      title: 'Usuarios',
+      description: 'Gestiona los miembros del equipo.',
+      stateTitle: 'Aún no hay usuarios',
+      stateDescription: 'Crea el primero para rellenar esta tabla.',
+      action: 'Añadir usuario',
     },
   },
 };

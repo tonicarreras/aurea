@@ -1,6 +1,13 @@
 import type { PreviewMessages } from '../../types/previews';
 
 export const PREVIEWS_EN: PreviewMessages = {
+  accordion: {
+    ariaLabel: 'Account settings',
+    profile: 'Profile',
+    profilePanel: 'Update your name and avatar.',
+    billing: 'Billing',
+    billingPanel: 'Manage payment methods.',
+  },
   badge: { accent: 'New', count: '3' },
   breadcrumb: { home: 'Home', components: 'Components', table: 'Table' },
   button: { primary: 'Primary', secondary: 'Secondary', outline: 'Outline', ghost: 'Ghost' },
@@ -25,6 +32,13 @@ export const PREVIEWS_EN: PreviewMessages = {
     confirm: 'Confirm',
   },
   divider: { top: 'Top section', label: 'or', bottom: 'Bottom section' },
+  fieldset: {
+    legend: 'Shipping address',
+    description: 'Where we deliver your order.',
+    streetLabel: 'Street',
+    streetPlaceholder: '123 Main St',
+  },
+  fileUpload: { label: 'Attachments', hint: 'PDF or images up to 10 MB each.' },
   formField: {
     label: 'Email',
     hint: 'We only use your email for notifications.',
@@ -44,6 +58,7 @@ export const PREVIEWS_EN: PreviewMessages = {
   popover: { trigger: 'Filters', content: 'Compact panel content.' },
   radioGroup: { label: 'Plan' },
   select: { label: 'Country', placeholder: 'Choose a country' },
+  slider: { label: 'Volume', hint: 'Adjust speaker level.' },
   snackbar: { show: 'Show snackbar', message: 'Changes saved' },
   steps: {
     ariaLabel: 'Documentation sections',

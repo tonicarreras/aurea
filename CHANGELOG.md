@@ -9,6 +9,16 @@ Git tags for library releases use the prefix **`components-v`** (monorepo conven
 
 ## [Unreleased]
 
+### Added
+
+- **`AuEmptyState`** (beta) — centered placeholder for empty lists, tables, and search results; media via preset `icon`, `imageSrc`, projected `[auEmptyStateMedia]`, projected actions, and configurable heading level.
+- **`AuTable`** — empty rows accept projected `au-empty-state`; `emptyMessage` remains the text fallback.
+- **`AuSpinner`** — default arc color is `--au-color-action-primary` (override with `--au-spinner-arc` or `color` on the host).
+- **`AuAccordion`** (beta) — collapsible sections with `button[auAccordionItem]` + `[auAccordionPanel]`, `[(value)]`, and arrow/Home/End keyboard nav.
+- **`AuFieldset`** (beta) — native `fieldset` wrapper with `legend`, optional `description`, and `disabled` for grouped fields.
+- **`AuSlider`** (beta) — range input (`FormValueControl<number>`) with optional live value, min/max/step, and `au-form-field` integration.
+- **`AuFileUpload`** (beta) — drag-and-drop file picker (`FormValueControl<File[]>`) with browse button, accept filter, and removable list.
+
 ## [1.0.0] - 2026-05-30
 
 First **stable** release. Meets [V1_CRITERIA.md](./docs/V1_CRITERIA.md). The documented public API in `public-api.ts`, Storybook, and the docs catalog is semver-stable from this version forward; breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR** bump.

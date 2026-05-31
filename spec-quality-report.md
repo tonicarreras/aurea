@@ -1,11 +1,11 @@
 # Spec quality audit
 
-Generated: 2026-05-30T13:33:16.680Z
+Generated: 2026-05-31T11:27:43.043Z
 
 | Component      | Tests | Smoke-like | Ratio | Flag |
 | -------------- | ----- | ---------- | ----- | ---- |
-| `table`        | 41    | 3          | 7%    | ✓    |
 | `popover`      | 14    | 1          | 7%    | ✓    |
+| `table`        | 42    | 3          | 7%    | ✓    |
 | `button`       | 21    | 1          | 5%    | ✓    |
 | `menu`         | 39    | 1          | 3%    | ✓    |
 | `dialog`       | 70    | 1          | 1%    | ✓    |

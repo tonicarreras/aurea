@@ -1,0 +1,62 @@
+<div
+  class="au-file-upload__dropzone"
+  [class.au-file-upload__dropzone--invalid]="effectiveInvalid()"
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  <input
+    #fileInput
+    class="au-file-upload__input"
+    type="file"
+    tabindex="-1"
+    [id]="fileInputId()"
+    [attr.name]="name() || null"
+    [attr.accept]="resolvedAccept()"
+    [attr.multiple]="multiple() ? true : null"
+    [disabled]="disabled()"
+    [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+    [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
+    [attr.aria-describedby]="ariaDescribedBy() ?? null"
+    [attr.aria-required]="required() ? 'true' : null"
+    (change)="onInputChange($event)"
+    (blur)="blur.emit()"
+  />
+  <p class="au-file-upload__prompt">{{ dropLabel() }}</p>
+  <au-button
+    type="button"
+    variant="outline"
+    size="sm"
+    [disabled]="disabled()"
+    (click)="onBrowseClick()"
+  >
+    {{ browseLabel() }}
+  </au-button>
+</div>
+
+@if (hasFiles()) {
+  <ul
+    class="au-file-upload__list"
+    aria-live="polite"
+  >
+    @for (file of value(); track file.name + file.size + file.lastModified; let index = $index) {
+      <li class="au-file-upload__item">
+        <span class="au-file-upload__item-name">{{ file.name }}</span>
+        <span class="au-file-upload__item-size">{{ formatSize(file.size) }}</span>
+        <button
+          type="button"
+          class="au-file-upload__remove"
+          [attr.aria-label]="removeFileLabel() + ': ' + file.name"
+          [disabled]="disabled()"
+          (click)="removeFile(index)"
+        >
+          <au-icon
+            name="close"
+            size="xs"
+          />
+        </button>
+      </li>
+    }
+  </ul>
+}

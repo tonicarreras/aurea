@@ -1,0 +1,53 @@
+@if (hasProjectedMedia()) {
+  <div
+    class="au-empty-state__media"
+    data-au-media-kind="custom"
+    aria-hidden="true"
+  >
+    <ng-content select="[auEmptyStateMedia]" />
+  </div>
+} @else if (showImage()) {
+  <div
+    class="au-empty-state__media"
+    data-au-media-kind="image"
+    [attr.aria-hidden]="imageIsDecorative() ? 'true' : null"
+  >
+    <img
+      [src]="imageSrc()!"
+      [alt]="imageAlt()"
+    />
+  </div>
+} @else if (showIcon()) {
+  <div
+    class="au-empty-state__media"
+    data-au-media-kind="icon"
+    aria-hidden="true"
+  >
+    <au-icon
+      [name]="icon()!"
+      size="lg"
+    />
+  </div>
+}
+
+@if (hasTitle()) {
+  @switch (headingLevel()) {
+    @case (2) {
+      <h2 [id]="titleId" class="au-empty-state__title">{{ resolvedTitle() }}</h2>
+    }
+    @case (3) {
+      <h3 [id]="titleId" class="au-empty-state__title">{{ resolvedTitle() }}</h3>
+    }
+    @default {
+      <h4 [id]="titleId" class="au-empty-state__title">{{ resolvedTitle() }}</h4>
+    }
+  }
+}
+
+@if (hasDescription()) {
+  <p class="au-empty-state__description">{{ resolvedDescription() }}</p>
+}
+
+<div class="au-empty-state__actions">
+  <ng-content />
+</div>

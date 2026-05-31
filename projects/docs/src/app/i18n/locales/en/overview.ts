@@ -67,6 +67,32 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     relatedExports: ['AU_FORM_FIELD', 'AuFormFieldContext'],
   },
+  fieldset: {
+    intro: [
+      'Groups related controls with a native `<fieldset>`, optional `<legend>`, and supporting description.',
+      'Use `[disabled]="true"` to disable every nested control in one place.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Address blocks, payment sections, or filter groups that belong together semantically.',
+        'Forms where a shared legend names the region for assistive tech.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Visual grouping only → card or divider.', 'Single field → bare `au-form-field`.'],
+    },
+    anatomy: [
+      { region: 'Legend', detail: 'Omitted when `legend` is empty.' },
+      { region: 'Description', detail: 'Optional helper copy under the legend.' },
+      { region: 'Content slot', detail: 'Project `au-form-field` rows or other controls.' },
+    ],
+    accessibility: [
+      'Native `fieldset`/`legend` semantics propagate to nested inputs.',
+      'Disabled state disables all descendants without extra wiring.',
+    ],
+  },
   'input-text': {
     intro: [
       'Single-line control projected inside `au-form-field` for label, hint, and error.',
@@ -242,6 +268,43 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     keyboard: ['Same as select; typing filters options.'],
     relatedExports: ['AuAutocompleteOption'],
   },
+  accordion: {
+    intro: [
+      'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `[auAccordionPanel]` regions share a string key.',
+      'Bind `[(value)]` to the list of expanded keys; set `[multiple]="false"` for exclusive expand.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'FAQ, settings panels, or filters where only a subset should be visible at once.',
+        'Long forms split into scannable sections on one page.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Mutually exclusive views with persistent tab chrome → `au-tabs`.',
+        'Sequential wizard with validation gates → `au-steps`.',
+      ],
+    },
+    anatomy: [
+      { region: '`.au-accordion__item`', detail: 'Wrap each trigger + panel pair.' },
+      {
+        region: '`button[auAccordionItem]`',
+        detail: 'Trigger with `aria-expanded` and `aria-controls`.',
+      },
+      { region: '`[auAccordionPanel]`', detail: 'Region; `hidden` when collapsed.' },
+    ],
+    accessibility: [
+      'Root `role="region"` with `aria-label` or labelledby.',
+      'Triggers stay in the tab order; panels expose `aria-labelledby`.',
+    ],
+    keyboard: [
+      'Arrow Down/Up move focus among enabled triggers.',
+      'Home/End jump to first/last trigger; Enter/Space toggle on the button.',
+    ],
+    relatedExports: ['AuAccordionItem', 'AuAccordionPanel'],
+  },
   'radio-group': {
     intro: [
       'Native radio buttons in a shell with legend. Single selection per `name`.',
@@ -287,6 +350,39 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: ['Label, error, and focus like other fields.'],
   },
+  slider: {
+    intro: [
+      'Native `input[type="range"]` styled with Aurea tokens and optional live value output.',
+      'Implements `FormValueControl<number>`; project inside `au-form-field` for label, hint, and errors.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Volume, opacity, or any bounded continuous value where dragging is faster than typing.',
+        'Settings with a visible min/max and coarse steps.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Exact numeric entry → `au-input-number`.',
+        'Discrete choices → radio group or select.',
+      ],
+    },
+    anatomy: [
+      { region: 'Track', detail: 'Fill percentage driven by value between min and max.' },
+      { region: 'Thumb', detail: 'Native range thumb with focus ring.' },
+      {
+        region: 'Value output',
+        detail: 'Optional `showValue` region linked via `aria-describedby`.',
+      },
+    ],
+    accessibility: [
+      'Linked label and error ids from `au-form-field`.',
+      'Live value announced when `showValue` is enabled.',
+    ],
+    keyboard: ['Arrow keys adjust the value per native range behavior.'],
+  },
   'input-date': {
     intro: [
       'Native date picker (`<input type="date">`) with Aurea tokens on icon and OS popup.',
@@ -304,6 +400,36 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Native input', detail: 'Tokens `--au-color-date-picker-*` for icon and accent.' },
     ],
     accessibility: ['Linked label and errors; native OS picker behavior.'],
+  },
+  'file-upload': {
+    intro: [
+      'Drag-and-drop target with hidden native `input[type="file"]`, browse button, and removable file list.',
+      'Implements `FormValueControl<File[]>`; empty selection is `[]`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Attachments, imports, or media uploads in forms.',
+        'When users benefit from dropping files onto a large target.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Camera capture only → native input without the dropzone chrome.',
+        'Async cloud picker → integrate your provider UI.',
+      ],
+    },
+    anatomy: [
+      { region: 'Dropzone', detail: 'Prompt, browse button, and hidden file input.' },
+      { region: 'File list', detail: 'Name, size, and remove control per file.' },
+    ],
+    accessibility: [
+      'Browse button is keyboard reachable; dropzone respects `aria-disabled`.',
+      'Remove buttons expose `aria-label` per file.',
+      'List updates use `aria-live="polite"`.',
+    ],
+    keyboard: ['Tab to browse; activate with Enter/Space on the button.'],
   },
   dialog: {
     intro: [
@@ -566,7 +692,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   spinner: {
     intro: [
       'Inline loading indicator with `role="status"` and `aria-busy="true"`.',
-      'Dual-ring SVG: muted track and rotating arc (~0.9s). Glyph uses `currentColor`.',
+      'Dual-ring SVG: muted track and rotating arc (~0.9s). Glyph uses `--au-color-action-primary` by default.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -647,6 +773,41 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Label', detail: 'Horizontal only; text between two line halves.' },
     ],
     accessibility: ['`aria-orientation` from `orientation`.'],
+  },
+  'empty-state': {
+    intro: [
+      'Centered placeholder when a list, table, panel, or search has no data to show.',
+      'Compose with `title`, optional `description`, media (`icon`, `imageSrc`, or projected `[auEmptyStateMedia]`), and projected actions.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Empty table or list after filters return zero rows.',
+        'First-use panels that need a primary action (create, import, connect).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Loading placeholders → `au-skeleton`.',
+        'Inline status or errors → `au-message`.',
+        'Blocking fetch in a button or row → `au-spinner`.',
+      ],
+    },
+    anatomy: [
+      {
+        region: 'Media',
+        detail:
+          'Optional illustration: preset icon, `imageSrc`, or custom markup via `[auEmptyStateMedia]` (first match wins).',
+      },
+      { region: 'Title', detail: 'Heading (`headingLevel` 2–4) names the region.' },
+      { region: 'Description', detail: 'Supporting copy under the title.' },
+      { region: 'Actions', detail: 'Project buttons or links; container hidden when empty.' },
+    ],
+    accessibility: [
+      '`role="region"` with `aria-labelledby` on the title.',
+      'Pick `headingLevel` to fit the surrounding heading outline.',
+    ],
   },
   badge: {
     intro: [
@@ -861,6 +1022,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
       'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
       'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
+      'Empty data: project `au-empty-state` as a child (use `size="sm"` and `headingLevel="3"`); otherwise `emptyMessage` is shown.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -897,6 +1059,11 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
         region: '`auTableCell`',
         detail: 'Optional template for rich cell content (badges, menus).',
       },
+      {
+        region: 'Empty row',
+        detail:
+          'When `data` is empty, project `au-empty-state` for rich placeholders; falls back to `emptyMessage`.',
+      },
     ],
     accessibility: [
       'Preserve native table semantics (`thead`, `tbody`, `th scope`).',
@@ -908,7 +1075,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Tab to sort buttons; Enter/Space toggles sort cycle.',
       'Tab to row checkboxes; Space toggles selection. Row click also toggles when selection is enabled.',
     ],
-    relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef'],
+    relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef', 'AuEmptyState'],
   },
   tooltip: {
     intro: [

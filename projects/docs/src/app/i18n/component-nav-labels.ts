@@ -3,6 +3,7 @@
  * Storybook titles (`Aurea/Input text`) and registry `title` fields — not translated.
  */
 export const COMPONENT_NAV_LABELS: Record<string, string> = {
+  accordion: 'Accordion',
   badge: 'Badge',
   breadcrumb: 'Breadcrumb',
   button: 'Button',
@@ -16,6 +17,7 @@ export const COMPONENT_NAV_LABELS: Record<string, string> = {
   autocomplete: 'Autocomplete',
   'radio-group': 'Radio group',
   'input-number': 'Input number',
+  slider: 'Slider',
   'input-date': 'Input date',
   dialog: 'Dialog',
   card: 'Card',
@@ -35,5 +37,8 @@ export const COMPONENT_NAV_LABELS: Record<string, string> = {
   spinner: 'Spinner',
   steps: 'Steps',
   divider: 'Divider',
+  'empty-state': 'Empty state',
+  fieldset: 'Fieldset',
+  'file-upload': 'File upload',
   tooltip: 'Tooltip',
 };

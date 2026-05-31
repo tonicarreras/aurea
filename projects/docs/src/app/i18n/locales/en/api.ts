@@ -88,6 +88,21 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  fieldset: {
+    importNames: ['AuFieldset'],
+    sections: [
+      {
+        title: 'AuFieldset',
+        description: 'Native fieldset wrapper for grouped form controls.',
+        rows: [
+          i('legend', 'string', 'Fieldset legend text.', "''"),
+          i('description', 'string', 'Supporting copy under the legend.', "''"),
+          i('disabled', 'boolean', 'Disables all nested controls.', 'false'),
+          i('size', "'sm' | 'md'", 'Typography density.', "'md'"),
+        ],
+      },
+    ],
+  },
   'input-text': {
     importNames: ['AuFormField', 'AuInputText'],
     sections: [
@@ -216,6 +231,36 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  accordion: {
+    importNames: ['AuAccordion', 'AuAccordionItem', 'AuAccordionPanel'],
+    sections: [
+      {
+        title: 'AuAccordion',
+        description: 'Root accordion; bind expanded section keys with `[(value)]`.',
+        rows: [
+          m('value', 'ModelSignal<string[]>', 'Expanded section keys.'),
+          i('multiple', 'boolean', 'Allow several panels open.', 'true'),
+          i('ariaLabel', 'string', 'Accessible name for the region.', "''"),
+          i('size', "'sm' | 'md'", 'Trigger typography density.', "'md'"),
+          i('id', 'string', 'Stable id prefix for triggers/panels.', "''"),
+          o('valueChange', 'string[]', 'When expanded keys change.'),
+        ],
+      },
+      {
+        title: 'AuAccordionItem',
+        description: 'Place on `<button type="button">` with a string key matching its panel.',
+        rows: [
+          i('auAccordionItem', 'string', 'Section key (required input).'),
+          i('auAccordionItemDisabled', 'boolean', 'Prevents expand/collapse.', 'false'),
+        ],
+      },
+      {
+        title: 'AuAccordionPanel',
+        description: 'Panel region paired with a trigger key.',
+        rows: [i('auAccordionPanel', 'string', 'Section key (required input).')],
+      },
+    ],
+  },
   'radio-group': {
     importNames: ['AuFormField', 'AuRadioGroup', 'type AuRadioOption'],
     sections: [
@@ -263,6 +308,32 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  slider: {
+    importNames: ['AuFormField', 'AuSlider'],
+    sections: [
+      {
+        title: 'AuSlider',
+        description:
+          'Project inside `au-form-field`. Native range input. `FormValueControl<number>`.',
+        rows: [
+          m('value', 'ModelSignal<number>', 'Current value.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('readOnly', 'boolean', 'Read-only.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('name', 'string', 'Native `name`.', "''"),
+          i('min', 'number | undefined', 'Range minimum (default 0).'),
+          i('max', 'number | undefined', 'Range maximum (default 100).'),
+          i('step', 'number', 'Native step.', '1'),
+          i('showValue', 'boolean', 'Show live value output.', 'false'),
+          i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
+          o('blur', 'void', 'Blur.'),
+          o('valueChange', 'number', 'When a finite value changes.'),
+        ],
+      },
+    ],
+  },
   'input-date': {
     importNames: ['AuFormField', 'AuInputDate'],
     sections: [
@@ -282,6 +353,32 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
           o('blur', 'void', 'Blur.'),
           o('valueChange', 'string | null', 'When a date is selected.'),
+        ],
+      },
+    ],
+  },
+  'file-upload': {
+    importNames: ['AuFormField', 'AuFileUpload'],
+    sections: [
+      {
+        title: 'AuFileUpload',
+        description:
+          'Project inside `au-form-field`. Drag-and-drop file picker. `FormValueControl<File[]>`.',
+        rows: [
+          m('value', 'ModelSignal<File[]>', 'Selected files.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('accept', 'string', 'Native `accept` filter.', "''"),
+          i('multiple', 'boolean', 'Allow several files.', 'true'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('name', 'string', 'Native `name`.', "''"),
+          i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
+          i('browseLabel', 'string', 'Browse button label.', "'Browse files'"),
+          i('dropLabel', 'string', 'Dropzone prompt.', "'Drag files here or browse'"),
+          i('removeFileLabel', 'string', 'Prefix for remove button `aria-label`.', "'Remove file'"),
+          o('blur', 'void', 'When the hidden input blurs.'),
+          o('valueChange', 'File[]', 'When the file list changes.'),
         ],
       },
     ],
@@ -456,6 +553,40 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           i('inset', 'boolean', 'Inset at the start (horizontal).', 'false'),
           i('label', 'string', 'Centered label (horizontal only).', "''"),
         ],
+      },
+    ],
+  },
+  'empty-state': {
+    importNames: ['AuEmptyState', 'AuEmptyStateMedia'],
+    sections: [
+      {
+        title: 'AuEmptyState',
+        description:
+          'Centered empty placeholder; project actions in the default slot. Media priority: `[auEmptyStateMedia]` → `imageSrc` → `icon`.',
+        rows: [
+          i('title', 'string', 'Primary heading text.', "''"),
+          i('description', 'string', 'Supporting copy under the title.', "''"),
+          i(
+            'icon',
+            'AuIconName',
+            'Decorative glyph in a sunken well; omit when using image or custom media.',
+            'undefined',
+          ),
+          i(
+            'imageSrc',
+            'string',
+            'Illustration URL; ignored when custom media is projected.',
+            'undefined',
+          ),
+          i('imageAlt', 'string', 'Alt text for `imageSrc`; use `""` for decorative images.', "''"),
+          i('size', "'sm' | 'md' | 'lg'", 'Layout density.', "'md'"),
+          i('headingLevel', '2 | 3 | 4', 'Heading level for `title`.', '2'),
+        ],
+      },
+      {
+        title: 'AuEmptyStateMedia',
+        description: 'Attribute on projected SVG, img, or markup for a custom illustration.',
+        rows: [],
       },
     ],
   },
@@ -780,7 +911,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
             'Stable identity for row tracking.',
             'undefined',
           ),
-          i('emptyMessage', 'string', 'Text when `data` is empty.', "'No data'"),
+          i(
+            'emptyMessage',
+            'string',
+            'Fallback text when `data` is empty and no `au-empty-state` is projected.',
+            "'No data'",
+          ),
         ],
       },
       {

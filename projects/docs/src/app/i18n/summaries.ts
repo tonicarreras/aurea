@@ -94,6 +94,26 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Horizontal or vertical rules with optional inset and label.',
     'Reglas horizontales o verticales con sangría y etiqueta opcionales.',
   ),
+  'empty-state': L(
+    'Centered placeholder for empty lists, tables, or search results.',
+    'Placeholder centrado para listas, tablas o búsquedas vacías.',
+  ),
+  accordion: L(
+    'Collapsible sections with WAI-ARIA triggers, panels, and keyboard navigation.',
+    'Secciones plegables con disparadores WAI-ARIA, paneles y teclado.',
+  ),
+  fieldset: L(
+    'Groups related fields with a native fieldset, legend, and description.',
+    'Agrupa campos relacionados con fieldset nativo, leyenda y descripción.',
+  ),
+  slider: L(
+    'Range control for continuous values; integrates with au-form-field and signal forms.',
+    'Control de rango para valores continuos; integra con au-form-field y signal forms.',
+  ),
+  'file-upload': L(
+    'File picker with drag-and-drop, browse button, and removable file list.',
+    'Selector de archivos con drag-and-drop, explorar y lista removible.',
+  ),
   tooltip: L(
     'Directive on a focusable trigger; positions with collision handling.',
     'Directiva en disparador enfocable; posiciona con detección de colisiones.',

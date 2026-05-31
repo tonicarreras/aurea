@@ -1,0 +1,14 @@
+<fieldset
+  class="au-fieldset__native"
+  [disabled]="disabled()"
+>
+  @if (hasLegend()) {
+    <legend class="au-fieldset__legend">{{ resolvedLegend() }}</legend>
+  }
+  @if (hasDescription()) {
+    <p class="au-fieldset__description">{{ resolvedDescription() }}</p>
+  }
+  <div class="au-fieldset__content">
+    <ng-content />
+  </div>
+</fieldset>
