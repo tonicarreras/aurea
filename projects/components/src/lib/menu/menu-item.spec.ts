@@ -85,9 +85,10 @@ describe('AuMenuItem', () => {
     fixture.detectChanges();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
-    vi.spyOn(itemCmp as unknown as { buttonEl: () => HTMLButtonElement }, 'buttonEl').mockReturnValue(
-      { textContent: null } as unknown as HTMLButtonElement,
-    );
+    vi.spyOn(
+      itemCmp as unknown as { buttonEl: () => HTMLButtonElement },
+      'buttonEl',
+    ).mockReturnValue({ textContent: null } as unknown as HTMLButtonElement);
     expect(itemCmp.labelText()).toBe('');
   });
 

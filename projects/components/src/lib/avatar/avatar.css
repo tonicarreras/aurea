@@ -1,0 +1,70 @@
+/**
+ * Avatar — circle (default) or square with rounded corners.
+ */
+
+:host {
+  --au-avatar-size: 2.5rem;
+  --au-avatar-font-size: var(--au-text-sm);
+  --au-avatar-bg: var(--au-color-accent-surface);
+  --au-avatar-color: var(--au-color-accent-foreground);
+  --au-avatar-border: 1px solid var(--au-color-border-subtle);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--au-avatar-size);
+  height: var(--au-avatar-size);
+  overflow: hidden;
+  border: var(--au-avatar-border);
+  border-radius: var(--au-radius-full);
+  background: var(--au-avatar-bg);
+  color: var(--au-avatar-color);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-avatar-font-size);
+  font-weight: var(--au-weight-semibold);
+  line-height: 1;
+  vertical-align: middle;
+  user-select: none;
+}
+
+:host([data-au-size='xs']) {
+  --au-avatar-size: 1.5rem;
+  --au-avatar-font-size: var(--au-text-2xs);
+}
+
+:host([data-au-size='sm']) {
+  --au-avatar-size: 2rem;
+  --au-avatar-font-size: var(--au-text-xs);
+}
+
+:host([data-au-size='lg']) {
+  --au-avatar-size: 3rem;
+  --au-avatar-font-size: var(--au-text-base);
+}
+
+:host([data-au-size='xl']) {
+  --au-avatar-size: 4rem;
+  --au-avatar-font-size: var(--au-text-lg);
+}
+
+:host([data-au-shape='square']) {
+  border-radius: var(--au-radius-control);
+}
+
+.au-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.au-avatar__initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  letter-spacing: var(--au-tracking-ui);
+}

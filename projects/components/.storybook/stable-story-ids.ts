@@ -4,6 +4,7 @@
  */
 export const STABLE_STORY_PREFIXES = [
   'aurea-accordion--',
+  'aurea-avatar--',
   'aurea-badge--',
   'aurea-breadcrumb--',
   'aurea-button--',
@@ -12,6 +13,7 @@ export const STABLE_STORY_PREFIXES = [
   'aurea-chip--',
   'aurea-dialog--',
   'aurea-divider--',
+  'aurea-drawer--',
   'aurea-emptystate--',
   'aurea-fieldset--',
   'aurea-fileupload--',

@@ -248,7 +248,10 @@ export class AuMenu {
     const cur = this.findFocusedItemIndex(items);
     const start = cur < 0 ? 0 : cur + 1;
     for (let offset = 0; offset < items.length; offset++) {
-      const item = items[(start + offset) % items.length]!;
+      const item = items[(start + offset) % items.length];
+      if (!item) {
+        continue;
+      }
       if (item.labelText().toLowerCase().startsWith(char)) {
         this.focusMenuItem(item);
         return;

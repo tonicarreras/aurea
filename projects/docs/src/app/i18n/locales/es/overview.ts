@@ -271,6 +271,35 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     keyboard: ['Igual que select; escritura filtra opciones.'],
     relatedExports: ['AuAutocompleteOption'],
   },
+  avatar: {
+    intro: [
+      'Muestra una foto de usuario o iniciales derivadas de `name` cuando no hay imagen.',
+      'Tamaños xs–xl; `circle` (por defecto, circular) o `square` (cuadrado con esquinas redondeadas).',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Cabeceras de perfil, autores de comentarios o asignados en listas.',
+        'Iniciales cuando no hay URL de foto.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Placeholder de carga → `au-skeleton` variante circular.',
+        'Marca decorativa sin persona → `au-icon` o SVG propio.',
+      ],
+    },
+    anatomy: [
+      { region: 'Imagen', detail: '`<img>` con `src`; requiere `alt`.' },
+      { region: 'Iniciales', detail: 'Dos letras desde la primera/última palabra de `name`.' },
+    ],
+    accessibility: [
+      'Con imagen: nombre accesible en `alt`.',
+      'Solo iniciales: host `role="img"` y `aria-label` desde `name`.',
+      'Usa `decorative` cuando la fila padre expone el nombre.',
+    ],
+  },
   accordion: {
     intro: [
       'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y regiones `[auAccordionPanel]` comparten una clave string.',
@@ -468,6 +497,33 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Tab cicla dentro del diálogo.',
     ],
     keyboard: ['Escape cierra si `closeOnEscape`.', 'Tab / Shift+Tab atrapados en el panel.'],
+    relatedExports: ['AuDialogFooter'],
+  },
+  drawer: {
+    intro: [
+      'Panel lateral sobre `<dialog>` nativo: entra desde `start` o `end`, con trampa de foco y bloqueo de scroll como `au-dialog`.',
+      'Proyecta contenido y pie opcional con `[auDrawerFooter]`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Navegación móvil, filtros o detalle sin cambiar de ruta.',
+        'Flujos secundarios que necesitan más ancho que un popover.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Confirmación centrada → `au-dialog`.', 'Panel contextual no modal → `au-popover`.'],
+    },
+    anatomy: [
+      { region: 'Backdrop', detail: 'Overlay atenuado; clic cierra si está habilitado.' },
+      { region: 'Panel', detail: 'Cabecera, cuerpo con scroll, pie opcional.' },
+    ],
+    accessibility: [
+      '`aria-labelledby` con `title` o `aria-label`.',
+      'El foco entra al panel al abrir; se restaura al cerrar.',
+    ],
+    keyboard: ['Escape cierra con `closeOnEscape`.', 'Tab atrapado dentro del panel.'],
     relatedExports: ['AuDialogFooter'],
   },
   card: {

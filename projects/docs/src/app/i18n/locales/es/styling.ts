@@ -145,6 +145,18 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-shadow-focus-ring', description: 'Anillo de foco visible en triggers.' },
     { token: '--au-text-sm / --au-text-base', description: 'Tipografía del trigger según `size`.' },
   ],
+  avatar: [
+    { token: '--au-avatar-size', description: 'Ancho/alto del host (según `size`).' },
+    { token: '--au-avatar-bg', description: 'Fondo de iniciales.' },
+    { token: '--au-avatar-color', description: 'Color del texto de iniciales.' },
+    { token: '--au-avatar-border', description: 'Borde exterior.' },
+  ],
+  drawer: [
+    { token: '--au-drawer-width-sm/md/lg', description: 'Ancho del panel según `size`.' },
+    { token: '--au-drawer-bg', description: 'Superficie del panel.' },
+    { token: '--au-z-drawer', description: 'Orden de apilamiento.' },
+    { token: '--au-shadow-focus-ring', description: 'Foco del botón cerrar.' },
+  ],
   'radio-group': [
     { token: '--au-color-text-label', description: 'Leyenda del grupo.' },
     {

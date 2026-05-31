@@ -181,6 +181,8 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuProgress`         | `<au-progress>`     | Progressbar                                                          |
 | `AuLink`             | `a[auLink]`         | Semantic inline link                                                 |
 | `AuEmptyState`       | `<au-empty-state>`  | Empty lists/tables/search (stable **1.2.0**)                         |
+| `AuAvatar`           | `<au-avatar>`       | User image or initials (stable **1.4.0**)                            |
+| `AuDrawer`           | `<au-drawer>`       | Side panel overlay (stable **1.4.0**)                                |
 | `AuAccordion`        | `<au-accordion>`    | `auAccordionItem` / `auAccordionPanel` (stable **1.2.0**)            |
 | `AuFieldset`         | `<au-fieldset>`     | Grouped fields with legend (stable **1.2.0**)                        |
 | `AuSlider`           | `<au-slider>`       | Range control + `[formField]` (stable **1.2.0**)                     |
@@ -196,7 +198,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 - [CHANGELOG](../../CHANGELOG.md) · [Governance docs](../../docs/README.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [Security](../../SECURITY.md)
 - [Versioning](../../docs/VERSIONING.md) · [Deprecation](../../docs/DEPRECATION.md) · [Angular compatibility](../../docs/ANGULAR_COMPATIBILITY.md)
 - [Component Definition of Done](./COMPONENT_DONE.md) · [A11y audit](./A11Y_AUDIT.md) · [Bundle](./BUNDLE.md) · [Performance](./PERFORMANCE.md)
-- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`). **1.2.0** promotes `empty-state`, `accordion`, `fieldset`, `slider`, and `file-upload` from beta to stable.
+- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`). **1.4.0** promotes `avatar` and `drawer` from beta to stable.
 
 ---
 

@@ -1,3 +1,5 @@
+export * from './avatar.preview';
+export * from './drawer.preview';
 export * from './accordion.preview';
 export * from './fieldset.preview';
 export * from './file-upload.preview';

@@ -6,6 +6,7 @@ import { type DocsLocale, pickL } from './docs-locale';
 import {
   AccordionDemo,
   AutocompleteDemo,
+  AvatarDemo,
   BadgeDemo,
   BreadcrumbDemo,
   ButtonDemo,
@@ -27,6 +28,7 @@ import {
   StepsDemo,
   DialogDemo,
   DividerDemo,
+  DrawerDemo,
   EmptyStateDemo,
   FieldsetDemo,
   FileUploadDemo,
@@ -219,6 +221,17 @@ options: AuSelectOption[] = [
 </au-form-field>`,
   },
   {
+    slug: 'avatar',
+    title: 'Avatar',
+    exportName: 'AuAvatar',
+    selector: 'au-avatar',
+    summary: 'Imagen de usuario o iniciales como respaldo.',
+    demoComponent: AvatarDemo,
+    snippet: `import { AuAvatar } from '@aurea-design-system/components';
+
+<au-avatar name="Jane Doe" />`,
+  },
+  {
     slug: 'accordion',
     title: 'Accordion',
     exportName: 'AuAccordion',
@@ -314,6 +327,22 @@ options: AuSelectOption[] = [
     <au-button (click)="open = false">Cerrar</au-button>
   </div>
 </au-dialog>`,
+  },
+  {
+    slug: 'drawer',
+    title: 'Drawer',
+    exportName: 'AuDrawer',
+    selector: 'au-drawer',
+    summary: 'Panel lateral modal para navegación, filtros o detalle.',
+    demoComponent: DrawerDemo,
+    snippet: `import { AuDrawer, AuDialogFooter, AuButton } from '@aurea-design-system/components';
+
+<au-drawer [(open)]="open" title="Filters">
+  <p>Content</p>
+  <div auDrawerFooter>
+    <au-button (click)="open = false">Close</au-button>
+  </div>
+</au-drawer>`,
   },
   {
     slug: 'card',

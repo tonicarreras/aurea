@@ -69,6 +69,13 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     emailPlaceholder: 'you@example.com',
     save: 'Save',
   },
+  drawer: {
+    trigger: 'Open filters',
+    title: 'Filters',
+    body: 'Adjust filters for this view.',
+    cancel: 'Cancel',
+    apply: 'Apply',
+  },
   divider: { above: 'Above', below: 'Below', label: 'or continue with' },
   fieldset: {
     legend: 'Shipping address',

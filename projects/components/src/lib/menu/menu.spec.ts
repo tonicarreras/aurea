@@ -524,7 +524,8 @@ describe('AuMenu', () => {
       const fixture = TestBed.createComponent(HostNoItems);
       fixture.componentInstance.open = true;
       fixture.detectChanges();
-      const menu = fixture.debugElement.query(By.directive(AuMenu)).componentInstance as unknown as {
+      const menu = fixture.debugElement.query(By.directive(AuMenu))
+        .componentInstance as unknown as {
         handleTypeahead: (key: string) => void;
       };
       expect(() => menu.handleTypeahead.call(menu, 'a')).not.toThrow();

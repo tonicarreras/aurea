@@ -40,6 +40,8 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   fieldset: { level: 'stable', since: '1.2.0' },
   slider: { level: 'stable', since: '1.2.0' },
   'file-upload': { level: 'stable', since: '1.2.0' },
+  avatar: { level: 'stable', since: '1.4.0' },
+  drawer: { level: 'stable', since: '1.4.0' },
   tooltip: { level: 'stable', since: '0.2.0' },
   badge: { level: 'stable', since: '0.4.0' },
   progress: { level: 'stable', since: '0.4.0' },

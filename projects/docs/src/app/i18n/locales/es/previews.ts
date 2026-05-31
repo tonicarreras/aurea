@@ -9,6 +9,11 @@ export const PREVIEWS_ES: PreviewMessages = {
     billingPanel: 'Gestiona métodos de pago.',
   },
   badge: { accent: 'Nuevo', count: '3' },
+  avatar: {
+    name: 'Jane Doe',
+    alt: 'Retrato de Jane Doe',
+    src: 'https://i.pravatar.cc/128?img=5',
+  },
   breadcrumb: { home: 'Inicio', components: 'Componentes', table: 'Tabla' },
   button: { primary: 'Primario', secondary: 'Secundario', outline: 'Contorno', ghost: 'Fantasma' },
   card: {
@@ -30,6 +35,13 @@ export const PREVIEWS_ES: PreviewMessages = {
     body: 'Esta acción no se puede deshacer.',
     cancel: 'Cancelar',
     confirm: 'Confirmar',
+  },
+  drawer: {
+    open: 'Abrir panel',
+    title: 'Filtros',
+    body: 'Ajusta los filtros de esta vista.',
+    cancel: 'Cancelar',
+    apply: 'Aplicar',
   },
   divider: { top: 'Sección superior', label: 'o', bottom: 'Sección inferior' },
   fieldset: {
