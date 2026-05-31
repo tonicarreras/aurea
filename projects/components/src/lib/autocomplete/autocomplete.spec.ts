@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { describe, expect, it } from 'vitest';
 import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
 import { AuFormField } from '../form-field/form-field';
 import {
@@ -899,12 +900,29 @@ describe('AuAutocomplete', () => {
     const comp = CONTROL(fix) as unknown as { panelOpen: { set(v: boolean): void } };
     comp.panelOpen.set(false);
     fix.detectChanges();
-    expect(input.value).toBe('Madrid');
+    expect(input.value).toBe('typing');
     const fix2 = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'bcn';
     });
     expect(queryInput(fix2).value).toBe('Barcelona');
+  });
+
+  it('keeps partial query when deleting below minFilterLength after a selection', () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.minFilterLength = 2;
+      f.componentInstance.value = 'mad';
+    });
+    const input = queryInput(fix);
+    input.dispatchEvent(new FocusEvent('focus'));
+    fix.detectChanges();
+    input.value = 'M';
+    input.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(input.value).toBe('M');
+    expect(CONTROL(fix).value()).toBe('mad');
+    expect(fix.debugElement.query(By.css('.au-field-listbox'))).toBeFalsy();
   });
 
   it('ArrowDown does not open empty panel below minFilterLength', () => {
@@ -1081,6 +1099,17 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fix.detectChanges();
     expect(input.value).toBe('Madrid');
+  });
+
+  it('inputValue keeps typed query when selected option label is null', () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = [{ value: 'x', label: null as unknown as string }];
+      f.componentInstance.value = 'x';
+    });
+    const comp = CONTROL(fix) as AuAutocomplete & { query: { set(v: string): void } };
+    comp.query.set('typed');
+    fix.detectChanges();
+    expect(comp.inputValue()).toBe('typed');
   });
 
   it('shows required marker and aria-required', () => {

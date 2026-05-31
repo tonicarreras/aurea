@@ -11,6 +11,7 @@ import { examples as avatarExamples } from './avatar';
 import { examples as radioGroupExamples } from './radio-group';
 import { examples as inputNumberExamples } from './input-number';
 import { examples as inputDateExamples } from './input-date';
+import { examples as inputTimeExamples } from './input-time';
 import { examples as dialogExamples } from './dialog';
 import { examples as drawerExamples } from './drawer';
 import { examples as cardExamples } from './card';
@@ -56,6 +57,7 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   'radio-group': radioGroupExamples,
   'input-number': inputNumberExamples,
   'input-date': inputDateExamples,
+  'input-time': inputTimeExamples,
   dialog: dialogExamples,
   drawer: drawerExamples,
   card: cardExamples,

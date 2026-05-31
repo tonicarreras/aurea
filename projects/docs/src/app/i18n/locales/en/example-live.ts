@@ -108,6 +108,11 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     hintLabel: 'Delivery date',
     hint: 'Deliveries in 2026 only.',
   },
+  inputTime: {
+    basicLabel: 'Start time',
+    boundsLabel: 'Booking time',
+    boundsHint: 'Business hours only.',
+  },
   inputNumber: {
     basicLabel: 'Quantity',
     errorLabel: 'Quantity',
@@ -135,6 +140,11 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     successBody: 'Your changes were saved.',
     errorBody: 'Please fix the highlighted fields.',
     infoBody: 'You can dismiss this notice.',
+    bannerTitle: 'Scheduled maintenance',
+    bannerMessage: 'The app will be read-only from 18:00–19:00 UTC.',
+    bannerActionTitle: 'Trial ending soon',
+    bannerActionMessage: 'Upgrade to keep team features.',
+    bannerActionLabel: 'View plans',
   },
   radioGroup: {
     basicLabel: 'Plan',

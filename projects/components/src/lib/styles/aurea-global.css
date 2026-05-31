@@ -1,8 +1,9 @@
 /**
  * Aurea shared styles — import after au-tokens.css.
- * Field errors, listbox overlays (select/autocomplete), portaled snackbar.
+ * Field chrome, errors, listbox overlays, portaled snackbar.
  */
 
+@import './au-field-chrome.css';
 @import './au-field-error.css';
 @import './au-field-listbox.css';
 @import './au-snackbar.css';

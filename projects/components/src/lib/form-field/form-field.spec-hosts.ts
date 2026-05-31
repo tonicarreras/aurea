@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { AuAutocomplete } from '../autocomplete/autocomplete';
 import { AuCheckbox } from '../checkbox/checkbox';
 import { AuInputDate } from '../input-date/input-date';
+import { AuInputTime } from '../input-time/input-time';
 import { AuInputNumber } from '../input-number/input-number';
 import { AuInputText } from '../input-text/input-text';
 import { AuRadioGroup } from '../radio-group/radio-group';
@@ -243,6 +244,50 @@ export class AuInputDateTestHost {
   autocomplete: string | undefined = undefined;
   minDate: string | undefined = undefined;
   maxDate: string | undefined = undefined;
+  size: 'sm' | 'md' | 'lg' = 'md';
+}
+
+@Component({
+  selector: 'au-input-time-test-host',
+  imports: [AuFormField, AuInputTime],
+  template: `
+    <au-form-field ${fieldHarnessBindings}>
+      <au-input-time
+        [(value)]="value"
+        [errors]="$any(errors)"
+        [invalid]="invalid"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        [required]="required"
+        [name]="name"
+        [placeholder]="placeholder"
+        [autocomplete]="autocomplete"
+        [minTime]="minTime"
+        [maxTime]="maxTime"
+        [size]="size"
+      />
+    </au-form-field>
+  `,
+})
+export class AuInputTimeTestHost {
+  readonly ffLabel = input('Field', { transform: nullToEmptyString });
+  readonly ffHint = input('', { transform: nullToEmptyString });
+  readonly ffErrorMessage = input('', { transform: nullToEmptyString });
+  readonly ffControlId = input('', { transform: nullToEmptyString });
+  readonly ffRequired = input(false);
+  readonly ffShowRequired = input(true);
+  readonly ffInvalid = input(false);
+  value: string | null = null;
+  errors: unknown[] = [];
+  invalid = false;
+  disabled = false;
+  readOnly = false;
+  required = false;
+  name = '';
+  placeholder = '';
+  autocomplete: string | undefined = undefined;
+  minTime: string | undefined = undefined;
+  maxTime: string | undefined = undefined;
   size: 'sm' | 'md' | 'lg' = 'md';
 }
 

@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { describe, expect, it, vi } from 'vitest';
 import { AuInputDate } from './input-date';
 import {
   AuInputDateTestHost,
@@ -259,5 +260,34 @@ describe('AuInputDate', () => {
       f.componentInstance.invalid = true;
     });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
+  });
+
+  it('onPickerIconClick opens native picker when enabled', () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    fix.detectChanges();
+    const input = queryInput(fix);
+    const showPicker = vi.fn();
+    input.showPicker = showPicker;
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    const preventDefault = vi.spyOn(event, 'preventDefault');
+    const stopPropagation = vi.spyOn(event, 'stopPropagation');
+    CONTROL(fix).onPickerIconClick(event);
+    expect(preventDefault).toHaveBeenCalled();
+    expect(stopPropagation).toHaveBeenCalled();
+    expect(showPicker).toHaveBeenCalledOnce();
+  });
+
+  it('onPickerIconClick is no-op when disabled or readOnly', () => {
+    for (const flag of ['disabled', 'readOnly'] as const) {
+      const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+        f.componentInstance[flag] = true;
+      });
+      fix.detectChanges();
+      const input = queryInput(fix);
+      const showPicker = vi.fn();
+      input.showPicker = showPicker;
+      CONTROL(fix).onPickerIconClick(new MouseEvent('click'));
+      expect(showPicker).not.toHaveBeenCalled();
+    }
   });
 });

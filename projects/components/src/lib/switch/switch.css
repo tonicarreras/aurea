@@ -1,7 +1,7 @@
 /**
  * Switch — pill toggle from native checkbox + role="switch".
+ * Field errors: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
 
 :host {
   display: block;

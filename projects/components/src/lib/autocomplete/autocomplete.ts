@@ -144,18 +144,22 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   /** Input text: query while filtering; selected label when closed (no post-render flash). */
   readonly inputValue = computed(() => {
+    const q = this.query();
     if (this.panelOpen()) {
-      return this.query();
+      return q;
     }
     const opt = this.selectedOption();
-    if (opt) {
+    if (opt !== null && (q === '' || this.queryMatchesLabel(q, opt.label))) {
       return opt.label;
     }
-    const v = this.value();
-    if (v == null) {
-      return '';
+    if (q.length > 0) {
+      return q;
     }
-    return String(v);
+    const v = this.value();
+    if (v != null) {
+      return String(v);
+    }
+    return '';
   });
 
   readonly filteredOptions = computed(() => {
@@ -418,6 +422,13 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     }
     this.value.set(next);
     this.valueChange.emit(next);
+  }
+
+  private queryMatchesLabel(query: string, label: string | null): boolean {
+    if (label === null) {
+      return false;
+    }
+    return this.caseSensitive() ? query === label : query.toLowerCase() === label.toLowerCase();
   }
 
   private findOptionByLabel(label: string): AuAutocompleteOption | undefined {

@@ -24,17 +24,30 @@
     }
   </div>
 
-  @if (dismissible()) {
-    <button
-      type="button"
-      class="au-message__close"
-      [attr.aria-label]="closeAriaLabel()"
-      (click)="onDismissClick()"
-    >
-      <au-icon
-        name="close"
-        size="sm"
-      />
-    </button>
+  @if (showAction() || dismissible()) {
+    <div class="au-message__actions">
+      @if (showAction()) {
+        <button
+          type="button"
+          class="au-message__action"
+          (click)="onActionClick()"
+        >
+          {{ actionLabel() }}
+        </button>
+      }
+      @if (dismissible()) {
+        <button
+          type="button"
+          class="au-message__close"
+          [attr.aria-label]="closeAriaLabel()"
+          (click)="onDismissClick()"
+        >
+          <au-icon
+            name="close"
+            size="sm"
+          />
+        </button>
+      }
+    </div>
   }
 </div>

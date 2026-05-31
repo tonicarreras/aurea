@@ -511,12 +511,16 @@
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #7eb8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
-  /* Native `input[type="date"]` popup + accent (browser support varies) */
-  --au-color-date-picker-accent: var(--au-color-action-primary);
+  /* Native date/time — inline segment highlight (legible with form-text) */
+  --au-color-date-picker-edit-highlight: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 24%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-date-picker-accent: var(--au-color-date-picker-edit-highlight);
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(16, 89, 200, 0.14);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Ring shadow: single composition (components) */
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
@@ -750,11 +754,15 @@
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #cfe8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
-  --au-color-date-picker-accent: var(--au-color-action-primary);
+  --au-color-date-picker-edit-highlight: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 32%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-date-picker-accent: var(--au-color-date-picker-edit-highlight);
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-color-date-picker-edit-highlight: rgba(110, 180, 255, 0.22);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: edges, not heavy haze */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);

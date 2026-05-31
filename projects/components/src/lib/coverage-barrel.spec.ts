@@ -12,6 +12,7 @@ import * as card from './card/index';
 import * as checkbox from './checkbox/index';
 import * as chip from './chip/index';
 import * as chipGroup from './chip-group/index';
+import * as inputTime from './input-time/index';
 import * as inputDate from './input-date/index';
 import * as inputNumber from './input-number/index';
 import * as inputText from './input-text/index';
@@ -56,6 +57,7 @@ describe('library barrel exports', () => {
     expect(chip.AuChip).toBeDefined();
     expect(chipGroup.AuChipGroup).toBeDefined();
     expect(inputDate.AuInputDate).toBeDefined();
+    expect(inputTime.AuInputTime).toBeDefined();
     expect(inputNumber.AuInputNumber).toBeDefined();
     expect(inputText.AuInputText).toBeDefined();
     expect(link.AuLink).toBeDefined();

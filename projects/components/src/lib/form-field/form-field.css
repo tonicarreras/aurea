@@ -1,4 +1,7 @@
-@import url('../styles/au-field-error.css');
+/**
+ * Form field — label, hint, error wrapper for projected controls.
+ * Field errors: aurea-global.css
+ */
 
 :host {
   display: block;

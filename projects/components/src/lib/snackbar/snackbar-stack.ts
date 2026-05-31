@@ -15,6 +15,17 @@ interface StackEntry {
 
 let nextId = 0;
 const entries = new Map<number, StackEntry>();
+const layoutListeners = new Set<() => void>();
+
+/** Notifies snackbars when stack order changes (live region policy). */
+export function subscribeSnackbarStackLayout(listener: () => void): () => void {
+  layoutListeners.add(listener);
+  return () => layoutListeners.delete(listener);
+}
+
+function notifyLayoutListeners(): void {
+  layoutListeners.forEach((listener) => listener());
+}
 
 function groupFor(position: AuSnackbarPosition): StackEntry[] {
   return [...entries.values()]
@@ -44,6 +55,7 @@ function layout(position: AuSnackbarPosition): void {
     }
     layer--;
   }
+  notifyLayoutListeners();
 }
 
 function clearStackStyles(entry: StackEntry): void {

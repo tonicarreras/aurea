@@ -1,143 +1,8 @@
 /**
- * Select — combobox with shared field listbox (same hover as au-autocomplete).
+ * Select — combobox with shared field listbox.
  * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome + listbox: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
-@import url('../styles/au-field-listbox.css');
-
-:host {
-  display: block;
-  overflow: visible;
-  font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Stack: label + control + help (no extra chrome)
-/* -------------------------------------------------------------------------- */
-
-.au-select__field {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--au-space-2);
-  max-width: 100%;
-  overflow: visible;
-}
-
-.au-select__hint,
-.au-select__field > .au-field-error {
-  position: relative;
-  z-index: var(--au-z-base);
-}
-
-.au-select__control-wrap {
-  position: relative;
-  z-index: var(--au-z-raised);
-}
-
-.au-select__control-wrap:has(.au-field-listbox) {
-  z-index: var(--au-z-dropdown);
-}
-
-.au-select__label-host {
-  display: block;
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-}
-
-.au-select__label {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.125em;
-  position: relative;
-  font-size: var(--au-text-sm);
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
-  letter-spacing: var(--au-tracking-ui);
-}
-
-.au-select__required {
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-}
-
-/* Control shell: one surface, one border */
-.au-select__control-row {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
-  transition: var(--au-transition-control);
-}
-
-/* Hover: stronger border + subtle fill (distinct from default and from list highlight) */
-.au-select__control-row:has(.au-select__trigger:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-  background: var(--au-color-select-field-hover-bg);
-}
-
-/* Error (no focus) */
-.au-select__control-row:has(.au-select__trigger[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
-}
-
-/*
- * Pointer focus: tight stroke (border + 1px shadow).
- * Tab-only focus: `.au-select__control-row--from-tab` (TS) → outward outline.
- */
-.au-select__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
-}
-
-.au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
-}
-
-/* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
-.au-select__control-row--from-tab:focus-within {
-  box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
-}
-
-.au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: none;
-  outline: 2px solid var(--au-color-form-error);
-  outline-offset: 2px;
-}
-
-/* Disabled: whole row muted */
-.au-select__control-row--open:not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-}
-
-.au-select__control-row:has(.au-select__trigger:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
-  box-shadow: none;
-}
 
 .au-select__trigger {
   display: block;
@@ -204,26 +69,19 @@
   padding: 0 var(--au-space-9) 0 var(--au-size-field-px-lg);
 }
 
-:host([data-au-size='sm']) .au-field-listbox__option {
-  font-size: var(--au-size-field-text-sm);
-}
-
-:host([data-au-size='lg']) .au-field-listbox__option {
-  font-size: var(--au-size-field-text-lg);
-}
-
 .au-select__control-row--open .au-select__icon {
   transform: translateY(-50%) rotate(180deg);
   color: var(--au-color-text-secondary);
 }
 
-/* Icon: custom dropdown arrow */
 .au-select__icon {
   position: absolute;
-  right: var(--au-space-3);
+  inset-inline-end: var(--au-space-3);
   top: 50%;
   transform: translateY(-50%);
-  transition: transform var(--au-duration-fast) var(--au-ease-standard);
+  transition:
+    color var(--au-duration-short) var(--au-ease-in-out),
+    transform var(--au-duration-short) var(--au-ease-in-out);
   pointer-events: none;
   color: var(--au-color-text-tertiary);
   display: flex;
@@ -237,30 +95,14 @@
 }
 
 :host([data-au-size='sm']) .au-select__icon {
-  right: var(--au-space-2-5);
+  inset-inline-end: var(--au-space-2-5);
 }
 
 :host([data-au-size='lg']) .au-select__icon {
-  right: var(--au-space-4);
+  inset-inline-end: var(--au-space-4);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Hint and error */
-/* -------------------------------------------------------------------------- */
-
-.au-select__hint {
-  margin: 0;
-  font-size: var(--au-text-xs);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
-}
-
-/* -------------------------------------------------------------------------- */
-/* Motion */
-/* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .au-select__control-row,
   .au-select__icon {
     transition: none;
   }

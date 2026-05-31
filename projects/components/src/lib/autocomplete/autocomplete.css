@@ -1,128 +1,8 @@
 /**
  * Autocomplete — combobox field chrome aligned with au-select / au-input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome + listbox: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
-@import url('../styles/au-field-listbox.css');
-
-:host {
-  display: block;
-  overflow: visible;
-  font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.au-autocomplete__field {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--au-space-2);
-  max-width: 100%;
-  overflow: visible;
-}
-
-/* Hint / error stay under the open listbox (later siblings would otherwise paint on top). */
-.au-autocomplete__hint,
-.au-autocomplete__field > .au-field-error {
-  position: relative;
-  z-index: var(--au-z-base);
-}
-
-.au-autocomplete__label-host {
-  display: block;
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-}
-
-.au-autocomplete__label {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.125em;
-  font-size: var(--au-text-sm);
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
-  letter-spacing: var(--au-tracking-ui);
-}
-
-.au-autocomplete__required {
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-}
-
-.au-autocomplete__control-wrap {
-  position: relative;
-  z-index: var(--au-z-raised);
-}
-
-.au-autocomplete__control-wrap:has(.au-field-listbox) {
-  z-index: var(--au-z-dropdown);
-}
-
-.au-autocomplete__control-row {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
-  transition: var(--au-transition-control);
-}
-
-.au-autocomplete__control-row:has(.au-autocomplete__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-  background: var(--au-color-select-field-hover-bg);
-}
-
-.au-autocomplete__control-row--open:not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-}
-
-.au-autocomplete__control-row:has(.au-autocomplete__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
-}
-
-.au-autocomplete__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
-}
-
-.au-autocomplete__control-row:focus-within:has(.au-autocomplete__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
-}
-
-.au-autocomplete__control-row--from-tab:focus-within {
-  box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
-}
-
-.au-autocomplete__control-row--from-tab:focus-within:has(
-    .au-autocomplete__input[aria-invalid='true']
-  ) {
-  border-color: var(--au-color-form-error);
-  outline: 2px solid var(--au-color-form-error);
-}
-
-.au-autocomplete__control-row:has(.au-autocomplete__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
-  box-shadow: none;
-}
 
 .au-autocomplete__input {
   display: block;
@@ -134,10 +14,11 @@
   box-sizing: border-box;
   padding: 0 var(--au-space-8) 0 var(--au-size-field-px-md);
   border: 0;
-  border-radius: inherit;
+  border-radius: 0;
   background: transparent;
-  font-family: inherit;
+  font: inherit;
   font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
   line-height: var(--au-size-field-h-md);
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
@@ -210,20 +91,8 @@
   inset-inline-end: var(--au-space-4);
 }
 
-.au-autocomplete__hint {
-  margin: 0;
-  font-size: var(--au-text-xs);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .au-autocomplete__control-row,
   .au-autocomplete__icon {
     transition: none;
-  }
-
-  .au-field-listbox {
-    scroll-behavior: auto;
   }
 }

@@ -12,6 +12,7 @@ import {
   input,
   model,
   output,
+  signal,
 } from '@angular/core';
 
 import { AuIcon, type AuIconName } from '../icon/icon';
@@ -19,6 +20,7 @@ import {
   isTopmostSnackbarStackEntry,
   registerSnackbarStackEntry,
   setSnackbarStackSurface,
+  subscribeSnackbarStackLayout,
   unregisterSnackbarStackEntry,
 } from './snackbar-stack';
 import {
@@ -45,7 +47,7 @@ export type AuSnackbarPosition =
  * - **Stacking:** multiple open instances with the same `position` stack; newest sits on the edge,
  *   older toasts shift upward (bottom) or downward (top). Escape dismisses only the topmost toast.
  * - **Accessibility:** `role="status"` (default/success/info) or `role="alert"` (warning/error);
- *   matching `aria-live`; close button with accessible name.
+ *   matching `aria-live`; only the **topmost** toast in a stack announces (`aria-live="off"` on others).
  *
  * @example
  * ```html
@@ -82,6 +84,8 @@ export class AuSnackbar {
   private bodyAnchor: Comment | null = null;
   private stackId: number | null = null;
   private stackResizeObserver: ResizeObserver | null = null;
+  /** Only the newest toast in a position group uses polite/assertive live regions. */
+  private readonly announceLive = signal(true);
 
   /** Whether the snackbar is visible. */
   readonly open = model<boolean>(false);
@@ -125,9 +129,12 @@ export class AuSnackbar {
     this.variant() === 'error' || this.variant() === 'warning' ? 'alert' : 'status',
   );
 
-  readonly livePoliteness = computed(() =>
-    this.variant() === 'error' || this.variant() === 'warning' ? 'assertive' : 'polite',
-  );
+  readonly livePoliteness = computed(() => {
+    if (!this.announceLive()) {
+      return 'off';
+    }
+    return this.variant() === 'error' || this.variant() === 'warning' ? 'assertive' : 'polite';
+  });
 
   readonly showMessage = computed(() => this.message().trim().length > 0);
 
@@ -147,7 +154,9 @@ export class AuSnackbar {
   });
 
   constructor() {
+    const unsubscribeLayout = subscribeSnackbarStackLayout(() => this.updateAnnounceLive());
     this.destroyRef.onDestroy(() => {
+      unsubscribeLayout();
       this.clearDismissTimer();
       this.teardownStack();
       this.restoreFromBody();
@@ -220,7 +229,16 @@ export class AuSnackbar {
       this.stackId = registerSnackbarStackEntry(host, this.position());
     }
     setSnackbarStackSurface(this.stackId, surface);
+    this.updateAnnounceLive();
     this.observeStackResize(surface);
+  }
+
+  private updateAnnounceLive(): void {
+    if (!this.open() || this.stackId === null) {
+      this.announceLive.set(true);
+      return;
+    }
+    this.announceLive.set(isTopmostSnackbarStackEntry(this.stackId));
   }
 
   private teardownStack(): void {
