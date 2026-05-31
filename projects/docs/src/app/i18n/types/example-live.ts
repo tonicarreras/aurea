@@ -1,5 +1,16 @@
 /** Live demo UI strings (component doc examples), keyed by component slug. */
 export interface ExampleLiveMessages {
+  accordion: {
+    ariaLabel: string;
+    profile: string;
+    profilePanel: string;
+    billing: string;
+    billingPanel: string;
+    sectionOne: string;
+    sectionOnePanel: string;
+    sectionTwo: string;
+    sectionTwoPanel: string;
+  };
   autocomplete: {
     basic: { label: string; placeholder: string };
     error: { label: string; placeholder: string; errorMessage: string };
@@ -60,6 +71,20 @@ export interface ExampleLiveMessages {
     below: string;
     label: string;
   };
+  fieldset: {
+    legend: string;
+    description: string;
+    streetLabel: string;
+    streetPlaceholder: string;
+    cityLabel: string;
+    cityPlaceholder: string;
+  };
+  fileUpload: {
+    basicLabel: string;
+    hint: string;
+    singleLabel: string;
+    singleDropLabel: string;
+  };
   formField: {
     emailLabel: string;
     emailPlaceholder: string;
@@ -119,6 +144,12 @@ export interface ExampleLiveMessages {
     errorMessage: string;
     hintLabel: string;
     hint: string;
+  };
+  slider: {
+    basicLabel: string;
+    hint: string;
+    errorLabel: string;
+    errorMessage: string;
   };
   snackbar: {
     showSuccess: string;
@@ -184,5 +215,12 @@ export interface ExampleLiveMessages {
     multipleSelect: { title: string; description: string };
     customCell: { title: string; description: string };
     loading: { title: string; description: string; message: string };
+    empty: {
+      title: string;
+      description: string;
+      stateTitle: string;
+      stateDescription: string;
+      action: string;
+    };
   };
 }

@@ -1,5 +1,12 @@
 /** Copy for landing carousel / docs preview demos (locale-specific). */
 export interface PreviewMessages {
+  accordion: {
+    ariaLabel: string;
+    profile: string;
+    profilePanel: string;
+    billing: string;
+    billingPanel: string;
+  };
   badge: { accent: string; count: string };
   breadcrumb: { home: string; components: string; table: string };
   button: { primary: string; secondary: string; outline: string; ghost: string };
@@ -9,6 +16,13 @@ export interface PreviewMessages {
   chipGroup: { ariaLabel: string; draft: string; published: string; archived: string };
   dialog: { open: string; title: string; body: string; cancel: string; confirm: string };
   divider: { top: string; label: string; bottom: string };
+  fieldset: {
+    legend: string;
+    description: string;
+    streetLabel: string;
+    streetPlaceholder: string;
+  };
+  fileUpload: { label: string; hint: string };
   formField: { label: string; hint: string; placeholder: string };
   inputDate: { label: string };
   inputNumber: { label: string };
@@ -20,6 +34,7 @@ export interface PreviewMessages {
   popover: { trigger: string; content: string };
   radioGroup: { label: string };
   select: { label: string; placeholder: string };
+  slider: { label: string; hint: string };
   snackbar: { show: string; message: string };
   steps: {
     ariaLabel: string;

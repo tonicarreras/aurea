@@ -59,7 +59,7 @@ export const InlineWithText: Story = {
   render: () => ({
     moduleMetadata: { imports: [AuSpinner] },
     template: `
-      <au-spinner size="sm" label="Loading team members…" style="color:var(--au-color-action-primary)" />
+      <au-spinner size="sm" label="Loading team members…" />
     `,
   }),
 };

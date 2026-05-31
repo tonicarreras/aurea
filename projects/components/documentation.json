@@ -1573,6 +1573,36 @@
                 "defaultValue": "[\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n]"
             },
             {
+                "name": "Compact",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
+            },
+            {
+                "name": "Compact",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n}"
+            },
+            {
+                "name": "Compact",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
+            },
+            {
                 "name": "CompactSize",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1657,6 +1687,26 @@
                 "defaultValue": "{\n  args: { label: 'Saving changes' },\n}"
             },
             {
+                "name": "CustomSvg",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuEmptyState, AuEmptyStateMedia, AuButton] },\n    template: `\n      <au-empty-state\n        [title]=\"title\"\n        [description]=\"description\"\n        [size]=\"size\"\n      >\n        <svg\n          auEmptyStateMedia\n          aria-hidden=\"true\"\n          width=\"96\"\n          height=\"96\"\n          viewBox=\"0 0 96 96\"\n          fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <rect x=\"12\" y=\"20\" width=\"72\" height=\"56\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"2\" />\n          <path d=\"M32 44h32M32 52h20\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" />\n        </svg>\n        <au-button type=\"button\">Create project</au-button>\n      </au-empty-state>\n    `,\n  }),\n  args: {\n    title: 'No projects yet',\n    description: 'Start by creating your first project.',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <div auAccordionPanel=\"profile\">Update your name, email, and avatar.</div>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <div auAccordionPanel=\"billing\">Manage payment methods and invoices.</div>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <div auAccordionPanel=\"security\">Change password and enable 2FA.</div>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1735,6 +1785,36 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuEmptyState, AuButton] },\n    template: `\n      <au-empty-state\n        [title]=\"title\"\n        [description]=\"description\"\n        [icon]=\"icon\"\n        [size]=\"size\"\n        [headingLevel]=\"headingLevel\"\n      >\n        <au-button variant=\"outline\" type=\"button\">Clear filters</au-button>\n      </au-empty-state>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, files: [] as File[] },\n    moduleMetadata: { imports: [AuFormField, AuFileUpload] },\n    template: `\n      <au-form-field label=\"Attachments\" hint=\"PDF or images up to 10 MB each.\">\n        <au-file-upload\n          [(value)]=\"files\"\n          [multiple]=\"multiple\"\n          [accept]=\"accept\"\n          [disabled]=\"disabled\"\n          [browseLabel]=\"browseLabel\"\n          [dropLabel]=\"dropLabel\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -1835,6 +1915,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Basic select with label, placeholder, and options. The **play** function selects an option.',\n      },\n    },\n  },\n  args: {\n    label: 'Choose an option',\n    placeholder: 'Select one...',\n    options: sampleOptions,\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, 'Choose an option');\n    await userEvent.click(select);\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Option Two' }));\n    await expect(select).toHaveTextContent('Option Two');\n  },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/slider/slider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, volume: 35 },\n    moduleMetadata: { imports: [AuFormField, AuSlider] },\n    template: `\n      <au-form-field label=\"Volume\" hint=\"Adjust speaker level.\">\n        <au-slider\n          [(value)]=\"volume\"\n          [min]=\"min\"\n          [max]=\"max\"\n          [step]=\"step\"\n          [showValue]=\"showValue\"\n          [disabled]=\"disabled\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -1960,6 +2050,16 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { disabled: true },\n  render: Default.render,\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2035,6 +2135,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (hover / teclado) y **selected** comparten el mismo listbox que `au-autocomplete`.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "Empty",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, data: [] as Row[] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        title=\"Users\"\n        description=\"Manage team members.\"\n        caption=\"Users\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        <au-empty-state\n          title=\"No users yet\"\n          description=\"Create your first user to populate this table.\"\n          size=\"sm\"\n          [headingLevel]=\"3\"\n        >\n          <au-button type=\"button\">Add user</au-button>\n        </au-empty-state>\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(\n      await canvas.findByRole('heading', { name: 'No users yet', level: 3 }),\n    ).toBeVisible();\n    await expect(await canvas.findByRole('button', { name: 'Add user' })).toBeVisible();\n  },\n}"
             },
             {
                 "name": "Error",
@@ -2184,7 +2294,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSpinner] },\n    template: `\n      <au-spinner size=\"sm\" label=\"Loading team members…\" style=\"color:var(--au-color-action-primary)\" />\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSpinner] },\n    template: `\n      <au-spinner size=\"sm\" label=\"Loading team members…\" />\n    `,\n  }),\n}"
             },
             {
                 "name": "Inset",
@@ -2225,6 +2335,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<au-button [variant]=\"variant\" [size]=\"size\" (click)=\"click\">Large (Touch)</au-button>`,\n    ),\n}"
+            },
+            {
+                "name": "Large",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'lg', icon: 'plus', title: 'Create your first project' },\n}"
             },
             {
                 "name": "Large",
@@ -2320,6 +2440,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAccordion>",
+                "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2340,21 +2470,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuBreadcrumb>",
-                "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuButton>",
                 "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuBreadcrumb>",
+                "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2415,6 +2545,36 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuDivider>",
                 "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuEmptyState>",
+                "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuFieldset>",
+                "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuFileUpload>",
+                "defaultValue": "{\n  title: 'Aurea/FileUpload',\n  component: AuFileUpload,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('file-upload'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    accept: { control: 'text', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    browseLabel: { control: 'text', table: { category: 'Content' } },\n    dropLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    multiple: true,\n    accept: '',\n    disabled: false,\n    browseLabel: 'Browse files',\n    dropLabel: 'Drag files here or browse',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2565,6 +2725,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuSkeleton>",
                 "defaultValue": "{\n  title: 'Aurea/Skeleton',\n  component: AuSkeleton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('skeleton'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['text', 'circular', 'rectangular', 'rounded', 'button'],\n      table: { category: 'Appearance' },\n    },\n    animation: {\n      control: 'select',\n      options: ['pulse', 'wave', 'none'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    width: {\n      control: 'text',\n      description: 'CSS width (e.g. `100%`, `12rem`).',\n      table: { category: 'Layout' },\n    },\n    height: {\n      control: 'text',\n      description: 'CSS height override.',\n      table: { category: 'Layout' },\n    },\n    radius: {\n      control: 'text',\n      description: 'Border-radius override.',\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    variant: 'text',\n    animation: 'pulse',\n    size: 'md',\n    width: undefined,\n    height: undefined,\n    radius: undefined,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/slider/slider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuSlider>",
+                "defaultValue": "{\n  title: 'Aurea/Slider',\n  component: AuSlider,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('slider'),\n  argTypes: {\n    min: { control: 'number', table: { category: 'Behavior' } },\n    max: { control: 'number', table: { category: 'Behavior' } },\n    step: { control: 'number', table: { category: 'Behavior' } },\n    showValue: { control: 'boolean', table: { category: 'Appearance' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    min: 0,\n    max: 100,\n    step: 1,\n    showValue: true,\n    disabled: false,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2939,6 +3109,26 @@
                 "defaultValue": "AU_ICON_NAMES.filter((n) =>\n  ['check-circle', 'check', 'warning', 'error', 'info', 'close', 'spinner'].includes(n),\n)"
             },
             {
+                "name": "SingleExpand",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { multiple: false },\n  render: Default.render,\n}"
+            },
+            {
+                "name": "SingleFile",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { multiple: false, dropLabel: 'Drop a file here or browse' },\n  render: Default.render,\n}"
+            },
+            {
                 "name": "SingleSelect",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3052,6 +3242,16 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "[]",
+                "defaultValue": "[AuAccordion, AuAccordionItem, AuAccordionPanel]"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3096,7 +3296,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "[]",
-                "defaultValue": "[AuTable, AuTableColumn, AuTableCellDef, AuBadge]"
+                "defaultValue": "[AuTable, AuTableColumn, AuTableCellDef, AuBadge, AuEmptyState, AuButton]"
             },
             {
                 "name": "storyImports",
@@ -3167,6 +3367,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 0.5rem;\">\n        <au-skeleton\n          [variant]=\"variant\"\n          [animation]=\"animation\"\n          [size]=\"size\"\n          [width]=\"width\"\n          [height]=\"height\"\n          [radius]=\"radius\"\n        />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"75%\" />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"50%\" />\n      </div>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "TitleOnly",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    title: 'Nothing here yet',\n    description: '',\n    icon: undefined,\n  },\n}"
             },
             {
                 "name": "TopEnd",
@@ -3439,6 +3649,16 @@
                 "defaultValue": "{\n  args: {\n    label: 'Marketing emails',\n    hint: 'You can change this anytime in settings.',\n    checked: false,\n  },\n}"
             },
             {
+                "name": "WithImage",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    icon: undefined,\n    imageSrc: 'https://placehold.co/96x96/e2e8f0/64748b?text=Empty',\n    imageAlt: '',\n    title: 'Inbox zero',\n    description: 'You are all caught up.',\n  },\n}"
+            },
+            {
                 "name": "WithInput",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3487,6 +3707,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin título visible; el nombre accesible viene de <code>ariaLabel</code>.</p>',\n  }),\n  args: {\n    title: '',\n    ariaLabel: 'Información',\n  },\n}"
+            },
+            {
+                "name": "WithoutValue",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/slider/slider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { showValue: false },\n  render: Default.render,\n}"
             },
             {
                 "name": "WithValue",
@@ -3967,6 +4197,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuAccordion>",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AutocompleteStoryArgs>",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
@@ -3989,8 +4230,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBreadcrumb>",
-                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4000,8 +4241,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "rawtype": "StoryObj<AuBreadcrumb>",
+                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4068,6 +4309,39 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuDivider>",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuEmptyState>",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuFieldset>",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuFileUpload>",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4233,6 +4507,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuSkeleton>",
                 "file": "projects/components/src/lib/skeleton/skeleton.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuSlider>",
+                "file": "projects/components/src/lib/slider/slider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5044,6 +5329,172 @@
                     "defaultValue": "{\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n}"
                 }
             ],
+            "projects/components/src/lib/accordion/accordion.stories.ts": [
+                {
+                    "name": "Compact",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <div auAccordionPanel=\"profile\">Update your name, email, and avatar.</div>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <div auAccordionPanel=\"billing\">Manage payment methods and invoices.</div>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <div auAccordionPanel=\"security\">Change password and enable 2FA.</div>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuAccordion>",
+                    "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
+                },
+                {
+                    "name": "SingleExpand",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { multiple: false },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "defaultValue": "[AuAccordion, AuAccordionItem, AuAccordionPanel]"
+                }
+            ],
+            "projects/components/src/lib/empty-state/empty-state.stories.ts": [
+                {
+                    "name": "Compact",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'sm' },\n}"
+                },
+                {
+                    "name": "CustomSvg",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuEmptyState, AuEmptyStateMedia, AuButton] },\n    template: `\n      <au-empty-state\n        [title]=\"title\"\n        [description]=\"description\"\n        [size]=\"size\"\n      >\n        <svg\n          auEmptyStateMedia\n          aria-hidden=\"true\"\n          width=\"96\"\n          height=\"96\"\n          viewBox=\"0 0 96 96\"\n          fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <rect x=\"12\" y=\"20\" width=\"72\" height=\"56\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"2\" />\n          <path d=\"M32 44h32M32 52h20\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" />\n        </svg>\n        <au-button type=\"button\">Create project</au-button>\n      </au-empty-state>\n    `,\n  }),\n  args: {\n    title: 'No projects yet',\n    description: 'Start by creating your first project.',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuEmptyState, AuButton] },\n    template: `\n      <au-empty-state\n        [title]=\"title\"\n        [description]=\"description\"\n        [icon]=\"icon\"\n        [size]=\"size\"\n        [headingLevel]=\"headingLevel\"\n      >\n        <au-button variant=\"outline\" type=\"button\">Clear filters</au-button>\n      </au-empty-state>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'lg', icon: 'plus', title: 'Create your first project' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuEmptyState>",
+                    "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
+                },
+                {
+                    "name": "TitleOnly",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    title: 'Nothing here yet',\n    description: '',\n    icon: undefined,\n  },\n}"
+                },
+                {
+                    "name": "WithImage",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    icon: undefined,\n    imageSrc: 'https://placehold.co/96x96/e2e8f0/64748b?text=Empty',\n    imageAlt: '',\n    title: 'Inbox zero',\n    description: 'You are all caught up.',\n  },\n}"
+                }
+            ],
+            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
+                {
+                    "name": "Compact",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { disabled: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuFieldset>",
+                    "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
+                }
+            ],
             "projects/components/src/lib/input-text/input-text.stories.ts": [
                 {
                     "name": "CompactSize",
@@ -5419,7 +5870,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSpinner] },\n    template: `\n      <au-spinner size=\"sm\" label=\"Loading team members…\" style=\"color:var(--au-color-action-primary)\" />\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuSpinner] },\n    template: `\n      <au-spinner size=\"sm\" label=\"Loading team members…\" />\n    `,\n  }),\n}"
                 },
                 {
                     "name": "Large",
@@ -5772,6 +6223,38 @@
                     "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
                 }
             ],
+            "projects/components/src/lib/file-upload/file-upload.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, files: [] as File[] },\n    moduleMetadata: { imports: [AuFormField, AuFileUpload] },\n    template: `\n      <au-form-field label=\"Attachments\" hint=\"PDF or images up to 10 MB each.\">\n        <au-file-upload\n          [(value)]=\"files\"\n          [multiple]=\"multiple\"\n          [accept]=\"accept\"\n          [disabled]=\"disabled\"\n          [browseLabel]=\"browseLabel\"\n          [dropLabel]=\"dropLabel\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuFileUpload>",
+                    "defaultValue": "{\n  title: 'Aurea/FileUpload',\n  component: AuFileUpload,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('file-upload'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    accept: { control: 'text', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    browseLabel: { control: 'text', table: { category: 'Content' } },\n    dropLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    multiple: true,\n    accept: '',\n    disabled: false,\n    browseLabel: 'Browse files',\n    dropLabel: 'Drag files here or browse',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "SingleFile",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { multiple: false, dropLabel: 'Drop a file here or browse' },\n  render: Default.render,\n}"
+                }
+            ],
             "projects/components/src/lib/icon/icon.stories.ts": [
                 {
                     "name": "Default",
@@ -6004,6 +6487,38 @@
                     "defaultValue": "[\n  { value: 'email', label: 'Email' },\n  { value: 'sms', label: 'SMS' },\n  { value: 'none', label: 'None' },\n]"
                 }
             ],
+            "projects/components/src/lib/slider/slider.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/slider/slider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, volume: 35 },\n    moduleMetadata: { imports: [AuFormField, AuSlider] },\n    template: `\n      <au-form-field label=\"Volume\" hint=\"Adjust speaker level.\">\n        <au-slider\n          [(value)]=\"volume\"\n          [min]=\"min\"\n          [max]=\"max\"\n          [step]=\"step\"\n          [showValue]=\"showValue\"\n          [disabled]=\"disabled\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/slider/slider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuSlider>",
+                    "defaultValue": "{\n  title: 'Aurea/Slider',\n  component: AuSlider,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('slider'),\n  argTypes: {\n    min: { control: 'number', table: { category: 'Behavior' } },\n    max: { control: 'number', table: { category: 'Behavior' } },\n    step: { control: 'number', table: { category: 'Behavior' } },\n    showValue: { control: 'boolean', table: { category: 'Appearance' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    min: 0,\n    max: 100,\n    step: 1,\n    showValue: true,\n    disabled: false,\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "WithoutValue",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/slider/slider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { showValue: false },\n  render: Default.render,\n}"
+                }
+            ],
             "projects/components/src/lib/snackbar/snackbar.stories.ts": [
                 {
                     "name": "Default",
@@ -6130,6 +6645,16 @@
                     "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n}"
                 },
                 {
+                    "name": "Empty",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, data: [] as Row[] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        title=\"Users\"\n        description=\"Manage team members.\"\n        caption=\"Users\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        <au-empty-state\n          title=\"No users yet\"\n          description=\"Create your first user to populate this table.\"\n          size=\"sm\"\n          [headingLevel]=\"3\"\n        >\n          <au-button type=\"button\">Add user</au-button>\n        </au-empty-state>\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(\n      await canvas.findByRole('heading', { name: 'No users yet', level: 3 }),\n    ).toBeVisible();\n    await expect(await canvas.findByRole('button', { name: 'Add user' })).toBeVisible();\n  },\n}"
+                },
+                {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -6177,7 +6702,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
-                    "defaultValue": "[AuTable, AuTableColumn, AuTableCellDef, AuBadge]"
+                    "defaultValue": "[AuTable, AuTableColumn, AuTableCellDef, AuBadge, AuEmptyState, AuButton]"
                 },
                 {
                     "name": "Striped",
@@ -6956,6 +7481,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/accordion/accordion.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAccordion>",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "Story",
@@ -6982,19 +7520,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBreadcrumb>",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
@@ -7002,6 +7527,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuButton>",
                     "file": "projects/components/src/lib/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuBreadcrumb>",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7080,6 +7618,45 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuDivider>",
                     "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/empty-state/empty-state.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuEmptyState>",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuFieldset>",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/file-upload/file-upload.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuFileUpload>",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7268,6 +7845,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/slider/slider.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuSlider>",
+                    "file": "projects/components/src/lib/slider/slider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/snackbar/snackbar.stories.ts": [
                 {
                     "name": "Story",
@@ -7440,6 +8030,66 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Compact",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SingleExpand",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
@@ -8371,6 +9021,176 @@
             },
             {
                 "filePath": "projects/components/src/lib/divider/divider.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Compact",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomSvg",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Large",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TitleOnly",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithImage",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Compact",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SingleFile",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
@@ -9384,6 +10204,46 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/components/src/lib/slider/slider.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/slider/slider.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/slider/slider.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithoutValue",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/slider/slider.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
@@ -9658,6 +10518,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Empty",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

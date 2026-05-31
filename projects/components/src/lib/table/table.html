@@ -133,7 +133,11 @@
             </tr>
           } @empty {
             <tr class="au-table__empty-row">
-              <td [attr.colspan]="columnSpan()">{{ emptyMessage() }}</td>
+              <td [attr.colspan]="columnSpan()">
+                <ng-content select="au-empty-state">
+                  <span class="au-table__empty-message">{{ emptyMessage() }}</span>
+                </ng-content>
+              </td>
             </tr>
           }
         }

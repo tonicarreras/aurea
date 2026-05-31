@@ -1,0 +1,108 @@
+@import url('../styles/au-field-error.css');
+
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+}
+
+.au-file-upload__dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-space-3);
+  padding: var(--au-space-6) var(--au-space-4);
+  border: 1px dashed var(--au-color-border-subtle);
+  border-radius: var(--au-radius-surface);
+  background: var(--au-color-surface-sunken);
+  text-align: center;
+}
+
+.au-file-upload__dropzone--invalid {
+  border-color: var(--au-color-form-error);
+}
+
+:host(.au-file-upload--dragover) .au-file-upload__dropzone {
+  border-color: var(--au-color-action-primary);
+  background: color-mix(in srgb, var(--au-color-action-primary) 8%, var(--au-color-surface-sunken));
+}
+
+.au-file-upload__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.au-file-upload__prompt {
+  margin: 0;
+  max-width: 20rem;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-secondary);
+}
+
+.au-file-upload__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-2);
+  margin: var(--au-space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.au-file-upload__item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: var(--au-space-3);
+  padding: var(--au-space-2) var(--au-space-3);
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-control);
+  background: var(--au-color-surface-raised);
+}
+
+.au-file-upload__item-name {
+  overflow: hidden;
+  font-size: var(--au-text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.au-file-upload__item-size {
+  font-size: var(--au-text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--au-color-text-secondary);
+}
+
+.au-file-upload__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--au-radius-control);
+  background: transparent;
+  color: var(--au-color-text-secondary);
+  cursor: pointer;
+}
+
+.au-file-upload__remove:hover:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+  color: var(--au-color-text-primary);
+}
+
+.au-file-upload__remove:focus-visible {
+  outline: none;
+  box-shadow: var(--au-shadow-focus-ring);
+}
+
+.au-file-upload__remove:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

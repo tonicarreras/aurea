@@ -1,6 +1,17 @@
 import type { ExampleLiveMessages } from '../../types/example-live';
 
 export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
+  accordion: {
+    ariaLabel: 'Account settings',
+    profile: 'Profile',
+    profilePanel: 'Update your name and avatar.',
+    billing: 'Billing',
+    billingPanel: 'Manage payment methods.',
+    sectionOne: 'Section one',
+    sectionOnePanel: 'Panel one content.',
+    sectionTwo: 'Section two',
+    sectionTwoPanel: 'Panel two content.',
+  },
   autocomplete: {
     basic: { label: 'City', placeholder: 'Search…' },
     error: { label: 'City', placeholder: 'Search…', errorMessage: 'Choose a city from the list.' },
@@ -59,6 +70,20 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     save: 'Save',
   },
   divider: { above: 'Above', below: 'Below', label: 'or continue with' },
+  fieldset: {
+    legend: 'Shipping address',
+    description: 'Where we deliver your order.',
+    streetLabel: 'Street',
+    streetPlaceholder: '123 Main St',
+    cityLabel: 'City',
+    cityPlaceholder: 'San Francisco',
+  },
+  fileUpload: {
+    basicLabel: 'Attachments',
+    hint: 'PDF or images up to 10 MB each.',
+    singleLabel: 'Cover image',
+    singleDropLabel: 'Drop a file here or browse',
+  },
   formField: {
     emailLabel: 'Email',
     emailPlaceholder: 'you@example.com',
@@ -118,6 +143,12 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     errorMessage: 'Select a country.',
     hintLabel: 'Country of residence',
     hint: 'Used for billing and shipping.',
+  },
+  slider: {
+    basicLabel: 'Volume',
+    hint: 'Adjust speaker level.',
+    errorLabel: 'Volume',
+    errorMessage: 'Value out of range.',
   },
   snackbar: {
     showSuccess: 'Show success',
@@ -195,6 +226,13 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
       title: 'Team members',
       description: 'Loading state while data is fetched.',
       message: 'Loading team…',
+    },
+    empty: {
+      title: 'Users',
+      description: 'Manage team members.',
+      stateTitle: 'No users yet',
+      stateDescription: 'Create your first user to populate this table.',
+      action: 'Add user',
     },
   },
 };

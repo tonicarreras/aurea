@@ -14,6 +14,12 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
     },
     { concern: 'Spacing', examples: '`--au-space-2`, `--au-text-sm`' },
   ],
+  fieldset: [
+    { concern: 'Legend', examples: '`--au-fieldset-legend-size`, `--au-color-text-primary`' },
+  ],
+  'file-upload': [
+    { concern: 'Dropzone', examples: '`--au-color-surface-sunken`, `--au-color-border-subtle`' },
+  ],
   'input-text': [
     {
       concern: 'Field chrome',
@@ -47,6 +53,10 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
       examples: '`--au-color-select-menu-bg`, `--au-shadow-overlay`, `--au-z-dropdown`',
     },
   ],
+  accordion: [
+    { concern: 'Sections', examples: '`--au-color-border-subtle`, `--au-color-action-primary`' },
+    { concern: 'Focus', examples: '`--au-shadow-focus-ring`' },
+  ],
   'radio-group': [
     { concern: 'Group shell', examples: '`--au-color-form-border`, `--au-color-action-primary`' },
   ],
@@ -56,6 +66,7 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
       examples: '`--au-color-form-border`, `--au-color-action-primary` (steppers)',
     },
   ],
+  slider: [{ concern: 'Track', examples: '`--au-color-action-primary`, `--au-slider-fill`' }],
   'input-date': [
     { concern: 'Native picker', examples: '`--au-color-form-border`, `--au-radius-field`' },
   ],

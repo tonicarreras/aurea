@@ -3,6 +3,8 @@ import { signal } from '@angular/core';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuBadge } from '../badge/badge';
+import { AuButton } from '../button/button';
+import { AuEmptyState } from '../empty-state/empty-state';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuTableCellDef } from './au-table-cell-def.directive';
@@ -23,7 +25,7 @@ const rows: Row[] = [
   { name: 'Katherine Johnson', role: 'Mathematician', score: 97, status: 'away' },
 ];
 
-const storyImports = [AuTable, AuTableColumn, AuTableCellDef, AuBadge];
+const storyImports = [AuTable, AuTableColumn, AuTableCellDef, AuBadge, AuEmptyState, AuButton];
 
 const meta: Meta<AuTable> = {
   title: 'Aurea/Table',
@@ -176,5 +178,40 @@ export const MultipleSelect: Story = {
     const rowChecks = await canvas.findAllByRole('checkbox', { name: /^select row$/i });
     await expect(rowChecks[0]).toBeChecked();
     await expect(rowChecks[1]).toBeChecked();
+  },
+};
+
+export const Empty: Story = {
+  render: (args) => ({
+    props: { ...args, data: [] as Row[] },
+    moduleMetadata: { imports: storyImports },
+    template: `
+      <au-table
+        [data]="data"
+        title="Users"
+        description="Manage team members."
+        caption="Users"
+        [striped]="striped"
+      >
+        <au-table-column name="name" header="Name" cellVariant="primary" />
+        <au-table-column name="role" header="Role" cellVariant="secondary" />
+        <au-table-column name="score" header="Score" align="end" />
+        <au-empty-state
+          title="No users yet"
+          description="Create your first user to populate this table."
+          size="sm"
+          [headingLevel]="3"
+        >
+          <au-button type="button">Add user</au-button>
+        </au-empty-state>
+      </au-table>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      await canvas.findByRole('heading', { name: 'No users yet', level: 3 }),
+    ).toBeVisible();
+    await expect(await canvas.findByRole('button', { name: 'Add user' })).toBeVisible();
   },
 };

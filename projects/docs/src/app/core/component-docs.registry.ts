@@ -4,6 +4,7 @@ import { COMPONENT_SUMMARIES } from '../i18n';
 import { type DocsLocale, pickL } from './docs-locale';
 
 import {
+  AccordionDemo,
   AutocompleteDemo,
   BadgeDemo,
   BreadcrumbDemo,
@@ -26,11 +27,15 @@ import {
   StepsDemo,
   DialogDemo,
   DividerDemo,
+  EmptyStateDemo,
+  FieldsetDemo,
+  FileUploadDemo,
   InputDateDemo,
   InputNumberDemo,
   InputTextDemo,
   RadioGroupDemo,
   SelectDemo,
+  SliderDemo,
   SnackbarDemo,
   SwitchDemo,
   TableDemo,
@@ -121,6 +126,21 @@ export class Example {}`,
 </au-form-field>`,
   },
   {
+    slug: 'fieldset',
+    title: 'Fieldset',
+    exportName: 'AuFieldset',
+    selector: 'au-fieldset',
+    summary: 'Agrupa campos relacionados con fieldset nativo, leyenda y descripción opcional.',
+    demoComponent: FieldsetDemo,
+    snippet: `import { AuFieldset, AuFormField, AuInputText } from '@aurea-design-system/components';
+
+<au-fieldset legend="Shipping address" description="Where we deliver your order.">
+  <au-form-field label="Street">
+    <au-input-text />
+  </au-form-field>
+</au-fieldset>`,
+  },
+  {
     slug: 'input-text',
     title: 'Input text',
     exportName: 'AuInputText',
@@ -199,6 +219,22 @@ options: AuSelectOption[] = [
 </au-form-field>`,
   },
   {
+    slug: 'accordion',
+    title: 'Accordion',
+    exportName: 'AuAccordion',
+    selector: 'au-accordion',
+    summary: 'Secciones plegables con disparadores WAI-ARIA y paneles emparejados por clave.',
+    demoComponent: AccordionDemo,
+    snippet: `import { AuAccordion, AuAccordionItem, AuAccordionPanel } from '@aurea-design-system/components';
+
+<au-accordion [(value)]="expanded" ariaLabel="FAQ">
+  <div class="au-accordion__item">
+    <button type="button" auAccordionItem="one">Section one</button>
+    <div auAccordionPanel="one">Panel content</div>
+  </div>
+</au-accordion>`,
+  },
+  {
     slug: 'radio-group',
     title: 'Radio group',
     exportName: 'AuRadioGroup',
@@ -225,6 +261,19 @@ options: AuSelectOption[] = [
 </au-form-field>`,
   },
   {
+    slug: 'slider',
+    title: 'Slider',
+    exportName: 'AuSlider',
+    selector: 'au-slider',
+    summary: 'Control de rango continuo con valor opcional visible e integración con form-field.',
+    demoComponent: SliderDemo,
+    snippet: `import { AuFormField, AuSlider } from '@aurea-design-system/components';
+
+<au-form-field label="Volume" hint="Adjust speaker level.">
+  <au-slider [(value)]="volume" [min]="0" [max]="100" [showValue]="true" />
+</au-form-field>`,
+  },
+  {
     slug: 'input-date',
     title: 'Input date',
     exportName: 'AuInputDate',
@@ -235,6 +284,19 @@ options: AuSelectOption[] = [
 
 <au-form-field label="Date">
   <au-input-date />
+</au-form-field>`,
+  },
+  {
+    slug: 'file-upload',
+    title: 'File upload',
+    exportName: 'AuFileUpload',
+    selector: 'au-file-upload',
+    summary: 'Selector de archivos con drag-and-drop, explorar y lista removible.',
+    demoComponent: FileUploadDemo,
+    snippet: `import { AuFileUpload, AuFormField } from '@aurea-design-system/components';
+
+<au-form-field label="Attachments" hint="PDF or images up to 10 MB each.">
+  <au-file-upload [(value)]="files" />
 </au-form-field>`,
   },
   {
@@ -399,6 +461,21 @@ options: AuSelectOption[] = [
 
 <au-divider />
 <au-divider label="o" />`,
+  },
+  {
+    slug: 'empty-state',
+    title: 'Empty state',
+    exportName: 'AuEmptyState',
+    selector: 'au-empty-state',
+    summary: 'Placeholder centrado para listas, tablas o búsquedas sin resultados.',
+    demoComponent: EmptyStateDemo,
+    snippet: `import { AuEmptyState } from '@aurea-design-system/components';
+
+<au-empty-state
+  icon="search"
+  title="No results"
+  description="Try another search."
+/>`,
   },
   {
     slug: 'badge',

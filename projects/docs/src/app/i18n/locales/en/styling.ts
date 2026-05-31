@@ -33,6 +33,13 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-text-sm', description: 'Label, hint, and error typography.' },
     { token: '--au-space-2', description: 'Vertical gap between label, control, and messages.' },
   ],
+  fieldset: [
+    { token: '--au-fieldset-legend-size', description: 'Legend typography per size.' },
+    { token: '--au-fieldset-description-size', description: 'Description typography per size.' },
+    { token: '--au-color-text-primary', description: 'Legend text color.' },
+    { token: '--au-color-text-secondary', description: 'Description text color.' },
+    { token: '--au-space-1 / --au-space-4', description: 'Spacing around legend and content.' },
+  ],
   'input-text': [
     { token: '--au-color-form-border', description: 'Field border at rest.' },
     {
@@ -122,6 +129,13 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-z-dropdown', description: 'Options overlay z-index.' },
     { token: '--au-color-focus-ring', description: 'Focus on the search input.' },
   ],
+  accordion: [
+    { token: '--au-color-border-subtle', description: 'Divider between accordion items.' },
+    { token: '--au-color-action-primary', description: 'Expanded trigger emphasis.' },
+    { token: '--au-color-focus-ring', description: 'Keyboard focus on triggers.' },
+    { token: '--au-shadow-focus-ring', description: 'Visible focus ring on triggers.' },
+    { token: '--au-text-sm / --au-text-base', description: 'Trigger typography by `size`.' },
+  ],
   'radio-group': [
     { token: '--au-color-text-label', description: 'Group legend.' },
     {
@@ -140,6 +154,14 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-error', description: 'Validation states with error.' },
     { token: '--au-color-form-disabled-surface', description: 'Background when disabled.' },
   ],
+  slider: [
+    { token: '--au-color-action-primary', description: 'Filled portion of the track.' },
+    { token: '--au-color-surface-sunken', description: 'Unfilled track background.' },
+    { token: '--au-slider-fill', description: 'CSS variable driving fill percentage.' },
+    { token: '--au-shadow-focus-ring', description: 'Focus on the range input.' },
+    { token: '--au-color-form-error', description: 'Invalid outline on the control row.' },
+    { token: '--au-text-sm', description: 'Optional live value typography.' },
+  ],
   'input-date': [
     { token: '--au-color-form-border', description: 'Native date picker border.' },
     { token: '--au-color-form-text', description: 'Selected date text.' },
@@ -148,6 +170,14 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-size-field-h-md', description: 'Height aligned with other fields.' },
     { token: '--au-color-focus-ring', description: 'Focus on the `type="date"` input.' },
     { token: '--au-color-form-error', description: 'Error border and message.' },
+  ],
+  'file-upload': [
+    { token: '--au-color-border-subtle', description: 'Dropzone dashed border.' },
+    { token: '--au-color-surface-sunken', description: 'Dropzone background.' },
+    { token: '--au-color-action-primary', description: 'Drag-over border and tint.' },
+    { token: '--au-color-form-error', description: 'Invalid dropzone border.' },
+    { token: '--au-radius-surface', description: 'Dropzone corners.' },
+    { token: '--au-text-sm', description: 'Prompt and file list typography.' },
   ],
   dialog: [
     { token: '--au-color-surface-inverted', description: 'Semi-transparent backdrop tint.' },
@@ -232,7 +262,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
   spinner: [
     { token: 'data-au-size', description: 'sm / md / lg — host footprint.' },
     { token: '--au-spinner-track', description: 'Muted ring behind the active arc.' },
-    { token: '--au-spinner-arc', description: 'Stroke color (default: `currentColor`).' },
+    {
+      token: '--au-spinner-arc',
+      description: 'Stroke color (default: `--au-color-action-primary`).',
+    },
     { token: '--au-duration-spinner', description: 'Rotation period (~0.9s).' },
   ],
   steps: [
@@ -262,6 +295,17 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-text-xs', description: 'Optional label size.' },
     { token: '--au-space-4', description: 'Horizontal inset (`inset` on the host).' },
     { token: '--au-space-3', description: 'Gap between line and label.' },
+  ],
+  'empty-state': [
+    { token: '--au-empty-state-padding-y', description: 'Vertical padding (size presets).' },
+    { token: '--au-empty-state-padding-x', description: 'Horizontal padding (size presets).' },
+    { token: '--au-empty-state-media-size', description: 'Icon/image well footprint.' },
+    { token: '--au-empty-state-custom-max-width', description: 'Max width for projected SVG/img.' },
+    { token: '--au-empty-state-title-size', description: 'Title typography per size.' },
+    { token: '--au-empty-state-description-size', description: 'Description typography per size.' },
+    { token: '--au-empty-state-gap', description: 'Spacing between blocks and actions.' },
+    { token: '--au-color-surface-sunken', description: 'Icon/image well background.' },
+    { token: '--au-color-text-secondary', description: 'Icon and description color.' },
   ],
   badge: [
     { token: '--au-radius-pill', description: 'Pill shape for the badge host.' },

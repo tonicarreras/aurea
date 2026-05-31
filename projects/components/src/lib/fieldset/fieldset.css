@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+}
+
+.au-fieldset__native {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.au-fieldset__legend {
+  padding: 0;
+  font-size: var(--au-fieldset-legend-size, var(--au-text-base));
+  font-weight: var(--au-weight-semibold);
+  line-height: var(--au-leading-snug);
+}
+
+.au-fieldset__description {
+  margin: var(--au-space-1) 0 var(--au-space-4);
+  max-width: 40rem;
+  font-size: var(--au-fieldset-description-size, var(--au-text-sm));
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-secondary);
+}
+
+.au-fieldset__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-fieldset-gap, var(--au-space-4));
+}
+
+:host([data-au-size='sm']) {
+  --au-fieldset-legend-size: var(--au-text-sm);
+  --au-fieldset-description-size: var(--au-text-xs);
+  --au-fieldset-gap: var(--au-space-3);
+}
+
+:host(:not(:has(.au-fieldset__legend))) .au-fieldset__description {
+  margin-block-start: 0;
+}

@@ -75,6 +75,38 @@ export const STORY_OVERVIEW_SOURCE = {
       extra:
         '### Related exports\n\n`AU_FORM_FIELD`, `AuFormFieldContext` — import from `@aurea-design-system/components`.',
     },
+    fieldset: {
+      intro: [
+        'Groups related controls with a native `<fieldset>`, optional `<legend>`, and supporting description.',
+        'Use `[disabled]="true"` to disable every nested control in one place.',
+      ],
+      whenToUse: [
+        'Address blocks, payment sections, or filter groups that belong together semantically.',
+        'Forms where a shared legend names the region for assistive tech.',
+      ],
+      whenNotToUse: [
+        'Visual grouping only → card or divider.',
+        'Single field → bare `au-form-field`.',
+      ],
+      anatomy: [
+        {
+          region: 'Legend',
+          detail: 'Omitted when `legend` is empty.',
+        },
+        {
+          region: 'Description',
+          detail: 'Optional helper copy under the legend.',
+        },
+        {
+          region: 'Content slot',
+          detail: 'Project `au-form-field` rows or other controls.',
+        },
+      ],
+      accessibility: [
+        'Native `fieldset`/`legend` semantics propagate to nested inputs.',
+        'Disabled state disables all descendants without extra wiring.',
+      ],
+    },
     'input-text': {
       intro: [
         'Single-line control projected inside `au-form-field` for label, hint, and error.',
@@ -253,6 +285,42 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: ['Combobox with listbox; open state on `data-au-listbox-open`.'],
       keyboard: ['Same as select; typing filters options.'],
     },
+    accordion: {
+      intro: [
+        'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `[auAccordionPanel]` regions share a string key.',
+        'Bind `[(value)]` to the list of expanded keys; set `[multiple]="false"` for exclusive expand.',
+      ],
+      whenToUse: [
+        'FAQ, settings panels, or filters where only a subset should be visible at once.',
+        'Long forms split into scannable sections on one page.',
+      ],
+      whenNotToUse: [
+        'Mutually exclusive views with persistent tab chrome → `au-tabs`.',
+        'Sequential wizard with validation gates → `au-steps`.',
+      ],
+      anatomy: [
+        {
+          region: '`.au-accordion__item`',
+          detail: 'Wrap each trigger + panel pair.',
+        },
+        {
+          region: '`button[auAccordionItem]`',
+          detail: 'Trigger with `aria-expanded` and `aria-controls`.',
+        },
+        {
+          region: '`[auAccordionPanel]`',
+          detail: 'Region; `hidden` when collapsed.',
+        },
+      ],
+      accessibility: [
+        'Root `role="region"` with `aria-label` or labelledby.',
+        'Triggers stay in the tab order; panels expose `aria-labelledby`.',
+      ],
+      keyboard: [
+        'Arrow Down/Up move focus among enabled triggers.',
+        'Home/End jump to first/last trigger; Enter/Space toggle on the button.',
+      ],
+    },
     'radio-group': {
       intro: [
         'Native radio buttons in a shell with legend. Single selection per `name`.',
@@ -297,6 +365,39 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: ['Label, error, and focus like other fields.'],
     },
+    slider: {
+      intro: [
+        'Native `input[type="range"]` styled with Aurea tokens and optional live value output.',
+        'Implements `FormValueControl<number>`; project inside `au-form-field` for label, hint, and errors.',
+      ],
+      whenToUse: [
+        'Volume, opacity, or any bounded continuous value where dragging is faster than typing.',
+        'Settings with a visible min/max and coarse steps.',
+      ],
+      whenNotToUse: [
+        'Exact numeric entry → `au-input-number`.',
+        'Discrete choices → radio group or select.',
+      ],
+      anatomy: [
+        {
+          region: 'Track',
+          detail: 'Fill percentage driven by value between min and max.',
+        },
+        {
+          region: 'Thumb',
+          detail: 'Native range thumb with focus ring.',
+        },
+        {
+          region: 'Value output',
+          detail: 'Optional `showValue` region linked via `aria-describedby`.',
+        },
+      ],
+      accessibility: [
+        'Linked label and error ids from `au-form-field`.',
+        'Live value announced when `showValue` is enabled.',
+      ],
+      keyboard: ['Arrow keys adjust the value per native range behavior.'],
+    },
     'input-date': {
       intro: [
         'Native date picker (`<input type="date">`) with Aurea tokens on icon and OS popup.',
@@ -314,6 +415,36 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['Linked label and errors; native OS picker behavior.'],
+    },
+    'file-upload': {
+      intro: [
+        'Drag-and-drop target with hidden native `input[type="file"]`, browse button, and removable file list.',
+        'Implements `FormValueControl<File[]>`; empty selection is `[]`.',
+      ],
+      whenToUse: [
+        'Attachments, imports, or media uploads in forms.',
+        'When users benefit from dropping files onto a large target.',
+      ],
+      whenNotToUse: [
+        'Camera capture only → native input without the dropzone chrome.',
+        'Async cloud picker → integrate your provider UI.',
+      ],
+      anatomy: [
+        {
+          region: 'Dropzone',
+          detail: 'Prompt, browse button, and hidden file input.',
+        },
+        {
+          region: 'File list',
+          detail: 'Name, size, and remove control per file.',
+        },
+      ],
+      accessibility: [
+        'Browse button is keyboard reachable; dropzone respects `aria-disabled`.',
+        'Remove buttons expose `aria-label` per file.',
+        'List updates use `aria-live="polite"`.',
+      ],
+      keyboard: ['Tab to browse; activate with Enter/Space on the button.'],
     },
     dialog: {
       intro: [
@@ -580,7 +711,7 @@ export const STORY_OVERVIEW_SOURCE = {
     spinner: {
       intro: [
         'Inline loading indicator with `role="status"` and `aria-busy="true"`.',
-        'Dual-ring SVG: muted track and rotating arc (~0.9s). Glyph uses `currentColor`.',
+        'Dual-ring SVG: muted track and rotating arc (~0.9s). Glyph uses `--au-color-action-primary` by default.',
       ],
       whenToUse: [
         'Table or panel loading rows while data fetches.',
@@ -660,6 +791,44 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['`aria-orientation` from `orientation`.'],
+    },
+    'empty-state': {
+      intro: [
+        'Centered placeholder when a list, table, panel, or search has no data to show.',
+        'Compose with `title`, optional `description`, media (`icon`, `imageSrc`, or projected `[auEmptyStateMedia]`), and projected actions.',
+      ],
+      whenToUse: [
+        'Empty table or list after filters return zero rows.',
+        'First-use panels that need a primary action (create, import, connect).',
+      ],
+      whenNotToUse: [
+        'Loading placeholders → `au-skeleton`.',
+        'Inline status or errors → `au-message`.',
+        'Blocking fetch in a button or row → `au-spinner`.',
+      ],
+      anatomy: [
+        {
+          region: 'Media',
+          detail:
+            'Optional illustration: preset icon, `imageSrc`, or custom markup via `[auEmptyStateMedia]` (first match wins).',
+        },
+        {
+          region: 'Title',
+          detail: 'Heading (`headingLevel` 2–4) names the region.',
+        },
+        {
+          region: 'Description',
+          detail: 'Supporting copy under the title.',
+        },
+        {
+          region: 'Actions',
+          detail: 'Project buttons or links; container hidden when empty.',
+        },
+      ],
+      accessibility: [
+        '`role="region"` with `aria-labelledby` on the title.',
+        'Pick `headingLevel` to fit the surrounding heading outline.',
+      ],
     },
     badge: {
       intro: [
@@ -886,6 +1055,7 @@ export const STORY_OVERVIEW_SOURCE = {
         'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
         'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
         'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
+        'Empty data: project `au-empty-state` as a child (use `size="sm"` and `headingLevel="3"`); otherwise `emptyMessage` is shown.',
       ],
       whenToUse: [
         'Tabular data with headers and body rows.',
@@ -915,6 +1085,11 @@ export const STORY_OVERVIEW_SOURCE = {
         {
           region: '`auTableCell`',
           detail: 'Optional template for rich cell content (badges, menus).',
+        },
+        {
+          region: 'Empty row',
+          detail:
+            'When `data` is empty, project `au-empty-state` for rich placeholders; falls back to `emptyMessage`.',
         },
       ],
       accessibility: [
@@ -1024,6 +1199,38 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       extra:
         '### Exportaciones relacionadas\n\n`AU_FORM_FIELD`, `AuFormFieldContext` — import desde `@aurea-design-system/components`.',
+    },
+    fieldset: {
+      intro: [
+        'Agrupa controles relacionados con un `<fieldset>` nativo, `<legend>` opcional y descripción de apoyo.',
+        'Usa `[disabled]="true"` para deshabilitar todos los controles anidados de una vez.',
+      ],
+      whenToUse: [
+        'Bloques de dirección, secciones de pago o filtros que pertenecen juntos semánticamente.',
+        'Formularios donde una leyenda compartida nombra la región para tecnología asistiva.',
+      ],
+      whenNotToUse: [
+        'Solo agrupación visual → card o divider.',
+        'Un solo campo → `au-form-field` suelto.',
+      ],
+      anatomy: [
+        {
+          region: 'Leyenda',
+          detail: 'Se omite cuando `legend` está vacío.',
+        },
+        {
+          region: 'Descripción',
+          detail: 'Texto de ayuda opcional bajo la leyenda.',
+        },
+        {
+          region: 'Slot de contenido',
+          detail: 'Proyecta filas `au-form-field` u otros controles.',
+        },
+      ],
+      accessibility: [
+        'Semántica nativa `fieldset`/`legend` propagada a inputs anidados.',
+        'El estado disabled deshabilita todos los descendientes sin cableado extra.',
+      ],
     },
     'input-text': {
       intro: [
@@ -1203,6 +1410,42 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: ['Combobox con listbox; estado abierto en `data-au-listbox-open`.'],
       keyboard: ['Igual que select; escritura filtra opciones.'],
     },
+    accordion: {
+      intro: [
+        'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y regiones `[auAccordionPanel]` comparten una clave string.',
+        'Enlaza `[(value)]` a la lista de claves expandidas; `[multiple]="false"` para expansión exclusiva.',
+      ],
+      whenToUse: [
+        'FAQ, paneles de ajustes o filtros donde solo parte del contenido debe estar visible.',
+        'Formularios largos divididos en secciones escaneables en una página.',
+      ],
+      whenNotToUse: [
+        'Vistas mutuamente excluyentes con chrome de pestañas → `au-tabs`.',
+        'Asistente secuencial con validación → `au-steps`.',
+      ],
+      anatomy: [
+        {
+          region: '`.au-accordion__item`',
+          detail: 'Envuelve cada par trigger + panel.',
+        },
+        {
+          region: '`button[auAccordionItem]`',
+          detail: 'Disparador con `aria-expanded` y `aria-controls`.',
+        },
+        {
+          region: '`[auAccordionPanel]`',
+          detail: 'Región; `hidden` cuando está colapsada.',
+        },
+      ],
+      accessibility: [
+        'Raíz `role="region"` con `aria-label` o labelledby.',
+        'Los triggers permanecen en el orden de tabulación; los paneles exponen `aria-labelledby`.',
+      ],
+      keyboard: [
+        'Flecha abajo/arriba mueven el foco entre triggers habilitados.',
+        'Home/End saltan al primero/último; Enter/Espacio alternan en el botón.',
+      ],
+    },
     'radio-group': {
       intro: [
         'Grupo de botones radio nativos dentro de un shell con leyenda. Una sola selección por `name`.',
@@ -1247,6 +1490,39 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: ['Label, error y foco como el resto de campos.'],
     },
+    slider: {
+      intro: [
+        'Input nativo `type="range"` estilizado con tokens Aurea y salida de valor opcional.',
+        'Implementa `FormValueControl<number>`; proyecta dentro de `au-form-field` para label, hint y errores.',
+      ],
+      whenToUse: [
+        'Volumen, opacidad o cualquier valor continuo acotado donde arrastrar es más rápido que escribir.',
+        'Ajustes con min/max visibles y pasos gruesos.',
+      ],
+      whenNotToUse: [
+        'Entrada numérica exacta → `au-input-number`.',
+        'Opciones discretas → radio group o select.',
+      ],
+      anatomy: [
+        {
+          region: 'Pista',
+          detail: 'Relleno según el valor entre min y max.',
+        },
+        {
+          region: 'Thumb',
+          detail: 'Control nativo con anillo de foco.',
+        },
+        {
+          region: 'Valor visible',
+          detail: 'Región opcional `showValue` enlazada vía `aria-describedby`.',
+        },
+      ],
+      accessibility: [
+        'Ids de label y error desde `au-form-field`.',
+        'El valor se anuncia cuando `showValue` está activo.',
+      ],
+      keyboard: ['Las flechas ajustan el valor según el comportamiento nativo del range.'],
+    },
     'input-date': {
       intro: [
         'Selector de fecha nativo (`<input type="date">`) con tokens Aurea en icono y popup del SO.',
@@ -1266,6 +1542,36 @@ export const STORY_OVERVIEW_SOURCE = {
       accessibility: [
         'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
       ],
+    },
+    'file-upload': {
+      intro: [
+        'Zona drag-and-drop con `input[type="file"]` oculto, botón de explorar y lista de archivos removibles.',
+        'Implementa `FormValueControl<File[]>`; selección vacía = `[]`.',
+      ],
+      whenToUse: [
+        'Adjuntos, importaciones o subida de medios en formularios.',
+        'Cuando conviene soltar archivos sobre un objetivo grande.',
+      ],
+      whenNotToUse: [
+        'Solo captura de cámara → input nativo sin chrome de dropzone.',
+        'Selector en la nube → integra el UI de tu proveedor.',
+      ],
+      anatomy: [
+        {
+          region: 'Dropzone',
+          detail: 'Texto, botón explorar e input file oculto.',
+        },
+        {
+          region: 'Lista',
+          detail: 'Nombre, tamaño y quitar por archivo.',
+        },
+      ],
+      accessibility: [
+        'El botón explorar es alcanzable por teclado; la dropzone respeta `aria-disabled`.',
+        'Los botones quitar exponen `aria-label` por archivo.',
+        'La lista usa `aria-live="polite"`.',
+      ],
+      keyboard: ['Tab al explorar; Enter/Espacio activan el botón.'],
     },
     dialog: {
       intro: [
@@ -1529,7 +1835,7 @@ export const STORY_OVERVIEW_SOURCE = {
     spinner: {
       intro: [
         'Indicador de carga inline con `role="status"` y `aria-busy="true"`.',
-        'SVG de doble anillo: pista tenue y arco animado (~0,9 s). El glifo usa `currentColor`.',
+        'SVG de doble anillo: pista tenue y arco animado (~0,9 s). El glifo usa `--au-color-action-primary` por defecto.',
       ],
       whenToUse: [
         'Filas o paneles mientras llegan datos.',
@@ -1612,6 +1918,44 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['`aria-orientation` según `orientation`.'],
+    },
+    'empty-state': {
+      intro: [
+        'Placeholder centrado cuando una lista, tabla, panel o búsqueda no tiene datos.',
+        'Compón con `title`, `description` opcional, media (`icon`, `imageSrc` o `[auEmptyStateMedia]` proyectado) y acciones proyectadas.',
+      ],
+      whenToUse: [
+        'Tabla o lista vacía tras aplicar filtros.',
+        'Paneles de primer uso con acción principal (crear, importar, conectar).',
+      ],
+      whenNotToUse: [
+        'Carga → `au-skeleton`.',
+        'Estado inline o errores → `au-message`.',
+        'Espera en botón o fila → `au-spinner`.',
+      ],
+      anatomy: [
+        {
+          region: 'Media',
+          detail:
+            'Ilustración opcional: icono preset, `imageSrc` o markup custom con `[auEmptyStateMedia]` (gana el primero).',
+        },
+        {
+          region: 'Título',
+          detail: 'Encabezado (`headingLevel` 2–4) que nombra la región.',
+        },
+        {
+          region: 'Descripción',
+          detail: 'Texto de apoyo bajo el título.',
+        },
+        {
+          region: 'Acciones',
+          detail: 'Proyecta botones o enlaces; oculto si está vacío.',
+        },
+      ],
+      accessibility: [
+        '`role="region"` con `aria-labelledby` en el título.',
+        'Elige `headingLevel` según el outline de la página.',
+      ],
     },
     badge: {
       intro: [
@@ -1840,6 +2184,7 @@ export const STORY_OVERVIEW_SOURCE = {
         'Orden con columnas `sortable`, `[(sort)]` y `clientSort`. Los iconos de orden usan `au-icon` (`sort-asc`, `sort-desc`, `sort-neutral`).',
         'Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `au-checkbox`.',
         'Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.',
+        'Datos vacíos: proyecta `au-empty-state` como hijo (`size="sm"`, `headingLevel="3"`); si no, se muestra `emptyMessage`.',
       ],
       whenToUse: [
         'Datos tabulares con cabeceras y filas.',
@@ -1869,6 +2214,11 @@ export const STORY_OVERVIEW_SOURCE = {
         {
           region: '`auTableCell`',
           detail: 'Plantilla opcional para celdas ricas (badges, menús).',
+        },
+        {
+          region: 'Fila vacía',
+          detail:
+            'Con `data` vacío, proyecta `au-empty-state` para placeholders ricos; si no, `emptyMessage`.',
         },
       ],
       accessibility: [
