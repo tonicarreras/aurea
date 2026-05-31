@@ -56,16 +56,50 @@ describe('AuMenuItem', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('focuses the item button', () => {
+  it('focuses the item button and marks it active', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     fixture.detectChanges();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
+    const menu = fixture.debugElement.query(By.directive(AuMenu)).componentInstance as AuMenu;
     const btn = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
     const focusSpy = vi.spyOn(btn, 'focus');
     itemCmp.focus();
     expect(focusSpy).toHaveBeenCalled();
+    expect(menu.isActiveMenuItem(itemCmp)).toBe(true);
+  });
+
+  it('exposes label text for typeahead', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
+      .componentInstance as AuMenuItem;
+    expect(itemCmp.labelText()).toBe('Action');
+  });
+
+  it('labelText returns empty string when button has no text content', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
+      .componentInstance as AuMenuItem;
+    vi.spyOn(itemCmp as unknown as { buttonEl: () => HTMLButtonElement }, 'buttonEl').mockReturnValue(
+      { textContent: null } as unknown as HTMLButtonElement,
+    );
+    expect(itemCmp.labelText()).toBe('');
+  });
+
+  it('sets roving tabindex via focus handler', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    const btn = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
+    expect(btn.getAttribute('tabindex')).toBe('0');
+    btn.dispatchEvent(new FocusEvent('focus'));
+    fixture.detectChanges();
+    expect(btn.getAttribute('tabindex')).toBe('0');
   });
 
   it('containsElement matches nodes inside and outside the button', () => {
@@ -92,6 +126,8 @@ describe('AuMenuItem', () => {
           useValue: {
             registerMenuItem: vi.fn(),
             unregisterMenuItem: unregister,
+            isActiveMenuItem: () => false,
+            setActiveMenuItem: vi.fn(),
             close: vi.fn(),
           },
         },

@@ -9,6 +9,21 @@ Git tags for library releases use the prefix **`components-v`** (monorepo conven
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-05-29
+
+### Changed
+
+- Promoted to **stable** (since 1.1.0 beta): **`AuEmptyState`**, **`AuAccordion`**, **`AuFieldset`**, **`AuSlider`**, **`AuFileUpload`** — after a11y audit and docs review.
+- **`AuMenu`** — roving `tabindex` on items and first-character typeahead (closes **A11Y-004**).
+
+### Migration from 1.1.0
+
+No breaking API changes. Beta components from **1.1.0** are now **stable**; update maturity badges in your internal catalogs if you gate on `beta`.
+
+```bash
+bun add @aurea-design-system/components@1.2.0
+```
+
 ## [1.1.0] - 2026-05-31
 
 ### Added

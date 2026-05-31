@@ -1,7 +1,7 @@
 # Accessibility audit — Aurea v0.9
 
 Baseline: **WCAG 2.2 Level AA** for documented **stable** components.  
-Last review: **2026-05-23** (post Phase 4 + menu/popover/table stable).
+Last review: **2026-05-29** (1.2.0 stable promotions + menu A11Y-004).
 
 ## Summary
 
@@ -30,7 +30,7 @@ Last review: **2026-05-23** (post Phase 4 + menu/popover/table stable).
 
 | Component       | Status | Notes                                                              |
 | --------------- | ------ | ------------------------------------------------------------------ |
-| `au-menu`       | Stable | Escape closes; roving tabindex / typeahead planned 0.10 (A11Y-004) |
+| `au-menu`       | Stable | Escape closes; roving `tabindex` + typeahead (1.2.0, A11Y-004) |
 | `au-popover`    | Stable | `role="dialog"` non-modal; focus return on close                   |
 | `au-pagination` | Stable | `aria-current="page"` on active page button                        |
 | `au-table`      | Stable | Native table semantics; sort header exposes `aria-sort`            |
@@ -46,6 +46,16 @@ Last review: **2026-05-23** (post Phase 4 + menu/popover/table stable).
 - **au-tabs**: Ensure selected tab `aria-selected` when dynamically added tabs.
 - **au-steps**: Step state should expose current step to SR (roadmap: `aria-current="step"`).
 
+### Stable (1.1.0 → 1.2.0)
+
+| Component         | Status | Notes                                                                 |
+| ----------------- | ------ | --------------------------------------------------------------------- |
+| `au-empty-state`  | Stable | Heading level configurable; not for loading or alerts                 |
+| `au-accordion`    | Stable | `button[auAccordionItem]` + `[auAccordionPanel]`; arrow/Home/End keys |
+| `au-fieldset`     | Stable | Native `fieldset` + legend/description                                |
+| `au-slider`       | Stable | Native range; use inside `au-form-field`                              |
+| `au-file-upload`  | Stable | Drag-and-drop + browse; label/`controlId` aligned with form-field     |
+
 ### Known debt (tracked as GitHub issues)
 
 | ID       | Component       | Issue                                                              | Milestone |
@@ -53,7 +63,7 @@ Last review: **2026-05-23** (post Phase 4 + menu/popover/table stable).
 | A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                 | 0.10      |
 | A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                             | 0.10      |
 | A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing | —         |
-| A11Y-004 | `au-menu`       | Roving tabindex + typeahead                                        | 0.10      |
+| A11Y-004 | `au-menu`       | ~~Roving tabindex + typeahead~~ **Fixed** in **1.2.0**             | —         |
 
 Issue bodies: [docs/a11y/issue-templates.md](../../docs/a11y/issue-templates.md).
 

@@ -7,7 +7,7 @@ import { AuSlider } from './slider';
 const meta: Meta<AuSlider> = {
   title: 'Aurea/Slider',
   component: AuSlider,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('slider'),
   argTypes: {
     min: { control: 'number', table: { category: 'Behavior' } },

@@ -24,7 +24,7 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | P1       | Progress                    | `AuProgress`                            |
 | P2       | Link                        | `AuLink`                                |
 
-**Next in 0.5.x (phase 2 continuation):** Accordion, Empty state, Slider, File upload, Fieldset layout.
+**Next in 0.5.x (phase 2 continuation):** Accordion, Empty state, Slider, File upload, Fieldset layout — **delivered in 1.1.0** (beta); **promoted to stable in 1.2.0** after a11y + docs audit. New components ship **1–2 per MINOR** release (same cadence as 1.1.0).
 
 ## Phase 3 — Pro quality (delivered)
 
@@ -51,10 +51,12 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | Version       | Focus                                       |
 | ------------- | ------------------------------------------- |
 | **0.4.x**     | Phase 2 core components                     |
-| **0.5.x**     | Accordion, empty state, form layout, slider |
-| **0.6–0.8.x** | Table data features, file upload            |
-| **0.9.x**     | Visual regression + API freeze candidate    |
-| **1.0.0**     | Stable core, public roadmap, reference app  |
+| **0.5.x**     | Accordion, empty state, form layout, slider (**1.1.0** beta → **1.2.0** stable) |
+| **0.6–0.8.x** | Table data features, file upload (**1.1.0** beta → **1.2.0** stable)            |
+| **0.9.x**     | Visual regression + API freeze candidate                                        |
+| **1.0.0**     | Stable core, public roadmap, reference app                                      |
+| **1.1.0**     | Empty state, accordion, fieldset, slider, file upload (beta)                    |
+| **1.2.0**     | Promote 1.1.0 betas to stable; menu roving tabindex + typeahead (A11Y-004)    |
 
 ## Post-1.0 — Tooling
 

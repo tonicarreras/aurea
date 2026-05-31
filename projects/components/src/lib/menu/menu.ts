@@ -37,7 +37,7 @@ export function auMenuSelfRef(): typeof AuMenu {
  * - **Items:** `au-menu-item` emits `select` and closes the menu.
  * - **Dismiss:** outside click and Escape.
  * - **Exclusive open:** opening one menu closes any other open menu on the page.
- * - **Keyboard:** Arrow keys cycle items; Home/End jump to ends; Enter/Space activates; Escape closes.
+ * - **Keyboard:** Arrow keys cycle items; Home/End jump to ends; typeahead by first character; Enter/Space activates; Escape closes.
  * - **Focus:** moves to the first item on open, returns to the trigger on close.
  *
  * @example
@@ -84,6 +84,7 @@ export class AuMenu {
 
   /** Registered menu items for keyboard navigation. */
   private readonly menuItems = signal<AuMenuItem[]>([]);
+  private readonly activeMenuItem = signal<AuMenuItem | null>(null);
   private savedTrigger: HTMLElement | null = null;
 
   private readonly releaseMenuOnDestroy = this.destroyRef.onDestroy(() => releaseOpenMenu(this));
@@ -102,6 +103,17 @@ export class AuMenu {
 
   unregisterMenuItem(item: AuMenuItem): void {
     this.menuItems.update((list) => list.filter((i) => i !== item));
+    if (this.activeMenuItem() === item) {
+      this.activeMenuItem.set(null);
+    }
+  }
+
+  isActiveMenuItem(item: AuMenuItem): boolean {
+    return this.activeMenuItem() === item;
+  }
+
+  setActiveMenuItem(item: AuMenuItem): void {
+    this.activeMenuItem.set(item);
   }
 
   toggle(): void {
@@ -123,6 +135,7 @@ export class AuMenu {
       claimOpenMenu(this);
     } else {
       releaseOpenMenu(this);
+      this.activeMenuItem.set(null);
     }
     this.open.set(value);
     this.openChange.emit(value);
@@ -150,7 +163,7 @@ export class AuMenu {
     const items = this.enabledMenuItems();
     if (items.length > 0 && !panel.contains(document.activeElement)) {
       this.savedTrigger = trigger;
-      items[0].focus();
+      this.focusMenuItem(items[0]);
     }
   });
 
@@ -189,28 +202,57 @@ export class AuMenu {
         event.preventDefault();
         const cur = this.findFocusedItemIndex(items);
         const next = cur < 0 ? 0 : (cur + 1) % items.length;
-        items[next].focus();
+        this.focusMenuItem(items[next]);
         return;
       }
       case 'ArrowUp': {
         event.preventDefault();
         const cur = this.findFocusedItemIndex(items);
         const prev = cur < 0 ? items.length - 1 : (cur - 1 + items.length) % items.length;
-        items[prev].focus();
+        this.focusMenuItem(items[prev]);
         return;
       }
       case 'Home': {
         event.preventDefault();
-        items[0].focus();
+        this.focusMenuItem(items[0]);
         return;
       }
       case 'End': {
         event.preventDefault();
-        items[items.length - 1].focus();
+        this.focusMenuItem(items[items.length - 1]);
         return;
       }
-      default:
+      default: {
+        if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+          this.handleTypeahead(event.key);
+        }
         return;
+      }
+    }
+  }
+
+  private focusMenuItem(item: AuMenuItem): void {
+    this.activeMenuItem.set(item);
+    item.focus();
+  }
+
+  private handleTypeahead(key: string): void {
+    const items = this.enabledMenuItems();
+    if (items.length === 0) {
+      return;
+    }
+    const char = key.toLowerCase();
+    if (!/[\p{L}\p{N}]/u.test(char)) {
+      return;
+    }
+    const cur = this.findFocusedItemIndex(items);
+    const start = cur < 0 ? 0 : cur + 1;
+    for (let offset = 0; offset < items.length; offset++) {
+      const item = items[(start + offset) % items.length]!;
+      if (item.labelText().toLowerCase().startsWith(char)) {
+        this.focusMenuItem(item);
+        return;
+      }
     }
   }
 
