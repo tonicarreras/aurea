@@ -1,3 +1,7 @@
+import * as accordion from './accordion/index';
+import * as fieldset from './fieldset/index';
+import * as fileUpload from './file-upload/index';
+import * as slider from './slider/index';
 import * as autocomplete from './autocomplete/index';
 import * as badge from './badge/index';
 import * as breadcrumb from './breadcrumb/index';
@@ -18,6 +22,7 @@ import * as popover from './popover/index';
 import * as progress from './progress/index';
 import * as dialog from './dialog/index';
 import * as divider from './divider/index';
+import * as emptyState from './empty-state/index';
 import * as formField from './form-field/index';
 import * as icon from './icon/index';
 import * as radioGroup from './radio-group/index';
@@ -35,6 +40,9 @@ import * as tokens from './tokens/index';
 describe('library barrel exports', () => {
   it('re-exports all public components', () => {
     expect(autocomplete.AuAutocomplete).toBeDefined();
+    expect(accordion.AuAccordion).toBeDefined();
+    expect(accordion.AuAccordionItem).toBeDefined();
+    expect(accordion.AuAccordionPanel).toBeDefined();
     expect(badge.AuBadge).toBeDefined();
     expect(breadcrumb.AuBreadcrumb).toBeDefined();
     expect(button.AuButton).toBeDefined();
@@ -59,12 +67,17 @@ describe('library barrel exports', () => {
     expect(progress.AuProgress).toBeDefined();
     expect(dialog.AuDialog).toBeDefined();
     expect(divider.AuDivider).toBeDefined();
+    expect(emptyState.AuEmptyState).toBeDefined();
+    expect(emptyState.AuEmptyStateMedia).toBeDefined();
+    expect(fieldset.AuFieldset).toBeDefined();
+    expect(fileUpload.AuFileUpload).toBeDefined();
     expect(formField.AuFormField).toBeDefined();
     expect(icon.AuIcon).toBeDefined();
     expect(dialog.AuDialogFooter).toBeDefined();
     expect(radioGroup.AuRadioGroup).toBeDefined();
     expect(select.AuSelect).toBeDefined();
     expect(skeleton.AuSkeleton).toBeDefined();
+    expect(slider.AuSlider).toBeDefined();
     expect(spinner.AuSpinner).toBeDefined();
     expect(snackbar.AuSnackbar).toBeDefined();
     expect(switchMod.AuSwitch).toBeDefined();

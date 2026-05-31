@@ -1,3 +1,7 @@
+export * from './accordion.examples';
+export * from './fieldset.examples';
+export * from './file-upload.examples';
+export * from './slider.examples';
 export * from './button.examples';
 export * from './form-field.examples';
 export * from './input-text.examples';

@@ -246,18 +246,23 @@ au-table[data-au-striped] .au-table__grid tbody tr:nth-child(even):not(.au-table
 }
 
 au-table .au-table__empty-row td {
-  padding: var(--au-space-6) var(--au-table-cell-x);
+  padding: 0;
   text-align: center;
+}
+
+au-table .au-table__empty-message {
+  display: block;
+  padding: var(--au-space-6) var(--au-table-cell-x);
   color: var(--au-color-text-tertiary);
+}
+
+au-table .au-table__empty-row au-empty-state {
+  width: 100%;
 }
 
 au-table .au-table__loading-row td {
   padding: var(--au-space-6) var(--au-table-cell-x);
   text-align: center;
-}
-
-au-table .au-table__loading-row au-spinner {
-  color: var(--au-color-action-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {

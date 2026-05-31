@@ -1,0 +1,7 @@
+<div
+  class="au-accordion__root"
+  [attr.aria-label]="ariaLabel().trim() || null"
+  (keydown)="onRootKeydown($event)"
+>
+  <ng-content />
+</div>

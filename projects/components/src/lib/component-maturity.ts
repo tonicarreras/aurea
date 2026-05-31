@@ -46,6 +46,31 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
   skeleton: { level: 'stable', since: '0.2.0' },
   spinner: { level: 'stable', since: '1.0.0' },
   divider: { level: 'stable', since: '0.1.0' },
+  'empty-state': {
+    level: 'beta',
+    since: '1.1.0',
+    note: 'Centered placeholder for empty lists/tables; not for loading or alerts.',
+  },
+  accordion: {
+    level: 'beta',
+    since: '1.1.0',
+    note: 'Collapsible sections with `auAccordionItem` / `auAccordionPanel` triggers.',
+  },
+  fieldset: {
+    level: 'beta',
+    since: '1.1.0',
+    note: 'Groups related fields with legend and description.',
+  },
+  slider: {
+    level: 'beta',
+    since: '1.1.0',
+    note: 'Native range input; use inside `au-form-field`.',
+  },
+  'file-upload': {
+    level: 'beta',
+    since: '1.1.0',
+    note: 'Drag-and-drop file picker with removable list.',
+  },
   tooltip: { level: 'stable', since: '0.2.0' },
   badge: { level: 'stable', since: '0.4.0' },
   progress: { level: 'stable', since: '0.4.0' },

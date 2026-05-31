@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { AuBadge, AuTable, AuTableCellDef, AuTableColumn } from '@aurea-design-system/components';
+import {
+  AuBadge,
+  AuButton,
+  AuEmptyState,
+  AuTable,
+  AuTableCellDef,
+  AuTableColumn,
+} from '@aurea-design-system/components';
 import { docsExampleLive } from '../../core/docs-example-live-copy';
 
 @Component({
@@ -170,5 +177,46 @@ export class ExampleTableCustomCellDemo {
   `,
 })
 export class ExampleTableLoadingDemo {
+  readonly t = docsExampleLive('table');
+}
+
+@Component({
+  selector: 'docs-example-table-empty',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuTable, AuTableColumn, AuEmptyState, AuButton],
+  template: `
+    <au-table
+      [data]="[]"
+      [title]="t().empty.title"
+      [description]="t().empty.description"
+      [caption]="t().caption"
+    >
+      <au-table-column
+        name="name"
+        [header]="t().colName"
+        cellVariant="primary"
+      />
+      <au-table-column
+        name="role"
+        [header]="t().colRole"
+        cellVariant="secondary"
+      />
+      <au-table-column
+        name="score"
+        [header]="t().colScore"
+        align="end"
+      />
+      <au-empty-state
+        [title]="t().empty.stateTitle"
+        [description]="t().empty.stateDescription"
+        size="sm"
+        [headingLevel]="3"
+      >
+        <au-button type="button">{{ t().empty.action }}</au-button>
+      </au-empty-state>
+    </au-table>
+  `,
+})
+export class ExampleTableEmptyDemo {
   readonly t = docsExampleLive('table');
 }

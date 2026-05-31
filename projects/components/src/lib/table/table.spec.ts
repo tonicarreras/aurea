@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { AuEmptyState } from '../empty-state/empty-state';
 import { AuTableCellDef } from './au-table-cell-def.directive';
 import { AuTableColumn } from './au-table-column';
 import { AuTable } from './table';
@@ -200,6 +201,37 @@ describe('AuTable', () => {
     fixture.componentInstance.rows = [];
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('No data');
+    expect(fixture.nativeElement.querySelector('.au-table__empty-message')).not.toBeNull();
+  });
+
+  it('projects au-empty-state when data is empty', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn, AuEmptyState],
+      template: `
+        <au-table [data]="[]">
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+          <au-empty-state
+            title="No users yet"
+            description="Create your first user."
+            size="sm"
+            [headingLevel]="3"
+          />
+        </au-table>
+      `,
+    })
+    class EmptyStateHost {}
+
+    await TestBed.configureTestingModule({ imports: [EmptyStateHost] }).compileComponents();
+    const fixture = TestBed.createComponent(EmptyStateHost);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('au-empty-state')).not.toBeNull();
+    expect(root.querySelector('.au-table__empty-message')).toBeNull();
+    expect(root.textContent).toContain('No users yet');
+    expect(root.textContent).not.toContain('No data');
   });
 
   it('applies striped, compact, and sticky header host attributes', async () => {

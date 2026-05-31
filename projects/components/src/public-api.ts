@@ -10,6 +10,10 @@ export {
 } from './lib/component-maturity';
 export type { AuSize } from './lib/au-size';
 export type { AuFieldOption } from './lib/field-option';
+export * from './lib/accordion';
+export * from './lib/fieldset';
+export * from './lib/file-upload';
+export * from './lib/slider';
 export * from './lib/autocomplete';
 export * from './lib/badge';
 export * from './lib/breadcrumb';
@@ -30,6 +34,7 @@ export * from './lib/menu';
 export * from './lib/message';
 export * from './lib/dialog';
 export * from './lib/divider';
+export * from './lib/empty-state';
 export * from './lib/form-field';
 export * from './lib/icon';
 export * from './lib/radio-group';

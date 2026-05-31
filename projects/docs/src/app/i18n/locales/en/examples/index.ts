@@ -5,6 +5,7 @@ import { examples as textareaExamples } from './textarea';
 import { examples as checkboxExamples } from './checkbox';
 import { examples as switchExamples } from './switch';
 import { examples as selectExamples } from './select';
+import { examples as accordionExamples } from './accordion';
 import { examples as autocompleteExamples } from './autocomplete';
 import { examples as radioGroupExamples } from './radio-group';
 import { examples as inputNumberExamples } from './input-number';
@@ -24,11 +25,15 @@ import { examples as stepsExamples } from './steps';
 import { examples as badgeExamples } from './badge';
 import { examples as breadcrumbExamples } from './breadcrumb';
 import { examples as dividerExamples } from './divider';
+import { examples as emptyStateExamples } from './empty-state';
+import { examples as fieldsetExamples } from './fieldset';
+import { examples as fileUploadExamples } from './file-upload';
 import { examples as linkExamples } from './link';
 import { examples as menuExamples } from './menu';
 import { examples as paginationExamples } from './pagination';
 import { examples as popoverExamples } from './popover';
 import { examples as progressExamples } from './progress';
+import { examples as sliderExamples } from './slider';
 import { examples as tableExamples } from './table';
 import { examples as tooltipExamples } from './tooltip';
 import type { ComponentDocExample } from '../../../types/example';
@@ -36,6 +41,7 @@ import type { ComponentDocExample } from '../../../types/example';
 export type { ComponentDocExample } from '../../../types/example';
 
 export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = {
+  accordion: accordionExamples,
   button: buttonExamples,
   'form-field': formFieldExamples,
   'input-text': inputTextExamples,
@@ -60,6 +66,9 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   spinner: spinnerExamples,
   steps: stepsExamples,
   divider: dividerExamples,
+  'empty-state': emptyStateExamples,
+  fieldset: fieldsetExamples,
+  'file-upload': fileUploadExamples,
   badge: badgeExamples,
   breadcrumb: breadcrumbExamples,
   link: linkExamples,
@@ -67,6 +76,7 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   pagination: paginationExamples,
   popover: popoverExamples,
   progress: progressExamples,
+  slider: sliderExamples,
   table: tableExamples,
   tooltip: tooltipExamples,
 };

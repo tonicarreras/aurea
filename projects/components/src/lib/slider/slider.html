@@ -1,0 +1,41 @@
+<div
+  class="au-slider__control-row"
+  [class.au-slider__control-row--from-tab]="fieldFocusByTab()"
+  [class.au-slider__control-row--invalid]="effectiveInvalid()"
+  [style.--au-slider-fill]="percent() + '%'"
+  (focusin)="onControlRowFocusin()"
+  (focusout)="onControlRowFocusout($event)"
+>
+  <input
+    #inputEl
+    class="au-slider__input"
+    type="range"
+    [id]="controlId()"
+    [attr.name]="name() || null"
+    [min]="effectiveMin()"
+    [max]="effectiveMax()"
+    [step]="step()"
+    [value]="value()"
+    [attr.aria-valuemin]="effectiveMin()"
+    [attr.aria-valuemax]="effectiveMax()"
+    [attr.aria-valuenow]="value()"
+    [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
+    [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
+    [attr.aria-describedby]="ariaDescribedBy() ?? null"
+    [attr.aria-required]="required() ? 'true' : null"
+    [disabled]="disabled()"
+    [attr.readonly]="readOnly() ? true : null"
+    [attr.required]="required() ? true : null"
+    (input)="onInput($event)"
+    (blur)="onBlurHost()"
+  />
+  @if (showValue()) {
+    <output
+      class="au-slider__value"
+      [id]="controlId() + '-value'"
+      [attr.for]="controlId()"
+    >
+      {{ value() }}
+    </output>
+  }
+</div>

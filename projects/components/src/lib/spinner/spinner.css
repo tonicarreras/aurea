@@ -1,7 +1,7 @@
 :host {
   --au-spinner-duration: var(--au-duration-spinner, 0.9s);
-  --au-spinner-arc: currentColor;
-  --au-spinner-track: color-mix(in srgb, currentColor 22%, transparent);
+  --au-spinner-arc: var(--au-color-action-primary);
+  --au-spinner-track: color-mix(in srgb, var(--au-spinner-arc) 22%, transparent);
 
   display: inline-flex;
   flex-shrink: 0;
@@ -84,7 +84,7 @@
 }
 
 .au-spinner__arc {
-  stroke: currentColor;
+  stroke: var(--au-spinner-arc);
   stroke-dasharray: 28 72;
 }
 

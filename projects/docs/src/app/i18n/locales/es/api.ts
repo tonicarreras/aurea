@@ -83,6 +83,21 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  fieldset: {
+    importNames: ['AuFieldset'],
+    sections: [
+      {
+        title: 'AuFieldset',
+        description: 'Wrapper `fieldset` nativo para agrupar controles de formulario.',
+        rows: [
+          i('legend', 'string', 'Texto de la leyenda.', "''"),
+          i('description', 'string', 'Texto de apoyo bajo la leyenda.', "''"),
+          i('disabled', 'boolean', 'Desactiva todos los controles anidados.', 'false'),
+          i('size', "'sm' | 'md'", 'Densidad tipográfica.', "'md'"),
+        ],
+      },
+    ],
+  },
   'input-text': {
     importNames: ['AuFormField', 'AuInputText'],
     sections: [
@@ -211,6 +226,36 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  accordion: {
+    importNames: ['AuAccordion', 'AuAccordionItem', 'AuAccordionPanel'],
+    sections: [
+      {
+        title: 'AuAccordion',
+        description: 'Raíz del acordeón; enlaza claves expandidas con `[(value)]`.',
+        rows: [
+          m('value', 'ModelSignal<string[]>', 'Claves de secciones expandidas.'),
+          i('multiple', 'boolean', 'Permite varios paneles abiertos.', 'true'),
+          i('ariaLabel', 'string', 'Nombre accesible de la región.', "''"),
+          i('size', "'sm' | 'md'", 'Densidad tipográfica del trigger.', "'md'"),
+          i('id', 'string', 'Prefijo de id estable para triggers/paneles.', "''"),
+          o('valueChange', 'string[]', 'Al cambiar las claves expandidas.'),
+        ],
+      },
+      {
+        title: 'AuAccordionItem',
+        description: 'En `<button type="button">` con clave que coincide con su panel.',
+        rows: [
+          i('auAccordionItem', 'string', 'Clave de sección (input requerido).'),
+          i('auAccordionItemDisabled', 'boolean', 'Impide expandir/colapsar.', 'false'),
+        ],
+      },
+      {
+        title: 'AuAccordionPanel',
+        description: 'Región del panel emparejada con una clave de trigger.',
+        rows: [i('auAccordionPanel', 'string', 'Clave de sección (input requerido).')],
+      },
+    ],
+  },
   'radio-group': {
     importNames: ['AuFormField', 'AuRadioGroup', 'type AuRadioOption'],
     sections: [
@@ -258,6 +303,32 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  slider: {
+    importNames: ['AuFormField', 'AuSlider'],
+    sections: [
+      {
+        title: 'AuSlider',
+        description:
+          'Proyecta dentro de `au-form-field`. Range nativo. `FormValueControl<number>`.',
+        rows: [
+          m('value', 'ModelSignal<number>', 'Valor actual.'),
+          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
+          i('invalid', 'boolean', 'Inválido.', 'false'),
+          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          i('readOnly', 'boolean', 'Solo lectura.', 'false'),
+          i('required', 'boolean', 'Obligatorio.', 'false'),
+          i('name', 'string', '`name` nativo.', "''"),
+          i('min', 'number | undefined', 'Mínimo del rango (por defecto 0).'),
+          i('max', 'number | undefined', 'Máximo del rango (por defecto 100).'),
+          i('step', 'number', 'Paso nativo.', '1'),
+          i('showValue', 'boolean', 'Muestra el valor en vivo.', 'false'),
+          i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
+          o('blur', 'void', 'Blur.'),
+          o('valueChange', 'number', 'Al cambiar un valor finito.'),
+        ],
+      },
+    ],
+  },
   'input-date': {
     importNames: ['AuFormField', 'AuInputDate'],
     sections: [
@@ -277,6 +348,32 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
           o('blur', 'void', 'Blur.'),
           o('valueChange', 'string | null', 'Al elegir fecha.'),
+        ],
+      },
+    ],
+  },
+  'file-upload': {
+    importNames: ['AuFormField', 'AuFileUpload'],
+    sections: [
+      {
+        title: 'AuFileUpload',
+        description:
+          'Proyecta dentro de `au-form-field`. Selector con drag-and-drop. `FormValueControl<File[]>`.',
+        rows: [
+          m('value', 'ModelSignal<File[]>', 'Archivos seleccionados.'),
+          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
+          i('invalid', 'boolean', 'Inválido.', 'false'),
+          i('accept', 'string', 'Filtro nativo `accept`.', "''"),
+          i('multiple', 'boolean', 'Permite varios archivos.', 'true'),
+          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          i('required', 'boolean', 'Obligatorio.', 'false'),
+          i('name', 'string', '`name` nativo.', "''"),
+          i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
+          i('browseLabel', 'string', 'Etiqueta del botón explorar.', "'Browse files'"),
+          i('dropLabel', 'string', 'Texto de la dropzone.', "'Drag files here or browse'"),
+          i('removeFileLabel', 'string', 'Prefijo del `aria-label` de quitar.', "'Remove file'"),
+          o('blur', 'void', 'Blur del input oculto.'),
+          o('valueChange', 'File[]', 'Al cambiar la lista de archivos.'),
         ],
       },
     ],
@@ -606,6 +703,45 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'empty-state': {
+    importNames: ['AuEmptyState', 'AuEmptyStateMedia'],
+    sections: [
+      {
+        title: 'AuEmptyState',
+        description:
+          'Placeholder vacío centrado; proyecta acciones en el slot por defecto. Prioridad de media: `[auEmptyStateMedia]` → `imageSrc` → `icon`.',
+        rows: [
+          i('title', 'string', 'Texto del encabezado principal.', "''"),
+          i('description', 'string', 'Copy de apoyo bajo el título.', "''"),
+          i(
+            'icon',
+            'AuIconName',
+            'Glifo decorativo en superficie hundida; omite si usas imagen o media custom.',
+            'undefined',
+          ),
+          i(
+            'imageSrc',
+            'string',
+            'URL de ilustración; ignorada si hay media proyectada.',
+            'undefined',
+          ),
+          i(
+            'imageAlt',
+            'string',
+            'Texto `alt` de `imageSrc`; usa `""` para imágenes decorativas.',
+            "''",
+          ),
+          i('size', "'sm' | 'md' | 'lg'", 'Densidad del layout.', "'md'"),
+          i('headingLevel', '2 | 3 | 4', 'Nivel de encabezado del `title`.', '2'),
+        ],
+      },
+      {
+        title: 'AuEmptyStateMedia',
+        description: 'Atributo en SVG, img o markup proyectado para una ilustración custom.',
+        rows: [],
+      },
+    ],
+  },
   badge: {
     importNames: ['AuBadge'],
     sections: [
@@ -776,7 +912,12 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
             'Identidad estable para el tracking de filas.',
             'undefined',
           ),
-          i('emptyMessage', 'string', 'Texto si `data` está vacío.', "'No data'"),
+          i(
+            'emptyMessage',
+            'string',
+            'Texto de respaldo si `data` está vacío y no hay `au-empty-state` proyectado.',
+            "'No data'",
+          ),
         ],
       },
       {

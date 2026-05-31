@@ -1,6 +1,7 @@
 import { TableDemo } from '../../../../demos/previews/table.preview';
 import {
   ExampleTableCustomCellDemo,
+  ExampleTableEmptyDemo,
   ExampleTableLoadingDemo,
   ExampleTableMultipleSelectDemo,
   ExampleTableSingleSelectDemo,
@@ -77,6 +78,26 @@ export const examples: ComponentDocExample[] = [
 >
   <au-table-column name="name" header="Name" />
   <au-table-column name="role" header="Role" />
+</au-table>`,
+  },
+  {
+    title: 'Empty state',
+    description:
+      'Project `au-empty-state` as a child of `au-table`; falls back to `emptyMessage` when omitted.',
+    demoComponent: ExampleTableEmptyDemo,
+    code: `import { AuButton, AuEmptyState, AuTable, AuTableColumn } from '@aurea-design-system/components';
+
+<au-table [data]="[]" title="Users">
+  <au-table-column name="name" header="Name" cellVariant="primary" />
+  <au-table-column name="role" header="Role" />
+  <au-empty-state
+    title="No users yet"
+    description="Create your first user to populate this table."
+    size="sm"
+    [headingLevel]="3"
+  >
+    <au-button type="button">Add user</au-button>
+  </au-empty-state>
 </au-table>`,
   },
 ];

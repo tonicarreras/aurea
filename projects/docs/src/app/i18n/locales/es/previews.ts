@@ -1,6 +1,13 @@
 import type { PreviewMessages } from '../../types/previews';
 
 export const PREVIEWS_ES: PreviewMessages = {
+  accordion: {
+    ariaLabel: 'Ajustes de cuenta',
+    profile: 'Perfil',
+    profilePanel: 'Actualiza nombre y avatar.',
+    billing: 'Facturación',
+    billingPanel: 'Gestiona métodos de pago.',
+  },
   badge: { accent: 'Nuevo', count: '3' },
   breadcrumb: { home: 'Inicio', components: 'Componentes', table: 'Tabla' },
   button: { primary: 'Primario', secondary: 'Secundario', outline: 'Contorno', ghost: 'Fantasma' },
@@ -25,6 +32,13 @@ export const PREVIEWS_ES: PreviewMessages = {
     confirm: 'Confirmar',
   },
   divider: { top: 'Sección superior', label: 'o', bottom: 'Sección inferior' },
+  fieldset: {
+    legend: 'Dirección de envío',
+    description: 'Dónde entregamos tu pedido.',
+    streetLabel: 'Calle',
+    streetPlaceholder: 'Calle Mayor 1',
+  },
+  fileUpload: { label: 'Adjuntos', hint: 'PDF o imágenes de hasta 10 MB.' },
   formField: {
     label: 'Correo',
     hint: 'Usamos tu correo solo para avisos.',
@@ -44,6 +58,7 @@ export const PREVIEWS_ES: PreviewMessages = {
   popover: { trigger: 'Filtros', content: 'Contenido compacto del panel.' },
   radioGroup: { label: 'Plan' },
   select: { label: 'País', placeholder: 'Elige un país' },
+  slider: { label: 'Volumen', hint: 'Ajusta el nivel del altavoz.' },
   snackbar: { show: 'Mostrar snackbar', message: 'Cambios guardados' },
   steps: {
     ariaLabel: 'Secciones de documentación',
