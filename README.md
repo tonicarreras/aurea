@@ -79,13 +79,9 @@ Install and usage docs for consumers: **[`projects/components/README.md`](projec
 
 ## 🧩 Components
 
-| Component       | Description                                            | Status |
-| --------------- | ------------------------------------------------------ | ------ |
-| `au-button`     | Primary, secondary, ghost variants with focus states   | ✅     |
-| `au-input-text` | Text input with label, hint, error, and signal support | ✅     |
-| `au-textarea`   | Multi-line text area with resize control               | ✅     |
-| `au-checkbox`   | Accessible checkbox with custom styling                | ✅     |
-| `au-select`     | Dropdown select with keyboard navigation               | ✅     |
+Full export list, signal-forms notes, and maturity: **[`projects/components/README.md`](projects/components/README.md#components)**.
+
+All catalogued components are **stable** as of **1.5.0** (see [component maturity](projects/components/src/lib/component-maturity.ts) and [docs maturity matrix](https://aurea-ds.netlify.app/en/maturity)).
 
 ---
 
@@ -204,13 +200,10 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 ## 📋 Governance
 
-Documentación de producto y proceso: **[docs/](./docs/)** (índice). En la raíz solo lo habitual para GitHub/npm:
-
 - [CHANGELOG](./CHANGELOG.md) · [CONTRIBUTING](./CONTRIBUTING.md) · [SECURITY](./SECURITY.md)
-- [Roadmap](./docs/ROADMAP.md) · [Versioning](./docs/VERSIONING.md) · [Releases](./docs/RELEASE.md) · [V1 criteria](./docs/V1_CRITERIA.md) (17/19)
-- [Design principles](./docs/DESIGN.md) · [Good first issues](./docs/GOOD_FIRST_ISSUES.md) · [Design tokens (Figma)](./projects/design-tokens/README.md)
-- Live docs: [aurea-ds.netlify.app](https://aurea-ds.netlify.app/) — roadmap, maturity matrix, CRUD demo, migration guides
-- [Component Definition of Done](./projects/components/COMPONENT_DONE.md) · [Accessibility audit](./projects/components/A11Y_AUDIT.md) · [Bundle](./projects/components/BUNDLE.md) · [Performance](./projects/components/PERFORMANCE.md)
+- [Versioning & releases](./docs/VERSIONING.md) · [Roadmap](./docs/ROADMAP.md) · [Design principles](./docs/DESIGN.md)
+- [Library README](./projects/components/README.md) · [A11y audit](./projects/components/A11Y_AUDIT.md) · [Design tokens (Figma)](./projects/design-tokens/README.md)
+- Live: [docs](https://aurea-ds.netlify.app/) · [Storybook](https://aurea-ds-storybook.netlify.app/)
 
 ## 📄 License
 

@@ -11,7 +11,7 @@ export interface ComponentMaturityMeta {
 
 /**
  * Catálogo v1.x — actualizar al cambiar APIs o promover componentes.
- * @see projects/components/COMPONENT_DONE.md
+ * @see CONTRIBUTING.md — Component Definition of Done
  */
 export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
   button: { level: 'stable', since: '0.1.0' },

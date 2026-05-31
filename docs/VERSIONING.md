@@ -1,10 +1,10 @@
-# Versioning policy
+# Versioning & releases
 
 Aurea follows **[Semantic Versioning 2.0.0](https://semver.org/)** for `@aurea-design-system/components`.
 
 ## Version format
 
-`MAJOR.MINOR.PATCH` (e.g. `0.3.1`)
+`MAJOR.MINOR.PATCH` (e.g. `1.5.0`)
 
 | Bump      | When                                                                                                                    |
 | --------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -12,53 +12,64 @@ Aurea follows **[Semantic Versioning 2.0.0](https://semver.org/)** for `@aurea-d
 | **MINOR** | Backward-compatible features: new components, new optional inputs, new tokens, new schematics.                          |
 | **PATCH** | Backward-compatible fixes: a11y, visual bugs, docs-only package metadata.                                               |
 
-While `0.x`, MINOR may include small breaking changes; we document them in [CHANGELOG.md](../CHANGELOG.md) and bump MINOR with a clear migration note.
+While `0.x`, MINOR may include small breaking changes; document them in [CHANGELOG.md](../CHANGELOG.md).
 
 ## Public API surface
 
-Counted as breaking if changed without deprecation:
+Breaking without deprecation:
 
-- Exported TypeScript symbols from `public-api.ts`
+- Exported symbols from `public-api.ts`
 - Component selectors (`au-*`)
-- Required inputs and default behavior documented in Storybook / docs
-- CSS custom properties listed in per-component **Styling** sections
+- Required inputs and documented default behavior
+- Documented CSS custom properties in component Styling sections
 - Peer dependency ranges in `package.json`
 
-Not breaking:
+Not breaking: internal CSS, Storybook-only demos, docs site content, new optional inputs with defaults.
 
-- Internal CSS not documented as tokens
-- Storybook-only demos
-- Docs site content
-- Adding optional inputs with defaults
+## Component maturity
 
-## Component maturity vs semver
+| Badge            | Meaning                                                       |
+| ---------------- | ------------------------------------------------------------- |
+| **stable**       | API and a11y covered by tests; safe for production.           |
+| **beta**         | Usable; optional props may still land; edge cases documented. |
+| **experimental** | May change or be removed in a MINOR until promoted.           |
 
-| Badge            | Meaning for consumers                                             |
-| ---------------- | ----------------------------------------------------------------- |
-| **stable**       | API and a11y contract covered by tests; safe for production.      |
-| **beta**         | Usable; API may still gain optional props; edge cases documented. |
-| **experimental** | May change or be removed in a MINOR until promoted.               |
-
-Promoting **experimental → beta → stable** is announced in [CHANGELOG.md](../CHANGELOG.md) but does not require a MAJOR by itself unless the API changes.
-
-## API freeze (0.9.0 → 1.0.0)
-
-**0.9.0** is the API freeze **candidate**: documented exports, selectors, and styling tokens should not break without deprecation. See the announcement in [CHANGELOG.md](../CHANGELOG.md#090---2026-05-22). **1.0.0** ships when [V1_CRITERIA.md](./V1_CRITERIA.md) is fully checked (GitHub Releases per tag, optional npm provenance).
-
-## Release process
-
-1. Update [CHANGELOG.md](../CHANGELOG.md) under `[Unreleased]`.
-2. Bump `projects/components/package.json` version.
-3. Tag `components-vX.Y.Z` (or monorepo tag per your CI).
-4. Publish to npm from `dist/components` after `ng build components`.
+Promotions are announced in [CHANGELOG.md](../CHANGELOG.md). As of **1.5.0**, all entries in `component-maturity.ts` are **stable**.
 
 ## Deprecations
 
-Public API removals follow **[DEPRECATION.md](./DEPRECATION.md)** (minimum two MINOR releases of notice, removal only in MAJOR).
+| Step        | When            | Action                                      |
+| ----------- | --------------- | ------------------------------------------- |
+| 1. Announce | First **minor** | `@deprecated` JSDoc + CHANGELOG + docs note |
+| 2. Warn     | Next **minor**  | Optional dev-only `console.warn`            |
+| 3. Remove   | **Major** only  | Delete API; migration sample in CHANGELOG   |
 
-## Angular peers
+Minimum notice: **two MINOR releases** before removal. Each entry must list target major, replacement, and before/after sample.
 
-See **[ANGULAR_COMPATIBILITY.md](./ANGULAR_COMPATIBILITY.md)** for the full support matrix.
+## Angular compatibility
 
-- **Angular 21.2+** is required for signal forms and current control APIs.
-- A new **Angular major** from Google may require a matching Aurea MAJOR when peer ranges tighten.
+| Aurea     | Angular (`@angular/core`) | Node (tooling) | Status      |
+| --------- | ------------------------- | -------------- | ----------- |
+| **1.x**   | **21.2.x** — `^21.2.0`    | 20.19+         | Active      |
+| 0.3–0.4.x | 21.2.x                    | 20.19+         | Maintenance |
+
+- **Signal forms** (`[formField]`, `form()`) require Angular **21.2+**.
+- **Standalone** components only; **zoneless** supported per [Angular docs](https://angular.dev/guide/zoneless).
+- CI pins versions in root `package.json`; published peers define the consumer range.
+
+## Release process
+
+1. Move `[Unreleased]` in [CHANGELOG.md](../CHANGELOG.md) to `## [X.Y.Z] - date`.
+2. Set `projects/components/package.json` `"version"`.
+3. Run `bun run ci` (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
+4. Merge to `main` — [.github/workflows/publish.yml](../.github/workflows/publish.yml) publishes to npm, tags `components-vX.Y.Z`, and creates a GitHub Release from the CHANGELOG section.
+
+Manual tag fallback:
+
+```bash
+git tag -a components-vX.Y.Z -m "@aurea-design-system/components X.Y.Z"
+git push origin components-vX.Y.Z
+gh release create components-vX.Y.Z --title "@aurea-design-system/components X.Y.Z" --notes-file release-notes.md
+```
+
+Git tags use prefix **`components-v`**. **`1.0.0`** shipped **2026-05-30** (`components-v1.0.0`).

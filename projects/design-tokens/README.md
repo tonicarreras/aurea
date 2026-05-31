@@ -41,5 +41,4 @@ Fails if documented hex values in JSON no longer match the CSS light/dark blocks
 
 ## Related
 
-- [Theming guide](https://aurea-ds.netlify.app/en/themes)
-- [PERFORMANCE.md](../components/PERFORMANCE.md)
+- [Theming guide](https://aurea-ds.netlify.app/en/themes) · [Library README](../components/README.md#bundle--performance)
