@@ -46,6 +46,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Date field with native picker and shared field chrome.',
     'Campo de fecha con selector nativo y cromado de campo compartido.',
   ),
+  'input-time': L(
+    'Time field with native picker and shared field chrome.',
+    'Campo de hora con selector nativo y cromado de campo compartido.',
+  ),
   dialog: L(
     'Modal dialog with focus trap, backdrop, and projected actions.',
     'Diálogo modal con trampa de foco, backdrop y acciones proyectadas.',
@@ -75,8 +79,8 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Mensajes transitorios con acción opcional y auto-cierre.',
   ),
   message: L(
-    'Inline callout with semantic variants, optional icon, and dismiss.',
-    'Aviso inline con variantes semánticas, icono opcional y cierre.',
+    'Inline callout or full-width banner for status and notices.',
+    'Aviso inline o banner a ancho completo para estado y avisos.',
   ),
   icon: L(
     'Shared SVG glyphs (decorative); used in message, chips, and buttons.',

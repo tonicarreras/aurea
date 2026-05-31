@@ -1,0 +1,23 @@
+import {
+  ExampleInputTimeBasicDemo,
+  ExampleInputTimeBoundsDemo,
+} from '../../../../demos/examples/input-time.examples';
+import type { ComponentDocExample } from '../../../types/example';
+
+export const examples: ComponentDocExample[] = [
+  {
+    title: 'Time',
+    demoComponent: ExampleInputTimeBasicDemo,
+    code: `<au-form-field label="Start time">
+  <au-input-time />
+</au-form-field>`,
+  },
+  {
+    title: 'With bounds',
+    description: 'Use `minTime` and `maxTime` (`HH:mm`) for native `min`/`max`.',
+    demoComponent: ExampleInputTimeBoundsDemo,
+    code: `<au-form-field label="Booking time" hint="Business hours only.">
+  <au-input-time minTime="08:00" maxTime="20:00" />
+</au-form-field>`,
+  },
+];

@@ -1,3 +1,4 @@
+export * from './input-time.preview';
 export * from './avatar.preview';
 export * from './drawer.preview';
 export * from './accordion.preview';

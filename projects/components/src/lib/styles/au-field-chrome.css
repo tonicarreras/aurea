@@ -1,0 +1,297 @@
+/**
+ * Shared field stack + control-row chrome.
+ * Loaded via aurea-global.css (requires au-tokens.css).
+ *
+ * BEM blocks must use the same element names: __field, __label-host, __label,
+ * __required, __hint, __control-row.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Host baseline (block-level field controls) */
+/* -------------------------------------------------------------------------- */
+
+:is(
+  au-input-text,
+  au-input-number,
+  au-textarea,
+  au-input-date,
+  au-input-time,
+  au-select,
+  au-autocomplete
+) {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+au-input-date,
+au-input-time {
+  color-scheme: inherit;
+}
+
+au-select,
+au-autocomplete {
+  overflow: visible;
+}
+
+:is(.au-select__field, .au-autocomplete__field) {
+  overflow: visible;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Stack: label + control + help */
+/* -------------------------------------------------------------------------- */
+
+:is(
+  .au-input-text__field,
+  .au-input-number__field,
+  .au-textarea__field,
+  .au-input-date__field,
+  .au-input-time__field,
+  .au-select__field,
+  .au-autocomplete__field
+) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+:is(
+  .au-input-text__label-host,
+  .au-input-number__label-host,
+  .au-textarea__label-host,
+  .au-input-date__label-host,
+  .au-input-time__label-host,
+  .au-select__label-host,
+  .au-autocomplete__label-host
+) {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+:is(
+  .au-input-text__label,
+  .au-input-number__label,
+  .au-textarea__label,
+  .au-input-date__label,
+  .au-input-time__label,
+  .au-select__label,
+  .au-autocomplete__label
+) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  position: relative;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+:is(
+  .au-input-text__required,
+  .au-input-number__required,
+  .au-textarea__required,
+  .au-input-date__required,
+  .au-input-time__required,
+  .au-select__required,
+  .au-autocomplete__required
+) {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+:is(
+  .au-input-text__hint,
+  .au-input-number__hint,
+  .au-textarea__hint,
+  .au-input-date__hint,
+  .au-input-time__hint,
+  .au-select__hint,
+  .au-autocomplete__hint
+) {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Control shell */
+/* -------------------------------------------------------------------------- */
+
+:is(
+  .au-input-text__control-row,
+  .au-input-number__control-row,
+  .au-textarea__control-row,
+  .au-input-date__control-row,
+  .au-input-time__control-row,
+  .au-select__control-row,
+  .au-autocomplete__control-row
+) {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--au-color-form-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-shadow-control);
+  transition: var(--au-transition-control);
+}
+
+.au-select__control-row,
+.au-autocomplete__control-row {
+  align-items: center;
+}
+
+/* Hover: border only */
+:is(
+  .au-input-text__control-row:has(.au-input-text__input:hover:not(:disabled)),
+  .au-input-number__control-row:has(.au-input-number__input:hover:not(:disabled)),
+  .au-textarea__control-row:has(.au-textarea__input:hover:not(:disabled)),
+  .au-input-date__control-row:has(.au-input-date__input:hover:not(:disabled)),
+  .au-input-time__control-row:has(.au-input-time__input:hover:not(:disabled))
+):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+/* Hover: border + fill (combobox) */
+:is(
+  .au-select__control-row:has(.au-select__trigger:hover:not(:disabled)),
+  .au-autocomplete__control-row:has(.au-autocomplete__input:hover:not(:disabled))
+):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+  background: var(--au-color-select-field-hover-bg);
+}
+
+/* Error (no focus) */
+:is(
+  .au-input-text__control-row:has(.au-input-text__input[aria-invalid='true']),
+  .au-input-number__control-row:has(.au-input-number__input[aria-invalid='true']),
+  .au-textarea__control-row:has(.au-textarea__input[aria-invalid='true']),
+  .au-input-date__control-row:has(.au-input-date__input[aria-invalid='true']),
+  .au-input-time__control-row:has(.au-input-time__input[aria-invalid='true']),
+  .au-select__control-row:has(.au-select__trigger[aria-invalid='true']),
+  .au-autocomplete__control-row:has(.au-autocomplete__input[aria-invalid='true'])
+):not(:focus-within) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+/* Pointer focus */
+:is(
+  .au-input-text__control-row,
+  .au-input-number__control-row,
+  .au-textarea__control-row,
+  .au-input-date__control-row,
+  .au-input-time__control-row,
+  .au-select__control-row,
+  .au-autocomplete__control-row
+):focus-within {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: var(--au-shadow-focus-control);
+}
+
+:is(
+  .au-input-text__control-row:focus-within:has(.au-input-text__input[aria-invalid='true']),
+  .au-input-number__control-row:focus-within:has(.au-input-number__input[aria-invalid='true']),
+  .au-textarea__control-row:focus-within:has(.au-textarea__input[aria-invalid='true']),
+  .au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']),
+  .au-input-time__control-row:focus-within:has(.au-input-time__input[aria-invalid='true']),
+  .au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']),
+  .au-autocomplete__control-row:focus-within:has(.au-autocomplete__input[aria-invalid='true'])
+) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-shadow-focus-control-error);
+}
+
+/* Tab-only focus → outward outline */
+:is(
+  .au-input-text__control-row--from-tab,
+  .au-input-number__control-row--from-tab,
+  .au-textarea__control-row--from-tab,
+  .au-input-date__control-row--from-tab,
+  .au-input-time__control-row--from-tab,
+  .au-select__control-row--from-tab,
+  .au-autocomplete__control-row--from-tab
+):focus-within {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-form-border);
+  outline: 2px solid var(--au-color-focus-ring);
+  outline-offset: 2px;
+}
+
+:is(
+  .au-input-text__control-row--from-tab:focus-within:has(
+      .au-input-text__input[aria-invalid='true']
+    ),
+  .au-input-number__control-row--from-tab:focus-within:has(
+      .au-input-number__input[aria-invalid='true']
+    ),
+  .au-textarea__control-row--from-tab:focus-within:has(.au-textarea__input[aria-invalid='true']),
+  .au-input-date__control-row--from-tab:focus-within:has(
+      .au-input-date__input[aria-invalid='true']
+    ),
+  .au-input-time__control-row--from-tab:focus-within:has(
+      .au-input-time__input[aria-invalid='true']
+    ),
+  .au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']),
+  .au-autocomplete__control-row--from-tab:focus-within:has(
+      .au-autocomplete__input[aria-invalid='true']
+    )
+) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: 2px solid var(--au-color-form-error);
+  outline-offset: 2px;
+}
+
+/* Disabled */
+:is(
+  .au-input-text__control-row:has(.au-input-text__input:disabled),
+  .au-input-number__control-row:has(.au-input-number__input:disabled),
+  .au-textarea__control-row:has(.au-textarea__input:disabled),
+  .au-input-date__control-row:has(.au-input-date__input:disabled),
+  .au-input-time__control-row:has(.au-input-time__input:disabled),
+  .au-select__control-row:has(.au-select__trigger:disabled),
+  .au-autocomplete__control-row:has(.au-autocomplete__input:disabled)
+) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
+}
+
+/* Combobox open (no focus) */
+:is(.au-select__control-row--open, .au-autocomplete__control-row--open):not(:focus-within) {
+  border-color: var(--au-color-form-border-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .au-input-text__control-row,
+    .au-input-number__control-row,
+    .au-textarea__control-row,
+    .au-input-date__control-row,
+    .au-input-time__control-row,
+    .au-select__control-row,
+    .au-autocomplete__control-row
+  ) {
+    transition: none;
+  }
+}

@@ -15,6 +15,7 @@ export const AU_ICON_NAMES = [
   'sort-desc',
   'sort-neutral',
   'calendar',
+  'clock',
   'search',
   'plus',
   'minus',

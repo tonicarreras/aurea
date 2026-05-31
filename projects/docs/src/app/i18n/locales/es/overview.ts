@@ -438,6 +438,30 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
     ],
   },
+  'input-time': {
+    intro: [
+      'Selector de hora nativo (`<input type="time">`) con tokens Aurea en icono y popup del SO.',
+      'Valor en formato 24h `HH:mm` o `null`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Horas del reloj con picker del sistema operativo.',
+        'Filtros de horario laboral con `minTime` / `maxTime`.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['Steppers de duración personalizados → componente compuesto o librería externa.'],
+    },
+    anatomy: [
+      { region: 'Input nativo', detail: 'Tokens `--au-color-date-picker-*` para icono y acento.' },
+    ],
+    accessibility: [
+      'Label, hint y errores enlazados vía `au-form-field` (`aria-invalid`, `aria-describedby`).',
+      'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
+    ],
+  },
   'file-upload': {
     intro: [
       'Zona drag-and-drop con `input[type="file"]` oculto, botón de explorar y lista de archivos removibles.',
@@ -691,14 +715,14 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   message: {
     intro: [
-      'Aviso inline para estado de página, resumen de validación o ayuda contextual.',
+      'Aviso inline (`layout="inline"`) o banner a ancho completo (`layout="banner"`) para estado y avisos.',
       'Variantes semánticas con tokens; icono `au-icon` opcional.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
       items: [
-        'Errores de formulario a nivel de página.',
-        'Éxito tras guardar, avisos de política, advertencias no bloqueantes.',
+        'Errores de formulario encima de campos (`inline`).',
+        'Mantenimiento global, facturación o políticas (`banner`).',
       ],
     },
     whenNotToUse: {
@@ -708,7 +732,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     anatomy: [
       { region: 'Icono', detail: 'Glifo de variante si `showIcon` (no en default).' },
       { region: 'Título / cuerpo', detail: '`title` + `message` o slot.' },
-      { region: 'Cerrar', detail: 'Botón opcional.' },
+      { region: 'Acciones', detail: '`actionLabel` opcional y botón cerrar.' },
     ],
     accessibility: ['Error/warning: `role="alert"`.', 'Resto: `role="status"`.'],
   },

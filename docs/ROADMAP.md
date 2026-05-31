@@ -48,17 +48,18 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 
 ## Version targets
 
-| Version       | Focus                                                                           |
-| ------------- | ------------------------------------------------------------------------------- |
-| **0.4.x**     | Phase 2 core components                                                         |
-| **0.5.x**     | Accordion, empty state, form layout, slider (**1.1.0** beta → **1.2.0** stable) |
-| **0.6–0.8.x** | Table data features, file upload (**1.1.0** beta → **1.2.0** stable)            |
-| **0.9.x**     | Visual regression + API freeze candidate                                        |
-| **1.0.0**     | Stable core, public roadmap, reference app                                      |
-| **1.1.0**     | Empty state, accordion, fieldset, slider, file upload (beta)                    |
-| **1.2.0**     | Promote 1.1.0 betas to stable; menu roving tabindex + typeahead (A11Y-004)      |
-| **1.3.0**     | `AuAvatar` + `AuDrawer` (beta) — 2 components per MINOR cadence                 |
-| **1.4.0**     | Promote 1.3.0 betas to stable; avatar `square` shape + drawer overlay polish    |
+| Version       | Focus                                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------- |
+| **0.4.x**     | Phase 2 core components                                                                  |
+| **0.5.x**     | Accordion, empty state, form layout, slider (**1.1.0** beta → **1.2.0** stable)          |
+| **0.6–0.8.x** | Table data features, file upload (**1.1.0** beta → **1.2.0** stable)                     |
+| **0.9.x**     | Visual regression + API freeze candidate                                                 |
+| **1.0.0**     | Stable core, public roadmap, reference app                                               |
+| **1.1.0**     | Empty state, accordion, fieldset, slider, file upload (beta)                             |
+| **1.2.0**     | Promote 1.1.0 betas to stable; menu roving tabindex + typeahead (A11Y-004)               |
+| **1.3.0**     | `AuAvatar` + `AuDrawer` (beta) — 2 components per MINOR cadence                          |
+| **1.4.0**     | Promote 1.3.0 betas to stable; avatar `square` shape + drawer overlay polish             |
+| **1.5.0**     | Close beta catalog (incl. `AuInputTime` stable); A11Y-001/002; `AuMessage` banner layout |
 
 ## Post-1.0 — Tooling
 

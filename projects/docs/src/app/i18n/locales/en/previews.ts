@@ -57,6 +57,7 @@ export const PREVIEWS_EN: PreviewMessages = {
     placeholder: 'you@example.com',
   },
   inputDate: { label: 'Start date' },
+  inputTime: { label: 'Start time' },
   inputNumber: { label: 'Quantity' },
   inputText: { label: 'Name', placeholder: 'Your name' },
   link: { label: 'Design tokens' },

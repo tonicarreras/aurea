@@ -1,9 +1,14 @@
-@import url('../styles/au-field-error.css');
+/**
+ * File upload — dropzone + file list.
+ * Field errors: aurea-global.css
+ */
 
 :host {
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .au-file-upload__dropzone {

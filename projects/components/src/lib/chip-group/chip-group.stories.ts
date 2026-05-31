@@ -7,7 +7,7 @@ import { AuChipGroup } from './chip-group';
 const meta: Meta<AuChipGroup> = {
   title: 'Aurea/ChipGroup',
   component: AuChipGroup,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('chip-group'),
   argTypes: {
     ariaLabel: { control: 'text', table: { category: 'Accessibility' } },

@@ -1,148 +1,64 @@
 /**
- * Input number — same field chrome as au-input-text, native type="number".
+ * Input number — same field chrome as au-input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
 
-:host {
-  display: block;
-  font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.au-input-number__field {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--au-space-2);
-  max-width: 100%;
-}
-
-.au-input-number__label-host {
-  display: block;
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-}
-
-.au-input-number__label {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.125em;
-  font-size: var(--au-text-sm);
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
-  letter-spacing: var(--au-tracking-ui);
-}
-
-.au-input-number__required {
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-}
-
-.au-input-number__control-row {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
-  transition: var(--au-transition-control);
-}
-
-.au-input-number__control-row:has(.au-input-number__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-}
-
-.au-input-number__control-row:has(.au-input-number__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
-}
-
-.au-input-number__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
-}
-
-.au-input-number__control-row:focus-within:has(.au-input-number__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
-}
-
-.au-input-number__control-row--from-tab:focus-within {
-  box-shadow: none;
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
-}
-
-.au-input-number__control-row--from-tab:focus-within:has(
-    .au-input-number__input[aria-invalid='true']
-  ) {
-  border-color: var(--au-color-form-error);
-  outline: 2px solid var(--au-color-form-error);
-}
-
-.au-input-number__control-row:has(.au-input-number__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
-  box-shadow: none;
+.au-input-number__input:focus,
+.au-input-number__input:focus-visible {
+  outline: none;
 }
 
 .au-input-number__input {
   display: block;
-  width: 100%;
+  flex: 1 1 auto;
   min-width: 0;
+  width: 100%;
+  height: var(--au-size-field-h-md);
   margin: 0;
-  padding: var(--au-space-2-5) var(--au-space-3);
-  border: none;
-  border-radius: inherit;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
   background: transparent;
-  font-family: inherit;
-  font-size: var(--au-text-sm);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-primary);
-  outline: none;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-size-field-px-md);
 }
 
 :host([data-au-size='sm']) .au-input-number__input {
-  padding: var(--au-space-2) var(--au-space-2-5);
-  font-size: var(--au-text-xs);
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-size-field-px-sm);
+}
+
+:host([data-au-size='md']) .au-input-number__input,
+:host(:not([data-au-size])) .au-input-number__input {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 var(--au-size-field-px-md);
 }
 
 :host([data-au-size='lg']) .au-input-number__input {
-  padding: var(--au-space-3) var(--au-space-3-5);
-  font-size: var(--au-text-md);
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-size-field-px-lg);
 }
 
 .au-input-number__input::placeholder {
-  color: var(--au-color-text-tertiary);
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
 }
 
 .au-input-number__input:disabled {
+  color: var(--au-color-form-disabled-foreground);
   cursor: not-allowed;
-  opacity: 0.55;
-}
-
-.au-input-number__hint {
-  margin: 0;
-  font-size: var(--au-text-xs);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-input-number__control-row {
-    transition: none;
-  }
+  opacity: 0.9;
+  background: transparent;
 }

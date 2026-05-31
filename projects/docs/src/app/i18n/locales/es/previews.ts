@@ -57,6 +57,7 @@ export const PREVIEWS_ES: PreviewMessages = {
     placeholder: 'tu@correo.com',
   },
   inputDate: { label: 'Fecha de inicio' },
+  inputTime: { label: 'Hora de inicio' },
   inputNumber: { label: 'Cantidad' },
   inputText: { label: 'Nombre', placeholder: 'Tu nombre' },
   link: { label: 'Tokens de diseño' },

@@ -27,6 +27,7 @@ export interface PreviewMessages {
   fileUpload: { label: string; hint: string };
   formField: { label: string; hint: string; placeholder: string };
   inputDate: { label: string };
+  inputTime: { label: string };
   inputNumber: { label: string };
   inputText: { label: string; placeholder: string };
   link: { label: string };

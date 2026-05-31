@@ -17,6 +17,7 @@ import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
+import { openNativePicker } from '../au-open-native-picker';
 import { AuIcon } from '../icon/icon';
 
 /** Date control; project inside {@link AuFormField}. */
@@ -108,6 +109,15 @@ export class AuInputDate implements FormValueControl<string | null> {
 
   onBlurHost(): void {
     this.blur.emit();
+  }
+
+  onPickerIconClick(event: MouseEvent): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    openNativePicker(queryFieldNative<HTMLInputElement>(this.host, '.au-input-date__input'));
   }
 
   onControlRowFocusin(): void {

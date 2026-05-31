@@ -445,6 +445,27 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       accessibility: ['Linked label and errors; native OS picker behavior.'],
     },
+    'input-time': {
+      intro: [
+        'Native time picker (`<input type="time">`) with Aurea tokens on icon and OS popup.',
+        'Value as 24h `HH:mm` or `null`.',
+      ],
+      whenToUse: [
+        'Clock times with the OS picker.',
+        'Business-hour filters with `minTime` / `maxTime`.',
+      ],
+      whenNotToUse: ['Custom duration steppers → composite component or external library.'],
+      anatomy: [
+        {
+          region: 'Native input',
+          detail: 'Tokens `--au-color-date-picker-*` for icon and accent.',
+        },
+      ],
+      accessibility: [
+        'Linked label, hint, and errors via `au-form-field` (`aria-invalid`, `aria-describedby`).',
+        'Decorative clock icon (`aria-hidden`); picker opens via native control.',
+      ],
+    },
     'file-upload': {
       intro: [
         'Drag-and-drop target with hidden native `input[type="file"]`, browse button, and removable file list.',
@@ -695,12 +716,12 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     message: {
       intro: [
-        'Inline callout for page-level status, validation summaries, or contextual help.',
+        'Inline callout (`layout="inline"`) or full-width banner (`layout="banner"`) for status and notices.',
         'Semantic variants map to token surfaces; optional `au-icon` glyph per variant.',
       ],
       whenToUse: [
-        'Form-level errors above fields.',
-        'Success after save, policy notices, non-blocking warnings.',
+        'Form-level errors above fields (`inline`).',
+        'App-wide maintenance, billing, or policy notices (`banner`).',
       ],
       whenNotToUse: [
         'Transient toast → `au-snackbar`.',
@@ -716,8 +737,8 @@ export const STORY_OVERVIEW_SOURCE = {
           detail: '`title` + `message` or projected slot.',
         },
         {
-          region: 'Dismiss',
-          detail: 'Optional close button.',
+          region: 'Actions',
+          detail: 'Optional `actionLabel` and dismiss control.',
         },
       ],
       accessibility: [
@@ -1630,6 +1651,29 @@ export const STORY_OVERVIEW_SOURCE = {
         'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
       ],
     },
+    'input-time': {
+      intro: [
+        'Selector de hora nativo (`<input type="time">`) con tokens Aurea en icono y popup del SO.',
+        'Valor en formato 24h `HH:mm` o `null`.',
+      ],
+      whenToUse: [
+        'Horas del reloj con picker del sistema operativo.',
+        'Filtros de horario laboral con `minTime` / `maxTime`.',
+      ],
+      whenNotToUse: [
+        'Steppers de duración personalizados → componente compuesto o librería externa.',
+      ],
+      anatomy: [
+        {
+          region: 'Input nativo',
+          detail: 'Tokens `--au-color-date-picker-*` para icono y acento.',
+        },
+      ],
+      accessibility: [
+        'Label, hint y errores enlazados vía `au-form-field` (`aria-invalid`, `aria-describedby`).',
+        'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
+      ],
+    },
     'file-upload': {
       intro: [
         'Zona drag-and-drop con `input[type="file"]` oculto, botón de explorar y lista de archivos removibles.',
@@ -1880,12 +1924,12 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     message: {
       intro: [
-        'Aviso inline para estado de página, resumen de validación o ayuda contextual.',
+        'Aviso inline (`layout="inline"`) o banner a ancho completo (`layout="banner"`) para estado y avisos.',
         'Variantes semánticas con tokens; icono `au-icon` opcional.',
       ],
       whenToUse: [
-        'Errores de formulario a nivel de página.',
-        'Éxito tras guardar, avisos de política, advertencias no bloqueantes.',
+        'Errores de formulario encima de campos (`inline`).',
+        'Mantenimiento global, facturación o políticas (`banner`).',
       ],
       whenNotToUse: [
         'Toast → `au-snackbar`.',
@@ -1901,8 +1945,8 @@ export const STORY_OVERVIEW_SOURCE = {
           detail: '`title` + `message` o slot.',
         },
         {
-          region: 'Cerrar',
-          detail: 'Botón opcional.',
+          region: 'Acciones',
+          detail: '`actionLabel` opcional y botón cerrar.',
         },
       ],
       accessibility: ['Error/warning: `role="alert"`.', 'Resto: `role="status"`.'],

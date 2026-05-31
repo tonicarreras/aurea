@@ -28,7 +28,7 @@ interface InputDateStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<InputDateStoryArgs> = {
   title: 'Aurea/InputDate',
   component: AuInputDate,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('input-date'),
   argTypes: {
     ...fieldChromeArgTypes,
@@ -103,7 +103,7 @@ export const CalendarTheming: Story = {
     docs: {
       description: {
         story:
-          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` + `color-scheme`); el icono del campo y los segmentos de fecha usan tokens Aurea (Chromium / Safari).',
+          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` en Firefox, `color-scheme`); los segmentos inline usan tokens Aurea (WebKit y Firefox). En Chromium/Safari el icono es el de Aurea; en Firefox se usa el icono nativo (no se puede ocultar por CSS).',
       },
     },
   },

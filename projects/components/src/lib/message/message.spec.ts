@@ -128,6 +128,44 @@ describe('AuMessage', () => {
     expect(component.hasTitle()).toBe(false);
     expect(component.showInputMessage()).toBe(false);
   });
+
+  it('defaults layout to inline', () => {
+    expect(fixture.nativeElement.getAttribute('data-au-layout')).toBe('inline');
+  });
+
+  it('sets banner layout on host', () => {
+    fixture.componentRef.setInput('layout', 'banner');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.getAttribute('data-au-layout')).toBe('banner');
+  });
+
+  it('renders action button and emits action', () => {
+    fixture.componentRef.setInput('actionLabel', 'Learn more');
+    fixture.detectChanges();
+    let n = 0;
+    component.action.subscribe(() => n++);
+    const action = fixture.nativeElement.querySelector('.au-message__action') as HTMLButtonElement;
+    action.click();
+    expect(n).toBe(1);
+  });
+
+  it('treats null actionLabel as empty', () => {
+    fixture.componentRef.setInput('actionLabel', null as unknown as string);
+    fixture.detectChanges();
+    expect(component.showAction()).toBe(false);
+  });
+
+  it('maps success variant to check-circle icon', () => {
+    fixture.componentRef.setInput('variant', 'success');
+    fixture.detectChanges();
+    expect(component.variantIcon()).toBe('check-circle');
+  });
+
+  it('maps error variant to icon', () => {
+    fixture.componentRef.setInput('variant', 'error');
+    fixture.detectChanges();
+    expect(component.variantIcon()).toBe('error');
+  });
 });
 
 @Component({

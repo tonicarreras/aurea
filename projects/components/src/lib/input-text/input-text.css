@@ -1,123 +1,13 @@
 /**
- * Input text — built from scratch: crisp border, no faux-3D fill.
+ * Input text — crisp border, no faux-3D fill.
  * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
-
-:host {
-  display: block;
-  font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
 
 /* -------------------------------------------------------------------------- */
-/* Stack: label + control + help (no extra chrome) */
+/* Input / reveal */
 /* -------------------------------------------------------------------------- */
 
-.au-input-text__field {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--au-space-2);
-  max-width: 100%;
-}
-
-.au-input-text__label-host {
-  display: block;
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-}
-
-.au-input-text__label {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.125em;
-  position: relative;
-  font-size: var(--au-text-sm);
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
-  letter-spacing: var(--au-tracking-ui);
-}
-
-.au-input-text__required {
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-}
-
-/* Control shell: one surface, one border */
-.au-input-text__control-row {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  width: 100%;
-  /* Align icons/button to the box; height comes from the input, not a large min-height */
-  box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
-  transition: var(--au-transition-control);
-}
-
-/* Hover: border only, no ring */
-.au-input-text__control-row:has(.au-input-text__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-}
-
-/* Error (no focus) */
-.au-input-text__control-row:has(.au-input-text__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
-}
-
-/*
- * Pointer focus: tight stroke (border + 1px shadow).
- * Tab-only focus: `.au-input-text__control-row--from-tab` (TS) → outward outline.
- */
-.au-input-text__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
-}
-
-.au-input-text__control-row:focus-within:has(.au-input-text__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
-}
-
-/* Outer ring on Tab only (not engine :focus-visible, which often fires on click too) */
-.au-input-text__control-row--from-tab:focus-within {
-  box-shadow: none;
-  background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
-}
-
-.au-input-text__control-row--from-tab:focus-within:has(.au-input-text__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: none;
-  outline: 2px solid var(--au-color-form-error);
-  outline-offset: 2px;
-}
-
-/* Disabled: whole row muted (<input> may still receive focus / AT per platform) */
-.au-input-text__control-row:has(.au-input-text__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
-  box-shadow: none;
-}
-
-/* No double ring on children: the row draws the ring */
 .au-input-text__input:focus,
 .au-input-text__input:focus-visible,
 .au-input-text__reveal:focus,
@@ -125,16 +15,11 @@
   outline: none;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Input / button */
-/* -------------------------------------------------------------------------- */
-
 .au-input-text__input {
   display: block;
   flex: 1 1 auto;
   min-width: 0;
   width: 100%;
-  /* line-height = height: placeholder and value vertically aligned in Chromium / WebKit / Firefox */
   height: var(--au-size-field-h-md);
   margin: 0;
   box-sizing: border-box;
@@ -144,7 +29,6 @@
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
   font: inherit;
-  /* line-height = height → single-line placeholder/value, centered per UA (no height:100% in flex) */
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
   font-synthesis: none;
@@ -190,7 +74,6 @@
   background: transparent;
 }
 
-/* Password reveal: icon button */
 .au-input-text__reveal {
   display: inline-flex;
   flex: 0 0 auto;
@@ -224,23 +107,7 @@
   opacity: 0.45;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Hint and error */
-/* -------------------------------------------------------------------------- */
-
-.au-input-text__hint {
-  margin: 0;
-  font-size: var(--au-text-xs);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
-}
-
-/* -------------------------------------------------------------------------- */
-/* Motion */
-/* -------------------------------------------------------------------------- */
-
 @media (prefers-reduced-motion: reduce) {
-  .au-input-text__control-row,
   .au-input-text__reveal {
     transition: none;
   }

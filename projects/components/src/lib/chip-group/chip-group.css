@@ -1,8 +1,29 @@
 :host {
+  display: block;
+  box-sizing: border-box;
+  font-family: var(--au-font-sans);
+}
+
+.au-chip-group__scroll {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--au-space-2);
   align-items: center;
   box-sizing: border-box;
-  font-family: var(--au-font-sans);
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-block: 2px;
+}
+
+.au-chip-group__scroll:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .au-chip-group__scroll {
+    scroll-behavior: smooth;
+  }
 }

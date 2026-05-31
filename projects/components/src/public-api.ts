@@ -25,6 +25,7 @@ export * from './lib/checkbox';
 export * from './lib/chip';
 export * from './lib/chip-group';
 export * from './lib/input-date';
+export * from './lib/input-time';
 export * from './lib/input-number';
 export * from './lib/input-text';
 export * from './lib/pagination';

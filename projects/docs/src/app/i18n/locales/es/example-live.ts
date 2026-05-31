@@ -112,6 +112,11 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     hintLabel: 'Fecha de entrega',
     hint: 'Solo entregas en 2026.',
   },
+  inputTime: {
+    basicLabel: 'Hora de inicio',
+    boundsLabel: 'Hora de reserva',
+    boundsHint: 'Solo horario laboral.',
+  },
   inputNumber: {
     basicLabel: 'Cantidad',
     errorLabel: 'Cantidad',
@@ -139,6 +144,11 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     successBody: 'Los cambios se guardaron correctamente.',
     errorBody: 'Corrige los campos resaltados.',
     infoBody: 'Puedes cerrar este aviso.',
+    bannerTitle: 'Mantenimiento programado',
+    bannerMessage: 'Modo solo lectura de 18:00 a 19:00 UTC.',
+    bannerActionTitle: 'Prueba por terminar',
+    bannerActionMessage: 'Actualiza el plan para conservar funciones de equipo.',
+    bannerActionLabel: 'Ver planes',
   },
   radioGroup: {
     basicLabel: 'Plan',

@@ -1,15 +1,30 @@
 /**
  * Shared dropdown list + option rows (au-select, au-autocomplete).
- * Import from field components; requires au-tokens.css.
+ * Loaded via aurea-global.css (requires au-tokens.css).
  *
  * Hosts set `data-au-listbox-open` while the panel is visible so the whole
  * component stacks above sibling fields (not only the listbox node).
  */
 
-:host([data-au-listbox-open]) {
+:is(au-select, au-autocomplete)[data-au-listbox-open] {
   position: relative;
   z-index: var(--au-z-dropdown);
   overflow: visible;
+}
+
+:is(.au-select__hint, .au-autocomplete__hint),
+:is(.au-select__field, .au-autocomplete__field) > .au-field-error {
+  position: relative;
+  z-index: var(--au-z-base);
+}
+
+:is(.au-select__control-wrap, .au-autocomplete__control-wrap) {
+  position: relative;
+  z-index: var(--au-z-raised);
+}
+
+:is(.au-select__control-wrap, .au-autocomplete__control-wrap):has(.au-field-listbox) {
+  z-index: var(--au-z-dropdown);
 }
 
 .au-field-listbox {
@@ -38,7 +53,23 @@
   z-index: var(--au-z-dropdown);
   inset-inline: auto;
   top: auto;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
   animation: au-floating-enter-bottom var(--au-motion-floating) both;
+}
+
+:is(au-select, au-autocomplete)[data-au-listbox-open]
+  :is(.au-select__control-row, .au-autocomplete__control-row) {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+:is(au-select, au-autocomplete)[data-au-size='sm'] .au-field-listbox__option {
+  font-size: var(--au-size-field-text-sm);
+}
+
+:is(au-select, au-autocomplete)[data-au-size='lg'] .au-field-listbox__option {
+  font-size: var(--au-size-field-text-lg);
 }
 
 .au-field-listbox__option {
