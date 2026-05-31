@@ -5,7 +5,7 @@ All notable changes to **@aurea-design-system/components** are documented here.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).  
 Versioning follows [Semantic Versioning](https://semver.org/) — see [VERSIONING.md](./docs/VERSIONING.md).
 
-Git tags for library releases use the prefix **`components-v`** (monorepo convention — see [RELEASE.md](./docs/RELEASE.md)).
+Git tags for library releases use the prefix **`components-v`** (see [VERSIONING.md](./docs/VERSIONING.md#release-process)).
 
 ## [Unreleased]
 

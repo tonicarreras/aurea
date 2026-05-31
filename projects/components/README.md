@@ -5,7 +5,7 @@
 [![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![npm](https://img.shields.io/npm/v/@aurea-design-system/components?label=npm)](https://www.npmjs.com/package/@aurea-design-system/components)
-[![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/tonicarreras/aurea?color=blue)](https://github.com/tonicarreras/aurea/blob/main/LICENSE)
 
 Monorepo project **`components`** (this folder).
 
@@ -134,15 +134,15 @@ export class ProfileEmailComponent {
 
 ### Controls with `[formField]`
 
-| Component                      | Value type       | Notes                 |
-| ------------------------------ | ---------------- | --------------------- |
-| `AuInputText`, `AuTextarea`    | `string \| null` | Empty field → `null`  |
-| `AuInputNumber`, `AuInputDate` | `string \| null` | Same empty semantics  |
-| `AuSelect`, `AuAutocomplete`   | `string \| null` | Option `value`        |
-| `AuCheckbox`, `AuSwitch`       | `boolean`        |                       |
-| `AuRadioGroup`                 | `string \| null` | Selected option value |
-| `AuSlider`                     | `number`         | Native range input    |
-| `AuFileUpload`                 | `File[]`         | Drag-and-drop picker  |
+| Component                                     | Value type       | Notes                 |
+| --------------------------------------------- | ---------------- | --------------------- |
+| `AuInputText`, `AuTextarea`                   | `string \| null` | Empty field → `null`  |
+| `AuInputNumber`, `AuInputDate`, `AuInputTime` | `string \| null` | Same empty semantics  |
+| `AuSelect`, `AuAutocomplete`                  | `string \| null` | Option `value`        |
+| `AuCheckbox`, `AuSwitch`                      | `boolean`        |                       |
+| `AuRadioGroup`                                | `string \| null` | Selected option value |
+| `AuSlider`                                    | `number`         | Native range input    |
+| `AuFileUpload`                                | `File[]`         | Drag-and-drop picker  |
 
 ### Manual validation (no `form()`)
 
@@ -170,6 +170,12 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuCard`             | `<au-card>`         | `AuCardFooter` directive                                             |
 | `AuTabs`             | `<au-tabs>`         | `AuTab`, `AuTabPanel`                                                |
 | `AuChip`             | `<au-chip>`         | Removable / selectable                                               |
+| `AuChipGroup`        | `<au-chip-group>`   | Filter / choice groups (stable **1.5.0**)                            |
+| `AuList`             | `<au-list>`         | Removable list items (stable **1.5.0**)                              |
+| `AuSteps`            | `<au-steps>`        | Step indicator (stable **1.5.0**)                                    |
+| `AuMessage`          | `<au-message>`      | Inline / banner notices (`layout="banner"` since **1.5.0**)          |
+| `AuIcon`             | `<au-icon>`         | SVG icon set                                                         |
+| `AuSkeleton`         | `<au-skeleton>`     | Loading placeholder                                                  |
 | `AuSnackbar`         | `<au-snackbar>`     |                                                                      |
 | `AuDivider`          | `<au-divider>`      | Horizontal / vertical                                                |
 | `AuTooltip`          | `[auTooltip]`       | Directive on the trigger                                             |
@@ -196,13 +202,19 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 
 ## Governance & maturity
 
-- [CHANGELOG](../../CHANGELOG.md) · [Governance docs](../../docs/README.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [Security](../../SECURITY.md)
-- [Versioning](../../docs/VERSIONING.md) · [Deprecation](../../docs/DEPRECATION.md) · [Angular compatibility](../../docs/ANGULAR_COMPATIBILITY.md)
-- [Component Definition of Done](./COMPONENT_DONE.md) · [A11y audit](./A11Y_AUDIT.md) · [Bundle](./BUNDLE.md) · [Performance](./PERFORMANCE.md)
-- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`). **1.5.0** closes the beta catalog (including **`AuInputTime`**); **`AuMessage`** gains `layout="banner"` for full-width notices.
+- [CHANGELOG](../../CHANGELOG.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [VERSIONING](../../docs/VERSIONING.md) · [A11y audit](./A11Y_AUDIT.md)
+- Maturity: `getComponentMaturity()` or [docs matrix](https://aurea-ds.netlify.app/en/maturity). All catalogued components are **stable** as of **1.5.0**.
+
+## Bundle & performance
+
+- Import per symbol (`import { AuButton } from '…'`), not `import *`.
+- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, listbox, snackbar).
+- All components use `ChangeDetectionStrategy.OnPush`; overlays attach to `document.body` only while open.
+- Lazy-load feature routes; paginate large tables server-side.
+- CI: `bun run check:bundle` (+5% vs baseline). Update baseline with `bun run update:bundle-baseline` after intentional size changes.
 
 ---
 
 ## License
 
-[MIT](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
+[MIT](https://github.com/tonicarreras/aurea/blob/main/LICENSE)
