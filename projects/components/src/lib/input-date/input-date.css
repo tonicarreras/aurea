@@ -1,102 +1,8 @@
 /**
- * Input date — same field chrome as au-input-number.
+ * Input date — same field chrome as au-input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
-
-:host {
-  display: block;
-  font-family: var(--au-font-sans);
-  color: var(--au-color-text-primary);
-  color-scheme: inherit;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.au-input-date__field {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--au-space-2);
-  max-width: 100%;
-}
-
-.au-input-date__label-host {
-  display: block;
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-}
-
-.au-input-date__label {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.125em;
-  font-size: var(--au-text-sm);
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-tight);
-  color: var(--au-color-text-label);
-  letter-spacing: var(--au-tracking-ui);
-}
-
-.au-input-date__required {
-  color: var(--au-color-form-error);
-  font-weight: var(--au-weight-semibold);
-}
-
-.au-input-date__control-row {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
-  border-radius: var(--au-radius-field);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
-  transition: var(--au-transition-control);
-}
-
-.au-input-date__control-row:has(.au-input-date__input:hover:not(:disabled)):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
-}
-
-.au-input-date__control-row:has(.au-input-date__input[aria-invalid='true']):not(:focus-within) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-form-error-bg);
-}
-
-.au-input-date__control-row:focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
-}
-
-.au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
-}
-
-.au-input-date__control-row--from-tab:focus-within {
-  box-shadow: none;
-  border-color: var(--au-color-form-border);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
-}
-
-.au-input-date__control-row--from-tab:focus-within:has(.au-input-date__input[aria-invalid='true']) {
-  border-color: var(--au-color-form-error);
-  outline: 2px solid var(--au-color-form-error);
-}
-
-.au-input-date__control-row:has(.au-input-date__input:disabled) {
-  border-color: var(--au-color-border-subtle);
-  background: var(--au-color-form-disabled-surface);
-  box-shadow: none;
-}
 
 .au-input-date__input {
   display: block;
@@ -106,12 +12,13 @@
   margin: 0;
   box-sizing: border-box;
   padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
-  border: none;
-  border-radius: inherit;
+  border: 0;
+  border-radius: 0;
   background: transparent;
-  font-family: inherit;
-  font-size: var(--au-size-field-text-md);
+  font: inherit;
   line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
   outline: none;
@@ -142,9 +49,10 @@
 }
 
 .au-input-date__input:disabled {
-  cursor: not-allowed;
   color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
   opacity: 0.9;
+  background: transparent;
 }
 
 /* Inline date segments (Chromium / Safari) */
@@ -178,7 +86,6 @@
   outline: none;
 }
 
-/* Decorative calendar icon (same pattern as au-select chevron) */
 .au-input-date__icon {
   position: absolute;
   inset-inline-end: var(--au-space-3);
@@ -229,10 +136,7 @@
   opacity: 0.9;
 }
 
-/*
- * Chromium / Safari: invisible hit target over the decorative icon.
- * Firefox keeps its native icon; `accent-color` styles popup selection.
- */
+/* Chromium / Safari: invisible hit target over the decorative icon */
 .au-input-date__input::-webkit-calendar-picker-indicator {
   position: absolute;
   inset-inline-end: 0;
@@ -256,20 +160,11 @@
   width: 3rem;
 }
 
-/* Firefox: native icon + accent-color on popup selection */
 .au-input-date__input::-moz-focus-inner {
   border: 0;
 }
 
-.au-input-date__hint {
-  margin: 0;
-  font-size: var(--au-text-xs);
-  line-height: var(--au-leading-normal);
-  color: var(--au-color-text-tertiary);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .au-input-date__control-row,
   .au-input-date__icon {
     transition: none;
   }

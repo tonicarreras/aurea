@@ -5,6 +5,7 @@ export const VISUAL_STORIES: {
   readonly slug: string;
 }[] = [
   { name: 'accordion-default', id: 'aurea-accordion--default', slug: 'accordion' },
+  { name: 'autocomplete-default', id: 'aurea-autocomplete--default', slug: 'autocomplete' },
   { name: 'avatar-initials', id: 'aurea-avatar--initials', slug: 'avatar' },
   { name: 'badge-variants', id: 'aurea-badge--variants', slug: 'badge' },
   { name: 'breadcrumb-default', id: 'aurea-breadcrumb--default', slug: 'breadcrumb' },
@@ -12,6 +13,7 @@ export const VISUAL_STORIES: {
   { name: 'card-default', id: 'aurea-card--default', slug: 'card' },
   { name: 'checkbox-default', id: 'aurea-checkbox--default', slug: 'checkbox' },
   { name: 'chip-default', id: 'aurea-chip--default', slug: 'chip' },
+  { name: 'chip-group-filter-chips', id: 'aurea-chipgroup--filter-chips', slug: 'chip-group' },
   { name: 'dialog-default', id: 'aurea-dialog--default', slug: 'dialog' },
   { name: 'divider-default', id: 'aurea-divider--default', slug: 'divider' },
   { name: 'drawer-default', id: 'aurea-drawer--default', slug: 'drawer' },
@@ -20,9 +22,11 @@ export const VISUAL_STORIES: {
   { name: 'file-upload-default', id: 'aurea-fileupload--default', slug: 'file-upload' },
   { name: 'form-field-with-input', id: 'aurea-formfield--with-input', slug: 'form-field' },
   { name: 'icon-default', id: 'aurea-icon--default', slug: 'icon' },
+  { name: 'input-date-default', id: 'aurea-inputdate--default', slug: 'input-date' },
   { name: 'input-number-default', id: 'aurea-inputnumber--default', slug: 'input-number' },
   { name: 'input-text-default', id: 'aurea-inputtext--default', slug: 'input-text' },
   { name: 'link-default', id: 'aurea-link--default', slug: 'link' },
+  { name: 'list-with-chips', id: 'aurea-list--with-chips', slug: 'list' },
   { name: 'menu-default', id: 'aurea-menu--default', slug: 'menu' },
   { name: 'message-success', id: 'aurea-message--success', slug: 'message' },
   { name: 'pagination-default', id: 'aurea-pagination--default', slug: 'pagination' },
@@ -34,8 +38,10 @@ export const VISUAL_STORIES: {
   { name: 'slider-default', id: 'aurea-slider--default', slug: 'slider' },
   { name: 'snackbar-default', id: 'aurea-snackbar--default', slug: 'snackbar' },
   { name: 'spinner-default', id: 'aurea-spinner--default', slug: 'spinner' },
+  { name: 'steps-docs-navigation', id: 'aurea-steps--docs-navigation', slug: 'steps' },
   { name: 'switch-default', id: 'aurea-switch--default', slug: 'switch' },
   { name: 'table-default', id: 'aurea-table--default', slug: 'table' },
+  { name: 'tabs-default', id: 'aurea-tabs--default', slug: 'tabs' },
   { name: 'textarea-default', id: 'aurea-textarea--default', slug: 'textarea' },
   { name: 'tooltip-default', id: 'aurea-tooltip--default', slug: 'tooltip' },
 ];

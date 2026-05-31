@@ -1,7 +1,7 @@
 # Accessibility audit — Aurea v0.9
 
 Baseline: **WCAG 2.2 Level AA** for documented **stable** components.  
-Last review: **2026-05-31** (1.4.0 stable promotions: avatar, drawer).
+Last review: **2026-05-31** (1.5.0: beta closure, A11Y-001/002, message banner layout + input-time).
 
 ## Summary
 
@@ -10,11 +10,12 @@ Last review: **2026-05-31** (1.4.0 stable promotions: avatar, drawer).
 | Focus visibility            | Pass         | `--au-focus-ring-width` + `box-shadow` on interactive controls |
 | Color contrast (light/dark) | Pass         | Semantic tokens tuned per theme                                |
 | High contrast theme         | Experimental | `high-contrast` / `high-contrast-dark` — manual QA ongoing     |
-| Keyboard — buttons, chips   | Pass         | Native focus; chip group roving tabindex                       |
+| Keyboard — buttons, chips   | Pass         | Native focus; chip group scroll-into-view on focus             |
 | Keyboard — dialogs / drawer | Pass         | Escape closes; focus trap in `AuDialog` / `AuDrawer`           |
 | Keyboard — tabs             | Pass         | Arrow keys between tabs                                        |
 | Form errors                 | Pass         | `aria-invalid`, `aria-describedby` via `au-form-field`         |
 | Screen reader labels        | Pass         | Visible labels or `aria-label` documented per component        |
+| Live regions — snackbar     | Pass         | Only topmost toast in a stack announces (A11Y-001)             |
 
 ## Per-component notes
 
@@ -39,13 +40,6 @@ Last review: **2026-05-31** (1.4.0 stable promotions: avatar, drawer).
 | `au-progress`   | Stable | `progressbar` + valuemin/max/now                               |
 | `au-link`       | Stable | Focus ring; external links get `rel="noopener"`                |
 
-### Beta — extra checks recommended
-
-- **au-autocomplete**: Verify listbox `aria-activedescendant` in strict keyboard flows.
-- **au-input-date**: Browser-native picker; see [input-date ADR](../../docs/decisions/input-date-strategy.md).
-- **au-tabs**: Ensure selected tab `aria-selected` when dynamically added tabs.
-- **au-steps**: Step state should expose current step to SR (roadmap: `aria-current="step"`).
-
 ### Stable (1.1.0 → 1.2.0)
 
 | Component        | Status | Notes                                                                 |
@@ -63,12 +57,28 @@ Last review: **2026-05-31** (1.4.0 stable promotions: avatar, drawer).
 | `au-avatar` | Stable | `alt` on images; initials use `role="img"` + `aria-label`; `decorative` in labelled rows |
 | `au-drawer` | Stable | Native modal `<dialog>`; focus trap; Escape/backdrop close; `prefers-reduced-motion`     |
 
-### Known debt (tracked as GitHub issues)
+### Stable (1.4.0 → 1.5.0)
+
+| Component          | Status | Notes                                                                 |
+| ------------------ | ------ | --------------------------------------------------------------------- |
+| `au-autocomplete`  | Stable | Listbox `aria-activedescendant`; strict keyboard flows documented     |
+| `au-input-date`    | Stable | Native date picker; see [input-date ADR](../../docs/decisions/input-date-strategy.md) |
+| `au-tabs`          | Stable | Selected tab `aria-selected`; arrow-key navigation                  |
+| `au-steps`         | Stable | Current step exposed to SR; keyboard between steps                    |
+| `au-chip-group`    | Stable | `role="group"`; horizontal scroll + `scrollIntoView` on focus (A11Y-002) |
+| `au-list`          | Stable | Removable tags; `auListItem` semantics                                |
+| `au-snackbar`      | Stable | Stacked toasts: only topmost uses `aria-live` polite/assertive (A11Y-001) |
+
+### Beta — extra checks recommended
+
+- **au-input-time**: Browser-native picker; styling varies by browser (mirrors `au-input-date`).
+
+## Known debt (tracked as GitHub issues)
 
 | ID       | Component       | Issue                                                              | Milestone |
 | -------- | --------------- | ------------------------------------------------------------------ | --------- |
-| A11Y-001 | `au-snackbar`   | Multiple live regions — verify polite vs assertive                 | 0.10      |
-| A11Y-002 | `au-chip-group` | Horizontal scroll + keyboard on mobile                             | 0.10      |
+| A11Y-001 | `au-snackbar`   | ~~Multiple live regions~~ **Fixed** in **1.5.0** (topmost-only)   | —         |
+| A11Y-002 | `au-chip-group` | ~~Horizontal scroll keyboard~~ **Fixed** in **1.5.0**              | —         |
 | A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing | —         |
 | A11Y-004 | `au-menu`       | ~~Roving tabindex + typeahead~~ **Fixed** in **1.2.0**             | —         |
 
@@ -80,6 +90,7 @@ Issue bodies: [docs/a11y/issue-templates.md](../../docs/a11y/issue-templates.md)
 2. VoiceOver (macOS) or NVDA (Windows): form field error after blur.
 3. `prefers-reduced-motion: reduce` — no essential motion-only cues.
 4. High-contrast theme toggle in app shell — borders and focus ring visible.
+5. Stacked snackbars: only the newest toast is announced by screen readers.
 
 ## Automated
 

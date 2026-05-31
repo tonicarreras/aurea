@@ -48,6 +48,24 @@ describe('AuChipGroup', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBeNull();
   });
+
+  it('scrolls focused chips into view on focusin', () => {
+    const target = document.createElement('button');
+    target.scrollIntoView = vi.fn();
+    fixture.nativeElement.querySelector('.au-chip-group__scroll')?.appendChild(target);
+    target.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    expect(target.scrollIntoView).toHaveBeenCalledWith({
+      block: 'nearest',
+      inline: 'nearest',
+    });
+  });
+
+  it('ignores focusin when target is not an HTMLElement', () => {
+    const scroll = fixture.nativeElement.querySelector('.au-chip-group__scroll') as HTMLElement;
+    const event = new FocusEvent('focusin', { bubbles: true });
+    Object.defineProperty(event, 'target', { value: document });
+    expect(() => scroll.dispatchEvent(event)).not.toThrow();
+  });
 });
 
 @Component({

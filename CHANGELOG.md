@@ -9,6 +9,28 @@ Git tags for library releases use the prefix **`components-v`** (monorepo conven
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-05-31
+
+### Added
+
+- **`AuInputTime`** (beta) — native `type="time"` field (`FormValueControl<string | null>`) with `minTime` / `maxTime` and `au-form-field` integration.
+- **`AuMessage`** — `layout="inline" | "banner"`, optional `actionLabel` / `(action)` for full-width persistent notices.
+- **`AuIcon`** — new `clock` glyph for time fields.
+
+### Changed
+
+- Promoted to **stable** (since 0.2.0–0.3.0 beta): **`AuAutocomplete`**, **`AuInputDate`**, **`AuTabs`**, **`AuSteps`**, **`AuChipGroup`**, **`AuList`** — after a11y audit and docs review.
+- **`AuSnackbar`** — only the topmost toast in a stack uses an active `aria-live` region; older stacked toasts use `aria-live="off"` (closes **A11Y-001**).
+- **`AuChipGroup`** — horizontal scroll row with `scrollIntoView` on chip focus (closes **A11Y-002**).
+
+### Migration from 1.4.0
+
+No breaking API changes. Former **beta** components are now **stable**; **`AuInputTime`** is **beta**. Use `au-message layout="banner"` instead of a separate banner component.
+
+```bash
+bun add @aurea-design-system/components@1.5.0
+```
+
 ## [1.4.0] - 2026-05-31
 
 ### Changed

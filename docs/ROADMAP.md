@@ -59,6 +59,7 @@ Public plan for `@aurea-design-system/components`. See [VERSIONING.md](./VERSION
 | **1.2.0**     | Promote 1.1.0 betas to stable; menu roving tabindex + typeahead (A11Y-004)      |
 | **1.3.0**     | `AuAvatar` + `AuDrawer` (beta) — 2 components per MINOR cadence                 |
 | **1.4.0**     | Promote 1.3.0 betas to stable; avatar `square` shape + drawer overlay polish    |
+| **1.5.0**     | Close remaining beta catalog; A11Y-001/002; `AuMessage` banner layout + `AuInputTime` (beta) |
 
 ## Post-1.0 — Tooling
 

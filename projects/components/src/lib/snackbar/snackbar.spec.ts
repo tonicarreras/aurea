@@ -234,6 +234,25 @@ describe('AuSnackbar', () => {
     );
   });
 
+  it('only the topmost stacked snackbar uses an active live region', () => {
+    const first = TestBed.createComponent(AuSnackbar);
+    first.componentRef.setInput('open', true);
+    first.componentRef.setInput('variant', 'success');
+    first.componentRef.setInput('message', 'First');
+    first.detectChanges();
+
+    const second = TestBed.createComponent(AuSnackbar);
+    second.componentRef.setInput('open', true);
+    second.componentRef.setInput('variant', 'error');
+    second.componentRef.setInput('message', 'Second');
+    second.detectChanges();
+
+    const firstSurface = querySurface(first)!.nativeElement as HTMLElement;
+    const secondSurface = querySurface(second)!.nativeElement as HTMLElement;
+    expect(firstSurface.getAttribute('aria-live')).toBe('off');
+    expect(secondSurface.getAttribute('aria-live')).toBe('assertive');
+  });
+
   it('Escape dismisses only the topmost snackbar in the stack', () => {
     const first = TestBed.createComponent(AuSnackbar);
     const firstDismiss = vi.fn();

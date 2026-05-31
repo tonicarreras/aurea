@@ -5,6 +5,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
  *
  * @remarks
  * - Sets `role="group"` (toggle filters, not a list of static tags).
+ * - Horizontally scrollable row; focused chips scroll into view (keyboard / narrow viewports).
  * - Pair with `au-chip` `selectable` chips — use {@link AuList} for removable/static tags.
  *
  * @example
@@ -45,4 +46,12 @@ export class AuChipGroup {
     const id = this.ariaLabelledBy().trim();
     return id.length > 0 ? id : null;
   });
+
+  onFocusIn(event: FocusEvent): void {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
 }

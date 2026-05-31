@@ -5,7 +5,7 @@ Component folders (`button/`, `input-text/`, `dialog/`, …) own their public AP
 | Folder           | Contents                                                                                                                                  |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | **`tokens/`**    | `au-tokens.css`, `AuTheme` directive (`[auTheme]` → `data-au-theme`)                                                                      |
-| **`styles/`**    | Shared CSS bundles (`aurea-global.css`) and partials (`au-field-error.css`, `au-field-listbox.css`, `au-snackbar.css`)                    |
+| **`styles/`**    | Shared CSS bundles (`aurea-global.css`) and partials (`au-field-chrome.css`, `au-field-error.css`, `au-field-listbox.css`, `au-snackbar.css`) |
 | **`overlay/`**   | `tooltip-position.ts`, `tooltip-overlay.ts`, `field-listbox-overlay.ts`; tests in `overlay.spec.ts` only — not exported from `public-api` |
 | **`storybook/`** | Storybook-only assets (`au-preview-shell.css`)                                                                                            |
 

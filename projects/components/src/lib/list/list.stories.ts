@@ -8,7 +8,7 @@ import { AuList } from './list';
 const meta: Meta<AuList> = {
   title: 'Aurea/List',
   component: AuList,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('list'),
   argTypes: {
     ariaLabel: { control: 'text', table: { category: 'Accessibility' } },

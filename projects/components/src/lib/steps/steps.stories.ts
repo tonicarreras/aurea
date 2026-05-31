@@ -10,7 +10,7 @@ const storyImports = { imports: [AuSteps, AuStep, AuStepPanel] };
 const meta: Meta<AuSteps> = {
   title: 'Aurea/Steps',
   component: AuSteps,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('steps'),
   argTypes: {
     value: {

@@ -20,6 +20,7 @@ export const COMPONENT_NAV_LABELS: Record<string, string> = {
   'input-number': 'Input number',
   slider: 'Slider',
   'input-date': 'Input date',
+  'input-time': 'Input time',
   dialog: 'Dialog',
   drawer: 'Drawer',
   card: 'Card',

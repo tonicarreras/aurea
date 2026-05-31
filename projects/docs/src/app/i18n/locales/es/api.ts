@@ -374,6 +374,29 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'input-time': {
+    importNames: ['AuFormField', 'AuInputTime'],
+    sections: [
+      {
+        title: 'AuInputTime',
+        description:
+          'Proyecta dentro de `au-form-field`. Selector nativo `type="time"`; valor `HH:mm` o `null`.',
+        rows: [
+          m('value', 'ModelSignal<string | null>', 'Hora como string 24h.'),
+          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
+          i('invalid', 'boolean', 'Inválido.', 'false'),
+          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          i('readOnly', 'boolean', 'Solo lectura.', 'false'),
+          i('required', 'boolean', 'Obligatorio.', 'false'),
+          i('minTime', 'string | undefined', 'Atributo `min` (`HH:mm`).'),
+          i('maxTime', 'string | undefined', 'Atributo `max` (`HH:mm`).'),
+          i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
+          o('blur', 'void', 'Blur.'),
+          o('valueChange', 'string | null', 'Al elegir hora.'),
+        ],
+      },
+    ],
+  },
   'file-upload': {
     importNames: ['AuFormField', 'AuFileUpload'],
     sections: [
@@ -675,7 +698,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuMessage',
-        description: 'Aviso inline; error/warning usan `role="alert"`.',
+        description: 'Aviso inline o banner a ancho completo; error/warning usan `role="alert"`.',
         rows: [
           i(
             'variant',
@@ -683,12 +706,15 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
             'Superficie semántica.',
             "'default'",
           ),
+          i('layout', "'inline' | 'banner'", 'Ancho y cromado.', "'inline'"),
           i('title', 'string', 'Título opcional.', "''"),
           i('message', 'string', 'Cuerpo (o slot por defecto).', "''"),
+          i('actionLabel', 'string', 'Etiqueta del botón de acción opcional.', "''"),
           i('dismissible', 'boolean', 'Botón cerrar.', 'false'),
           i('showIcon', 'boolean', 'Icono de variante (no en default).', 'true'),
           i('closeAriaLabel', 'string', 'Etiqueta del cerrar.', "'Dismiss message'"),
           o('dismiss', 'void', 'Al descartar.'),
+          o('action', 'void', 'Al pulsar la acción.'),
         ],
       },
     ],

@@ -39,7 +39,7 @@ interface AutocompleteStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<AutocompleteStoryArgs> = {
   title: 'Aurea/Autocomplete',
   component: AuAutocomplete,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('autocomplete'),
   argTypes: {
     ...fieldChromeArgTypes,
@@ -112,6 +112,22 @@ function getListbox(canvasElement: HTMLElement) {
 }
 
 export const Default: Story = {
+  args: {
+    label: 'City',
+    placeholder: 'Search cities…',
+    options: cities,
+  },
+};
+
+/** Interaction test: filter by typing and pick an option (CI / test-runner). */
+export const TypeAndSelect: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',
+      },
+    },
+  },
   args: {
     label: 'City',
     placeholder: 'Search cities…',

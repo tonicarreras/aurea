@@ -1,4 +1,6 @@
 import {
+  ExampleMessageBannerActionDemo,
+  ExampleMessageBannerDemo,
   ExampleMessageDismissibleDemo,
   ExampleMessageErrorDemo,
   ExampleMessageSuccessDemo,
@@ -28,6 +30,29 @@ export const examples: ComponentDocExample[] = [
   message="You can dismiss this notice."
   [dismissible]="true"
   (dismiss)="onDismiss()"
+/>`,
+  },
+  {
+    title: 'Banner',
+    demoComponent: ExampleMessageBannerDemo,
+    code: `<au-message
+  layout="banner"
+  variant="info"
+  title="Scheduled maintenance"
+  message="Read-only mode from 18:00–19:00 UTC."
+  [dismissible]="true"
+/>`,
+  },
+  {
+    title: 'Banner with action',
+    demoComponent: ExampleMessageBannerActionDemo,
+    code: `<au-message
+  layout="banner"
+  variant="warning"
+  title="Trial ending soon"
+  message="Upgrade to keep team features."
+  actionLabel="View plans"
+  [dismissible]="true"
 />`,
   },
 ];

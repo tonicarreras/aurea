@@ -109,6 +109,11 @@ export interface ExampleLiveMessages {
     hintLabel: string;
     hint: string;
   };
+  inputTime: {
+    basicLabel: string;
+    boundsLabel: string;
+    boundsHint: string;
+  };
   inputNumber: {
     basicLabel: string;
     errorLabel: string;
@@ -136,6 +141,11 @@ export interface ExampleLiveMessages {
     successBody: string;
     errorBody: string;
     infoBody: string;
+    bannerTitle: string;
+    bannerMessage: string;
+    bannerActionTitle: string;
+    bannerActionMessage: string;
+    bannerActionLabel: string;
   };
   radioGroup: {
     basicLabel: string;

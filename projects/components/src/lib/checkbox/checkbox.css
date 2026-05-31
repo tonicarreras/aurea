@@ -2,8 +2,8 @@
  * Checkbox — native input with custom visual styling.
  * Size: `data-au-size` on host (sm | md | lg).
  * Accessibility: WCAG 2.2 AA — focus rings, 24x24 target, 4.5:1 contrast.
+ * Field errors: aurea-global.css
  */
-@import url('../styles/au-field-error.css');
 
 :host {
   display: inline-block;

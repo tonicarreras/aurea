@@ -379,6 +379,29 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'input-time': {
+    importNames: ['AuFormField', 'AuInputTime'],
+    sections: [
+      {
+        title: 'AuInputTime',
+        description:
+          'Project inside `au-form-field`. Native `type="time"`; value `HH:mm` or `null`.',
+        rows: [
+          m('value', 'ModelSignal<string | null>', 'Time as 24h string.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('readOnly', 'boolean', 'Read-only.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('minTime', 'string | undefined', 'Native `min` attribute (`HH:mm`).'),
+          i('maxTime', 'string | undefined', 'Native `max` attribute (`HH:mm`).'),
+          i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
+          o('blur', 'void', 'Blur.'),
+          o('valueChange', 'string | null', 'When a time is selected.'),
+        ],
+      },
+    ],
+  },
   'file-upload': {
     importNames: ['AuFormField', 'AuFileUpload'],
     sections: [
@@ -687,7 +710,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuMessage',
-        description: 'Inline callout; error/warning use `role="alert"`.',
+        description: 'Inline callout or full-width banner; error/warning use `role="alert"`.',
         rows: [
           i(
             'variant',
@@ -695,12 +718,15 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
             'Semantic surface.',
             "'default'",
           ),
+          i('layout', "'inline' | 'banner'", 'Surface width and chrome.', "'inline'"),
           i('title', 'string', 'Optional heading.', "''"),
           i('message', 'string', 'Body text (or default slot).', "''"),
+          i('actionLabel', 'string', 'Optional action button label.', "''"),
           i('dismissible', 'boolean', 'Close button.', 'false'),
           i('showIcon', 'boolean', 'Variant icon (not on default).', 'true'),
           i('closeAriaLabel', 'string', 'Close button label.', "'Dismiss message'"),
           o('dismiss', 'void', 'When the user dismisses.'),
+          o('action', 'void', 'When the action button is activated.'),
         ],
       },
     ],

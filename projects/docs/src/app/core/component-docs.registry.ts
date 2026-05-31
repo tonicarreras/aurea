@@ -33,6 +33,7 @@ import {
   FieldsetDemo,
   FileUploadDemo,
   InputDateDemo,
+  InputTimeDemo,
   InputNumberDemo,
   InputTextDemo,
   RadioGroupDemo,
@@ -300,6 +301,19 @@ options: AuSelectOption[] = [
 </au-form-field>`,
   },
   {
+    slug: 'input-time',
+    title: 'Input time',
+    exportName: 'AuInputTime',
+    selector: 'au-input-time',
+    summary: 'Selector de hora nativo estilizado con tokens Aurea.',
+    demoComponent: InputTimeDemo,
+    snippet: `import { AuFormField, AuInputTime } from '@aurea-design-system/components';
+
+<au-form-field label="Time">
+  <au-input-time />
+</au-form-field>`,
+  },
+  {
     slug: 'file-upload',
     title: 'File upload',
     exportName: 'AuFileUpload',
@@ -444,7 +458,7 @@ options: AuSelectOption[] = [
     title: 'Message',
     exportName: 'AuMessage',
     selector: 'au-message',
-    summary: 'Aviso inline con variantes semánticas, icono opcional y cierre.',
+    summary: 'Aviso inline o banner a ancho completo con variantes semánticas.',
     demoComponent: MessageDemo,
     snippet: `import { AuMessage } from '@aurea-design-system/components';
 
