@@ -165,7 +165,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuRadioGroup`       | `<au-radio-group>`  |                                                                      |
 | `AuInputNumber`      | `<au-input-number>` |                                                                      |
 | `AuInputDate`        | `<au-input-date>`   | Native date field (stable **1.5.0**)                                 |
-| `AuInputTime`        | `<au-input-time>`   | Native time field (beta **1.5.0**)                                   |
+| `AuInputTime`        | `<au-input-time>`   | Native time field (stable **1.5.0**)                                 |
 | `AuDialog`           | `<au-dialog>`       | Native `<dialog>`                                                    |
 | `AuCard`             | `<au-card>`         | `AuCardFooter` directive                                             |
 | `AuTabs`             | `<au-tabs>`         | `AuTab`, `AuTabPanel`                                                |
@@ -199,7 +199,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 - [CHANGELOG](../../CHANGELOG.md) · [Governance docs](../../docs/README.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [Security](../../SECURITY.md)
 - [Versioning](../../docs/VERSIONING.md) · [Deprecation](../../docs/DEPRECATION.md) · [Angular compatibility](../../docs/ANGULAR_COMPATIBILITY.md)
 - [Component Definition of Done](./COMPONENT_DONE.md) · [A11y audit](./A11Y_AUDIT.md) · [Bundle](./BUNDLE.md) · [Performance](./PERFORMANCE.md)
-- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`). **1.5.0** closes the remaining beta catalog and adds **`AuInputTime`** (beta); **`AuMessage`** gains `layout="banner"` for full-width notices.
+- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`). **1.5.0** closes the beta catalog (including **`AuInputTime`**); **`AuMessage`** gains `layout="banner"` for full-width notices.
 
 ---
 

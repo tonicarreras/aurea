@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "AutocompleteStoryArgs",
-            "id": "interface-AutocompleteStoryArgs-e8b7c54200e7af59fea5965d397d250cb2aac3550a3b48ed3209e4ac0ce9f7e2b77550d57a7cbba51c88f5717b6af7f58fc94b45c133605add54222172ce66a3",
+            "id": "interface-AutocompleteStoryArgs-b6e420d19c5224fa703f6dace6fe770b6b5f418929c78a4fc91fedbf116476bfa9a038cdbc7a84778c84b5a71cccaeff48745d37093303cb4d16c8658f6f9578",
             "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
             "properties": [
                 {
                     "name": "blur",
@@ -813,12 +813,12 @@
         },
         {
             "name": "InputTimeStoryArgs",
-            "id": "interface-InputTimeStoryArgs-01b0b4ee7a05b5249d75132cb0a754af246d332f7ddb9e5f6004a6c013594b7b4a84ea627cdc5e4845d0ff4b93ca1da8886b4947be0ad4e1e3ca3ef023f4c027",
+            "id": "interface-InputTimeStoryArgs-b7fc602b8950364376d35ef61f0fe9644455d0c677627703f996239be3fce578d860ca781e687b8d3335d3e64b32aac748a2e10476a27428f142396bc124eef6",
             "file": "projects/components/src/lib/input-time/input-time.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputTime } from './input-time';\n\ninterface InputTimeStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  minTime: string | undefined;\n  maxTime: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  size: 'sm' | 'md' | 'lg';\n}\n\nconst meta: Meta<InputTimeStoryArgs> = {\n  title: 'Aurea/InputTime',\n  component: AuInputTime,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-time'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minTime: { control: 'text', table: { category: 'Field' } },\n    maxTime: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputTimeStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minTime: undefined,\n    maxTime: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputTime],\n      args,\n      `<au-input-time\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minTime]=\"minTime\"\n  [maxTime]=\"maxTime\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputTimeStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Start time',\n    value: '',\n    hint: 'Uses the native time picker where available.',\n  },\n};\n\nexport const WithBounds: Story = {\n  args: {\n    label: 'Booking',\n    value: '10:30',\n    minTime: '08:00',\n    maxTime: '20:00',\n  },\n};\n\nexport const PickerTheming: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the native time picker and toggle **Theme** in the toolbar. The popup is browser-owned; inline segments use Aurea tokens (WebKit and Firefox). Chromium/Safari show the Aurea clock icon; Firefox uses its native icon (no CSS hook to hide it).',\n      },\n    },\n  },\n  args: {\n    label: 'Event time',\n    value: '14:00',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minTime: '08:00',\n    maxTime: '22:00',\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputTime } from './input-time';\n\ninterface InputTimeStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  minTime: string | undefined;\n  maxTime: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  size: 'sm' | 'md' | 'lg';\n}\n\nconst meta: Meta<InputTimeStoryArgs> = {\n  title: 'Aurea/InputTime',\n  component: AuInputTime,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-time'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minTime: { control: 'text', table: { category: 'Field' } },\n    maxTime: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputTimeStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minTime: undefined,\n    maxTime: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputTime],\n      args,\n      `<au-input-time\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minTime]=\"minTime\"\n  [maxTime]=\"maxTime\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputTimeStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Start time',\n    value: '',\n    hint: 'Uses the native time picker where available.',\n  },\n};\n\nexport const WithBounds: Story = {\n  args: {\n    label: 'Booking',\n    value: '10:30',\n    minTime: '08:00',\n    maxTime: '20:00',\n  },\n};\n\nexport const PickerTheming: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the native time picker and toggle **Theme** in the toolbar. The popup is browser-owned; inline segments use Aurea tokens (WebKit and Firefox). Chromium/Safari show the Aurea clock icon; Firefox uses its native icon (no CSS hook to hide it).',\n      },\n    },\n  },\n  args: {\n    label: 'Event time',\n    value: '14:00',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minTime: '08:00',\n    maxTime: '22:00',\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -1743,21 +1743,21 @@
                 "name": "Compact",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
-            },
-            {
-                "name": "Compact",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { size: 'sm' },\n}"
+            },
+            {
+                "name": "Compact",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
             },
             {
                 "name": "CompactSize",
@@ -1937,16 +1937,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/drawer/drawer.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1957,11 +1947,11 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -1972,6 +1962,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuEmptyState, AuButton] },\n    template: `\n      <au-empty-state\n        [title]=\"title\"\n        [description]=\"description\"\n        [icon]=\"icon\"\n        [size]=\"size\"\n        [headingLevel]=\"headingLevel\"\n      >\n        <au-button variant=\"outline\" type=\"button\">Clear filters</au-button>\n      </au-empty-state>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -2657,21 +2657,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuAvatar>",
-                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AutocompleteStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAvatar>",
+                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2687,21 +2687,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuBreadcrumb>",
                 "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2757,16 +2757,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuDivider>",
-                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/drawer/drawer.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2777,11 +2767,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuFieldset>",
-                "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
+                "type": "Meta<AuDivider>",
+                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2792,6 +2782,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuEmptyState>",
                 "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuFieldset>",
+                "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2861,7 +2861,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputTimeStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/InputTime',\n  component: AuInputTime,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-time'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minTime: { control: 'text', table: { category: 'Field' } },\n    maxTime: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputTimeStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minTime: undefined,\n    maxTime: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputTime],\n      args,\n      `<au-input-time\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minTime]=\"minTime\"\n  [maxTime]=\"maxTime\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+                "defaultValue": "{\n  title: 'Aurea/InputTime',\n  component: AuInputTime,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-time'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minTime: { control: 'text', table: { category: 'Field' } },\n    maxTime: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputTimeStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minTime: undefined,\n    maxTime: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputTime],\n      args,\n      `<au-input-time\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minTime]=\"minTime\"\n  [maxTime]=\"maxTime\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -3673,7 +3673,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
                 "rawdescription": "Interaction test: filter by typing and pick an option (CI / test-runner).",
                 "description": "<p>Interaction test: filter by typing and pick an option (CI / test-runner).</p>\n"
             },
@@ -4534,8 +4534,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "rawtype": "StoryObj<AutocompleteStoryArgs>",
+                "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4545,8 +4545,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AutocompleteStoryArgs>",
-                "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4567,8 +4567,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "rawtype": "StoryObj<AuBreadcrumb>",
+                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4578,8 +4578,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBreadcrumb>",
-                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4644,17 +4644,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDivider>",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuDrawer>",
                 "file": "projects/components/src/lib/drawer/drawer.stories.ts",
                 "deprecated": false,
@@ -4666,8 +4655,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuFieldset>",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "rawtype": "StoryObj<AuDivider>",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4679,6 +4668,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuEmptyState>",
                 "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuFieldset>",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5695,7 +5695,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
                     "rawdescription": "Interaction test: filter by typing and pick an option (CI / test-runner).",
                     "description": "<p>Interaction test: filter by typing and pick an option (CI / test-runner).</p>\n"
                 },
@@ -5782,48 +5782,6 @@
                     "defaultValue": "[AuAccordion, AuAccordionItem, AuAccordionPanel]"
                 }
             ],
-            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
-                {
-                    "name": "Compact",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Disabled",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { disabled: true },\n  render: Default.render,\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuFieldset>",
-                    "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
-                }
-            ],
             "projects/components/src/lib/empty-state/empty-state.stories.ts": [
                 {
                     "name": "Compact",
@@ -5894,6 +5852,48 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    icon: undefined,\n    imageSrc: 'https://placehold.co/96x96/e2e8f0/64748b?text=Empty',\n    imageAlt: '',\n    title: 'Inbox zero',\n    description: 'You are all caught up.',\n  },\n}"
+                }
+            ],
+            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
+                {
+                    "name": "Compact",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { disabled: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuFieldset>",
+                    "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
                 }
             ],
             "projects/components/src/lib/input-text/input-text.stories.ts": [
@@ -6572,6 +6572,48 @@
                     "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin título visible; el nombre accesible viene de <code>ariaLabel</code>.</p>',\n  }),\n  args: {\n    title: '',\n    ariaLabel: 'Información',\n  },\n}"
                 }
             ],
+            "projects/components/src/lib/drawer/drawer.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</au-button>\n        <au-button type=\"button\" (click)=\"open.set(false)\">Apply</au-button>\n      </div>`,\n  }),\n}"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Wider panel for forms or multi-step flows.</p>',\n  }),\n  args: { size: 'lg', title: 'Account settings' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDrawer>",
+                    "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                },
+                {
+                    "name": "StartPosition",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Panel slides in from the start edge (left in LTR).</p>',\n  }),\n  args: { position: 'start', title: 'Filters' },\n}"
+                }
+            ],
             "projects/components/src/lib/divider/divider.stories.ts": [
                 {
                     "name": "Default",
@@ -6622,48 +6664,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
-                }
-            ],
-            "projects/components/src/lib/drawer/drawer.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</au-button>\n        <au-button type=\"button\" (click)=\"open.set(false)\">Apply</au-button>\n      </div>`,\n  }),\n}"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Wider panel for forms or multi-step flows.</p>',\n  }),\n  args: { size: 'lg', title: 'Account settings' },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuDrawer>",
-                    "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
-                },
-                {
-                    "name": "StartPosition",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Panel slides in from the start edge (left in LTR).</p>',\n  }),\n  args: { position: 'start', title: 'Filters' },\n}"
                 }
             ],
             "projects/components/src/lib/file-upload/file-upload.stories.ts": [
@@ -6821,7 +6821,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<InputTimeStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/InputTime',\n  component: AuInputTime,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-time'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minTime: { control: 'text', table: { category: 'Field' } },\n    maxTime: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputTimeStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minTime: undefined,\n    maxTime: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputTime],\n      args,\n      `<au-input-time\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minTime]=\"minTime\"\n  [maxTime]=\"maxTime\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
+                    "defaultValue": "{\n  title: 'Aurea/InputTime',\n  component: AuInputTime,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-time'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    minTime: { control: 'text', table: { category: 'Field' } },\n    maxTime: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n  } as Meta<InputTimeStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    minTime: undefined,\n    maxTime: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    size: 'md',\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputTime],\n      args,\n      `<au-input-time\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [minTime]=\"minTime\"\n  [maxTime]=\"maxTime\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n/>`,\n    ),\n}"
                 },
                 {
                     "name": "PickerTheming",
@@ -8060,19 +8060,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/avatar/avatar.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuAvatar>",
-                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "Story",
@@ -8080,6 +8067,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AutocompleteStoryArgs>",
                     "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/avatar/avatar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAvatar>",
+                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8099,19 +8099,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/button/button.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButton>",
-                    "file": "projects/components/src/lib/button/button.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
                 {
                     "name": "Story",
@@ -8119,6 +8106,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuBreadcrumb>",
                     "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/button/button.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuButton>",
+                    "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8190,19 +8190,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuDivider>",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/drawer/drawer.stories.ts": [
                 {
                     "name": "Story",
@@ -8216,13 +8203,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
+            "projects/components/src/lib/divider/divider.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuFieldset>",
-                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                    "rawtype": "StoryObj<AuDivider>",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8236,6 +8223,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuEmptyState>",
                     "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuFieldset>",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

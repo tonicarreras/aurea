@@ -22,7 +22,7 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   'radio-group': { level: 'stable', since: '0.2.0' },
   'input-number': { level: 'stable', since: '0.2.0' },
   'input-date': { level: 'stable', since: '1.5.0' },
-  'input-time': { level: 'beta', since: '1.5.0' },
+  'input-time': { level: 'stable', since: '1.5.0' },
   dialog: { level: 'stable', since: '0.2.0' },
   card: { level: 'stable', since: '0.1.0' },
   tabs: { level: 'stable', since: '1.5.0' },

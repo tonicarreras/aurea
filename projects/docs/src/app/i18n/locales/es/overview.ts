@@ -458,7 +458,8 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       { region: 'Input nativo', detail: 'Tokens `--au-color-date-picker-*` para icono y acento.' },
     ],
     accessibility: [
-      'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
+      'Label, hint y errores enlazados vía `au-form-field` (`aria-invalid`, `aria-describedby`).',
+      'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
     ],
   },
   'file-upload': {

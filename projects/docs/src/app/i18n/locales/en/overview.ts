@@ -446,7 +446,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     anatomy: [
       { region: 'Native input', detail: 'Tokens `--au-color-date-picker-*` for icon and accent.' },
     ],
-    accessibility: ['Linked label and errors; native OS picker behavior.'],
+    accessibility: [
+      'Linked label, hint, and errors via `au-form-field` (`aria-invalid`, `aria-describedby`).',
+      'Decorative clock icon (`aria-hidden`); picker opens via native control.',
+    ],
   },
   'file-upload': {
     intro: [

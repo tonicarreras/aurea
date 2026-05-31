@@ -9,6 +9,10 @@ Git tags for library releases use the prefix **`components-v`** (monorepo conven
 
 ## [Unreleased]
 
+### Changed
+
+- **`AuInputTime`** promoted to **stable** (since **1.5.0**) after a11y audit and axe on Storybook stories.
+
 ## [1.5.0] - 2026-05-31
 
 ### Added

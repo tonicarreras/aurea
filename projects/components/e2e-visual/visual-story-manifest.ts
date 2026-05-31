@@ -25,6 +25,7 @@ export const VISUAL_STORIES: {
   { name: 'input-date-default', id: 'aurea-inputdate--default', slug: 'input-date' },
   { name: 'input-number-default', id: 'aurea-inputnumber--default', slug: 'input-number' },
   { name: 'input-text-default', id: 'aurea-inputtext--default', slug: 'input-text' },
+  { name: 'input-time-default', id: 'aurea-inputtime--default', slug: 'input-time' },
   { name: 'link-default', id: 'aurea-link--default', slug: 'link' },
   { name: 'list-with-chips', id: 'aurea-list--with-chips', slug: 'list' },
   { name: 'menu-default', id: 'aurea-menu--default', slug: 'menu' },

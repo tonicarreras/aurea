@@ -34,7 +34,7 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
     note: 'Native date picker styling varies by browser.',
   },
   'input-time': {
-    level: 'beta',
+    level: 'stable',
     since: '1.5.0',
     note: 'Native time picker styling varies by browser.',
   },

@@ -1,7 +1,7 @@
 # Accessibility audit — Aurea v0.9
 
 Baseline: **WCAG 2.2 Level AA** for documented **stable** components.  
-Last review: **2026-05-31** (1.5.0: beta closure, A11Y-001/002, message banner layout + input-time).
+Last review: **2026-05-29** (1.5.0+: `au-input-time` promoted to stable; axe on date/time stories).
 
 ## Summary
 
@@ -63,15 +63,12 @@ Last review: **2026-05-31** (1.5.0: beta closure, A11Y-001/002, message banner l
 | ------------------ | ------ | --------------------------------------------------------------------- |
 | `au-autocomplete`  | Stable | Listbox `aria-activedescendant`; strict keyboard flows documented     |
 | `au-input-date`    | Stable | Native date picker; see [input-date ADR](../../docs/decisions/input-date-strategy.md) |
+| `au-input-time`    | Stable | Native time picker; `aria-invalid` / `aria-describedby` via `au-form-field`; decorative clock icon |
 | `au-tabs`          | Stable | Selected tab `aria-selected`; arrow-key navigation                  |
 | `au-steps`         | Stable | Current step exposed to SR; keyboard between steps                    |
 | `au-chip-group`    | Stable | `role="group"`; horizontal scroll + `scrollIntoView` on focus (A11Y-002) |
 | `au-list`          | Stable | Removable tags; `auListItem` semantics                                |
 | `au-snackbar`      | Stable | Stacked toasts: only topmost uses `aria-live` polite/assertive (A11Y-001) |
-
-### Beta — extra checks recommended
-
-- **au-input-time**: Browser-native picker; styling varies by browser (mirrors `au-input-date`).
 
 ## Known debt (tracked as GitHub issues)
 

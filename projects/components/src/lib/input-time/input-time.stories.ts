@@ -28,7 +28,7 @@ interface InputTimeStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<InputTimeStoryArgs> = {
   title: 'Aurea/InputTime',
   component: AuInputTime,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('input-time'),
   argTypes: {
     ...fieldChromeArgTypes,
