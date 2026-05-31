@@ -85,6 +85,8 @@ describe('AuFileUpload', () => {
     fixture.detectChanges();
     expect(upload.value()).toEqual([file]);
     expect(upload.controlId()).toBeTruthy();
+    const input = fixture.nativeElement.querySelector('.au-file-upload__input') as HTMLInputElement;
+    expect(input.id).toBe(upload.controlId());
     expect(fixture.nativeElement.querySelector('.au-file-upload__item-name')?.textContent).toBe(
       'notes.txt',
     );
@@ -233,8 +235,25 @@ describe('AuFileUpload standalone', () => {
     expect(uploadInstance.ariaDescribedBy()).toContain('hint');
   });
 
-  it('exposes a stable file input id', () => {
-    expect(fixture.componentInstance['fileInputId']()).toMatch(/^au-file-upload-/);
+  it('uses the form-field control id on the native input', () => {
+    @Component({
+      imports: [AuFormField, AuFileUpload],
+      template: `
+        <au-form-field label="Attachments">
+          <au-file-upload />
+        </au-form-field>
+      `,
+    })
+    class IdHost {}
+
+    const idFixture = TestBed.createComponent(IdHost);
+    idFixture.detectChanges();
+    const uploadInstance = idFixture.debugElement.query(By.directive(AuFileUpload))
+      .componentInstance as AuFileUpload;
+    const input = idFixture.nativeElement.querySelector(
+      '.au-file-upload__input',
+    ) as HTMLInputElement;
+    expect(input.id).toBe(uploadInstance.controlId());
   });
 
   it('syncs invalid state from signal-form errors', () => {

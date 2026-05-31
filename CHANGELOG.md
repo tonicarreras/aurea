@@ -9,15 +9,28 @@ Git tags for library releases use the prefix **`components-v`** (monorepo conven
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-05-31
+
 ### Added
 
 - **`AuEmptyState`** (beta) — centered placeholder for empty lists, tables, and search results; media via preset `icon`, `imageSrc`, projected `[auEmptyStateMedia]`, projected actions, and configurable heading level.
-- **`AuTable`** — empty rows accept projected `au-empty-state`; `emptyMessage` remains the text fallback.
-- **`AuSpinner`** — default arc color is `--au-color-action-primary` (override with `--au-spinner-arc` or `color` on the host).
 - **`AuAccordion`** (beta) — collapsible sections with `button[auAccordionItem]` + `[auAccordionPanel]`, `[(value)]`, and arrow/Home/End keyboard nav.
 - **`AuFieldset`** (beta) — native `fieldset` wrapper with `legend`, optional `description`, and `disabled` for grouped fields.
 - **`AuSlider`** (beta) — range input (`FormValueControl<number>`) with optional live value, min/max/step, and `au-form-field` integration.
 - **`AuFileUpload`** (beta) — drag-and-drop file picker (`FormValueControl<File[]>`) with browse button, accept filter, and removable list.
+
+### Changed
+
+- **`AuTable`** — empty rows accept projected `au-empty-state`; `emptyMessage` remains the text fallback.
+- **`AuSpinner`** — default arc color is `--au-color-action-primary` (override with `--au-spinner-arc` or `color` on the host).
+
+### Migration from 1.0.0
+
+No breaking API changes. New components are **beta** (see [component maturity](./projects/components/src/lib/component-maturity.ts)).
+
+```bash
+bun add @aurea-design-system/components@1.1.0
+```
 
 ## [1.0.0] - 2026-05-30
 
@@ -113,7 +126,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.0.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.1.0...HEAD
+[1.1.0]: https://github.com/tonicarreras/aurea/compare/components-v1.0.0...components-v1.1.0
 [1.0.0]: https://github.com/tonicarreras/aurea/compare/components-v0.9.0...components-v1.0.0
 [0.9.0]: https://github.com/tonicarreras/aurea/compare/v0.3.0...components-v0.9.0
 [0.3.0]: https://github.com/tonicarreras/aurea/compare/v0.2.0...v0.3.0

@@ -62,7 +62,6 @@ export class AuFileUpload implements FormValueControl<File[]> {
   private readonly host = inject(ElementRef<HTMLElement>);
 
   protected readonly dragOver = signal(false);
-  private readonly inputId = signal(`au-file-upload-${++nextFileUploadId}`);
 
   readonly controlId = computed(() => this.formField.controlId());
   readonly displayError = displayErrorFromErrors(this.errors);
@@ -150,10 +149,6 @@ export class AuFileUpload implements FormValueControl<File[]> {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
-  protected fileInputId(): string {
-    return this.inputId();
-  }
-
   private addFiles(incoming: File[]): void {
     if (incoming.length === 0) {
       return;
@@ -167,5 +162,3 @@ export class AuFileUpload implements FormValueControl<File[]> {
     this.valueChange.emit(next);
   }
 }
-
-let nextFileUploadId = 0;
