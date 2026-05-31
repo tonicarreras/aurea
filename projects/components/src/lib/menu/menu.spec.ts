@@ -582,6 +582,26 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[1]);
     });
 
+    it('skips undefined entries while typeahead iterates items (direct call)', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture) as unknown as {
+        handleTypeahead: (key: string) => void;
+        enabledMenuItems: () => AuMenuItem[];
+        findFocusedItemIndex: (items: AuMenuItem[]) => number;
+      };
+      const mockItem = {
+        labelText: () => 'Action',
+        focus: vi.fn(),
+      } as unknown as AuMenuItem;
+      vi.spyOn(menu, 'findFocusedItemIndex').mockReturnValue(-1);
+      vi.spyOn(menu, 'enabledMenuItems').mockReturnValue([
+        mockItem,
+        undefined as unknown as AuMenuItem,
+      ]);
+      menu.handleTypeahead('s');
+    });
+
     it('cleans up listeners when destroyed while open', () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;

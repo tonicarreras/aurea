@@ -65,12 +65,8 @@ function deriveInitials(name: string): string {
   }
   const parts = trimmed.split(/\s+/).filter(Boolean);
   if (parts.length >= 2) {
-    const first = parts[0];
     const last = parts[parts.length - 1];
-    if (first && last) {
-      return `${first.charAt(0)}${last.charAt(0)}`.toUpperCase();
-    }
+    return `${parts[0].charAt(0)}${last.charAt(0)}`.toUpperCase();
   }
-  const first = parts[0];
-  return first ? first.slice(0, 2).toUpperCase() : '?';
+  return parts[0].slice(0, 2).toUpperCase();
 }

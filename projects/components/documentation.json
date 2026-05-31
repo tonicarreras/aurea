@@ -2490,21 +2490,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuAvatar>",
-                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AutocompleteStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAvatar>",
+                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -4325,8 +4325,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "rawtype": "StoryObj<AutocompleteStoryArgs>",
+                "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4336,8 +4336,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AutocompleteStoryArgs>",
-                "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -7756,19 +7756,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/avatar/avatar.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuAvatar>",
-                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "Story",
@@ -7776,6 +7763,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AutocompleteStoryArgs>",
                     "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/avatar/avatar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAvatar>",
+                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
