@@ -102,6 +102,14 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Collapsible sections with WAI-ARIA triggers, panels, and keyboard navigation.',
     'Secciones plegables con disparadores WAI-ARIA, paneles y teclado.',
   ),
+  avatar: L(
+    'User image or initials fallback for profiles and lists.',
+    'Imagen de usuario o iniciales para perfiles y listas.',
+  ),
+  drawer: L(
+    'Side panel overlay for navigation, filters, or detail views.',
+    'Panel lateral modal para navegación, filtros o detalle.',
+  ),
   fieldset: L(
     'Groups related fields with a native fieldset, legend, and description.',
     'Agrupa campos relacionados con fieldset nativo, leyenda y descripción.',

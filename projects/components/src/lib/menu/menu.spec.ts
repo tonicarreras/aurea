@@ -471,11 +471,135 @@ describe('AuMenu', () => {
       const menu = menuInstance(fixture) as unknown as {
         unregisterMenuItem: (item: AuMenuItem) => void;
         enabledMenuItems: () => AuMenuItem[];
+        activeMenuItem: () => AuMenuItem | null;
       };
       const items = menu.enabledMenuItems();
       expect(items.length).toBeGreaterThan(0);
+      (menu as unknown as { focusMenuItem: (item: AuMenuItem) => void }).focusMenuItem(items[0]);
       menu.unregisterMenuItem(items[0]);
       expect(menu.enabledMenuItems()).toHaveLength(items.length - 1);
+      expect(menu.activeMenuItem()).toBeNull();
+    });
+
+    it('sets roving tabindex so only the active item is tabbable', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      expect(btn[0].getAttribute('tabindex')).toBe('0');
+      expect(btn[1].getAttribute('tabindex')).toBe('-1');
+      expect(btn[2].getAttribute('tabindex')).toBe('-1');
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+      expect(btn[0].getAttribute('tabindex')).toBe('-1');
+      expect(btn[1].getAttribute('tabindex')).toBe('0');
+    });
+
+    it('typeahead focuses the next item matching the typed character', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      expect(document.activeElement).toBe(btn[0]);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 's', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[1]);
+      expect(btn[1].textContent?.trim()).toBe('Second');
+    });
+
+    it('ignores typeahead for non-character keys', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('no-ops typeahead when there are no enabled items (direct call)', () => {
+      const fixture = TestBed.createComponent(HostNoItems);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const menu = fixture.debugElement.query(By.directive(AuMenu))
+        .componentInstance as unknown as {
+        handleTypeahead: (key: string) => void;
+      };
+      expect(() => menu.handleTypeahead.call(menu, 'a')).not.toThrow();
+    });
+
+    it('no-ops typeahead for punctuation (direct call)', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      const menu = menuInstance(fixture) as unknown as {
+        handleTypeahead: (key: string) => void;
+      };
+      menu.handleTypeahead.call(menu, '!');
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('typeahead wraps to earlier items when no match after current', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      btn[1].focus();
+      fixture.detectChanges();
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('ignores typeahead when no item matches the character', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      const panel = getPanel(fixture);
+      panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', bubbles: true }));
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[0]);
+    });
+
+    it('typeahead searches from the first item when no item is focused (direct call)', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.componentInstance.open = true;
+      fixture.detectChanges();
+      const btn = getMenuItems(fixture);
+      const menu = menuInstance(fixture) as unknown as {
+        handleTypeahead: (key: string) => void;
+        findFocusedItemIndex: (items: AuMenuItem[]) => number;
+      };
+      vi.spyOn(menu, 'findFocusedItemIndex').mockReturnValue(-1);
+      menu.handleTypeahead('s');
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(btn[1]);
+    });
+
+    it('skips undefined entries while typeahead iterates items (direct call)', () => {
+      const fixture = TestBed.createComponent(Host);
+      fixture.detectChanges();
+      const menu = menuInstance(fixture) as unknown as {
+        handleTypeahead: (key: string) => void;
+        enabledMenuItems: () => AuMenuItem[];
+        findFocusedItemIndex: (items: AuMenuItem[]) => number;
+      };
+      const mockItem = {
+        labelText: () => 'Action',
+        focus: vi.fn(),
+      } as unknown as AuMenuItem;
+      vi.spyOn(menu, 'findFocusedItemIndex').mockReturnValue(-1);
+      vi.spyOn(menu, 'enabledMenuItems').mockReturnValue([
+        mockItem,
+        undefined as unknown as AuMenuItem,
+      ]);
+      menu.handleTypeahead('s');
     });
 
     it('cleans up listeners when destroyed while open', () => {

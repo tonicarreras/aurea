@@ -1,3 +1,5 @@
+import * as avatar from './avatar/index';
+import * as drawer from './drawer/index';
 import * as accordion from './accordion/index';
 import * as fieldset from './fieldset/index';
 import * as fileUpload from './file-upload/index';
@@ -40,6 +42,8 @@ import * as tokens from './tokens/index';
 describe('library barrel exports', () => {
   it('re-exports all public components', () => {
     expect(autocomplete.AuAutocomplete).toBeDefined();
+    expect(avatar.AuAvatar).toBeDefined();
+    expect(drawer.AuDrawer).toBeDefined();
     expect(accordion.AuAccordion).toBeDefined();
     expect(accordion.AuAccordionItem).toBeDefined();
     expect(accordion.AuAccordionPanel).toBeDefined();

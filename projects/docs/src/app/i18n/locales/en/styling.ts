@@ -136,6 +136,18 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-shadow-focus-ring', description: 'Visible focus ring on triggers.' },
     { token: '--au-text-sm / --au-text-base', description: 'Trigger typography by `size`.' },
   ],
+  avatar: [
+    { token: '--au-avatar-size', description: 'Host width/height (by `size`).' },
+    { token: '--au-avatar-bg', description: 'Initials fallback background.' },
+    { token: '--au-avatar-color', description: 'Initials text color.' },
+    { token: '--au-avatar-border', description: 'Outer border.' },
+  ],
+  drawer: [
+    { token: '--au-drawer-width-sm/md/lg', description: 'Panel width by `size`.' },
+    { token: '--au-drawer-bg', description: 'Panel surface.' },
+    { token: '--au-z-drawer', description: 'Stacking order.' },
+    { token: '--au-shadow-focus-ring', description: 'Close button focus.' },
+  ],
   'radio-group': [
     { token: '--au-color-text-label', description: 'Group legend.' },
     {

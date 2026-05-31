@@ -8,6 +8,7 @@ export interface PreviewMessages {
     billingPanel: string;
   };
   badge: { accent: string; count: string };
+  avatar: { name: string; alt: string; src: string };
   breadcrumb: { home: string; components: string; table: string };
   button: { primary: string; secondary: string; outline: string; ghost: string };
   card: { title: string; body: string; action: string };
@@ -15,6 +16,7 @@ export interface PreviewMessages {
   chip: { removable: string };
   chipGroup: { ariaLabel: string; draft: string; published: string; archived: string };
   dialog: { open: string; title: string; body: string; cancel: string; confirm: string };
+  drawer: { open: string; title: string; body: string; cancel: string; apply: string };
   divider: { top: string; label: string; bottom: string };
   fieldset: {
     legend: string;

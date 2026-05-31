@@ -4,6 +4,8 @@ export const VISUAL_STORIES: {
   readonly id: string;
   readonly slug: string;
 }[] = [
+  { name: 'accordion-default', id: 'aurea-accordion--default', slug: 'accordion' },
+  { name: 'avatar-initials', id: 'aurea-avatar--initials', slug: 'avatar' },
   { name: 'badge-variants', id: 'aurea-badge--variants', slug: 'badge' },
   { name: 'breadcrumb-default', id: 'aurea-breadcrumb--default', slug: 'breadcrumb' },
   { name: 'button-primary', id: 'aurea-button--primary', slug: 'button' },
@@ -12,6 +14,10 @@ export const VISUAL_STORIES: {
   { name: 'chip-default', id: 'aurea-chip--default', slug: 'chip' },
   { name: 'dialog-default', id: 'aurea-dialog--default', slug: 'dialog' },
   { name: 'divider-default', id: 'aurea-divider--default', slug: 'divider' },
+  { name: 'drawer-default', id: 'aurea-drawer--default', slug: 'drawer' },
+  { name: 'empty-state-default', id: 'aurea-emptystate--default', slug: 'empty-state' },
+  { name: 'fieldset-default', id: 'aurea-fieldset--default', slug: 'fieldset' },
+  { name: 'file-upload-default', id: 'aurea-fileupload--default', slug: 'file-upload' },
   { name: 'form-field-with-input', id: 'aurea-formfield--with-input', slug: 'form-field' },
   { name: 'icon-default', id: 'aurea-icon--default', slug: 'icon' },
   { name: 'input-number-default', id: 'aurea-inputnumber--default', slug: 'input-number' },
@@ -25,6 +31,7 @@ export const VISUAL_STORIES: {
   { name: 'radio-group-default', id: 'aurea-radiogroup--default', slug: 'radio-group' },
   { name: 'select-default', id: 'aurea-select--default', slug: 'select' },
   { name: 'skeleton-text', id: 'aurea-skeleton--text', slug: 'skeleton' },
+  { name: 'slider-default', id: 'aurea-slider--default', slug: 'slider' },
   { name: 'snackbar-default', id: 'aurea-snackbar--default', slug: 'snackbar' },
   { name: 'spinner-default', id: 'aurea-spinner--default', slug: 'spinner' },
   { name: 'switch-default', id: 'aurea-switch--default', slug: 'switch' },

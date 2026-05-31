@@ -35,17 +35,19 @@ On narrow viewports, chip groups scroll horizontally. Verify arrow keys and focu
 
 ## A11Y-004 — au-menu roving tabindex + typeahead
 
+**Status:** ✅ Fixed in **1.2.0**
+
 **Title:** `[A11Y-004] au-menu: roving tabindex and typeahead`
 
 **Body:**
 
-Menu items should support arrow-key navigation and typeahead per WAI-ARIA menu pattern. Currently Escape/outside-click work; full pattern planned for 0.10.
+Menu items support arrow-key navigation and typeahead per WAI-ARIA menu pattern.
 
 **Acceptance criteria:**
 
-- [ ] Roving `tabindex` on `au-menu-item`
-- [ ] Typeahead matches first item by character
-- [ ] Storybook play test for keyboard
+- [x] Roving `tabindex` on `au-menu-item`
+- [x] Typeahead matches first item by character
+- [x] Unit tests for keyboard (`menu.spec.ts`, `menu-item.spec.ts`)
 
 ---
 

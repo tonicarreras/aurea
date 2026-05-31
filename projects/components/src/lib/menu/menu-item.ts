@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   ElementRef,
   inject,
@@ -14,7 +15,7 @@ import { AU_MENU } from './au-menu.token';
  * Action entry inside {@link AuMenu}.
  *
  * @remarks
- * - **Keyboard:** Arrow keys cycle between items (handled by parent menu).
+ * - **Keyboard:** Arrow keys cycle between items (handled by parent menu); roving `tabindex`.
  * - **Focus:** receives focus via parent navigation; button click or Enter/Space activates.
  */
 @Component({
@@ -34,6 +35,8 @@ export class AuMenuItem {
   readonly disabled = input(false);
   readonly select = output<void>();
 
+  protected readonly tabIndexAttr = computed(() => (this.menu.isActiveMenuItem(this) ? 0 : -1));
+
   constructor() {
     this.menu.registerMenuItem(this);
     this.destroyRef.onDestroy(() => this.menu.unregisterMenuItem(this));
@@ -46,11 +49,21 @@ export class AuMenuItem {
   }
 
   focus(): void {
+    this.menu.setActiveMenuItem(this);
     this.buttonEl().focus();
+  }
+
+  /** Visible label text for menu typeahead (first character match). */
+  labelText(): string {
+    return (this.buttonEl().textContent ?? '').trim();
   }
 
   containsElement(el: Node): boolean {
     return this.buttonEl().contains(el);
+  }
+
+  protected onFocus(): void {
+    this.menu.setActiveMenuItem(this);
   }
 
   protected onClick(event: MouseEvent): void {

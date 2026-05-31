@@ -226,6 +226,28 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  avatar: {
+    importNames: ['AuAvatar'],
+    sections: [
+      {
+        title: 'AuAvatar',
+        description: 'Imagen de usuario o iniciales como respaldo.',
+        rows: [
+          i('src', 'string', 'URL de imagen.', "''"),
+          i('alt', 'string', 'Texto alternativo con `src`.', "''"),
+          i('name', 'string', 'Nombre para iniciales y `aria-label`.', "''"),
+          i('size', "'xs' | 'sm' | 'md' | 'lg' | 'xl'", 'Diámetro.', "'md'"),
+          i(
+            'shape',
+            "'circle' | 'square'",
+            'Círculo (por defecto) o cuadrado con esquinas redondeadas.',
+            "'circle'",
+          ),
+          i('decorative', 'boolean', 'Ocultar del árbol de accesibilidad.', 'false'),
+        ],
+      },
+    ],
+  },
   accordion: {
     importNames: ['AuAccordion', 'AuAccordionItem', 'AuAccordionPanel'],
     sections: [
@@ -405,6 +427,37 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
             name: 'auDialogFooter',
             type: 'directiva',
             description: 'Slot de acciones en el pie del diálogo.',
+          },
+        ],
+      },
+    ],
+  },
+  drawer: {
+    importNames: ['AuDrawer', 'AuDialogFooter', 'AuButton'],
+    sections: [
+      {
+        title: 'AuDrawer',
+        description: 'Panel lateral sobre `<dialog>` nativo.',
+        rows: [
+          m('open', 'ModelSignal<boolean>', 'Visibilidad.'),
+          i('title', 'string', 'Título visible.', "''"),
+          i('ariaLabel', 'string', 'Nombre accesible sin título.', "''"),
+          i('position', "'start' | 'end'", 'Borde de entrada (LTR: start=izq, end=der).', "'end'"),
+          i('size', "'sm' | 'md' | 'lg' | 'full'", 'Ancho del panel.', "'md'"),
+          i('showCloseButton', 'boolean', 'Botón cerrar en cabecera.', 'true'),
+          i('closeOnBackdrop', 'boolean', 'Cerrar al pulsar fuera.', 'true'),
+          i('closeOnEscape', 'boolean', 'Cerrar con Escape.', 'true'),
+          o('close', 'void', 'Tras cerrar.'),
+        ],
+      },
+      {
+        title: 'AuDialogFooter / auDrawerFooter',
+        description: 'Proyecta `<div auDrawerFooter>` o `<div auDialogFooter>` para acciones.',
+        rows: [
+          {
+            name: 'auDrawerFooter',
+            type: 'directiva',
+            description: 'Slot del pie (alias de AuDialogFooter).',
           },
         ],
       },

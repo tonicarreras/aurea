@@ -8,7 +8,7 @@ import { AuEmptyState } from './empty-state';
 const meta: Meta<AuEmptyState> = {
   title: 'Aurea/EmptyState',
   component: AuEmptyState,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('empty-state'),
   argTypes: {
     title: {
