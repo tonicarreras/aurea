@@ -16,9 +16,9 @@ import * as Aurea from '@aurea-design-system/components';
 
 These files are **not** tree-shaken; include only what you need:
 
-| File                      | When                                            |
-| ------------------------- | ----------------------------------------------- |
-| `styles/au-tokens.css`    | Always (required)                               |
+| File                      | When                                                        |
+| ------------------------- | ----------------------------------------------------------- |
+| `styles/au-tokens.css`    | Always (required)                                           |
 | `styles/aurea-global.css` | Field chrome, validation errors, listbox overlays, snackbar |
 
 ```scss

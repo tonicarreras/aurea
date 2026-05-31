@@ -428,9 +428,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     if (label === null) {
       return false;
     }
-    return this.caseSensitive()
-      ? query === label
-      : query.toLowerCase() === label.toLowerCase();
+    return this.caseSensitive() ? query === label : query.toLowerCase() === label.toLowerCase();
   }
 
   private findOptionByLabel(label: string): AuAutocompleteOption | undefined {

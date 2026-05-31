@@ -237,13 +237,23 @@ au-autocomplete {
 }
 
 :is(
-  .au-input-text__control-row--from-tab:focus-within:has(.au-input-text__input[aria-invalid='true']),
-  .au-input-number__control-row--from-tab:focus-within:has(.au-input-number__input[aria-invalid='true']),
+  .au-input-text__control-row--from-tab:focus-within:has(
+      .au-input-text__input[aria-invalid='true']
+    ),
+  .au-input-number__control-row--from-tab:focus-within:has(
+      .au-input-number__input[aria-invalid='true']
+    ),
   .au-textarea__control-row--from-tab:focus-within:has(.au-textarea__input[aria-invalid='true']),
-  .au-input-date__control-row--from-tab:focus-within:has(.au-input-date__input[aria-invalid='true']),
-  .au-input-time__control-row--from-tab:focus-within:has(.au-input-time__input[aria-invalid='true']),
+  .au-input-date__control-row--from-tab:focus-within:has(
+      .au-input-date__input[aria-invalid='true']
+    ),
+  .au-input-time__control-row--from-tab:focus-within:has(
+      .au-input-time__input[aria-invalid='true']
+    ),
   .au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']),
-  .au-autocomplete__control-row--from-tab:focus-within:has(.au-autocomplete__input[aria-invalid='true'])
+  .au-autocomplete__control-row--from-tab:focus-within:has(
+      .au-autocomplete__input[aria-invalid='true']
+    )
 ) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
@@ -268,10 +278,7 @@ au-autocomplete {
 }
 
 /* Combobox open (no focus) */
-:is(
-  .au-select__control-row--open,
-  .au-autocomplete__control-row--open
-):not(:focus-within) {
+:is(.au-select__control-row--open, .au-autocomplete__control-row--open):not(:focus-within) {
   border-color: var(--au-color-form-border-hover);
 }
 

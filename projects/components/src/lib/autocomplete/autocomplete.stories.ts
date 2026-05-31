@@ -124,7 +124,8 @@ export const TypeAndSelect: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',
+        story:
+          'Type to filter, then click an option. The **play** function runs in test-runner only.',
       },
     },
   },

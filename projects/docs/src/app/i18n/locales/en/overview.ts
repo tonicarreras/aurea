@@ -437,7 +437,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Clock times with the OS picker.', 'Business-hour filters with `minTime` / `maxTime`.'],
+      items: [
+        'Clock times with the OS picker.',
+        'Business-hour filters with `minTime` / `maxTime`.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',

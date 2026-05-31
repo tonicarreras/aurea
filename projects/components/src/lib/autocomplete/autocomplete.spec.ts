@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { describe, expect, it } from 'vitest';
 import { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';
 import { AuFormField } from '../form-field/form-field';
 import {
@@ -1098,6 +1099,17 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fix.detectChanges();
     expect(input.value).toBe('Madrid');
+  });
+
+  it('inputValue keeps typed query when selected option label is null', () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = [{ value: 'x', label: null as unknown as string }];
+      f.componentInstance.value = 'x';
+    });
+    const comp = CONTROL(fix) as AuAutocomplete & { query: { set(v: string): void } };
+    comp.query.set('typed');
+    fix.detectChanges();
+    expect(comp.inputValue()).toBe('typed');
   });
 
   it('shows required marker and aria-required', () => {

@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "AutocompleteStoryArgs",
-            "id": "interface-AutocompleteStoryArgs-b6e420d19c5224fa703f6dace6fe770b6b5f418929c78a4fc91fedbf116476bfa9a038cdbc7a84778c84b5a71cccaeff48745d37093303cb4d16c8658f6f9578",
+            "id": "interface-AutocompleteStoryArgs-e8b7c54200e7af59fea5965d397d250cb2aac3550a3b48ed3209e4ac0ce9f7e2b77550d57a7cbba51c88f5717b6af7f58fc94b45c133605add54222172ce66a3",
             "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
             "properties": [
                 {
                     "name": "blur",
@@ -1927,11 +1927,11 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Eliminar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: '¿Quieres aceptar?',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -1947,11 +1947,11 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</au-button>\n            <au-button type=\"button\" (click)=\"open.set(false)\">Eliminar</au-button>\n          </div>`,\n  }),\n  args: {\n    title: '¿Quieres aceptar?',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Default",
@@ -1977,21 +1977,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, files: [] as File[] },\n    moduleMetadata: { imports: [AuFormField, AuFileUpload] },\n    template: `\n      <au-form-field label=\"Attachments\" hint=\"PDF or images up to 10 MB each.\">\n        <au-file-upload\n          [(value)]=\"files\"\n          [multiple]=\"multiple\"\n          [accept]=\"accept\"\n          [disabled]=\"disabled\"\n          [browseLabel]=\"browseLabel\"\n          [dropLabel]=\"dropLabel\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, files: [] as File[] },\n    moduleMetadata: { imports: [AuFormField, AuFileUpload] },\n    template: `\n      <au-form-field label=\"Attachments\" hint=\"PDF or images up to 10 MB each.\">\n        <au-file-upload\n          [(value)]=\"files\"\n          [multiple]=\"multiple\"\n          [accept]=\"accept\"\n          [disabled]=\"disabled\"\n          [browseLabel]=\"browseLabel\"\n          [dropLabel]=\"dropLabel\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -2747,11 +2747,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuDialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('dialog'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                "type": "Meta<AuDivider>",
+                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2767,11 +2767,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuDivider>",
-                "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                "type": "Meta<AuDialog>",
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('dialog'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -2797,16 +2797,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuFileUpload>",
-                "defaultValue": "{\n  title: 'Aurea/FileUpload',\n  component: AuFileUpload,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('file-upload'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    accept: { control: 'text', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    browseLabel: { control: 'text', table: { category: 'Content' } },\n    dropLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    multiple: true,\n    accept: '',\n    disabled: false,\n    browseLabel: 'Browse files',\n    dropLabel: 'Drag files here or browse',\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2822,6 +2812,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuIcon>",
                 "defaultValue": "{\n  title: 'Aurea/Icon',\n  component: AuIcon,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('icon'),\n  argTypes: {\n    name: { control: 'select', options: [...AU_ICON_NAMES], table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    name: 'info',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuFileUpload>",
+                "defaultValue": "{\n  title: 'Aurea/FileUpload',\n  component: AuFileUpload,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('file-upload'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    accept: { control: 'text', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    browseLabel: { control: 'text', table: { category: 'Content' } },\n    dropLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    multiple: true,\n    accept: '',\n    disabled: false,\n    browseLabel: 'Browse files',\n    dropLabel: 'Drag files here or browse',\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3673,7 +3673,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
                 "rawdescription": "Interaction test: filter by typing and pick an option (CI / test-runner).",
                 "description": "<p>Interaction test: filter by typing and pick an option (CI / test-runner).</p>\n"
             },
@@ -4633,8 +4633,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDialog>",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "rawtype": "StoryObj<AuDivider>",
+                "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4655,8 +4655,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDivider>",
-                "file": "projects/components/src/lib/divider/divider.stories.ts",
+                "rawtype": "StoryObj<AuDialog>",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4688,17 +4688,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuFileUpload>",
-                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<FormFieldStoryArgs>",
                 "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                 "deprecated": false,
@@ -4712,6 +4701,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuIcon>",
                 "file": "projects/components/src/lib/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuFileUpload>",
+                "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5695,7 +5695,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
                     "rawdescription": "Interaction test: filter by typing and pick an option (CI / test-runner).",
                     "description": "<p>Interaction test: filter by typing and pick an option (CI / test-runner).</p>\n"
                 },
@@ -6480,6 +6480,100 @@
                     "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n    ),\n}"
                 }
             ],
+            "projects/components/src/lib/divider/divider.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Inset",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDivider>",
+                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                },
+                {
+                    "name": "Vertical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
+                }
+            ],
+            "projects/components/src/lib/drawer/drawer.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</au-button>\n        <au-button type=\"button\" (click)=\"open.set(false)\">Apply</au-button>\n      </div>`,\n  }),\n}"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Wider panel for forms or multi-step flows.</p>',\n  }),\n  args: { size: 'lg', title: 'Account settings' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDrawer>",
+                    "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                },
+                {
+                    "name": "StartPosition",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Panel slides in from the start edge (left in LTR).</p>',\n  }),\n  args: { position: 'start', title: 'Filters' },\n}"
+                }
+            ],
             "projects/components/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "Default",
@@ -6572,132 +6666,6 @@
                     "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin título visible; el nombre accesible viene de <code>ariaLabel</code>.</p>',\n  }),\n  args: {\n    title: '',\n    ariaLabel: 'Información',\n  },\n}"
                 }
             ],
-            "projects/components/src/lib/drawer/drawer.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <au-button variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</au-button>\n        <au-button type=\"button\" (click)=\"open.set(false)\">Apply</au-button>\n      </div>`,\n  }),\n}"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Wider panel for forms or multi-step flows.</p>',\n  }),\n  args: { size: 'lg', title: 'Account settings' },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuDrawer>",
-                    "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
-                },
-                {
-                    "name": "StartPosition",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Panel slides in from the start edge (left in LTR).</p>',\n  }),\n  args: { position: 'start', title: 'Filters' },\n}"
-                }
-            ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Inset",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuDivider>",
-                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
-                },
-                {
-                    "name": "Vertical",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "WithLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
-                }
-            ],
-            "projects/components/src/lib/file-upload/file-upload.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, files: [] as File[] },\n    moduleMetadata: { imports: [AuFormField, AuFileUpload] },\n    template: `\n      <au-form-field label=\"Attachments\" hint=\"PDF or images up to 10 MB each.\">\n        <au-file-upload\n          [(value)]=\"files\"\n          [multiple]=\"multiple\"\n          [accept]=\"accept\"\n          [disabled]=\"disabled\"\n          [browseLabel]=\"browseLabel\"\n          [dropLabel]=\"dropLabel\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuFileUpload>",
-                    "defaultValue": "{\n  title: 'Aurea/FileUpload',\n  component: AuFileUpload,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('file-upload'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    accept: { control: 'text', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    browseLabel: { control: 'text', table: { category: 'Content' } },\n    dropLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    multiple: true,\n    accept: '',\n    disabled: false,\n    browseLabel: 'Browse files',\n    dropLabel: 'Drag files here or browse',\n    size: 'md',\n  },\n}"
-                },
-                {
-                    "name": "SingleFile",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { multiple: false, dropLabel: 'Drop a file here or browse' },\n  render: Default.render,\n}"
-                }
-            ],
             "projects/components/src/lib/icon/icon.stories.ts": [
                 {
                     "name": "Default",
@@ -6768,6 +6736,38 @@
                     "deprecationMessage": "",
                     "type": "unknown",
                     "defaultValue": "AU_ICON_NAMES.filter((n) => !semanticNames.includes(n))"
+                }
+            ],
+            "projects/components/src/lib/file-upload/file-upload.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, files: [] as File[] },\n    moduleMetadata: { imports: [AuFormField, AuFileUpload] },\n    template: `\n      <au-form-field label=\"Attachments\" hint=\"PDF or images up to 10 MB each.\">\n        <au-file-upload\n          [(value)]=\"files\"\n          [multiple]=\"multiple\"\n          [accept]=\"accept\"\n          [disabled]=\"disabled\"\n          [browseLabel]=\"browseLabel\"\n          [dropLabel]=\"dropLabel\"\n          [size]=\"size\"\n        />\n      </au-form-field>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuFileUpload>",
+                    "defaultValue": "{\n  title: 'Aurea/FileUpload',\n  component: AuFileUpload,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('file-upload'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    accept: { control: 'text', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    browseLabel: { control: 'text', table: { category: 'Content' } },\n    dropLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    multiple: true,\n    accept: '',\n    disabled: false,\n    browseLabel: 'Browse files',\n    dropLabel: 'Drag files here or browse',\n    size: 'md',\n  },\n}"
+                },
+                {
+                    "name": "SingleFile",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { multiple: false, dropLabel: 'Drop a file here or browse' },\n  render: Default.render,\n}"
                 }
             ],
             "projects/components/src/lib/input-number/input-number.stories.ts": [
@@ -8177,13 +8177,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/dialog/dialog.stories.ts": [
+            "projects/components/src/lib/divider/divider.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuDialog>",
-                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "rawtype": "StoryObj<AuDivider>",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8203,13 +8203,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
+            "projects/components/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuDivider>",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "rawtype": "StoryObj<AuDialog>",
+                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8242,19 +8242,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/file-upload/file-upload.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuFileUpload>",
-                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/form-field/form-field.stories.ts": [
                 {
                     "name": "Story",
@@ -8275,6 +8262,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuIcon>",
                     "file": "projects/components/src/lib/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/file-upload/file-upload.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuFileUpload>",
+                    "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

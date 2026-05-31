@@ -45,7 +45,9 @@ export class AuMessage {
 
   readonly dismissible = input(false);
 
-  readonly actionLabel = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+  readonly actionLabel = input<string, string>('', {
+    transform: (v) => (v == null ? '' : String(v)),
+  });
 
   readonly closeAriaLabel = input<string, string>('Dismiss message', {
     transform: (v) => (v == null ? '' : String(v)),

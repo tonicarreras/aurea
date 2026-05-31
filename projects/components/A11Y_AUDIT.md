@@ -59,22 +59,22 @@ Last review: **2026-05-29** (1.5.0+: `au-input-time` promoted to stable; axe on 
 
 ### Stable (1.4.0 → 1.5.0)
 
-| Component          | Status | Notes                                                                 |
-| ------------------ | ------ | --------------------------------------------------------------------- |
-| `au-autocomplete`  | Stable | Listbox `aria-activedescendant`; strict keyboard flows documented     |
-| `au-input-date`    | Stable | Native date picker; see [input-date ADR](../../docs/decisions/input-date-strategy.md) |
-| `au-input-time`    | Stable | Native time picker; `aria-invalid` / `aria-describedby` via `au-form-field`; decorative clock icon |
-| `au-tabs`          | Stable | Selected tab `aria-selected`; arrow-key navigation                  |
-| `au-steps`         | Stable | Current step exposed to SR; keyboard between steps                    |
-| `au-chip-group`    | Stable | `role="group"`; horizontal scroll + `scrollIntoView` on focus (A11Y-002) |
-| `au-list`          | Stable | Removable tags; `auListItem` semantics                                |
-| `au-snackbar`      | Stable | Stacked toasts: only topmost uses `aria-live` polite/assertive (A11Y-001) |
+| Component         | Status | Notes                                                                                              |
+| ----------------- | ------ | -------------------------------------------------------------------------------------------------- |
+| `au-autocomplete` | Stable | Listbox `aria-activedescendant`; strict keyboard flows documented                                  |
+| `au-input-date`   | Stable | Native date picker; see [input-date ADR](../../docs/decisions/input-date-strategy.md)              |
+| `au-input-time`   | Stable | Native time picker; `aria-invalid` / `aria-describedby` via `au-form-field`; decorative clock icon |
+| `au-tabs`         | Stable | Selected tab `aria-selected`; arrow-key navigation                                                 |
+| `au-steps`        | Stable | Current step exposed to SR; keyboard between steps                                                 |
+| `au-chip-group`   | Stable | `role="group"`; horizontal scroll + `scrollIntoView` on focus (A11Y-002)                           |
+| `au-list`         | Stable | Removable tags; `auListItem` semantics                                                             |
+| `au-snackbar`     | Stable | Stacked toasts: only topmost uses `aria-live` polite/assertive (A11Y-001)                          |
 
 ## Known debt (tracked as GitHub issues)
 
 | ID       | Component       | Issue                                                              | Milestone |
 | -------- | --------------- | ------------------------------------------------------------------ | --------- |
-| A11Y-001 | `au-snackbar`   | ~~Multiple live regions~~ **Fixed** in **1.5.0** (topmost-only)   | —         |
+| A11Y-001 | `au-snackbar`   | ~~Multiple live regions~~ **Fixed** in **1.5.0** (topmost-only)    | —         |
 | A11Y-002 | `au-chip-group` | ~~Horizontal scroll keyboard~~ **Fixed** in **1.5.0**              | —         |
 | A11Y-003 | Docs site       | ~~Carousel arrows need `aria-controls`~~ **Fixed** in docs landing | —         |
 | A11Y-004 | `au-menu`       | ~~Roving tabindex + typeahead~~ **Fixed** in **1.2.0**             | —         |
