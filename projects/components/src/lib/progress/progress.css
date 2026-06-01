@@ -10,7 +10,7 @@
   overflow: hidden;
   border-radius: var(--au-radius-full);
   background: var(--au-color-surface-sunken);
-  border: 1px solid var(--au-color-border-subtle);
+  border: var(--au-chrome-border);
 }
 
 .au-progress__bar {

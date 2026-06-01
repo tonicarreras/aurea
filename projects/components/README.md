@@ -59,7 +59,7 @@ Adds global styles to `angular.json` and prints next steps.
 <html data-au-theme="dark"></html>
 ```
 
-Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark` experimental).
+Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark`).
 
 ### 4. Density (optional)
 

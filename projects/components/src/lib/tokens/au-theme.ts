@@ -7,7 +7,7 @@ export type AuThemeMode = 'light' | 'dark' | 'system' | 'high-contrast' | 'high-
  * (see `au-tokens.css`). Use on a layout root (`<body>`, shell div) or `document.documentElement`.
  *
  * - `light` / `dark` / `high-contrast` / `high-contrast-dark`: fixed palettes.
- * - `high-contrast` pairs with light appearance; `high-contrast-dark` with dark.
+ * - `high-contrast` pairs with light appearance; `high-contrast-dark` with dark (stable palettes).
  * - `system`: follows `prefers-color-scheme` and updates when the OS preference changes.
  */
 @Directive({

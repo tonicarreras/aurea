@@ -144,9 +144,9 @@ export const MESSAGES_EN: DocsMessages = {
     densityBody:
       'Set <code>data-au-density</code> on the shell: <code>compact</code>, <code>comfortable</code> (default), or <code>spacious</code>. Use the <code>auDensity</code> directive for reactive binding.',
     densityExpand: 'Show density HTML',
-    highContrastHeading: 'High contrast (experimental)',
+    highContrastHeading: 'High contrast',
     highContrastBody:
-      'Separate from appearance: stronger borders and focus for accessibility. When the user opts in, map appearance to <code>high-contrast</code> (light) or <code>high-contrast-dark</code> (dark) via <code>data-au-theme</code> or <code>[auTheme]</code>. Both palettes are experimental — validate with your QA checklist.',
+      'Separate from appearance: stronger borders, focus rings, and semantic colors for accessibility. When the user opts in, map appearance to <code>high-contrast</code> (light) or <code>high-contrast-dark</code> (dark) via <code>data-au-theme</code> or <code>[auTheme]</code>. Palettes are part of the stable token set in <code>au-tokens.css</code>.',
     highContrastExpand: 'Show high-contrast HTML',
     brandHeading: 'Brand customization',
     brandBody:

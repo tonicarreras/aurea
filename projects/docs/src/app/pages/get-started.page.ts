@@ -126,10 +126,6 @@ export type GetStartedStep =
       margin: 0 0 var(--au-space-3);
     }
 
-    ::ng-deep .docs-steps__content h2 {
-      margin-top: 0;
-    }
-
     .docs-requirements {
       display: flex;
       flex-wrap: wrap;

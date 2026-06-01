@@ -39,7 +39,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: var(--au-scroll-smooth);
-  border: 1px solid var(--au-color-border-default);
+  border: var(--au-chrome-border);
   border-radius: var(--au-radius-surface);
   background: var(--au-color-select-menu-bg);
   color: var(--au-color-select-menu-text);

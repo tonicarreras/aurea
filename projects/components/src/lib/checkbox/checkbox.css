@@ -61,10 +61,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
+  border: var(--au-chrome-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  box-shadow: var(--au-chrome-shadow);
   cursor: pointer;
   transition:
     border-color var(--au-duration-short) var(--au-ease-in-out),
@@ -93,7 +93,7 @@
 
 /* Hover: darker border */
 .au-checkbox__wrapper:hover .au-checkbox__element:not(:disabled) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-chrome-border-color-hover);
 }
 
 /* Checked: action primary fill + checkmark */
@@ -153,8 +153,8 @@
 /* Inset ring on focus (click / pointer) */
 .au-checkbox__wrapper:focus-within:not(.au-checkbox__wrapper--from-tab)
   .au-checkbox__element:not(:disabled) {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-chrome-shadow-focus);
 }
 
 /* Outer ring on Tab focus */

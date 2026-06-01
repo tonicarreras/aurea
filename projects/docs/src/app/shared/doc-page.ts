@@ -108,67 +108,6 @@ import { DocsInlineText } from './docs-inline-text';
       max-width: 100%;
       animation: docs-fade-up 0.55s var(--au-ease-out) 0.16s both;
     }
-
-    :host ::ng-deep .docs-page__body > * {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    :host-context([data-au-theme='light']) .docs-page__body {
-      opacity: 0.92;
-    }
-
-    ::ng-deep .docs-page__body h2 {
-      display: flex;
-      align-items: center;
-      gap: var(--au-space-3);
-      margin: var(--au-space-2) 0 var(--au-space-3);
-      font-size: var(--au-text-lg);
-      font-weight: var(--au-weight-semibold);
-      letter-spacing: var(--au-tracking-tight);
-    }
-
-    ::ng-deep .docs-page__body h2::before {
-      content: '';
-      flex-shrink: 0;
-      align-self: stretch;
-      width: var(--docs-section-marker-width);
-      min-height: var(--docs-section-marker-min-height);
-      border-radius: var(--au-radius-pill);
-      background: var(--docs-section-marker-bg);
-    }
-
-    ::ng-deep .docs-page__body p {
-      margin: 0 0 var(--au-space-4);
-      color: var(--au-color-text-secondary);
-      max-width: min(var(--docs-prose-max), 100%);
-    }
-
-    ::ng-deep
-      .docs-page__body
-      > ul:not(.docs-requirements, .docs-adoption-grid, .docs-components-index) {
-      margin: 0 0 var(--au-space-4);
-      color: var(--au-color-text-secondary);
-      max-width: min(var(--docs-prose-max), 100%);
-      padding-left: var(--au-space-5);
-    }
-
-    ::ng-deep .docs-page__body p code,
-    ::ng-deep .docs-page__body li code {
-      padding: 0.1em 0.4em;
-      border-radius: var(--au-radius-xs);
-      background: color-mix(in srgb, var(--au-color-accent) 8%, var(--au-color-surface-raised));
-      border: 1px solid var(--docs-border-fine);
-      font-size: 0.9em;
-      color: var(--au-color-text-primary);
-    }
-
-    :host-context([data-au-theme='dark']) ::ng-deep .docs-page__body p code,
-    :host-context([data-au-theme='dark']) ::ng-deep .docs-page__body li code {
-      border-color: transparent;
-      background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
-    }
   `,
 })
 export class DocPage {

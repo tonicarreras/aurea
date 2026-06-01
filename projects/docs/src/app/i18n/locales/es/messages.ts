@@ -144,9 +144,9 @@ export const MESSAGES_ES: DocsMessages = {
     densityBody:
       'Define <code>data-au-density</code> en el shell: <code>compact</code>, <code>comfortable</code> (por defecto) o <code>spacious</code>. Usa la directiva <code>auDensity</code> para enlazarlo de forma reactiva.',
     densityExpand: 'Ver HTML de densidad',
-    highContrastHeading: 'Alto contraste (experimental)',
+    highContrastHeading: 'Alto contraste',
     highContrastBody:
-      'Independiente de la apariencia: bordes y foco reforzados para accesibilidad. Cuando el usuario lo active, mapea la apariencia a <code>high-contrast</code> (claro) o <code>high-contrast-dark</code> (oscuro) con <code>data-au-theme</code> o <code>[auTheme]</code>. Ambas paletas son experimentales — valídalo con tu checklist de QA.',
+      'Independiente de la apariencia: bordes, anillos de foco y colores semánticos reforzados para accesibilidad. Cuando el usuario lo active, mapea la apariencia a <code>high-contrast</code> (claro) o <code>high-contrast-dark</code> (oscuro) con <code>data-au-theme</code> o <code>[auTheme]</code>. Las paletas forman parte del conjunto estable de tokens en <code>au-tokens.css</code>.',
     highContrastExpand: 'Ver HTML alto contraste',
     brandHeading: 'Personalizar marca',
     brandBody:

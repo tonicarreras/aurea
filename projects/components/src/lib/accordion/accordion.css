@@ -27,8 +27,8 @@
 
 :host([data-au-variant='contained']) {
   background: var(--au-color-surface-raised);
-  border: 1px solid var(--au-color-border-subtle);
+  border: var(--au-chrome-border);
   border-radius: var(--au-radius-surface);
-  box-shadow: var(--au-shadow-control);
+  box-shadow: var(--au-chrome-shadow);
   overflow: hidden;
 }

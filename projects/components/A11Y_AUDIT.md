@@ -9,7 +9,7 @@ Last review: **2026-05-29** (1.5.0: full stable catalog; axe on date/time storie
 | ------------------- | ------------ | ---------------------------------------------------- |
 | Focus visibility    | Pass         | `--au-shadow-focus-ring` on interactive controls     |
 | Color contrast      | Pass         | Semantic tokens per light/dark theme                 |
-| High contrast theme | Experimental | `high-contrast` / `high-contrast-dark` — manual QA   |
+| High contrast theme | Pass         | `high-contrast` / `high-contrast-dark` — stable tokens |
 | Keyboard            | Pass         | Documented per component in docs overviews           |
 | Form errors         | Pass         | `aria-invalid`, `aria-describedby` via form-field    |
 | Live regions        | Pass         | Stacked snackbars: topmost only announces (A11Y-001) |

@@ -4,7 +4,7 @@
 
 | File               | Required                                  | Role                                                         |
 | ------------------ | ----------------------------------------- | ------------------------------------------------------------ |
-| `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`)                                     |
+| `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css` |
 | `aurea-global.css` | Yes for form controls & description lists | Shared CSS that cannot live in a single component `styleUrl` |
 
 ## When CSS goes in `aurea-global.css`
@@ -22,6 +22,7 @@ Do **not** add a global file for a single control whose template and host are fu
 - Use **emulated** encapsulation and a **`styleUrl`** next to the component.
 - Target the host with **`:host`** / **`:host([data-au-size])`**, not the element name (`au-textarea { }`) inside component CSS.
 - Field **chrome** (border, label row, focus ring on `.au-*__control-row`) lives in `au-field-chrome.css`; the component CSS only styles the inner native control.
+- Interactive surfaces share **`--au-chrome-*`** tokens (same as `au-button` secondary): `1px solid border-default` + `--au-shadow-button`; focus uses `--au-chrome-shadow-focus` (`--au-shadow-focus-control`).
 - **`ViewEncapsulation.None`** only when documented and unavoidable (e.g. `au-table` token surface). Prefer splitting child components/directives instead.
 
 ## Portals and overlays
