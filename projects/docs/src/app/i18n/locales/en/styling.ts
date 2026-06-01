@@ -133,7 +133,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Focus on the search input.' },
   ],
   accordion: [
-    { token: '--au-color-border-subtle', description: 'Dividers between items (`plain` and `contained`).' },
+    {
+      token: '--au-color-border-subtle',
+      description: 'Dividers between items (`plain` and `contained`).',
+    },
     {
       token: '--au-color-surface-raised / --au-shadow-control',
       description: '`variant="contained"` shell background and elevation.',
@@ -145,7 +148,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
   ],
   'button-group': [
     { token: '--au-space-2', description: 'Gap between buttons when `[attached]="false"`.' },
-    { token: '--au-color-border-default', description: 'Shared borders in attached mode (via `au-button`).' },
+    {
+      token: '--au-color-border-default',
+      description: 'Shared borders in attached mode (via `au-button`).',
+    },
   ],
   'input-password': [
     { token: '--au-color-form-border', description: 'Field shell border (shared chrome).' },

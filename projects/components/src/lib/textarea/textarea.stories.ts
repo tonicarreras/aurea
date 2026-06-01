@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, within } from 'storybook/test';
 
+import { playUserEvent } from '../../../.storybook/story-user-event';
 import { AuFormField } from '../form-field/form-field';
 import {
   defaultFieldChromeArgs,
@@ -180,8 +181,8 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
     const field = el.getByLabelText('Description');
-    await userEvent.clear(field);
-    await userEvent.type(field, 'Test context');
+    await playUserEvent.clear(field);
+    await playUserEvent.type(field, 'Test context');
     await expect(field).toHaveValue('Test context');
   },
 };

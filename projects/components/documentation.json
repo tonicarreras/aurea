@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "AutocompleteStoryArgs",
-            "id": "interface-AutocompleteStoryArgs-e8b7c54200e7af59fea5965d397d250cb2aac3550a3b48ed3209e4ac0ce9f7e2b77550d57a7cbba51c88f5717b6af7f58fc94b45c133605add54222172ce66a3",
+            "id": "interface-AutocompleteStoryArgs-2b833fa78dbd95fa76e2d692002167eed3f5d9e89204e0f0d67f8d850d159799af28727325197b96f5fcf8341547eb21715d830263dbb383b8f2a3ba101a51e7",
             "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, within } from 'storybook/test';\n\nimport { playUserEvent } from '../../../.storybook/story-user-event';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then pick an option. **play** autoplays on load (slower typing in the canvas; full speed in test-storybook).',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await playUserEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
             "properties": [
                 {
                     "name": "blur",
@@ -18,7 +18,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 25
+                    "line": 27
                 },
                 {
                     "name": "caseSensitive",
@@ -28,7 +28,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 33
+                    "line": 35
                 },
                 {
                     "name": "disabled",
@@ -38,7 +38,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 31
                 },
                 {
                     "name": "errors",
@@ -48,7 +48,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 38
                 },
                 {
                     "name": "minFilterLength",
@@ -58,7 +58,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 33
                 },
                 {
                     "name": "name",
@@ -68,7 +68,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 35
+                    "line": 37
                 },
                 {
                     "name": "options",
@@ -78,7 +78,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 30
                 },
                 {
                     "name": "placeholder",
@@ -88,7 +88,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 27
+                    "line": 29
                 },
                 {
                     "name": "readOnly",
@@ -98,7 +98,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 32
                 },
                 {
                     "name": "size",
@@ -108,7 +108,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 34
+                    "line": 36
                 },
                 {
                     "name": "strictSelection",
@@ -118,7 +118,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 34
                 },
                 {
                     "name": "value",
@@ -128,7 +128,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 28
                 },
                 {
                     "name": "valueChange",
@@ -138,7 +138,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 24
+                    "line": 26
                 }
             ],
             "indexSignatures": [],
@@ -783,12 +783,12 @@
         },
         {
             "name": "InputTextStoryArgs",
-            "id": "interface-InputTextStoryArgs-5dbc735409c7d2f100424fb2ee2f40dd59d5683f713c98c09b4de97576eed3c7df343f86c6c6feb4bed11a502f215e82d741f80b1a8df5138d183b2ac4a59521",
+            "id": "interface-InputTextStoryArgs-1416b3b3aa5265aacc15cac184c3dddcfc0c9c2855ab14fa984623bc83e8409894e0dd8c50c58ea5ab7ffc4b761fd2ec29a161128b1d2a7b0c87678373536dea",
             "file": "projects/components/src/lib/input-text/input-text.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputText } from './input-text';\n\ntype InputTextType = 'text' | 'email' | 'number' | 'tel' | 'search' | 'url';\n\ninterface InputTextStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  type: InputTextType;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  minLength: number | undefined;\n  maxLength: number | undefined;\n  size: 'sm' | 'md' | 'lg';\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<InputTextStoryArgs> = {\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-text'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'Native HTML input type. For passwords use `au-input-password`.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n  } as Meta<InputTextStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    type: 'text',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputText],\n      args,\n      `<au-input-text\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [type]=\"type\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputTextStoryArgs>;\n\nexport const Default: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n};\n\nexport const WithError: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the input in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Email',\n    placeholder: 'you@example.com',\n    type: 'email',\n    errorMessage: 'Enter a valid email address.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Email');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Enter a valid email address.');\n  },\n};\n\nexport const Disabled: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled fields keep focus rules platform-dependent; **no** `valueChange` while disabled.',\n      },\n    },\n  },\n  args: {\n    label: 'Read-only (disabled)',\n    disabled: true,\n    placeholder: 'Not editable',\n    value: 'fixed value',\n  },\n};\n\nexport const CompactSize: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Small size',\n    size: 'sm',\n    placeholder: 'Smaller text',\n  },\n};\n\nexport const Required: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Subject',\n    required: true,\n    placeholder: 'Required on classic form submit',\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, within } from 'storybook/test';\n\nimport { playUserEvent } from '../../../.storybook/story-user-event';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputText } from './input-text';\n\ntype InputTextType = 'text' | 'email' | 'number' | 'tel' | 'search' | 'url';\n\ninterface InputTextStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  type: InputTextType;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  minLength: number | undefined;\n  maxLength: number | undefined;\n  size: 'sm' | 'md' | 'lg';\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<InputTextStoryArgs> = {\n  title: 'Aurea/InputText',\n  component: AuInputText,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-text'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`). Prefer `[(value)]` or `[formField]`.',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on every input event when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the input loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder; use hint for longer guidance.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Populated by `formField` from signal forms.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      description: 'Native `minlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      description: 'Native `maxlength` attribute.',\n      table: { category: 'Validation' },\n    },\n    type: {\n      control: 'select',\n      options: ['text', 'email', 'number', 'tel', 'search', 'url'],\n      description: 'Native HTML input type. For passwords use `au-input-password`.',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables editing and suppresses `valueChange`.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      description: 'Read-only input (still focusable; not the same as disabled).',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density token on `data-au-size`.',\n      table: { category: 'Field' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` for form posts.',\n      table: { category: 'Field' },\n    },\n    autocomplete: {\n      control: 'text',\n      description: 'Native autocomplete hint.',\n      table: { category: 'Field' },\n    },\n  } as Meta<InputTextStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    type: 'text',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputText],\n      args,\n      `<au-input-text\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [type]=\"type\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputTextStoryArgs>;\n\nexport const Default: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await playUserEvent.clear(field);\n    await playUserEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n};\n\nexport const WithError: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the input in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Email',\n    placeholder: 'you@example.com',\n    type: 'email',\n    errorMessage: 'Enter a valid email address.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Email');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Enter a valid email address.');\n  },\n};\n\nexport const Disabled: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled fields keep focus rules platform-dependent; **no** `valueChange` while disabled.',\n      },\n    },\n  },\n  args: {\n    label: 'Read-only (disabled)',\n    disabled: true,\n    placeholder: 'Not editable',\n    value: 'fixed value',\n  },\n};\n\nexport const CompactSize: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Uses **`size=\"sm\"`** (`data-au-size=\"sm\"`) for denser layouts.',\n      },\n    },\n  },\n  args: {\n    label: 'Small size',\n    size: 'sm',\n    placeholder: 'Smaller text',\n  },\n};\n\nexport const Required: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Subject',\n    required: true,\n    placeholder: 'Required on classic form submit',\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -798,7 +798,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 25
+                    "line": 26
                 },
                 {
                     "name": "blur",
@@ -808,7 +808,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 19
                 },
                 {
                     "name": "disabled",
@@ -818,7 +818,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 23
                 },
                 {
                     "name": "errors",
@@ -828,7 +828,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 30
                 },
                 {
                     "name": "maxLength",
@@ -838,7 +838,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 27
+                    "line": 28
                 },
                 {
                     "name": "minLength",
@@ -848,7 +848,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 27
                 },
                 {
                     "name": "name",
@@ -858,7 +858,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 24
+                    "line": 25
                 },
                 {
                     "name": "placeholder",
@@ -868,7 +868,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 21
                 },
                 {
                     "name": "readOnly",
@@ -878,7 +878,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 23
+                    "line": 24
                 },
                 {
                     "name": "size",
@@ -888,7 +888,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 29
                 },
                 {
                     "name": "type",
@@ -898,7 +898,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 22
                 },
                 {
                     "name": "value",
@@ -908,7 +908,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 20
                 },
                 {
                     "name": "valueChange",
@@ -918,7 +918,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 18
                 }
             ],
             "indexSignatures": [],
@@ -1573,12 +1573,12 @@
         },
         {
             "name": "TextareaStoryArgs",
-            "id": "interface-TextareaStoryArgs-af4d8a069a3e7ac02893aa8e046b99c3fe1e05620a22c27b0fe14f04de44663d36437faf27085fee5bfbeed9dbab9de1e1f4a65085a4497f8e9a961b0e129a9f",
+            "id": "interface-TextareaStoryArgs-e895e8479564e12392f1a6bf2e82be20d7584ee75e8a891fd142d6958dadb6339498d1d74aa04f30e61b9a97ab506a3d87448dc773ee7163da75bf9ff4af06f2",
             "file": "projects/components/src/lib/textarea/textarea.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuTextarea } from './textarea';\n\ntype TextareaResize = 'none' | 'vertical' | 'both';\n\ninterface TextareaStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  rows: number;\n  cols: number | undefined;\n  resize: TextareaResize;\n  wrap: 'soft' | 'hard';\n  spellcheck: boolean | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  minLength: number | undefined;\n  maxLength: number | undefined;\n  size: 'sm' | 'md' | 'lg';\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<TextareaStoryArgs> = {\n  title: 'Aurea/Textarea',\n  component: AuTextarea,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('textarea'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  } as Meta<TextareaStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    rows: 4,\n    cols: undefined,\n    resize: 'vertical',\n    wrap: 'soft',\n    spellcheck: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTextarea],\n      args,\n      `<au-textarea\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [rows]=\"rows\"\n  [cols]=\"cols\"\n  [resize]=\"resize\"\n  [wrap]=\"wrap\"\n  [spellcheck]=\"spellcheck\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<TextareaStoryArgs>;\n\nexport const Default: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n};\n\nexport const WithError: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Error region uses **`role=\"alert\"`** so assistive tech picks up validation text.',\n      },\n    },\n  },\n  args: {\n    label: 'Comment',\n    rows: 3,\n    errorMessage: 'Add at least one sentence.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Comment');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Add at least one sentence.');\n  },\n};\n\nexport const ReadOnly: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',\n      },\n    },\n  },\n  args: {\n    label: 'System block',\n    value: 'Auto-generated content.\\nNot editable by the user.',\n    readOnly: true,\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, within } from 'storybook/test';\n\nimport { playUserEvent } from '../../../.storybook/story-user-event';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuTextarea } from './textarea';\n\ntype TextareaResize = 'none' | 'vertical' | 'both';\n\ninterface TextareaStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  rows: number;\n  cols: number | undefined;\n  resize: TextareaResize;\n  wrap: 'soft' | 'hard';\n  spellcheck: boolean | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  name: string;\n  autocomplete: string | undefined;\n  minLength: number | undefined;\n  maxLength: number | undefined;\n  size: 'sm' | 'md' | 'lg';\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<TextareaStoryArgs> = {\n  title: 'Aurea/Textarea',\n  component: AuTextarea,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('textarea'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Current value (`ModelSignal<string>`).',\n      table: { category: 'Value' },\n    },\n    valueChange: {\n      description: 'Emits on input when not disabled.',\n      table: { category: 'Events' },\n    },\n    blur: {\n      description: 'Emits when the textarea loses focus.',\n      table: { category: 'Events' },\n    },\n    placeholder: {\n      control: 'text',\n      description: 'Native placeholder.',\n      table: { category: 'Field' },\n    },\n    errors: {\n      description: 'Signal-form errors via `formField`.',\n      table: { category: 'Validation' },\n    },\n    minLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    maxLength: {\n      control: 'number',\n      table: { category: 'Validation' },\n    },\n    rows: {\n      control: 'number',\n      description: 'Logical rows (`rows` attribute).',\n      table: { category: 'Field' },\n    },\n    cols: {\n      control: 'number',\n      description: 'Optional `cols` attribute.',\n      table: { category: 'Field' },\n    },\n    resize: {\n      control: 'select',\n      options: ['none', 'vertical', 'both'],\n      description: 'Default **vertical** to avoid breaking horizontal layouts.',\n      table: { category: 'Field' },\n    },\n    wrap: {\n      control: 'select',\n      options: ['soft', 'hard'],\n      table: { category: 'Field' },\n    },\n    spellcheck: {\n      control: 'boolean',\n      description: '`true` / `false` / unset for browser default.',\n      table: { category: 'Field' },\n    },\n    readOnly: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    disabled: {\n      control: 'boolean',\n      table: { category: 'Field' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Padding and type scale.',\n      table: { category: 'Field' },\n    },\n    name: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n  } as Meta<TextareaStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    value: '',\n    valueChange: fn(),\n    blur: fn(),\n    placeholder: '',\n    rows: 4,\n    cols: undefined,\n    resize: 'vertical',\n    wrap: 'soft',\n    spellcheck: undefined,\n    disabled: false,\n    readOnly: false,\n    name: '',\n    autocomplete: undefined,\n    minLength: undefined,\n    maxLength: undefined,\n    size: 'md',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTextarea],\n      args,\n      `<au-textarea\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [rows]=\"rows\"\n  [cols]=\"cols\"\n  [resize]=\"resize\"\n  [wrap]=\"wrap\"\n  [spellcheck]=\"spellcheck\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [autocomplete]=\"autocomplete\"\n  [minLength]=\"minLength\"\n  [maxLength]=\"maxLength\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<TextareaStoryArgs>;\n\nexport const Default: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await playUserEvent.clear(field);\n    await playUserEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n};\n\nexport const WithError: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Error region uses **`role=\"alert\"`** so assistive tech picks up validation text.',\n      },\n    },\n  },\n  args: {\n    label: 'Comment',\n    rows: 3,\n    errorMessage: 'Add at least one sentence.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Comment');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Add at least one sentence.');\n  },\n};\n\nexport const ReadOnly: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**`readOnly`** — content is selectable but not editable; differs from **disabled** (greyed out, no edits).',\n      },\n    },\n  },\n  args: {\n    label: 'System block',\n    value: 'Auto-generated content.\\nNot editable by the user.',\n    readOnly: true,\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -1588,7 +1588,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 30
                 },
                 {
                     "name": "blur",
@@ -1598,7 +1598,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 19
                 },
                 {
                     "name": "cols",
@@ -1608,7 +1608,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 23
                 },
                 {
                     "name": "disabled",
@@ -1618,7 +1618,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 27
                 },
                 {
                     "name": "errors",
@@ -1628,7 +1628,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 33
+                    "line": 34
                 },
                 {
                     "name": "maxLength",
@@ -1638,7 +1638,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 32
                 },
                 {
                     "name": "minLength",
@@ -1648,7 +1648,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 31
                 },
                 {
                     "name": "name",
@@ -1658,7 +1658,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 29
                 },
                 {
                     "name": "placeholder",
@@ -1668,7 +1668,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 21
                 },
                 {
                     "name": "readOnly",
@@ -1678,7 +1678,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 27
+                    "line": 28
                 },
                 {
                     "name": "resize",
@@ -1688,7 +1688,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 23
+                    "line": 24
                 },
                 {
                     "name": "rows",
@@ -1698,7 +1698,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 22
                 },
                 {
                     "name": "size",
@@ -1708,7 +1708,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 33
                 },
                 {
                     "name": "spellcheck",
@@ -1718,7 +1718,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 25
+                    "line": 26
                 },
                 {
                     "name": "value",
@@ -1728,7 +1728,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 20
                 },
                 {
                     "name": "valueChange",
@@ -1738,7 +1738,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 18
                 },
                 {
                     "name": "wrap",
@@ -1748,7 +1748,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 24
+                    "line": 25
                 }
             ],
             "indexSignatures": [],
@@ -2081,6 +2081,16 @@
                 "name": "Contained",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { variant: 'contained' },\n  render: Default.render,\n}"
+            },
+            {
+                "name": "Contained",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/tabs/tabs.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2125,7 +2135,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <au-accordion-panel panel=\"profile\">Update your name, email, and avatar.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <au-accordion-panel panel=\"billing\">Manage payment methods and invoices.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <au-accordion-panel panel=\"security\">Change password and enable 2FA.</au-accordion-panel>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [variant]=\"variant\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <au-accordion-panel panel=\"profile\">Update your name, email, and avatar.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <au-accordion-panel panel=\"billing\">Manage payment methods and invoices.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <au-accordion-panel panel=\"security\">Change password and enable 2FA.</au-accordion-panel>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -2305,7 +2315,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await playUserEvent.clear(field);\n    await playUserEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2455,7 +2465,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await playUserEvent.clear(field);\n    await playUserEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2845,7 +2855,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
             },
             {
                 "name": "Large",
@@ -2975,7 +2985,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuAccordion>",
-                "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    variant: {\n      control: 'select',\n      options: ['plain', 'contained'],\n      description: 'Plain dividers or raised surface shell.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    variant: 'plain',\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3011,6 +3021,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuBadge>",
+                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3026,16 +3046,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuButtonGroup>",
                 "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuBadge>",
-                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
             },
             {
                 "name": "meta",
@@ -4087,7 +4097,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then pick an option. **play** autoplays on load (slower typing in the canvas; full speed in test-storybook).',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await playUserEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
                 "rawdescription": "Interaction test: filter by typing and pick an option (CI / test-runner).",
                 "description": "<p>Interaction test: filter by typing and pick an option (CI / test-runner).</p>\n"
             },
@@ -5011,6 +5021,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuBadge>",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuButton>",
                 "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
@@ -5024,17 +5045,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuButtonGroup>",
                 "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuBadge>",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6205,7 +6215,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -6245,7 +6255,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then click an option. The **play** function runs in test-runner only.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await userEvent.click(combo);\n    await userEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then pick an option. **play** autoplays on load (slower typing in the canvas; full speed in test-storybook).',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await playUserEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}",
                     "rawdescription": "Interaction test: filter by typing and pick an option (CI / test-runner).",
                     "description": "<p>Interaction test: filter by typing and pick an option (CI / test-runner).</p>\n"
                 },
@@ -6292,6 +6302,16 @@
                     "defaultValue": "{\n  args: { size: 'sm' },\n  render: Default.render,\n}"
                 },
                 {
+                    "name": "Contained",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { variant: 'contained' },\n  render: Default.render,\n}"
+                },
+                {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -6299,7 +6319,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <au-accordion-panel panel=\"profile\">Update your name, email, and avatar.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <au-accordion-panel panel=\"billing\">Manage payment methods and invoices.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <au-accordion-panel panel=\"security\">Change password and enable 2FA.</au-accordion-panel>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [variant]=\"variant\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <au-accordion-panel panel=\"profile\">Update your name, email, and avatar.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <au-accordion-panel panel=\"billing\">Manage payment methods and invoices.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <au-accordion-panel panel=\"security\">Change password and enable 2FA.</au-accordion-panel>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
                 },
                 {
                     "name": "meta",
@@ -6309,7 +6329,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuAccordion>",
-                    "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    variant: {\n      control: 'select',\n      options: ['plain', 'contained'],\n      description: 'Plain dividers or raised surface shell.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    variant: 'plain',\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
                 },
                 {
                     "name": "SingleExpand",
@@ -6465,7 +6485,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Basic bound field with label and hint. The **play** function types sample text.',\n      },\n    },\n  },\n  args: {\n    label: 'Username',\n    placeholder: 'e.g. your_name',\n    hint: 'Shown on your profile.',\n    size: 'md',\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Username');\n    await playUserEvent.clear(field);\n    await playUserEvent.type(field, 'hello');\n    await expect(field).toHaveValue('hello');\n  },\n}"
                 },
                 {
                     "name": "Disabled",
@@ -7905,7 +7925,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await userEvent.clear(field);\n    await userEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **`resize=\"vertical\"`** and hint. **Play** types sample content.',\n      },\n    },\n  },\n  args: {\n    label: 'Description',\n    placeholder: 'Briefly describe the context…',\n    hint: 'Visible to the rest of the team (depending on permissions).',\n    size: 'md',\n    rows: 4,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Description');\n    await playUserEvent.clear(field);\n    await playUserEvent.type(field, 'Test context');\n    await expect(field).toHaveValue('Test context');\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -8795,6 +8815,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/badge/badge.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuBadge>",
+                    "file": "projects/components/src/lib/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
@@ -8815,19 +8848,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuButtonGroup>",
                     "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/badge/badge.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBadge>",
-                    "file": "projects/components/src/lib/badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -9390,6 +9410,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Compact",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Contained",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

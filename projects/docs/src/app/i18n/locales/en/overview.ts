@@ -179,7 +179,8 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Shell', detail: 'Same as single-line fields.' },
       {
         region: '`<textarea>`',
-        detail: 'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (or `size` presets).',
+        detail:
+          'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (or `size` presets).',
       },
     ],
     accessibility: [
@@ -348,7 +349,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Host', detail: '`variant="plain"` (dividers) or `contained` (raised surface shell).' },
+      {
+        region: 'Host',
+        detail: '`variant="plain"` (dividers) or `contained` (raised surface shell).',
+      },
       { region: '`.au-accordion__item`', detail: 'Wrap each trigger + panel pair.' },
       {
         region: '`button[auAccordionItem]`',

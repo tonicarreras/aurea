@@ -142,7 +142,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Foco en el input de búsqueda.' },
   ],
   accordion: [
-    { token: '--au-color-border-subtle', description: 'Separadores entre ítems (`plain` y `contained`).' },
+    {
+      token: '--au-color-border-subtle',
+      description: 'Separadores entre ítems (`plain` y `contained`).',
+    },
     {
       token: '--au-color-surface-raised / --au-shadow-control',
       description: 'Fondo y elevación con `variant="contained"`.',
@@ -154,7 +157,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
   ],
   'button-group': [
     { token: '--au-space-2', description: 'Separación entre botones con `[attached]="false"`.' },
-    { token: '--au-color-border-default', description: 'Bordes compartidos en modo attached (vía `au-button`).' },
+    {
+      token: '--au-color-border-default',
+      description: 'Bordes compartidos en modo attached (vía `au-button`).',
+    },
   ],
   'input-password': [
     { token: '--au-color-form-border', description: 'Borde del shell (cromado compartido).' },

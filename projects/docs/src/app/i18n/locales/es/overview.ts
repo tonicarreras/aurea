@@ -185,7 +185,8 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       { region: 'Shell', detail: 'Igual que campos de una línea.' },
       {
         region: '`<textarea>`',
-        detail: 'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (o presets por `size`).',
+        detail:
+          'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (o presets por `size`).',
       },
     ],
     accessibility: [

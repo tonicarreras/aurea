@@ -2,9 +2,9 @@
 
 ## What consumers import
 
-| File | Required | Role |
-|------|----------|------|
-| `au-tokens.css` | Yes | Design tokens (`--au-*`) |
+| File               | Required                                  | Role                                                         |
+| ------------------ | ----------------------------------------- | ------------------------------------------------------------ |
+| `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`)                                     |
 | `aurea-global.css` | Yes for form controls & description lists | Shared CSS that cannot live in a single component `styleUrl` |
 
 ## When CSS goes in `aurea-global.css`
