@@ -46,6 +46,16 @@ import { DocsTokenList } from '../shared/docs-token-list';
         [expandLabel]="i18n.messages().themes.attrExpand"
       />
 
+      <h2>{{ i18n.messages().themes.globalStylesHeading }}</h2>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.globalStylesBody" />
+      </p>
+      <docs-code-block
+        [code]="globalStylesSnippet"
+        language="css"
+        [expandLabel]="i18n.messages().themes.globalStylesExpand"
+      />
+
       <h2>{{ i18n.messages().themes.directiveHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.directiveBody" />
@@ -416,6 +426,15 @@ export class ThemingPage {
   readonly htmlSnippet = `<html data-au-theme="dark">
   <!-- your app -->
 </html>`;
+
+  readonly globalStylesSnippet = `@import '@aurea-design-system/components/styles/au-tokens.css';
+@import '@aurea-design-system/components/styles/aurea-global.css';
+
+/* aurea-global.css (requires tokens):
+ * - Field chrome, errors, listbox overlays
+ * - Description list (dt/dd across hosts)
+ * - Accordion projected item shells + triggers
+ * Per-component CSS ships with each Angular import. */`;
 
   readonly directiveSnippet = `<div class="app-shell" [auTheme]="'system'">
   ...

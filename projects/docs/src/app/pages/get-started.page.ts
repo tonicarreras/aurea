@@ -126,10 +126,6 @@ export type GetStartedStep =
       margin: 0 0 var(--au-space-3);
     }
 
-    ::ng-deep .docs-steps__content h2 {
-      margin-top: 0;
-    }
-
     .docs-requirements {
       display: flex;
       flex-wrap: wrap;
@@ -205,8 +201,10 @@ export class GetStartedPage {
 
   readonly ngAddSnippet = 'ng add @aurea-design-system/components';
 
-  readonly stylesSnippet = `@import '@aurea-design-system/components/styles/au-tokens.css';
- @import '@aurea-design-system/components/styles/aurea-global.css';`;
+  readonly stylesSnippet = `/* 1. Tokens (required) */
+@import '@aurea-design-system/components/styles/au-tokens.css';
+/* 2. Shared field chrome, listbox, description-list, accordion shells */
+@import '@aurea-design-system/components/styles/aurea-global.css';`;
 
   readonly componentSnippet = computed(() => this.i18n.messages().getStarted.componentSnippet);
 

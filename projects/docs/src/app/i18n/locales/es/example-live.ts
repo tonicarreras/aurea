@@ -117,6 +117,31 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     boundsLabel: 'Hora de reserva',
     boundsHint: 'Solo horario laboral.',
   },
+  inputPassword: {
+    basicLabel: 'Contraseña',
+    basicHint: 'Usa al menos 12 caracteres.',
+    signUpLabel: 'Crear contraseña',
+  },
+  buttonGroup: {
+    ariaLabel: 'Acciones del documento',
+    cancel: 'Cancelar',
+    draft: 'Borrador',
+    publish: 'Publicar',
+  },
+  descriptionList: {
+    nameLabel: 'Nombre',
+    nameValue: 'Ada Lovelace',
+    emailLabel: 'Correo',
+    emailValue: 'ada@example.com',
+    roleLabel: 'Rol',
+    roleValue: 'Ingeniera',
+  },
+  tagInput: {
+    basicLabel: 'Habilidades',
+    basicHint: 'Pulsa Enter o coma para añadir.',
+    limitsLabel: 'Temas',
+    limitsHint: 'Hasta 5 etiquetas únicas.',
+  },
   inputNumber: {
     basicLabel: 'Cantidad',
     errorLabel: 'Cantidad',

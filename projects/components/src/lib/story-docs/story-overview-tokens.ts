@@ -29,7 +29,10 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
   ],
   textarea: [
     { concern: 'Field shell', examples: '`--au-color-form-border`, `--au-radius-field`' },
-    { concern: 'Min height', examples: '`--au-textarea-min-h-*`, `--au-textarea-pad-y`' },
+    {
+      concern: 'Min height & padding',
+      examples: '`--au-textarea-min-h-*`, `--au-textarea-pad-block`, `--au-textarea-pad-inline`',
+    },
   ],
   checkbox: [
     { concern: 'Box', examples: '`--au-checkbox-size-*`, `--au-color-action-primary`' },
@@ -54,7 +57,11 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
     },
   ],
   accordion: [
-    { concern: 'Sections', examples: '`--au-color-border-subtle`, `--au-color-action-primary`' },
+    {
+      concern: 'Contained shell',
+      examples: '`--au-color-surface-raised`, `--au-color-border-subtle`, `--au-shadow-control`',
+    },
+    { concern: 'Sections', examples: '`--au-color-border-subtle`' },
     { concern: 'Focus', examples: '`--au-shadow-focus-ring`' },
   ],
   'radio-group': [

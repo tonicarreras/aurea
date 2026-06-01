@@ -40,11 +40,8 @@ button.au-button__element {
   user-select: none;
   box-shadow: var(--au-shadow-button);
   transition:
-    var(--au-transition-background),
-    var(--au-transition-border),
-    var(--au-transition-shadow),
-    var(--au-transition-color),
-    transform var(--au-motion-control);
+    var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
+    var(--au-transition-color);
   white-space: nowrap;
 }
 
@@ -87,14 +84,12 @@ button.au-button__element {
 :host([data-au-variant='primary']) .au-button__element:hover:not(:disabled) {
   background: var(--au-color-action-primary-hover);
   border-color: var(--au-color-action-primary-hover);
-  box-shadow: var(--au-shadow-button-hover);
-  transform: translateY(-1px);
 }
 
 :host([data-au-variant='primary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-action-primary-pressed);
   border-color: var(--au-color-action-primary-pressed);
-  transform: translateY(0) scale(0.98);
+  box-shadow: var(--au-shadow-button-primary);
 }
 
 /* Secondary: filled surface, accent text */
@@ -107,13 +102,11 @@ button.au-button__element {
 :host([data-au-variant='secondary']) .au-button__element:hover:not(:disabled) {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-strong);
-  box-shadow: var(--au-shadow-button-hover);
-  transform: translateY(-1px);
 }
 
 :host([data-au-variant='secondary']) .au-button__element:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
-  transform: translateY(0) scale(0.98);
+  box-shadow: var(--au-shadow-button);
 }
 
 /* Outline: border-only, transparent background */
@@ -227,9 +220,70 @@ button.au-button__element {
       var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
       var(--au-transition-color);
   }
+}
 
-  .au-button__element:hover:not(:disabled),
-  .au-button__element:active:not(:disabled) {
-    transform: none;
-  }
+/* -------------------------------------------------------------------------- */
+/* Button group (attached track) */
+/* -------------------------------------------------------------------------- */
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='horizontal']) {
+  display: inline-flex;
+}
+
+:host-context(au-button-group[data-au-orientation='vertical']) {
+  display: flex;
+  width: 100%;
+}
+
+:host-context(au-button-group[data-au-orientation='vertical']) .au-button__element {
+  width: 100%;
+}
+
+:host-context(au-button-group[data-au-attached]) .au-button__element {
+  border-radius: 0;
+}
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='horizontal'])
+  :host:not(:first-of-type)
+  .au-button__element {
+  margin-inline-start: -1px;
+}
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='horizontal'])
+  :host:first-of-type
+  .au-button__element {
+  border-start-start-radius: var(--au-button-radius);
+  border-end-start-radius: var(--au-button-radius);
+}
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='horizontal'])
+  :host:last-of-type
+  .au-button__element {
+  border-start-end-radius: var(--au-button-radius);
+  border-end-end-radius: var(--au-button-radius);
+}
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='vertical'])
+  :host:not(:first-of-type)
+  .au-button__element {
+  margin-block-start: -1px;
+}
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='vertical'])
+  :host:first-of-type
+  .au-button__element {
+  border-start-start-radius: var(--au-button-radius);
+  border-start-end-radius: var(--au-button-radius);
+}
+
+:host-context(au-button-group[data-au-attached][data-au-orientation='vertical'])
+  :host:last-of-type
+  .au-button__element {
+  border-end-start-radius: var(--au-button-radius);
+  border-end-end-radius: var(--au-button-radius);
+}
+
+:host-context(au-button-group[data-au-attached]) .au-button__element:hover:not(:disabled),
+:host-context(au-button-group[data-au-attached]) .au-button__element:active:not(:disabled) {
+  z-index: 1;
 }

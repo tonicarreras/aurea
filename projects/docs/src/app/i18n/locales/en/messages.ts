@@ -91,8 +91,9 @@ export const MESSAGES_EN: DocsMessages = {
       },
       install: { title: 'Install', expand: 'Show install command' },
       tokens: {
-        title: 'Global tokens',
-        intro: 'Import semantic styles in angular.json or your global stylesheet:',
+        title: 'Global styles',
+        intro:
+          'Import <code>au-tokens.css</code> (variables) and <code>aurea-global.css</code> (shared field chrome, listbox overlays, description list, accordion projected shells) in angular.json or your global stylesheet. Each component also ships its own <code>styleUrl</code> when you import it — do not duplicate component CSS in your app.',
         expand: 'Show CSS imports',
       },
       firstComponent: { title: 'First component', expand: 'Show Angular example' },
@@ -118,6 +119,10 @@ export const MESSAGES_EN: DocsMessages = {
     attrBody:
       'Set <code>data-au-theme</code> on an ancestor (e.g. <code>&lt;html&gt;</code> or your app shell). Values: <code>light</code>, <code>dark</code>.',
     attrExpand: 'Show HTML',
+    globalStylesHeading: 'aurea-global.css',
+    globalStylesBody:
+      'Load <strong>after</strong> <code>au-tokens.css</code>. Contains only cross-cutting CSS: shared <code>au-form-field</code> chrome and errors, portaled listbox surfaces, <code>au-description-list</code> layout across hosts, and accordion triggers/items declared in parent templates. Controls such as <code>au-textarea</code>, <code>au-button-group</code>, and <code>au-snackbar</code> style themselves via their component bundles — they are not duplicated here. Criteria: <code>projects/components/src/lib/styles/README.md</code> in the repo.',
+    globalStylesExpand: 'Show global CSS imports',
     directiveHeading: 'AuTheme directive',
     directiveBody:
       'Reactive alternative with <code>system</code> to follow <code>prefers-color-scheme</code>:',
@@ -139,9 +144,9 @@ export const MESSAGES_EN: DocsMessages = {
     densityBody:
       'Set <code>data-au-density</code> on the shell: <code>compact</code>, <code>comfortable</code> (default), or <code>spacious</code>. Use the <code>auDensity</code> directive for reactive binding.',
     densityExpand: 'Show density HTML',
-    highContrastHeading: 'High contrast (experimental)',
+    highContrastHeading: 'High contrast',
     highContrastBody:
-      'Separate from appearance: stronger borders and focus for accessibility. When the user opts in, map appearance to <code>high-contrast</code> (light) or <code>high-contrast-dark</code> (dark) via <code>data-au-theme</code> or <code>[auTheme]</code>. Both palettes are experimental — validate with your QA checklist.',
+      'Separate from appearance: stronger borders, focus rings, and semantic colors for accessibility. When the user opts in, map appearance to <code>high-contrast</code> (light) or <code>high-contrast-dark</code> (dark) via <code>data-au-theme</code> or <code>[auTheme]</code>. Palettes are part of the stable token set in <code>au-tokens.css</code>.',
     highContrastExpand: 'Show high-contrast HTML',
     brandHeading: 'Brand customization',
     brandBody:

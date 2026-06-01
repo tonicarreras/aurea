@@ -7,7 +7,7 @@ export const GUIDES_ES: GuidesMessages = {
     cards: [
       {
         title: 'Empezar',
-        description: 'Instalación, CSS global y primer componente.',
+        description: 'Instalación, au-tokens + aurea-global.css y primer componente.',
         path: 'get-started',
       },
       {

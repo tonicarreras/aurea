@@ -35,10 +35,16 @@ const meta: Meta<AuCard> = {
       description: 'Density / padding of the card.',
       table: { category: 'Appearance' },
     },
+    interactive: {
+      control: 'boolean',
+      description: 'Hover lift on elevated variant (clickable tiles / links).',
+      table: { category: 'Behavior' },
+    },
   },
   args: {
     variant: 'elevated',
     size: 'md',
+    interactive: false,
   },
 };
 
@@ -50,7 +56,7 @@ export const Default: Story = {
     cardRender(
       args,
       `
-      <au-card [variant]="variant" [size]="size">
+      <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Card title</h3>
         <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>
       </au-card>
@@ -64,7 +70,7 @@ export const Outlined: Story = {
     cardRender(
       args,
       `
-      <au-card [variant]="variant" [size]="size">
+      <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Outlined card</h3>
         <p auCardBody>Stronger border, no elevation shadow.</p>
       </au-card>
@@ -78,7 +84,7 @@ export const Filled: Story = {
     cardRender(
       args,
       `
-      <au-card [variant]="variant" [size]="size">
+      <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Filled card</h3>
         <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>
       </au-card>
@@ -91,7 +97,7 @@ export const WithFooter: Story = {
     cardRender(
       args,
       `
-      <au-card [variant]="variant" [size]="size">
+      <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Confirm</h3>
         <p auCardBody>Review the summary before continuing.</p>
         <div auCardFooter>
@@ -130,9 +136,28 @@ export const SmallSize: Story = {
     cardRender(
       args,
       `
-      <au-card [variant]="variant" [size]="size">
+      <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Compact</h3>
         <p auCardBody>Reduced padding for dense lists.</p>
+      </au-card>
+    `,
+    ),
+};
+
+export const Interactive: Story = {
+  args: { interactive: true },
+  render: (args) =>
+    cardRender(
+      args,
+      `
+      <au-card
+        [variant]="variant"
+        [size]="size"
+        [interactive]="interactive"
+        style="max-width: 22rem;"
+      >
+        <h3 auCardHeader>Open workspace</h3>
+        <p auCardBody>Whole card is the hit target — interactive strengthens the border on hover (no lift).</p>
       </au-card>
     `,
     ),
@@ -144,7 +169,7 @@ export const LargeSize: Story = {
     cardRender(
       args,
       `
-      <au-card [variant]="variant" [size]="size">
+      <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Spacious</h3>
         <p auCardBody>More padding for emphasis or hero cards.</p>
       </au-card>

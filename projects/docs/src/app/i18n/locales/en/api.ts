@@ -112,11 +112,15 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           'Project inside `au-form-field`. Implements `FormValueControl<string | null>`. Bind `[formField]` or `[(value)]`.',
         rows: [
           ...VALUE_FIELD_BASE,
-          i('type', "'text' | 'password' | 'email' | …", 'Native `<input>` type.', "'text'"),
+          i(
+            'type',
+            "'text' | 'email' | 'number' | …",
+            'Native `<input>` type. Password → `au-input-password`.',
+            "'text'",
+          ),
           i('autocomplete', 'string | undefined', 'Native `autocomplete` attribute.'),
           i('minLength', 'number | undefined', 'Native `minlength` validation.'),
           i('maxLength', 'number | undefined', 'Native `maxlength` validation.'),
-          i('showPasswordToggle', 'boolean', 'Show/hide button when `type="password"`.', 'true'),
         ],
       },
     ],
@@ -263,6 +267,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           m('value', 'ModelSignal<string[]>', 'Expanded section keys.'),
           i('multiple', 'boolean', 'Allow several panels open.', 'true'),
           i('ariaLabel', 'string', 'Accessible name for the region.', "''"),
+          i(
+            'variant',
+            "'plain' | 'contained'",
+            'Plain dividers or raised surface shell.',
+            "'plain'",
+          ),
           i('size', "'sm' | 'md'", 'Trigger typography density.', "'md'"),
           i('id', 'string', 'Stable id prefix for triggers/panels.', "''"),
           o('valueChange', 'string[]', 'When expanded keys change.'),
@@ -279,7 +289,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuAccordionPanel',
         description: 'Panel region paired with a trigger key.',
-        rows: [i('auAccordionPanel', 'string', 'Section key (required input).')],
+        rows: [i('panel', 'string', 'Section key; must match paired `auAccordionItem`.')],
       },
     ],
   },
@@ -402,6 +412,108 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'input-password': {
+    importNames: ['AuFormField', 'AuInputPassword'],
+    sections: [
+      {
+        title: 'AuInputPassword',
+        description:
+          'Project inside `au-form-field`. Dedicated password input with optional reveal toggle.',
+        rows: [
+          m('value', 'ModelSignal<string | null>', 'Password value; empty is `null`.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('readOnly', 'boolean', 'Read-only.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('name', 'string', 'Native `name`.', "''"),
+          i('placeholder', 'string', 'Placeholder.', "''"),
+          i(
+            'autocomplete',
+            'string | undefined',
+            'Native `autocomplete` (e.g. `current-password`).',
+          ),
+          i('minLength', 'number | undefined', 'Native `minlength`.'),
+          i('maxLength', 'number | undefined', 'Native `maxlength`.'),
+          i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
+          i('showRevealToggle', 'boolean', 'Show reveal/hide button.', 'true'),
+          i(
+            'revealLabelShow',
+            'string',
+            'Reveal button `aria-label` when hidden.',
+            "'Show password'",
+          ),
+          i(
+            'revealLabelHide',
+            'string',
+            'Reveal button `aria-label` when visible.',
+            "'Hide password'",
+          ),
+          o('blur', 'void', 'Blur.'),
+          o('valueChange', 'string | null', 'When the value changes.'),
+        ],
+      },
+    ],
+  },
+  'button-group': {
+    importNames: ['AuButtonGroup', 'AuButton', 'type AuButtonGroupOrientation'],
+    sections: [
+      {
+        title: 'AuButtonGroup',
+        description: 'Groups projected `au-button` children; not a form control.',
+        rows: [
+          i('ariaLabel', 'string', 'Accessible name for the group.', "''"),
+          i('ariaLabelledBy', 'string', 'ID of labelling element.', "''"),
+          i('attached', 'boolean', 'Share borders between buttons.', 'true'),
+          i('orientation', "'horizontal' | 'vertical'", 'Layout direction.', "'horizontal'"),
+        ],
+      },
+    ],
+  },
+  'description-list': {
+    importNames: ['AuDescriptionList', 'AuDescriptionItem'],
+    sections: [
+      {
+        title: 'AuDescriptionList',
+        description:
+          'Semantic `<dl>` wrapper. Prefer `au-description-item` children; native `<dt>` / `<dd>` for advanced markup.',
+        rows: [
+          i('layout', "'vertical' | 'horizontal'", 'Term/description layout.', "'vertical'"),
+          i('columns', '1 | 2 | 3', 'Column count for grid layout.', '1'),
+        ],
+      },
+      {
+        title: 'AuDescriptionItem',
+        description: 'One term/description pair inside `au-description-list`.',
+        rows: [i('term', 'string', 'Label rendered in `<dt>`.', "''")],
+      },
+    ],
+  },
+  'tag-input': {
+    importNames: ['AuFormField', 'AuTagInput'],
+    sections: [
+      {
+        title: 'AuTagInput',
+        description: 'Project inside `au-form-field`. Multi-value tags as removable chips.',
+        rows: [
+          m('value', 'ModelSignal<string[]>', 'Committed tags.'),
+          i('errors', 'ValidationError[]', 'From signal forms.', '[]'),
+          i('invalid', 'boolean', 'Invalid.', 'false'),
+          i('disabled', 'boolean', 'Disabled.', 'false'),
+          i('readOnly', 'boolean', 'Read-only.', 'false'),
+          i('required', 'boolean', 'Required.', 'false'),
+          i('name', 'string', 'Native `name`.', "''"),
+          i('placeholder', 'string', 'Draft input placeholder.', "''"),
+          i('size', "'sm' | 'md' | 'lg'", 'Density.', "'md'"),
+          i('allowDuplicates', 'boolean', 'Allow repeated tag text.', 'false'),
+          i('maxTags', 'number | undefined', 'Maximum tag count.'),
+          i('removeTagLabel', 'string', '`aria-label` for remove buttons.', "'Remove tag'"),
+          o('blur', 'void', 'Blur; commits draft if non-empty.'),
+          o('valueChange', 'string[]', 'When tags change.'),
+        ],
+      },
+    ],
+  },
   'file-upload': {
     importNames: ['AuFormField', 'AuFileUpload'],
     sections: [
@@ -500,6 +612,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         rows: [
           i('variant', "'elevated' | 'outlined' | 'filled'", 'Surface style.', "'elevated'"),
           i('size', "'sm' | 'md' | 'lg'", 'Inner padding (`--au-card-*`).', "'md'"),
+          i(
+            'interactive',
+            'boolean',
+            'Hover lift on elevated variant; use when the card is a link or click target.',
+            'false',
+          ),
           {
             name: 'hasFooter',
             type: 'Signal<boolean> (solo lectura)',

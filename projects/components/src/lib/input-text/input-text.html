@@ -1,6 +1,5 @@
 <div
   class="au-input-text__control-row"
-  [class.au-input-text__control-row--password]="hasPasswordUi()"
   [class.au-input-text__control-row--from-tab]="fieldFocusByTab()"
   (focusin)="onControlRowFocusin()"
   (focusout)="onControlRowFocusout($event)"
@@ -10,7 +9,7 @@
     class="au-input-text__input"
     [id]="controlId()"
     [attr.name]="name() || null"
-    [type]="effectiveInputType()"
+    [type]="type()"
     [value]="inputDisplay()"
     [attr.placeholder]="placeholder() || null"
     [attr.autocomplete]="autocomplete() ?? null"
@@ -26,19 +25,4 @@
     (input)="onInput($event)"
     (blur)="onBlurHost()"
   />
-
-  @if (hasPasswordUi()) {
-    <button
-      type="button"
-      class="au-input-text__reveal"
-      [attr.aria-pressed]="passwordRevealed()"
-      [attr.aria-label]="passwordRevealed() ? 'Hide password' : 'Show password'"
-      (click)="togglePasswordVisibility()"
-    >
-      <au-icon
-        [name]="passwordRevealed() ? 'eye-off' : 'eye'"
-        size="sm"
-      />
-    </button>
-  }
 </div>

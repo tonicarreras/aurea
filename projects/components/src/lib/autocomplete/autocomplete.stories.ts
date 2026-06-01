@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, within } from 'storybook/test';
+
+import { playUserEvent } from '../../../.storybook/story-user-event';
 
 import { AuFormField } from '../form-field/form-field';
 import {
@@ -125,7 +127,7 @@ export const TypeAndSelect: Story = {
     docs: {
       description: {
         story:
-          'Type to filter, then click an option. The **play** function runs in test-runner only.',
+          'Type to filter, then pick an option. **play** autoplays on load (slower typing in the canvas; full speed in test-storybook).',
       },
     },
   },
@@ -136,10 +138,10 @@ export const TypeAndSelect: Story = {
   },
   play: async ({ canvasElement }) => {
     const combo = getCombobox(canvasElement, 'City');
-    await userEvent.click(combo);
-    await userEvent.type(combo, 'bar');
+    await playUserEvent.click(combo);
+    await playUserEvent.type(combo, 'bar');
     const listbox = getListbox(canvasElement);
-    await userEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));
+    await playUserEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));
     await expect(combo).toHaveValue('Barcelona');
   },
 };
@@ -217,8 +219,8 @@ export const KeyboardNavigation: Story = {
   },
   play: async ({ canvasElement }) => {
     const combo = getCombobox(canvasElement, 'City');
-    await userEvent.click(combo);
-    await userEvent.keyboard('{ArrowDown}{Enter}');
+    await playUserEvent.click(combo);
+    await playUserEvent.keyboard('{ArrowDown}{Enter}');
     await expect(combo).toHaveValue('Barcelona');
   },
 };

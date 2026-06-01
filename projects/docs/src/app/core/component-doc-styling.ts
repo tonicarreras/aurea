@@ -3,6 +3,8 @@ import type { DocsLocale } from './docs-locale';
 import { COMPONENT_DOC_STYLING_EN, DEFAULT_COMPONENT_STYLING_EN } from '../i18n/locales/en/styling';
 import { COMPONENT_DOC_STYLING_ES, DEFAULT_COMPONENT_STYLING_ES } from '../i18n/locales/es/styling';
 
+/** Per-slug token lists: `i18n/locales/{en,es}/styling.ts`. Global field chrome: `aurea-global.css`. */
+
 export function resolveComponentStyling(
   doc: ComponentDoc,
   locale: DocsLocale,

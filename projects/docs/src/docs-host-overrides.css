@@ -1,0 +1,55 @@
+/**
+ * Docs-only layout tweaks for Aurea hosts (toolbar, code panel, CRUD frame).
+ * Scoped by docs BEM classes — not part of the component public API.
+ */
+
+.docs-toolbar__field .au-form-field__label {
+  font-size: var(--au-text-2xs);
+}
+
+.docs-code-panel__toggle .au-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--au-space-2);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+}
+
+.docs-code-panel__copy--done .au-button__element {
+  border-color: color-mix(in srgb, var(--au-color-semantic-success) 50%, transparent);
+  color: var(--au-color-semantic-success);
+}
+
+.docs-crud-frame__group au-button {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.docs-crud-frame__group--a11y au-switch {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.docs-crud-frame__group--a11y .au-switch__field {
+  gap: 0;
+}
+
+.docs-crud-app__btn-add .au-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--au-space-1-5);
+}
+
+.docs-crud-app__toolbar-actions au-button-group {
+  display: inline-flex;
+}
+
+.docs-crud-app__progress-cell .au-progress {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.docs-crud-app__filters .au-form-field {
+  min-width: 0;
+}

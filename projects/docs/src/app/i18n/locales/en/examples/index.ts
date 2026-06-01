@@ -1,4 +1,5 @@
 import { examples as buttonExamples } from './button';
+import { examples as buttonGroupExamples } from './button-group';
 import { examples as formFieldExamples } from './form-field';
 import { examples as inputTextExamples } from './input-text';
 import { examples as textareaExamples } from './textarea';
@@ -11,11 +12,13 @@ import { examples as avatarExamples } from './avatar';
 import { examples as radioGroupExamples } from './radio-group';
 import { examples as inputNumberExamples } from './input-number';
 import { examples as inputDateExamples } from './input-date';
+import { examples as inputPasswordExamples } from './input-password';
 import { examples as inputTimeExamples } from './input-time';
 import { examples as dialogExamples } from './dialog';
 import { examples as drawerExamples } from './drawer';
 import { examples as cardExamples } from './card';
 import { examples as tabsExamples } from './tabs';
+import { examples as tagInputExamples } from './tag-input';
 import { examples as chipExamples } from './chip';
 import { examples as chipGroupExamples } from './chip-group';
 import { examples as listExamples } from './list';
@@ -28,6 +31,7 @@ import { examples as stepsExamples } from './steps';
 import { examples as badgeExamples } from './badge';
 import { examples as breadcrumbExamples } from './breadcrumb';
 import { examples as dividerExamples } from './divider';
+import { examples as descriptionListExamples } from './description-list';
 import { examples as emptyStateExamples } from './empty-state';
 import { examples as fieldsetExamples } from './fieldset';
 import { examples as fileUploadExamples } from './file-upload';
@@ -46,6 +50,7 @@ export type { ComponentDocExample } from '../../../types/example';
 export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = {
   accordion: accordionExamples,
   button: buttonExamples,
+  'button-group': buttonGroupExamples,
   'form-field': formFieldExamples,
   'input-text': inputTextExamples,
   textarea: textareaExamples,
@@ -57,11 +62,13 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   'radio-group': radioGroupExamples,
   'input-number': inputNumberExamples,
   'input-date': inputDateExamples,
+  'input-password': inputPasswordExamples,
   'input-time': inputTimeExamples,
   dialog: dialogExamples,
   drawer: drawerExamples,
   card: cardExamples,
   tabs: tabsExamples,
+  'tag-input': tagInputExamples,
   chip: chipExamples,
   'chip-group': chipGroupExamples,
   list: listExamples,
@@ -72,6 +79,7 @@ export const COMPONENT_DOC_EXAMPLES_EN: Record<string, ComponentDocExample[]> = 
   spinner: spinnerExamples,
   steps: stepsExamples,
   divider: dividerExamples,
+  'description-list': descriptionListExamples,
   'empty-state': emptyStateExamples,
   fieldset: fieldsetExamples,
   'file-upload': fileUploadExamples,

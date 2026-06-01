@@ -6,7 +6,7 @@
 au-dialog {
   --au-dialog-radius: var(--au-radius-modal);
   --au-dialog-bg: var(--au-color-surface-raised);
-  --au-dialog-border: 1px solid var(--au-color-border-subtle);
+  --au-dialog-border: var(--au-chrome-border);
   --au-dialog-shadow: var(--au-shadow-overlay);
   --au-dialog-padding: var(--au-space-6);
   --au-dialog-gap: var(--au-space-5);

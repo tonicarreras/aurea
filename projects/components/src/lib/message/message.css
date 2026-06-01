@@ -27,7 +27,7 @@
   border-radius: var(--au-radius-control);
   background: var(--au-message-bg, var(--au-color-surface-elevated));
   color: var(--au-message-text, var(--au-color-text-primary));
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: none;
 }
 
 :host([data-au-layout='banner']) .au-message__surface {

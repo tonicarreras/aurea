@@ -39,6 +39,36 @@ export const STORY_OVERVIEW_SOURCE = {
         'Tab focuses the control; focus restored after closing dialogs.',
       ],
     },
+    'button-group': {
+      intro: [
+        'Layout wrapper that groups related `au-button` actions with `role="group"`.',
+        'Default **`attached`** mode shares borders between buttons; set `[attached]="false"` for spaced actions.',
+      ],
+      whenToUse: [
+        'Save / Cancel / secondary actions on forms and dialogs.',
+        'Compact toolbars of independent buttons.',
+      ],
+      whenNotToUse: [
+        'Exclusive visible choice in a form → `au-radio-group` or `au-tabs` `variant="contained"`.',
+        'Multi-select filters → `au-chip-group`.',
+        'Single action → lone `au-button`.',
+      ],
+      anatomy: [
+        {
+          region: 'Group',
+          detail: '`role="group"` with `ariaLabel` or `ariaLabelledBy`.',
+        },
+        {
+          region: '`au-button`',
+          detail: 'Projected children; variants and clicks stay on each button.',
+        },
+      ],
+      accessibility: [
+        'Name the group when more than one button is present.',
+        'Each `au-button` keeps its own accessible name and keyboard behavior.',
+      ],
+      keyboard: ['Tab moves between buttons in document order.'],
+    },
     'form-field': {
       intro: [
         'Shared label, hint, and error chrome around a projected control (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
@@ -114,10 +144,11 @@ export const STORY_OVERVIEW_SOURCE = {
         'Full `form()` example: `@aurea-design-system/components` package README → *Signal forms* (not a separate Storybook page).',
       ],
       whenToUse: [
-        'Text, email, URL, tel, search, or password with the same chrome as other fields.',
+        'Text, email, URL, tel, or search with the same chrome as other fields.',
         'Validation via signal forms or manual `errorMessage` / `invalid`.',
       ],
       whenNotToUse: [
+        'Password fields → `au-input-password`.',
         'Multi-line text → `au-textarea`.',
         'Pick from a list → `au-select` or `au-autocomplete`.',
       ],
@@ -134,20 +165,12 @@ export const STORY_OVERVIEW_SOURCE = {
           region: 'Native input',
           detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` via context.',
         },
-        {
-          region: 'Password toggle',
-          detail: 'Only with `type="password"` and `showPasswordToggle`.',
-        },
       ],
       accessibility: [
         'Accessible name via visible label or external `aria-label`.',
         'Errors linked with `aria-errormessage`; hints with `aria-describedby`.',
-        'Password toggle with `aria-pressed` and Show/Hide labels.',
       ],
-      keyboard: [
-        'Tab enters the field with outer ring (`--from-tab`); click uses inner ring.',
-        'Space on the password toggle toggles visibility.',
-      ],
+      keyboard: ['Tab enters the field with outer ring (`--from-tab`); click uses inner ring.'],
       extra:
         '## Signal forms vs manual\n\n| Mode | Where | Validation |\n|------|--------|------------|\n| Signal forms | `[formField]` on `au-input-text`; `form()` in your component | Schema drives `errors` / `invalid`; `au-form-field` shows the message |\n| Manual | `[(value)]` + `au-form-field` `errorMessage` / `invalid` | Parent sets chrome (see **With error** story) |\n\nFull `form()` example: **`@aurea-design-system/components` README** → *Signal forms*.\n\n### Manual checks (Storybook **Accessibility** addon)\n\n1. Run **Accessibility** → **Run** on each story.\n2. Tab through **Password** and confirm keyboard vs pointer focus rings.\n3. **With error**: screen reader should hear `aria-errormessage`.',
     },
@@ -165,7 +188,8 @@ export const STORY_OVERVIEW_SOURCE = {
         },
         {
           region: '`<textarea>`',
-          detail: 'Padding vertical `--au-textarea-pad-y`.',
+          detail:
+            'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (or `size` presets).',
         },
       ],
       accessibility: [
@@ -316,8 +340,9 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     accordion: {
       intro: [
-        'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `[auAccordionPanel]` regions share a string key.',
+        'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `au-accordion-panel` regions share a string key.',
         'Bind `[(value)]` to the list of expanded keys; set `[multiple]="false"` for exclusive expand.',
+        'Use `variant="contained"` for a raised surface (card-like shell); default `plain` is border dividers only.',
       ],
       whenToUse: [
         'FAQ, settings panels, or filters where only a subset should be visible at once.',
@@ -329,6 +354,10 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       anatomy: [
         {
+          region: 'Host',
+          detail: '`variant="plain"` (dividers) or `contained` (raised surface shell).',
+        },
+        {
           region: '`.au-accordion__item`',
           detail: 'Wrap each trigger + panel pair.',
         },
@@ -337,8 +366,8 @@ export const STORY_OVERVIEW_SOURCE = {
           detail: 'Trigger with `aria-expanded` and `aria-controls`.',
         },
         {
-          region: '`[auAccordionPanel]`',
-          detail: 'Region; `hidden` when collapsed.',
+          region: '`au-accordion-panel`',
+          detail: 'Region with height transition; `aria-hidden` and `inert` when collapsed.',
         },
       ],
       accessibility: [
@@ -466,6 +495,31 @@ export const STORY_OVERVIEW_SOURCE = {
         'Decorative clock icon (`aria-hidden`); picker opens via native control.',
       ],
     },
+    'input-password': {
+      intro: [
+        'Dedicated password field with optional reveal toggle and shared Aurea field chrome.',
+        'Implements `FormValueControl<string | null>`; empty ↔ `null`. Localize `revealLabelShow` / `revealLabelHide`.',
+      ],
+      whenToUse: [
+        'Login, registration, and change-password forms.',
+        'When users may need to verify what they typed (`showRevealToggle`).',
+      ],
+      whenNotToUse: ['Fixed-length OTP or PIN → specialized input pattern.'],
+      anatomy: [
+        {
+          region: 'Native input',
+          detail: 'Toggles `type="password"` / `type="text"` when revealed.',
+        },
+        {
+          region: 'Reveal control',
+          detail: 'Optional icon button with `aria-pressed` and localized label.',
+        },
+      ],
+      accessibility: [
+        'Label, hint, and errors linked via `au-form-field`.',
+        'Reveal button is keyboard accessible and does not submit the form.',
+      ],
+    },
     'file-upload': {
       intro: [
         'Drag-and-drop target with hidden native `input[type="file"]`, browse button, and removable file list.',
@@ -559,8 +613,12 @@ export const STORY_OVERVIEW_SOURCE = {
       intro: [
         'Grouped surface with elevated, outlined, and filled variants. Regions: media, header, body, footer.',
         'Host is `<article>`: include a heading in `auCardHeader` for document outline.',
+        'Set `[interactive]="true"` only when the whole card is a link or click target (hover border emphasis on elevated).',
       ],
-      whenToUse: ['Entity summaries, dashboard tiles, settings blocks.'],
+      whenToUse: [
+        'Entity summaries, dashboard tiles, settings blocks.',
+        'Clickable tiles with `interactive` and a real link or button pattern.',
+      ],
       whenNotToUse: [
         'Only separate content → `au-divider` or spacing.',
         'Blocking overlay → `au-dialog`.',
@@ -614,6 +672,40 @@ export const STORY_OVERVIEW_SOURCE = {
       keyboard: [
         'Arrows change active tab (horizontal or vertical per `orientation`).',
         'Home/End to first/last tab.',
+      ],
+    },
+    'tag-input': {
+      intro: [
+        'Multi-value text field that shows entered values as removable chips.',
+        'Implements `FormValueControl<string[]>`; confirm with Enter, comma, or blur.',
+      ],
+      whenToUse: [
+        'Skills, topics, email recipients, or filter tokens in forms.',
+        'When each value should stay visible and be removed individually.',
+      ],
+      whenNotToUse: [
+        'Single free-text value → `au-input-text` or `au-textarea`.',
+        'Predefined filters → `au-chip-group`.',
+        'Removable list without typing → `au-list` + `au-chip`.',
+      ],
+      anatomy: [
+        {
+          region: 'Chips',
+          detail: 'Removable labels with a remove button per chip.',
+        },
+        {
+          region: 'Draft input',
+          detail: 'Inline field for the next tag.',
+        },
+      ],
+      accessibility: [
+        'Remove buttons expose `aria-label` via `removeTagLabel`.',
+        '`readOnly` keeps the native control readable without `disabled` (stays in tab order).',
+        'Backspace with an empty draft removes the last tag.',
+      ],
+      keyboard: [
+        'Enter or comma confirms the draft as a tag.',
+        'Backspace with empty input removes the last tag.',
       ],
     },
     chip: {
@@ -870,6 +962,39 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['`aria-orientation` from `orientation`.'],
+    },
+    'description-list': {
+      intro: [
+        'Semantic description list container (`<dl>`) for key–value pairs.',
+        'Compose with `au-description-item` (`term` + projected description); native `<dt>` / `<dd>` for advanced markup.',
+      ],
+      whenToUse: [
+        'Profile summaries, invoice detail, metadata panels.',
+        'Read-only detail beside forms or in settings sidebars.',
+      ],
+      whenNotToUse: [
+        'Editable fields → form controls inside `au-form-field`.',
+        'Sortable tabular data → `au-table`.',
+        'Simple stacked labels → typography utilities.',
+      ],
+      anatomy: [
+        {
+          region: '`dl` shell',
+          detail: 'CSS grid from `layout` and `columns`.',
+        },
+        {
+          region: '`au-description-item`',
+          detail: 'Renders `<dt>` and `<dd>`; host uses `display: contents`.',
+        },
+        {
+          region: 'Native `dt` / `dd`',
+          detail: 'Optional projection for rich descriptions.',
+        },
+      ],
+      accessibility: [
+        'Preserves native list semantics for screen readers.',
+        'Each `dt` should be followed by its `dd` in document order.',
+      ],
     },
     'empty-state': {
       intro: [
@@ -1243,6 +1368,36 @@ export const STORY_OVERVIEW_SOURCE = {
         'Tab enfoca el control; foco restaurado tras cerrar diálogos.',
       ],
     },
+    'button-group': {
+      intro: [
+        'Contenedor de layout que agrupa acciones `au-button` relacionadas con `role="group"`.',
+        'Por defecto **`attached`** une bordes entre botones; `[attached]="false"` los separa.',
+      ],
+      whenToUse: [
+        'Acciones Guardar / Cancelar / secundarias en formularios y diálogos.',
+        'Toolbars compactas de botones independientes.',
+      ],
+      whenNotToUse: [
+        'Elección exclusiva en formulario → `au-radio-group` o `au-tabs` `variant="contained"`.',
+        'Filtros multi-selección → `au-chip-group`.',
+        'Una sola acción → `au-button` suelto.',
+      ],
+      anatomy: [
+        {
+          region: 'Grupo',
+          detail: '`role="group"` con `ariaLabel` o `ariaLabelledBy`.',
+        },
+        {
+          region: '`au-button`',
+          detail: 'Hijos proyectados; variantes y clics en cada botón.',
+        },
+      ],
+      accessibility: [
+        'Nombra el grupo cuando hay más de un botón.',
+        'Cada `au-button` conserva su nombre accesible y teclado propio.',
+      ],
+      keyboard: ['Tab recorre los botones en orden de documento.'],
+    },
     'form-field': {
       intro: [
         'Cromado compartido de etiqueta, hint y error alrededor de un control proyectado (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
@@ -1318,11 +1473,12 @@ export const STORY_OVERVIEW_SOURCE = {
         'Ejemplo completo con `form()`: README del paquete `@aurea-design-system/components` → *Signal forms* (no hay página aparte en Storybook).',
       ],
       whenToUse: [
-        'Texto, email, URL, teléfono, búsqueda o contraseña con la misma cromática que el resto de campos.',
+        'Texto, email, URL, teléfono o búsqueda con la misma cromática que el resto de campos.',
         'Validación con signal forms o `errorMessage` / `invalid` manuales.',
       ],
       whenNotToUse: [
         'Texto multilínea → `au-textarea`.',
+        'Contraseña → `au-input-password`.',
         'Elección en lista → `au-select` o `au-autocomplete`.',
       ],
       anatomy: [
@@ -1338,19 +1494,13 @@ export const STORY_OVERVIEW_SOURCE = {
           region: 'Input nativo',
           detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` vía contexto.',
         },
-        {
-          region: 'Toggle contraseña',
-          detail: 'Solo con `type="password"` y `showPasswordToggle`.',
-        },
       ],
       accessibility: [
         'Nombre accesible vía etiqueta visible o `aria-label` externo.',
         'Errores enlazados con `aria-errormessage`; hints con `aria-describedby`.',
-        'Toggle de contraseña con `aria-pressed` y etiquetas Mostrar/Ocultar.',
       ],
       keyboard: [
         'Tab entra al campo con anillo exterior (`--from-tab`); clic usa anillo interior.',
-        'Space en el toggle de contraseña alterna visibilidad.',
       ],
       extra:
         '## Signal forms vs manual\n\n| Modo | Dónde | Validación |\n|------|--------|------------|\n| Signal forms | `[formField]` en `au-input-text`; `form()` en tu componente | El esquema define `errors` / `invalid`; `au-form-field` muestra el mensaje |\n| Manual | `[(value)]` + `errorMessage` / `invalid` en `au-form-field` | El padre controla el cromado (story **With error**) |\n\nEjemplo completo con `form()`: README de **`@aurea-design-system/components`** → *Signal forms*.\n\n### Comprobaciones manuales (addon **Accessibility**)\n\n1. **Accessibility** → **Run** en cada story.\n2. Tab en **Password** y revisa anillos de foco teclado vs puntero.\n3. **With error**: el lector debe anunciar `aria-errormessage`.',
@@ -1372,7 +1522,8 @@ export const STORY_OVERVIEW_SOURCE = {
         },
         {
           region: '`<textarea>`',
-          detail: 'Padding vertical `--au-textarea-pad-y`.',
+          detail:
+            'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (o presets por `size`).',
         },
       ],
       accessibility: [
@@ -1520,8 +1671,9 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     accordion: {
       intro: [
-        'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y regiones `[auAccordionPanel]` comparten una clave string.',
+        'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y `au-accordion-panel` comparten una clave string.',
         'Enlaza `[(value)]` a la lista de claves expandidas; `[multiple]="false"` para expansión exclusiva.',
+        '`variant="contained"` añade superficie elevada (como una tarjeta); `plain` (por defecto) solo usa separadores.',
       ],
       whenToUse: [
         'FAQ, paneles de ajustes o filtros donde solo parte del contenido debe estar visible.',
@@ -1533,6 +1685,10 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       anatomy: [
         {
+          region: 'Host',
+          detail: '`variant="plain"` (separadores) o `contained` (superficie elevada).',
+        },
+        {
           region: '`.au-accordion__item`',
           detail: 'Envuelve cada par trigger + panel.',
         },
@@ -1541,8 +1697,8 @@ export const STORY_OVERVIEW_SOURCE = {
           detail: 'Disparador con `aria-expanded` y `aria-controls`.',
         },
         {
-          region: '`[auAccordionPanel]`',
-          detail: 'Región; `hidden` cuando está colapsada.',
+          region: '`au-accordion-panel`',
+          detail: 'Región con transición de altura; `aria-hidden` e `inert` al colapsar.',
         },
       ],
       accessibility: [
@@ -1674,6 +1830,31 @@ export const STORY_OVERVIEW_SOURCE = {
         'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
       ],
     },
+    'input-password': {
+      intro: [
+        'Campo de contraseña dedicado con toggle de revelar opcional y cromado Aurea compartido.',
+        'Implementa `FormValueControl<string | null>`; vacío ↔ `null`. Localiza `revealLabelShow` / `revealLabelHide`.',
+      ],
+      whenToUse: [
+        'Formularios de inicio de sesión, registro y cambio de contraseña.',
+        'Cuando el usuario puede necesitar verificar lo escrito (`showRevealToggle`).',
+      ],
+      whenNotToUse: ['OTP o PIN de longitud fija → patrón de input especializado.'],
+      anatomy: [
+        {
+          region: 'Input nativo',
+          detail: 'Alterna `type="password"` / `type="text"` al revelar.',
+        },
+        {
+          region: 'Control revelar',
+          detail: 'Botón icono opcional con `aria-pressed` y etiqueta localizada.',
+        },
+      ],
+      accessibility: [
+        'Label, hint y errores enlazados vía `au-form-field`.',
+        'El botón de revelar es accesible por teclado; no envía el formulario.',
+      ],
+    },
     'file-upload': {
       intro: [
         'Zona drag-and-drop con `input[type="file"]` oculto, botón de explorar y lista de archivos removibles.',
@@ -1767,8 +1948,12 @@ export const STORY_OVERVIEW_SOURCE = {
       intro: [
         'Superficie agrupada con variantes elevated, outlined y filled. Proyección por regiones: media, cabecera, cuerpo y pie.',
         'El host es un `<article>`: incluye un heading en `auCardHeader` para el outline del documento.',
+        'Usa `[interactive]="true"` solo cuando toda la tarjeta sea enlace o destino de clic (refuerzo de borde al hover en elevated).',
       ],
-      whenToUse: ['Resúmenes de entidad, tiles de dashboard, bloques de configuración.'],
+      whenToUse: [
+        'Resúmenes de entidad, tiles de dashboard, bloques de configuración.',
+        'Tiles clicables con `interactive` y un patrón real de enlace o botón.',
+      ],
       whenNotToUse: [
         'Solo separar contenido → `au-divider` o espaciado.',
         'Overlay bloqueante → `au-dialog`.',
@@ -1822,6 +2007,40 @@ export const STORY_OVERVIEW_SOURCE = {
       keyboard: [
         'Flechas cambian pestaña activa (horizontal o vertical según `orientation`).',
         'Home/End al primer/último tab.',
+      ],
+    },
+    'tag-input': {
+      intro: [
+        'Campo de texto multi-valor que muestra los valores introducidos como chips removibles.',
+        'Implementa `FormValueControl<string[]>`; confirma con Enter, coma o blur.',
+      ],
+      whenToUse: [
+        'Habilidades, temas, destinatarios de correo o tokens de filtro en formularios.',
+        'Cuando cada valor debe permanecer visible y eliminarse individualmente.',
+      ],
+      whenNotToUse: [
+        'Un solo valor de texto libre → `au-input-text` o `au-textarea`.',
+        'Filtros predefinidos → `au-chip-group`.',
+        'Lista removible sin teclear → `au-list` + `au-chip`.',
+      ],
+      anatomy: [
+        {
+          region: 'Chips',
+          detail: 'Etiquetas removibles con botón de quitar por chip.',
+        },
+        {
+          region: 'Input borrador',
+          detail: 'Campo inline para la siguiente etiqueta.',
+        },
+      ],
+      accessibility: [
+        'Los botones de quitar exponen `aria-label` vía `removeTagLabel`.',
+        '`readOnly` mantiene el control nativo legible sin `disabled` (sigue en el orden de tabulación).',
+        'Backspace con borrador vacío elimina la última etiqueta.',
+      ],
+      keyboard: [
+        'Enter o coma confirman el borrador como etiqueta.',
+        'Backspace con input vacío elimina la última etiqueta.',
       ],
     },
     chip: {
@@ -2078,6 +2297,39 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: ['`aria-orientation` según `orientation`.'],
+    },
+    'description-list': {
+      intro: [
+        'Contenedor semántico de lista de descripción (`<dl>`) para pares clave–valor.',
+        'Compón con `au-description-item` (`term` + descripción proyectada); `<dt>` / `<dd>` nativos para markup avanzado.',
+      ],
+      whenToUse: [
+        'Resúmenes de perfil, detalle de factura, paneles de metadatos.',
+        'Detalle de solo lectura junto a formularios o en barras laterales de ajustes.',
+      ],
+      whenNotToUse: [
+        'Campos editables → controles de formulario dentro de `au-form-field`.',
+        'Datos tabulares ordenables → `au-table`.',
+        'Etiquetas apiladas simples → utilidades tipográficas.',
+      ],
+      anatomy: [
+        {
+          region: 'Shell `dl`',
+          detail: 'Rejilla CSS según `layout` y `columns`.',
+        },
+        {
+          region: '`au-description-item`',
+          detail: 'Renderiza `<dt>` y `<dd>`; host con `display: contents`.',
+        },
+        {
+          region: '`dt` / `dd` nativos',
+          detail: 'Proyección opcional para descripciones ricas.',
+        },
+      ],
+      accessibility: [
+        'Preserva la semántica nativa de lista para lectores de pantalla.',
+        'Cada `dt` debe ir seguido de su `dd` en orden del documento.',
+      ],
     },
     'empty-state': {
       intro: [

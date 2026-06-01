@@ -156,32 +156,7 @@ describe('AuInputText', () => {
     expect(label.textContent).not.toContain('*');
   });
 
-  it('toggles password visibility', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-      f.componentInstance.type = 'password';
-    });
-    const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
-    const input = queryInput(fix);
-    expect(input.getAttribute('type')).toBe('password');
-    expect(reveal.getAttribute('aria-pressed')).toBe('false');
-    reveal.click();
-    fix.detectChanges();
-    expect(input.getAttribute('type')).toBe('text');
-    expect(reveal.getAttribute('aria-pressed')).toBe('true');
-    reveal.click();
-    fix.detectChanges();
-    expect(input.getAttribute('type')).toBe('password');
-  });
-
-  it('does not render password toggle when showPasswordToggle is false', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-      f.componentInstance.type = 'password';
-      f.componentInstance.showPasswordToggle = false;
-    });
-    expect(fix.debugElement.query(By.css('.au-input-text__reveal'))).toBeNull();
-  });
-
-  it('keeps non-password type from effectiveInputType', () => {
+  it('binds native input type', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.type = 'email';
     });
@@ -268,14 +243,6 @@ describe('AuInputText', () => {
     expect(row.classList.contains('au-input-text__control-row--from-tab')).toBe(false);
   });
 
-  it('adds password control row class when toggle shown', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-      f.componentInstance.type = 'password';
-    });
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
-    expect(row.classList.contains('au-input-text__control-row--password')).toBe(true);
-  });
-
   it('prefers manual errorMessage over errors', () => {
     const fix = createFieldFixture(AuInputTextTestHost, { errorMessage: 'Manual' }, (f) => {
       f.componentInstance.errors = [{ kind: 'x', message: 'ignored' }];
@@ -291,12 +258,10 @@ describe('AuInputText', () => {
   });
 
   it('onControlRowFocusout returns when focus stays inside row', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-      f.componentInstance.type = 'password';
-    });
+    const fix = createFieldFixture(AuInputTextTestHost);
     const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
-    const reveal = fix.debugElement.query(By.css('.au-input-text__reveal'))!.nativeElement;
-    const ev = new FocusEvent('focusout', { relatedTarget: reveal });
+    const input = queryInput(fix);
+    const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
     control(fix).onControlRowFocusout(ev);
   });
@@ -320,19 +285,6 @@ describe('AuInputText', () => {
       f.componentInstance.errors = [{ message: '', kind: '' }];
     });
     expect(control(fix).displayError()).toBe('');
-  });
-
-  it('togglePasswordVisibility toggles type without using the reveal button', () => {
-    const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
-      f.componentInstance.type = 'password';
-    });
-    const comp = control(fix);
-    comp.togglePasswordVisibility();
-    fix.detectChanges();
-    expect(queryInput(fix).getAttribute('type')).toBe('text');
-    comp.togglePasswordVisibility();
-    fix.detectChanges();
-    expect(queryInput(fix).getAttribute('type')).toBe('password');
   });
 
   it('treats null field harness strings as empty', () => {

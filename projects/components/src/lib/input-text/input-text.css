@@ -5,13 +5,11 @@
  */
 
 /* -------------------------------------------------------------------------- */
-/* Input / reveal */
+/* Input */
 /* -------------------------------------------------------------------------- */
 
 .au-input-text__input:focus,
-.au-input-text__input:focus-visible,
-.au-input-text__reveal:focus,
-.au-input-text__reveal:focus-visible {
+.au-input-text__input:focus-visible {
   outline: none;
 }
 
@@ -57,10 +55,6 @@
   padding: 0 var(--au-size-field-px-lg);
 }
 
-.au-input-text__control-row--password .au-input-text__input {
-  padding-right: 0.35rem;
-}
-
 .au-input-text__input::placeholder {
   color: var(--au-color-form-placeholder);
   opacity: 1;
@@ -72,43 +66,4 @@
   cursor: not-allowed;
   opacity: 0.9;
   background: transparent;
-}
-
-.au-input-text__reveal {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  margin: 0;
-  padding-inline: var(--au-space-2-5);
-  border: 0;
-  border-inline-start: 1px solid var(--au-color-border-subtle);
-  border-radius: 0;
-  background: transparent;
-  color: var(--au-color-text-tertiary);
-  cursor: pointer;
-  user-select: none;
-  transition: var(--au-transition-glyph), var(--au-transition-background);
-}
-
-.au-input-text__reveal:hover:not(:disabled) {
-  color: var(--au-color-text-secondary);
-  background: var(--au-color-surface-elevated);
-}
-
-.au-input-text__reveal:active:not(:disabled) {
-  color: var(--au-color-text-primary);
-  background: var(--au-color-surface-sunken);
-}
-
-.au-input-text__reveal:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-input-text__reveal {
-    transition: none;
-  }
 }

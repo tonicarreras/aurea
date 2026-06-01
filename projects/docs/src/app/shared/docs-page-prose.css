@@ -1,0 +1,59 @@
+/**
+ * Prose typography for projected content inside docs-page (no ::ng-deep).
+ */
+
+.docs-page__body > * {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+[data-au-theme='light'] .docs-page__body {
+  opacity: 0.92;
+}
+
+.docs-page__body h1:not([class^='au-']),
+.docs-page__body h2:not([class^='au-']),
+.docs-page__body h3:not([class^='au-']),
+.docs-page__body h4:not([class^='au-']) {
+  margin: var(--au-space-2) 0 var(--au-space-3);
+  font-weight: var(--au-weight-semibold);
+  letter-spacing: var(--au-tracking-tight);
+}
+
+.docs-page__body h1:not([class^='au-']) {
+  font-size: var(--au-text-xl);
+}
+
+.docs-page__body h2:not([class^='au-']) {
+  font-size: var(--au-text-lg);
+}
+
+.docs-page__body p:not([class^='au-']) {
+  margin: 0 0 var(--au-space-4);
+  color: var(--au-color-text-secondary);
+  max-width: min(var(--docs-prose-max), 100%);
+}
+
+.docs-page__body > ul:not(.docs-requirements, .docs-adoption-grid, .docs-components-index) {
+  margin: 0 0 var(--au-space-4);
+  color: var(--au-color-text-secondary);
+  max-width: min(var(--docs-prose-max), 100%);
+  padding-left: var(--au-space-5);
+}
+
+.docs-page__body p code,
+.docs-page__body li code {
+  padding: 0.1em 0.4em;
+  border-radius: var(--au-radius-xs);
+  background: color-mix(in srgb, var(--au-color-accent) 8%, var(--au-color-surface-raised));
+  border: 1px solid var(--docs-border-fine);
+  font-size: 0.9em;
+  color: var(--au-color-text-primary);
+}
+
+[data-au-theme='dark'] .docs-page__body p code,
+[data-au-theme='dark'] .docs-page__body li code {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
+}

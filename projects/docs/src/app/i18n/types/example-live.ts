@@ -114,6 +114,31 @@ export interface ExampleLiveMessages {
     boundsLabel: string;
     boundsHint: string;
   };
+  inputPassword: {
+    basicLabel: string;
+    basicHint: string;
+    signUpLabel: string;
+  };
+  buttonGroup: {
+    ariaLabel: string;
+    cancel: string;
+    draft: string;
+    publish: string;
+  };
+  descriptionList: {
+    nameLabel: string;
+    nameValue: string;
+    emailLabel: string;
+    emailValue: string;
+    roleLabel: string;
+    roleValue: string;
+  };
+  tagInput: {
+    basicLabel: string;
+    basicHint: string;
+    limitsLabel: string;
+    limitsHint: string;
+  };
   inputNumber: {
     basicLabel: string;
     errorLabel: string;

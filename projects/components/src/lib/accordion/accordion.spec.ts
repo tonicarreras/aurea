@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
-import { AuAccordionPanel } from './au-accordion-panel.directive';
+import { AuAccordionPanel } from './au-accordion-panel';
 import { AuAccordion } from './accordion';
 
 @Component({
@@ -21,7 +21,7 @@ import { AuAccordion } from './accordion';
         >
           Section one
         </button>
-        <div auAccordionPanel="one">Panel one</div>
+        <au-accordion-panel panel="one">Panel one</au-accordion-panel>
       </div>
       <div class="au-accordion__item">
         <button
@@ -30,7 +30,7 @@ import { AuAccordion } from './accordion';
         >
           Section two
         </button>
-        <div auAccordionPanel="two">Panel two</div>
+        <au-accordion-panel panel="two">Panel two</au-accordion-panel>
       </div>
     </au-accordion>
   `,
@@ -49,13 +49,18 @@ describe('AuAccordion', () => {
     fixture.detectChanges();
   });
 
+  it('defaults to plain variant', () => {
+    const accordion = fixture.nativeElement.querySelector('au-accordion') as HTMLElement;
+    expect(accordion.getAttribute('data-au-variant')).toBe('plain');
+  });
+
   it('renders triggers and shows the expanded panel', () => {
     const root = fixture.nativeElement as HTMLElement;
     expect(
       root.querySelector('.au-accordion__trigger[aria-expanded="true"]')?.textContent,
     ).toContain('Section one');
     expect(root.querySelector('[id$="-panel-one"]')?.textContent).toContain('Panel one');
-    expect(root.querySelector('[id$="-panel-two"]')?.hasAttribute('hidden')).toBe(true);
+    expect(root.querySelector('[id$="-panel-two"]')?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('toggles sections when multiple is true', () => {
@@ -81,7 +86,7 @@ describe('AuAccordion', () => {
             >
               Section one
             </button>
-            <div auAccordionPanel="one">Panel one</div>
+            <au-accordion-panel panel="one">Panel one</au-accordion-panel>
           </div>
           <div class="au-accordion__item">
             <button
@@ -90,7 +95,7 @@ describe('AuAccordion', () => {
             >
               Section two
             </button>
-            <div auAccordionPanel="two">Panel two</div>
+            <au-accordion-panel panel="two">Panel two</au-accordion-panel>
           </div>
         </au-accordion>
       `,
@@ -129,7 +134,7 @@ describe('AuAccordion', () => {
             >
               One
             </button>
-            <div auAccordionPanel="one">Panel one</div>
+            <au-accordion-panel panel="one">Panel one</au-accordion-panel>
           </div>
         </au-accordion>
       `,
@@ -179,6 +184,38 @@ describe('AuAccordion', () => {
   });
 });
 
+describe('AuAccordion variant', () => {
+  it('applies contained surface attributes', () => {
+    @Component({
+      imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
+      template: `
+        <au-accordion
+          [(value)]="expanded"
+          variant="contained"
+        >
+          <div class="au-accordion__item">
+            <button
+              type="button"
+              auAccordionItem="one"
+            >
+              One
+            </button>
+            <au-accordion-panel panel="one">Panel</au-accordion-panel>
+          </div>
+        </au-accordion>
+      `,
+    })
+    class ContainedHost {
+      expanded: string[] = ['one'];
+    }
+
+    const containedFixture = TestBed.createComponent(ContainedHost);
+    containedFixture.detectChanges();
+    const accordion = containedFixture.nativeElement.querySelector('au-accordion') as HTMLElement;
+    expect(accordion.getAttribute('data-au-variant')).toBe('contained');
+  });
+});
+
 describe('AuAccordion keyboard edge cases', () => {
   it('does not duplicate registry entries', () => {
     @Component({
@@ -191,7 +228,7 @@ describe('AuAccordion keyboard edge cases', () => {
           >
             One
           </button>
-          <div auAccordionPanel="one">Panel</div>
+          <au-accordion-panel panel="one">Panel</au-accordion-panel>
         </au-accordion>
       `,
     })

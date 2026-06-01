@@ -5,7 +5,7 @@
 [![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![npm](https://img.shields.io/npm/v/@aurea-design-system/components?label=npm)](https://www.npmjs.com/package/@aurea-design-system/components)
-[![License](https://img.shields.io/github/license/tonicarreras/aurea-ds?color=blue)](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/tonicarreras/aurea?color=blue)](https://github.com/tonicarreras/aurea/blob/main/LICENSE)
 
 Monorepo project **`components`** (this folder).
 
@@ -59,7 +59,7 @@ Adds global styles to `angular.json` and prints next steps.
 <html data-au-theme="dark"></html>
 ```
 
-Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark` experimental).
+Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark`).
 
 ### 4. Density (optional)
 
@@ -134,15 +134,15 @@ export class ProfileEmailComponent {
 
 ### Controls with `[formField]`
 
-| Component                      | Value type       | Notes                 |
-| ------------------------------ | ---------------- | --------------------- |
-| `AuInputText`, `AuTextarea`    | `string \| null` | Empty field → `null`  |
-| `AuInputNumber`, `AuInputDate` | `string \| null` | Same empty semantics  |
-| `AuSelect`, `AuAutocomplete`   | `string \| null` | Option `value`        |
-| `AuCheckbox`, `AuSwitch`       | `boolean`        |                       |
-| `AuRadioGroup`                 | `string \| null` | Selected option value |
-| `AuSlider`                     | `number`         | Native range input    |
-| `AuFileUpload`                 | `File[]`         | Drag-and-drop picker  |
+| Component                                     | Value type       | Notes                 |
+| --------------------------------------------- | ---------------- | --------------------- |
+| `AuInputText`, `AuTextarea`                   | `string \| null` | Empty field → `null`  |
+| `AuInputNumber`, `AuInputDate`, `AuInputTime` | `string \| null` | Same empty semantics  |
+| `AuSelect`, `AuAutocomplete`                  | `string \| null` | Option `value`        |
+| `AuCheckbox`, `AuSwitch`                      | `boolean`        |                       |
+| `AuRadioGroup`                                | `string \| null` | Selected option value |
+| `AuSlider`                                    | `number`         | Native range input    |
+| `AuFileUpload`                                | `File[]`         | Drag-and-drop picker  |
 
 ### Manual validation (no `form()`)
 
@@ -152,57 +152,73 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 
 ## Components
 
-| Export               | Selector / API      | Notes                                                                |
-| -------------------- | ------------------- | -------------------------------------------------------------------- |
-| `AuButton`           | `<au-button>`       | Variants, loading, focus ring                                        |
-| `AuInputText`        | `<au-input-text>`   | `[formField]` or `[(value)]` + `au-form-field`                       |
-| `AuTextarea`         | `<au-textarea>`     | Same as input-text                                                   |
-| `AuFormField`        | `<au-form-field>`   | Label / hint / error wrapper                                         |
-| `AuCheckbox`         | `<au-checkbox>`     |                                                                      |
-| `AuSelect`           | `<au-select>`       | Portaled listbox                                                     |
-| `AuAutocomplete`     | `<au-autocomplete>` |                                                                      |
-| `AuSwitch`           | `<au-switch>`       |                                                                      |
-| `AuRadioGroup`       | `<au-radio-group>`  |                                                                      |
-| `AuInputNumber`      | `<au-input-number>` |                                                                      |
-| `AuInputDate`        | `<au-input-date>`   | Native date field (stable **1.5.0**)                                 |
-| `AuInputTime`        | `<au-input-time>`   | Native time field (stable **1.5.0**)                                 |
-| `AuDialog`           | `<au-dialog>`       | Native `<dialog>`                                                    |
-| `AuCard`             | `<au-card>`         | `AuCardFooter` directive                                             |
-| `AuTabs`             | `<au-tabs>`         | `AuTab`, `AuTabPanel`                                                |
-| `AuChip`             | `<au-chip>`         | Removable / selectable                                               |
-| `AuSnackbar`         | `<au-snackbar>`     |                                                                      |
-| `AuDivider`          | `<au-divider>`      | Horizontal / vertical                                                |
-| `AuTooltip`          | `[auTooltip]`       | Directive on the trigger                                             |
-| `AuBadge`            | `<au-badge>`        | Status / count label                                                 |
-| `AuBreadcrumb`       | `<au-breadcrumb>`   | Navigation trail                                                     |
-| `AuPagination`       | `<au-pagination>`   | Page controls (1-based)                                              |
-| `AuMenu`             | `<au-menu>`         | Dropdown + `auMenuTrigger` / `au-menu-item`                          |
-| `AuPopover`          | `<au-popover>`      | Anchored panel + `auPopoverTrigger`                                  |
-| `AuTable`            | `<au-table>`        | Table shell + `auTableSortHeader`                                    |
-| `AuProgress`         | `<au-progress>`     | Progressbar                                                          |
-| `AuLink`             | `a[auLink]`         | Semantic inline link                                                 |
-| `AuEmptyState`       | `<au-empty-state>`  | Empty lists/tables/search (stable **1.2.0**)                         |
-| `AuAvatar`           | `<au-avatar>`       | User image or initials (stable **1.4.0**)                            |
-| `AuDrawer`           | `<au-drawer>`       | Side panel overlay (stable **1.4.0**)                                |
-| `AuAccordion`        | `<au-accordion>`    | `auAccordionItem` / `auAccordionPanel` (stable **1.2.0**)            |
-| `AuFieldset`         | `<au-fieldset>`     | Grouped fields with legend (stable **1.2.0**)                        |
-| `AuSlider`           | `<au-slider>`       | Range control + `[formField]` (stable **1.2.0**)                     |
-| `AuFileUpload`       | `<au-file-upload>`  | File picker + `[formField]` (stable **1.2.0**)                       |
-| `AuSpinner`          | `<au-spinner>`      | Loading indicator                                                    |
-| `AuTheme`            | `[auTheme]`         | `light` / `dark` / `system` / `high-contrast` / `high-contrast-dark` |
-| `AuDensityDirective` | `[auDensity]`       | `compact` / `comfortable` / `spacious`                               |
+| Export               | Selector / API          | Notes                                                                 |
+| -------------------- | ----------------------- | --------------------------------------------------------------------- |
+| `AuButton`           | `<au-button>`           | Variants, loading, focus ring                                         |
+| `AuInputText`        | `<au-input-text>`       | `[formField]` or `[(value)]` + `au-form-field`                        |
+| `AuTextarea`         | `<au-textarea>`         | Same as input-text                                                    |
+| `AuFormField`        | `<au-form-field>`       | Label / hint / error wrapper                                          |
+| `AuCheckbox`         | `<au-checkbox>`         |                                                                       |
+| `AuSelect`           | `<au-select>`           | Portaled listbox                                                      |
+| `AuAutocomplete`     | `<au-autocomplete>`     |                                                                       |
+| `AuSwitch`           | `<au-switch>`           |                                                                       |
+| `AuRadioGroup`       | `<au-radio-group>`      |                                                                       |
+| `AuInputNumber`      | `<au-input-number>`     |                                                                       |
+| `AuInputDate`        | `<au-input-date>`       | Native date field (stable **1.5.0**)                                  |
+| `AuInputTime`        | `<au-input-time>`       | Native time field (stable **1.5.0**)                                  |
+| `AuInputPassword`    | `<au-input-password>`   | Password with reveal toggle (stable **1.6.0**)                        |
+| `AuButtonGroup`      | `<au-button-group>`     | Groups `au-button` actions (stable **1.6.0**)                         |
+| `AuTagInput`         | `<au-tag-input>`        | Multi-value tags (stable **1.6.0**)                                   |
+| `AuDialog`           | `<au-dialog>`           | Native `<dialog>`                                                     |
+| `AuCard`             | `<au-card>`             | `AuCardFooter` directive                                              |
+| `AuTabs`             | `<au-tabs>`             | `AuTab`, `AuTabPanel`                                                 |
+| `AuChip`             | `<au-chip>`             | Removable / selectable                                                |
+| `AuChipGroup`        | `<au-chip-group>`       | Filter / choice groups (stable **1.5.0**)                             |
+| `AuList`             | `<au-list>`             | Removable list items (stable **1.5.0**)                               |
+| `AuSteps`            | `<au-steps>`            | Step indicator (stable **1.5.0**)                                     |
+| `AuMessage`          | `<au-message>`          | Inline / banner notices (`layout="banner"` since **1.5.0**)           |
+| `AuIcon`             | `<au-icon>`             | SVG icon set                                                          |
+| `AuSkeleton`         | `<au-skeleton>`         | Loading placeholder                                                   |
+| `AuSnackbar`         | `<au-snackbar>`         |                                                                       |
+| `AuDivider`          | `<au-divider>`          | Horizontal / vertical                                                 |
+| `AuDescriptionList`  | `<au-description-list>` | Key–value `dl` with `au-description-item` (stable **1.6.0**)          |
+| `AuTooltip`          | `[auTooltip]`           | Directive on the trigger                                              |
+| `AuBadge`            | `<au-badge>`            | Status / count label                                                  |
+| `AuBreadcrumb`       | `<au-breadcrumb>`       | Navigation trail                                                      |
+| `AuPagination`       | `<au-pagination>`       | Page controls (1-based)                                               |
+| `AuMenu`             | `<au-menu>`             | Dropdown + `auMenuTrigger` / `au-menu-item`                           |
+| `AuPopover`          | `<au-popover>`          | Anchored panel + `auPopoverTrigger`                                   |
+| `AuTable`            | `<au-table>`            | Table shell + `auTableSortHeader`                                     |
+| `AuProgress`         | `<au-progress>`         | Progressbar                                                           |
+| `AuLink`             | `a[auLink]`             | Semantic inline link                                                  |
+| `AuEmptyState`       | `<au-empty-state>`      | Empty lists/tables/search (stable **1.2.0**)                          |
+| `AuAvatar`           | `<au-avatar>`           | User image or initials (stable **1.4.0**)                             |
+| `AuDrawer`           | `<au-drawer>`           | Side panel overlay (stable **1.4.0**)                                 |
+| `AuAccordion`        | `<au-accordion>`        | `button[auAccordionItem]` + `<au-accordion-panel>` (stable **1.2.0**) |
+| `AuFieldset`         | `<au-fieldset>`         | Grouped fields with legend (stable **1.2.0**)                         |
+| `AuSlider`           | `<au-slider>`           | Range control + `[formField]` (stable **1.2.0**)                      |
+| `AuFileUpload`       | `<au-file-upload>`      | File picker + `[formField]` (stable **1.2.0**)                        |
+| `AuSpinner`          | `<au-spinner>`          | Loading indicator                                                     |
+| `AuTheme`            | `[auTheme]`             | `light` / `dark` / `system` / `high-contrast` / `high-contrast-dark`  |
+| `AuDensityDirective` | `[auDensity]`           | `compact` / `comfortable` / `spacious`                                |
 
 ---
 
 ## Governance & maturity
 
-- [CHANGELOG](../../CHANGELOG.md) · [Governance docs](../../docs/README.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [Security](../../SECURITY.md)
-- [Versioning](../../docs/VERSIONING.md) · [Deprecation](../../docs/DEPRECATION.md) · [Angular compatibility](../../docs/ANGULAR_COMPATIBILITY.md)
-- [Component Definition of Done](./COMPONENT_DONE.md) · [A11y audit](./A11Y_AUDIT.md) · [Bundle](./BUNDLE.md) · [Performance](./PERFORMANCE.md)
-- Maturity per component: import `getComponentMaturity` or see docs badges (`stable` / `beta` / `experimental`). **1.5.0** closes the beta catalog (including **`AuInputTime`**); **`AuMessage`** gains `layout="banner"` for full-width notices.
+- [CHANGELOG](../../CHANGELOG.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [VERSIONING](../../docs/VERSIONING.md) · [A11y audit](./A11Y_AUDIT.md)
+- Maturity: `getComponentMaturity()` or [docs matrix](https://aurea-ds.netlify.app/en/maturity). Full catalog **stable** as of **1.6.0**.
+
+## Bundle & performance
+
+- Import per symbol (`import { AuButton } from '…'`), not `import *`.
+- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, errors, listbox, description list, accordion item shells). See `src/lib/styles/README.md`.
+- All components use `ChangeDetectionStrategy.OnPush`; overlays attach to `document.body` only while open.
+- Lazy-load feature routes; paginate large tables server-side.
+- CI: `bun run check:bundle` (+5% vs baseline). Update baseline with `bun run update:bundle-baseline` after intentional size changes.
 
 ---
 
 ## License
 
-[MIT](https://github.com/tonicarreras/aurea-ds/blob/main/LICENSE)
+[MIT](https://github.com/tonicarreras/aurea/blob/main/LICENSE)

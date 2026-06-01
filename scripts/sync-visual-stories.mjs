@@ -3,8 +3,9 @@
  * Generates visual-story-manifest.ts from COMPONENT_MATURITY stable slugs + *.stories.ts exports.
  * Run: node scripts/sync-visual-stories.mjs
  */
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
-import { basename, dirname, join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const root = join(process.cwd(), 'projects/components');
 const libRoot = join(root, 'src/lib');
@@ -142,6 +143,16 @@ ${entries.map((e) => `  { name: '${e.name}', id: '${e.id}', slug: '${e.slug}' },
 `;
 
   writeFileSync(outPath, body);
+
+  const format = spawnSync('bunx', ['prettier', '--write', outPath], {
+    encoding: 'utf8',
+    cwd: process.cwd(),
+  });
+  if (format.status !== 0) {
+    console.error(format.stderr || format.stdout);
+    process.exit(format.status ?? 1);
+  }
+
   console.log(`Wrote ${entries.length} visual stories → ${outPath}`);
 }
 

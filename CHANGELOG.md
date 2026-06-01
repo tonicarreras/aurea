@@ -5,13 +5,39 @@ All notable changes to **@aurea-design-system/components** are documented here.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).  
 Versioning follows [Semantic Versioning](https://semver.org/) — see [VERSIONING.md](./docs/VERSIONING.md).
 
-Git tags for library releases use the prefix **`components-v`** (monorepo convention — see [RELEASE.md](./docs/RELEASE.md)).
+Git tags for library releases use the prefix **`components-v`** (see [VERSIONING.md](./docs/VERSIONING.md#release-process)).
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-06-01
+
+### Added
+
+- **`AuInputPassword`** — dedicated password field with reveal toggle for sign-in flows.
+- **`AuButtonGroup`** — groups projected `au-button` actions (`role="group"`); not a form control.
+- **`AuDescriptionList`** — semantic `dl` layout with `au-description-item` pairs; horizontal and multi-column modes.
+- **`AuDescriptionItem`** — term/description pair (`term` + projected content) inside `au-description-list`.
+- **`AuTagInput`** — multi-value tags with removable chips; Enter or comma to add.
+
 ### Changed
 
+- Promoted to **stable** (since **1.6.0**) after a11y audit: **`AuInputPassword`**, **`AuButtonGroup`**, **`AuDescriptionList`**, **`AuTagInput`**.
+- **`AuInputPassword`** — `revealLabelShow` / `revealLabelHide` for localized reveal toggle labels.
+- **`AuTagInput`** — `readOnly` uses native `readonly` (keeps focus order); remove buttons stay disabled when read-only.
+- **`AuButtonGroup`** — refactored from segmented `radiogroup` to layout wrapper for `au-button` children.
+- **`AuAccordion`** — panel expand/collapse animation (`grid-template-rows`); styles in `aurea-global.css`. **`AuAccordionPanel`** selector is `au-accordion-panel` with `panel` input (replaces `[auAccordionPanel]` attribute).
+- **`AuDescriptionList`** — styles in `aurea-global.css`; list renders valid `dl` > `div` > `dt`/`dd` for axe (hidden `au-description-item` hosts).
+- **`AuInputText`** — removed `type="password"` and `showPasswordToggle`; use **`AuInputPassword`** for password fields.
 - **`AuInputTime`** promoted to **stable** (since **1.5.0**) after a11y audit and axe on Storybook stories.
+
+### Migration from 1.5.0
+
+- Password fields: replace `<au-input-text type="password" …>` with **`<au-input-password>`** (and `revealLabelShow` / `revealLabelHide` for i18n).
+- Accordion panels: use **`<au-accordion-panel [panel]="…">`** instead of **`[auAccordionPanel]`** on a generic element.
+
+```bash
+bun add @aurea-design-system/components@1.6.0
+```
 
 ## [1.5.0] - 2026-05-31
 
@@ -90,7 +116,7 @@ bun add @aurea-design-system/components@1.2.0
 ### Added
 
 - **`AuEmptyState`** (beta) — centered placeholder for empty lists, tables, and search results; media via preset `icon`, `imageSrc`, projected `[auEmptyStateMedia]`, projected actions, and configurable heading level.
-- **`AuAccordion`** (beta) — collapsible sections with `button[auAccordionItem]` + `[auAccordionPanel]`, `[(value)]`, and arrow/Home/End keyboard nav.
+- **`AuAccordion`** (beta) — collapsible sections with `button[auAccordionItem]` + `au-accordion-panel`, `[(value)]`, and arrow/Home/End keyboard nav.
 - **`AuFieldset`** (beta) — native `fieldset` wrapper with `legend`, optional `description`, and `disabled` for grouped fields.
 - **`AuSlider`** (beta) — range input (`FormValueControl<number>`) with optional live value, min/max/step, and `au-form-field` integration.
 - **`AuFileUpload`** (beta) — drag-and-drop file picker (`FormValueControl<File[]>`) with browse button, accept filter, and removable list.
@@ -202,7 +228,12 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.1.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...HEAD
+[1.6.0]: https://github.com/tonicarreras/aurea/compare/components-v1.5.0...components-v1.6.0
+[1.5.0]: https://github.com/tonicarreras/aurea/compare/components-v1.4.0...components-v1.5.0
+[1.4.0]: https://github.com/tonicarreras/aurea/compare/components-v1.3.0...components-v1.4.0
+[1.3.0]: https://github.com/tonicarreras/aurea/compare/components-v1.2.0...components-v1.3.0
+[1.2.0]: https://github.com/tonicarreras/aurea/compare/components-v1.1.0...components-v1.2.0
 [1.1.0]: https://github.com/tonicarreras/aurea/compare/components-v1.0.0...components-v1.1.0
 [1.0.0]: https://github.com/tonicarreras/aurea/compare/components-v0.9.0...components-v1.0.0
 [0.9.0]: https://github.com/tonicarreras/aurea/compare/v0.3.0...components-v0.9.0
