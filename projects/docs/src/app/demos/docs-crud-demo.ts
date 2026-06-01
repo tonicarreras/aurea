@@ -356,28 +356,28 @@ type StatusFilter = 'all' | PersonStatus;
                 <div class="docs-crud-app__status-row">
                   <span class="docs-crud-app__filter-label">{{ t().statusFilterLabel }}</span>
                   <au-chip-group [ariaLabel]="t().statusFilterLabel">
-                  <au-chip
-                    size="sm"
-                    [label]="t().statusAll"
-                    [selectable]="true"
-                    [selected]="statusFilter() === 'all'"
-                    (selectedChange)="onStatusChip('all', $event)"
-                  />
-                  <au-chip
-                    size="sm"
-                    [label]="t().statusActive"
-                    [selectable]="true"
-                    [selected]="statusFilter() === 'active'"
-                    (selectedChange)="onStatusChip('active', $event)"
-                  />
-                  <au-chip
-                    size="sm"
-                    [label]="t().statusAway"
-                    [selectable]="true"
-                    [selected]="statusFilter() === 'away'"
-                    (selectedChange)="onStatusChip('away', $event)"
-                  />
-                </au-chip-group>
+                    <au-chip
+                      size="sm"
+                      [label]="t().statusAll"
+                      [selectable]="true"
+                      [selected]="statusFilter() === 'all'"
+                      (selectedChange)="onStatusChip('all', $event)"
+                    />
+                    <au-chip
+                      size="sm"
+                      [label]="t().statusActive"
+                      [selectable]="true"
+                      [selected]="statusFilter() === 'active'"
+                      (selectedChange)="onStatusChip('active', $event)"
+                    />
+                    <au-chip
+                      size="sm"
+                      [label]="t().statusAway"
+                      [selectable]="true"
+                      [selected]="statusFilter() === 'away'"
+                      (selectedChange)="onStatusChip('away', $event)"
+                    />
+                  </au-chip-group>
                 </div>
 
                 <au-accordion
@@ -664,23 +664,23 @@ type StatusFilter = 'all' | PersonStatus;
                 class="docs-crud-app__insights-detail"
                 [attr.aria-label]="t().tabInsights"
               >
-              <au-description-list
-                layout="horizontal"
-                [columns]="2"
-              >
-                <au-description-item [term]="t().statsTotal">{{
-                  workspaceStats().total
-                }}</au-description-item>
-                <au-description-item [term]="t().statsActive">{{
-                  workspaceStats().active
-                }}</au-description-item>
-                <au-description-item [term]="t().statsAway">{{
-                  workspaceStats().away
-                }}</au-description-item>
-                <au-description-item [term]="t().statsAvgProgress"
-                  >{{ workspaceStats().avgProgress }}%</au-description-item
+                <au-description-list
+                  layout="horizontal"
+                  [columns]="2"
                 >
-              </au-description-list>
+                  <au-description-item [term]="t().statsTotal">{{
+                    workspaceStats().total
+                  }}</au-description-item>
+                  <au-description-item [term]="t().statsActive">{{
+                    workspaceStats().active
+                  }}</au-description-item>
+                  <au-description-item [term]="t().statsAway">{{
+                    workspaceStats().away
+                  }}</au-description-item>
+                  <au-description-item [term]="t().statsAvgProgress"
+                    >{{ workspaceStats().avgProgress }}%</au-description-item
+                  >
+                </au-description-list>
               </section>
             </div>
           </au-tabs>
@@ -711,17 +711,21 @@ type StatusFilter = 'all' | PersonStatus;
                 [label]="t().colProgress"
               />
               <au-description-list layout="vertical">
-                <au-description-item [term]="t().fieldEmail">{{ person.email }}</au-description-item>
-                <au-description-item [term]="t().fieldJoined">{{ person.joined }}</au-description-item>
+                <au-description-item [term]="t().fieldEmail">{{
+                  person.email
+                }}</au-description-item>
+                <au-description-item [term]="t().fieldJoined">{{
+                  person.joined
+                }}</au-description-item>
                 <au-description-item [term]="t().colStatus">
-                  {{
-                    person.status === 'active' ? t().statusActive : t().statusAway
-                  }}
+                  {{ person.status === 'active' ? t().statusActive : t().statusAway }}
                 </au-description-item>
                 <au-description-item [term]="t().fieldSkills">{{
                   person.skills.join(', ')
                 }}</au-description-item>
-                <au-description-item [term]="t().fieldNotes">{{ person.notes }}</au-description-item>
+                <au-description-item [term]="t().fieldNotes">{{
+                  person.notes
+                }}</au-description-item>
               </au-description-list>
             </div>
           }
@@ -748,61 +752,61 @@ type StatusFilter = 'all' | PersonStatus;
           size="md"
         >
           <div class="docs-crud-app__dialog-form">
-          <au-form-field
-            [label]="t().colName"
-            [required]="true"
-          >
-            <au-input-text
-              [formField]="editForm.name"
-              autocomplete="name"
-            />
-          </au-form-field>
-          <au-form-field
-            [label]="t().fieldEmail"
-            [required]="true"
-          >
-            <au-input-text
-              [formField]="editForm.email"
-              type="email"
-              autocomplete="email"
-            />
-          </au-form-field>
-          <au-form-field
-            [label]="t().colRole"
-            [required]="true"
-          >
-            <au-select
-              [formField]="editForm.role"
-              [options]="roleEditOptions()"
-            />
-          </au-form-field>
-          <au-form-field
-            [label]="t().colStatus"
-            [required]="true"
-          >
-            <au-select
-              [formField]="editForm.status"
-              [options]="statusEditOptions()"
-            />
-          </au-form-field>
-          <au-form-field [label]="t().fieldJoined">
-            <au-input-date [formField]="editForm.joined" />
-          </au-form-field>
-          <au-form-field [label]="t().fieldSkills">
-            <au-tag-input
-              [formField]="editForm.skills"
-              [placeholder]="t().skillsPlaceholder"
-            />
-          </au-form-field>
-          <au-form-field [label]="t().colProgress">
-            <au-slider [formField]="editForm.progress" />
-          </au-form-field>
-          <au-form-field [label]="t().fieldNotes">
-            <au-textarea
-              [formField]="editForm.notes"
-              [rows]="3"
-            />
-          </au-form-field>
+            <au-form-field
+              [label]="t().colName"
+              [required]="true"
+            >
+              <au-input-text
+                [formField]="editForm.name"
+                autocomplete="name"
+              />
+            </au-form-field>
+            <au-form-field
+              [label]="t().fieldEmail"
+              [required]="true"
+            >
+              <au-input-text
+                [formField]="editForm.email"
+                type="email"
+                autocomplete="email"
+              />
+            </au-form-field>
+            <au-form-field
+              [label]="t().colRole"
+              [required]="true"
+            >
+              <au-select
+                [formField]="editForm.role"
+                [options]="roleEditOptions()"
+              />
+            </au-form-field>
+            <au-form-field
+              [label]="t().colStatus"
+              [required]="true"
+            >
+              <au-select
+                [formField]="editForm.status"
+                [options]="statusEditOptions()"
+              />
+            </au-form-field>
+            <au-form-field [label]="t().fieldJoined">
+              <au-input-date [formField]="editForm.joined" />
+            </au-form-field>
+            <au-form-field [label]="t().fieldSkills">
+              <au-tag-input
+                [formField]="editForm.skills"
+                [placeholder]="t().skillsPlaceholder"
+              />
+            </au-form-field>
+            <au-form-field [label]="t().colProgress">
+              <au-slider [formField]="editForm.progress" />
+            </au-form-field>
+            <au-form-field [label]="t().fieldNotes">
+              <au-textarea
+                [formField]="editForm.notes"
+                [rows]="3"
+              />
+            </au-form-field>
           </div>
           <div auDialogFooter>
             <au-button

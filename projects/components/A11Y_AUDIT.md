@@ -6,14 +6,14 @@ Last review: **2026-06-01** (HC AAA token pass + `au-high-contrast-aaa.css`).
 
 ## Summary
 
-| Area                | Status       | Notes                                                |
-| ------------------- | ------------ | ---------------------------------------------------- |
-| Focus visibility    | Pass         | `--au-shadow-focus-ring` on interactive controls     |
-| Color contrast      | Pass         | Semantic tokens per light/dark theme                 |
-| High contrast theme | Pass (AAA)   | `au-tokens-high-contrast.css` + `au-high-contrast-aaa.css` |
-| Keyboard            | Pass         | Documented per component in docs overviews           |
-| Form errors         | Pass         | `aria-invalid`, `aria-describedby` via form-field    |
-| Live regions        | Pass         | Stacked snackbars: topmost only announces (A11Y-001) |
+| Area                | Status     | Notes                                                      |
+| ------------------- | ---------- | ---------------------------------------------------------- |
+| Focus visibility    | Pass       | `--au-shadow-focus-ring` on interactive controls           |
+| Color contrast      | Pass       | Semantic tokens per light/dark theme                       |
+| High contrast theme | Pass (AAA) | `au-tokens-high-contrast.css` + `au-high-contrast-aaa.css` |
+| Keyboard            | Pass       | Documented per component in docs overviews                 |
+| Form errors         | Pass       | `aria-invalid`, `aria-describedby` via form-field          |
+| Live regions        | Pass       | Stacked snackbars: topmost only announces (A11Y-001)       |
 
 Per-component keyboard and ARIA notes: docs site overviews (`/en/components/:slug`) and Storybook Autodocs.
 

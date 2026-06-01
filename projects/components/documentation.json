@@ -3011,6 +3011,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3026,16 +3036,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuBadge>",
                 "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -5010,6 +5010,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuBreadcrumb>",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
                 "deprecated": false,
@@ -5023,17 +5034,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuBadge>",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -8802,6 +8802,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/button/button.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuButton>",
+                    "file": "projects/components/src/lib/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
                 {
                     "name": "Story",
@@ -8822,19 +8835,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuBadge>",
                     "file": "projects/components/src/lib/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/button/button.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButton>",
-                    "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

@@ -93,7 +93,8 @@
 /* Fields — tab focus ring (keyboard) */
 /* -------------------------------------------------------------------------- */
 
-[data-au-theme='high-contrast'] :is(
+[data-au-theme='high-contrast']
+  :is(
     .au-input-text__control-row--from-tab,
     .au-input-number__control-row--from-tab,
     .au-textarea__control-row--from-tab,
@@ -104,7 +105,8 @@
     .au-select__control-row--from-tab,
     .au-autocomplete__control-row--from-tab
   ):focus-within,
-[data-au-theme='high-contrast-dark'] :is(
+[data-au-theme='high-contrast-dark']
+  :is(
     .au-input-text__control-row--from-tab,
     .au-input-number__control-row--from-tab,
     .au-textarea__control-row--from-tab,
@@ -119,7 +121,9 @@
   outline-offset: 2px;
 }
 
-[data-au-theme='high-contrast'] .au-checkbox__wrapper--from-tab:focus-within .au-checkbox__element:not(:disabled),
+[data-au-theme='high-contrast']
+  .au-checkbox__wrapper--from-tab:focus-within
+  .au-checkbox__element:not(:disabled),
 [data-au-theme='high-contrast-dark']
   .au-checkbox__wrapper--from-tab:focus-within
   .au-checkbox__element:not(:disabled) {
