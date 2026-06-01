@@ -98,7 +98,7 @@ export const WithError: Story = {
   },
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
-    const field = el.getByLabelText('Password');
+    const field = el.getByRole('textbox', { name: /password/i });
     await expect(field).toHaveAttribute('aria-invalid', 'true');
     const errId = field.getAttribute('aria-errormessage');
     await expect(errId).toBeTruthy();
@@ -113,7 +113,7 @@ export const RevealToggle: Story = {
     const toggle = el.getByRole('button', { name: 'Show password' });
     await expect(toggle).toHaveAttribute('aria-pressed', 'false');
     await userEvent.click(toggle);
-    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');
+    await expect(el.getByRole('textbox', { name: /password/i })).toHaveAttribute('type', 'text');
     await expect(toggle).toHaveAttribute('aria-pressed', 'true');
     await expect(toggle).toHaveAccessibleName('Hide password');
   },
