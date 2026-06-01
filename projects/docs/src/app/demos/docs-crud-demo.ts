@@ -1368,7 +1368,7 @@ export class DocsCrudDemo {
     name: '',
     email: '',
     role: null as string | null,
-    status: 'active' as PersonStatus | null,
+    status: 'active',
     joined: null as string | null,
     skills: [] as string[],
     notes: '',
@@ -1673,7 +1673,7 @@ export class DocsCrudDemo {
     anchor.download = `people.${format}`;
     anchor.click();
     URL.revokeObjectURL(url);
-    this.showSnack(this.t().snackbarExported as string);
+    this.showSnack(this.t().snackbarExported);
   }
 
   private triggerTableLoading(): void {
