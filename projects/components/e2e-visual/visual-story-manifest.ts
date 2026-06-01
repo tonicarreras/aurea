@@ -15,7 +15,11 @@ export const VISUAL_STORIES: {
   { name: 'checkbox-default', id: 'aurea-checkbox--default', slug: 'checkbox' },
   { name: 'chip-default', id: 'aurea-chip--default', slug: 'chip' },
   { name: 'chip-group-filter-chips', id: 'aurea-chipgroup--filter-chips', slug: 'chip-group' },
-  { name: 'description-list-default', id: 'aurea-descriptionlist--default', slug: 'description-list' },
+  {
+    name: 'description-list-default',
+    id: 'aurea-descriptionlist--default',
+    slug: 'description-list',
+  },
   { name: 'dialog-default', id: 'aurea-dialog--default', slug: 'dialog' },
   { name: 'divider-default', id: 'aurea-divider--default', slug: 'divider' },
   { name: 'drawer-default', id: 'aurea-drawer--default', slug: 'drawer' },

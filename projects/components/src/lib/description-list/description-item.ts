@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  TemplateRef,
-  input,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, input, viewChild } from '@angular/core';
 
 /**
  * One term/description pair inside {@link AuDescriptionList}.

@@ -70,7 +70,8 @@ au-description-list[data-au-layout='horizontal'] .au-description-list__list {
 }
 
 /* `au-description-item` rows: stack groups; each group is a two-column grid. */
-au-description-list[data-au-layout='horizontal'] .au-description-list__list:has(> .au-description-item) {
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list:has(> .au-description-item) {
   display: flex;
   flex-direction: column;
   row-gap: var(--au-space-2);
