@@ -67,6 +67,17 @@ import {
 
 type StatusFilter = 'all' | PersonStatus;
 
+type CrudEditModel = {
+  name: string;
+  email: string;
+  role: string | null;
+  status: PersonStatus | null;
+  joined: string | null;
+  skills: string[];
+  notes: string;
+  progress: number;
+};
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'docs-crud-demo',
@@ -1364,13 +1375,13 @@ export class DocsCrudDemo {
   readonly snackOpen = signal(false);
   readonly snackMessage = signal('');
 
-  readonly editModel = signal({
+  readonly editModel = signal<CrudEditModel>({
     name: '',
     email: '',
-    role: null as string | null,
+    role: null,
     status: 'active',
-    joined: null as string | null,
-    skills: [] as string[],
+    joined: null,
+    skills: [],
     notes: '',
     progress: 50,
   });
