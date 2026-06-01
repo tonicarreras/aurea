@@ -16,6 +16,8 @@
   au-textarea,
   au-input-date,
   au-input-time,
+  au-input-password,
+  au-tag-input,
   au-select,
   au-autocomplete
 ) {
@@ -27,7 +29,9 @@
 }
 
 au-input-date,
-au-input-time {
+au-input-time,
+au-input-password,
+au-tag-input {
   color-scheme: inherit;
 }
 
@@ -135,6 +139,8 @@ au-autocomplete {
   .au-textarea__control-row,
   .au-input-date__control-row,
   .au-input-time__control-row,
+  .au-input-password__control-row,
+  .au-tag-input__control-row,
   .au-select__control-row,
   .au-autocomplete__control-row
 ) {
@@ -145,10 +151,10 @@ au-autocomplete {
   align-items: stretch;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--au-color-form-border);
+  border: var(--au-chrome-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  box-shadow: var(--au-chrome-shadow);
   transition: var(--au-transition-control);
 }
 
@@ -163,9 +169,11 @@ au-autocomplete {
   .au-input-number__control-row:has(.au-input-number__input:hover:not(:disabled)),
   .au-textarea__control-row:has(.au-textarea__input:hover:not(:disabled)),
   .au-input-date__control-row:has(.au-input-date__input:hover:not(:disabled)),
-  .au-input-time__control-row:has(.au-input-time__input:hover:not(:disabled))
+  .au-input-time__control-row:has(.au-input-time__input:hover:not(:disabled)),
+  .au-input-password__control-row:has(.au-input-password__input:hover:not(:disabled)),
+  .au-tag-input__control-row:has(.au-tag-input__input:hover:not(:disabled))
 ):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-chrome-border-color-hover);
 }
 
 /* Hover: border + fill (combobox) */
@@ -173,7 +181,7 @@ au-autocomplete {
   .au-select__control-row:has(.au-select__trigger:hover:not(:disabled)),
   .au-autocomplete__control-row:has(.au-autocomplete__input:hover:not(:disabled))
 ):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-chrome-border-color-hover);
   background: var(--au-color-select-field-hover-bg);
 }
 
@@ -184,6 +192,8 @@ au-autocomplete {
   .au-textarea__control-row:has(.au-textarea__input[aria-invalid='true']),
   .au-input-date__control-row:has(.au-input-date__input[aria-invalid='true']),
   .au-input-time__control-row:has(.au-input-time__input[aria-invalid='true']),
+  .au-input-password__control-row:has(.au-input-password__input[aria-invalid='true']),
+  .au-tag-input__control-row:has(.au-tag-input__input[aria-invalid='true']),
   .au-select__control-row:has(.au-select__trigger[aria-invalid='true']),
   .au-autocomplete__control-row:has(.au-autocomplete__input[aria-invalid='true'])
 ):not(:focus-within) {
@@ -198,11 +208,13 @@ au-autocomplete {
   .au-textarea__control-row,
   .au-input-date__control-row,
   .au-input-time__control-row,
+  .au-input-password__control-row,
+  .au-tag-input__control-row,
   .au-select__control-row,
   .au-autocomplete__control-row
 ):focus-within {
-  border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-control);
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-chrome-shadow-focus);
 }
 
 :is(
@@ -211,27 +223,31 @@ au-autocomplete {
   .au-textarea__control-row:focus-within:has(.au-textarea__input[aria-invalid='true']),
   .au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']),
   .au-input-time__control-row:focus-within:has(.au-input-time__input[aria-invalid='true']),
+  .au-input-password__control-row:focus-within:has(.au-input-password__input[aria-invalid='true']),
+  .au-tag-input__control-row:focus-within:has(.au-tag-input__input[aria-invalid='true']),
   .au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']),
   .au-autocomplete__control-row:focus-within:has(.au-autocomplete__input[aria-invalid='true'])
 ) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-focus-control-error);
+  box-shadow: var(--au-chrome-shadow-focus-error);
 }
 
-/* Tab-only focus → outward outline */
+/* Tab-only focus → outward outline (matches au-button --from-tab) */
 :is(
   .au-input-text__control-row--from-tab,
   .au-input-number__control-row--from-tab,
   .au-textarea__control-row--from-tab,
   .au-input-date__control-row--from-tab,
   .au-input-time__control-row--from-tab,
+  .au-input-password__control-row--from-tab,
+  .au-tag-input__control-row--from-tab,
   .au-select__control-row--from-tab,
   .au-autocomplete__control-row--from-tab
 ):focus-within {
   box-shadow: none;
   background: var(--au-color-surface-raised);
-  border-color: var(--au-color-form-border);
+  border-color: var(--au-chrome-border-color);
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 2px;
 }
@@ -250,6 +266,10 @@ au-autocomplete {
   .au-input-time__control-row--from-tab:focus-within:has(
       .au-input-time__input[aria-invalid='true']
     ),
+  .au-input-password__control-row--from-tab:focus-within:has(
+      .au-input-password__input[aria-invalid='true']
+    ),
+  .au-tag-input__control-row--from-tab:focus-within:has(.au-tag-input__input[aria-invalid='true']),
   .au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']),
   .au-autocomplete__control-row--from-tab:focus-within:has(
       .au-autocomplete__input[aria-invalid='true']
@@ -269,6 +289,8 @@ au-autocomplete {
   .au-textarea__control-row:has(.au-textarea__input:disabled),
   .au-input-date__control-row:has(.au-input-date__input:disabled),
   .au-input-time__control-row:has(.au-input-time__input:disabled),
+  .au-input-password__control-row:has(.au-input-password__input:disabled),
+  .au-tag-input__control-row:has(.au-tag-input__input:disabled),
   .au-select__control-row:has(.au-select__trigger:disabled),
   .au-autocomplete__control-row:has(.au-autocomplete__input:disabled)
 ) {
@@ -279,7 +301,7 @@ au-autocomplete {
 
 /* Combobox open (no focus) */
 :is(.au-select__control-row--open, .au-autocomplete__control-row--open):not(:focus-within) {
-  border-color: var(--au-color-form-border-hover);
+  border-color: var(--au-chrome-border-color-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {

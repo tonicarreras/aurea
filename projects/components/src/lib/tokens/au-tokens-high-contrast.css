@@ -1,0 +1,294 @@
+/**
+ * High-contrast themes — WCAG 2.2 AAA-oriented palettes.
+ * Targets: text/UI ≥7:1 (normal text), placeholders ≥7:1, 2px control borders,
+ * 3px focus rings. Pair with au-high-contrast-aaa.css (aurea-global).
+ * Appearance: light → high-contrast, dark → high-contrast-dark.
+ */
+
+/* ==========================================================================
+   Theme: high contrast (light appearance)
+   ========================================================================== */
+
+[data-au-theme='high-contrast'] {
+  color-scheme: light;
+  --au-focus-ring-width: 3px;
+  --au-progress-track-height: 0.625rem;
+  --au-table-divider-width: 2px;
+  /* Surfaces */
+  --au-color-surface-canvas: #ffffff;
+  --au-color-surface-raised: #ffffff;
+  --au-color-surface-elevated: #f5f5f5;
+  --au-color-surface-sunken: #ebebeb;
+  --au-color-surface-inverted: #000000;
+  --au-color-skeleton-base: #d4d4d4;
+  --au-color-skeleton-shimmer: #bdbdbd;
+  /* Text */
+  --au-color-text-primary: #000000;
+  --au-color-text-secondary: #000000;
+  --au-color-text-tertiary: #1a1a1a;
+  --au-color-text-placeholder: #1a1a1a;
+  --au-color-text-disabled: #333333;
+  --au-color-text-label: #000000;
+  --au-color-text-on-solid: #ffffff;
+  /* Borders — max contrast (Windows HC–style); 2px on interactive chrome */
+  --au-color-border-subtle: #000000;
+  --au-color-border-default: #000000;
+  --au-color-border-strong: #000000;
+  --au-chrome-border: 2px solid var(--au-color-border-default);
+  --au-chrome-border-color: var(--au-color-border-default);
+  --au-chrome-border-color-hover: var(--au-color-border-strong);
+  --au-chrome-shadow: none;
+  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
+  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
+  /* Actions & links */
+  --au-color-action-primary: #0000ee;
+  --au-color-action-primary-hover: #0000cc;
+  --au-color-action-primary-pressed: #000099;
+  --au-color-link: #0000ee;
+  --au-color-link-hover: #0000cc;
+  --au-color-focus-ring: #0000ee;
+  --au-color-focus-inner: #ffffff;
+  /* Semantic */
+  --au-color-semantic-error: #b00020;
+  --au-color-semantic-error-contrast: #ffffff;
+  --au-color-semantic-error-surface: #ffe5e8;
+  --au-color-semantic-success: #006400;
+  --au-color-semantic-success-surface: #e6f4e6;
+  --au-color-semantic-warning: #5c4a00;
+  --au-color-semantic-warning-surface: #fff4cc;
+  --au-color-semantic-info: #003d6b;
+  --au-color-semantic-info-surface: #e6f2fa;
+  --au-color-feedback-success-bg: #e6f4e6;
+  --au-color-feedback-success-border: #006400;
+  --au-color-feedback-warning-bg: #fff4cc;
+  --au-color-feedback-warning-border: #5c4a00;
+  --au-color-feedback-error-bg: #ffe5e8;
+  --au-color-feedback-error-border: #b00020;
+  --au-color-feedback-info-bg: #e6f2fa;
+  --au-color-feedback-info-border: #003d6b;
+  --au-color-feedback-success-title: #004d00;
+  --au-color-feedback-warning-title: #5c4a00;
+  --au-color-feedback-error-title: #b00020;
+  --au-color-feedback-info-title: #003d6b;
+  --au-color-accent-surface: #e8e8ff;
+  --au-color-accent-border: #0000ee;
+  --au-color-accent-foreground: #0000ee;
+  --au-color-semantic-success-border: #006400;
+  --au-color-semantic-warning-border: #5c4a00;
+  --au-color-semantic-error-border: #b00020;
+  --au-color-semantic-info-border: #003d6b;
+  --au-color-state-selected: #e8e8ff;
+  --au-color-state-selected-hover: #d4d4ff;
+  --au-color-state-selected-accent: #0000ee;
+  --au-color-state-hover: #f0f0f0;
+  --au-color-selection: rgba(0, 0, 238, 0.35);
+  --au-color-selection-text: inherit;
+  /* Forms */
+  --au-color-form-border: var(--au-color-border-default);
+  --au-color-form-border-hover: var(--au-color-border-strong);
+  --au-color-form-text: #000000;
+  --au-color-form-placeholder: var(--au-color-text-placeholder);
+  --au-color-form-caret: #000000;
+  --au-color-form-error: #b00020;
+  --au-color-form-error-bg: #ffd6dc;
+  --au-dialog-border: var(--au-chrome-border);
+  --au-color-form-disabled-foreground: #333333;
+  --au-color-form-disabled-surface: #f0f0f0;
+  /* Switch */
+  --au-color-switch-track-off: #000000;
+  --au-color-switch-track-off-hover: #333333;
+  --au-color-switch-track-off-border: #000000;
+  --au-color-switch-thumb-off: #ffffff;
+  /* Select */
+  --au-color-select-menu-bg: #ffffff;
+  --au-color-select-menu-text: #000000;
+  --au-color-select-field-hover-bg: #f0f0f0;
+  --au-color-select-option-highlight-bg: #e8e8ff;
+  --au-color-select-option-highlight-text: #000000;
+  --au-color-select-option-highlight-marker: #0000ee;
+  --au-color-select-option-selected-bg: #0000ee;
+  --au-color-select-option-selected-text: #ffffff;
+  --au-color-select-option-selected-marker: #ffffff;
+  --au-color-select-option-disabled-text: #333333;
+  --au-color-date-picker-edit-highlight: #e8e8ff;
+  --au-color-date-picker-accent: #e8e8ff;
+  --au-color-date-picker-icon: #333333;
+  --au-color-date-picker-icon-hover: #000000;
+  --au-color-date-picker-icon-active: #0000ee;
+  --au-shadow-field-inset: inset 0 0 0 2px #000000;
+  --au-shadow-hairline: none;
+  --au-shadow-control: none;
+  --au-shadow-raised: none;
+  --au-shadow-float: 0 0 0 2px var(--au-color-border-default);
+  --au-shadow-overlay: 0 0 0 2px var(--au-color-border-default), 0 8px 24px rgba(0, 0, 0, 0.15);
+  --au-shadow-floating: 0 0 0 2px var(--au-color-border-default), 0 4px 16px rgba(0, 0, 0, 0.12);
+  --au-shadow-button: none;
+  --au-shadow-button-primary: none;
+  --au-shadow-button-hover: none;
+  --au-shadow-focus-control: 0 0 0 3px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error: 0 0 0 3px var(--au-color-form-error);
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+}
+
+[data-au-theme='high-contrast'] .au-floating-panel {
+  --au-floating-panel-bg: #ffffff;
+  --au-floating-panel-border: #000000;
+}
+
+[data-au-theme='high-contrast'] au-dialog .au-dialog__native::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+[data-au-theme='high-contrast'] au-drawer {
+  --au-drawer-shadow-end: 0 0 0 1px var(--au-color-border-default);
+  --au-drawer-shadow-start: 0 0 0 1px var(--au-color-border-default);
+}
+
+[data-au-theme='high-contrast'] au-drawer .au-drawer__native::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* ==========================================================================
+   Theme: high contrast (dark appearance)
+   ========================================================================== */
+
+[data-au-theme='high-contrast-dark'] {
+  color-scheme: dark;
+  --au-focus-ring-width: 3px;
+  --au-progress-track-height: 0.625rem;
+  --au-table-divider-width: 2px;
+  /* Surfaces */
+  --au-color-surface-canvas: #000000;
+  --au-color-surface-raised: #000000;
+  --au-color-surface-elevated: #141414;
+  --au-color-surface-sunken: #0a0a0a;
+  --au-color-surface-inverted: #ffffff;
+  --au-color-skeleton-base: #333333;
+  --au-color-skeleton-shimmer: #4d4d4d;
+  /* Text */
+  --au-color-text-primary: #ffffff;
+  --au-color-text-secondary: #ffffff;
+  --au-color-text-tertiary: #f0f0f0;
+  --au-color-text-placeholder: #f0f0f0;
+  --au-color-text-disabled: #e0e0e0;
+  --au-color-text-label: #ffffff;
+  --au-color-text-on-solid: #000000;
+  /* Borders */
+  --au-color-border-subtle: #ffffff;
+  --au-color-border-default: #ffffff;
+  --au-color-border-strong: #ffffff;
+  --au-chrome-border: 2px solid var(--au-color-border-default);
+  --au-chrome-border-color: var(--au-color-border-default);
+  --au-chrome-border-color-hover: var(--au-color-border-strong);
+  --au-chrome-shadow: none;
+  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
+  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
+  /* Actions & links */
+  --au-color-action-primary: #00ffff;
+  --au-color-action-primary-hover: #80ffff;
+  --au-color-action-primary-pressed: #b3ffff;
+  --au-color-link: #00ffff;
+  --au-color-link-hover: #80ffff;
+  --au-color-focus-ring: #00ffff;
+  --au-color-focus-inner: #000000;
+  /* Semantic */
+  --au-color-semantic-error: #ff6b6b;
+  --au-color-semantic-error-contrast: #000000;
+  --au-color-semantic-error-surface: #3d0000;
+  --au-color-semantic-success: #7fff7f;
+  --au-color-semantic-success-surface: #003300;
+  --au-color-semantic-warning: #ffff00;
+  --au-color-semantic-warning-surface: #333300;
+  --au-color-semantic-info: #80d4ff;
+  --au-color-semantic-info-surface: #001a33;
+  --au-color-feedback-success-bg: #003300;
+  --au-color-feedback-success-border: #7fff7f;
+  --au-color-feedback-warning-bg: #333300;
+  --au-color-feedback-warning-border: #ffff00;
+  --au-color-feedback-error-bg: #3d0000;
+  --au-color-feedback-error-border: #ff6b6b;
+  --au-color-feedback-info-bg: #001a33;
+  --au-color-feedback-info-border: #80d4ff;
+  --au-color-feedback-success-title: #7fff7f;
+  --au-color-feedback-warning-title: #ffff00;
+  --au-color-feedback-error-title: #ff6b6b;
+  --au-color-feedback-info-title: #80d4ff;
+  --au-color-accent-surface: #003333;
+  --au-color-accent-border: #00ffff;
+  --au-color-accent-foreground: #00ffff;
+  --au-color-semantic-success-border: #7fff7f;
+  --au-color-semantic-warning-border: #ffff00;
+  --au-color-semantic-error-border: #ff6b6b;
+  --au-color-semantic-info-border: #80d4ff;
+  --au-color-state-selected: #003333;
+  --au-color-state-selected-hover: #004d4d;
+  --au-color-state-selected-accent: #00ffff;
+  --au-color-state-hover: #1a1a1a;
+  --au-color-selection: rgba(0, 255, 255, 0.35);
+  --au-color-selection-text: inherit;
+  /* Forms */
+  --au-color-form-border: var(--au-color-border-default);
+  --au-color-form-border-hover: var(--au-color-border-strong);
+  --au-color-form-text: #ffffff;
+  --au-color-form-placeholder: var(--au-color-text-placeholder);
+  --au-color-form-caret: #ffffff;
+  --au-color-form-error: #ff6b6b;
+  --au-color-form-error-bg: #4d0014;
+  --au-dialog-border: var(--au-chrome-border);
+  --au-color-form-disabled-foreground: #e0e0e0;
+  --au-color-form-disabled-surface: #141414;
+  /* Switch */
+  --au-color-switch-track-off: #ffffff;
+  --au-color-switch-track-off-hover: #cccccc;
+  --au-color-switch-track-off-border: #ffffff;
+  --au-color-switch-thumb-off: #000000;
+  /* Select */
+  --au-color-select-menu-bg: #000000;
+  --au-color-select-menu-text: #ffffff;
+  --au-color-select-field-hover-bg: #141414;
+  --au-color-select-option-highlight-bg: #003333;
+  --au-color-select-option-highlight-text: #ffffff;
+  --au-color-select-option-highlight-marker: #00ffff;
+  --au-color-select-option-selected-bg: #00ffff;
+  --au-color-select-option-selected-text: #000000;
+  --au-color-select-option-selected-marker: #000000;
+  --au-color-select-option-disabled-text: #e0e0e0;
+  --au-color-date-picker-edit-highlight: #003333;
+  --au-color-date-picker-accent: #003333;
+  --au-color-date-picker-icon: #e0e0e0;
+  --au-color-date-picker-icon-hover: #ffffff;
+  --au-color-date-picker-icon-active: #00ffff;
+  --au-shadow-field-inset: inset 0 0 0 2px #ffffff;
+  --au-shadow-hairline: none;
+  --au-shadow-control: none;
+  --au-shadow-raised: none;
+  --au-shadow-float: 0 0 0 2px var(--au-color-border-default);
+  --au-shadow-overlay: 0 0 0 2px var(--au-color-border-default), 0 8px 24px rgba(0, 0, 0, 0.9);
+  --au-shadow-floating: 0 0 0 2px var(--au-color-border-default), 0 4px 16px rgba(0, 0, 0, 0.85);
+  --au-shadow-button: none;
+  --au-shadow-button-primary: none;
+  --au-shadow-button-hover: none;
+  --au-shadow-focus-control: 0 0 0 3px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error: 0 0 0 3px var(--au-color-form-error);
+  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
+  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+}
+
+[data-au-theme='high-contrast-dark'] .au-floating-panel {
+  --au-floating-panel-bg: #000000;
+  --au-floating-panel-border: #ffffff;
+}
+
+[data-au-theme='high-contrast-dark'] au-dialog .au-dialog__native::backdrop {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-au-theme='high-contrast-dark'] au-drawer {
+  --au-drawer-shadow-end: 0 0 0 2px var(--au-color-border-default);
+  --au-drawer-shadow-start: 0 0 0 2px var(--au-color-border-default);
+}
+
+[data-au-theme='high-contrast-dark'] au-drawer .au-drawer__native::backdrop {
+  background: rgba(255, 255, 255, 0.2);
+}

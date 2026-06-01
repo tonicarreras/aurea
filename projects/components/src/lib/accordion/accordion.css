@@ -1,8 +1,9 @@
 /**
- * Accordion — collapsible sections with WAI-ARIA triggers and regions.
+ * Accordion root — host and in-template shell.
+ * Projected items/triggers: styles/au-accordion.css (aurea-global).
  */
 
-au-accordion {
+:host {
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -16,73 +17,7 @@ au-accordion {
   gap: 0;
 }
 
-.au-accordion__item {
-  border-block-end: 1px solid var(--au-color-border-subtle);
-}
-
-.au-accordion__item:first-child {
-  border-block-start: 1px solid var(--au-color-border-subtle);
-}
-
-.au-accordion__trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--au-space-3);
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0;
-  padding: var(--au-accordion-trigger-padding-y, var(--au-space-4))
-    var(--au-accordion-trigger-padding-x, var(--au-space-4));
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  font: inherit;
-  font-weight: var(--au-weight-medium);
-  line-height: var(--au-leading-snug);
-  color: inherit;
-  text-align: start;
-  cursor: pointer;
-}
-
-.au-accordion__trigger:hover:not(:disabled) {
-  background: var(--au-color-surface-sunken);
-}
-
-.au-accordion__trigger:focus-visible {
-  outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
-  z-index: 1;
-}
-
-.au-accordion__trigger:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-
-.au-accordion__trigger::after {
-  content: '';
-  flex-shrink: 0;
-  width: 0.625rem;
-  height: 0.625rem;
-  border-inline-end: 2px solid currentColor;
-  border-block-end: 2px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform var(--au-duration-fast, 120ms) ease;
-}
-
-.au-accordion__trigger--expanded::after {
-  transform: rotate(-135deg);
-}
-
-.au-accordion__panel {
-  padding: 0 var(--au-accordion-panel-padding-x, var(--au-space-4))
-    var(--au-accordion-panel-padding-y, var(--au-space-4));
-  color: var(--au-color-text-secondary);
-  line-height: var(--au-leading-normal);
-}
-
-au-accordion[data-au-size='sm'] {
+:host([data-au-size='sm']) {
   --au-accordion-trigger-padding-y: var(--au-space-3);
   --au-accordion-trigger-padding-x: var(--au-space-3);
   --au-accordion-panel-padding-x: var(--au-space-3);
@@ -90,8 +25,10 @@ au-accordion[data-au-size='sm'] {
   font-size: var(--au-text-sm);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-accordion__trigger::after {
-    transition: none;
-  }
+:host([data-au-variant='contained']) {
+  background: var(--au-color-surface-raised);
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-surface);
+  box-shadow: var(--au-chrome-shadow);
+  overflow: hidden;
 }

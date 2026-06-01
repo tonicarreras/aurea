@@ -1,0 +1,77 @@
+/**
+ * Accordion — projected consumer markup (ng-content).
+ * Root host: accordion.css · Panels: au-accordion-panel.css
+ */
+
+au-accordion .au-accordion__item {
+  border-block-end: 1px solid var(--au-color-border-subtle);
+}
+
+au-accordion:not([data-au-variant='contained']) .au-accordion__item:first-child {
+  border-block-start: 1px solid var(--au-color-border-subtle);
+}
+
+au-accordion[data-au-variant='contained'] .au-accordion__item:first-child {
+  border-block-start: none;
+}
+
+au-accordion[data-au-variant='contained'] .au-accordion__item:last-child {
+  border-block-end: none;
+}
+
+au-accordion button.au-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--au-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: var(--au-accordion-trigger-padding-y, var(--au-space-4))
+    var(--au-accordion-trigger-padding-x, var(--au-space-4));
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-snug);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+au-accordion button.au-accordion__trigger:hover:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+au-accordion button.au-accordion__trigger:focus-visible {
+  outline: none;
+  box-shadow: var(--au-shadow-focus-ring);
+  z-index: 1;
+}
+
+au-accordion button.au-accordion__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+au-accordion button.au-accordion__trigger::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-inline-end: 2px solid currentColor;
+  border-block-end: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--au-duration-short) var(--au-ease-in-out);
+}
+
+au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after {
+  transform: rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  au-accordion button.au-accordion__trigger::after {
+    transition: none;
+  }
+}

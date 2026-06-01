@@ -16,6 +16,7 @@ export const PREVIEWS_ES: PreviewMessages = {
   },
   breadcrumb: { home: 'Inicio', components: 'Componentes', table: 'Tabla' },
   button: { primary: 'Primario', secondary: 'Secundario', outline: 'Contorno', ghost: 'Fantasma' },
+  buttonGroup: { ariaLabel: 'Acciones del documento', cancel: 'Cancelar', save: 'Guardar' },
   card: {
     title: 'Proyecto Aurea',
     body: 'Superficie con cabecera, cuerpo y pie opcional para agrupar contenido relacionado.',
@@ -44,6 +45,12 @@ export const PREVIEWS_ES: PreviewMessages = {
     apply: 'Aplicar',
   },
   divider: { top: 'Sección superior', label: 'o', bottom: 'Sección inferior' },
+  descriptionList: {
+    nameLabel: 'Nombre',
+    nameValue: 'Ada Lovelace',
+    emailLabel: 'Correo',
+    emailValue: 'ada@example.com',
+  },
   fieldset: {
     legend: 'Dirección de envío',
     description: 'Dónde entregamos tu pedido.',
@@ -57,6 +64,7 @@ export const PREVIEWS_ES: PreviewMessages = {
     placeholder: 'tu@correo.com',
   },
   inputDate: { label: 'Fecha de inicio' },
+  inputPassword: { label: 'Contraseña', hint: 'Usa al menos 12 caracteres.' },
   inputTime: { label: 'Hora de inicio' },
   inputNumber: { label: 'Cantidad' },
   inputText: { label: 'Nombre', placeholder: 'Tu nombre' },
@@ -83,6 +91,11 @@ export const PREVIEWS_ES: PreviewMessages = {
     examplesPanel: 'Fragmentos listos para copiar.',
   },
   switch: { hint: 'Puedes cambiarlo en ajustes del sistema.', label: 'Modo oscuro del sistema' },
+  tagInput: {
+    label: 'Habilidades',
+    hint: 'Pulsa Enter o coma para añadir.',
+    initialTags: ['Angular', 'TypeScript'],
+  },
   table: {
     title: 'Equipo',
     description: 'Vista previa de documentación.',

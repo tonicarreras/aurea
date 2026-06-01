@@ -13,8 +13,8 @@ Monorepo:
 
 ```bash
 bun install
-ng build components
-ng serve docs          # http://127.0.0.1:4200
+bun run build:components
+bun run docs           # http://127.0.0.1:4200 (`start` is an alias)
 bun run storybook      # http://127.0.0.1:6006
 ```
 
@@ -53,13 +53,29 @@ Required before marking **stable** in `component-maturity.ts`:
 
 **Tests:** `*.spec.ts` (render, disabled/invalid, events); form integration when `FormValueControl`.
 
-**Storybook:** variant stories; signal-forms story when applicable; tag `stable`/`beta` via `bun run tag:stories`.
+**Storybook:** variant stories; signal-forms story when applicable; tag `stable`/`beta` via `bun run tag:stories`; run `bun run maintain:storybook` before PR when stories/maturity/overviews change.
 
 **Docs site:** `component-docs.registry.ts`; overview + API + styling in `i18n/locales/{en,es}/`; preview + examples.
 
 **A11y:** visible focus; labels via `au-form-field`; notes in overview; no open items in [A11Y_AUDIT.md](./projects/components/A11Y_AUDIT.md).
 
 **Release:** CHANGELOG entry; breaking changes follow [VERSIONING.md](./docs/VERSIONING.md).
+
+## npm scripts (cheat sheet)
+
+| Command                  | When to use                                                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `build`                  | Alias of `build:components` (library + schematics + strip sourcemaps).                                             |
+| `build:components`       | Same as `build`; used explicitly in CI.                                                                            |
+| `docs` / `start`         | Docs site dev server (port **4200**). `start` → `docs`.                                                            |
+| `sync:story-overviews`   | After changing component overviews in `projects/docs/.../i18n` — regenerates Storybook `story-overview-source.ts`. |
+| `sync:visual-stories`    | Regenerate `e2e-visual/visual-story-manifest.ts` (no git check).                                                   |
+| `verify:visual-manifest` | CI: sync manifest + fail if `visual-story-manifest.ts` is out of date.                                             |
+| `maintain:storybook`     | Pre-PR: `sync:story-overviews` + `verify:story-tags` + `verify:visual-manifest`.                                   |
+| `tag:stories`            | Apply `stable` / `beta` tags from `component-maturity.ts`.                                                         |
+| `update:bundle-baseline` | After intentional FESM size change; then `check:bundle` in CI.                                                     |
+| `pack:package`           | Local `.tgz` smoke test before publish.                                                                            |
+| `test:docs:e2e`          | Docs Playwright smoke (run after `build:docs`; CI does both).                                                      |
 
 ## Storybook development
 

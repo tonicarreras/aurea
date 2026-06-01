@@ -35,6 +35,37 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Tab enfoca el control; foco restaurado tras cerrar diálogos.',
     ],
   },
+  'button-group': {
+    intro: [
+      'Contenedor de layout que agrupa acciones `au-button` relacionadas con `role="group"`.',
+      'Por defecto **`attached`** une bordes entre botones; `[attached]="false"` los separa.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Acciones Guardar / Cancelar / secundarias en formularios y diálogos.',
+        'Toolbars compactas de botones independientes.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Elección exclusiva en formulario → `au-radio-group` o `au-tabs` `variant="contained"`.',
+        'Filtros multi-selección → `au-chip-group`.',
+        'Una sola acción → `au-button` suelto.',
+      ],
+    },
+    anatomy: [
+      { region: 'Grupo', detail: '`role="group"` con `ariaLabel` o `ariaLabelledBy`.' },
+      { region: '`au-button`', detail: 'Hijos proyectados; variantes y clics en cada botón.' },
+    ],
+    accessibility: [
+      'Nombra el grupo cuando hay más de un botón.',
+      'Cada `au-button` conserva su nombre accesible y teclado propio.',
+    ],
+    keyboard: ['Tab recorre los botones en orden de documento.'],
+    relatedExports: ['type AuButtonGroupOrientation'],
+  },
   'form-field': {
     intro: [
       'Cromado compartido de etiqueta, hint y error alrededor de un control proyectado (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
@@ -108,7 +139,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     whenToUse: {
       title: 'Cuándo usarlo',
       items: [
-        'Texto, email, URL, teléfono, búsqueda o contraseña con la misma cromática que el resto de campos.',
+        'Texto, email, URL, teléfono o búsqueda con la misma cromática que el resto de campos.',
         'Validación con signal forms o `errorMessage` / `invalid` manuales.',
       ],
     },
@@ -116,6 +147,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       title: 'Alternativas',
       items: [
         'Texto multilínea → `au-textarea`.',
+        'Contraseña → `au-input-password`.',
         'Elección en lista → `au-select` o `au-autocomplete`.',
       ],
     },
@@ -126,17 +158,12 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
         region: 'Input nativo',
         detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` vía contexto.',
       },
-      { region: 'Toggle contraseña', detail: 'Solo con `type="password"` y `showPasswordToggle`.' },
     ],
     accessibility: [
       'Nombre accesible vía etiqueta visible o `aria-label` externo.',
       'Errores enlazados con `aria-errormessage`; hints con `aria-describedby`.',
-      'Toggle de contraseña con `aria-pressed` y etiquetas Mostrar/Ocultar.',
     ],
-    keyboard: [
-      'Tab entra al campo con anillo exterior (`--from-tab`); clic usa anillo interior.',
-      'Space en el toggle de contraseña alterna visibilidad.',
-    ],
+    keyboard: ['Tab entra al campo con anillo exterior (`--from-tab`); clic usa anillo interior.'],
   },
   textarea: {
     intro: [
@@ -156,7 +183,11 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Shell', detail: 'Igual que campos de una línea.' },
-      { region: '`<textarea>`', detail: 'Padding vertical `--au-textarea-pad-y`.' },
+      {
+        region: '`<textarea>`',
+        detail:
+          'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (o presets por `size`).',
+      },
     ],
     accessibility: [
       'Misma semántica de label, error y hint que input-text.',
@@ -302,8 +333,9 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   accordion: {
     intro: [
-      'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y regiones `[auAccordionPanel]` comparten una clave string.',
+      'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y `au-accordion-panel` comparten una clave string.',
       'Enlaza `[(value)]` a la lista de claves expandidas; `[multiple]="false"` para expansión exclusiva.',
+      '`variant="contained"` añade superficie elevada (como una tarjeta); `plain` (por defecto) solo usa separadores.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -320,12 +352,19 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
+      {
+        region: 'Host',
+        detail: '`variant="plain"` (separadores) o `contained` (superficie elevada).',
+      },
       { region: '`.au-accordion__item`', detail: 'Envuelve cada par trigger + panel.' },
       {
         region: '`button[auAccordionItem]`',
         detail: 'Disparador con `aria-expanded` y `aria-controls`.',
       },
-      { region: '`[auAccordionPanel]`', detail: 'Región; `hidden` cuando está colapsada.' },
+      {
+        region: '`au-accordion-panel`',
+        detail: 'Región con transición de altura; `aria-hidden` e `inert` al colapsar.',
+      },
     ],
     accessibility: [
       'Raíz `role="region"` con `aria-label` o labelledby.',
@@ -462,6 +501,34 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
     ],
   },
+  'input-password': {
+    intro: [
+      'Campo de contraseña dedicado con toggle de revelar opcional y cromado Aurea compartido.',
+      'Implementa `FormValueControl<string | null>`; vacío ↔ `null`. Localiza `revealLabelShow` / `revealLabelHide`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Formularios de inicio de sesión, registro y cambio de contraseña.',
+        'Cuando el usuario puede necesitar verificar lo escrito (`showRevealToggle`).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: ['OTP o PIN de longitud fija → patrón de input especializado.'],
+    },
+    anatomy: [
+      { region: 'Input nativo', detail: 'Alterna `type="password"` / `type="text"` al revelar.' },
+      {
+        region: 'Control revelar',
+        detail: 'Botón icono opcional con `aria-pressed` y etiqueta localizada.',
+      },
+    ],
+    accessibility: [
+      'Label, hint y errores enlazados vía `au-form-field`.',
+      'El botón de revelar es accesible por teclado; no envía el formulario.',
+    ],
+  },
   'file-upload': {
     intro: [
       'Zona drag-and-drop con `input[type="file"]` oculto, botón de explorar y lista de archivos removibles.',
@@ -554,10 +621,14 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     intro: [
       'Superficie agrupada con variantes elevated, outlined y filled. Proyección por regiones: media, cabecera, cuerpo y pie.',
       'El host es un `<article>`: incluye un heading en `auCardHeader` para el outline del documento.',
+      'Usa `[interactive]="true"` solo cuando toda la tarjeta sea enlace o destino de clic (refuerzo de borde al hover en elevated).',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Resúmenes de entidad, tiles de dashboard, bloques de configuración.'],
+      items: [
+        'Resúmenes de entidad, tiles de dashboard, bloques de configuración.',
+        'Tiles clicables con `interactive` y un patrón real de enlace o botón.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',
@@ -612,6 +683,40 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Home/End al primer/último tab.',
     ],
     relatedExports: ['AuTab', 'AuTabPanel'],
+  },
+  'tag-input': {
+    intro: [
+      'Campo de texto multi-valor que muestra los valores introducidos como chips removibles.',
+      'Implementa `FormValueControl<string[]>`; confirma con Enter, coma o blur.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Habilidades, temas, destinatarios de correo o tokens de filtro en formularios.',
+        'Cuando cada valor debe permanecer visible y eliminarse individualmente.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Un solo valor de texto libre → `au-input-text` o `au-textarea`.',
+        'Filtros predefinidos → `au-chip-group`.',
+        'Lista removible sin teclear → `au-list` + `au-chip`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Chips', detail: 'Etiquetas removibles con botón de quitar por chip.' },
+      { region: 'Input borrador', detail: 'Campo inline para la siguiente etiqueta.' },
+    ],
+    accessibility: [
+      'Los botones de quitar exponen `aria-label` vía `removeTagLabel`.',
+      '`readOnly` mantiene el control nativo legible sin `disabled` (sigue en el orden de tabulación).',
+      'Backspace con borrador vacío elimina la última etiqueta.',
+    ],
+    keyboard: [
+      'Enter o coma confirman el borrador como etiqueta.',
+      'Backspace con input vacío elimina la última etiqueta.',
+    ],
   },
   chip: {
     intro: [
@@ -870,6 +975,39 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       { region: 'Label', detail: 'Solo horizontal; texto entre dos mitades de línea.' },
     ],
     accessibility: ['`aria-orientation` según `orientation`.'],
+  },
+  'description-list': {
+    intro: [
+      'Contenedor semántico de lista de descripción (`<dl>`) para pares clave–valor.',
+      'Compón con `au-description-item` (`term` + descripción proyectada); `<dt>` / `<dd>` nativos para markup avanzado.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Resúmenes de perfil, detalle de factura, paneles de metadatos.',
+        'Detalle de solo lectura junto a formularios o en barras laterales de ajustes.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Campos editables → controles de formulario dentro de `au-form-field`.',
+        'Datos tabulares ordenables → `au-table`.',
+        'Etiquetas apiladas simples → utilidades tipográficas.',
+      ],
+    },
+    anatomy: [
+      { region: 'Shell `dl`', detail: 'Rejilla CSS según `layout` y `columns`.' },
+      {
+        region: '`au-description-item`',
+        detail: 'Renderiza `<dt>` y `<dd>`; host con `display: contents`.',
+      },
+      { region: '`dt` / `dd` nativos', detail: 'Proyección opcional para descripciones ricas.' },
+    ],
+    accessibility: [
+      'Preserva la semántica nativa de lista para lectores de pantalla.',
+      'Cada `dt` debe ir seguido de su `dd` en orden del documento.',
+    ],
   },
   'empty-state': {
     intro: [

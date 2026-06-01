@@ -15,10 +15,6 @@
   min-width: 8.5rem;
 }
 
-.docs-toolbar__field ::ng-deep .au-form-field__label {
-  font-size: var(--au-text-2xs);
-}
-
 .docs-toolbar__icon-links {
   display: flex;
   align-items: center;

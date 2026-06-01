@@ -1,0 +1,140 @@
+/**
+ * High-contrast theme enhancements — WCAG 2.2 AAA targets.
+ * Requires `data-au-theme="high-contrast"` or `high-contrast-dark"` on an ancestor.
+ * Pair with au-tokens-high-contrast.css (palette + chrome tokens).
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Controls — 2px borders, no opacity-based disabled states */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast'] button.au-button__element,
+[data-au-theme='high-contrast-dark'] button.au-button__element {
+  border-width: 2px;
+}
+
+[data-au-theme='high-contrast'] button.au-button__element:disabled,
+[data-au-theme='high-contrast'] button.au-button__element[aria-disabled='true'],
+[data-au-theme='high-contrast-dark'] button.au-button__element:disabled,
+[data-au-theme='high-contrast-dark'] button.au-button__element[aria-disabled='true'] {
+  opacity: 1;
+  color: var(--au-color-text-disabled);
+  border-color: var(--au-color-text-disabled);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
+}
+
+[data-au-theme='high-contrast'] button.au-button__element--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] button.au-button__element--from-tab:focus-visible {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast'] .au-select__value--placeholder,
+[data-au-theme='high-contrast-dark'] .au-select__value--placeholder {
+  color: var(--au-color-form-placeholder);
+}
+
+[data-au-theme='high-contrast'] .au-select__trigger:disabled,
+[data-au-theme='high-contrast-dark'] .au-select__trigger:disabled {
+  opacity: 1;
+}
+
+[data-au-theme='high-contrast'] button.au-chip__surface:disabled,
+[data-au-theme='high-contrast-dark'] button.au-chip__surface:disabled {
+  opacity: 1;
+  color: var(--au-color-text-disabled);
+  border-color: var(--au-color-text-disabled);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Progress — taller track, 2px shell */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast'] .au-progress__track,
+[data-au-theme='high-contrast-dark'] .au-progress__track {
+  height: var(--au-progress-track-height);
+  border-width: 2px;
+}
+
+[data-au-theme='high-contrast'] .au-progress__bar,
+[data-au-theme='high-contrast-dark'] .au-progress__bar {
+  box-shadow: inset 0 0 0 1px var(--au-color-border-default);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Table — stronger row dividers */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast'] au-table .au-table__cell,
+[data-au-theme='high-contrast-dark'] au-table .au-table__cell {
+  border-bottom-width: var(--au-table-divider-width);
+  border-bottom-color: var(--au-color-border-default);
+}
+
+[data-au-theme='high-contrast'] au-table .au-table__header-cell,
+[data-au-theme='high-contrast-dark'] au-table .au-table__header-cell {
+  border-bottom-width: var(--au-table-divider-width);
+  border-bottom-color: var(--au-color-border-default);
+}
+
+[data-au-theme='high-contrast'] au-table .au-table__sort-icon,
+[data-au-theme='high-contrast-dark'] au-table .au-table__sort-icon {
+  opacity: 1;
+  color: var(--au-color-text-secondary);
+}
+
+[data-au-theme='high-contrast'] au-table .au-table__header-cell--sorted .au-table__sort-icon,
+[data-au-theme='high-contrast-dark'] au-table .au-table__header-cell--sorted .au-table__sort-icon {
+  color: var(--au-color-action-primary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Fields — tab focus ring (keyboard) */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast']
+  :is(
+    .au-input-text__control-row--from-tab,
+    .au-input-number__control-row--from-tab,
+    .au-textarea__control-row--from-tab,
+    .au-input-date__control-row--from-tab,
+    .au-input-time__control-row--from-tab,
+    .au-input-password__control-row--from-tab,
+    .au-tag-input__control-row--from-tab,
+    .au-select__control-row--from-tab,
+    .au-autocomplete__control-row--from-tab
+  ):focus-within,
+[data-au-theme='high-contrast-dark']
+  :is(
+    .au-input-text__control-row--from-tab,
+    .au-input-number__control-row--from-tab,
+    .au-textarea__control-row--from-tab,
+    .au-input-date__control-row--from-tab,
+    .au-input-time__control-row--from-tab,
+    .au-input-password__control-row--from-tab,
+    .au-tag-input__control-row--from-tab,
+    .au-select__control-row--from-tab,
+    .au-autocomplete__control-row--from-tab
+  ):focus-within {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast']
+  .au-checkbox__wrapper--from-tab:focus-within
+  .au-checkbox__element:not(:disabled),
+[data-au-theme='high-contrast-dark']
+  .au-checkbox__wrapper--from-tab:focus-within
+  .au-checkbox__element:not(:disabled) {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast'] button.au-chip__surface--from-tab:focus-visible,
+[data-au-theme='high-contrast'] .au-chip__remove--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] button.au-chip__surface--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] .au-chip__remove--from-tab:focus-visible {
+  outline-width: 3px;
+  outline-offset: 2px;
+}

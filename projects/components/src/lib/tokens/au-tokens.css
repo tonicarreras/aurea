@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:ital,wght@0,100..900;1,100..900&display=swap');
+@import './au-tokens-high-contrast.css';
 
 /**
  * Aurea — semantic tokens
@@ -94,18 +95,17 @@
   --au-checkbox-size-lg: 1.5rem; /* 24px */
 }
 
-/* Elevation: readable depth, no neumorphism — scale control → raised → float → overlay */
+/* Elevation: subtle depth — control → raised → float → overlay (product UI, not marketing) */
 :root {
   --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
-  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px rgba(15, 20, 26, 0.04);
-  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.08), 0 2px 8px rgba(15, 20, 26, 0.06);
-  --au-shadow-float: 0 4px 14px rgba(15, 20, 26, 0.1), 0 2px 4px rgba(15, 20, 26, 0.06);
-  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 12px 40px rgba(15, 20, 26, 0.14);
+  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.06), 0 0 0 1px rgba(15, 20, 26, 0.04);
+  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.06), 0 2px 4px rgba(15, 20, 26, 0.04);
+  --au-shadow-float: 0 2px 8px rgba(15, 20, 26, 0.07), 0 1px 2px rgba(15, 20, 26, 0.05);
+  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 8px 24px rgba(15, 20, 26, 0.1);
   --au-shadow-button: var(--au-shadow-control);
-  --au-shadow-button-primary:
-    0 1px 2px color-mix(in srgb, var(--au-color-action-primary) 36%, transparent),
-    0 1px 1px rgba(15, 20, 26, 0.05);
-  --au-shadow-button-hover: 0 2px 6px rgba(15, 20, 26, 0.1), 0 1px 2px rgba(15, 20, 26, 0.06);
+  --au-shadow-button-primary: 0 1px 1px
+    color-mix(in srgb, var(--au-color-action-primary) 28%, transparent);
+  --au-shadow-button-hover: var(--au-shadow-button-primary);
   --au-shadow-focus-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-focus-ring);
   --au-shadow-focus-control-error:
     0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-form-error);
@@ -327,7 +327,7 @@
   --au-floating-blur: 14px;
   --au-shadow-floating:
     0 0 0 1px color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent),
-    0 2px 4px -1px rgba(15, 20, 26, 0.06), 0 14px 36px -6px rgba(15, 20, 26, 0.14);
+    0 1px 3px rgba(15, 20, 26, 0.05), 0 6px 16px -4px rgba(15, 20, 26, 0.08);
   --au-transition-motion-tap:
     transform var(--au-motion-tap), box-shadow var(--au-motion-tap),
     background-color var(--au-motion-tap), border-color var(--au-motion-tap);
@@ -370,6 +370,15 @@
   --au-color-border-subtle: #e0e4ea;
   --au-color-border-default: #c8ced7;
   --au-color-border-strong: #8d98a6;
+  /* Control chrome — same recipe as au-button (secondary): 1px border-default + shadow-button */
+  --au-chrome-border: 1px solid var(--au-color-border-default);
+  --au-chrome-border-color: var(--au-color-border-default);
+  --au-chrome-border-color-hover: var(--au-color-border-strong);
+  --au-chrome-shadow: var(--au-shadow-button);
+  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
+  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
+  --au-color-form-border: var(--au-color-border-default);
+  --au-color-form-border-hover: var(--au-color-border-strong);
   /* Accent / link / button */
   --au-color-action-primary: #1059c8;
   --au-color-action-primary-hover: #0d4aa3;
@@ -484,8 +493,6 @@
   --au-color-selection: rgba(16, 89, 200, 0.2);
   --au-color-selection-text: inherit;
   /* Forms: aligned to surfaces, not accent (except focus) */
-  --au-color-form-border: #b8c0cc;
-  --au-color-form-border-hover: #8d98a6;
   --au-color-form-text: var(--au-color-text-primary);
   --au-color-form-placeholder: var(--au-color-text-tertiary);
   --au-color-form-caret: var(--au-color-text-primary);
@@ -590,11 +597,11 @@
 
 [data-au-theme='dark'] {
   color-scheme: dark;
-  /* Surfaces */
-  --au-color-surface-canvas: #0c0e12;
-  --au-color-surface-raised: #13161c;
-  --au-color-surface-elevated: #181b22;
-  --au-color-surface-sunken: #0a0c0f;
+  /* Surfaces — stepped neutrals (canvas < sunken < raised < elevated) */
+  --au-color-surface-canvas: #12161e;
+  --au-color-surface-sunken: #171d27;
+  --au-color-surface-raised: #1f2632;
+  --au-color-surface-elevated: #283140;
   --au-color-surface-inverted: #f0f2f4;
   /* Skeleton: lighter shimmer on dark raised surfaces */
   --au-color-skeleton-base: color-mix(
@@ -610,16 +617,24 @@
   /* Text */
   --au-color-text-primary: #eef1f4;
   --au-color-text-secondary: #a8b2bd;
-  --au-color-text-tertiary: #7a8794;
-  --au-color-text-placeholder: #5c6b7a;
-  --au-color-text-disabled: #5c6b7a;
+  --au-color-text-tertiary: #8b97a6;
+  --au-color-text-placeholder: #6d7a8a;
+  --au-color-text-disabled: #6d7a8a;
   --au-color-text-label: #dce0e5;
   --au-color-text-on-solid: #0c0e12;
-  /* Borders */
-  --au-color-border-subtle: #252a33;
-  --au-color-border-default: #343b46;
-  --au-color-border-strong: #4d5666;
-  /* Accent — lighter sky blue (readable on #0c–#18 surfaces; avoids light-mode #1059c8) */
+  /* Borders — slightly lighter so panels read on canvas */
+  --au-color-border-subtle: #2f3845;
+  --au-color-border-default: #3d4756;
+  --au-color-border-strong: #566274;
+  --au-chrome-border: 1px solid var(--au-color-border-default);
+  --au-chrome-border-color: var(--au-color-border-default);
+  --au-chrome-border-color-hover: var(--au-color-border-strong);
+  --au-chrome-shadow: var(--au-shadow-button);
+  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
+  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
+  --au-color-form-border: var(--au-color-border-default);
+  --au-color-form-border-hover: var(--au-color-border-strong);
+  /* Accent — lighter sky blue (readable on dark surfaces; avoids light-mode #1059c8) */
   --au-color-action-primary: #6eb4ff;
   --au-color-action-primary-hover: #8ec5ff;
   --au-color-action-primary-pressed: #b0d8ff;
@@ -723,21 +738,19 @@
   --au-color-state-selected-accent: var(--au-color-action-primary);
   --au-color-state-hover: color-mix(
     in srgb,
-    var(--au-color-action-primary) 12%,
-    var(--au-color-surface-sunken)
+    var(--au-color-action-primary) 10%,
+    var(--au-color-surface-elevated)
   );
   /* Selection */
   --au-color-selection: rgba(110, 180, 255, 0.28);
   /* Form */
-  --au-color-form-border: #343b46;
-  --au-color-form-border-hover: #4d5666;
   --au-color-form-text: var(--au-color-text-primary);
   --au-color-form-placeholder: var(--au-color-text-tertiary);
   --au-color-form-caret: var(--au-color-text-primary);
   --au-color-form-error: var(--au-color-semantic-error);
   --au-color-form-error-bg: var(--au-color-semantic-error-surface);
-  --au-color-form-disabled-foreground: #5c6b7a;
-  --au-color-form-disabled-surface: #1a1e26;
+  --au-color-form-disabled-foreground: #6d7a8a;
+  --au-color-form-disabled-surface: #232a36;
   /* Switch (off) */
   --au-color-switch-track-off: #4d5666;
   --au-color-switch-track-off-hover: #5c6b7d;
@@ -746,8 +759,8 @@
   /* Native `<select>` dropdown list */
   --au-color-select-menu-bg: var(--au-color-surface-elevated);
   --au-color-select-menu-text: var(--au-color-form-text);
-  --au-color-select-field-hover-bg: #1c222c;
-  --au-color-select-option-highlight-bg: #2a3340;
+  --au-color-select-field-hover-bg: #283140;
+  --au-color-select-option-highlight-bg: #343f4f;
   --au-color-select-option-highlight-text: #eef1f4;
   --au-color-select-option-highlight-marker: #8ec5ff;
   --au-color-select-option-selected-bg: #3d8fd4;
@@ -764,20 +777,19 @@
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
-  /* Dark shadows: edges, not heavy haze */
-  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
-  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --au-shadow-float: 0 6px 18px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.28);
-  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 48px rgba(0, 0, 0, 0.48);
+  /* Dark shadows: hairline edge + soft depth (avoid muddy black haze) */
+  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.06);
+  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --au-shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --au-shadow-float: 0 4px 12px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 12px 32px rgba(0, 0, 0, 0.32);
   --au-shadow-floating:
-    0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.36),
-    0 18px 40px -8px rgba(0, 0, 0, 0.52);
+    0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.2),
+    0 10px 24px -6px rgba(0, 0, 0, 0.28);
   --au-shadow-button: var(--au-shadow-control);
-  --au-shadow-button-primary:
-    0 1px 3px color-mix(in srgb, var(--au-color-action-primary) 42%, transparent),
-    0 1px 2px rgba(0, 0, 0, 0.28);
-  --au-shadow-button-hover: 0 3px 10px rgba(0, 0, 0, 0.34), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --au-shadow-button-primary: 0 1px 2px
+    color-mix(in srgb, var(--au-color-action-primary) 32%, transparent);
+  --au-shadow-button-hover: var(--au-shadow-button-primary);
   --au-shadow-focus-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-focus-ring);
   --au-shadow-focus-control-error:
     0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-form-error);
@@ -787,101 +799,23 @@
   --au-scroll-smooth: smooth;
 }
 
-/* ==========================================================================
-   Theme: high contrast (experimental) — WCAG-friendly palette
-   ========================================================================== */
-
-[data-au-theme='high-contrast'] {
-  color-scheme: light;
-  --au-color-surface-canvas: #ffffff;
-  --au-color-surface-raised: #ffffff;
-  --au-color-surface-elevated: #f5f5f5;
-  --au-color-surface-sunken: #ebebeb;
-  --au-color-surface-inverted: #000000;
-  --au-color-text-primary: #000000;
-  --au-color-text-secondary: #1a1a1a;
-  --au-color-text-tertiary: #333333;
-  --au-color-text-placeholder: #4d4d4d;
-  --au-color-text-disabled: #666666;
-  --au-color-text-label: #000000;
-  --au-color-text-on-solid: #ffffff;
-  --au-color-border-subtle: #000000;
-  --au-color-border-default: #000000;
-  --au-color-border-strong: #000000;
-  --au-color-action-primary: #0000ee;
-  --au-color-action-primary-hover: #0000cc;
-  --au-color-action-primary-pressed: #000099;
-  --au-color-link: #0000ee;
-  --au-color-link-hover: #0000cc;
-  --au-color-focus-ring: #000000;
-  --au-color-focus-inner: #ffffff;
-  --au-focus-ring-width: 3px;
-  --au-color-semantic-error: #b00020;
-  --au-color-semantic-error-contrast: #ffffff;
-  --au-color-semantic-error-surface: #ffe5e8;
-  --au-color-semantic-success: #006400;
-  --au-color-semantic-success-surface: #e6f4e6;
-  --au-color-semantic-warning: #5c4a00;
-  --au-color-semantic-warning-surface: #fff4cc;
-  --au-color-semantic-info: #003d6b;
-  --au-color-semantic-info-surface: #e6f2fa;
-  --au-color-form-border: #000000;
-  --au-color-form-border-hover: #000000;
-  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
-  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+/* Dark — portaled menus/popovers: opaque elevated surface (90% raised mix was too dim) */
+[data-au-theme='dark'] .au-floating-panel {
+  --au-floating-panel-bg: color-mix(in srgb, var(--au-color-surface-elevated) 96%, transparent);
+  --au-floating-panel-border: var(--au-color-border-default);
 }
 
-[data-au-theme='high-contrast-dark'] {
-  color-scheme: dark;
-  --au-color-surface-canvas: #000000;
-  --au-color-surface-raised: #000000;
-  --au-color-surface-elevated: #141414;
-  --au-color-surface-sunken: #0a0a0a;
-  --au-color-surface-inverted: #ffffff;
-  --au-color-text-primary: #ffffff;
-  --au-color-text-secondary: #f0f0f0;
-  --au-color-text-tertiary: #e0e0e0;
-  --au-color-text-placeholder: #cccccc;
-  --au-color-text-disabled: #999999;
-  --au-color-text-label: #ffffff;
-  --au-color-text-on-solid: #000000;
-  --au-color-border-subtle: #ffffff;
-  --au-color-border-default: #ffffff;
-  --au-color-border-strong: #ffffff;
-  --au-color-action-primary: #00ffff;
-  --au-color-action-primary-hover: #80ffff;
-  --au-color-action-primary-pressed: #b3ffff;
-  --au-color-link: #00ffff;
-  --au-color-link-hover: #80ffff;
-  --au-color-focus-ring: #ffffff;
-  --au-color-focus-inner: #000000;
-  --au-focus-ring-width: 3px;
-  --au-color-semantic-error: #ff6b6b;
-  --au-color-semantic-error-contrast: #000000;
-  --au-color-semantic-error-surface: #3d0000;
-  --au-color-semantic-success: #7fff7f;
-  --au-color-semantic-success-surface: #003300;
-  --au-color-semantic-warning: #ffff00;
-  --au-color-semantic-warning-surface: #333300;
-  --au-color-semantic-info: #80d4ff;
-  --au-color-semantic-info-surface: #001a33;
-  --au-color-form-border: #ffffff;
-  --au-color-form-border-hover: #ffffff;
-  --au-color-form-text: #ffffff;
-  --au-color-form-placeholder: #cccccc;
-  --au-color-form-error: #ff6b6b;
-  --au-color-form-error-bg: #3d0000;
-  --au-color-form-disabled-surface: #1a1a1a;
-  --au-shadow-control: 0 0 0 1px #ffffff;
-  --au-shadow-raised: 0 0 0 1px #ffffff;
-  --au-shadow-float: 0 0 0 2px #ffffff;
-  --au-shadow-overlay: 0 0 0 2px #ffffff, 0 8px 24px rgba(0, 0, 0, 0.9);
-  --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
-  --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
-  --au-shadow-focus-control:
-    0 0 0 1px var(--au-color-focus-ring), 0 0 0 calc(var(--au-focus-ring-width) + 1px) #000000;
-  --au-shadow-focus-control-error:
-    0 0 0 1px var(--au-color-semantic-error), 0 0 0 calc(var(--au-focus-ring-width) + 1px) #000000;
+[data-au-theme='dark'] au-dialog .au-dialog__native::backdrop {
+  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
+}
+
+[data-au-theme='dark'] au-drawer {
+  --au-drawer-shadow-end: -10px 0 28px rgba(0, 0, 0, 0.28);
+  --au-drawer-shadow-start: 10px 0 28px rgba(0, 0, 0, 0.28);
+}
+
+[data-au-theme='dark'] au-drawer .au-drawer__native::backdrop {
+  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
 }
 
 /* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */

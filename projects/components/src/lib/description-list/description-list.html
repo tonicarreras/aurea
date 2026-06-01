@@ -1,0 +1,14 @@
+<dl class="au-description-list__list">
+  <ng-content select="dt,dd" />
+  @for (item of items(); track item) {
+    <div
+      class="au-description-item"
+      [attr.data-au-description-item]=""
+    >
+      <dt class="au-description-item__term">{{ item.term() }}</dt>
+      <dd class="au-description-item__detail">
+        <ng-container *ngTemplateOutlet="item.detailTemplate()" />
+      </dd>
+    </div>
+  }
+</dl>

@@ -34,7 +34,7 @@ Not breaking: internal CSS, Storybook-only demos, docs site content, new optiona
 | **beta**         | Usable; optional props may still land; edge cases documented. |
 | **experimental** | May change or be removed in a MINOR until promoted.           |
 
-Promotions are announced in [CHANGELOG.md](../CHANGELOG.md). As of **1.5.0**, all entries in `component-maturity.ts` are **stable**.
+Promotions are announced in [CHANGELOG.md](../CHANGELOG.md). As of **1.6.0**, all entries in `component-maturity.ts` are **stable**.
 
 ## Deprecations
 

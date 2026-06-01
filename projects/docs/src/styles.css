@@ -1,6 +1,9 @@
 @import '../../components/src/lib/tokens/au-tokens.css';
 @import './app/demos/shared/demo-preview.css';
 @import './app/layout/docs-component-layout.css';
+@import './app/shared/docs-page-prose.css';
+@import './docs-host-overrides.css';
+/* Shared field chrome, listbox, description-list, accordion projected shells — see components/src/lib/styles/README.md */
 @import '../../components/src/lib/styles/aurea-global.css';
 
 /* Docs-only aliases (nav / links used legacy accent names) */
@@ -55,10 +58,47 @@
   text-wrap: wrap;
 }
 
-[data-au-theme='dark'] .docs-inline-code {
+[data-au-theme='dark'] .docs-inline-code,
+[data-au-theme='high-contrast-dark'] .docs-inline-code {
   border-color: var(--docs-border-fine);
   background: var(--au-color-surface-elevated);
   color: var(--au-color-text-primary);
+}
+
+[data-au-theme='high-contrast'] .docs-inline-code {
+  border-color: var(--au-color-border-default);
+  background: #ffffff;
+  color: #000000;
+}
+
+[data-au-theme='high-contrast'] {
+  --docs-border-fine: var(--au-color-border-subtle);
+  --docs-grid-line: var(--au-color-border-subtle);
+  --docs-code-bg: #ffffff;
+  --docs-code-fg: #000000;
+  --docs-elevated-shadow: none;
+  --docs-glow: transparent;
+  --docs-mesh-1: transparent;
+  --docs-mesh-2: transparent;
+}
+
+[data-au-theme='high-contrast-dark'] {
+  --docs-border-fine: var(--au-color-border-subtle);
+  --docs-grid-line: var(--au-color-border-subtle);
+  --docs-code-bg: #000000;
+  --docs-code-fg: #ffffff;
+  --docs-elevated-shadow: none;
+  --docs-glow: transparent;
+  --docs-mesh-1: transparent;
+  --docs-mesh-2: transparent;
+  --docs-token-comment: #cccccc;
+  --docs-token-keyword: #00ffff;
+  --docs-token-string: #7fff7f;
+  --docs-token-function: #80d4ff;
+  --docs-token-punctuation: #ffffff;
+  --docs-token-tag: #00ffff;
+  --docs-token-attr: #ffff00;
+  --docs-token-builtin: #80d4ff;
 }
 
 [data-au-theme='dark'] {

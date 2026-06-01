@@ -2,22 +2,22 @@
   "$schema": "https://design-tokens.org/schemas/2025-10/format.json",
   "color": {
     "surface": {
-      "canvas": { "$value": "#0c0e12", "$type": "color" },
-      "raised": { "$value": "#13161c", "$type": "color" },
-      "elevated": { "$value": "#181b22", "$type": "color" },
-      "sunken": { "$value": "#0a0c0f", "$type": "color" },
+      "canvas": { "$value": "#12161e", "$type": "color" },
+      "raised": { "$value": "#1f2632", "$type": "color" },
+      "elevated": { "$value": "#283140", "$type": "color" },
+      "sunken": { "$value": "#171d27", "$type": "color" },
       "inverted": { "$value": "#f0f2f4", "$type": "color" }
     },
     "text": {
       "primary": { "$value": "#eef1f4", "$type": "color" },
       "secondary": { "$value": "#a8b2bd", "$type": "color" },
-      "tertiary": { "$value": "#7a8794", "$type": "color" },
+      "tertiary": { "$value": "#8b97a6", "$type": "color" },
       "on-solid": { "$value": "#0c0e12", "$type": "color" }
     },
     "border": {
-      "subtle": { "$value": "#252a33", "$type": "color" },
-      "default": { "$value": "#343b46", "$type": "color" },
-      "strong": { "$value": "#4d5666", "$type": "color" }
+      "subtle": { "$value": "#2f3845", "$type": "color" },
+      "default": { "$value": "#3d4756", "$type": "color" },
+      "strong": { "$value": "#566274", "$type": "color" }
     },
     "action": {
       "primary": { "$value": "#6eb4ff", "$type": "color" },

@@ -11,7 +11,7 @@
       "output": "."
     },
     {
-      "glob": "au-tokens.css",
+      "glob": "au-tokens*.css",
       "input": "src/lib/tokens",
       "output": "styles"
     },

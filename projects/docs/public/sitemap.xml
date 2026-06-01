@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://aurea-ds.netlify.app/en</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/get-started</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/guides/adoption</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/adoption"/>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/guides/signal-forms</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/signal-forms"/>
@@ -39,7 +39,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/guides/crud-demo</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/crud-demo"/>
@@ -48,7 +48,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/maturity</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -57,7 +57,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/design-tokens</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -66,7 +66,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/themes</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -75,7 +75,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -84,7 +84,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/button</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/button"/>
@@ -92,8 +92,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/button"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/components/button-group</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/button-group"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/button-group"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/button-group"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/components/form-field</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/form-field"/>
@@ -102,7 +111,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/fieldset</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/fieldset"/>
@@ -111,7 +120,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/input-text</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-text"/>
@@ -120,7 +129,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/textarea</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/textarea"/>
@@ -129,7 +138,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/checkbox</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/checkbox"/>
@@ -138,7 +147,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/switch</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/switch"/>
@@ -147,7 +156,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/select</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/select"/>
@@ -156,7 +165,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/autocomplete</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/autocomplete"/>
@@ -164,8 +173,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/autocomplete"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/components/avatar</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/avatar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/avatar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/avatar"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/components/accordion</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/accordion"/>
@@ -174,7 +192,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/radio-group</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/radio-group"/>
@@ -183,7 +201,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/input-number</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-number"/>
@@ -192,7 +210,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/slider</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/slider"/>
@@ -201,7 +219,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/input-date</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-date"/>
@@ -209,8 +227,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/input-date"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/components/input-time</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-time"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/input-time"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/input-time"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/en/components/input-password</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-password"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/input-password"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/input-password"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/components/file-upload</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/file-upload"/>
@@ -219,7 +255,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/dialog</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/dialog"/>
@@ -227,8 +263,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/dialog"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/components/drawer</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/drawer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/drawer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/drawer"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/components/card</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/card"/>
@@ -237,7 +282,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/tabs</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/tabs"/>
@@ -245,8 +290,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/tabs"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/components/tag-input</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/tag-input"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/tag-input"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/tag-input"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/components/steps</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/steps"/>
@@ -255,7 +309,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/chip</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/chip"/>
@@ -264,7 +318,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/chip-group</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/chip-group"/>
@@ -273,7 +327,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/list</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/list"/>
@@ -282,7 +336,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/snackbar</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/snackbar"/>
@@ -291,7 +345,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/message</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/message"/>
@@ -300,7 +354,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/icon</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/icon"/>
@@ -309,7 +363,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/skeleton</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/skeleton"/>
@@ -318,7 +372,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/divider</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/divider"/>
@@ -326,8 +380,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/divider"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/components/description-list</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/description-list"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/description-list"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/description-list"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/components/empty-state</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/empty-state"/>
@@ -336,7 +399,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/badge</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/badge"/>
@@ -345,7 +408,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/breadcrumb</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/breadcrumb"/>
@@ -354,7 +417,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/link</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/link"/>
@@ -363,7 +426,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/menu</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/menu"/>
@@ -372,7 +435,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/pagination</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/pagination"/>
@@ -381,7 +444,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/popover</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/popover"/>
@@ -390,7 +453,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/progress</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/progress"/>
@@ -399,7 +462,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/spinner</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/spinner"/>
@@ -408,7 +471,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/table</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/table"/>
@@ -417,7 +480,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/en/components/tooltip</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/tooltip"/>
@@ -426,7 +489,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -435,7 +498,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/get-started</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -444,7 +507,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/guides/adoption</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/adoption"/>
@@ -453,7 +516,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/guides/signal-forms</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/signal-forms"/>
@@ -462,7 +525,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/guides/crud-demo</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/crud-demo"/>
@@ -471,7 +534,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/maturity</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -480,7 +543,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/design-tokens</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -489,7 +552,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/themes</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -498,7 +561,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en"/>
@@ -507,7 +570,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/button</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/button"/>
@@ -515,8 +578,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/button"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/es/components/button-group</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/button-group"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/button-group"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/button-group"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/es/components/form-field</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/form-field"/>
@@ -525,7 +597,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/fieldset</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/fieldset"/>
@@ -534,7 +606,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/input-text</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-text"/>
@@ -543,7 +615,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/textarea</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/textarea"/>
@@ -552,7 +624,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/checkbox</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/checkbox"/>
@@ -561,7 +633,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/switch</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/switch"/>
@@ -570,7 +642,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/select</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/select"/>
@@ -579,7 +651,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/autocomplete</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/autocomplete"/>
@@ -587,8 +659,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/autocomplete"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/es/components/avatar</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/avatar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/avatar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/avatar"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/es/components/accordion</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/accordion"/>
@@ -597,7 +678,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/radio-group</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/radio-group"/>
@@ -606,7 +687,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/input-number</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-number"/>
@@ -615,7 +696,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/slider</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/slider"/>
@@ -624,7 +705,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/input-date</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-date"/>
@@ -632,8 +713,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/input-date"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/es/components/input-time</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-time"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/input-time"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/input-time"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/es/components/input-password</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/input-password"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/input-password"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/input-password"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/es/components/file-upload</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/file-upload"/>
@@ -642,7 +741,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/dialog</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/dialog"/>
@@ -650,8 +749,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/dialog"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/es/components/drawer</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/drawer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/drawer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/drawer"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/es/components/card</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/card"/>
@@ -660,7 +768,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/tabs</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/tabs"/>
@@ -668,8 +776,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/tabs"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/es/components/tag-input</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/tag-input"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/tag-input"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/tag-input"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/es/components/steps</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/steps"/>
@@ -678,7 +795,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/chip</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/chip"/>
@@ -687,7 +804,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/chip-group</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/chip-group"/>
@@ -696,7 +813,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/list</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/list"/>
@@ -705,7 +822,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/snackbar</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/snackbar"/>
@@ -714,7 +831,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/message</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/message"/>
@@ -723,7 +840,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/icon</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/icon"/>
@@ -732,7 +849,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/skeleton</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/skeleton"/>
@@ -741,7 +858,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/divider</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/divider"/>
@@ -749,8 +866,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/divider"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/es/components/description-list</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/description-list"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/description-list"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/description-list"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/es/components/empty-state</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/empty-state"/>
@@ -759,7 +885,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/badge</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/badge"/>
@@ -768,7 +894,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/breadcrumb</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/breadcrumb"/>
@@ -777,7 +903,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/link</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/link"/>
@@ -786,7 +912,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/menu</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/menu"/>
@@ -795,7 +921,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/pagination</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/pagination"/>
@@ -804,7 +930,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/popover</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/popover"/>
@@ -813,7 +939,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/progress</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/progress"/>
@@ -822,7 +948,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/spinner</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/spinner"/>
@@ -831,7 +957,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/table</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/table"/>
@@ -840,7 +966,7 @@
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/components/tooltip</loc>
-    <lastmod>2026-05-31</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/tooltip"/>

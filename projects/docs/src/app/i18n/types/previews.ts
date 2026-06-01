@@ -11,6 +11,7 @@ export interface PreviewMessages {
   avatar: { name: string; alt: string; src: string };
   breadcrumb: { home: string; components: string; table: string };
   button: { primary: string; secondary: string; outline: string; ghost: string };
+  buttonGroup: { ariaLabel: string; cancel: string; save: string };
   card: { title: string; body: string; action: string };
   checkbox: { terms: string; newsletter: string };
   chip: { removable: string };
@@ -18,6 +19,12 @@ export interface PreviewMessages {
   dialog: { open: string; title: string; body: string; cancel: string; confirm: string };
   drawer: { open: string; title: string; body: string; cancel: string; apply: string };
   divider: { top: string; label: string; bottom: string };
+  descriptionList: {
+    nameLabel: string;
+    nameValue: string;
+    emailLabel: string;
+    emailValue: string;
+  };
   fieldset: {
     legend: string;
     description: string;
@@ -27,6 +34,7 @@ export interface PreviewMessages {
   fileUpload: { label: string; hint: string };
   formField: { label: string; hint: string; placeholder: string };
   inputDate: { label: string };
+  inputPassword: { label: string; hint: string };
   inputTime: { label: string };
   inputNumber: { label: string };
   inputText: { label: string; placeholder: string };
@@ -49,6 +57,7 @@ export interface PreviewMessages {
     examplesPanel: string;
   };
   switch: { hint: string; label: string };
+  tagInput: { label: string; hint: string; initialTags: string[] };
   table: {
     title: string;
     description: string;

@@ -78,6 +78,9 @@ export interface DocsMessages {
     attrHeading: string;
     attrBody: string;
     attrExpand: string;
+    globalStylesHeading: string;
+    globalStylesBody: string;
+    globalStylesExpand: string;
     directiveHeading: string;
     directiveBody: string;
     directiveExpand: string;

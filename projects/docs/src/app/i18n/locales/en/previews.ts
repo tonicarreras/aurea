@@ -16,6 +16,7 @@ export const PREVIEWS_EN: PreviewMessages = {
   },
   breadcrumb: { home: 'Home', components: 'Components', table: 'Table' },
   button: { primary: 'Primary', secondary: 'Secondary', outline: 'Outline', ghost: 'Ghost' },
+  buttonGroup: { ariaLabel: 'Document actions', cancel: 'Cancel', save: 'Save' },
   card: {
     title: 'Aurea project',
     body: 'Surface with optional header, body, and footer for related content.',
@@ -44,6 +45,12 @@ export const PREVIEWS_EN: PreviewMessages = {
     apply: 'Apply',
   },
   divider: { top: 'Top section', label: 'or', bottom: 'Bottom section' },
+  descriptionList: {
+    nameLabel: 'Name',
+    nameValue: 'Ada Lovelace',
+    emailLabel: 'Email',
+    emailValue: 'ada@example.com',
+  },
   fieldset: {
     legend: 'Shipping address',
     description: 'Where we deliver your order.',
@@ -57,6 +64,7 @@ export const PREVIEWS_EN: PreviewMessages = {
     placeholder: 'you@example.com',
   },
   inputDate: { label: 'Start date' },
+  inputPassword: { label: 'Password', hint: 'Use at least 12 characters.' },
   inputTime: { label: 'Start time' },
   inputNumber: { label: 'Quantity' },
   inputText: { label: 'Name', placeholder: 'Your name' },
@@ -83,6 +91,11 @@ export const PREVIEWS_EN: PreviewMessages = {
     examplesPanel: 'Copy-ready snippets.',
   },
   switch: { hint: 'You can change this in system settings.', label: 'System dark mode' },
+  tagInput: {
+    label: 'Skills',
+    hint: 'Press Enter or comma to add.',
+    initialTags: ['Angular', 'TypeScript'],
+  },
   table: {
     title: 'Team',
     description: 'Docs preview.',

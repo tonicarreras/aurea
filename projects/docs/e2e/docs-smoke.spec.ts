@@ -21,22 +21,22 @@ test.describe('Docs site smoke', () => {
     await expect(page.locator('docs-page')).toBeVisible();
   });
 
-  test('api table descriptions follow locale on input-text', async ({ page }) => {
-    await page.goto('/en/components/input-text');
+  test('api table descriptions follow locale on input-password', async ({ page }) => {
+    await page.goto('/en/components/input-password');
     await page.locator('docs-shell').waitFor({ state: 'attached' });
     await page.locator('.docs-component-steps [auStep="api"]').click();
     await expect(page.locator('docs-component-api-table').first()).toContainText(
-      /show\/hide button when/i,
+      /reveal\/hide button/i,
     );
     await expect(page.locator('docs-component-api-table').first()).not.toContainText(
       /botón mostrar/i,
     );
 
-    await page.goto('/es/components/input-text');
+    await page.goto('/es/components/input-password');
     await page.locator('docs-shell').waitFor({ state: 'attached' });
     await page.locator('.docs-component-steps [auStep="api"]').click();
     await expect(page.locator('docs-component-api-table').first()).toContainText(
-      /botón mostrar\/ocultar/i,
+      /botón revelar\/ocultar/i,
     );
   });
 

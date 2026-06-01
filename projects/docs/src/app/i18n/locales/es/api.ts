@@ -107,11 +107,15 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           'Proyecta dentro de `au-form-field`. Implementa `FormValueControl<string | null>`. Enlaza `[formField]` o `[(value)]`.',
         rows: [
           ...VALUE_FIELD_BASE,
-          i('type', "'text' | 'password' | 'email' | …", 'Tipo nativo del `<input>`.', "'text'"),
+          i(
+            'type',
+            "'text' | 'email' | 'number' | …",
+            'Tipo nativo del `<input>`. Contraseña → `au-input-password`.',
+            "'text'",
+          ),
           i('autocomplete', 'string | undefined', 'Atributo `autocomplete`.'),
           i('minLength', 'number | undefined', 'Validación nativa `minlength`.'),
           i('maxLength', 'number | undefined', 'Validación nativa `maxlength`.'),
-          i('showPasswordToggle', 'boolean', 'Botón mostrar/ocultar si `type="password"`.', 'true'),
         ],
       },
     ],
@@ -258,6 +262,12 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           m('value', 'ModelSignal<string[]>', 'Claves de secciones expandidas.'),
           i('multiple', 'boolean', 'Permite varios paneles abiertos.', 'true'),
           i('ariaLabel', 'string', 'Nombre accesible de la región.', "''"),
+          i(
+            'variant',
+            "'plain' | 'contained'",
+            'Separadores planos o superficie elevada con borde.',
+            "'plain'",
+          ),
           i('size', "'sm' | 'md'", 'Densidad tipográfica del trigger.', "'md'"),
           i('id', 'string', 'Prefijo de id estable para triggers/paneles.', "''"),
           o('valueChange', 'string[]', 'Al cambiar las claves expandidas.'),
@@ -274,7 +284,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuAccordionPanel',
         description: 'Región del panel emparejada con una clave de trigger.',
-        rows: [i('auAccordionPanel', 'string', 'Clave de sección (input requerido).')],
+        rows: [i('panel', 'string', 'Clave de sección; debe coincidir con `auAccordionItem`.')],
       },
     ],
   },
@@ -397,6 +407,104 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
+  'input-password': {
+    importNames: ['AuFormField', 'AuInputPassword'],
+    sections: [
+      {
+        title: 'AuInputPassword',
+        description:
+          'Proyecta dentro de `au-form-field`. Campo de contraseña dedicado con toggle de revelar opcional.',
+        rows: [
+          m('value', 'ModelSignal<string | null>', 'Contraseña; vacío es `null`.'),
+          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
+          i('invalid', 'boolean', 'Inválido.', 'false'),
+          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          i('readOnly', 'boolean', 'Solo lectura.', 'false'),
+          i('required', 'boolean', 'Obligatorio.', 'false'),
+          i('name', 'string', 'Atributo `name` nativo.', "''"),
+          i('placeholder', 'string', 'Placeholder.', "''"),
+          i(
+            'autocomplete',
+            'string | undefined',
+            '`autocomplete` nativo (p. ej. `current-password`).',
+          ),
+          i('minLength', 'number | undefined', '`minlength` nativo.'),
+          i('maxLength', 'number | undefined', '`maxlength` nativo.'),
+          i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
+          i('showRevealToggle', 'boolean', 'Muestra botón revelar/ocultar.', 'true'),
+          i('revealLabelShow', 'string', '`aria-label` del botón revelar.', "'Show password'"),
+          i('revealLabelHide', 'string', '`aria-label` del botón ocultar.', "'Hide password'"),
+          o('blur', 'void', 'Blur.'),
+          o('valueChange', 'string | null', 'Cuando cambia el valor.'),
+        ],
+      },
+    ],
+  },
+  'button-group': {
+    importNames: ['AuButtonGroup', 'AuButton', 'type AuButtonGroupOrientation'],
+    sections: [
+      {
+        title: 'AuButtonGroup',
+        description: 'Agrupa hijos `au-button` proyectados; no es control de formulario.',
+        rows: [
+          i('ariaLabel', 'string', 'Nombre accesible del grupo.', "''"),
+          i('ariaLabelledBy', 'string', 'ID del elemento que etiqueta.', "''"),
+          i('attached', 'boolean', 'Comparte bordes entre botones.', 'true'),
+          i('orientation', "'horizontal' | 'vertical'", 'Dirección del layout.', "'horizontal'"),
+        ],
+      },
+    ],
+  },
+  'description-list': {
+    importNames: ['AuDescriptionList', 'AuDescriptionItem'],
+    sections: [
+      {
+        title: 'AuDescriptionList',
+        description:
+          'Contenedor semántico `<dl>`. Preferir `au-description-item`; `<dt>` / `<dd>` nativos para markup avanzado.',
+        rows: [
+          i(
+            'layout',
+            "'vertical' | 'horizontal'",
+            'Disposición término/descripción.',
+            "'vertical'",
+          ),
+          i('columns', '1 | 2 | 3', 'Número de columnas en la rejilla.', '1'),
+        ],
+      },
+      {
+        title: 'AuDescriptionItem',
+        description: 'Un par término/descripción dentro de `au-description-list`.',
+        rows: [i('term', 'string', 'Etiqueta en `<dt>`.', "''")],
+      },
+    ],
+  },
+  'tag-input': {
+    importNames: ['AuFormField', 'AuTagInput'],
+    sections: [
+      {
+        title: 'AuTagInput',
+        description:
+          'Proyecta dentro de `au-form-field`. Etiquetas multi-valor como chips removibles.',
+        rows: [
+          m('value', 'ModelSignal<string[]>', 'Etiquetas confirmadas.'),
+          i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
+          i('invalid', 'boolean', 'Inválido.', 'false'),
+          i('disabled', 'boolean', 'Desactivado.', 'false'),
+          i('readOnly', 'boolean', 'Solo lectura.', 'false'),
+          i('required', 'boolean', 'Obligatorio.', 'false'),
+          i('name', 'string', 'Atributo `name` nativo.', "''"),
+          i('placeholder', 'string', 'Placeholder del borrador.', "''"),
+          i('size', "'sm' | 'md' | 'lg'", 'Densidad.', "'md'"),
+          i('allowDuplicates', 'boolean', 'Permite texto repetido.', 'false'),
+          i('maxTags', 'number | undefined', 'Máximo de etiquetas.'),
+          i('removeTagLabel', 'string', '`aria-label` de botones quitar.', "'Remove tag'"),
+          o('blur', 'void', 'Blur; confirma borrador si no está vacío.'),
+          o('valueChange', 'string[]', 'Cuando cambian las etiquetas.'),
+        ],
+      },
+    ],
+  },
   'file-upload': {
     importNames: ['AuFormField', 'AuFileUpload'],
     sections: [
@@ -495,6 +603,12 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
         rows: [
           i('variant', "'elevated' | 'outlined' | 'filled'", 'Estilo de superficie.', "'elevated'"),
           i('size', "'sm' | 'md' | 'lg'", 'Padding interno (`--au-card-*`).', "'md'"),
+          i(
+            'interactive',
+            'boolean',
+            'Elevación al hover en variante elevated; cuando la tarjeta es enlace o destino de clic.',
+            'false',
+          ),
           {
             name: 'hasFooter',
             type: 'Signal<boolean> (solo lectura)',

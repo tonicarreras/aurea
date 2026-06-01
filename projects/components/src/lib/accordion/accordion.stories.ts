@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
-import { AuAccordionPanel } from './au-accordion-panel.directive';
+import { AuAccordionPanel } from './au-accordion-panel';
 import { AuAccordion } from './accordion';
 
 const storyImports = [AuAccordion, AuAccordionItem, AuAccordionPanel];
@@ -14,6 +14,12 @@ const meta: Meta<AuAccordion> = {
   parameters: storyMetaParameters('accordion'),
   argTypes: {
     multiple: { control: 'boolean', table: { category: 'Behavior' } },
+    variant: {
+      control: 'select',
+      options: ['plain', 'contained'],
+      description: 'Plain dividers or raised surface shell.',
+      table: { category: 'Appearance' },
+    },
     size: {
       control: 'select',
       options: ['sm', 'md'],
@@ -23,6 +29,7 @@ const meta: Meta<AuAccordion> = {
   },
   args: {
     multiple: true,
+    variant: 'plain',
     size: 'md',
     ariaLabel: 'Account settings',
   },
@@ -39,20 +46,21 @@ export const Default: Story = {
       <au-accordion
         [(value)]="expanded"
         [multiple]="multiple"
+        [variant]="variant"
         [size]="size"
         [ariaLabel]="ariaLabel"
       >
         <div class="au-accordion__item">
           <button type="button" auAccordionItem="profile">Profile</button>
-          <div auAccordionPanel="profile">Update your name, email, and avatar.</div>
+          <au-accordion-panel panel="profile">Update your name, email, and avatar.</au-accordion-panel>
         </div>
         <div class="au-accordion__item">
           <button type="button" auAccordionItem="billing">Billing</button>
-          <div auAccordionPanel="billing">Manage payment methods and invoices.</div>
+          <au-accordion-panel panel="billing">Manage payment methods and invoices.</au-accordion-panel>
         </div>
         <div class="au-accordion__item">
           <button type="button" auAccordionItem="security">Security</button>
-          <div auAccordionPanel="security">Change password and enable 2FA.</div>
+          <au-accordion-panel panel="security">Change password and enable 2FA.</au-accordion-panel>
         </div>
       </au-accordion>
     `,
@@ -66,5 +74,10 @@ export const SingleExpand: Story = {
 
 export const Compact: Story = {
   args: { size: 'sm' },
+  render: Default.render,
+};
+
+export const Contained: Story = {
+  args: { variant: 'contained' },
   render: Default.render,
 };
