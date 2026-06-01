@@ -25,5 +25,7 @@ export class AuDescriptionList {
   readonly layout = input<AuDescriptionListLayout>('vertical');
   readonly columns = input<AuDescriptionListColumns>(1);
 
+  /* v8 ignore start -- contentChildren token reference is not invoked at runtime */
   readonly items = contentChildren(AuDescriptionItem);
+  /* v8 ignore end */
 }
