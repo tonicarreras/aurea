@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewEncapsulation,
   computed,
   input,
   model,
@@ -11,22 +10,25 @@ import {
 
 import { AuAccordionItem } from './au-accordion-item.directive';
 
+export type AuAccordionVariant = 'plain' | 'contained';
+
 /**
  * Collapsible sections with WAI-ARIA accordion triggers and panels.
  *
  * @remarks
  * - **Value:** `[(value)]` lists expanded section keys.
  * - **Structure:** `button[auAccordionItem]` + `au-accordion-panel` with matching keys.
+ * - **Variant:** `plain` (dividers only) or `contained` (raised surface, like a card shell).
  * - **Keyboard:** Arrow Up/Down move focus; Home/End jump; Enter/Space toggle.
  */
 @Component({
   selector: 'au-accordion',
   templateUrl: './accordion.html',
   styleUrl: './accordion.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-accordion',
+    '[attr.data-au-variant]': 'variant()',
     '[attr.data-au-size]': 'size()',
   },
 })
@@ -40,6 +42,8 @@ export class AuAccordion {
   /** When false, opening one section closes the others. */
   readonly multiple = input(true);
   readonly ariaLabel = input<string>('');
+  /** `plain` embeds in the page; `contained` adds raised surface and outer border. */
+  readonly variant = input<AuAccordionVariant>('plain');
   readonly size = input<'sm' | 'md'>('md');
   readonly id = input<string>('');
 

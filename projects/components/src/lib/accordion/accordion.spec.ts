@@ -49,6 +49,11 @@ describe('AuAccordion', () => {
     fixture.detectChanges();
   });
 
+  it('defaults to plain variant', () => {
+    const accordion = fixture.nativeElement.querySelector('au-accordion') as HTMLElement;
+    expect(accordion.getAttribute('data-au-variant')).toBe('plain');
+  });
+
   it('renders triggers and shows the expanded panel', () => {
     const root = fixture.nativeElement as HTMLElement;
     expect(
@@ -176,6 +181,38 @@ describe('AuAccordion', () => {
     expect(document.activeElement).toBe(buttons[0]);
     root.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     expect(document.activeElement).toBe(buttons[1]);
+  });
+});
+
+describe('AuAccordion variant', () => {
+  it('applies contained surface attributes', () => {
+    @Component({
+      imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
+      template: `
+        <au-accordion
+          [(value)]="expanded"
+          variant="contained"
+        >
+          <div class="au-accordion__item">
+            <button
+              type="button"
+              auAccordionItem="one"
+            >
+              One
+            </button>
+            <au-accordion-panel panel="one">Panel</au-accordion-panel>
+          </div>
+        </au-accordion>
+      `,
+    })
+    class ContainedHost {
+      expanded: string[] = ['one'];
+    }
+
+    const containedFixture = TestBed.createComponent(ContainedHost);
+    containedFixture.detectChanges();
+    const accordion = containedFixture.nativeElement.querySelector('au-accordion') as HTMLElement;
+    expect(accordion.getAttribute('data-au-variant')).toBe('contained');
   });
 });
 

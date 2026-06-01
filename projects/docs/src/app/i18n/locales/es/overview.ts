@@ -183,7 +183,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Shell', detail: 'Igual que campos de una línea.' },
-      { region: '`<textarea>`', detail: 'Padding vertical `--au-textarea-pad-y`.' },
+      {
+        region: '`<textarea>`',
+        detail: 'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (o presets por `size`).',
+      },
     ],
     accessibility: [
       'Misma semántica de label, error y hint que input-text.',
@@ -331,6 +334,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     intro: [
       'Secciones plegables con patrón WAI-ARIA accordion: `button[auAccordionItem]` y `au-accordion-panel` comparten una clave string.',
       'Enlaza `[(value)]` a la lista de claves expandidas; `[multiple]="false"` para expansión exclusiva.',
+      '`variant="contained"` añade superficie elevada (como una tarjeta); `plain` (por defecto) solo usa separadores.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -347,6 +351,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
+      {
+        region: 'Host',
+        detail: '`variant="plain"` (separadores) o `contained` (superficie elevada).',
+      },
       { region: '`.au-accordion__item`', detail: 'Envuelve cada par trigger + panel.' },
       {
         region: '`button[auAccordionItem]`',
@@ -495,8 +503,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   'input-password': {
     intro: [
       'Campo de contraseña dedicado con toggle de revelar opcional y cromado Aurea compartido.',
-      'Campo de contraseña dedicado con toggle de revelar y autocomplete específico.',
-      'Implementa `FormValueControl<string | null>`; vacío ↔ `null`.',
+      'Implementa `FormValueControl<string | null>`; vacío ↔ `null`. Localiza `revealLabelShow` / `revealLabelHide`.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -702,6 +709,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Los botones de quitar exponen `aria-label` vía `removeTagLabel`.',
+      '`readOnly` mantiene el control nativo legible sin `disabled` (sigue en el orden de tabulación).',
       'Backspace con borrador vacío elimina la última etiqueta.',
     ],
     keyboard: [

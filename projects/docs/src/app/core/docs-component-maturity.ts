@@ -2,6 +2,8 @@
  * Docs-side maturity map — keep in sync with
  * `projects/components/src/lib/component-maturity.ts`.
  * Local copy avoids pulling the full component catalog into the index chunk.
+ *
+ * 1.6.0 stable: input-password, button-group, description-list, tag-input.
  */
 export type DocsComponentMaturityLevel = 'stable' | 'beta' | 'experimental';
 
@@ -12,7 +14,7 @@ export interface DocsComponentMaturityMeta {
 
 const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   button: { level: 'stable', since: '0.1.0' },
-  'button-group': { level: 'beta', since: '1.6.0' },
+  'button-group': { level: 'stable', since: '1.6.0' },
   'form-field': { level: 'stable', since: '0.1.0' },
   'input-text': { level: 'stable', since: '0.1.0' },
   textarea: { level: 'stable', since: '0.2.0' },
@@ -24,7 +26,7 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   'input-number': { level: 'stable', since: '0.2.0' },
   'input-date': { level: 'stable', since: '1.5.0' },
   'input-time': { level: 'stable', since: '1.5.0' },
-  'input-password': { level: 'beta', since: '1.6.0' },
+  'input-password': { level: 'stable', since: '1.6.0' },
   dialog: { level: 'stable', since: '0.2.0' },
   card: { level: 'stable', since: '0.1.0' },
   tabs: { level: 'stable', since: '1.5.0' },
@@ -38,7 +40,7 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   skeleton: { level: 'stable', since: '0.2.0' },
   spinner: { level: 'stable', since: '1.0.0' },
   divider: { level: 'stable', since: '0.1.0' },
-  'description-list': { level: 'beta', since: '1.6.0' },
+  'description-list': { level: 'stable', since: '1.6.0' },
   'empty-state': { level: 'stable', since: '1.2.0' },
   accordion: { level: 'stable', since: '1.2.0' },
   fieldset: { level: 'stable', since: '1.2.0' },
@@ -55,7 +57,7 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   menu: { level: 'stable', since: '0.9.0' },
   popover: { level: 'stable', since: '0.9.0' },
   table: { level: 'stable', since: '0.9.0' },
-  'tag-input': { level: 'beta', since: '1.6.0' },
+  'tag-input': { level: 'stable', since: '1.6.0' },
 };
 
 export function getDocsComponentMaturity(slug: string): DocsComponentMaturityMeta {

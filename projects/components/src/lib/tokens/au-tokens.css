@@ -589,11 +589,11 @@
 
 [data-au-theme='dark'] {
   color-scheme: dark;
-  /* Surfaces */
-  --au-color-surface-canvas: #0c0e12;
-  --au-color-surface-raised: #13161c;
-  --au-color-surface-elevated: #181b22;
-  --au-color-surface-sunken: #0a0c0f;
+  /* Surfaces — stepped neutrals (canvas < sunken < raised < elevated) */
+  --au-color-surface-canvas: #12161e;
+  --au-color-surface-sunken: #171d27;
+  --au-color-surface-raised: #1f2632;
+  --au-color-surface-elevated: #283140;
   --au-color-surface-inverted: #f0f2f4;
   /* Skeleton: lighter shimmer on dark raised surfaces */
   --au-color-skeleton-base: color-mix(
@@ -609,16 +609,16 @@
   /* Text */
   --au-color-text-primary: #eef1f4;
   --au-color-text-secondary: #a8b2bd;
-  --au-color-text-tertiary: #7a8794;
-  --au-color-text-placeholder: #5c6b7a;
-  --au-color-text-disabled: #5c6b7a;
+  --au-color-text-tertiary: #8b97a6;
+  --au-color-text-placeholder: #6d7a8a;
+  --au-color-text-disabled: #6d7a8a;
   --au-color-text-label: #dce0e5;
   --au-color-text-on-solid: #0c0e12;
-  /* Borders */
-  --au-color-border-subtle: #252a33;
-  --au-color-border-default: #343b46;
-  --au-color-border-strong: #4d5666;
-  /* Accent — lighter sky blue (readable on #0c–#18 surfaces; avoids light-mode #1059c8) */
+  /* Borders — slightly lighter so panels read on canvas */
+  --au-color-border-subtle: #2f3845;
+  --au-color-border-default: #3d4756;
+  --au-color-border-strong: #566274;
+  /* Accent — lighter sky blue (readable on dark surfaces; avoids light-mode #1059c8) */
   --au-color-action-primary: #6eb4ff;
   --au-color-action-primary-hover: #8ec5ff;
   --au-color-action-primary-pressed: #b0d8ff;
@@ -722,21 +722,21 @@
   --au-color-state-selected-accent: var(--au-color-action-primary);
   --au-color-state-hover: color-mix(
     in srgb,
-    var(--au-color-action-primary) 12%,
-    var(--au-color-surface-sunken)
+    var(--au-color-action-primary) 10%,
+    var(--au-color-surface-elevated)
   );
   /* Selection */
   --au-color-selection: rgba(110, 180, 255, 0.28);
   /* Form */
-  --au-color-form-border: #343b46;
-  --au-color-form-border-hover: #4d5666;
+  --au-color-form-border: #3d4756;
+  --au-color-form-border-hover: #566274;
   --au-color-form-text: var(--au-color-text-primary);
   --au-color-form-placeholder: var(--au-color-text-tertiary);
   --au-color-form-caret: var(--au-color-text-primary);
   --au-color-form-error: var(--au-color-semantic-error);
   --au-color-form-error-bg: var(--au-color-semantic-error-surface);
-  --au-color-form-disabled-foreground: #5c6b7a;
-  --au-color-form-disabled-surface: #1a1e26;
+  --au-color-form-disabled-foreground: #6d7a8a;
+  --au-color-form-disabled-surface: #232a36;
   /* Switch (off) */
   --au-color-switch-track-off: #4d5666;
   --au-color-switch-track-off-hover: #5c6b7d;
@@ -745,8 +745,8 @@
   /* Native `<select>` dropdown list */
   --au-color-select-menu-bg: var(--au-color-surface-elevated);
   --au-color-select-menu-text: var(--au-color-form-text);
-  --au-color-select-field-hover-bg: #1c222c;
-  --au-color-select-option-highlight-bg: #2a3340;
+  --au-color-select-field-hover-bg: #283140;
+  --au-color-select-option-highlight-bg: #343f4f;
   --au-color-select-option-highlight-text: #eef1f4;
   --au-color-select-option-highlight-marker: #8ec5ff;
   --au-color-select-option-selected-bg: #3d8fd4;
@@ -763,15 +763,15 @@
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
   --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
-  /* Dark shadows: edges, not heavy haze */
-  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
-  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --au-shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --au-shadow-float: 0 3px 10px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.22);
-  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 28px rgba(0, 0, 0, 0.4);
+  /* Dark shadows: hairline edge + soft depth (avoid muddy black haze) */
+  --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.06);
+  --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --au-shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --au-shadow-float: 0 4px 12px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 12px 32px rgba(0, 0, 0, 0.32);
   --au-shadow-floating:
-    0 0 0 1px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.32),
-    0 8px 20px -6px rgba(0, 0, 0, 0.4);
+    0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.2),
+    0 10px 24px -6px rgba(0, 0, 0, 0.28);
   --au-shadow-button: var(--au-shadow-control);
   --au-shadow-button-primary: 0 1px 2px
     color-mix(in srgb, var(--au-color-action-primary) 32%, transparent);
@@ -783,6 +783,25 @@
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
   --au-scroll-smooth: smooth;
+}
+
+/* Dark — portaled menus/popovers: opaque elevated surface (90% raised mix was too dim) */
+[data-au-theme='dark'] .au-floating-panel {
+  --au-floating-panel-bg: color-mix(in srgb, var(--au-color-surface-elevated) 96%, transparent);
+  --au-floating-panel-border: var(--au-color-border-default);
+}
+
+[data-au-theme='dark'] au-dialog .au-dialog__native::backdrop {
+  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
+}
+
+[data-au-theme='dark'] au-drawer {
+  --au-drawer-shadow-end: -10px 0 28px rgba(0, 0, 0, 0.28);
+  --au-drawer-shadow-start: 10px 0 28px rgba(0, 0, 0, 0.28);
+}
+
+[data-au-theme='dark'] au-drawer .au-drawer__native::backdrop {
+  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
 }
 
 /* ==========================================================================

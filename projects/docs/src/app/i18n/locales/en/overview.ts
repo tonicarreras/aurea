@@ -177,7 +177,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Shell', detail: 'Same as single-line fields.' },
-      { region: '`<textarea>`', detail: 'Padding vertical `--au-textarea-pad-y`.' },
+      {
+        region: '`<textarea>`',
+        detail: 'Padding `--au-textarea-pad-block` / `--au-textarea-pad-inline` (or `size` presets).',
+      },
     ],
     accessibility: [
       'Same label, error, and hint semantics as input-text.',
@@ -328,6 +331,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     intro: [
       'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `au-accordion-panel` regions share a string key.',
       'Bind `[(value)]` to the list of expanded keys; set `[multiple]="false"` for exclusive expand.',
+      'Use `variant="contained"` for a raised surface (card-like shell); default `plain` is border dividers only.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -344,6 +348,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
+      { region: 'Host', detail: '`variant="plain"` (dividers) or `contained` (raised surface shell).' },
       { region: '`.au-accordion__item`', detail: 'Wrap each trigger + panel pair.' },
       {
         region: '`button[auAccordionItem]`',
@@ -487,7 +492,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   'input-password': {
     intro: [
       'Dedicated password field with optional reveal toggle and shared Aurea field chrome.',
-      'Implements `FormValueControl<string | null>`; empty ↔ `null`.',
+      'Implements `FormValueControl<string | null>`; empty ↔ `null`. Localize `revealLabelShow` / `revealLabelHide`.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -696,6 +701,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Remove buttons expose `aria-label` via `removeTagLabel`.',
+      '`readOnly` keeps the native control readable without `disabled` (stays in tab order).',
       'Backspace with an empty draft removes the last tag.',
     ],
     keyboard: [

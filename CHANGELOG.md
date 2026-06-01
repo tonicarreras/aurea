@@ -11,14 +11,17 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ### Added
 
-- **`AuInputPassword`** (beta) — dedicated password field with reveal toggle for sign-in flows.
-- **`AuButtonGroup`** (beta) — groups projected `au-button` actions (`role="group"`); not a form control.
-- **`AuDescriptionList`** (beta) — semantic `dl` layout with `au-description-item` pairs; horizontal and multi-column modes.
-- **`AuDescriptionItem`** (beta) — term/description pair (`term` + projected content) inside `au-description-list`.
-- **`AuTagInput`** (beta) — multi-value tags with removable chips; Enter or comma to add.
+- **`AuInputPassword`** — dedicated password field with reveal toggle for sign-in flows.
+- **`AuButtonGroup`** — groups projected `au-button` actions (`role="group"`); not a form control.
+- **`AuDescriptionList`** — semantic `dl` layout with `au-description-item` pairs; horizontal and multi-column modes.
+- **`AuDescriptionItem`** — term/description pair (`term` + projected content) inside `au-description-list`.
+- **`AuTagInput`** — multi-value tags with removable chips; Enter or comma to add.
 
 ### Changed
 
+- Promoted to **stable** (since **1.6.0**) after a11y audit: **`AuInputPassword`**, **`AuButtonGroup`**, **`AuDescriptionList`**, **`AuTagInput`**.
+- **`AuInputPassword`** — `revealLabelShow` / `revealLabelHide` for localized reveal toggle labels.
+- **`AuTagInput`** — `readOnly` uses native `readonly` (keeps focus order); remove buttons stay disabled when read-only.
 - **`AuButtonGroup`** — refactored from segmented `radiogroup` to layout wrapper for `au-button` children.
 - **`AuAccordion`** — panel expand/collapse animation (`grid-template-rows`); styles in `aurea-global.css`. **`AuAccordionPanel`** selector is `au-accordion-panel` with `panel` input (replaces `[auAccordionPanel]` attribute).
 - **`AuDescriptionList`** — styles moved to `aurea-global.css` (`au-description-list.css`); required for `dt` / `dd` inside `au-description-item`.

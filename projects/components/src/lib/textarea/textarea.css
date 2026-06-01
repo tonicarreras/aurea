@@ -1,25 +1,35 @@
 /**
  * Textarea — same control grammar as input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
  * Field chrome: aurea-global.css
  */
 
-au-textarea {
+:host {
   --au-textarea-min-h-sm: 4.5rem;
   --au-textarea-min-h-md: 5.5rem;
   --au-textarea-min-h-lg: 6.5rem;
-  --au-textarea-pad-y: 0.5rem;
+  --au-textarea-pad-block: var(--au-space-3);
+  --au-textarea-pad-inline: var(--au-size-field-px-md);
 }
 
-au-textarea[data-au-size='sm'] {
-  --au-textarea-pad-y: 0.4rem;
+:host([data-au-size='sm']) {
+  --au-textarea-pad-block: var(--au-space-2-5);
+  --au-textarea-pad-inline: var(--au-size-field-px-sm);
 }
 
-au-textarea[data-au-size='md'] {
-  --au-textarea-pad-y: 0.5rem;
+:host([data-au-size='md']) {
+  --au-textarea-pad-block: var(--au-space-3);
+  --au-textarea-pad-inline: var(--au-size-field-px-md);
 }
 
-au-textarea[data-au-size='lg'] {
-  --au-textarea-pad-y: 0.6rem;
+:host([data-au-size='lg']) {
+  --au-textarea-pad-block: var(--au-space-3-5);
+  --au-textarea-pad-inline: var(--au-size-field-px-lg);
+}
+
+/* Block shell — multiline control; no horizontal flex chrome */
+.au-textarea__control-row {
+  display: block;
 }
 
 .au-textarea__input:focus,
@@ -34,7 +44,7 @@ au-textarea[data-au-size='lg'] {
   margin: 0;
   box-sizing: border-box;
   border: 0;
-  border-radius: var(--au-radius-2xs);
+  border-radius: 0;
   background: transparent;
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
@@ -43,29 +53,32 @@ au-textarea[data-au-size='lg'] {
   font-synthesis: none;
   min-height: var(--au-textarea-min-h-md);
   max-height: min(70vh, 32rem);
-  padding: var(--au-textarea-pad-y) var(--au-size-field-px-md);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-3));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-md));
   font-size: var(--au-size-field-text-md);
-  vertical-align: top;
   overflow: auto;
 }
 
-au-textarea[data-au-size='sm'] .au-textarea__input {
+:host([data-au-size='sm']) .au-textarea__input {
   min-height: var(--au-textarea-min-h-sm);
   font-size: var(--au-size-field-text-sm);
-  padding: var(--au-textarea-pad-y) var(--au-size-field-px-sm);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-2-5));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-sm));
 }
 
-au-textarea[data-au-size='md'] .au-textarea__input,
-au-textarea:not([data-au-size]) .au-textarea__input {
+:host([data-au-size='md']) .au-textarea__input,
+:host(:not([data-au-size])) .au-textarea__input {
   min-height: var(--au-textarea-min-h-md);
   font-size: var(--au-size-field-text-md);
-  padding: var(--au-textarea-pad-y) var(--au-size-field-px-md);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-3));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-md));
 }
 
-au-textarea[data-au-size='lg'] .au-textarea__input {
+:host([data-au-size='lg']) .au-textarea__input {
   min-height: var(--au-textarea-min-h-lg);
   font-size: var(--au-size-field-text-lg);
-  padding: var(--au-textarea-pad-y) var(--au-size-field-px-lg);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-3-5));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-lg));
 }
 
 .au-textarea__input::placeholder {

@@ -1,5 +1,6 @@
 import {
   ExampleAccordionBasicDemo,
+  ExampleAccordionContainedDemo,
   ExampleAccordionSingleDemo,
 } from '../../../../demos/examples/accordion.examples';
 import type { ComponentDocExample } from '../../../types/example';
@@ -18,6 +19,16 @@ export const examples: ComponentDocExample[] = [
   <div class="au-accordion__item">
     <button type="button" auAccordionItem="billing">Billing</button>
     <au-accordion-panel panel="billing">Manage payment methods.</au-accordion-panel>
+  </div>
+</au-accordion>`,
+  },
+  {
+    title: 'Contained',
+    demoComponent: ExampleAccordionContainedDemo,
+    code: `<au-accordion [(value)]="expanded" variant="contained" ariaLabel="Account settings">
+  <div class="au-accordion__item">
+    <button type="button" auAccordionItem="profile">Profile</button>
+    <au-accordion-panel panel="profile">Update your name and avatar.</au-accordion-panel>
   </div>
 </au-accordion>`,
   },

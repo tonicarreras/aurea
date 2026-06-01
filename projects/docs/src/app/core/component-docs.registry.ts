@@ -1,3 +1,8 @@
+/**
+ * Component catalog for the docs site: slug, demo preview, import snippet, optional API/styling overrides.
+ * Copy (overview, API tables, examples) lives under `projects/docs/src/app/i18n/locales/`.
+ * Maturity: `docs-component-maturity.ts` — keep in sync with `projects/components/src/lib/component-maturity.ts`.
+ */
 import { Type } from '@angular/core';
 
 import { COMPONENT_SUMMARIES } from '../i18n';
@@ -259,7 +264,7 @@ options: AuSelectOption[] = [
     demoComponent: AccordionDemo,
     snippet: `import { AuAccordion, AuAccordionItem, AuAccordionPanel } from '@aurea-design-system/components';
 
-<au-accordion [(value)]="expanded" ariaLabel="FAQ">
+<au-accordion [(value)]="expanded" variant="contained" ariaLabel="FAQ">
   <div class="au-accordion__item">
     <button type="button" auAccordionItem="one">Section one</button>
     <au-accordion-panel panel="one">Panel content</au-accordion-panel>

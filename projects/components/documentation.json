@@ -656,12 +656,12 @@
         },
         {
             "name": "InputPasswordStoryArgs",
-            "id": "interface-InputPasswordStoryArgs-9df7137c8fe0bb5281f588ee6dd7fb2c52a80df37dc71468915cdb852eabfd1aacd48d991889192987034775509e72a6381d9daa9829aac42ed8cbca67f9f647",
+            "id": "interface-InputPasswordStoryArgs-e67ecda88c9b20642151467eb175cf9ced1c4a7f22f7909f627b112bca82368b1c530297963b1690262b71984bda646ce18006879766800f3a8ca14fbe4c06df",
             "file": "projects/components/src/lib/input-password/input-password.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputPassword } from './input-password';\n\ninterface InputPasswordStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  autocomplete: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  required: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  showRevealToggle: boolean;\n}\n\nconst meta: Meta<InputPasswordStoryArgs> = {\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputPasswordStoryArgs>;\n\nexport const Default: Story = {\n  args: { label: 'Password', hint: 'Use at least 12 characters.' },\n};\n\nexport const SignUp: Story = {\n  args: {\n    label: 'Create password',\n    autocomplete: 'new-password',\n    required: true,\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputPassword } from './input-password';\n\ninterface InputPasswordStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  autocomplete: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  required: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  showRevealToggle: boolean;\n}\n\nconst meta: Meta<InputPasswordStoryArgs> = {\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputPasswordStoryArgs>;\n\nexport const Default: Story = {\n  args: { label: 'Password', hint: 'Use at least 12 characters.' },\n};\n\nexport const SignUp: Story = {\n  args: {\n    label: 'Create password',\n    autocomplete: 'new-password',\n    required: true,\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Password');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n};\n\nexport const RevealToggle: Story = {\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -1446,12 +1446,12 @@
         },
         {
             "name": "TagInputStoryArgs",
-            "id": "interface-TagInputStoryArgs-3412c153397cbeade4051dee4fb058453a7c6570e5d4a5e1e87d7db36e07c0d5784c021c2276ee61e717092a2a25ff50a03e232c055ef661e369a87528341a61",
+            "id": "interface-TagInputStoryArgs-05b37d500dc03bfa2ef81c79ca75f412fc0c99aedcd1fb3eede89d5934f2e7856fc7e5408777c1b061b9de64cec5a2065913841832faa77c28095ac59e5bddb6",
             "file": "projects/components/src/lib/tag-input/tag-input.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn } from 'storybook/test';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuTagInput } from './tag-input';\n\ninterface TagInputStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string[];\n  placeholder: string;\n  disabled: boolean;\n  readOnly: boolean;\n  required: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  allowDuplicates: boolean;\n  maxTags: number | undefined;\n}\n\nconst meta: Meta<TagInputStoryArgs> = {\n  title: 'Aurea/TagInput',\n  component: AuTagInput,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('tag-input'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: false, table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    allowDuplicates: { control: 'boolean', table: { category: 'Field' } },\n    maxTags: { control: 'number', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: ['angular', 'typescript'],\n    placeholder: 'Add tag…',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    allowDuplicates: false,\n    maxTags: undefined,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTagInput],\n      args,\n      `<au-tag-input\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [allowDuplicates]=\"allowDuplicates\"\n  [maxTags]=\"maxTags\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<TagInputStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Technologies',\n    hint: 'Press Enter or comma to add a tag.',\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuTagInput } from './tag-input';\n\ninterface TagInputStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string[];\n  placeholder: string;\n  disabled: boolean;\n  readOnly: boolean;\n  required: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  allowDuplicates: boolean;\n  maxTags: number | undefined;\n}\n\nconst meta: Meta<TagInputStoryArgs> = {\n  title: 'Aurea/TagInput',\n  component: AuTagInput,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('tag-input'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: false, table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    allowDuplicates: { control: 'boolean', table: { category: 'Field' } },\n    maxTags: { control: 'number', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: ['angular', 'typescript'],\n    placeholder: 'Add tag…',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    allowDuplicates: false,\n    maxTags: undefined,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTagInput],\n      args,\n      `<au-tag-input\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [allowDuplicates]=\"allowDuplicates\"\n  [maxTags]=\"maxTags\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<TagInputStoryArgs>;\n\nexport const Default: Story = {\n  args: {\n    label: 'Technologies',\n    hint: 'Press Enter or comma to add a tag.',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'Skills',\n    errorMessage: 'Add at least one skill.',\n    invalid: true,\n    value: [],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Skills');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    await expect(el.getByRole('alert')).toHaveTextContent('Add at least one skill.');\n  },\n};\n\nexport const RemoveTag: Story = {\n  args: { label: 'Tags', value: ['angular'] },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    await userEvent.click(el.getByRole('button', { name: 'Remove tag: angular' }));\n    await expect(el.getByLabelText('Tags')).toBeTruthy();\n    await expect(el.queryByRole('button', { name: /Remove tag/ })).toBeNull();\n  },\n};\n",
             "properties": [
                 {
                     "name": "allowDuplicates",
@@ -1834,6 +1834,16 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "Accessibility",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: renderButtons,\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const group = el.getByRole('group', { name: 'View actions' });\n    await expect(group).toBeTruthy();\n    await expect(el.getByRole('button', { name: 'Cancel' })).toBeTruthy();\n    await expect(el.getByRole('button', { name: 'Publish' })).toBeTruthy();\n  },\n}"
+            },
+            {
                 "name": "AllVariants",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2155,7 +2165,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "Default",
@@ -2185,7 +2195,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: itemImports },\n    template: `\n      <au-description-list [layout]=\"layout\" [columns]=\"columns\">\n        <au-description-item term=\"Name\">Ada Lovelace</au-description-item>\n        <au-description-item term=\"Email\">ada@example.com</au-description-item>\n        <au-description-item term=\"Role\">Engineer</au-description-item>\n      </au-description-list>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: itemImports },\n    template: `\n      <au-description-list [layout]=\"layout\" [columns]=\"columns\">\n        <au-description-item term=\"Name\">Ada Lovelace</au-description-item>\n        <au-description-item term=\"Email\">ada@example.com</au-description-item>\n        <au-description-item term=\"Role\">Engineer</au-description-item>\n      </au-description-list>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    await expect(canvasElement.querySelector('dl.au-description-list__list')).toBeTruthy();\n    await expect(el.getAllByRole('term')).toHaveLength(3);\n    await expect(el.getAllByRole('definition')).toHaveLength(3);\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2645,7 +2655,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n    ),\n}"
+                "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "FilterChips",
@@ -2808,6 +2818,16 @@
                 "defaultValue": "{\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n}"
             },
             {
+                "name": "Interactive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { interactive: true },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card\n        [variant]=\"variant\"\n        [size]=\"size\"\n        [interactive]=\"interactive\"\n        style=\"max-width: 22rem;\"\n      >\n        <h3 auCardHeader>Open workspace</h3>\n        <p auCardBody>Whole card is the hit target — interactive strengthens the border on hover (no lift).</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
                 "name": "itemImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2885,7 +2905,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
+                "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "LargeSize",
@@ -3001,6 +3021,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButtonGroup>",
+                "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3011,21 +3041,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButtonGroup>",
-                "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuCard>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3065,7 +3085,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuDescriptionList>",
-                "defaultValue": "{\n  title: 'Aurea/DescriptionList',\n  component: AuDescriptionList,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('description-list'),\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['vertical', 'horizontal'],\n      table: { category: 'Layout' },\n    },\n    columns: { control: 'select', options: [1, 2, 3], table: { category: 'Layout' } },\n  },\n  args: { layout: 'vertical', columns: 1 },\n}"
+                "defaultValue": "{\n  title: 'Aurea/DescriptionList',\n  component: AuDescriptionList,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('description-list'),\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['vertical', 'horizontal'],\n      table: { category: 'Layout' },\n    },\n    columns: { control: 'select', options: [1, 2, 3], table: { category: 'Layout' } },\n  },\n  args: { layout: 'vertical', columns: 1 },\n}"
             },
             {
                 "name": "meta",
@@ -3175,7 +3195,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<InputPasswordStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n}"
+                "defaultValue": "{\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -3375,7 +3395,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<TagInputStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/TagInput',\n  component: AuTagInput,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('tag-input'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: false, table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    allowDuplicates: { control: 'boolean', table: { category: 'Field' } },\n    maxTags: { control: 'number', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: ['angular', 'typescript'],\n    placeholder: 'Add tag…',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    allowDuplicates: false,\n    maxTags: undefined,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTagInput],\n      args,\n      `<au-tag-input\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [allowDuplicates]=\"allowDuplicates\"\n  [maxTags]=\"maxTags\"\n/>`,\n    ),\n}"
+                "defaultValue": "{\n  title: 'Aurea/TagInput',\n  component: AuTagInput,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('tag-input'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: false, table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    allowDuplicates: { control: 'boolean', table: { category: 'Field' } },\n    maxTags: { control: 'number', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: ['angular', 'typescript'],\n    placeholder: 'Add tag…',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    allowDuplicates: false,\n    maxTags: undefined,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTagInput],\n      args,\n      `<au-tag-input\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [allowDuplicates]=\"allowDuplicates\"\n  [maxTags]=\"maxTags\"\n/>`,\n    ),\n}"
             },
             {
                 "name": "meta",
@@ -3485,7 +3505,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
+                "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "PickerTheming",
@@ -3570,6 +3590,16 @@
                 "defaultValue": "{\n  args: {\n    label: 'Angular',\n    removable: true,\n  },\n  play: async ({ canvasElement }) => {\n    const remove = within(canvasElement).getByRole('button', { name: /remove angular/i });\n    await userEvent.click(remove);\n    await expect(remove).toBeEnabled();\n  },\n}"
             },
             {
+                "name": "RemoveTag",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tag-input/tag-input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { label: 'Tags', value: ['angular'] },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    await userEvent.click(el.getByRole('button', { name: 'Remove tag: angular' }));\n    await expect(el.getByLabelText('Tags')).toBeTruthy();\n    await expect(el.queryByRole('button', { name: /Remove tag/ })).toBeNull();\n  },\n}"
+            },
+            {
                 "name": "renderButtons",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3618,6 +3648,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'When **`required`** is true, the native attribute and **`aria-required`** are set; the asterisk is decorative with screen-reader text.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country (required)',\n    required: true,\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n  },\n  play: async ({ canvasElement }) => {\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-required', 'true');\n  },\n}"
+            },
+            {
+                "name": "RevealToggle",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/input-password/input-password.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n}"
             },
             {
                 "name": "Rounded",
@@ -3817,7 +3857,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
+                "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
                 "name": "SmallSize",
@@ -4245,6 +4285,16 @@
                 "name": "WithError",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/input-password/input-password.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Password');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n}"
+            },
+            {
+                "name": "WithError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/input-text/input-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -4260,6 +4310,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Invalid state driven by `errorMessage`. Check **`aria-invalid`** and **`aria-errormessage`** on the select in DevTools or the Accessibility tree.',\n      },\n    },\n  },\n  args: {\n    label: 'Country',\n    placeholder: 'Select country',\n    options: [\n      { value: 'us', label: 'United States' },\n      { value: 'ca', label: 'Canada' },\n    ],\n    errorMessage: 'Please select a country.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const select = getSelect(canvasElement, /Country/);\n    await expect(select).toHaveAttribute('aria-invalid', 'true');\n    const errId = select.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    const errEl = errId && canvasElement.ownerDocument.getElementById(errId);\n    await expect(errEl).not.toBeNull();\n    const alert = el.getByRole('alert');\n    await expect(alert).toHaveTextContent('Please select a country.');\n  },\n}"
+            },
+            {
+                "name": "WithError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/tag-input/tag-input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    label: 'Skills',\n    errorMessage: 'Add at least one skill.',\n    invalid: true,\n    value: [],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Skills');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    await expect(el.getByRole('alert')).toHaveTextContent('Add at least one skill.');\n  },\n}"
             },
             {
                 "name": "WithError",
@@ -4289,7 +4349,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n      withFooterImports,\n    ),\n}"
+                "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n      withFooterImports,\n    ),\n}"
             },
             {
                 "name": "WithFooter",
@@ -4962,8 +5022,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBadge>",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "rawtype": "StoryObj<AuButtonGroup>",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4973,8 +5033,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButtonGroup>",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "rawtype": "StoryObj<AuBadge>",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5412,6 +5472,68 @@
         ],
         "enumerations": [],
         "groupedVariables": {
+            "projects/components/src/lib/button-group/button-group.stories.ts": [
+                {
+                    "name": "Accessibility",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: renderButtons,\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const group = el.getByRole('group', { name: 'View actions' });\n    await expect(group).toBeTruthy();\n    await expect(el.getByRole('button', { name: 'Cancel' })).toBeTruthy();\n    await expect(el.getByRole('button', { name: 'Publish' })).toBeTruthy();\n  },\n}"
+                },
+                {
+                    "name": "Attached",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: renderButtons,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuButtonGroup>",
+                    "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
+                },
+                {
+                    "name": "renderButtons",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "(args) => ({\n  props: args,\n  moduleMetadata: { imports: [AuButtonGroup, AuButton] },\n  template: `\n    <au-button-group\n      [ariaLabel]=\"ariaLabel\"\n      [attached]=\"attached\"\n      [orientation]=\"orientation\"\n    >\n      <au-button variant=\"outline\">Cancel</au-button>\n      <au-button variant=\"secondary\">Draft</au-button>\n      <au-button>Publish</au-button>\n    </au-button-group>\n  `,\n})"
+                },
+                {
+                    "name": "Spaced",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { attached: false, ariaLabel: 'Editor toolbar' },\n  render: renderButtons,\n}"
+                },
+                {
+                    "name": "Vertical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { orientation: 'vertical', ariaLabel: 'Stacked actions' },\n  render: renderButtons,\n}"
+                }
+            ],
             "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "AllVariants",
@@ -5766,58 +5888,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuSkeleton] },\n    template: `\n      <div style=\"max-width: 20rem; display: flex; flex-direction: column; gap: 0.5rem;\">\n        <au-skeleton\n          [variant]=\"variant\"\n          [animation]=\"animation\"\n          [size]=\"size\"\n          [width]=\"width\"\n          [height]=\"height\"\n          [radius]=\"radius\"\n        />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"75%\" />\n        <au-skeleton variant=\"text\" [animation]=\"animation\" width=\"50%\" />\n      </div>\n    `,\n  }),\n}"
-                }
-            ],
-            "projects/components/src/lib/button-group/button-group.stories.ts": [
-                {
-                    "name": "Attached",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: renderButtons,\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuButtonGroup>",
-                    "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
-                },
-                {
-                    "name": "renderButtons",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "(args) => ({\n  props: args,\n  moduleMetadata: { imports: [AuButtonGroup, AuButton] },\n  template: `\n    <au-button-group\n      [ariaLabel]=\"ariaLabel\"\n      [attached]=\"attached\"\n      [orientation]=\"orientation\"\n    >\n      <au-button variant=\"outline\">Cancel</au-button>\n      <au-button variant=\"secondary\">Draft</au-button>\n      <au-button>Publish</au-button>\n    </au-button-group>\n  `,\n})"
-                },
-                {
-                    "name": "Spaced",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { attached: false, ariaLabel: 'Editor toolbar' },\n  render: renderButtons,\n}"
-                },
-                {
-                    "name": "Vertical",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { orientation: 'vertical', ariaLabel: 'Stacked actions' },\n  render: renderButtons,\n}"
                 }
             ],
             "projects/components/src/lib/input-date/input-date.stories.ts": [
@@ -6857,7 +6927,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
+                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "Filled",
@@ -6867,7 +6937,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n    ),\n}"
+                    "defaultValue": "{\n  args: { variant: 'filled' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Filled card</h3>\n        <p auCardBody>Subtle elevated surface for nested sections on canvas.</p>\n      </au-card>\n    `,\n    ),\n}"
+                },
+                {
+                    "name": "Interactive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { interactive: true },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card\n        [variant]=\"variant\"\n        [size]=\"size\"\n        [interactive]=\"interactive\"\n        style=\"max-width: 22rem;\"\n      >\n        <h3 auCardHeader>Open workspace</h3>\n        <p auCardBody>Whole card is the hit target — interactive strengthens the border on hover (no lift).</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -6877,7 +6957,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
+                    "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "meta",
@@ -6887,7 +6967,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuCard>",
-                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
                 },
                 {
                     "name": "Outlined",
@@ -6897,7 +6977,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
+                    "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "SmallSize",
@@ -6907,7 +6987,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
+                    "defaultValue": "{\n  args: { size: 'sm' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Compact</h3>\n        <p auCardBody>Reduced padding for dense lists.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "storyImports",
@@ -6927,7 +7007,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n      withFooterImports,\n    ),\n}"
+                    "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Confirm</h3>\n        <p auCardBody>Review the summary before continuing.</p>\n        <div auCardFooter>\n          <au-button style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\">Cancel</au-button>\n          <au-button type=\"button\">Continue</au-button>\n        </div>\n      </au-card>\n    `,\n      withFooterImports,\n    ),\n}"
                 },
                 {
                     "name": "withFooterImports",
@@ -6959,7 +7039,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: itemImports },\n    template: `\n      <au-description-list [layout]=\"layout\" [columns]=\"columns\">\n        <au-description-item term=\"Name\">Ada Lovelace</au-description-item>\n        <au-description-item term=\"Email\">ada@example.com</au-description-item>\n        <au-description-item term=\"Role\">Engineer</au-description-item>\n      </au-description-list>\n    `,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: itemImports },\n    template: `\n      <au-description-list [layout]=\"layout\" [columns]=\"columns\">\n        <au-description-item term=\"Name\">Ada Lovelace</au-description-item>\n        <au-description-item term=\"Email\">ada@example.com</au-description-item>\n        <au-description-item term=\"Role\">Engineer</au-description-item>\n      </au-description-list>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    await expect(canvasElement.querySelector('dl.au-description-list__list')).toBeTruthy();\n    await expect(el.getAllByRole('term')).toHaveLength(3);\n    await expect(el.getAllByRole('definition')).toHaveLength(3);\n  },\n}"
                 },
                 {
                     "name": "Horizontal",
@@ -6989,7 +7069,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuDescriptionList>",
-                    "defaultValue": "{\n  title: 'Aurea/DescriptionList',\n  component: AuDescriptionList,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('description-list'),\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['vertical', 'horizontal'],\n      table: { category: 'Layout' },\n    },\n    columns: { control: 'select', options: [1, 2, 3], table: { category: 'Layout' } },\n  },\n  args: { layout: 'vertical', columns: 1 },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/DescriptionList',\n  component: AuDescriptionList,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('description-list'),\n  argTypes: {\n    layout: {\n      control: 'select',\n      options: ['vertical', 'horizontal'],\n      table: { category: 'Layout' },\n    },\n    columns: { control: 'select', options: [1, 2, 3], table: { category: 'Layout' } },\n  },\n  args: { layout: 'vertical', columns: 1 },\n}"
                 },
                 {
                     "name": "NativeDtDd",
@@ -7343,7 +7423,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<InputPasswordStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n}"
+                    "defaultValue": "{\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n}"
+                },
+                {
+                    "name": "RevealToggle",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/input-password/input-password.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n}"
                 },
                 {
                     "name": "SignUp",
@@ -7354,6 +7444,16 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    label: 'Create password',\n    autocomplete: 'new-password',\n    required: true,\n  },\n}"
+                },
+                {
+                    "name": "WithError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/input-password/input-password.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Password');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n}"
                 }
             ],
             "projects/components/src/lib/input-time/input-time.stories.ts": [
@@ -7773,7 +7873,27 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<TagInputStoryArgs>",
-                    "defaultValue": "{\n  title: 'Aurea/TagInput',\n  component: AuTagInput,\n  tags: ['autodocs', 'au', 'beta'],\n  parameters: storyMetaParameters('tag-input'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: false, table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    allowDuplicates: { control: 'boolean', table: { category: 'Field' } },\n    maxTags: { control: 'number', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: ['angular', 'typescript'],\n    placeholder: 'Add tag…',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    allowDuplicates: false,\n    maxTags: undefined,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTagInput],\n      args,\n      `<au-tag-input\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [allowDuplicates]=\"allowDuplicates\"\n  [maxTags]=\"maxTags\"\n/>`,\n    ),\n}"
+                    "defaultValue": "{\n  title: 'Aurea/TagInput',\n  component: AuTagInput,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('tag-input'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: false, table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    allowDuplicates: { control: 'boolean', table: { category: 'Field' } },\n    maxTags: { control: 'number', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: ['angular', 'typescript'],\n    placeholder: 'Add tag…',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    allowDuplicates: false,\n    maxTags: undefined,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuTagInput],\n      args,\n      `<au-tag-input\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [allowDuplicates]=\"allowDuplicates\"\n  [maxTags]=\"maxTags\"\n/>`,\n    ),\n}"
+                },
+                {
+                    "name": "RemoveTag",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tag-input/tag-input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'Tags', value: ['angular'] },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    await userEvent.click(el.getByRole('button', { name: 'Remove tag: angular' }));\n    await expect(el.getByLabelText('Tags')).toBeTruthy();\n    await expect(el.queryByRole('button', { name: /Remove tag/ })).toBeNull();\n  },\n}"
+                },
+                {
+                    "name": "WithError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/tag-input/tag-input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    label: 'Skills',\n    errorMessage: 'Add at least one skill.',\n    invalid: true,\n    value: [],\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Skills');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    await expect(el.getByRole('alert')).toHaveTextContent('Add at least one skill.');\n  },\n}"
                 }
             ],
             "projects/components/src/lib/textarea/textarea.stories.ts": [
@@ -8688,19 +8808,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/badge/badge.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBadge>",
-                    "file": "projects/components/src/lib/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/button-group/button-group.stories.ts": [
                 {
                     "name": "Story",
@@ -8708,6 +8815,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuButtonGroup>",
                     "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/badge/badge.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuBadge>",
+                    "file": "projects/components/src/lib/badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -9628,6 +9748,16 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "Accessibility",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Attached",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -9849,6 +9979,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Filled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Interactive",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -10953,7 +11093,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "RevealToggle",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/input-password/input-password.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "SignUp",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/input-password/input-password.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithError",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -12348,6 +12508,26 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tag-input/tag-input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "RemoveTag",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/tag-input/tag-input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithError",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

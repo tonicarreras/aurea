@@ -67,7 +67,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
       token: '--au-textarea-min-h-md',
       description: 'Default minimum height; sm/lg on the host via `size`.',
     },
-    { token: '--au-textarea-pad-y', description: 'Internal vertical padding of the textarea.' },
+    {
+      token: '--au-textarea-pad-block / --au-textarea-pad-inline',
+      description: 'Inner padding; `size` sets sm/md/lg presets on the host.',
+    },
     { token: '--au-size-field-px-md', description: 'Horizontal padding; scales with `size`.' },
     { token: '--au-radius-field', description: 'Field shell corners.' },
     { token: '--au-color-form-error', description: 'Error state (border and message).' },
@@ -130,11 +133,35 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Focus on the search input.' },
   ],
   accordion: [
-    { token: '--au-color-border-subtle', description: 'Divider between accordion items.' },
-    { token: '--au-color-action-primary', description: 'Expanded trigger emphasis.' },
-    { token: '--au-color-focus-ring', description: 'Keyboard focus on triggers.' },
-    { token: '--au-shadow-focus-ring', description: 'Visible focus ring on triggers.' },
+    { token: '--au-color-border-subtle', description: 'Dividers between items (`plain` and `contained`).' },
+    {
+      token: '--au-color-surface-raised / --au-shadow-control',
+      description: '`variant="contained"` shell background and elevation.',
+    },
+    { token: '--au-color-surface-sunken', description: 'Trigger row hover background.' },
+    { token: '--au-shadow-focus-ring', description: 'Keyboard focus ring on triggers.' },
+    { token: '--au-radius-surface', description: 'Outer radius when `variant="contained"`.' },
     { token: '--au-text-sm / --au-text-base', description: 'Trigger typography by `size`.' },
+  ],
+  'button-group': [
+    { token: '--au-space-2', description: 'Gap between buttons when `[attached]="false"`.' },
+    { token: '--au-color-border-default', description: 'Shared borders in attached mode (via `au-button`).' },
+  ],
+  'input-password': [
+    { token: '--au-color-form-border', description: 'Field shell border (shared chrome).' },
+    { token: '--au-color-form-text', description: 'Masked value text.' },
+    { token: '--au-size-field-px-md', description: 'Horizontal padding; scales with `size`.' },
+    { token: '--au-color-focus-ring', description: 'Focus on the control row.' },
+  ],
+  'tag-input': [
+    { token: '--au-color-form-border', description: 'Field shell border.' },
+    { token: '--au-chip-*', description: 'Removable tag chips inside the field (via `au-chip`).' },
+    { token: '--au-color-focus-ring', description: 'Focus when editing the draft input.' },
+  ],
+  'description-list': [
+    { token: '--au-color-text-label', description: 'Term (`dt`) typography.' },
+    { token: '--au-color-text-primary', description: 'Description (`dd`) text.' },
+    { token: '--au-space-3', description: 'Vertical rhythm between term/description pairs.' },
   ],
   avatar: [
     { token: '--au-avatar-size', description: 'Host width/height (by `size`).' },

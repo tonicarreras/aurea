@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
-import { fn } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { AuFormField } from '../form-field/form-field';
 import {
   defaultFieldChromeArgs,
@@ -27,7 +27,7 @@ interface InputPasswordStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<InputPasswordStoryArgs> = {
   title: 'Aurea/InputPassword',
   component: AuInputPassword,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('input-password'),
   argTypes: {
     ...fieldChromeArgTypes,
@@ -86,5 +86,35 @@ export const SignUp: Story = {
     label: 'Create password',
     autocomplete: 'new-password',
     required: true,
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    label: 'Password',
+    errorMessage: 'Password is required.',
+    invalid: true,
+    required: true,
+  },
+  play: async ({ canvasElement }) => {
+    const el = within(canvasElement);
+    const field = el.getByLabelText('Password');
+    await expect(field).toHaveAttribute('aria-invalid', 'true');
+    const errId = field.getAttribute('aria-errormessage');
+    await expect(errId).toBeTruthy();
+    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');
+  },
+};
+
+export const RevealToggle: Story = {
+  args: { label: 'Password', value: 'secret' },
+  play: async ({ canvasElement }) => {
+    const el = within(canvasElement);
+    const toggle = el.getByRole('button', { name: 'Show password' });
+    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    await userEvent.click(toggle);
+    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');
+    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    await expect(toggle).toHaveAccessibleName('Hide password');
   },
 };

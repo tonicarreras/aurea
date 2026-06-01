@@ -48,6 +48,8 @@ export class AuInputPassword implements FormValueControl<string | null> {
   readonly maxLength = input<number | undefined>(undefined);
   readonly size = input<AuSize>('md');
   readonly showRevealToggle = input(true);
+  readonly revealLabelShow = input('Show password');
+  readonly revealLabelHide = input('Hide password');
 
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
@@ -67,6 +69,10 @@ export class AuInputPassword implements FormValueControl<string | null> {
 
   readonly inputType = computed(() => (this.revealed() ? 'text' : 'password'));
   readonly hasRevealUi = computed(() => this.showRevealToggle());
+
+  readonly revealAriaLabel = computed(() =>
+    this.revealed() ? this.revealLabelHide() : this.revealLabelShow(),
+  );
 
   readonly ariaDescribedBy = computed((): string | null => {
     const ids: string[] = [];

@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
+import { expect, within } from 'storybook/test';
 import { AuDescriptionItem } from './description-item';
 import { AuDescriptionList } from './description-list';
 
 const meta: Meta<AuDescriptionList> = {
   title: 'Aurea/DescriptionList',
   component: AuDescriptionList,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('description-list'),
   argTypes: {
     layout: {
@@ -36,6 +37,12 @@ export const Default: Story = {
       </au-description-list>
     `,
   }),
+  play: async ({ canvasElement }) => {
+    const el = within(canvasElement);
+    await expect(canvasElement.querySelector('dl.au-description-list__list')).toBeTruthy();
+    await expect(el.getAllByRole('term')).toHaveLength(3);
+    await expect(el.getAllByRole('definition')).toHaveLength(3);
+  },
 };
 
 export const Horizontal: Story = {

@@ -165,6 +165,21 @@ describe('AuInputPassword', () => {
     expect(CONTROL(fix).placeholder()).toBe('');
   });
 
+  it('uses custom reveal aria labels', () => {
+    const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
+      f.componentInstance.revealLabelShow = 'Mostrar';
+      f.componentInstance.revealLabelHide = 'Ocultar';
+    });
+    fix.detectChanges();
+    const btn = fix.debugElement.query(By.css('.au-input-password__reveal'))!
+      .nativeElement as HTMLButtonElement;
+    expect(btn.getAttribute('aria-label')).toBe('Mostrar');
+    btn.click();
+    fix.detectChanges();
+    expect(btn.getAttribute('aria-label')).toBe('Ocultar');
+    expect(btn.getAttribute('aria-pressed')).toBe('true');
+  });
+
   it('hides reveal toggle when showRevealToggle is false', () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.showRevealToggle = false;

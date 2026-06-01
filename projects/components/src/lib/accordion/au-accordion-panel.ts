@@ -13,6 +13,7 @@ import { AuAccordion } from './accordion';
 @Component({
   selector: 'au-accordion-panel',
   template: '<div class="au-accordion__panel-inner"><ng-content /></div>',
+  styleUrl: './au-accordion-panel.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-accordion__panel',

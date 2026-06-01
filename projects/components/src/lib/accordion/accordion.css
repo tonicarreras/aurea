@@ -1,7 +1,34 @@
 /**
- * Accordion — host hook; visual rules live in styles/au-accordion.css (global).
+ * Accordion root — host and in-template shell.
+ * Projected items/triggers: styles/au-accordion.css (aurea-global).
  */
 
 :host {
   display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-accordion__root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+:host([data-au-size='sm']) {
+  --au-accordion-trigger-padding-y: var(--au-space-3);
+  --au-accordion-trigger-padding-x: var(--au-space-3);
+  --au-accordion-panel-padding-x: var(--au-space-3);
+  --au-accordion-panel-padding-y: var(--au-space-3);
+  font-size: var(--au-text-sm);
+}
+
+:host([data-au-variant='contained']) {
+  background: var(--au-color-surface-raised);
+  border: 1px solid var(--au-color-border-subtle);
+  border-radius: var(--au-radius-surface);
+  box-shadow: var(--au-shadow-control);
+  overflow: hidden;
 }

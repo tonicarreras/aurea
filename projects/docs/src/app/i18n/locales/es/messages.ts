@@ -91,8 +91,9 @@ export const MESSAGES_ES: DocsMessages = {
       },
       install: { title: 'Instalación', expand: 'Ver instalación' },
       tokens: {
-        title: 'Tokens globales',
-        intro: 'Importa los estilos semánticos en angular.json o en tu hoja global:',
+        title: 'Estilos globales',
+        intro:
+          'Importa <code>au-tokens.css</code> (variables) y <code>aurea-global.css</code> (cromado de campos, listbox, description list, shells proyectados del acordeón) en angular.json o tu hoja global. Cada componente aporta su <code>styleUrl</code> al importarlo — no dupliques CSS de componente en tu app.',
         expand: 'Ver imports CSS',
       },
       firstComponent: { title: 'Primer componente', expand: 'Ver ejemplo Angular' },
@@ -118,6 +119,10 @@ export const MESSAGES_ES: DocsMessages = {
     attrBody:
       'Coloca <code>data-au-theme</code> en un ancestro (por ejemplo <code>&lt;html&gt;</code> o el shell de la app). Valores: <code>light</code>, <code>dark</code>.',
     attrExpand: 'Ver HTML',
+    globalStylesHeading: 'aurea-global.css',
+    globalStylesBody:
+      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. Solo incluye CSS transversal: cromado y errores de <code>au-form-field</code>, listbox en portal, layout de <code>au-description-list</code> entre hosts, y triggers/ítems proyectados del acordeón. Controles como <code>au-textarea</code>, <code>au-button-group</code> y <code>au-snackbar</code> traen sus estilos en el bundle del componente — no se duplican aquí. Criterio: <code>projects/components/src/lib/styles/README.md</code> en el repo.',
+    globalStylesExpand: 'Ver imports CSS globales',
     directiveHeading: 'Directiva AuTheme',
     directiveBody:
       'Alternativa reactiva con <code>system</code> para seguir <code>prefers-color-scheme</code>:',

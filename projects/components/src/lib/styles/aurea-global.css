@@ -1,6 +1,10 @@
 /**
  * Aurea shared styles — import after au-tokens.css.
- * Field chrome, errors, listbox overlays, portaled snackbar.
+ *
+ * Only cross-cutting CSS (see styles/README.md):
+ * - field chrome / errors / listbox overlays
+ * - description list (dt/dd across hosts)
+ * - accordion item shells (projected plain HTML)
  */
 
 @import './au-field-chrome.css';
@@ -8,5 +12,3 @@
 @import './au-field-listbox.css';
 @import './au-description-list.css';
 @import './au-accordion.css';
-@import './au-button-group.css';
-@import './au-snackbar.css';

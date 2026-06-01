@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
-import { fn } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { AuFormField } from '../form-field/form-field';
 import {
   defaultFieldChromeArgs,
@@ -27,7 +27,7 @@ interface TagInputStoryArgs extends FieldChromeStoryArgs {
 const meta: Meta<TagInputStoryArgs> = {
   title: 'Aurea/TagInput',
   component: AuTagInput,
-  tags: ['autodocs', 'au', 'beta'],
+  tags: ['autodocs', 'au', 'stable'],
   parameters: storyMetaParameters('tag-input'),
   argTypes: {
     ...fieldChromeArgTypes,
@@ -81,5 +81,30 @@ export const Default: Story = {
   args: {
     label: 'Technologies',
     hint: 'Press Enter or comma to add a tag.',
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    label: 'Skills',
+    errorMessage: 'Add at least one skill.',
+    invalid: true,
+    value: [],
+  },
+  play: async ({ canvasElement }) => {
+    const el = within(canvasElement);
+    const field = el.getByLabelText('Skills');
+    await expect(field).toHaveAttribute('aria-invalid', 'true');
+    await expect(el.getByRole('alert')).toHaveTextContent('Add at least one skill.');
+  },
+};
+
+export const RemoveTag: Story = {
+  args: { label: 'Tags', value: ['angular'] },
+  play: async ({ canvasElement }) => {
+    const el = within(canvasElement);
+    await userEvent.click(el.getByRole('button', { name: 'Remove tag: angular' }));
+    await expect(el.getByLabelText('Tags')).toBeTruthy();
+    await expect(el.queryByRole('button', { name: /Remove tag/ })).toBeNull();
   },
 };

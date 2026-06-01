@@ -1,6 +1,7 @@
 @import '../../components/src/lib/tokens/au-tokens.css';
 @import './app/demos/shared/demo-preview.css';
 @import './app/layout/docs-component-layout.css';
+/* Shared field chrome, listbox, description-list, accordion projected shells — see components/src/lib/styles/README.md */
 @import '../../components/src/lib/styles/aurea-global.css';
 
 /* Docs-only aliases (nav / links used legacy accent names) */

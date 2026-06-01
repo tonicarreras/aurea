@@ -308,6 +308,8 @@ export class AuInputTimeTestHost {
         [autocomplete]="autocomplete"
         [size]="size"
         [showRevealToggle]="showRevealToggle"
+        [revealLabelShow]="revealLabelShow"
+        [revealLabelHide]="revealLabelHide"
       />
     </au-form-field>
   `,
@@ -331,6 +333,8 @@ export class AuInputPasswordTestHost {
   autocomplete: string | undefined = undefined;
   size: 'sm' | 'md' | 'lg' = 'md';
   showRevealToggle = true;
+  revealLabelShow = 'Show password';
+  revealLabelHide = 'Hide password';
 }
 
 @Component({

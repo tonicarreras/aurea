@@ -212,7 +212,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 ## Bundle & performance
 
 - Import per symbol (`import { AuButton } from '…'`), not `import *`.
-- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, accordion, button group, description list, listbox, snackbar).
+- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, errors, listbox, description list, accordion item shells). See `src/lib/styles/README.md`.
 - All components use `ChangeDetectionStrategy.OnPush`; overlays attach to `document.body` only while open.
 - Lazy-load feature routes; paginate large tables server-side.
 - CI: `bun run check:bundle` (+5% vs baseline). Update baseline with `bun run update:bundle-baseline` after intentional size changes.

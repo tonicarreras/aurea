@@ -10,6 +10,7 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
     <div class="docs-preview docs-preview--wide">
       <au-accordion
         [(value)]="expanded"
+        variant="contained"
         [ariaLabel]="t().ariaLabel"
       >
         <div class="au-accordion__item">

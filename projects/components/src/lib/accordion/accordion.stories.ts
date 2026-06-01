@@ -14,6 +14,12 @@ const meta: Meta<AuAccordion> = {
   parameters: storyMetaParameters('accordion'),
   argTypes: {
     multiple: { control: 'boolean', table: { category: 'Behavior' } },
+    variant: {
+      control: 'select',
+      options: ['plain', 'contained'],
+      description: 'Plain dividers or raised surface shell.',
+      table: { category: 'Appearance' },
+    },
     size: {
       control: 'select',
       options: ['sm', 'md'],
@@ -23,6 +29,7 @@ const meta: Meta<AuAccordion> = {
   },
   args: {
     multiple: true,
+    variant: 'plain',
     size: 'md',
     ariaLabel: 'Account settings',
   },
@@ -39,6 +46,7 @@ export const Default: Story = {
       <au-accordion
         [(value)]="expanded"
         [multiple]="multiple"
+        [variant]="variant"
         [size]="size"
         [ariaLabel]="ariaLabel"
       >
@@ -66,5 +74,10 @@ export const SingleExpand: Story = {
 
 export const Compact: Story = {
   args: { size: 'sm' },
+  render: Default.render,
+};
+
+export const Contained: Story = {
+  args: { variant: 'contained' },
   render: Default.render,
 };

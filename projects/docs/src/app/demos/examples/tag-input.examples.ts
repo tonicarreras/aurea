@@ -21,7 +21,7 @@ export class ExampleTagInputBasicDemo {
 
 @Component({
   selector: 'docs-example-tag-input-limits',
-  changeDetectionStrategy: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuTagInput],
   template: `
     <au-form-field

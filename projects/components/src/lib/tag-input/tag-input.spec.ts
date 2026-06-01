@@ -79,6 +79,16 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
+  it('sets readonly on the draft input when readOnly', () => {
+    const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
+      f.componentInstance.readOnly = true;
+    });
+    fix.detectChanges();
+    const input = queryInput(fix);
+    expect(input.readOnly).toBe(true);
+    expect(input.disabled).toBe(false);
+  });
+
   it('does not commit draft on blur when readOnly', () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
