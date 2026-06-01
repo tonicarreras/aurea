@@ -1,11 +1,17 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  TemplateRef,
+  input,
+  viewChild,
+} from '@angular/core';
 
 /**
  * One term/description pair inside {@link AuDescriptionList}.
  *
  * @remarks
- * Renders native `<dt>` and `<dd>` with `display: contents` on the host so grid and column layouts apply.
- * For rich markup or custom structure, project native `<dt>` / `<dd>` on `au-description-list` instead.
+ * Hidden host (like `au-table-column`); the list renders `<dt>` / `<dd>` inside its `<dl>`.
+ * For rich markup, project native `<dt>` / `<dd>` on `au-description-list` instead.
  *
  * @example
  * ```html
@@ -21,6 +27,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-description-item',
+    hidden: '',
+    '[attr.data-au-description-item]': '""',
   },
 })
 export class AuDescriptionItem {
@@ -28,4 +36,7 @@ export class AuDescriptionItem {
   readonly term = input<string, string>('', {
     transform: (v) => (v == null ? '' : String(v)),
   });
+
+  /** Projected description body rendered inside `<dd>`. */
+  readonly detailTemplate = viewChild.required<TemplateRef<void>>('detail');
 }

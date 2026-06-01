@@ -61,11 +61,26 @@ au-description-list[data-au-layout='vertical'] .au-description-list__list > dd:l
   padding-bottom: 0;
 }
 
+/* Native `<dt>` / `<dd>` projected on the list: one shared grid on `<dl>`. */
 au-description-list[data-au-layout='horizontal'] .au-description-list__list {
   display: grid;
   grid-template-columns: minmax(8rem, 30%) 1fr;
   column-gap: var(--au-space-4);
   row-gap: var(--au-space-2);
+}
+
+/* `au-description-item` rows: stack groups; each group is a two-column grid. */
+au-description-list[data-au-layout='horizontal'] .au-description-list__list:has(> .au-description-item) {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--au-space-2);
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list > .au-description-item {
+  display: grid;
+  grid-template-columns: minmax(8rem, 30%) 1fr;
+  column-gap: var(--au-space-4);
+  align-items: baseline;
 }
 
 au-description-list[data-au-layout='horizontal'] .au-description-list__list dt,

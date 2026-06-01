@@ -1,7 +1,3 @@
 /**
- * Description item — projects dt/dd into the parent dl (layout via description-list.css).
+ * Description item — hidden definition host; `dt` / `dd` render inside the parent `dl`.
  */
-
-:host {
-  display: contents;
-}

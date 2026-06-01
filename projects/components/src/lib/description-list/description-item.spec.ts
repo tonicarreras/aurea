@@ -28,6 +28,7 @@ describe('AuDescriptionItem', () => {
     const dl = fix.nativeElement.querySelector('.au-description-list__list') as HTMLElement;
     expect(dl.querySelector('dt')?.textContent?.trim()).toBe('Name');
     expect(dl.querySelector('dd')?.textContent?.trim()).toBe('Ada Lovelace');
+    expect(dl.querySelector('au-description-item')).toBeNull();
   });
 
   it('coerces nullish term to empty string', () => {

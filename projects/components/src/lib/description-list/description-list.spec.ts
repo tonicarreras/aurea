@@ -39,6 +39,30 @@ describe('AuDescriptionList', () => {
     expect(terms[1].textContent?.trim()).toBe('Role');
   });
 
+  it('renders horizontal items as div groups with dt and dd inside the dl', () => {
+    @Component({
+      selector: 'au-description-list-horizontal-host',
+      imports: [AuDescriptionList, AuDescriptionItem],
+      template: `
+        <au-description-list layout="horizontal">
+          <au-description-item term="Name">Ada</au-description-item>
+          <au-description-item term="Role">Engineer</au-description-item>
+        </au-description-list>
+      `,
+    })
+    class Host {}
+
+    TestBed.configureTestingModule({ imports: [Host] });
+    const fix = TestBed.createComponent(Host);
+    fix.detectChanges();
+    const list = fix.nativeElement.querySelector('au-description-list') as HTMLElement;
+    expect(list.getAttribute('data-au-layout')).toBe('horizontal');
+    const dl = fix.nativeElement.querySelector('.au-description-list__list') as HTMLElement;
+    expect(dl.querySelectorAll('.au-description-item')).toHaveLength(2);
+    expect(dl.querySelectorAll('dt')).toHaveLength(2);
+    expect(dl.querySelector('au-description-item')).toBeNull();
+  });
+
   it('projects native dt and dd into the inner dl', () => {
     @Component({
       selector: 'au-description-list-spec-host',
