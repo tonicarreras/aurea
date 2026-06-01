@@ -16,7 +16,7 @@ import { AuAccordionItem } from './au-accordion-item.directive';
  *
  * @remarks
  * - **Value:** `[(value)]` lists expanded section keys.
- * - **Structure:** `button[auAccordionItem]` + `[auAccordionPanel]` with matching keys.
+ * - **Structure:** `button[auAccordionItem]` + `au-accordion-panel` with matching keys.
  * - **Keyboard:** Arrow Up/Down move focus; Home/End jump; Enter/Space toggle.
  */
 @Component({

@@ -17,9 +17,8 @@ import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field
 import { syncFormFieldControlState } from '../form-field/form-field';
 import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
-import { AuIcon } from '../icon/icon';
 
-type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
+type InputTextType = 'text' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
 /**
  * Design-system **single-line** text control. Must be projected inside {@link AuFormField}.
@@ -27,13 +26,13 @@ type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search'
  * @remarks
  * - **Signal forms:** `formField` + `errors` / `invalid` from the schema; label, hint, and error UI live on `au-form-field`.
  * - **Classic:** `[(value)]` inside `au-form-field` (empty field ↔ `null`).
+ * - Password fields → {@link AuInputPassword}.
  */
 @Component({
   selector: 'au-input-text',
   templateUrl: './input-text.html',
   styleUrl: './input-text.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuIcon],
   host: {
     class: 'au-input-text',
     '[attr.data-au-size]': 'size()',
@@ -57,7 +56,6 @@ export class AuInputText implements FormValueControl<string | null> {
   readonly minLength = input<number | undefined>(undefined);
   readonly maxLength = input<number | undefined>(undefined);
   readonly size = input<AuSize>('md');
-  readonly showPasswordToggle = input(true);
 
   readonly blur = output<void>();
   readonly valueChange = output<string | null>();
@@ -65,7 +63,6 @@ export class AuInputText implements FormValueControl<string | null> {
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = inject(ElementRef<HTMLElement>);
 
-  protected readonly passwordRevealed = signal(false);
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -75,16 +72,6 @@ export class AuInputText implements FormValueControl<string | null> {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
   });
-
-  readonly effectiveInputType = computed((): string => {
-    const t = this.type();
-    if (t === 'password') {
-      return this.passwordRevealed() ? 'text' : 'password';
-    }
-    return t;
-  });
-
-  readonly hasPasswordUi = computed(() => this.type() === 'password' && this.showPasswordToggle());
 
   readonly ariaDescribedBy = computed((): string | null => {
     const ids: string[] = [];
@@ -147,10 +134,6 @@ export class AuInputText implements FormValueControl<string | null> {
       return;
     }
     this.fieldFocusByTab.set(false);
-  }
-
-  togglePasswordVisibility(): void {
-    this.passwordRevealed.update((v) => !v);
   }
 
   focus(): void {

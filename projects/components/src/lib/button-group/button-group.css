@@ -1,0 +1,8 @@
+/**
+ * Button group — host hook; layout in styles/au-button-group.css (global).
+ */
+
+:host {
+  display: inline-flex;
+  max-width: 100%;
+}

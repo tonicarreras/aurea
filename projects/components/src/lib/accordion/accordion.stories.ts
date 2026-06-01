@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
-import { AuAccordionPanel } from './au-accordion-panel.directive';
+import { AuAccordionPanel } from './au-accordion-panel';
 import { AuAccordion } from './accordion';
 
 const storyImports = [AuAccordion, AuAccordionItem, AuAccordionPanel];
@@ -44,15 +44,15 @@ export const Default: Story = {
       >
         <div class="au-accordion__item">
           <button type="button" auAccordionItem="profile">Profile</button>
-          <div auAccordionPanel="profile">Update your name, email, and avatar.</div>
+          <au-accordion-panel panel="profile">Update your name, email, and avatar.</au-accordion-panel>
         </div>
         <div class="au-accordion__item">
           <button type="button" auAccordionItem="billing">Billing</button>
-          <div auAccordionPanel="billing">Manage payment methods and invoices.</div>
+          <au-accordion-panel panel="billing">Manage payment methods and invoices.</au-accordion-panel>
         </div>
         <div class="au-accordion__item">
           <button type="button" auAccordionItem="security">Security</button>
-          <div auAccordionPanel="security">Change password and enable 2FA.</div>
+          <au-accordion-panel panel="security">Change password and enable 2FA.</au-accordion-panel>
         </div>
       </au-accordion>
     `,

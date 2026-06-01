@@ -1,0 +1,7 @@
+/**
+ * Description item — projects dt/dd into the parent dl (layout via description-list.css).
+ */
+
+:host {
+  display: contents;
+}

@@ -1,0 +1,7 @@
+/**
+ * Description list — host hook; visual rules live in styles/au-description-list.css (global).
+ */
+
+:host {
+  display: block;
+}

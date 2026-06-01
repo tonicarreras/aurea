@@ -38,6 +38,26 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
     since: '1.5.0',
     note: 'Native time picker styling varies by browser.',
   },
+  'input-password': {
+    level: 'beta',
+    since: '1.6.0',
+    note: 'Dedicated password field with reveal toggle.',
+  },
+  'button-group': {
+    level: 'beta',
+    since: '1.6.0',
+    note: 'Segmented exclusive choice; use inside au-form-field.',
+  },
+  'description-list': {
+    level: 'beta',
+    since: '1.6.0',
+    note: 'Semantic dl/dt/dd layout helper.',
+  },
+  'tag-input': {
+    level: 'beta',
+    since: '1.6.0',
+    note: 'Multi-value tags; Enter or comma to add.',
+  },
   dialog: { level: 'stable', since: '0.2.0' },
   card: { level: 'stable', since: '0.1.0' },
   tabs: { level: 'stable', since: '1.5.0' },

@@ -10,6 +10,7 @@ import {
   BadgeDemo,
   BreadcrumbDemo,
   ButtonDemo,
+  ButtonGroupDemo,
   CardDemo,
   CheckboxDemo,
   FormFieldDemo,
@@ -28,11 +29,13 @@ import {
   StepsDemo,
   DialogDemo,
   DividerDemo,
+  DescriptionListDemo,
   DrawerDemo,
   EmptyStateDemo,
   FieldsetDemo,
   FileUploadDemo,
   InputDateDemo,
+  InputPasswordDemo,
   InputTimeDemo,
   InputNumberDemo,
   InputTextDemo,
@@ -43,6 +46,7 @@ import {
   SwitchDemo,
   TableDemo,
   TabsDemo,
+  TagInputDemo,
   TextareaDemo,
   TooltipDemo,
 } from '../demos/previews';
@@ -113,6 +117,20 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   \`,
 })
 export class Example {}`,
+  },
+  {
+    slug: 'button-group',
+    title: 'Button group',
+    exportName: 'AuButtonGroup',
+    selector: 'au-button-group',
+    summary: 'Agrupa acciones `au-button` relacionadas.',
+    demoComponent: ButtonGroupDemo,
+    snippet: `import { AuButton, AuButtonGroup } from '@aurea-design-system/components';
+
+<au-button-group ariaLabel="Document actions">
+  <au-button variant="outline">Cancel</au-button>
+  <au-button>Save</au-button>
+</au-button-group>`,
   },
   {
     slug: 'form-field',
@@ -244,7 +262,7 @@ options: AuSelectOption[] = [
 <au-accordion [(value)]="expanded" ariaLabel="FAQ">
   <div class="au-accordion__item">
     <button type="button" auAccordionItem="one">Section one</button>
-    <div auAccordionPanel="one">Panel content</div>
+    <au-accordion-panel panel="one">Panel content</au-accordion-panel>
   </div>
 </au-accordion>`,
   },
@@ -311,6 +329,19 @@ options: AuSelectOption[] = [
 
 <au-form-field label="Time">
   <au-input-time />
+</au-form-field>`,
+  },
+  {
+    slug: 'input-password',
+    title: 'Input password',
+    exportName: 'AuInputPassword',
+    selector: 'au-input-password',
+    summary: 'Campo de contraseña con toggle de revelar y tokens Aurea.',
+    demoComponent: InputPasswordDemo,
+    snippet: `import { AuFormField, AuInputPassword } from '@aurea-design-system/components';
+
+<au-form-field label="Password">
+  <au-input-password autocomplete="current-password" />
 </au-form-field>`,
   },
   {
@@ -386,6 +417,19 @@ options: AuSelectOption[] = [
   <button type="button" auTab="b">Dos</button>
   <div auTabPanel="a">Panel A</div>
 </au-tabs>`,
+  },
+  {
+    slug: 'tag-input',
+    title: 'Tag input',
+    exportName: 'AuTagInput',
+    selector: 'au-tag-input',
+    summary: 'Entrada multi-valor con chips removibles (Enter o coma).',
+    demoComponent: TagInputDemo,
+    snippet: `import { AuFormField, AuTagInput } from '@aurea-design-system/components';
+
+<au-form-field label="Skills">
+  <au-tag-input />
+</au-form-field>`,
   },
   {
     slug: 'steps',
@@ -504,6 +548,20 @@ options: AuSelectOption[] = [
 
 <au-divider />
 <au-divider label="o" />`,
+  },
+  {
+    slug: 'description-list',
+    title: 'Description list',
+    exportName: 'AuDescriptionList',
+    selector: 'au-description-list',
+    summary: 'Lista semántica clave–valor con `au-description-item`.',
+    demoComponent: DescriptionListDemo,
+    snippet: `import { AuDescriptionItem, AuDescriptionList } from '@aurea-design-system/components';
+
+<au-description-list layout="horizontal">
+  <au-description-item term="Name">Ada Lovelace</au-description-item>
+  <au-description-item term="Email">ada@example.com</au-description-item>
+</au-description-list>`,
   },
   {
     slug: 'empty-state',

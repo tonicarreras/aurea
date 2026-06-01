@@ -1,3 +1,7 @@
+export * from './button-group.preview';
+export * from './input-password.preview';
+export * from './description-list.preview';
+export * from './tag-input.preview';
 export * from './input-time.preview';
 export * from './avatar.preview';
 export * from './drawer.preview';

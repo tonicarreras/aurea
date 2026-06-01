@@ -1,0 +1,115 @@
+/**
+ * Accordion — triggers, panels, and expand/collapse motion (global).
+ * Ensures styles apply to projected `button[auAccordionItem]` and `au-accordion-panel`.
+ */
+
+au-accordion {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+au-accordion .au-accordion__root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+au-accordion .au-accordion__item {
+  border-block-end: 1px solid var(--au-color-border-subtle);
+}
+
+au-accordion .au-accordion__item:first-child {
+  border-block-start: 1px solid var(--au-color-border-subtle);
+}
+
+au-accordion .au-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--au-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: var(--au-accordion-trigger-padding-y, var(--au-space-4))
+    var(--au-accordion-trigger-padding-x, var(--au-space-4));
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-snug);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+au-accordion .au-accordion__trigger:hover:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+au-accordion .au-accordion__trigger:focus-visible {
+  outline: none;
+  box-shadow: var(--au-shadow-focus-ring);
+  z-index: 1;
+}
+
+au-accordion .au-accordion__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+au-accordion .au-accordion__trigger::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-inline-end: 2px solid currentColor;
+  border-block-end: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--au-duration-short) var(--au-ease-in-out);
+}
+
+au-accordion .au-accordion__trigger--expanded::after {
+  transform: rotate(-135deg);
+}
+
+au-accordion .au-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  color: var(--au-color-text-secondary);
+  line-height: var(--au-leading-normal);
+  transition: grid-template-rows var(--au-duration-default) var(--au-ease-standard);
+}
+
+au-accordion .au-accordion__panel--expanded {
+  grid-template-rows: 1fr;
+}
+
+au-accordion .au-accordion__panel-inner {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 var(--au-accordion-panel-padding-x, var(--au-space-4))
+    var(--au-accordion-panel-padding-y, var(--au-space-4));
+}
+
+au-accordion .au-accordion__panel:not(.au-accordion__panel--expanded) .au-accordion__panel-inner {
+  padding-block: 0;
+}
+
+au-accordion[data-au-size='sm'] {
+  --au-accordion-trigger-padding-y: var(--au-space-3);
+  --au-accordion-trigger-padding-x: var(--au-space-3);
+  --au-accordion-panel-padding-x: var(--au-space-3);
+  --au-accordion-panel-padding-y: var(--au-space-3);
+  font-size: var(--au-text-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  au-accordion .au-accordion__trigger::after,
+  au-accordion .au-accordion__panel {
+    transition: none;
+  }
+}

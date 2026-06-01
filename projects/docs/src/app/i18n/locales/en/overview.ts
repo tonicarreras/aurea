@@ -35,6 +35,37 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Tab focuses the control; focus restored after closing dialogs.',
     ],
   },
+  'button-group': {
+    intro: [
+      'Layout wrapper that groups related `au-button` actions with `role="group"`.',
+      'Default **`attached`** mode shares borders between buttons; set `[attached]="false"` for spaced actions.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Save / Cancel / secondary actions on forms and dialogs.',
+        'Compact toolbars of independent buttons.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Exclusive visible choice in a form → `au-radio-group` or `au-tabs` `variant="contained"`.',
+        'Multi-select filters → `au-chip-group`.',
+        'Single action → lone `au-button`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Group', detail: '`role="group"` with `ariaLabel` or `ariaLabelledBy`.' },
+      { region: '`au-button`', detail: 'Projected children; variants and clicks stay on each button.' },
+    ],
+    accessibility: [
+      'Name the group when more than one button is present.',
+      'Each `au-button` keeps its own accessible name and keyboard behavior.',
+    ],
+    keyboard: ['Tab moves between buttons in document order.'],
+    relatedExports: ['type AuButtonGroupOrientation'],
+  },
   'form-field': {
     intro: [
       'Shared label, hint, and error chrome around a projected control (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
@@ -102,13 +133,14 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenToUse: {
       title: 'When to use',
       items: [
-        'Text, email, URL, tel, search, or password with the same chrome as other fields.',
+        'Text, email, URL, tel, or search with the same chrome as other fields.',
         'Validation via signal forms or manual `errorMessage` / `invalid`.',
       ],
     },
     whenNotToUse: {
       title: 'Alternatives',
       items: [
+        'Password fields → `au-input-password`.',
         'Multi-line text → `au-textarea`.',
         'Pick from a list → `au-select` or `au-autocomplete`.',
       ],
@@ -120,19 +152,13 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
         region: 'Native input',
         detail: '`aria-invalid`, `aria-errormessage`, `aria-describedby` via context.',
       },
-      {
-        region: 'Password toggle',
-        detail: 'Only with `type="password"` and `showPasswordToggle`.',
-      },
     ],
     accessibility: [
       'Accessible name via visible label or external `aria-label`.',
       'Errors linked with `aria-errormessage`; hints with `aria-describedby`.',
-      'Password toggle with `aria-pressed` and Show/Hide labels.',
     ],
     keyboard: [
       'Tab enters the field with outer ring (`--from-tab`); click uses inner ring.',
-      'Space on the password toggle toggles visibility.',
     ],
   },
   textarea: {
@@ -299,7 +325,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   accordion: {
     intro: [
-      'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `[auAccordionPanel]` regions share a string key.',
+      'Collapsible sections built on WAI-ARIA accordion pattern: `button[auAccordionItem]` triggers and `au-accordion-panel` regions share a string key.',
       'Bind `[(value)]` to the list of expanded keys; set `[multiple]="false"` for exclusive expand.',
     ],
     whenToUse: {
@@ -322,7 +348,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
         region: '`button[auAccordionItem]`',
         detail: 'Trigger with `aria-expanded` and `aria-controls`.',
       },
-      { region: '`[auAccordionPanel]`', detail: 'Region; `hidden` when collapsed.' },
+      {
+        region: '`au-accordion-panel`',
+        detail: 'Region with height transition; `aria-hidden` and `inert` when collapsed.',
+      },
     ],
     accessibility: [
       'Root `role="region"` with `aria-label` or labelledby.',
@@ -452,6 +481,34 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     accessibility: [
       'Linked label, hint, and errors via `au-form-field` (`aria-invalid`, `aria-describedby`).',
       'Decorative clock icon (`aria-hidden`); picker opens via native control.',
+    ],
+  },
+  'input-password': {
+    intro: [
+      'Dedicated password field with optional reveal toggle and shared Aurea field chrome.',
+      'Implements `FormValueControl<string | null>`; empty ↔ `null`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Login, registration, and change-password forms.',
+        'When users may need to verify what they typed (`showRevealToggle`).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: ['Fixed-length OTP or PIN → specialized input pattern.'],
+    },
+    anatomy: [
+      { region: 'Native input', detail: 'Toggles `type="password"` / `type="text"` when revealed.' },
+      {
+        region: 'Reveal control',
+        detail: 'Optional icon button with `aria-pressed` and localized label.',
+      },
+    ],
+    accessibility: [
+      'Label, hint, and errors linked via `au-form-field`.',
+      'Reveal button is keyboard accessible and does not submit the form.',
     ],
   },
   'file-upload': {
@@ -604,6 +661,39 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Home/End to first/last tab.',
     ],
     relatedExports: ['AuTab', 'AuTabPanel'],
+  },
+  'tag-input': {
+    intro: [
+      'Multi-value text field that shows entered values as removable chips.',
+      'Implements `FormValueControl<string[]>`; confirm with Enter, comma, or blur.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Skills, topics, email recipients, or filter tokens in forms.',
+        'When each value should stay visible and be removed individually.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Single free-text value → `au-input-text` or `au-textarea`.',
+        'Predefined filters → `au-chip-group`.',
+        'Removable list without typing → `au-list` + `au-chip`.',
+      ],
+    },
+    anatomy: [
+      { region: 'Chips', detail: 'Removable labels with a remove button per chip.' },
+      { region: 'Draft input', detail: 'Inline field for the next tag.' },
+    ],
+    accessibility: [
+      'Remove buttons expose `aria-label` via `removeTagLabel`.',
+      'Backspace with an empty draft removes the last tag.',
+    ],
+    keyboard: [
+      'Enter or comma confirms the draft as a tag.',
+      'Backspace with empty input removes the last tag.',
+    ],
   },
   chip: {
     intro: [
@@ -853,6 +943,39 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Label', detail: 'Horizontal only; text between two line halves.' },
     ],
     accessibility: ['`aria-orientation` from `orientation`.'],
+  },
+  'description-list': {
+    intro: [
+      'Semantic description list container (`<dl>`) for key–value pairs.',
+      'Compose with `au-description-item` (`term` + projected description); native `<dt>` / `<dd>` for advanced markup.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Profile summaries, invoice detail, metadata panels.',
+        'Read-only detail beside forms or in settings sidebars.',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Editable fields → form controls inside `au-form-field`.',
+        'Sortable tabular data → `au-table`.',
+        'Simple stacked labels → typography utilities.',
+      ],
+    },
+    anatomy: [
+      { region: '`dl` shell', detail: 'CSS grid from `layout` and `columns`.' },
+      {
+        region: '`au-description-item`',
+        detail: 'Renders `<dt>` and `<dd>`; host uses `display: contents`.',
+      },
+      { region: 'Native `dt` / `dd`', detail: 'Optional projection for rich descriptions.' },
+    ],
+    accessibility: [
+      'Preserves native list semantics for screen readers.',
+      'Each `dt` should be followed by its `dd` in document order.',
+    ],
   },
   'empty-state': {
     intro: [

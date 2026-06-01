@@ -1,0 +1,107 @@
+/**
+ * Tag input — chips + text field in one control row.
+ * Field chrome: aurea-global.css
+ */
+
+.au-tag-input__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--au-space-1-5);
+  width: 100%;
+  min-height: var(--au-size-field-h-md);
+  padding: var(--au-space-1-5) var(--au-space-2);
+  box-sizing: border-box;
+}
+
+:host([data-au-size='sm']) .au-tag-input__inner {
+  min-height: var(--au-size-field-h-sm);
+  padding: var(--au-space-1) var(--au-space-2);
+}
+
+:host([data-au-size='lg']) .au-tag-input__inner {
+  min-height: var(--au-size-field-h-lg);
+  padding: var(--au-space-2) var(--au-space-3);
+}
+
+.au-tag-input__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--au-space-1);
+  max-width: 100%;
+  padding: var(--au-space-0-5) var(--au-space-1-5) var(--au-space-0-5) var(--au-space-2);
+  border-radius: var(--au-radius-pill);
+  background: var(--au-color-surface-sunken);
+  border: 1px solid var(--au-color-border-subtle);
+  color: var(--au-color-text-primary);
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-tight);
+}
+
+.au-tag-input__chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.au-tag-input__chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--au-radius-full);
+  background: transparent;
+  color: var(--au-color-text-tertiary);
+  cursor: pointer;
+}
+
+.au-tag-input__chip-remove:hover:not(:disabled) {
+  color: var(--au-color-text-primary);
+  background: var(--au-color-surface-elevated);
+}
+
+.au-tag-input__chip-remove:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.au-tag-input__input {
+  flex: 1 1 8rem;
+  min-width: 6rem;
+  margin: 0;
+  padding: var(--au-space-1) var(--au-space-1);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--au-color-form-text);
+  font: inherit;
+  font-size: var(--au-size-field-text-md);
+  outline: none;
+}
+
+:host([data-au-size='sm']) .au-tag-input__input {
+  font-size: var(--au-size-field-text-sm);
+}
+
+:host([data-au-size='lg']) .au-tag-input__input {
+  font-size: var(--au-size-field-text-lg);
+}
+
+.au-tag-input__input::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+}
+
+.au-tag-input__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+.au-tag-input__input:focus,
+.au-tag-input__input:focus-visible,
+.au-tag-input__chip-remove:focus,
+.au-tag-input__chip-remove:focus-visible {
+  outline: none;
+}

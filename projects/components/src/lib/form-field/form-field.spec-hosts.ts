@@ -5,7 +5,9 @@ import { By } from '@angular/platform-browser';
 import { AuAutocomplete } from '../autocomplete/autocomplete';
 import { AuCheckbox } from '../checkbox/checkbox';
 import { AuInputDate } from '../input-date/input-date';
+import { AuInputPassword } from '../input-password/input-password';
 import { AuInputTime } from '../input-time/input-time';
+import { AuTagInput } from '../tag-input/tag-input';
 import { AuInputNumber } from '../input-number/input-number';
 import { AuInputText } from '../input-text/input-text';
 import { AuRadioGroup } from '../radio-group/radio-group';
@@ -82,7 +84,6 @@ const fieldHarnessBindings = `
         [minLength]="minLength"
         [maxLength]="maxLength"
         [size]="size"
-        [showPasswordToggle]="showPasswordToggle"
       />
     </au-form-field>
   `,
@@ -98,7 +99,7 @@ export class AuInputTextTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
-  type: 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url' = 'text';
+  type: 'text' | 'email' | 'number' | 'tel' | 'search' | 'url' = 'text';
   disabled = false;
   readOnly = false;
   required = false;
@@ -108,7 +109,6 @@ export class AuInputTextTestHost {
   minLength: number | undefined = undefined;
   maxLength: number | undefined = undefined;
   size: 'sm' | 'md' | 'lg' = 'md';
-  showPasswordToggle = true;
 }
 
 @Component({
@@ -289,6 +289,90 @@ export class AuInputTimeTestHost {
   minTime: string | undefined = undefined;
   maxTime: string | undefined = undefined;
   size: 'sm' | 'md' | 'lg' = 'md';
+}
+
+@Component({
+  selector: 'au-input-password-test-host',
+  imports: [AuFormField, AuInputPassword],
+  template: `
+    <au-form-field ${fieldHarnessBindings}>
+      <au-input-password
+        [(value)]="value"
+        [errors]="$any(errors)"
+        [invalid]="invalid"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        [required]="required"
+        [name]="name"
+        [placeholder]="placeholder"
+        [autocomplete]="autocomplete"
+        [size]="size"
+        [showRevealToggle]="showRevealToggle"
+      />
+    </au-form-field>
+  `,
+})
+export class AuInputPasswordTestHost {
+  readonly ffLabel = input('Field', { transform: nullToEmptyString });
+  readonly ffHint = input('', { transform: nullToEmptyString });
+  readonly ffErrorMessage = input('', { transform: nullToEmptyString });
+  readonly ffControlId = input('', { transform: nullToEmptyString });
+  readonly ffRequired = input(false);
+  readonly ffShowRequired = input(true);
+  readonly ffInvalid = input(false);
+  value: string | null = null;
+  errors: unknown[] = [];
+  invalid = false;
+  disabled = false;
+  readOnly = false;
+  required = false;
+  name = '';
+  placeholder = '';
+  autocomplete: string | undefined = undefined;
+  size: 'sm' | 'md' | 'lg' = 'md';
+  showRevealToggle = true;
+}
+
+@Component({
+  selector: 'au-tag-input-test-host',
+  imports: [AuFormField, AuTagInput],
+  template: `
+    <au-form-field ${fieldHarnessBindings}>
+      <au-tag-input
+        [(value)]="value"
+        [errors]="$any(errors)"
+        [invalid]="invalid"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        [required]="required"
+        [name]="name"
+        [placeholder]="placeholder"
+        [size]="size"
+        [allowDuplicates]="allowDuplicates"
+        [maxTags]="maxTags"
+      />
+    </au-form-field>
+  `,
+})
+export class AuTagInputTestHost {
+  readonly ffLabel = input('Field', { transform: nullToEmptyString });
+  readonly ffHint = input('', { transform: nullToEmptyString });
+  readonly ffErrorMessage = input('', { transform: nullToEmptyString });
+  readonly ffControlId = input('', { transform: nullToEmptyString });
+  readonly ffRequired = input(false);
+  readonly ffShowRequired = input(true);
+  readonly ffInvalid = input(false);
+  value: string[] = [];
+  errors: unknown[] = [];
+  invalid = false;
+  disabled = false;
+  readOnly = false;
+  required = false;
+  name = '';
+  placeholder = 'Add tag…';
+  size: 'sm' | 'md' | 'lg' = 'md';
+  allowDuplicates = false;
+  maxTags: number | undefined = undefined;
 }
 
 @Component({

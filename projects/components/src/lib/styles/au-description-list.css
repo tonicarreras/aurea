@@ -1,0 +1,97 @@
+/**
+ * Description list — dt/dd typography and layout (global).
+ * Required because `dt` / `dd` render inside `au-description-item` or projected content
+ * (outside `au-description-list` encapsulation).
+ */
+
+au-description-list {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+}
+
+au-description-list .au-description-list__list {
+  margin: 0;
+  padding: 0;
+}
+
+au-description-list .au-description-list__list dt,
+au-description-list .au-description-list__list .au-description-item__term {
+  margin: 0;
+  padding: var(--au-space-3) 0 var(--au-space-1);
+  font-size: var(--au-text-xs);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  letter-spacing: var(--au-tracking-ui);
+  color: var(--au-color-text-label);
+}
+
+au-description-list[data-au-layout='vertical'] .au-description-list__list > :first-child dt,
+au-description-list[data-au-layout='vertical']
+  .au-description-list__list
+  > :first-child
+  .au-description-item__term,
+au-description-list[data-au-layout='vertical'] .au-description-list__list > dt:first-child {
+  padding-top: 0;
+}
+
+au-description-list .au-description-list__list dd,
+au-description-list .au-description-list__list .au-description-item__detail {
+  margin: 0;
+  padding: 0 0 var(--au-space-3);
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-primary);
+}
+
+au-description-list[data-au-layout='vertical'] .au-description-list__list dd,
+au-description-list[data-au-layout='vertical']
+  .au-description-list__list
+  .au-description-item__detail {
+  border-bottom: 1px solid var(--au-color-border-subtle);
+}
+
+au-description-list[data-au-layout='vertical'] .au-description-list__list > :last-child dd,
+au-description-list[data-au-layout='vertical']
+  .au-description-list__list
+  > :last-child
+  .au-description-item__detail,
+au-description-list[data-au-layout='vertical'] .au-description-list__list > dd:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list {
+  display: grid;
+  grid-template-columns: minmax(8rem, 30%) 1fr;
+  column-gap: var(--au-space-4);
+  row-gap: var(--au-space-2);
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list dt,
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list
+  .au-description-item__term,
+au-description-list[data-au-layout='horizontal'] .au-description-list__list dd,
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list
+  .au-description-item__detail {
+  padding: var(--au-space-2) 0;
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list dt,
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list
+  .au-description-item__term {
+  font-size: var(--au-text-sm);
+}
+
+au-description-list[data-au-columns='2'][data-au-layout='vertical'] .au-description-list__list {
+  column-count: 2;
+  column-gap: var(--au-space-8);
+}
+
+au-description-list[data-au-columns='3'][data-au-layout='vertical'] .au-description-list__list {
+  column-count: 3;
+  column-gap: var(--au-space-8);
+}

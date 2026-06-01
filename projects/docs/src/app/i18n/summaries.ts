@@ -6,6 +6,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Primary and secondary actions with variants, loading states, and an accessible focus ring.',
     'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
   ),
+  'button-group': L(
+    'Groups related `au-button` actions with shared layout.',
+    'Agrupa acciones `au-button` relacionadas con layout compartido.',
+  ),
   'form-field': L(
     'Shared label, hint, and error chrome around projected inputs; wires ids and ARIA via `AU_FORM_FIELD`.',
     'Cromado compartido de label, hint y error; enlaza ids y ARIA vía `AU_FORM_FIELD`.',
@@ -49,6 +53,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
   'input-time': L(
     'Time field with native picker and shared field chrome.',
     'Campo de hora con selector nativo y cromado de campo compartido.',
+  ),
+  'input-password': L(
+    'Dedicated password field with reveal toggle and autocomplete hints.',
+    'Campo de contraseña dedicado con toggle de revelar y pistas de autocomplete.',
   ),
   dialog: L(
     'Modal dialog with focus trap, backdrop, and projected actions.',
@@ -97,6 +105,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
   divider: L(
     'Horizontal or vertical rules with optional inset and label.',
     'Reglas horizontales o verticales con sangría y etiqueta opcionales.',
+  ),
+  'description-list': L(
+    'Semantic key–value list; compose with `au-description-item`.',
+    'Lista semántica clave–valor; compón con `au-description-item`.',
   ),
   'empty-state': L(
     'Centered placeholder for empty lists, tables, or search results.',
@@ -165,5 +177,9 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
   table: L(
     'Data table with sort, row selection, loading, and custom cells.',
     'Tabla con orden, selección de filas, carga y celdas custom.',
+  ),
+  'tag-input': L(
+    'Multi-value text tags with removable chips; Enter or comma to add.',
+    'Etiquetas de texto multi-valor con chips removibles; Enter o coma para añadir.',
   ),
 };

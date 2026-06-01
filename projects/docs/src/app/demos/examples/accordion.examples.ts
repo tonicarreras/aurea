@@ -19,7 +19,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         >
           {{ t().profile }}
         </button>
-        <div auAccordionPanel="profile">{{ t().profilePanel }}</div>
+        <au-accordion-panel panel="profile">{{ t().profilePanel }}</au-accordion-panel>
       </div>
       <div class="au-accordion__item">
         <button
@@ -28,7 +28,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         >
           {{ t().billing }}
         </button>
-        <div auAccordionPanel="billing">{{ t().billingPanel }}</div>
+        <au-accordion-panel panel="billing">{{ t().billingPanel }}</au-accordion-panel>
       </div>
     </au-accordion>
   `,
@@ -56,7 +56,7 @@ export class ExampleAccordionBasicDemo {
         >
           {{ t().sectionOne }}
         </button>
-        <div auAccordionPanel="one">{{ t().sectionOnePanel }}</div>
+        <au-accordion-panel panel="one">{{ t().sectionOnePanel }}</au-accordion-panel>
       </div>
       <div class="au-accordion__item">
         <button
@@ -65,7 +65,7 @@ export class ExampleAccordionBasicDemo {
         >
           {{ t().sectionTwo }}
         </button>
-        <div auAccordionPanel="two">{{ t().sectionTwoPanel }}</div>
+        <au-accordion-panel panel="two">{{ t().sectionTwoPanel }}</au-accordion-panel>
       </div>
     </au-accordion>
   `,

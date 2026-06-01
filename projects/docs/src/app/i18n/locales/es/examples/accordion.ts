@@ -6,30 +6,28 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Varias secciones',
-    description: 'Varios paneles abiertos a la vez con `[(value)]` y `[multiple]="true"`.',
+    title: 'Por defecto',
     demoComponent: ExampleAccordionBasicDemo,
     code: `import { AuAccordion, AuAccordionItem, AuAccordionPanel } from '@aurea-design-system/components';
 
 <au-accordion [(value)]="expanded" ariaLabel="Ajustes de cuenta">
   <div class="au-accordion__item">
     <button type="button" auAccordionItem="profile">Perfil</button>
-    <div auAccordionPanel="profile">Actualiza nombre y avatar.</div>
+    <au-accordion-panel panel="profile">Actualiza nombre y avatar.</au-accordion-panel>
   </div>
   <div class="au-accordion__item">
     <button type="button" auAccordionItem="billing">Facturación</button>
-    <div auAccordionPanel="billing">Gestiona métodos de pago.</div>
+    <au-accordion-panel panel="billing">Gestiona métodos de pago.</au-accordion-panel>
   </div>
 </au-accordion>`,
   },
   {
     title: 'Expansión única',
-    description: 'Con `[multiple]="false"` abrir una sección cierra las demás.',
     demoComponent: ExampleAccordionSingleDemo,
     code: `<au-accordion [(value)]="expanded" [multiple]="false" ariaLabel="FAQ">
   <div class="au-accordion__item">
     <button type="button" auAccordionItem="one">Sección uno</button>
-    <div auAccordionPanel="one">Panel uno</div>
+    <au-accordion-panel panel="one">Panel uno</au-accordion-panel>
   </div>
 </au-accordion>`,
   },
