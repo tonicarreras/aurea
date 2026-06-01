@@ -63,19 +63,19 @@ Required before marking **stable** in `component-maturity.ts`:
 
 ## npm scripts (cheat sheet)
 
-| Command | When to use |
-| ------- | ----------- |
-| `build` | Alias of `build:components` (library + schematics + strip sourcemaps). |
-| `build:components` | Same as `build`; used explicitly in CI. |
-| `docs` / `start` | Docs site dev server (port **4200**). `start` → `docs`. |
-| `sync:story-overviews` | After changing component overviews in `projects/docs/.../i18n` — regenerates Storybook `story-overview-source.ts`. |
-| `sync:visual-stories` | Regenerate `e2e-visual/visual-story-manifest.ts` (no git check). |
-| `verify:visual-manifest` | CI: sync manifest + fail if `visual-story-manifest.ts` is out of date. |
-| `maintain:storybook` | Pre-PR: `sync:story-overviews` + `verify:story-tags` + `verify:visual-manifest`. |
-| `tag:stories` | Apply `stable` / `beta` tags from `component-maturity.ts`. |
-| `update:bundle-baseline` | After intentional FESM size change; then `check:bundle` in CI. |
-| `pack:package` | Local `.tgz` smoke test before publish. |
-| `test:docs:e2e` | Docs Playwright smoke (run after `build:docs`; CI does both). |
+| Command                  | When to use                                                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `build`                  | Alias of `build:components` (library + schematics + strip sourcemaps).                                             |
+| `build:components`       | Same as `build`; used explicitly in CI.                                                                            |
+| `docs` / `start`         | Docs site dev server (port **4200**). `start` → `docs`.                                                            |
+| `sync:story-overviews`   | After changing component overviews in `projects/docs/.../i18n` — regenerates Storybook `story-overview-source.ts`. |
+| `sync:visual-stories`    | Regenerate `e2e-visual/visual-story-manifest.ts` (no git check).                                                   |
+| `verify:visual-manifest` | CI: sync manifest + fail if `visual-story-manifest.ts` is out of date.                                             |
+| `maintain:storybook`     | Pre-PR: `sync:story-overviews` + `verify:story-tags` + `verify:visual-manifest`.                                   |
+| `tag:stories`            | Apply `stable` / `beta` tags from `component-maturity.ts`.                                                         |
+| `update:bundle-baseline` | After intentional FESM size change; then `check:bundle` in CI.                                                     |
+| `pack:package`           | Local `.tgz` smoke test before publish.                                                                            |
+| `test:docs:e2e`          | Docs Playwright smoke (run after `build:docs`; CI does both).                                                      |
 
 ## Storybook development
 
