@@ -656,12 +656,12 @@
         },
         {
             "name": "InputPasswordStoryArgs",
-            "id": "interface-InputPasswordStoryArgs-e67ecda88c9b20642151467eb175cf9ced1c4a7f22f7909f627b112bca82368b1c530297963b1690262b71984bda646ce18006879766800f3a8ca14fbe4c06df",
+            "id": "interface-InputPasswordStoryArgs-e14bfc8e9af212a5517f8554e31cb5ef63a450515cfbe867a3bbddb669a8cbc0d5e7bf8dec7d61bd778d525e8099e308f25a6776872297f8947d941c0279f57c",
             "file": "projects/components/src/lib/input-password/input-password.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputPassword } from './input-password';\n\ninterface InputPasswordStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  autocomplete: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  required: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  showRevealToggle: boolean;\n}\n\nconst meta: Meta<InputPasswordStoryArgs> = {\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputPasswordStoryArgs>;\n\nexport const Default: Story = {\n  args: { label: 'Password', hint: 'Use at least 12 characters.' },\n};\n\nexport const SignUp: Story = {\n  args: {\n    label: 'Create password',\n    autocomplete: 'new-password',\n    required: true,\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Password');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n};\n\nexport const RevealToggle: Story = {\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, userEvent, within } from 'storybook/test';\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuInputPassword } from './input-password';\n\ninterface InputPasswordStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  autocomplete: string | undefined;\n  disabled: boolean;\n  readOnly: boolean;\n  required: boolean;\n  name: string;\n  size: 'sm' | 'md' | 'lg';\n  showRevealToggle: boolean;\n}\n\nconst meta: Meta<InputPasswordStoryArgs> = {\n  title: 'Aurea/InputPassword',\n  component: AuInputPassword,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('input-password'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: { control: 'text', table: { category: 'Value' } },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    autocomplete: { control: 'text', table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    showRevealToggle: { control: 'boolean', table: { category: 'Field' } },\n  },\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    autocomplete: 'current-password',\n    disabled: false,\n    readOnly: false,\n    name: '',\n    size: 'md',\n    showRevealToggle: true,\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuInputPassword],\n      args,\n      `<au-input-password\n  [(value)]=\"value\"\n  [placeholder]=\"placeholder\"\n  [autocomplete]=\"autocomplete\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [name]=\"name\"\n  [size]=\"size\"\n  [invalid]=\"invalid\"\n  [showRevealToggle]=\"showRevealToggle\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<InputPasswordStoryArgs>;\n\nexport const Default: Story = {\n  args: { label: 'Password', hint: 'Use at least 12 characters.' },\n};\n\nexport const SignUp: Story = {\n  args: {\n    label: 'Create password',\n    autocomplete: 'new-password',\n    required: true,\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText(/^Password/i);\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n};\n\nexport const RevealToggle: Story = {\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText(/^Password/i)).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n};\n",
             "properties": [
                 {
                     "name": "autocomplete",
@@ -2151,21 +2151,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    items: [{ label: 'Home', href: '#' }, { label: 'Components', href: '#' }, { label: 'Button' }],\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    items: [{ label: 'Home', href: '#' }, { label: 'Components', href: '#' }, { label: 'Button' }],\n  },\n}"
             },
             {
                 "name": "Default",
@@ -3011,11 +3011,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuButton>",
-                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
+                "type": "Meta<AuBadge>",
+                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
             },
             {
                 "name": "meta",
@@ -3031,21 +3031,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuBadge>",
-                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButtonGroup>",
-                "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
+                "type": "Meta<AuButton>",
+                "defaultValue": "{\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    click: {\n      description: 'Emits on native click when not disabled or loading.',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    click: fn(),\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3056,6 +3046,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuCard>",
                 "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButtonGroup>",
+                "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3667,7 +3667,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n}"
+                "defaultValue": "{\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText(/^Password/i)).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n}"
             },
             {
                 "name": "Rounded",
@@ -4299,7 +4299,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Password');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n}"
+                "defaultValue": "{\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText(/^Password/i);\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n}"
             },
             {
                 "name": "WithError",
@@ -5010,8 +5010,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButton>",
-                "file": "projects/components/src/lib/button/button.stories.ts",
+                "rawtype": "StoryObj<AuBadge>",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5032,19 +5032,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBadge>",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuButtonGroup>",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "rawtype": "StoryObj<AuButton>",
+                "file": "projects/components/src/lib/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5056,6 +5045,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuCard>",
                 "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuButtonGroup>",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6874,28 +6874,6 @@
                     "defaultValue": "{ args: { size: 'sm' } }"
                 }
             ],
-            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    items: [{ label: 'Home', href: '#' }, { label: 'Components', href: '#' }, { label: 'Button' }],\n  },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuBreadcrumb>",
-                    "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
-                }
-            ],
             "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Default",
@@ -6936,6 +6914,28 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuBadge] },\n    template: `\n      <div style=\"display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;\">\n        <au-badge label=\"Default\" />\n        <au-badge variant=\"accent\" label=\"New\" />\n        <au-badge variant=\"success\" label=\"OK\" />\n        <au-badge variant=\"warning\" label=\"!\" />\n        <au-badge variant=\"error\" label=\"3\" />\n        <au-badge variant=\"info\" label=\"i\" />\n      </div>\n    `,\n  }),\n}"
+                }
+            ],
+            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    items: [{ label: 'Home', href: '#' }, { label: 'Components', href: '#' }, { label: 'Button' }],\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuBreadcrumb>",
+                    "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
                 }
             ],
             "projects/components/src/lib/card/card.stories.ts": [
@@ -7453,7 +7453,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText('Password')).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n}"
+                    "defaultValue": "{\n  args: { label: 'Password', value: 'secret' },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const toggle = el.getByRole('button', { name: 'Show password' });\n    await expect(toggle).toHaveAttribute('aria-pressed', 'false');\n    await userEvent.click(toggle);\n    await expect(el.getByLabelText(/^Password/i)).toHaveAttribute('type', 'text');\n    await expect(toggle).toHaveAttribute('aria-pressed', 'true');\n    await expect(toggle).toHaveAccessibleName('Hide password');\n  },\n}"
                 },
                 {
                     "name": "SignUp",
@@ -7473,7 +7473,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText('Password');\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n}"
+                    "defaultValue": "{\n  args: {\n    label: 'Password',\n    errorMessage: 'Password is required.',\n    invalid: true,\n    required: true,\n  },\n  play: async ({ canvasElement }) => {\n    const el = within(canvasElement);\n    const field = el.getByLabelText(/^Password/i);\n    await expect(field).toHaveAttribute('aria-invalid', 'true');\n    const errId = field.getAttribute('aria-errormessage');\n    await expect(errId).toBeTruthy();\n    await expect(el.getByRole('alert')).toHaveTextContent('Password is required.');\n  },\n}"
                 }
             ],
             "projects/components/src/lib/input-time/input-time.stories.ts": [
@@ -8802,13 +8802,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/button/button.stories.ts": [
+            "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButton>",
-                    "file": "projects/components/src/lib/button/button.stories.ts",
+                    "rawtype": "StoryObj<AuBadge>",
+                    "file": "projects/components/src/lib/badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8828,26 +8828,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/badge/badge.stories.ts": [
+            "projects/components/src/lib/button/button.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBadge>",
-                    "file": "projects/components/src/lib/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/button-group/button-group.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButtonGroup>",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "rawtype": "StoryObj<AuButton>",
+                    "file": "projects/components/src/lib/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8861,6 +8848,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuCard>",
                     "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/button-group/button-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuButtonGroup>",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
