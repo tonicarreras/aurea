@@ -166,9 +166,9 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuInputNumber`      | `<au-input-number>`     |                                                                       |
 | `AuInputDate`        | `<au-input-date>`       | Native date field (stable **1.5.0**)                                  |
 | `AuInputTime`        | `<au-input-time>`       | Native time field (stable **1.5.0**)                                  |
-| `AuInputPassword`    | `<au-input-password>`   | Password with reveal toggle (beta **1.6.0**)                          |
-| `AuButtonGroup`      | `<au-button-group>`     | Groups `au-button` actions (beta **1.6.0**)                           |
-| `AuTagInput`         | `<au-tag-input>`        | Multi-value tags (beta **1.6.0**)                                     |
+| `AuInputPassword`    | `<au-input-password>`   | Password with reveal toggle (stable **1.6.0**)                        |
+| `AuButtonGroup`      | `<au-button-group>`     | Groups `au-button` actions (stable **1.6.0**)                         |
+| `AuTagInput`         | `<au-tag-input>`        | Multi-value tags (stable **1.6.0**)                                   |
 | `AuDialog`           | `<au-dialog>`           | Native `<dialog>`                                                     |
 | `AuCard`             | `<au-card>`             | `AuCardFooter` directive                                              |
 | `AuTabs`             | `<au-tabs>`             | `AuTab`, `AuTabPanel`                                                 |
@@ -181,7 +181,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuSkeleton`         | `<au-skeleton>`         | Loading placeholder                                                   |
 | `AuSnackbar`         | `<au-snackbar>`         |                                                                       |
 | `AuDivider`          | `<au-divider>`          | Horizontal / vertical                                                 |
-| `AuDescriptionList`  | `<au-description-list>` | Key–value `dl` with `au-description-item` (beta **1.6.0**)            |
+| `AuDescriptionList`  | `<au-description-list>` | Key–value `dl` with `au-description-item` (stable **1.6.0**)          |
 | `AuTooltip`          | `[auTooltip]`           | Directive on the trigger                                              |
 | `AuBadge`            | `<au-badge>`            | Status / count label                                                  |
 | `AuBreadcrumb`       | `<au-breadcrumb>`       | Navigation trail                                                      |
@@ -207,7 +207,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 ## Governance & maturity
 
 - [CHANGELOG](../../CHANGELOG.md) · [CONTRIBUTING](../../CONTRIBUTING.md) · [VERSIONING](../../docs/VERSIONING.md) · [A11y audit](./A11Y_AUDIT.md)
-- Maturity: `getComponentMaturity()` or [docs matrix](https://aurea-ds.netlify.app/en/maturity). Stable catalog as of **1.5.0**; new betas ship in **1.6.0** (`AuInputPassword`, `AuButtonGroup`, `AuDescriptionList`, `AuTagInput`).
+- Maturity: `getComponentMaturity()` or [docs matrix](https://aurea-ds.netlify.app/en/maturity). Full catalog **stable** as of **1.6.0**.
 
 ## Bundle & performance
 

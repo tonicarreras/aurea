@@ -9,6 +9,8 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-06-01
+
 ### Added
 
 - **`AuInputPassword`** — dedicated password field with reveal toggle for sign-in flows.
@@ -24,9 +26,18 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 - **`AuTagInput`** — `readOnly` uses native `readonly` (keeps focus order); remove buttons stay disabled when read-only.
 - **`AuButtonGroup`** — refactored from segmented `radiogroup` to layout wrapper for `au-button` children.
 - **`AuAccordion`** — panel expand/collapse animation (`grid-template-rows`); styles in `aurea-global.css`. **`AuAccordionPanel`** selector is `au-accordion-panel` with `panel` input (replaces `[auAccordionPanel]` attribute).
-- **`AuDescriptionList`** — styles moved to `aurea-global.css` (`au-description-list.css`); required for `dt` / `dd` inside `au-description-item`.
+- **`AuDescriptionList`** — styles in `aurea-global.css`; list renders valid `dl` > `div` > `dt`/`dd` for axe (hidden `au-description-item` hosts).
 - **`AuInputText`** — removed `type="password"` and `showPasswordToggle`; use **`AuInputPassword`** for password fields.
 - **`AuInputTime`** promoted to **stable** (since **1.5.0**) after a11y audit and axe on Storybook stories.
+
+### Migration from 1.5.0
+
+- Password fields: replace `<au-input-text type="password" …>` with **`<au-input-password>`** (and `revealLabelShow` / `revealLabelHide` for i18n).
+- Accordion panels: use **`<au-accordion-panel [panel]="…">`** instead of **`[auAccordionPanel]`** on a generic element.
+
+```bash
+bun add @aurea-design-system/components@1.6.0
+```
 
 ## [1.5.0] - 2026-05-31
 
@@ -217,7 +228,12 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.1.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...HEAD
+[1.6.0]: https://github.com/tonicarreras/aurea/compare/components-v1.5.0...components-v1.6.0
+[1.5.0]: https://github.com/tonicarreras/aurea/compare/components-v1.4.0...components-v1.5.0
+[1.4.0]: https://github.com/tonicarreras/aurea/compare/components-v1.3.0...components-v1.4.0
+[1.3.0]: https://github.com/tonicarreras/aurea/compare/components-v1.2.0...components-v1.3.0
+[1.2.0]: https://github.com/tonicarreras/aurea/compare/components-v1.1.0...components-v1.2.0
 [1.1.0]: https://github.com/tonicarreras/aurea/compare/components-v1.0.0...components-v1.1.0
 [1.0.0]: https://github.com/tonicarreras/aurea/compare/components-v0.9.0...components-v1.0.0
 [0.9.0]: https://github.com/tonicarreras/aurea/compare/v0.3.0...components-v0.9.0

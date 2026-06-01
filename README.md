@@ -81,7 +81,7 @@ Install and usage docs for consumers: **[`projects/components/README.md`](projec
 
 Full export list, signal-forms notes, and maturity: **[`projects/components/README.md`](projects/components/README.md#components)**.
 
-All catalogued components are **stable** as of **1.5.0** (see [component maturity](projects/components/src/lib/component-maturity.ts) and [docs maturity matrix](https://aurea-ds.netlify.app/en/maturity)).
+All catalogued components are **stable** as of **1.6.0** (see [component maturity](projects/components/src/lib/component-maturity.ts) and [docs maturity matrix](https://aurea-ds.netlify.app/en/maturity)).
 
 ---
 
