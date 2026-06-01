@@ -36,7 +36,7 @@ au-table .au-table__shell {
   border: 1px solid var(--au-color-border-subtle);
   border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: none;
   overflow: hidden;
 }
 

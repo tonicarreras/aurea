@@ -55,4 +55,41 @@ describe('AuButtonGroup', () => {
     expect(fix.componentInstance.ariaLabel()).toBe('');
     expect(fix.componentInstance.resolvedAriaLabel()).toBeNull();
   });
+
+  it('sets aria-labelledby when provided', () => {
+    const fix = TestBed.createComponent(AuButtonGroup);
+    fix.componentRef.setInput('ariaLabelledBy', 'actions-label');
+    fix.detectChanges();
+    expect(fix.nativeElement.getAttribute('aria-labelledby')).toBe('actions-label');
+  });
+
+  it('coerces nullish ariaLabelledBy to empty string', () => {
+    const fix = TestBed.createComponent(AuButtonGroup);
+    fix.componentRef.setInput('ariaLabelledBy', null as unknown as string);
+    fix.detectChanges();
+    expect(fix.componentInstance.ariaLabelledBy()).toBe('');
+    expect(fix.componentInstance.resolvedAriaLabelledBy()).toBeNull();
+  });
+
+  it('scrolls focused buttons into view on focusin', () => {
+    const fix = TestBed.createComponent(AuButtonGroup);
+    fix.detectChanges();
+    const target = document.createElement('button');
+    target.scrollIntoView = vi.fn();
+    fix.nativeElement.querySelector('.au-button-group__inner')?.appendChild(target);
+    target.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    expect(target.scrollIntoView).toHaveBeenCalledWith({
+      block: 'nearest',
+      inline: 'nearest',
+    });
+  });
+
+  it('ignores focusin when target is not an HTMLElement', () => {
+    const fix = TestBed.createComponent(AuButtonGroup);
+    fix.detectChanges();
+    const inner = fix.nativeElement.querySelector('.au-button-group__inner') as HTMLElement;
+    const event = new FocusEvent('focusin', { bubbles: true });
+    Object.defineProperty(event, 'target', { value: document });
+    expect(() => inner.dispatchEvent(event)).not.toThrow();
+  });
 });

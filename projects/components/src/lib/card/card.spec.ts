@@ -119,6 +119,19 @@ describe('AuCard', () => {
     fix.detectChanges();
     expect(fix.componentInstance.size()).toBe('md');
   });
+
+  it('does not set data-au-interactive by default', () => {
+    const fix = TestBed.createComponent(AuCard);
+    fix.detectChanges();
+    expect(fix.nativeElement.hasAttribute('data-au-interactive')).toBe(false);
+  });
+
+  it('sets data-au-interactive when interactive is true', () => {
+    const fix = TestBed.createComponent(AuCard);
+    fix.componentRef.setInput('interactive', true);
+    fix.detectChanges();
+    expect(fix.nativeElement.getAttribute('data-au-interactive')).toBe('');
+  });
 });
 
 @Component({

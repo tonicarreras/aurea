@@ -66,7 +66,7 @@ au-snackbar .au-snackbar__surface {
   border: 1px solid var(--au-color-border-default);
   border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-floating, var(--au-shadow-float));
+  box-shadow: var(--au-shadow-raised);
   color: var(--au-color-text-primary);
   pointer-events: auto;
   animation: au-snackbar-in var(--au-motion-toast) both;

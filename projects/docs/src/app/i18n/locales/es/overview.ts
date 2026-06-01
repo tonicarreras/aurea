@@ -613,10 +613,14 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     intro: [
       'Superficie agrupada con variantes elevated, outlined y filled. Proyección por regiones: media, cabecera, cuerpo y pie.',
       'El host es un `<article>`: incluye un heading en `auCardHeader` para el outline del documento.',
+      'Usa `[interactive]="true"` solo cuando toda la tarjeta sea enlace o destino de clic (refuerzo de borde al hover en elevated).',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
-      items: ['Resúmenes de entidad, tiles de dashboard, bloques de configuración.'],
+      items: [
+        'Resúmenes de entidad, tiles de dashboard, bloques de configuración.',
+        'Tiles clicables con `interactive` y un patrón real de enlace o botón.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternativas',

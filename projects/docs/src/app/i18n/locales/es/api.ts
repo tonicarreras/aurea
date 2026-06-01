@@ -442,12 +442,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i('ariaLabel', 'string', 'Nombre accesible del grupo.', "''"),
           i('ariaLabelledBy', 'string', 'ID del elemento que etiqueta.', "''"),
           i('attached', 'boolean', 'Comparte bordes entre botones.', 'true'),
-          i(
-            'orientation',
-            "'horizontal' | 'vertical'",
-            'Dirección del layout.',
-            "'horizontal'",
-          ),
+          i('orientation', "'horizontal' | 'vertical'", 'Dirección del layout.', "'horizontal'"),
         ],
       },
     ],
@@ -600,6 +595,12 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
         rows: [
           i('variant', "'elevated' | 'outlined' | 'filled'", 'Estilo de superficie.', "'elevated'"),
           i('size', "'sm' | 'md' | 'lg'", 'Padding interno (`--au-card-*`).', "'md'"),
+          i(
+            'interactive',
+            'boolean',
+            'Elevación al hover en variante elevated; cuando la tarjeta es enlace o destino de clic.',
+            'false',
+          ),
           {
             name: 'hasFooter',
             type: 'Signal<boolean> (solo lectura)',

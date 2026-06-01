@@ -57,7 +57,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Group', detail: '`role="group"` with `ariaLabel` or `ariaLabelledBy`.' },
-      { region: '`au-button`', detail: 'Projected children; variants and clicks stay on each button.' },
+      {
+        region: '`au-button`',
+        detail: 'Projected children; variants and clicks stay on each button.',
+      },
     ],
     accessibility: [
       'Name the group when more than one button is present.',
@@ -157,9 +160,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Accessible name via visible label or external `aria-label`.',
       'Errors linked with `aria-errormessage`; hints with `aria-describedby`.',
     ],
-    keyboard: [
-      'Tab enters the field with outer ring (`--from-tab`); click uses inner ring.',
-    ],
+    keyboard: ['Tab enters the field with outer ring (`--from-tab`); click uses inner ring.'],
   },
   textarea: {
     intro: [
@@ -500,7 +501,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       items: ['Fixed-length OTP or PIN → specialized input pattern.'],
     },
     anatomy: [
-      { region: 'Native input', detail: 'Toggles `type="password"` / `type="text"` when revealed.' },
+      {
+        region: 'Native input',
+        detail: 'Toggles `type="password"` / `type="text"` when revealed.',
+      },
       {
         region: 'Reveal control',
         detail: 'Optional icon button with `aria-pressed` and localized label.',
@@ -603,10 +607,14 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     intro: [
       'Grouped surface with elevated, outlined, and filled variants. Regions: media, header, body, footer.',
       'Host is `<article>`: include a heading in `auCardHeader` for document outline.',
+      'Set `[interactive]="true"` only when the whole card is a link or click target (hover border emphasis on elevated).',
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Entity summaries, dashboard tiles, settings blocks.'],
+      items: [
+        'Entity summaries, dashboard tiles, settings blocks.',
+        'Clickable tiles with `interactive` and a real link or button pattern.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',

@@ -94,18 +94,17 @@
   --au-checkbox-size-lg: 1.5rem; /* 24px */
 }
 
-/* Elevation: readable depth, no neumorphism — scale control → raised → float → overlay */
+/* Elevation: subtle depth — control → raised → float → overlay (product UI, not marketing) */
 :root {
   --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
-  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px rgba(15, 20, 26, 0.04);
-  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.08), 0 2px 8px rgba(15, 20, 26, 0.06);
-  --au-shadow-float: 0 4px 14px rgba(15, 20, 26, 0.1), 0 2px 4px rgba(15, 20, 26, 0.06);
-  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 12px 40px rgba(15, 20, 26, 0.14);
+  --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.06), 0 0 0 1px rgba(15, 20, 26, 0.04);
+  --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.06), 0 2px 4px rgba(15, 20, 26, 0.04);
+  --au-shadow-float: 0 2px 8px rgba(15, 20, 26, 0.07), 0 1px 2px rgba(15, 20, 26, 0.05);
+  --au-shadow-overlay: 0 0 0 1px rgba(15, 20, 26, 0.05), 0 8px 24px rgba(15, 20, 26, 0.1);
   --au-shadow-button: var(--au-shadow-control);
-  --au-shadow-button-primary:
-    0 1px 2px color-mix(in srgb, var(--au-color-action-primary) 36%, transparent),
-    0 1px 1px rgba(15, 20, 26, 0.05);
-  --au-shadow-button-hover: 0 2px 6px rgba(15, 20, 26, 0.1), 0 1px 2px rgba(15, 20, 26, 0.06);
+  --au-shadow-button-primary: 0 1px 1px
+    color-mix(in srgb, var(--au-color-action-primary) 28%, transparent);
+  --au-shadow-button-hover: var(--au-shadow-button-primary);
   --au-shadow-focus-control: 0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-focus-ring);
   --au-shadow-focus-control-error:
     0 1px 2px rgba(15, 20, 26, 0.07), 0 0 0 1px var(--au-color-form-error);
@@ -327,7 +326,7 @@
   --au-floating-blur: 14px;
   --au-shadow-floating:
     0 0 0 1px color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent),
-    0 2px 4px -1px rgba(15, 20, 26, 0.06), 0 14px 36px -6px rgba(15, 20, 26, 0.14);
+    0 1px 3px rgba(15, 20, 26, 0.05), 0 6px 16px -4px rgba(15, 20, 26, 0.08);
   --au-transition-motion-tap:
     transform var(--au-motion-tap), box-shadow var(--au-motion-tap),
     background-color var(--au-motion-tap), border-color var(--au-motion-tap);
@@ -767,17 +766,16 @@
   /* Dark shadows: edges, not heavy haze */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.04);
   --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --au-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --au-shadow-float: 0 6px 18px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.28);
-  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 48px rgba(0, 0, 0, 0.48);
+  --au-shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --au-shadow-float: 0 3px 10px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --au-shadow-overlay: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 28px rgba(0, 0, 0, 0.4);
   --au-shadow-floating:
-    0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.36),
-    0 18px 40px -8px rgba(0, 0, 0, 0.52);
+    0 0 0 1px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.32),
+    0 8px 20px -6px rgba(0, 0, 0, 0.4);
   --au-shadow-button: var(--au-shadow-control);
-  --au-shadow-button-primary:
-    0 1px 3px color-mix(in srgb, var(--au-color-action-primary) 42%, transparent),
-    0 1px 2px rgba(0, 0, 0, 0.28);
-  --au-shadow-button-hover: 0 3px 10px rgba(0, 0, 0, 0.34), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --au-shadow-button-primary: 0 1px 2px
+    color-mix(in srgb, var(--au-color-action-primary) 32%, transparent);
+  --au-shadow-button-hover: var(--au-shadow-button-primary);
   --au-shadow-focus-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-focus-ring);
   --au-shadow-focus-control-error:
     0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-form-error);

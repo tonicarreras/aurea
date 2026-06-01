@@ -447,12 +447,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           i('ariaLabel', 'string', 'Accessible name for the group.', "''"),
           i('ariaLabelledBy', 'string', 'ID of labelling element.', "''"),
           i('attached', 'boolean', 'Share borders between buttons.', 'true'),
-          i(
-            'orientation',
-            "'horizontal' | 'vertical'",
-            'Layout direction.',
-            "'horizontal'",
-          ),
+          i('orientation', "'horizontal' | 'vertical'", 'Layout direction.', "'horizontal'"),
         ],
       },
     ],
@@ -599,6 +594,12 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
         rows: [
           i('variant', "'elevated' | 'outlined' | 'filled'", 'Surface style.', "'elevated'"),
           i('size', "'sm' | 'md' | 'lg'", 'Inner padding (`--au-card-*`).', "'md'"),
+          i(
+            'interactive',
+            'boolean',
+            'Hover lift on elevated variant; use when the card is a link or click target.',
+            'false',
+          ),
           {
             name: 'hasFooter',
             type: 'Signal<boolean> (solo lectura)',

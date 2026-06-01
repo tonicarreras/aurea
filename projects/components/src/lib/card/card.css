@@ -6,7 +6,7 @@ au-card {
   --au-card-bg: var(--au-color-surface-raised);
   --au-card-border: 1px solid var(--au-color-border-subtle);
   --au-card-radius: var(--au-radius-surface);
-  --au-card-shadow: var(--au-shadow-float);
+  --au-card-shadow: var(--au-shadow-control);
   --au-card-padding: var(--au-space-5);
   --au-card-gap: var(--au-space-4);
 
@@ -22,34 +22,39 @@ au-card .au-card__container {
   flex-direction: column;
   overflow: hidden;
   border-radius: var(--au-radius-surface);
-  transition: var(--au-transition-control);
+  transition:
+    var(--au-transition-control),
+    border-color var(--au-duration-short) var(--au-ease-in-out);
 }
 
 au-card[data-au-variant='elevated'] .au-card__container {
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-float);
-  transition:
-    var(--au-transition-control),
-    transform var(--au-motion-control),
-    box-shadow var(--au-duration-default) var(--au-ease-out);
+  box-shadow: var(--au-shadow-control);
 }
 
-au-card[data-au-variant='elevated']:hover .au-card__container {
-  transform: translateY(-2px);
-  box-shadow: var(--au-shadow-floating);
+au-card[data-au-interactive] {
+  cursor: pointer;
+}
+
+au-card[data-au-interactive][data-au-variant='elevated']:hover .au-card__container {
+  border-color: var(--au-color-border-default);
+}
+
+au-card[data-au-interactive]:focus-within .au-card__container {
+  box-shadow: var(--au-shadow-focus-ring);
 }
 
 au-card[data-au-variant='outlined'] .au-card__container {
   background: var(--au-color-surface-raised);
   border: 1px solid var(--au-color-border-default);
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: none;
 }
 
 au-card[data-au-variant='filled'] .au-card__container {
   background: var(--au-color-surface-elevated);
   border: 1px solid var(--au-color-border-subtle);
-  box-shadow: var(--au-shadow-control);
+  box-shadow: none;
 }
 
 au-card .au-card__container [auCardMedia] {
@@ -128,10 +133,5 @@ au-card .au-card__footer {
 @media (prefers-reduced-motion: reduce) {
   au-card .au-card__container {
     transition: none;
-  }
-
-  au-card[data-au-variant='elevated']:hover .au-card__container {
-    transform: none;
-    box-shadow: var(--au-shadow-float);
   }
 }
