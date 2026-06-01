@@ -63,7 +63,7 @@ export type AuSnackbarPosition =
   selector: 'au-snackbar',
   imports: [AuIcon],
   templateUrl: './snackbar.html',
-  styleUrl: '../styles/au-snackbar.css',
+  styleUrl: './snackbar.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-snackbar',

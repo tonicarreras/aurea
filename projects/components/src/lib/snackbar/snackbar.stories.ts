@@ -154,7 +154,7 @@ export const Stacked: Story = {
         </div>
         <au-snackbar
         [(open)]="openA"
-        message="Primero (queda debajo)"
+        message="Primero"
         variant="default"
         [durationMs]="0"
         (dismiss)="openA.set(false); dismiss()"
@@ -168,7 +168,7 @@ export const Stacked: Story = {
       />
       <au-snackbar
         [(open)]="openC"
-        message="Tercero (encima)"
+        message="Tercero"
         variant="info"
         [durationMs]="0"
         (dismiss)="openC.set(false); dismiss()"

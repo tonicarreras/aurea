@@ -1,0 +1,7 @@
+/**
+ * Description list — host hook; dt/dd layout in styles/au-description-list.css (aurea-global).
+ */
+
+:host {
+  display: block;
+}

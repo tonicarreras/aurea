@@ -110,14 +110,6 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
       border-bottom-color: var(--docs-border-fine);
     }
 
-    .docs-code-panel__toggle ::ng-deep .au-button__content {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--au-space-2);
-      font-size: var(--au-text-sm);
-      font-weight: var(--au-weight-medium);
-    }
-
     .docs-code-panel__chevron {
       width: 0.5rem;
       height: 0.5rem;
@@ -144,11 +136,6 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
 
     .docs-code-panel__copy {
       animation: docs-fade-in 0.2s var(--au-ease-out) both;
-    }
-
-    .docs-code-panel__copy--done ::ng-deep .au-button__element {
-      border-color: color-mix(in srgb, var(--au-color-semantic-success) 50%, transparent);
-      color: var(--au-color-semantic-success);
     }
 
     .docs-code-panel__body {

@@ -1,0 +1,231 @@
+/**
+ * Snackbar — portaled to document.body; styles ship with the component styleUrl.
+ */
+
+:host {
+  display: none;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:host(.au-snackbar--open) {
+  position: fixed;
+  z-index: calc(var(--au-z-toast) + var(--au-snackbar-stack-layer, 0));
+  display: block;
+  box-sizing: border-box;
+  width: min(24rem, calc(100vw - 2 * var(--au-space-4)));
+  max-width: calc(100vw - 2 * var(--au-space-4));
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  inset: auto;
+}
+
+:host(.au-snackbar--open[data-au-position='bottom-center']) {
+  bottom: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+:host(.au-snackbar--open[data-au-position='bottom-start']) {
+  bottom: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
+  inset-inline-start: var(--au-space-4);
+}
+
+:host(.au-snackbar--open[data-au-position='bottom-end']) {
+  bottom: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
+  inset-inline-end: var(--au-space-4);
+}
+
+:host(.au-snackbar--open[data-au-position='top-center']) {
+  top: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+:host(.au-snackbar--open[data-au-position='top-start']) {
+  top: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
+  inset-inline-start: var(--au-space-4);
+}
+
+:host(.au-snackbar--open[data-au-position='top-end']) {
+  top: calc(var(--au-space-4) + var(--au-snackbar-stack-offset, 0px));
+  inset-inline-end: var(--au-space-4);
+}
+
+.au-snackbar__surface {
+  display: flex;
+  align-items: center;
+  gap: var(--au-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--au-space-3) var(--au-space-4);
+  border: 1px solid var(--au-color-border-default);
+  border-radius: var(--au-radius-surface);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-shadow-raised);
+  color: var(--au-color-text-primary);
+  pointer-events: auto;
+  animation: au-snackbar-in var(--au-motion-toast) both;
+}
+
+:host([data-au-variant='default']) .au-snackbar__surface,
+:host(:not([data-au-variant])) .au-snackbar__surface {
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-border-default);
+}
+
+:host([data-au-variant='success']) .au-snackbar__surface {
+  background: var(--au-color-feedback-success-bg);
+  border-color: var(--au-color-feedback-success-border);
+}
+
+:host([data-au-variant='warning']) .au-snackbar__surface {
+  background: var(--au-color-feedback-warning-bg);
+  border-color: var(--au-color-feedback-warning-border);
+}
+
+:host([data-au-variant='error']) .au-snackbar__surface {
+  background: var(--au-color-feedback-error-bg);
+  border-color: var(--au-color-feedback-error-border);
+}
+
+:host([data-au-variant='info']) .au-snackbar__surface {
+  background: var(--au-color-feedback-info-bg);
+  border-color: var(--au-color-feedback-info-border);
+}
+
+.au-snackbar__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--au-snackbar-accent, var(--au-color-text-secondary));
+}
+
+.au-snackbar__icon au-icon {
+  display: block;
+}
+
+:host([data-au-variant='success']) .au-snackbar__icon {
+  color: var(--au-color-feedback-success-title);
+}
+
+:host([data-au-variant='warning']) .au-snackbar__icon {
+  color: var(--au-color-feedback-warning-title);
+}
+
+:host([data-au-variant='error']) .au-snackbar__icon {
+  color: var(--au-color-feedback-error-title);
+}
+
+:host([data-au-variant='info']) .au-snackbar__icon {
+  color: var(--au-color-feedback-info-title);
+}
+
+.au-snackbar__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.au-snackbar__message {
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: inherit;
+}
+
+.au-snackbar__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--au-space-1);
+}
+
+.au-snackbar__action {
+  flex-shrink: 0;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: var(--au-space-1) var(--au-space-2);
+  border: none;
+  border-radius: var(--au-radius-control);
+  background: transparent;
+  color: var(--au-color-link);
+  font-family: inherit;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-semibold);
+  line-height: var(--au-leading-tight);
+  cursor: pointer;
+  transition: var(--au-transition-control);
+}
+
+.au-snackbar__action:hover {
+  background: color-mix(in srgb, var(--au-color-link) 10%, transparent);
+}
+
+.au-snackbar__action:focus-visible {
+  outline: var(--au-focus-ring-width) solid var(--au-color-focus-ring);
+  outline-offset: var(--au-focus-ring-offset);
+}
+
+.au-snackbar__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--au-space-8);
+  height: var(--au-space-8);
+  padding: 0;
+  border: none;
+  border-radius: var(--au-radius-control);
+  background: transparent;
+  color: var(--au-color-text-secondary);
+  cursor: pointer;
+  transition: var(--au-transition-control);
+}
+
+.au-snackbar__close:hover {
+  background: color-mix(in srgb, var(--au-color-text-primary) 8%, transparent);
+  color: var(--au-color-text-primary);
+}
+
+.au-snackbar__close:focus-visible {
+  outline: var(--au-focus-ring-width) solid var(--au-color-focus-ring);
+  outline-offset: var(--au-focus-ring-offset);
+}
+
+@keyframes au-snackbar-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+:host([data-au-position^='top']) .au-snackbar__surface {
+  animation-name: au-snackbar-in-top;
+}
+
+@keyframes au-snackbar-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-0.75rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-snackbar__surface {
+    animation: none;
+  }
+}

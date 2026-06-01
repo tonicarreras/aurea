@@ -10,6 +10,7 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
     <div class="docs-preview docs-preview--wide">
       <au-accordion
         [(value)]="expanded"
+        variant="contained"
         [ariaLabel]="t().ariaLabel"
       >
         <div class="au-accordion__item">
@@ -19,7 +20,7 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
           >
             {{ t().profile }}
           </button>
-          <div auAccordionPanel="profile">{{ t().profilePanel }}</div>
+          <au-accordion-panel panel="profile">{{ t().profilePanel }}</au-accordion-panel>
         </div>
         <div class="au-accordion__item">
           <button
@@ -28,7 +29,7 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
           >
             {{ t().billing }}
           </button>
-          <div auAccordionPanel="billing">{{ t().billingPanel }}</div>
+          <au-accordion-panel panel="billing">{{ t().billingPanel }}</au-accordion-panel>
         </div>
       </au-accordion>
     </div>

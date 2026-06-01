@@ -17,12 +17,12 @@ Live status: [maturity matrix](https://aurea-ds.netlify.app/en/maturity) · [roa
 
 ## Post-1.0 tooling
 
-| Item                     | Status                        |
-| ------------------------ | ----------------------------- |
-| Changelog automation     | Planned                       |
-| Angular compat matrix CI | ✅ Weekly `compat-matrix.yml` |
-| Docs Playwright smoke    | ✅ `test:docs:e2e:ci`         |
-| Bundle size guard        | ✅ `check:bundle` (+5%)       |
+| Item                     | Status                            |
+| ------------------------ | --------------------------------- |
+| Changelog automation     | Planned                           |
+| Angular compat matrix CI | ✅ Weekly `compat-matrix.yml`     |
+| Docs Playwright smoke    | ✅ `build:docs` + `test:docs:e2e` |
+| Bundle size guard        | ✅ `check:bundle` (+5%)           |
 
 ## Ideas (not committed)
 

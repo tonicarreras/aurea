@@ -53,7 +53,17 @@ export const THEME_HOST_OVERRIDES_ES: ThemeHostOverride[] = [
   },
   {
     host: 'au-textarea',
-    token: '--au-textarea-pad-y',
-    description: 'Padding vertical dentro del shell del control.',
+    token: '--au-textarea-pad-block',
+    description: 'Padding vertical del textarea nativo.',
+  },
+  {
+    host: 'au-textarea',
+    token: '--au-textarea-pad-inline',
+    description: 'Padding horizontal; alinea con presets de `size`.',
+  },
+  {
+    host: 'au-accordion',
+    token: 'data-au-variant',
+    description: '`plain` (por defecto) o `contained` para superficie elevada.',
   },
 ];

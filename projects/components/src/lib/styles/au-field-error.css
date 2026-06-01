@@ -6,12 +6,12 @@
 .au-field-error {
   display: flex;
   align-items: flex-start;
-  gap: var(--au-space-1);
+  gap: var(--au-space-1-5);
   margin: 0;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-tight);
-  color: var(--au-color-semantic-error-contrast);
-  font-weight: var(--au-weight-regular);
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-medium);
 }
 
 .au-field-error__glyph {

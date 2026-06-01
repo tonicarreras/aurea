@@ -16,6 +16,7 @@ export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
  *
  * @remarks
  * - **Variants:** elevated (shadow), outlined (border), filled (background).
+ * - **`interactive`:** hover elevation on elevated variant; use when the whole card is a link or click target.
  * - **Sizes:** sm (compact), md (default), lg (spacious).
  * - **Structure:** `[auCardMedia]`, `[auCardHeader]`, `[auCardBody]`, default slot, `[auCardFooter]`.
  * - **Footer:** import `AuCardFooter` in the host that projects `[auCardFooter]`.
@@ -42,6 +43,7 @@ export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
     class: 'au-card',
     '[attr.data-au-variant]': 'variant()',
     '[attr.data-au-size]': 'size()',
+    '[attr.data-au-interactive]': 'interactive() ? "" : null',
   },
 })
 export class AuCard {
@@ -49,6 +51,12 @@ export class AuCard {
   readonly variant = input<AuCardVariant>('elevated');
   /** Density: sm (compact), md (default), lg (spacious). */
   readonly size = input<AuSize>('md');
+
+  /**
+   * When true, elevated cards lift on hover (clickable tiles, links).
+   * Static content should leave this false.
+   */
+  readonly interactive = input(false);
 
   private readonly footerPresent = signal(false);
 

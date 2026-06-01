@@ -33,10 +33,10 @@ au-table[data-au-compact] {
 au-table .au-table__shell {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--au-color-border-subtle);
+  border: var(--au-chrome-border);
   border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: var(--au-chrome-shadow);
   overflow: hidden;
 }
 

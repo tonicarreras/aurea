@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, within } from 'storybook/test';
 
+import { playUserEvent } from '../../../.storybook/story-user-event';
 import { AuFormField } from '../form-field/form-field';
 import {
   defaultFieldChromeArgs,
@@ -11,7 +12,7 @@ import {
 } from '../form-field';
 import { AuInputText } from './input-text';
 
-type InputTextType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'search' | 'url';
+type InputTextType = 'text' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
 interface InputTextStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -26,7 +27,6 @@ interface InputTextStoryArgs extends FieldChromeStoryArgs {
   minLength: number | undefined;
   maxLength: number | undefined;
   size: 'sm' | 'md' | 'lg';
-  showPasswordToggle: boolean;
   errors: readonly unknown[];
 }
 
@@ -71,8 +71,8 @@ const meta: Meta<InputTextStoryArgs> = {
     },
     type: {
       control: 'select',
-      options: ['text', 'password', 'email', 'number', 'tel', 'search', 'url'],
-      description: 'HTML input type; password enables optional visibility toggle.',
+      options: ['text', 'email', 'number', 'tel', 'search', 'url'],
+      description: 'Native HTML input type. For passwords use `au-input-password`.',
       table: { category: 'Field' },
     },
     disabled: {
@@ -101,11 +101,6 @@ const meta: Meta<InputTextStoryArgs> = {
       description: 'Native autocomplete hint.',
       table: { category: 'Field' },
     },
-    showPasswordToggle: {
-      control: 'boolean',
-      description: 'Only applies when `type` is `password`.',
-      table: { category: 'Password' },
-    },
   } as Meta<InputTextStoryArgs>['argTypes'],
   args: {
     ...defaultFieldChromeArgs,
@@ -121,7 +116,6 @@ const meta: Meta<InputTextStoryArgs> = {
     minLength: undefined,
     maxLength: undefined,
     size: 'md',
-    showPasswordToggle: true,
     errors: [],
   },
   render: (args) =>
@@ -140,7 +134,6 @@ const meta: Meta<InputTextStoryArgs> = {
   [minLength]="minLength"
   [maxLength]="maxLength"
   [size]="size"
-  [showPasswordToggle]="showPasswordToggle"
   [invalid]="invalid"
   [errors]="$any(errors)"
 />`,
@@ -167,8 +160,8 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const el = within(canvasElement);
     const field = el.getByLabelText('Username');
-    await userEvent.clear(field);
-    await userEvent.type(field, 'hello');
+    await playUserEvent.clear(field);
+    await playUserEvent.type(field, 'hello');
     await expect(field).toHaveValue('hello');
   },
 };
@@ -216,24 +209,6 @@ export const Disabled: Story = {
     disabled: true,
     placeholder: 'Not editable',
     value: 'fixed value',
-  },
-};
-
-export const Password: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Password toggle is an **icon button** with `aria-pressed` and **Show password** / **Hide password** labels. Tab into the field vs click to see different focus ring treatments.',
-      },
-    },
-  },
-  args: {
-    label: 'Password',
-    type: 'password',
-    placeholder: 'Min. 8 characters',
-    autocomplete: 'new-password',
-    showPasswordToggle: true,
   },
 };
 

@@ -38,6 +38,26 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
     since: '1.5.0',
     note: 'Native time picker styling varies by browser.',
   },
+  'input-password': {
+    level: 'stable',
+    since: '1.6.0',
+    note: 'Dedicated password field with reveal toggle; localize revealLabelShow/Hide.',
+  },
+  'button-group': {
+    level: 'stable',
+    since: '1.6.0',
+    note: 'Layout wrapper for projected au-button; requires ariaLabel or ariaLabelledBy.',
+  },
+  'description-list': {
+    level: 'stable',
+    since: '1.6.0',
+    note: 'Semantic dl with au-description-item or native dt/dd.',
+  },
+  'tag-input': {
+    level: 'stable',
+    since: '1.6.0',
+    note: 'Multi-value tags; Enter or comma to add; localize removeTagLabel.',
+  },
   dialog: { level: 'stable', since: '0.2.0' },
   card: { level: 'stable', since: '0.1.0' },
   tabs: { level: 'stable', since: '1.5.0' },

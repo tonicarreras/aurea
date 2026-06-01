@@ -19,7 +19,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         >
           {{ t().profile }}
         </button>
-        <div auAccordionPanel="profile">{{ t().profilePanel }}</div>
+        <au-accordion-panel panel="profile">{{ t().profilePanel }}</au-accordion-panel>
       </div>
       <div class="au-accordion__item">
         <button
@@ -28,7 +28,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         >
           {{ t().billing }}
         </button>
-        <div auAccordionPanel="billing">{{ t().billingPanel }}</div>
+        <au-accordion-panel panel="billing">{{ t().billingPanel }}</au-accordion-panel>
       </div>
     </au-accordion>
   `,
@@ -56,7 +56,7 @@ export class ExampleAccordionBasicDemo {
         >
           {{ t().sectionOne }}
         </button>
-        <div auAccordionPanel="one">{{ t().sectionOnePanel }}</div>
+        <au-accordion-panel panel="one">{{ t().sectionOnePanel }}</au-accordion-panel>
       </div>
       <div class="au-accordion__item">
         <button
@@ -65,7 +65,7 @@ export class ExampleAccordionBasicDemo {
         >
           {{ t().sectionTwo }}
         </button>
-        <div auAccordionPanel="two">{{ t().sectionTwoPanel }}</div>
+        <au-accordion-panel panel="two">{{ t().sectionTwoPanel }}</au-accordion-panel>
       </div>
     </au-accordion>
   `,
@@ -73,4 +73,41 @@ export class ExampleAccordionBasicDemo {
 export class ExampleAccordionSingleDemo {
   readonly t = docsExampleLive('accordion');
   readonly expanded = model(['one']);
+}
+
+@Component({
+  selector: 'docs-example-accordion-contained',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
+  template: `
+    <au-accordion
+      [(value)]="expanded"
+      variant="contained"
+      [ariaLabel]="t().ariaLabel"
+      style="max-width: 28rem"
+    >
+      <div class="au-accordion__item">
+        <button
+          type="button"
+          auAccordionItem="profile"
+        >
+          {{ t().profile }}
+        </button>
+        <au-accordion-panel panel="profile">{{ t().profilePanel }}</au-accordion-panel>
+      </div>
+      <div class="au-accordion__item">
+        <button
+          type="button"
+          auAccordionItem="billing"
+        >
+          {{ t().billing }}
+        </button>
+        <au-accordion-panel panel="billing">{{ t().billingPanel }}</au-accordion-panel>
+      </div>
+    </au-accordion>
+  `,
+})
+export class ExampleAccordionContainedDemo {
+  readonly t = docsExampleLive('accordion');
+  readonly expanded = model(['profile']);
 }

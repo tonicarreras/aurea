@@ -1,0 +1,35 @@
+/**
+ * Button group — layout for projected `au-button` children.
+ * Attached-button chrome: button.css (`:host-context(au-button-group)`).
+ */
+
+:host {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+.au-button-group__inner {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+:host([data-au-orientation='horizontal']) .au-button-group__inner {
+  flex-direction: row;
+  align-items: center;
+}
+
+:host([data-au-orientation='vertical']) .au-button-group__inner {
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
+  max-width: 100%;
+}
+
+:host(:not([data-au-attached])) .au-button-group__inner {
+  gap: var(--au-space-2);
+}
+
+:host([data-au-attached][data-au-orientation='vertical']) .au-button-group__inner {
+  gap: 0;
+}

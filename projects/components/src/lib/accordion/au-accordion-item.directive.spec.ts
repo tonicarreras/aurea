@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
-import { AuAccordionPanel } from './au-accordion-panel.directive';
+import { AuAccordionPanel } from './au-accordion-panel';
 import { AuAccordion } from './accordion';
 
 @Component({
@@ -17,7 +17,7 @@ import { AuAccordion } from './accordion';
         >
           One
         </button>
-        <div auAccordionPanel="one">Panel</div>
+        <au-accordion-panel panel="one">Panel</au-accordion-panel>
       </div>
     </au-accordion>
   `,
@@ -54,7 +54,7 @@ describe('AuAccordionItem', () => {
           >
             One
           </button>
-          <div auAccordionPanel="one">Panel</div>
+          <au-accordion-panel panel="one">Panel</au-accordion-panel>
         </au-accordion>
       `,
     })

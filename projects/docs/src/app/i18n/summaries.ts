@@ -6,6 +6,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Primary and secondary actions with variants, loading states, and an accessible focus ring.',
     'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
   ),
+  'button-group': L(
+    'Groups related `au-button` actions; attached or spaced layout (stable 1.6.0).',
+    'Agrupa acciones `au-button`; layout attached o con separación (stable 1.6.0).',
+  ),
   'form-field': L(
     'Shared label, hint, and error chrome around projected inputs; wires ids and ARIA via `AU_FORM_FIELD`.',
     'Cromado compartido de label, hint y error; enlaza ids y ARIA vía `AU_FORM_FIELD`.',
@@ -49,6 +53,10 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
   'input-time': L(
     'Time field with native picker and shared field chrome.',
     'Campo de hora con selector nativo y cromado de campo compartido.',
+  ),
+  'input-password': L(
+    'Dedicated password field with reveal toggle; localize reveal labels (stable 1.6.0).',
+    'Campo de contraseña con toggle de revelar; localiza etiquetas reveal (stable 1.6.0).',
   ),
   dialog: L(
     'Modal dialog with focus trap, backdrop, and projected actions.',
@@ -98,13 +106,17 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Horizontal or vertical rules with optional inset and label.',
     'Reglas horizontales o verticales con sangría y etiqueta opcionales.',
   ),
+  'description-list': L(
+    'Semantic key–value list with `au-description-item` (stable 1.6.0).',
+    'Lista clave–valor semántica con `au-description-item` (stable 1.6.0).',
+  ),
   'empty-state': L(
     'Centered placeholder for empty lists, tables, or search results.',
     'Placeholder centrado para listas, tablas o búsquedas vacías.',
   ),
   accordion: L(
-    'Collapsible sections with WAI-ARIA triggers, panels, and keyboard navigation.',
-    'Secciones plegables con disparadores WAI-ARIA, paneles y teclado.',
+    'Collapsible sections with WAI-ARIA triggers; `variant="plain"` or raised `contained` shell.',
+    'Secciones plegables WAI-ARIA; `variant="plain"` o superficie elevada `contained`.',
   ),
   avatar: L(
     'User image or initials fallback for profiles and lists.',
@@ -165,5 +177,9 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
   table: L(
     'Data table with sort, row selection, loading, and custom cells.',
     'Tabla con orden, selección de filas, carga y celdas custom.',
+  ),
+  'tag-input': L(
+    'Multi-value tags with removable chips; `readOnly` without disabling (stable 1.6.0).',
+    'Etiquetas multi-valor removibles; `readOnly` sin `disabled` (stable 1.6.0).',
   ),
 };
