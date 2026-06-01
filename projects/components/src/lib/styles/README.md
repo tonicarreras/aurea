@@ -5,7 +5,7 @@
 | File               | Required                                  | Role                                                         |
 | ------------------ | ----------------------------------------- | ------------------------------------------------------------ |
 | `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css` |
-| `aurea-global.css` | Yes for form controls & description lists | Shared CSS that cannot live in a single component `styleUrl` |
+| `aurea-global.css` | Yes for form controls & description lists | Shared CSS + `au-high-contrast-aaa.css` (HC AAA overrides) |
 
 ## When CSS goes in `aurea-global.css`
 

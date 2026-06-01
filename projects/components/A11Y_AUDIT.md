@@ -1,7 +1,8 @@
 # Accessibility audit
 
-Baseline: **WCAG 2.2 Level AA** for **stable** components.  
-Last review: **2026-05-29** (1.5.0: full stable catalog; axe on date/time stories).
+Baseline: **WCAG 2.2 Level AA** for **stable** components in `light` / `dark`.  
+**High contrast** (`high-contrast` / `high-contrast-dark`) targets **WCAG 2.2 AAA** for text, placeholders, disabled states, borders (2px), and focus (3px).  
+Last review: **2026-06-01** (HC AAA token pass + `au-high-contrast-aaa.css`).
 
 ## Summary
 
@@ -9,7 +10,7 @@ Last review: **2026-05-29** (1.5.0: full stable catalog; axe on date/time storie
 | ------------------- | ------------ | ---------------------------------------------------- |
 | Focus visibility    | Pass         | `--au-shadow-focus-ring` on interactive controls     |
 | Color contrast      | Pass         | Semantic tokens per light/dark theme                 |
-| High contrast theme | Pass         | `high-contrast` / `high-contrast-dark` — stable tokens |
+| High contrast theme | Pass (AAA)   | `au-tokens-high-contrast.css` + `au-high-contrast-aaa.css` |
 | Keyboard            | Pass         | Documented per component in docs overviews           |
 | Form errors         | Pass         | `aria-invalid`, `aria-describedby` via form-field    |
 | Live regions        | Pass         | Stacked snackbars: topmost only announces (A11Y-001) |
@@ -30,7 +31,8 @@ Per-component keyboard and ARIA notes: docs site overviews (`/en/components/:slu
 1. Tab through Storybook stories without mouse.
 2. Screen reader: field error after blur.
 3. `prefers-reduced-motion: reduce` — no motion-only essential cues.
-4. High-contrast theme — borders and focus ring visible.
+4. High-contrast theme — 2px borders, 3px focus, placeholders/disabled ≥7:1, progress + table dividers.
+5. axe on CRUD demo with `high-contrast` enabled (docs preview).
 
 ## Automated CI
 

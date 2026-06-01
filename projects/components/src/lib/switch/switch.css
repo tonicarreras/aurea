@@ -132,7 +132,7 @@
 
 .au-switch__element:checked::after {
   background: var(--au-color-text-on-solid);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 22%);
+  box-shadow: var(--au-shadow-control);
 }
 
 .au-switch__element::after {
@@ -144,9 +144,7 @@
   height: 18px;
   border-radius: var(--au-radius-dot);
   background: var(--au-color-switch-thumb-off);
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 18%),
-    0 0 0 1px rgb(0 0 0 / 6%);
+  box-shadow: var(--au-shadow-control);
   transform: translate(0, -50%);
   transition: transform var(--au-duration-short) var(--au-ease-in-out);
 }

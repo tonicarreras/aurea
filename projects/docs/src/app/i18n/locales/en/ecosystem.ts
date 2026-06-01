@@ -40,7 +40,8 @@ export const ECOSYSTEM_EN: EcosystemMessages = {
     themeLight: 'Light',
     themeDark: 'Dark',
     highContrastLabel: 'High contrast (a11y)',
-    highContrastHint: 'Combines with appearance: light → high-contrast, dark → high-contrast-dark.',
+    highContrastHint:
+      'WCAG AAA mode: light → high-contrast, dark → high-contrast-dark. 2px borders, 3px focus, reinforced placeholders and disabled states.',
     densityCompact: 'Compact',
     densityComfortable: 'Comfortable',
     densitySpacious: 'Spacious',

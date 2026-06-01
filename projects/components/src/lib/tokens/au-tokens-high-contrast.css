@@ -1,7 +1,8 @@
 /**
- * High-contrast themes — stable accessibility palettes (WCAG-oriented).
- * Pair with appearance: light → high-contrast, dark → high-contrast-dark.
- * Applied via data-au-theme or [auTheme].
+ * High-contrast themes — WCAG 2.2 AAA-oriented palettes.
+ * Targets: text/UI ≥7:1 (normal text), placeholders ≥7:1, 2px control borders,
+ * 3px focus rings. Pair with au-high-contrast-aaa.css (aurea-global).
+ * Appearance: light → high-contrast, dark → high-contrast-dark.
  */
 
 /* ==========================================================================
@@ -10,8 +11,9 @@
 
 [data-au-theme='high-contrast'] {
   color-scheme: light;
-  /* 2px focus ring (WCAG); chrome stays 1px — avoid stacked 2px+1px rings */
-  --au-focus-ring-width: 2px;
+  --au-focus-ring-width: 3px;
+  --au-progress-track-height: 0.625rem;
+  --au-table-divider-width: 2px;
   /* Surfaces */
   --au-color-surface-canvas: #ffffff;
   --au-color-surface-raised: #ffffff;
@@ -22,20 +24,20 @@
   --au-color-skeleton-shimmer: #bdbdbd;
   /* Text */
   --au-color-text-primary: #000000;
-  --au-color-text-secondary: #1a1a1a;
-  --au-color-text-tertiary: #333333;
-  --au-color-text-placeholder: #4d4d4d;
-  --au-color-text-disabled: #666666;
+  --au-color-text-secondary: #000000;
+  --au-color-text-tertiary: #1a1a1a;
+  --au-color-text-placeholder: #1a1a1a;
+  --au-color-text-disabled: #333333;
   --au-color-text-label: #000000;
   --au-color-text-on-solid: #ffffff;
-  /* Borders — subtle for layout chrome; default/strong for controls */
-  --au-color-border-subtle: #757575;
+  /* Borders — max contrast (Windows HC–style); 2px on interactive chrome */
+  --au-color-border-subtle: #000000;
   --au-color-border-default: #000000;
   --au-color-border-strong: #000000;
-  --au-chrome-border: 1px solid var(--au-color-border-default);
+  --au-chrome-border: 2px solid var(--au-color-border-default);
   --au-chrome-border-color: var(--au-color-border-default);
   --au-chrome-border-color-hover: var(--au-color-border-strong);
-  --au-chrome-shadow: var(--au-shadow-button);
+  --au-chrome-shadow: none;
   --au-chrome-shadow-focus: var(--au-shadow-focus-control);
   --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
   /* Actions & links */
@@ -85,13 +87,13 @@
   --au-color-form-border: var(--au-color-border-default);
   --au-color-form-border-hover: var(--au-color-border-strong);
   --au-color-form-text: #000000;
-  --au-color-form-placeholder: #4d4d4d;
+  --au-color-form-placeholder: var(--au-color-text-placeholder);
   --au-color-form-caret: #000000;
   --au-color-form-error: #b00020;
   --au-color-form-error-bg: #ffd6dc;
   --au-dialog-border: var(--au-chrome-border);
-  --au-color-form-disabled-foreground: #666666;
-  --au-color-form-disabled-surface: #ebebeb;
+  --au-color-form-disabled-foreground: #333333;
+  --au-color-form-disabled-surface: #f0f0f0;
   /* Switch */
   --au-color-switch-track-off: #000000;
   --au-color-switch-track-off-hover: #333333;
@@ -107,25 +109,24 @@
   --au-color-select-option-selected-bg: #0000ee;
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #ffffff;
-  --au-color-select-option-disabled-text: #666666;
+  --au-color-select-option-disabled-text: #333333;
   --au-color-date-picker-edit-highlight: #e8e8ff;
   --au-color-date-picker-accent: #e8e8ff;
   --au-color-date-picker-icon: #333333;
   --au-color-date-picker-icon-hover: #000000;
   --au-color-date-picker-icon-active: #0000ee;
-  --au-shadow-field-inset: inset 0 0 0 1px #000000;
-  /* Elevation: 1px outline on chrome; depth via shadow only on overlays */
+  --au-shadow-field-inset: inset 0 0 0 2px #000000;
   --au-shadow-hairline: none;
-  --au-shadow-control: var(--au-shadow-button);
+  --au-shadow-control: none;
   --au-shadow-raised: none;
-  --au-shadow-float: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --au-shadow-floating: 0 0 0 1px var(--au-color-border-default), 0 4px 16px rgba(0, 0, 0, 0.1);
-  --au-shadow-button: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-button-primary: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-button-hover: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-focus-control: 0 0 0 2px var(--au-color-focus-ring);
-  --au-shadow-focus-control-error: 0 0 0 2px var(--au-color-form-error);
+  --au-shadow-float: 0 0 0 2px var(--au-color-border-default);
+  --au-shadow-overlay: 0 0 0 2px var(--au-color-border-default), 0 8px 24px rgba(0, 0, 0, 0.15);
+  --au-shadow-floating: 0 0 0 2px var(--au-color-border-default), 0 4px 16px rgba(0, 0, 0, 0.12);
+  --au-shadow-button: none;
+  --au-shadow-button-primary: none;
+  --au-shadow-button-hover: none;
+  --au-shadow-focus-control: 0 0 0 3px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error: 0 0 0 3px var(--au-color-form-error);
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
 }
@@ -139,6 +140,11 @@
   background: rgba(0, 0, 0, 0.72);
 }
 
+[data-au-theme='high-contrast'] au-drawer {
+  --au-drawer-shadow-end: 0 0 0 1px var(--au-color-border-default);
+  --au-drawer-shadow-start: 0 0 0 1px var(--au-color-border-default);
+}
+
 [data-au-theme='high-contrast'] au-drawer .au-drawer__native::backdrop {
   background: rgba(0, 0, 0, 0.72);
 }
@@ -149,7 +155,9 @@
 
 [data-au-theme='high-contrast-dark'] {
   color-scheme: dark;
-  --au-focus-ring-width: 2px;
+  --au-focus-ring-width: 3px;
+  --au-progress-track-height: 0.625rem;
+  --au-table-divider-width: 2px;
   /* Surfaces */
   --au-color-surface-canvas: #000000;
   --au-color-surface-raised: #000000;
@@ -160,20 +168,20 @@
   --au-color-skeleton-shimmer: #4d4d4d;
   /* Text */
   --au-color-text-primary: #ffffff;
-  --au-color-text-secondary: #f0f0f0;
-  --au-color-text-tertiary: #e0e0e0;
-  --au-color-text-placeholder: #cccccc;
-  --au-color-text-disabled: #999999;
+  --au-color-text-secondary: #ffffff;
+  --au-color-text-tertiary: #f0f0f0;
+  --au-color-text-placeholder: #f0f0f0;
+  --au-color-text-disabled: #e0e0e0;
   --au-color-text-label: #ffffff;
   --au-color-text-on-solid: #000000;
   /* Borders */
-  --au-color-border-subtle: #a3a3a3;
+  --au-color-border-subtle: #ffffff;
   --au-color-border-default: #ffffff;
   --au-color-border-strong: #ffffff;
-  --au-chrome-border: 1px solid var(--au-color-border-default);
+  --au-chrome-border: 2px solid var(--au-color-border-default);
   --au-chrome-border-color: var(--au-color-border-default);
   --au-chrome-border-color-hover: var(--au-color-border-strong);
-  --au-chrome-shadow: var(--au-shadow-button);
+  --au-chrome-shadow: none;
   --au-chrome-shadow-focus: var(--au-shadow-focus-control);
   --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
   /* Actions & links */
@@ -223,13 +231,13 @@
   --au-color-form-border: var(--au-color-border-default);
   --au-color-form-border-hover: var(--au-color-border-strong);
   --au-color-form-text: #ffffff;
-  --au-color-form-placeholder: #cccccc;
+  --au-color-form-placeholder: var(--au-color-text-placeholder);
   --au-color-form-caret: #ffffff;
   --au-color-form-error: #ff6b6b;
   --au-color-form-error-bg: #4d0014;
   --au-dialog-border: var(--au-chrome-border);
-  --au-color-form-disabled-foreground: #999999;
-  --au-color-form-disabled-surface: #1a1a1a;
+  --au-color-form-disabled-foreground: #e0e0e0;
+  --au-color-form-disabled-surface: #141414;
   /* Switch */
   --au-color-switch-track-off: #ffffff;
   --au-color-switch-track-off-hover: #cccccc;
@@ -245,24 +253,24 @@
   --au-color-select-option-selected-bg: #00ffff;
   --au-color-select-option-selected-text: #000000;
   --au-color-select-option-selected-marker: #000000;
-  --au-color-select-option-disabled-text: #999999;
+  --au-color-select-option-disabled-text: #e0e0e0;
   --au-color-date-picker-edit-highlight: #003333;
   --au-color-date-picker-accent: #003333;
   --au-color-date-picker-icon: #e0e0e0;
   --au-color-date-picker-icon-hover: #ffffff;
   --au-color-date-picker-icon-active: #00ffff;
-  --au-shadow-field-inset: inset 0 0 0 1px #ffffff;
+  --au-shadow-field-inset: inset 0 0 0 2px #ffffff;
   --au-shadow-hairline: none;
-  --au-shadow-control: var(--au-shadow-button);
+  --au-shadow-control: none;
   --au-shadow-raised: none;
-  --au-shadow-float: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.85);
-  --au-shadow-floating: 0 0 0 1px var(--au-color-border-default), 0 4px 16px rgba(0, 0, 0, 0.75);
-  --au-shadow-button: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-button-primary: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-button-hover: 0 0 0 1px var(--au-color-border-default);
-  --au-shadow-focus-control: 0 0 0 2px var(--au-color-focus-ring);
-  --au-shadow-focus-control-error: 0 0 0 2px var(--au-color-form-error);
+  --au-shadow-float: 0 0 0 2px var(--au-color-border-default);
+  --au-shadow-overlay: 0 0 0 2px var(--au-color-border-default), 0 8px 24px rgba(0, 0, 0, 0.9);
+  --au-shadow-floating: 0 0 0 2px var(--au-color-border-default), 0 4px 16px rgba(0, 0, 0, 0.85);
+  --au-shadow-button: none;
+  --au-shadow-button-primary: none;
+  --au-shadow-button-hover: none;
+  --au-shadow-focus-control: 0 0 0 3px var(--au-color-focus-ring);
+  --au-shadow-focus-control-error: 0 0 0 3px var(--au-color-form-error);
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
 }
@@ -277,8 +285,8 @@
 }
 
 [data-au-theme='high-contrast-dark'] au-drawer {
-  --au-drawer-shadow-end: -10px 0 28px rgba(255, 255, 255, 0.12);
-  --au-drawer-shadow-start: 10px 0 28px rgba(255, 255, 255, 0.12);
+  --au-drawer-shadow-end: 0 0 0 2px var(--au-color-border-default);
+  --au-drawer-shadow-start: 0 0 0 2px var(--au-color-border-default);
 }
 
 [data-au-theme='high-contrast-dark'] au-drawer .au-drawer__native::backdrop {
