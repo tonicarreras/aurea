@@ -82,7 +82,7 @@
     "angular-eslint": "21.4.0",
     "eslint": "^10.4.1",
     "eslint-config-prettier": "^10.1.8",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.1.1",
     "ng-packagr": "^21.2.3",
     "playwright": "^1.60.0",
     "prettier": "^3.8.3",
