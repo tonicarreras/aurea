@@ -23,6 +23,8 @@ try {
         type: 'module',
         dependencies: {
           '@angular/core': angularCore,
+          '@angular/common': angularCore,
+          '@angular/forms': angularCore,
           '@aurea-design-system/components': `file:${distPkg}`,
         },
       },
@@ -33,8 +35,12 @@ try {
 
   writeFileSync(
     join(work, 'smoke.ts'),
-    `import { AuButton } from '@aurea-design-system/components';
-export const used = AuButton;
+    `import { AuButton, AuInputPassword } from '@aurea-design-system/components';
+import type { FormValueControl } from '@angular/forms/signals';
+
+const _btn = AuButton;
+const _pwd: FormValueControl<string | null> = AuInputPassword;
+export const used = [_btn, _pwd];
 `,
   );
 
