@@ -35,27 +35,27 @@ bun run ci:fast          # skip Playwright / Storybook test-runner
 
 ### CI (GitHub Actions)
 
-| Workflow | Trigger | Notes |
-| -------- | ------- | ----- |
-| [test.yml](.github/workflows/test.yml) | PR → `main`/`develop`, push → `main` | Library checks, Storybook test-runner, lint, docs build; `docs-e2e` reuses `docs-dist` artifact |
-| [publish.yml](.github/workflows/publish.yml) | Merge/release → `main` | npm publish + `components-v*` tag |
-| [compat-matrix.yml](.github/workflows/compat-matrix.yml) | Weekly + manual | `verify-angular-compat.mjs` per `@angular/core` range |
-| Dependabot | Weekly | [`.github/dependabot.yml`](.github/dependabot.yml) — Bun + GitHub Actions |
+| Workflow                                                 | Trigger                              | Notes                                                                                           |
+| -------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| [test.yml](.github/workflows/test.yml)                   | PR → `main`/`develop`, push → `main` | Library checks, Storybook test-runner, lint, docs build; `docs-e2e` reuses `docs-dist` artifact |
+| [publish.yml](.github/workflows/publish.yml)             | Merge/release → `main`               | npm publish + `components-v*` tag                                                               |
+| [compat-matrix.yml](.github/workflows/compat-matrix.yml) | Weekly + manual                      | `verify-angular-compat.mjs` per `@angular/core` range                                           |
+| Dependabot                                               | Weekly                               | [`.github/dependabot.yml`](.github/dependabot.yml) — Bun + GitHub Actions                       |
 
 Install step uses [`.github/actions/bun-install`](.github/actions/bun-install) (Bun + `~/.bun/install/cache` cache).
 
 ### npm scripts (cheat sheet)
 
-| Command | When to use |
-| ------- | ----------- |
-| `build` | Alias of `build:components` (library + schematics + strip sourcemaps). |
-| `docs` / `start` | Docs site dev server (port **4200**). |
-| `sync:story-overviews` | After changing component overviews in docs i18n — regenerates Storybook `story-overview-source.ts`. |
-| `sync:visual-stories` | Regenerate `e2e-visual/visual-story-manifest.ts` (no git check). |
-| `verify:visual-manifest` | CI: sync manifest + fail if out of date. |
-| `maintain:storybook` | Pre-PR: `sync:story-overviews` + `verify:story-tags` + `verify:visual-manifest`. |
-| `tag:stories` | Apply `stable` / `beta` tags from `component-maturity.ts`. |
-| `test:docs:e2e` | Docs Playwright smoke (run after `build:docs`; CI passes artifact from `test` job). |
+| Command                  | When to use                                                                                         |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| `build`                  | Alias of `build:components` (library + schematics + strip sourcemaps).                              |
+| `docs` / `start`         | Docs site dev server (port **4200**).                                                               |
+| `sync:story-overviews`   | After changing component overviews in docs i18n — regenerates Storybook `story-overview-source.ts`. |
+| `sync:visual-stories`    | Regenerate `e2e-visual/visual-story-manifest.ts` (no git check).                                    |
+| `verify:visual-manifest` | CI: sync manifest + fail if out of date.                                                            |
+| `maintain:storybook`     | Pre-PR: `sync:story-overviews` + `verify:story-tags` + `verify:visual-manifest`.                    |
+| `tag:stories`            | Apply `stable` / `beta` tags from `component-maturity.ts`.                                          |
+| `test:docs:e2e`          | Docs Playwright smoke (run after `build:docs`; CI passes artifact from `test` job).                 |
 
 5. Update [CHANGELOG.md](./CHANGELOG.md) under `[Unreleased]` for user-visible library changes.
 
