@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/components/
@@ -84,7 +84,7 @@ jobs:
         run: bun run build:docs
 
       - name: Upload docs build
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: docs-dist
           path: dist/docs/
@@ -131,7 +131,7 @@ jobs:
 
       - name: Upload visual diff artifacts
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: visual-regression-diff
           path: |
