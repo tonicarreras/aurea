@@ -8,6 +8,7 @@ import {
   model,
   output,
   signal,
+  linkedSignal,
 } from '@angular/core';
 
 import { AuCheckbox } from '../checkbox/checkbox';
@@ -58,7 +59,8 @@ export class AuTable {
   readonly loading = input(false);
   readonly loadingMessage = input('Loading…');
   readonly emptyMessage = input('No data');
-  readonly sort = model<AuTableSortState | null>(null);
+  readonly sortInput = input<AuTableSortState | null>(null, { alias: 'sort' });
+  readonly sort = linkedSignal(this.sortInput);
   readonly clientSort = input(true);
   readonly sortChange = output<AuTableSortState | null>();
   readonly trackByFn = input<((index: number, row: unknown) => unknown) | undefined>(undefined);
@@ -66,7 +68,8 @@ export class AuTable {
   /** Row selection: `none`, one row (`single`), or many (`multiple`). */
   readonly selectionMode = input<AuTableSelectionMode>('none');
   /** Selected row objects (0–1 item when `selectionMode` is `single`). */
-  readonly selection = model<readonly unknown[]>([]);
+  readonly selectionInput = input<readonly unknown[]>([], { alias: 'selection' });
+  readonly selection = linkedSignal(this.selectionInput);
   readonly selectionChange = output<readonly unknown[]>();
   /** Equality for matching rows in `selection`. */
   readonly compareSelection = input<(a: unknown, b: unknown) => boolean>((a, b) => a === b);

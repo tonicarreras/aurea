@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AuTab } from './au-tab.directive';
 import { AuTabPanel } from './au-tab-panel.directive';
@@ -13,6 +13,7 @@ describe('AuTabPanel', () => {
 @Component({
   selector: 'test-tabs-panel',
   imports: [AuTabs, AuTab, AuTabPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-tabs
       value="a"

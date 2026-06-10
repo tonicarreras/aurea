@@ -7,6 +7,7 @@ import {
   model,
   output,
   signal,
+  linkedSignal,
 } from '@angular/core';
 import { AuStep } from './au-step.directive';
 
@@ -47,7 +48,8 @@ export class AuSteps {
 
   private readonly stepRegistry = signal<readonly AuStep[]>([]);
 
-  readonly value = model<string>('');
+  readonly valueInput = input<string>('', { alias: 'value' });
+  readonly value = linkedSignal(this.valueInput);
   readonly ariaLabel = input<string>('');
   readonly size = input<'sm' | 'md'>('md');
   /** `tabs`: un panel; `sections`: todos visibles y scroll al pulsar (documentación). */

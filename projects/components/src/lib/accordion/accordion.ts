@@ -6,6 +6,7 @@ import {
   model,
   output,
   signal,
+  linkedSignal,
 } from '@angular/core';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
@@ -38,7 +39,8 @@ export class AuAccordion {
   private readonly itemRegistry = signal<readonly AuAccordionItem[]>([]);
 
   /** Expanded section keys. */
-  readonly value = model<string[]>([]);
+  readonly valueInput = input<string[]>([], { alias: 'value' });
+  readonly value = linkedSignal(this.valueInput);
   /** When false, opening one section closes the others. */
   readonly multiple = input(true);
   readonly ariaLabel = input<string>('');

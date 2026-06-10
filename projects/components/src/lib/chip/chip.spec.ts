@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuList } from '../list/list';
@@ -259,6 +259,7 @@ describe('AuChip', () => {
 
 @Component({
   imports: [AuList, AuChip],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-list>
       <au-chip

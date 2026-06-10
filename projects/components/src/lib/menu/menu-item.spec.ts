@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,6 +10,7 @@ import { AuMenuTrigger } from './au-menu-trigger.directive';
 
 @Component({
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
       <au-button auMenuTrigger>Open</au-button>

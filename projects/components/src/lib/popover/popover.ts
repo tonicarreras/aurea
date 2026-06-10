@@ -14,6 +14,7 @@ import {
   output,
   signal,
   viewChild,
+  linkedSignal,
 } from '@angular/core';
 
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
@@ -53,7 +54,8 @@ export function auPopoverSelfRef(): typeof AuPopover {
   },
 })
 export class AuPopover {
-  readonly open = model(false);
+  readonly openInput = input(false, { alias: 'open' });
+  readonly open = linkedSignal(this.openInput);
   readonly placement = input<AuTooltipPlacement>('bottom');
   readonly disabled = input(false);
 

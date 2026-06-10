@@ -1,4 +1,4 @@
-import { forwardRef } from '@angular/core';
+import { forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { AuPopover, auPopoverSelfRef } from './popover';
 
 @Component({
   imports: [AuPopover, AuPopoverTrigger, AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-popover
       [(open)]="open"

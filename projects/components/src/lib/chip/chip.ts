@@ -88,9 +88,6 @@ export class AuChip {
   /** Emits when the remove control is activated. */
   readonly removed = output<void>();
 
-  /** Emits when `selected` changes (selectable chips only). */
-  readonly selectedChange = output<boolean>();
-
   /** Emits on primary chip activation (selectable toggle). */
   readonly click = output<MouseEvent>();
 
@@ -126,7 +123,6 @@ export class AuChip {
     }
     const next = !this.selected();
     this.selected.set(next);
-    this.selectedChange.emit(next);
     this.click.emit(event);
     event.stopPropagation();
   }

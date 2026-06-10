@@ -7,6 +7,7 @@ import {
   model,
   output,
   signal,
+  linkedSignal,
 } from '@angular/core';
 import { AuTab } from './au-tab.directive';
 
@@ -52,7 +53,8 @@ export class AuTabs {
   private readonly tabRegistry = signal<readonly AuTab[]>([]);
 
   /** Active tab key (matches `auTab` / `auTabPanel`). */
-  readonly value = model<string>('');
+  readonly valueInput = input<string>('', { alias: 'value' });
+  readonly value = linkedSignal(this.valueInput);
   /** Accessible name for the tablist when no visible label wraps the control. */
   readonly ariaLabel = input<string>('');
   /** Visual style: underline (line) or segmented control (contained). */

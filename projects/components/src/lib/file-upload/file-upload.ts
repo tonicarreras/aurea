@@ -56,7 +56,6 @@ export class AuFileUpload implements FormValueControl<File[]> {
   readonly removeFileLabel = input('Remove file');
 
   readonly blur = output<void>();
-  readonly valueChange = output<File[]>();
 
   protected readonly formField = injectAuFormField();
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -159,6 +158,5 @@ export class AuFileUpload implements FormValueControl<File[]> {
 
   private setFiles(next: File[]): void {
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 }

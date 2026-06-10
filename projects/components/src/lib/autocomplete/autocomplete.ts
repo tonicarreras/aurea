@@ -85,7 +85,6 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   });
 
   readonly blur = output<void>();
-  readonly valueChange = output<string | null>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -421,7 +420,6 @@ export class AuAutocomplete implements FormValueControl<string | null> {
       return;
     }
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 
   private queryMatchesLabel(query: string, label: string | null): boolean {

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuButton } from './button';
 
 @Component({
   imports: [AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<au-button [loading]="loading">Save changes</au-button>`,
 })
 class ButtonLoadingHost {
@@ -13,6 +14,7 @@ class ButtonLoadingHost {
 
 @Component({
   imports: [AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<au-button (click)="count = count + 1">Go</au-button>`,
 })
 class ButtonClickHost {

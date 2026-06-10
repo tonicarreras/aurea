@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, DestroyRef, inject, Renderer2 } from '@angular/core';
+import { Component, DestroyRef, inject, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -11,7 +11,7 @@ import {
 import { computeTooltipPosition } from './tooltip-position';
 import { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
 
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.OnPush, template: '' })
 class OverlayHost {
   readonly renderer = inject(Renderer2);
   readonly destroyRef = inject(DestroyRef);

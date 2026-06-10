@@ -49,7 +49,6 @@ export class AuTagInput implements FormValueControl<string[]> {
   readonly removeTagLabel = input('Remove tag');
 
   readonly blur = output<void>();
-  readonly valueChange = output<string[]>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -126,7 +125,6 @@ export class AuTagInput implements FormValueControl<string[]> {
     }
     const next = [...current, raw];
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 
   removeTag(index: number): void {
@@ -139,7 +137,6 @@ export class AuTagInput implements FormValueControl<string[]> {
     }
     const next = current.filter((_, i) => i !== index);
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 
   onBlurHost(): void {

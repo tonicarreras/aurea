@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,6 +11,7 @@ function createFile(name: string, size = 12): File {
 
 @Component({
   imports: [AuFormField, AuFileUpload],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field
       label="Attachments"

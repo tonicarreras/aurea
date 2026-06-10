@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuStep } from './au-step.directive';
@@ -11,6 +11,7 @@ async function flushStepsSelection(): Promise<void> {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       [(value)]="active"
@@ -39,6 +40,7 @@ class TestStepsHost {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       layout="sections"
@@ -68,6 +70,7 @@ class SectionsHost {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       layout="sections"
@@ -98,6 +101,7 @@ class SectionsScrollHost {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       [(value)]="active"
@@ -133,6 +137,7 @@ class TestThreeStepsHost {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       [(value)]="active"
@@ -169,6 +174,7 @@ class TestStepsWithDisabledHost {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       [(value)]="active"
@@ -198,6 +204,7 @@ class TestStepsWithIdHost {
 
 @Component({
   imports: [AuSteps, AuStep, AuStepPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-steps
       [(value)]="active"

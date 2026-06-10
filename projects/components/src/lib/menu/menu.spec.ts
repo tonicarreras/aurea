@@ -1,4 +1,4 @@
-import { forwardRef } from '@angular/core';
+import { forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -10,6 +10,7 @@ import { resetOpenMenuForTests } from './menu-open-registry';
 
 @Component({
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu
       [(open)]="open"
@@ -44,6 +45,7 @@ class Host {
 
 @Component({
   imports: [AuMenu, AuMenuTrigger, AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
       <au-button auMenuTrigger>Open</au-button>
@@ -56,6 +58,7 @@ class HostNoItems {
 
 @Component({
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="openA">
       <au-button auMenuTrigger>Menu A</au-button>

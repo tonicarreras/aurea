@@ -3001,16 +3001,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuAvatar>",
-                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3021,11 +3011,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuBreadcrumb>",
-                "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
+                "type": "Meta<AuAvatar>",
+                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3041,21 +3031,31 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/card/card.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuCard>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuButtonGroup>",
                 "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuBreadcrumb>",
+                "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuCard>",
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -4999,17 +4999,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuBadge>",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
@@ -5021,8 +5010,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBreadcrumb>",
-                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5043,8 +5032,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuCard>",
-                "file": "projects/components/src/lib/card/card.stories.ts",
+                "rawtype": "StoryObj<AuButtonGroup>",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5054,8 +5043,19 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuButtonGroup>",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "rawtype": "StoryObj<AuBreadcrumb>",
+                "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuCard>",
+                "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -8789,19 +8789,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/avatar/avatar.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuAvatar>",
-                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Story",
@@ -8815,13 +8802,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
+            "projects/components/src/lib/avatar/avatar.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBreadcrumb>",
-                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "rawtype": "StoryObj<AuAvatar>",
+                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -8841,19 +8828,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/card/card.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuCard>",
-                    "file": "projects/components/src/lib/card/card.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/button-group/button-group.stories.ts": [
                 {
                     "name": "Story",
@@ -8861,6 +8835,32 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuButtonGroup>",
                     "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuBreadcrumb>",
+                    "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/card/card.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuCard>",
+                    "file": "projects/components/src/lib/card/card.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
