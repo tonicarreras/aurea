@@ -12,7 +12,7 @@ export const GUIDES_EN: GuidesMessages = {
       },
       {
         title: 'Signal forms',
-        description: 'Angular 21 signal forms with au-form-field and validators.',
+        description: 'Angular 22 signal forms with au-form-field and validators.',
         path: 'guides/signal-forms',
       },
       {

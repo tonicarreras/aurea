@@ -2,7 +2,7 @@
 
 <h1 align="center">✨ Aurea Design System</h1>
 
-<p align="center"><strong>A semantic UI system for Angular 21</strong></p>
+<p align="center"><strong>A semantic UI system for Angular 22</strong></p>
 
 <!-- Badges must use HTML: Markdown images inside block HTML are not rendered on GitHub. -->
 <p align="center">
@@ -34,14 +34,14 @@ Aurea targets **WCAG 2.2 AA** on primary flows and ships as **`@aurea-design-sys
 | ----------------------- | ---------------------------------------------------------------------------------- |
 | **Semantic Design**     | Single source of truth for state; design tokens map to meaning, not implementation |
 | **Accessibility First** | WCAG 2.2 AA on primary flows; visible focus, `aria-*`, `prefers-reduced-motion`    |
-| **Angular 21 Native**   | Signals, `model()`, `FieldTree` / `formField` for reactive forms                   |
+| **Angular 22 Native**   | Signals, `model()`, `FieldTree` / `formField` for reactive forms                   |
 
 ---
 
 ## ✨ Features
 
 - **Design Tokens** — Semantic CSS custom properties (`--au-*`) for theming, including dark mode
-- **Signal Forms** — Modern reactive forms with Angular 21's `model()` and signal-based controls
+- **Signal Forms** — Modern reactive forms with Angular 22's `model()` and signal-based controls
 - **Accessible by Default** — Focus rings, keyboard navigation, ARIA attributes wired to controls
 - **Component Composition** — Primitives → Semantic → Component layers for maintainability
 - **Interactive Documentation** — Storybook with interaction tests and accessibility audits
@@ -190,7 +190,7 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 ## 🛠 Tech Stack
 
-- **Framework**: Angular 21 (Signals, Standalone APIs)
+- **Framework**: Angular 22 (Signals, Standalone APIs)
 - **Package Manager**: Bun
 - **Testing**: Vitest (100% unit coverage) + Playwright (Storybook test-runner)
 - **Documentation**: Storybook 10
