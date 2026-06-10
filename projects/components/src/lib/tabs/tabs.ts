@@ -5,9 +5,7 @@ import {
   computed,
   input,
   model,
-  output,
   signal,
-  linkedSignal,
 } from '@angular/core';
 import { AuTab } from './au-tab.directive';
 
@@ -53,8 +51,7 @@ export class AuTabs {
   private readonly tabRegistry = signal<readonly AuTab[]>([]);
 
   /** Active tab key (matches `auTab` / `auTabPanel`). */
-  readonly valueInput = input<string>('', { alias: 'value' });
-  readonly value = linkedSignal(this.valueInput);
+  readonly value = model('');
   /** Accessible name for the tablist when no visible label wraps the control. */
   readonly ariaLabel = input<string>('');
   /** Visual style: underline (line) or segmented control (contained). */
@@ -63,8 +60,6 @@ export class AuTabs {
   readonly size = input<AuTabsSize>('md');
   /** Optional id prefix for tab/panel elements. */
   readonly id = input<string>('');
-
-  readonly valueChange = output<string>();
 
   readonly resolvedId = computed(() => {
     const custom = this.id();
@@ -94,7 +89,6 @@ export class AuTabs {
       return;
     }
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 
   tabIdFor(value: string): string {

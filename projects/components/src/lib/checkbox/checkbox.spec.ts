@@ -74,7 +74,7 @@ describe('AuCheckbox', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.checkedChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.checked).pipe(take(1))),
     );
     const el = queryInput(fix);
     el.checked = true;
@@ -245,7 +245,7 @@ describe('AuCheckbox', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.checkedChange).subscribe(() => n++),
+      outputToObservable(comp.checked).subscribe(() => n++),
     );
     fix.detectChanges();
     const el = queryInput(fix);

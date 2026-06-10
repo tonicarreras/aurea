@@ -110,7 +110,7 @@ describe('AuMenu', () => {
   it('emits openChange when toggled', () => {
     const fixture = TestBed.createComponent(Host);
     const emissions: boolean[] = [];
-    menuInstance(fixture).openChange.subscribe((v) => emissions.push(v));
+    menuInstance(fixture).open.subscribe((v: boolean) => emissions.push(v));
     fixture.detectChanges();
     const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     trigger.click();

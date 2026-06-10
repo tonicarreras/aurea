@@ -132,7 +132,9 @@ describe('AuChip', () => {
     const surface = fixture.nativeElement.querySelector('.au-chip__surface') as HTMLButtonElement;
     expect(surface.getAttribute('aria-pressed')).toBe('false');
     let selected: boolean | undefined;
-    component.selectedChange.subscribe((v) => (selected = v));
+    component.selected.subscribe((v: boolean) => {
+      selected = v;
+    });
     surface.click();
     fixture.detectChanges();
     expect(component.selected()).toBe(true);
@@ -146,7 +148,7 @@ describe('AuChip', () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
     let n = 0;
-    component.selectedChange.subscribe(() => n++);
+    component.selected.subscribe(() => n++);
     const surfaceDe = fixture.debugElement.query(By.css('.au-chip__surface'))!;
     const ev = new MouseEvent('click', { cancelable: true });
     surfaceDe.triggerEventHandler('click', ev);

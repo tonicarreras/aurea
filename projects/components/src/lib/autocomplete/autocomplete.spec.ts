@@ -104,7 +104,7 @@ describe('AuAutocomplete', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
     comp.selectOption(testOptions[1]!);
     expect(await p).toBe('bcn');
@@ -380,7 +380,7 @@ describe('AuAutocomplete', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.valueChange).subscribe(() => n++),
+      outputToObservable(comp.value).subscribe(() => n++),
     );
     fix.detectChanges();
     const input = queryInput(fix);
@@ -707,7 +707,7 @@ describe('AuAutocomplete', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.valueChange).subscribe(() => n++),
+      outputToObservable(comp.value).subscribe(() => n++),
     );
     fix.detectChanges();
     comp.selectOption(testOptions[0]!);

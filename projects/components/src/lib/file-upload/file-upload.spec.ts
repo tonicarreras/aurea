@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Injector, runInInjectionContext } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -55,7 +57,12 @@ describe('AuFileUpload', () => {
   it('emits valueChange when files are added', () => {
     const file = createFile('notes.txt');
     let emitted: File[] | undefined;
-    upload.valueChange.subscribe((next) => (emitted = next));
+    const inj = TestBed.inject(Injector);
+    runInInjectionContext(inj, () =>
+      outputToObservable(upload.value).subscribe((next: File[]) => {
+        emitted = next;
+      }),
+    );
     upload['addFiles']([file]);
     expect(emitted).toEqual([file]);
   });

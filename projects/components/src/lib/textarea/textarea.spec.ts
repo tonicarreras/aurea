@@ -63,7 +63,7 @@ describe('AuTextarea', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
     const el = queryTextarea(fix);
     el.value = 'change';
@@ -213,7 +213,7 @@ describe('AuTextarea', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.valueChange).subscribe(() => n++),
+      outputToObservable(comp.value).subscribe(() => n++),
     );
     fix.detectChanges();
     const el = queryTextarea(fix);

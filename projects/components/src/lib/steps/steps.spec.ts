@@ -489,9 +489,10 @@ describe('AuSteps', () => {
     fix.detectChanges();
     await flushStepsSelection();
     const steps = fix.debugElement.query(By.directive(AuSteps))!.componentInstance as AuSteps;
-    const emit = vi.spyOn(steps.valueChange, 'emit');
+    let count = 0;
+    steps.value.subscribe(() => count++);
     steps.selectStep('overview');
-    expect(emit).not.toHaveBeenCalled();
+    expect(count).toBe(0);
   });
 
   it('resets to first enabled step when value is unknown', async () => {

@@ -12,10 +12,8 @@ import {
   inject,
   input,
   model,
-  output,
   signal,
   viewChild,
-  linkedSignal,
 } from '@angular/core';
 
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
@@ -62,12 +60,9 @@ export function auMenuSelfRef(): typeof AuMenu {
   },
 })
 export class AuMenu {
-  readonly openInput = input(false, { alias: 'open' });
-  readonly open = linkedSignal(this.openInput);
+  readonly open = model(false);
   readonly placement = input<AuTooltipPlacement>('bottom');
   readonly disabled = input(false);
-
-  readonly openChange = output<boolean>();
 
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly destroyRef = inject(DestroyRef);
@@ -140,7 +135,6 @@ export class AuMenu {
       this.activeMenuItem.set(null);
     }
     this.open.set(value);
-    this.openChange.emit(value);
   }
 
   private readonly syncPanelOverlay = afterRenderEffect(() => {

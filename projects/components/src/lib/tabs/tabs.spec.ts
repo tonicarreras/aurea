@@ -87,7 +87,7 @@ describe('AuTabs', () => {
     let next = '';
     fix.debugElement
       .query(By.directive(AuTabs))!
-      .componentInstance.valueChange.subscribe((v: string) => (next = v));
+      .componentInstance.value.subscribe((v: string) => (next = v));
     const billingTab = fix.nativeElement.querySelector(
       'button[auTab="billing"]',
     ) as HTMLButtonElement;
@@ -103,7 +103,7 @@ describe('AuTabs', () => {
     fix.detectChanges();
     const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
     let count = 0;
-    tabs.valueChange.subscribe(() => count++);
+    tabs.value.subscribe(() => count++);
     tabs.selectTab('profile');
     expect(count).toBe(0);
   });

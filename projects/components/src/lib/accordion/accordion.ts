@@ -4,9 +4,7 @@ import {
   computed,
   input,
   model,
-  output,
   signal,
-  linkedSignal,
 } from '@angular/core';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
@@ -39,8 +37,7 @@ export class AuAccordion {
   private readonly itemRegistry = signal<readonly AuAccordionItem[]>([]);
 
   /** Expanded section keys. */
-  readonly valueInput = input<string[]>([], { alias: 'value' });
-  readonly value = linkedSignal(this.valueInput);
+  readonly value = model<string[]>([]);
   /** When false, opening one section closes the others. */
   readonly multiple = input(true);
   readonly ariaLabel = input<string>('');
@@ -48,8 +45,6 @@ export class AuAccordion {
   readonly variant = input<AuAccordionVariant>('plain');
   readonly size = input<'sm' | 'md'>('md');
   readonly id = input<string>('');
-
-  readonly valueChange = output<string[]>();
 
   readonly resolvedId = computed(() => {
     const custom = this.id();
@@ -130,6 +125,5 @@ export class AuAccordion {
 
   private setValue(next: string[]): void {
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 }
