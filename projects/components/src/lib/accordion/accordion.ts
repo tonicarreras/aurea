@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  model,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
 
