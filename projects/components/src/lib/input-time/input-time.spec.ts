@@ -93,7 +93,7 @@ describe('AuInputTime', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
     const el = queryInput(fix);
     el.value = '16:45';
@@ -109,7 +109,7 @@ describe('AuInputTime', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.valueChange).subscribe(() => n++),
+      outputToObservable(comp.value).subscribe(() => n++),
     );
     fix.detectChanges();
     const el = queryInput(fix);

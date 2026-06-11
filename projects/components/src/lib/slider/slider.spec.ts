@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuFormField } from '../form-field/form-field';
@@ -6,6 +6,7 @@ import { AuSlider } from './slider';
 
 @Component({
   imports: [AuFormField, AuSlider],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field
       label="Volume"

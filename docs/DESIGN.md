@@ -1,6 +1,6 @@
 # Design principles
 
-Semantic UI for **WCAG 2.2 AA** on primary flows, **Angular 21** (signals, `formField`).
+Semantic UI for **WCAG 2.2 AA** on primary flows, **Angular 22** (signals, `formField`).
 
 ## Principles
 

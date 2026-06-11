@@ -1,9 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AuTheme } from './au-theme';
 
 @Component({
   imports: [AuTheme],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div
     auTheme="dark"
     id="host"
@@ -13,6 +14,7 @@ class ThemeHost {}
 
 @Component({
   imports: [AuTheme],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div
     [auTheme]="'light'"
     id="host2"
@@ -22,6 +24,7 @@ class ThemeHostLight {}
 
 @Component({
   imports: [AuTheme],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div
     [auTheme]="mode()"
     id="sys"
@@ -33,6 +36,7 @@ class ThemeHostSystem {
 
 @Component({
   imports: [AuTheme],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div
     auTheme="high-contrast-dark"
     id="hcDark"

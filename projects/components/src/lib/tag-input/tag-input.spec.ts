@@ -158,7 +158,7 @@ describe('AuTagInput', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
     typeDraft(fix, 'go');
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -548,6 +548,7 @@ describe('AuSnackbar', () => {
 
 @Component({
   imports: [AuSnackbar],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-snackbar
       [open]="true"

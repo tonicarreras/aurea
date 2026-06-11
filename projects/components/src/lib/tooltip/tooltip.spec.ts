@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
@@ -6,6 +6,7 @@ import { AuTooltip } from './au-tooltip.directive';
 
 @Component({
   imports: [AuTooltip],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
       type="button"

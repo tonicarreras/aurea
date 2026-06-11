@@ -3,18 +3,18 @@ import type { DocsSeoMessages } from '../../types/seo';
 export const SEO_ES: DocsSeoMessages = {
   siteName: 'Aurea Design System',
   defaultDescription:
-    'Documentación oficial de Aurea: componentes accesibles para Angular 21, tokens semánticos y formularios con signals. Paquete npm @aurea-design-system/components.',
+    'Documentación oficial de Aurea: componentes accesibles para Angular 22, tokens semánticos y formularios con signals. Paquete npm @aurea-design-system/components.',
   breadcrumbHome: 'Inicio',
   breadcrumbGetStarted: 'Empezar',
   breadcrumbThemes: 'Temas y tokens',
   breadcrumbComponents: 'Componentes',
   home: {
-    title: 'Aurea — Sistema de diseño para Angular 21',
+    title: 'Aurea — Sistema de diseño para Angular 22',
     description:
       'Librería npm MIT: tokens semánticos, componentes accesibles, signal forms y vistas previas. Instalación y referencia de API.',
   },
   getStarted: {
-    title: 'Empezar — Instalar Aurea en Angular 21',
+    title: 'Empezar — Instalar Aurea en Angular 22',
     description:
       'Requisitos, instalación de @aurea-design-system/components, tokens globales y tu primer ejemplo con au-button.',
   },
@@ -23,7 +23,7 @@ export const SEO_ES: DocsSeoMessages = {
     description: 'Guías de instalación, signal forms y temas.',
   },
   guidesSignalForms: {
-    title: 'Signal forms con Aurea — Angular 21',
+    title: 'Signal forms con Aurea — Angular 22',
     description:
       'Enlaza au-form-field y controles con FormField, form(), validadores y envío seguro.',
   },
@@ -52,7 +52,7 @@ export const SEO_ES: DocsSeoMessages = {
   },
   componentTitle: (name, exportName) => `${name} (${exportName}) — Docs Aurea`,
   componentDescription: (name, summary) =>
-    `${name} para Angular 21: ${summary} Referencia API, tokens de estilo y ejemplos interactivos.`,
+    `${name} para Angular 22: ${summary} Referencia API, tokens de estilo y ejemplos interactivos.`,
   notFound: {
     title: 'Página no encontrada — Aurea Design System',
     description: 'El componente o la página solicitada no existe en la documentación de Aurea.',

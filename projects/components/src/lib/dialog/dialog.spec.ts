@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuDialog } from './dialog';
@@ -658,6 +658,7 @@ describe('AuDialog', () => {
 @Component({
   selector: 'test-dialog',
   imports: [AuDialog],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-dialog [open]="true">
       <span class="test-dialog-content">Dialog body content</span>
@@ -669,6 +670,7 @@ class TestDialogComponent {}
 @Component({
   selector: 'test-dialog-footer',
   imports: [AuDialog, AuDialogFooter],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-dialog [open]="true">
       <p>Dialog body</p>
@@ -686,6 +688,7 @@ class TestDialogWithFooterComponent {}
 @Component({
   selector: 'test-dialog-focus-trap',
   imports: [AuDialog],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-dialog
       [open]="true"

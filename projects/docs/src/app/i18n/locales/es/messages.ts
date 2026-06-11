@@ -33,9 +33,9 @@ export const MESSAGES_ES: DocsMessages = {
     storybookAria: 'Abrir Storybook',
   },
   landing: {
-    eyebrow: 'Aurea · Sistema de diseño · Angular 21',
+    eyebrow: 'Aurea · Sistema de diseño · Angular 22',
     title: 'Sistema de diseño',
-    titleAccent: 'para Angular 21',
+    titleAccent: 'para Angular 22',
     lead: 'Librería npm open source (MIT): tokens CSS semánticos, componentes standalone y signal forms de Angular. Guía de instalación, referencia de componentes y Storybook.',
     ctaDocs: 'Documentación',
     ctaStorybook: 'Storybook',
@@ -63,7 +63,7 @@ export const MESSAGES_ES: DocsMessages = {
       'Primitivos (internos), tokens semánticos en <code>au-tokens.css</code> y CSS de componente que mapea tokens a la UI.',
     systemPoints: [
       'Notas de accesibilidad y teclado en la documentación de cada componente',
-      'Signal forms con <code>formField</code> de Angular 21',
+      'Signal forms con <code>formField</code> de Angular 22',
       'Publicado como <code>@aurea-design-system/components</code> en npm',
     ],
     themesLink: 'Temas y tokens',
@@ -82,7 +82,7 @@ export const MESSAGES_ES: DocsMessages = {
   },
   getStarted: {
     title: 'Empezar',
-    lead: 'Instala el paquete publicado y conecta tokens y componentes en tu aplicación Angular 21.',
+    lead: 'Instala el paquete publicado y conecta tokens y componentes en tu aplicación Angular 22.',
     componentSnippet: GET_STARTED_COMPONENT_SNIPPET,
     steps: {
       requirements: {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuCardFooter } from './card-footer.directive';
@@ -137,6 +137,7 @@ describe('AuCard', () => {
 @Component({
   selector: 'test-card',
   imports: [AuCard],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-card>
       <span class="test-content">Projected content</span>
@@ -148,6 +149,7 @@ class TestCardComponent {}
 @Component({
   selector: 'test-card-slots',
   imports: [AuCard],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-card>
       <h3 auCardHeader>Title</h3>
@@ -160,6 +162,7 @@ class TestCardSlotsComponent {}
 @Component({
   selector: 'test-card-footer',
   imports: [AuCard, AuCardFooter],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-card>
       <h3 auCardHeader>Title</h3>

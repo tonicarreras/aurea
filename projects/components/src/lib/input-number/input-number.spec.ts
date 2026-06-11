@@ -57,7 +57,7 @@ describe('AuInputNumber', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
     const el = queryInput(fix);
     el.value = '3';
@@ -71,10 +71,13 @@ describe('AuInputNumber', () => {
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
-    const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
-    );
     const el = queryInput(fix);
+    el.value = '3';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    const p = firstValueFrom(
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
+    );
     el.value = '';
     el.dispatchEvent(new Event('input'));
     expect(await p).toBeNull();
@@ -88,7 +91,7 @@ describe('AuInputNumber', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.valueChange).subscribe(() => n++),
+      outputToObservable(comp.value).subscribe(() => n++),
     );
     fix.detectChanges();
     const el = queryInput(fix);

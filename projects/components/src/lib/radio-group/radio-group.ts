@@ -46,7 +46,6 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   readonly size = input<AuSize>('md');
 
   readonly blur = output<void>();
-  readonly valueChange = output<string | null>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -113,7 +112,6 @@ export class AuRadioGroup implements FormValueControl<string | null> {
     const el = event.target as HTMLInputElement;
     if (el.checked) {
       this.value.set(el.value);
-      this.valueChange.emit(el.value);
     }
   }
 

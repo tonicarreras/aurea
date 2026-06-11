@@ -48,7 +48,6 @@ export class AuInputNumber implements FormValueControl<number | null> {
   readonly size = input<AuSize>('md');
 
   readonly blur = output<void>();
-  readonly valueChange = output<number | null>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -98,13 +97,11 @@ export class AuInputNumber implements FormValueControl<number | null> {
     const raw = (event.target as HTMLInputElement).value;
     if (raw === '') {
       this.value.set(null);
-      this.valueChange.emit(null);
       return;
     }
     const n = Number(raw);
     if (Number.isFinite(n)) {
       this.value.set(n);
-      this.valueChange.emit(n);
     }
   }
 

@@ -214,7 +214,7 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 ### Changed
 
-- Angular 21.2 peer dependency alignment.
+- Angular 22.2 peer dependency alignment.
 
 ## [0.2.0] - 2025-04-01
 

@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, startWith } from 'rxjs';
@@ -18,7 +18,7 @@ const SEO_MESSAGES: Record<DocsLocale, DocsSeoMessages> = {
 
 const JSON_LD_ID = 'docs-seo-jsonld';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class DocsSeoService {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
