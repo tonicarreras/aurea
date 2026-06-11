@@ -2251,16 +2251,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2276,6 +2266,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFieldset] },\n    template: `\n      <au-fieldset [legend]=\"legend\" [description]=\"description\" [disabled]=\"disabled\" [size]=\"size\">\n        <p style=\"margin:0;color:var(--au-color-text-secondary)\">Project form fields here.</p>\n      </au-fieldset>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -3141,16 +3141,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuFieldset>",
-                "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3176,6 +3166,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuIcon>",
                 "defaultValue": "{\n  title: 'Aurea/Icon',\n  component: AuIcon,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('icon'),\n  argTypes: {\n    name: { control: 'select', options: [...AU_ICON_NAMES], table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    name: 'info',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuFieldset>",
+                "defaultValue": "{\n  title: 'Aurea/Fieldset',\n  component: AuFieldset,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('fieldset'),\n  argTypes: {\n    legend: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    legend: 'Shipping address',\n    description: 'Where we deliver your order.',\n    disabled: false,\n    size: 'md',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -5153,17 +5153,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuFieldset>",
-                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuFileUpload>",
                 "file": "projects/components/src/lib/file-upload/file-upload.stories.ts",
                 "deprecated": false,
@@ -5188,6 +5177,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuIcon>",
                 "file": "projects/components/src/lib/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuFieldset>",
+                "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -8971,19 +8971,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuFieldset>",
-                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/file-upload/file-upload.stories.ts": [
                 {
                     "name": "Story",
@@ -9017,6 +9004,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuIcon>",
                     "file": "projects/components/src/lib/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/fieldset/fieldset.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuFieldset>",
+                    "file": "projects/components/src/lib/fieldset/fieldset.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
