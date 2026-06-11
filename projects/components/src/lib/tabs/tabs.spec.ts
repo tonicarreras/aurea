@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuTab } from './au-tab.directive';
@@ -87,7 +87,7 @@ describe('AuTabs', () => {
     let next = '';
     fix.debugElement
       .query(By.directive(AuTabs))!
-      .componentInstance.valueChange.subscribe((v: string) => (next = v));
+      .componentInstance.value.subscribe((v: string) => (next = v));
     const billingTab = fix.nativeElement.querySelector(
       'button[auTab="billing"]',
     ) as HTMLButtonElement;
@@ -103,7 +103,7 @@ describe('AuTabs', () => {
     fix.detectChanges();
     const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
     let count = 0;
-    tabs.valueChange.subscribe(() => count++);
+    tabs.value.subscribe(() => count++);
     tabs.selectTab('profile');
     expect(count).toBe(0);
   });
@@ -311,6 +311,7 @@ describe('AuTabs', () => {
 @Component({
   selector: 'test-tabs',
   imports: [AuTabs, AuTab, AuTabPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-tabs
       [(value)]="active"
@@ -340,6 +341,7 @@ class TestTabsComponent {
 @Component({
   selector: 'test-tabs-id',
   imports: [AuTabs, AuTab, AuTabPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-tabs
       [(value)]="active"
@@ -370,6 +372,7 @@ class TestTabsWithIdComponent {
 @Component({
   selector: 'test-three-tabs',
   imports: [AuTabs, AuTab, AuTabPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-tabs
       [(value)]="active"
@@ -408,6 +411,7 @@ class TestThreeTabsComponent {
 @Component({
   selector: 'test-tabs-disabled',
   imports: [AuTabs, AuTab, AuTabPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-tabs
       [(value)]="active"
@@ -445,6 +449,7 @@ class TestTabsWithDisabledComponent {
 @Component({
   selector: 'test-tabs-unknown-value',
   imports: [AuTabs, AuTab, AuTabPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-tabs
       [(value)]="active"

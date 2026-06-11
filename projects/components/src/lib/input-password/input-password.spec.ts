@@ -136,7 +136,7 @@ describe('AuInputPassword', () => {
     const inj = TestBed.inject(Injector);
     fix.detectChanges();
     const valueP = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.valueChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
     const el = queryInput(fix);
     el.value = 'x';

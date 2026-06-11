@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { AuLink } from './link';
 
 @Component({
   imports: [AuLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<a
     auLink
     [href]="href"
@@ -19,6 +20,7 @@ class AnchorHost {
 
 @Component({
   imports: [AuLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<au-link>Inline</au-link>`,
 })
 class ElementHost {}

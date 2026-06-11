@@ -50,7 +50,6 @@ export class AuInputDate implements FormValueControl<string | null> {
   readonly size = input<AuSize>('md');
 
   readonly blur = output<void>();
-  readonly valueChange = output<string | null>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -100,11 +99,9 @@ export class AuInputDate implements FormValueControl<string | null> {
     const raw = (event.target as HTMLInputElement).value;
     if (raw === '') {
       this.value.set(null);
-      this.valueChange.emit(null);
       return;
     }
     this.value.set(raw);
-    this.valueChange.emit(raw);
   }
 
   onBlurHost(): void {

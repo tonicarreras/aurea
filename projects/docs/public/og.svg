@@ -13,7 +13,7 @@
   <circle cx="980" cy="120" r="180" fill="#6366f1" opacity="0.18"/>
   <circle cx="180" cy="520" r="220" fill="#a855f7" opacity="0.14"/>
   <text x="80" y="280" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="72" font-weight="700">Aurea</text>
-  <text x="80" y="360" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="40" font-weight="500">Design System � Angular 21</text>
+  <text x="80" y="360" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="40" font-weight="500">Design System � Angular 22</text>
   <text x="80" y="430" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="28">Accessible components � Semantic tokens � Signal forms</text>
   <rect x="80" y="480" width="320" height="8" rx="4" fill="url(#accent)"/>
 </svg>

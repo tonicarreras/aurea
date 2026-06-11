@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -68,6 +68,7 @@ const fieldHarnessBindings = `
 @Component({
   selector: 'au-input-text-test-host',
   imports: [AuFormField, AuInputText],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-input-text
@@ -114,6 +115,7 @@ export class AuInputTextTestHost {
 @Component({
   selector: 'au-textarea-test-host',
   imports: [AuFormField, AuTextarea],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-textarea
@@ -162,6 +164,7 @@ export class AuTextareaTestHost {
 @Component({
   selector: 'au-input-number-test-host',
   imports: [AuFormField, AuInputNumber],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-input-number
@@ -206,6 +209,7 @@ export class AuInputNumberTestHost {
 @Component({
   selector: 'au-input-date-test-host',
   imports: [AuFormField, AuInputDate],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-input-date
@@ -250,6 +254,7 @@ export class AuInputDateTestHost {
 @Component({
   selector: 'au-input-time-test-host',
   imports: [AuFormField, AuInputTime],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-input-time
@@ -294,6 +299,7 @@ export class AuInputTimeTestHost {
 @Component({
   selector: 'au-input-password-test-host',
   imports: [AuFormField, AuInputPassword],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-input-password
@@ -340,6 +346,7 @@ export class AuInputPasswordTestHost {
 @Component({
   selector: 'au-tag-input-test-host',
   imports: [AuFormField, AuTagInput],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-tag-input
@@ -382,6 +389,7 @@ export class AuTagInputTestHost {
 @Component({
   selector: 'au-switch-test-host',
   imports: [AuFormField, AuSwitch],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-switch
@@ -420,6 +428,7 @@ export class AuSwitchTestHost {
 @Component({
   selector: 'au-checkbox-test-host',
   imports: [AuFormField, AuCheckbox],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-checkbox
@@ -464,6 +473,7 @@ export class AuCheckboxTestHost {
 @Component({
   selector: 'au-select-test-host',
   imports: [AuFormField, AuSelect],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-select
@@ -506,6 +516,7 @@ export class AuSelectTestHost {
 @Component({
   selector: 'au-autocomplete-test-host',
   imports: [AuFormField, AuAutocomplete],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-autocomplete
@@ -556,6 +567,7 @@ export class AuAutocompleteTestHost {
 @Component({
   selector: 'au-radio-group-test-host',
   imports: [AuFormField, AuRadioGroup],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
       <au-radio-group

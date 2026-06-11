@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuChip } from '../chip/chip';
 import { AuChipGroup } from './chip-group';
@@ -70,6 +70,7 @@ describe('AuChipGroup', () => {
 
 @Component({
   imports: [AuChipGroup, AuChip],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-chip-group ariaLabel="Status">
       <au-chip

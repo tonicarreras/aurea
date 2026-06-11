@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  model,
-  output,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
 
 import { AuAccordionItem } from './au-accordion-item.directive';
 
@@ -46,8 +38,6 @@ export class AuAccordion {
   readonly variant = input<AuAccordionVariant>('plain');
   readonly size = input<'sm' | 'md'>('md');
   readonly id = input<string>('');
-
-  readonly valueChange = output<string[]>();
 
   readonly resolvedId = computed(() => {
     const custom = this.id();
@@ -128,6 +118,5 @@ export class AuAccordion {
 
   private setValue(next: string[]): void {
     this.value.set(next);
-    this.valueChange.emit(next);
   }
 }

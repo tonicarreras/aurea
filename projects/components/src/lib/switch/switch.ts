@@ -32,7 +32,7 @@ import { tabFocusState } from '../au-tab-focus-state';
   providers: [{ provide: AU_FORM_FIELD, useFactory: createStandaloneAuFormFieldContext }],
 })
 export class AuSwitch implements FormCheckboxControl {
-  readonly checked = model<boolean>(false);
+  readonly checked = model(false);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
 
@@ -47,7 +47,6 @@ export class AuSwitch implements FormCheckboxControl {
   readonly name = input<string>('');
 
   readonly blur = output<void>();
-  readonly checkedChange = output<boolean>();
 
   protected readonly formField = injectAuFormField();
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -90,7 +89,6 @@ export class AuSwitch implements FormCheckboxControl {
     const target = event.target as HTMLInputElement;
     const next = target.checked;
     this.checked.set(next);
-    this.checkedChange.emit(next);
   }
 
   onBlurHost(): void {

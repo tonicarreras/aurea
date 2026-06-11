@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuListItem } from './au-list-item.directive';
@@ -53,6 +53,7 @@ describe('AuList', () => {
 
 @Component({
   imports: [AuList, AuListItem],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-list ariaLabel="Items">
       <div auListItem>One</div>

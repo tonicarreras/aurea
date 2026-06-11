@@ -1,4 +1,4 @@
-import { Injectable, computed, inject } from '@angular/core';
+import { Service, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
@@ -7,7 +7,7 @@ import { DOCS_MESSAGES } from '../i18n';
 import { getDocsNav } from './docs-nav';
 import { DEFAULT_DOCS_LOCALE, type DocsLocale, docsPath, isDocsLocale } from './docs-locale';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class DocsLocaleService {
   private readonly router = inject(Router);
 

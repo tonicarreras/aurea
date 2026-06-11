@@ -1,4 +1,4 @@
-import { forwardRef } from '@angular/core';
+import { forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { AuPopover, auPopoverSelfRef } from './popover';
 
 @Component({
   imports: [AuPopover, AuPopoverTrigger, AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-popover
       [(open)]="open"
@@ -43,7 +44,7 @@ describe('AuPopover', () => {
   it('emits openChange when toggled', () => {
     const fixture = TestBed.createComponent(Host);
     const emissions: boolean[] = [];
-    popoverInstance(fixture).openChange.subscribe((v) => emissions.push(v));
+    popoverInstance(fixture).open.subscribe((v: boolean) => emissions.push(v));
     fixture.detectChanges();
     const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     trigger.click();

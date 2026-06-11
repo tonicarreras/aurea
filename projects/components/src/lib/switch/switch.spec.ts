@@ -43,7 +43,7 @@ describe('AuSwitch', () => {
     const comp = control(fix);
     const inj = TestBed.inject(Injector);
     const p = firstValueFrom(
-      runInInjectionContext(inj, () => outputToObservable(comp.checkedChange).pipe(take(1))),
+      runInInjectionContext(inj, () => outputToObservable(comp.checked).pipe(take(1))),
     );
     const el = queryInput(fix);
     el.checked = true;
@@ -59,7 +59,7 @@ describe('AuSwitch', () => {
     const inj = TestBed.inject(Injector);
     let n = 0;
     const sub = runInInjectionContext(inj, () =>
-      outputToObservable(comp.checkedChange).subscribe(() => n++),
+      outputToObservable(comp.checked).subscribe(() => n++),
     );
     const el = queryInput(fix);
     el.checked = true;

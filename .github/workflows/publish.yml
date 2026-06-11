@@ -58,13 +58,8 @@ jobs:
           npm version "$VERSION" --no-git-tag-version --allow-same-version
         working-directory: projects/components
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: package.json
-
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        uses: ./.github/actions/bun-install
 
       - name: Check if version is already on npm
         id: npm_skip

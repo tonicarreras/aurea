@@ -6,7 +6,6 @@ import {
   computed,
   input,
   model,
-  output,
   signal,
 } from '@angular/core';
 
@@ -60,14 +59,12 @@ export class AuTable {
   readonly emptyMessage = input('No data');
   readonly sort = model<AuTableSortState | null>(null);
   readonly clientSort = input(true);
-  readonly sortChange = output<AuTableSortState | null>();
   readonly trackByFn = input<((index: number, row: unknown) => unknown) | undefined>(undefined);
 
   /** Row selection: `none`, one row (`single`), or many (`multiple`). */
   readonly selectionMode = input<AuTableSelectionMode>('none');
   /** Selected row objects (0–1 item when `selectionMode` is `single`). */
   readonly selection = model<readonly unknown[]>([]);
-  readonly selectionChange = output<readonly unknown[]>();
   /** Equality for matching rows in `selection`. */
   readonly compareSelection = input<(a: unknown, b: unknown) => boolean>((a, b) => a === b);
   readonly selectAllLabel = input('Select all rows');
@@ -178,7 +175,6 @@ export class AuTable {
       next = { column, direction: 'asc' };
     }
     this.sort.set(next);
-    this.sortChange.emit(next);
   }
 
   protected isRowSelected(row: unknown): boolean {
@@ -264,7 +260,6 @@ export class AuTable {
 
   private setSelection(next: readonly unknown[]): void {
     this.selection.set(next);
-    this.selectionChange.emit(next);
   }
 
   private cellText(value: unknown): string {

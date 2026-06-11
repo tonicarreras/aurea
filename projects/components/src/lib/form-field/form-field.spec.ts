@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, type WritableSignal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  type WritableSignal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -21,6 +27,7 @@ import {
 
 @Component({
   selector: 'au-test-form-field-child',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class FormFieldChildProbe {
@@ -29,11 +36,13 @@ class FormFieldChildProbe {
 
 @Component({
   imports: [AuFormField, FormFieldChildProbe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<au-form-field label="Probe"><au-test-form-field-child /></au-form-field>',
 })
 class FormFieldProviderHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<input class="probe-input" />',
 })
 class ProbeHost {

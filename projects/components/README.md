@@ -1,6 +1,6 @@
 # @aurea-design-system/components
 
-**Aurea** — design system for **Angular 21**: accessible components, semantic tokens, and signal-friendly forms.
+**Aurea** — design system for **Angular 22**: accessible components, semantic tokens, and signal-friendly forms.
 
 [![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
@@ -92,7 +92,7 @@ export class Example {}
 
 ---
 
-## Signal forms (Angular 21+)
+## Signal forms (Angular 22+)
 
 Field controls implement `FormValueControl` and bind with **`[formField]`** from `@angular/forms/signals`. Put **`form()`** and the model **`signal()`** in your **page or feature component** (injection context). Wrap the control in **`au-form-field`** for label, hint, and error chrome — do not duplicate `label` on the inner control.
 

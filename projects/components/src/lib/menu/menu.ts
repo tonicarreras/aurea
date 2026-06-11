@@ -12,7 +12,6 @@ import {
   inject,
   input,
   model,
-  output,
   signal,
   viewChild,
 } from '@angular/core';
@@ -64,8 +63,6 @@ export class AuMenu {
   readonly open = model(false);
   readonly placement = input<AuTooltipPlacement>('bottom');
   readonly disabled = input(false);
-
-  readonly openChange = output<boolean>();
 
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly destroyRef = inject(DestroyRef);
@@ -138,7 +135,6 @@ export class AuMenu {
       this.activeMenuItem.set(null);
     }
     this.open.set(value);
-    this.openChange.emit(value);
   }
 
   private readonly syncPanelOverlay = afterRenderEffect(() => {

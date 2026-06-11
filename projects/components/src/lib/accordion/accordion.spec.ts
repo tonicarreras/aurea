@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -8,6 +8,7 @@ import { AuAccordion } from './accordion';
 
 @Component({
   imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-accordion
       [(value)]="expanded"

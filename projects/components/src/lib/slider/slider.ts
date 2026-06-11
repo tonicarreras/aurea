@@ -56,7 +56,6 @@ export class AuSlider implements FormValueControl<number> {
   readonly effectiveMax = computed(() => this.max() ?? 100);
 
   readonly blur = output<void>();
-  readonly valueChange = output<number>();
 
   protected readonly formField = injectAuFormField();
   private readonly host = inject(ElementRef<HTMLElement>);
@@ -107,7 +106,6 @@ export class AuSlider implements FormValueControl<number> {
     const next = Number((event.target as HTMLInputElement).value);
     if (Number.isFinite(next)) {
       this.value.set(next);
-      this.valueChange.emit(next);
     }
   }
 

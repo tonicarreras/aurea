@@ -12,22 +12,19 @@ jobs:
   compat:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         angular_core: ['^21.2.0', '^21.2.14']
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: package.json
-
-      - name: Install monorepo dependencies
-        run: bun install --frozen-lockfile
+      - name: Install dependencies
+        uses: ./.github/actions/bun-install
 
       - name: Build Aurea library
         run: bun run build:components
 
+      # Typecheck consumer against matrix @angular/*; full unit suite runs in test.yml on pinned peers.
       - name: Verify peer compile against Angular ${{ matrix.angular_core }}
         run: node scripts/verify-angular-compat.mjs "${{ matrix.angular_core }}"

@@ -5,7 +5,6 @@ import {
   computed,
   input,
   model,
-  output,
   signal,
 } from '@angular/core';
 import { AuStep } from './au-step.directive';
@@ -47,13 +46,12 @@ export class AuSteps {
 
   private readonly stepRegistry = signal<readonly AuStep[]>([]);
 
-  readonly value = model<string>('');
+  readonly value = model('');
   readonly ariaLabel = input<string>('');
   readonly size = input<'sm' | 'md'>('md');
   /** `tabs`: un panel; `sections`: todos visibles y scroll al pulsar (documentación). */
   readonly layout = input<AuStepsLayout>('tabs');
 
-  readonly valueChange = output<string>();
   readonly id = input<string>('');
 
   readonly resolvedId = computed(() => {
@@ -83,7 +81,6 @@ export class AuSteps {
     const changed = this.value() !== next;
     if (changed) {
       this.value.set(next);
-      this.valueChange.emit(next);
     }
     if (options?.scroll && this.layout() === 'sections') {
       this.scrollToPanel(next);
