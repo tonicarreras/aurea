@@ -242,6 +242,22 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
+  it('prevents wheel scroll without hiding the page scrollbar', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    trigger.click();
+    fixture.detectChanges();
+
+    expect(document.body.style.overflow).not.toBe('hidden');
+    expect(document.body.style.position).not.toBe('fixed');
+
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+    expect(fixture.componentInstance.open).toBe(true);
+  });
+
   describe('keyboard navigation', () => {
     function getPanel(_fixture: ReturnType<typeof TestBed.createComponent<Host>>): HTMLElement {
       return document.body.querySelector('.au-menu__panel')!;
