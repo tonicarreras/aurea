@@ -79,7 +79,8 @@ au-steps {
 }
 
 .au-steps__step--from-tab:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
   outline-offset: -2px;
 }
 

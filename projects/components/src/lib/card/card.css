@@ -6,7 +6,7 @@ au-card {
   --au-card-bg: var(--au-color-surface-raised);
   --au-card-border: var(--au-chrome-border);
   --au-card-radius: var(--au-radius-surface);
-  --au-card-shadow: var(--au-chrome-shadow);
+  --au-card-shadow: var(--au-elevation-flat);
   --au-card-padding: var(--au-space-5);
   --au-card-gap: var(--au-space-4);
 
@@ -30,7 +30,7 @@ au-card .au-card__container {
 au-card[data-au-variant='elevated'] .au-card__container {
   background: var(--au-color-surface-raised);
   border: var(--au-chrome-border);
-  box-shadow: var(--au-chrome-shadow);
+  box-shadow: var(--au-elevation-flat);
 }
 
 au-card[data-au-interactive] {
@@ -42,7 +42,7 @@ au-card[data-au-interactive][data-au-variant='elevated']:hover .au-card__contain
 }
 
 au-card[data-au-interactive]:focus-within .au-card__container {
-  box-shadow: var(--au-chrome-shadow-focus);
+  box-shadow: var(--au-focus-inset);
 }
 
 au-card[data-au-variant='outlined'] .au-card__container {

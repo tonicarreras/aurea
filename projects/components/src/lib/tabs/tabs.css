@@ -120,8 +120,8 @@ au-tabs[data-au-variant='contained'] .au-tabs__list {
 }
 
 .au-tabs__tab--from-tab:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
   border-radius: var(--au-radius-field);
 }
 
@@ -210,8 +210,8 @@ au-tabs[data-au-variant='contained'] .au-tabs__tab--selected::after {
 }
 
 .au-tabs__panel--active:focus-visible {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 4px;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset-loose);
   border-radius: var(--au-radius-field);
 }
 

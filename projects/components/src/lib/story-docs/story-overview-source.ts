@@ -1118,7 +1118,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: [
-        'Visible focus ring (`--au-shadow-focus-ring`) on keyboard focus.',
+        'Visible focus ring (`--au-focus-inset` / `--au-focus-tab`) on keyboard focus.',
         'External links open in a new browsing context with `noopener`.',
       ],
       keyboard: ['Enter activates the native link; Tab follows document order.'],
@@ -2455,7 +2455,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: [
-        'Anillo de foco visible (`--au-shadow-focus-ring`) con teclado.',
+        'Anillo de foco visible (`--au-focus-inset` / `--au-focus-tab`) con teclado.',
         'Enlaces externos abren contexto nuevo con `noopener`.',
       ],
       keyboard: ['Enter activa el enlace nativo; Tab sigue el orden del documento.'],

@@ -7,7 +7,7 @@ au-dialog {
   --au-dialog-radius: var(--au-radius-modal);
   --au-dialog-bg: var(--au-color-surface-raised);
   --au-dialog-border: var(--au-chrome-border);
-  --au-dialog-shadow: var(--au-shadow-overlay);
+  --au-dialog-shadow: var(--au-elevation-overlay);
   --au-dialog-padding: var(--au-space-6);
   --au-dialog-gap: var(--au-space-5);
   --au-dialog-max-width-sm: 24rem;
@@ -136,7 +136,7 @@ au-dialog .au-dialog__close:hover {
 au-dialog .au-dialog__close:focus-visible {
   outline: none;
   border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 au-dialog .au-dialog__body {

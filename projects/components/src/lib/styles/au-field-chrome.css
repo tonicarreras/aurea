@@ -154,7 +154,7 @@ au-autocomplete {
   border: var(--au-chrome-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-chrome-shadow);
+  box-shadow: var(--au-elevation-flat);
   transition: var(--au-transition-control);
 }
 
@@ -214,7 +214,7 @@ au-autocomplete {
   .au-autocomplete__control-row
 ):focus-within {
   border-color: var(--au-chrome-border-color);
-  box-shadow: var(--au-chrome-shadow-focus);
+  box-shadow: var(--au-focus-inset);
 }
 
 :is(
@@ -230,7 +230,7 @@ au-autocomplete {
 ) {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-chrome-shadow-focus-error);
+  box-shadow: var(--au-focus-inset-error);
 }
 
 /* Tab-only focus → outward outline (matches au-button --from-tab) */
@@ -248,8 +248,8 @@ au-autocomplete {
   box-shadow: none;
   background: var(--au-color-surface-raised);
   border-color: var(--au-chrome-border-color);
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
 }
 
 :is(
@@ -278,8 +278,8 @@ au-autocomplete {
   border-color: var(--au-color-form-error);
   background: var(--au-color-surface-raised);
   box-shadow: none;
-  outline: 2px solid var(--au-color-form-error);
-  outline-offset: 2px;
+  outline: var(--au-focus-tab-error);
+  outline-offset: var(--au-focus-tab-offset);
 }
 
 /* Disabled */

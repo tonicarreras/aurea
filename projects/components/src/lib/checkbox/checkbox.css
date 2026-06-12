@@ -64,7 +64,7 @@
   border: var(--au-chrome-border);
   border-radius: var(--au-radius-field);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-chrome-shadow);
+  box-shadow: var(--au-elevation-flat);
   cursor: pointer;
   transition:
     border-color var(--au-duration-short) var(--au-ease-in-out),
@@ -154,15 +154,15 @@
 .au-checkbox__wrapper:focus-within:not(.au-checkbox__wrapper--from-tab)
   .au-checkbox__element:not(:disabled) {
   border-color: var(--au-chrome-border-color);
-  box-shadow: var(--au-chrome-shadow-focus);
+  box-shadow: var(--au-focus-inset);
 }
 
 /* Outer ring on Tab focus */
 .au-checkbox__wrapper--from-tab:focus-within .au-checkbox__element:not(:disabled) {
   border-color: var(--au-color-form-border);
   box-shadow: none;
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
 }
 
 /* Remove default focus on input itself — wrapper handles it */
@@ -244,12 +244,12 @@
 
 .au-checkbox__wrapper--invalid .au-checkbox__element:not(:disabled) {
   border-color: var(--au-color-form-error);
-  box-shadow: 0 0 0 1px var(--au-color-form-error);
+  box-shadow: var(--au-focus-inset-error);
 }
 
 .au-checkbox__wrapper--invalid .au-checkbox__element:checked:not(:disabled),
 .au-checkbox__wrapper--invalid .au-checkbox__element:indeterminate:not(:disabled) {
-  box-shadow: 0 0 0 2px var(--au-color-form-error);
+  box-shadow: var(--au-focus-inset-error);
 }
 
 .au-checkbox .au-field-error {

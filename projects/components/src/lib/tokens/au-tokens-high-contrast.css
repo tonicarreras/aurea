@@ -37,9 +37,6 @@
   --au-chrome-border: 2px solid var(--au-color-border-default);
   --au-chrome-border-color: var(--au-color-border-default);
   --au-chrome-border-color-hover: var(--au-color-border-strong);
-  --au-chrome-shadow: none;
-  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
-  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
   /* Actions & links */
   --au-color-action-primary: #0000ee;
   --au-color-action-primary-hover: #0000cc;
@@ -115,7 +112,6 @@
   --au-color-date-picker-icon: #333333;
   --au-color-date-picker-icon-hover: #000000;
   --au-color-date-picker-icon-active: #0000ee;
-  --au-shadow-field-inset: inset 0 0 0 2px #000000;
   --au-shadow-hairline: none;
   --au-shadow-control: none;
   --au-shadow-raised: none;
@@ -129,6 +125,27 @@
   --au-shadow-focus-control-error: 0 0 0 3px var(--au-color-form-error);
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  /* Elevation roles */
+  --au-elevation-tactile: var(--au-shadow-button);
+  --au-elevation-tactile-primary: var(--au-shadow-button-primary);
+  --au-elevation-raised: var(--au-shadow-raised);
+  --au-elevation-float: var(--au-shadow-float);
+  --au-elevation-floating: var(--au-shadow-floating);
+  --au-elevation-overlay: var(--au-shadow-overlay);
+  /* Focus roles — HC uses thicker rings via --au-focus-ring-width + focus-control */
+  --au-focus-inset: var(--au-shadow-focus-control);
+  --au-focus-inset-error: var(--au-shadow-focus-control-error);
+  --au-focus-tactile: var(--au-shadow-focus-control);
+  --au-focus-tactile-error: var(--au-shadow-focus-control-error);
+  --au-focus-tab: var(--au-focus-tab-width) solid var(--au-color-focus-ring);
+  --au-focus-tab-error: var(--au-focus-tab-width) solid var(--au-color-form-error);
+  /* Legacy aliases */
+  --au-chrome-shadow: var(--au-elevation-tactile);
+  --au-chrome-shadow-focus: var(--au-focus-tactile);
+  --au-chrome-shadow-focus-error: var(--au-focus-tactile-error);
+  --au-field-shadow: var(--au-elevation-flat);
+  --au-field-shadow-focus: var(--au-focus-inset);
+  --au-field-shadow-focus-error: var(--au-focus-inset-error);
 }
 
 [data-au-theme='high-contrast'] .au-floating-panel {
@@ -181,9 +198,6 @@
   --au-chrome-border: 2px solid var(--au-color-border-default);
   --au-chrome-border-color: var(--au-color-border-default);
   --au-chrome-border-color-hover: var(--au-color-border-strong);
-  --au-chrome-shadow: none;
-  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
-  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
   /* Actions & links */
   --au-color-action-primary: #00ffff;
   --au-color-action-primary-hover: #80ffff;
@@ -259,7 +273,6 @@
   --au-color-date-picker-icon: #e0e0e0;
   --au-color-date-picker-icon-hover: #ffffff;
   --au-color-date-picker-icon-active: #00ffff;
-  --au-shadow-field-inset: inset 0 0 0 2px #ffffff;
   --au-shadow-hairline: none;
   --au-shadow-control: none;
   --au-shadow-raised: none;
@@ -273,6 +286,27 @@
   --au-shadow-focus-control-error: 0 0 0 3px var(--au-color-form-error);
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  /* Elevation roles */
+  --au-elevation-tactile: var(--au-shadow-button);
+  --au-elevation-tactile-primary: var(--au-shadow-button-primary);
+  --au-elevation-raised: var(--au-shadow-raised);
+  --au-elevation-float: var(--au-shadow-float);
+  --au-elevation-floating: var(--au-shadow-floating);
+  --au-elevation-overlay: var(--au-shadow-overlay);
+  /* Focus roles */
+  --au-focus-inset: var(--au-shadow-focus-control);
+  --au-focus-inset-error: var(--au-shadow-focus-control-error);
+  --au-focus-tactile: var(--au-shadow-focus-control);
+  --au-focus-tactile-error: var(--au-shadow-focus-control-error);
+  --au-focus-tab: var(--au-focus-tab-width) solid var(--au-color-focus-ring);
+  --au-focus-tab-error: var(--au-focus-tab-width) solid var(--au-color-form-error);
+  /* Legacy aliases */
+  --au-chrome-shadow: var(--au-elevation-tactile);
+  --au-chrome-shadow-focus: var(--au-focus-tactile);
+  --au-chrome-shadow-focus-error: var(--au-focus-tactile-error);
+  --au-field-shadow: var(--au-elevation-flat);
+  --au-field-shadow-focus: var(--au-focus-inset);
+  --au-field-shadow-focus-error: var(--au-focus-inset-error);
 }
 
 [data-au-theme='high-contrast-dark'] .au-floating-panel {

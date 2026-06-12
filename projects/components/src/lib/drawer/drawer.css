@@ -142,7 +142,7 @@ au-drawer .au-drawer__close:hover {
 au-drawer .au-drawer__close:focus-visible {
   outline: none;
   border-color: var(--au-color-focus-ring);
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 au-drawer .au-drawer__body {

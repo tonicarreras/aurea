@@ -46,7 +46,7 @@ au-accordion button.au-accordion__trigger:hover:not(:disabled) {
 
 au-accordion button.au-accordion__trigger:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
   z-index: 1;
 }
 

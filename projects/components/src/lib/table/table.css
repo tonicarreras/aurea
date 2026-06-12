@@ -36,7 +36,7 @@ au-table .au-table__shell {
   border: var(--au-chrome-border);
   border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-chrome-shadow);
+  box-shadow: var(--au-elevation-flat);
   overflow: hidden;
 }
 
@@ -172,7 +172,7 @@ au-table .au-table__header-cell--sorted .au-table__sort-icon {
 
 au-table .au-table__sort-btn:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 au-table .au-table__sort-btn au-icon {

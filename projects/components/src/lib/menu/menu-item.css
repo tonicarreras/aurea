@@ -28,7 +28,7 @@
 
 .au-menu-item__btn:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 .au-menu-item__btn:disabled {

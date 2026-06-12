@@ -44,7 +44,7 @@
   background: var(--au-color-select-menu-bg);
   color: var(--au-color-select-menu-text);
   font-family: var(--au-font-sans);
-  box-shadow: var(--au-shadow-overlay);
+  box-shadow: var(--au-elevation-overlay);
 }
 
 /* Portaled to document.body (see overlay/field-listbox-overlay.ts) — top/width set in JS */
