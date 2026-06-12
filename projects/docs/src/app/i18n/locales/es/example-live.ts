@@ -107,11 +107,13 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     emailErrorPlaceholder: 'correo',
   },
   inputDate: {
-    basicLabel: 'Fecha de entrega',
+    basicLabel: 'Fecha de inicio',
     errorLabel: 'Fecha de entrega',
     errorMessage: 'Selecciona una fecha válida.',
     hintLabel: 'Fecha de entrega',
-    hint: 'Solo entregas en 2026.',
+    hint: 'Opcional — déjalo vacío para la primera franja disponible.',
+    rangeLabel: 'Fecha de entrega',
+    rangeHint: 'Solo entregas en 2026.',
   },
   inputTime: {
     basicLabel: 'Hora de inicio',

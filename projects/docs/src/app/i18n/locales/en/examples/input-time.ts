@@ -14,7 +14,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'With bounds',
-    description: 'Use `minTime` and `maxTime` (`HH:mm`) for native `min`/`max`.',
+    description: 'Use minTime and maxTime (HH:mm) for native min and max attributes.',
     demoComponent: ExampleInputTimeBoundsDemo,
     code: `<au-form-field label="Booking time" hint="Business hours only.">
   <au-input-time minTime="08:00" maxTime="20:00" />

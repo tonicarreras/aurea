@@ -96,12 +96,30 @@ export class AuInputTime implements FormValueControl<string | null> {
     if (this.disabled() || this.readOnly()) {
       return;
     }
-    const raw = (event.target as HTMLInputElement).value;
+    const input = event.target as HTMLInputElement;
+    const raw = input.value;
     if (raw === '') {
       this.value.set(null);
       return;
     }
+    if (!this.isWithinTimeBounds(raw)) {
+      input.value = this.inputDisplay();
+      return;
+    }
     this.value.set(raw);
+  }
+
+  /** `HH:mm` (24h) compares lexicographically when bounds use the same format. */
+  private isWithinTimeBounds(time: string): boolean {
+    const min = this.minTime();
+    const max = this.maxTime();
+    if (min && time < min) {
+      return false;
+    }
+    if (max && time > max) {
+      return false;
+    }
+    return true;
   }
 
   onBlurHost(): void {

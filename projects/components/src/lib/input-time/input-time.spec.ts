@@ -142,6 +142,40 @@ describe('AuInputTime', () => {
     expect(el.getAttribute('max')).toBe('20:00');
   });
 
+  it('rejects input outside minTime and maxTime', () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minTime = '08:00';
+      f.componentInstance.maxTime = '20:00';
+      f.componentInstance.value = '12:00';
+    });
+    fix.detectChanges();
+    const el = queryInput(fix);
+    el.value = '07:30';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(CONTROL(fix).value()).toBe('12:00');
+    expect(el.value).toBe('12:00');
+
+    el.value = '21:00';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(CONTROL(fix).value()).toBe('12:00');
+    expect(el.value).toBe('12:00');
+  });
+
+  it('accepts input within minTime and maxTime', () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minTime = '08:00';
+      f.componentInstance.maxTime = '20:00';
+    });
+    fix.detectChanges();
+    const el = queryInput(fix);
+    el.value = '14:30';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(CONTROL(fix).value()).toBe('14:30');
+  });
+
   it('shows error and aria-invalid', () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });

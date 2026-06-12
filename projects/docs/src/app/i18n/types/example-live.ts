@@ -109,6 +109,8 @@ export interface ExampleLiveMessages {
     errorMessage: string;
     hintLabel: string;
     hint: string;
+    rangeLabel: string;
+    rangeHint: string;
   };
   inputTime: {
     basicLabel: string;

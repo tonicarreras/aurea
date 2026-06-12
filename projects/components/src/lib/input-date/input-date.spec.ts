@@ -140,6 +140,42 @@ describe('AuInputDate', () => {
     const el = queryInput(fix);
     expect(el.getAttribute('min')).toBe('2026-01-01');
     expect(el.getAttribute('max')).toBe('2026-12-31');
+    expect(el.min).toBe('2026-01-01');
+    expect(el.max).toBe('2026-12-31');
+  });
+
+  it('rejects input outside minDate and maxDate', () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minDate = '2026-01-01';
+      f.componentInstance.maxDate = '2026-12-31';
+      f.componentInstance.value = '2026-06-15';
+    });
+    fix.detectChanges();
+    const el = queryInput(fix);
+    el.value = '2025-12-31';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(CONTROL(fix).value()).toBe('2026-06-15');
+    expect(el.value).toBe('2026-06-15');
+
+    el.value = '2027-01-01';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(CONTROL(fix).value()).toBe('2026-06-15');
+    expect(el.value).toBe('2026-06-15');
+  });
+
+  it('accepts input within minDate and maxDate', () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minDate = '2026-01-01';
+      f.componentInstance.maxDate = '2026-12-31';
+    });
+    fix.detectChanges();
+    const el = queryInput(fix);
+    el.value = '2026-03-20';
+    el.dispatchEvent(new Event('input'));
+    fix.detectChanges();
+    expect(CONTROL(fix).value()).toBe('2026-03-20');
   });
 
   it('shows error and aria-invalid', () => {
@@ -275,6 +311,21 @@ describe('AuInputDate', () => {
     expect(preventDefault).toHaveBeenCalled();
     expect(stopPropagation).toHaveBeenCalled();
     expect(showPicker).toHaveBeenCalledOnce();
+  });
+
+  it('onPickerIconClick opens bounded list instead of native picker when min/max set', () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minDate = '2026-01-01';
+      f.componentInstance.maxDate = '2026-12-31';
+    });
+    fix.detectChanges();
+    const input = queryInput(fix);
+    const showPicker = vi.fn();
+    input.showPicker = showPicker;
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    fix.detectChanges();
+    expect(showPicker).not.toHaveBeenCalled();
+    expect(fix.debugElement.query(By.css('.au-field-bounded-picker'))).toBeTruthy();
   });
 
   it('onPickerIconClick is no-op when disabled or readOnly', () => {

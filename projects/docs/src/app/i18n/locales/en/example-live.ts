@@ -107,7 +107,9 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     errorLabel: 'Delivery date',
     errorMessage: 'Select a valid date.',
     hintLabel: 'Delivery date',
-    hint: 'Deliveries in 2026 only.',
+    hint: 'Optional — leave blank for the earliest slot.',
+    rangeLabel: 'Delivery date',
+    rangeHint: 'Deliveries in 2026 only.',
   },
   inputTime: {
     basicLabel: 'Start time',

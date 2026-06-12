@@ -137,6 +137,15 @@
 }
 
 /* Chromium / Safari: invisible hit target over the decorative icon */
+:host([data-au-bounded-picker]) .au-input-date__icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+:host([data-au-bounded-picker]) .au-input-date__input::-webkit-calendar-picker-indicator {
+  pointer-events: none;
+}
+
 .au-input-date__input::-webkit-calendar-picker-indicator {
   position: absolute;
   inset-inline-end: 0;

@@ -1,4 +1,5 @@
 <div
+  #controlRow
   class="au-input-date__control-row"
   [class.au-input-date__control-row--from-tab]="fieldFocusByTab()"
   (focusin)="onControlRowFocusin()"
@@ -10,9 +11,6 @@
     type="date"
     [id]="controlId()"
     [attr.name]="name() || null"
-    [value]="inputDisplay()"
-    [attr.min]="minDate() ?? null"
-    [attr.max]="maxDate() ?? null"
     [attr.placeholder]="placeholder() || null"
     [attr.autocomplete]="autocomplete() ?? null"
     [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
@@ -22,7 +20,9 @@
     [disabled]="disabled()"
     [readOnly]="readOnly()"
     [attr.required]="required() ? true : null"
+    (click)="onNativeInputClick($event)"
     (input)="onInput($event)"
+    (change)="onChange($event)"
     (blur)="onBlurHost()"
   />
 
@@ -34,3 +34,15 @@
     <au-icon name="calendar" />
   </span>
 </div>
+
+@if (useBoundedPicker()) {
+  <au-internal-temporal-picker-panel
+    [open]="pickerOpen()"
+    [options]="pickerOptions()"
+    [selected]="value()"
+    [anchor]="controlRowRef()?.nativeElement ?? null"
+    ariaLabel="Choose a date"
+    (pick)="onPickerPick($event)"
+    (dismiss)="closePicker()"
+  />
+}

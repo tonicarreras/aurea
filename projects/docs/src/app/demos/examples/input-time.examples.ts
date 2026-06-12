@@ -26,12 +26,14 @@ export class ExampleInputTimeBasicDemo {
       [hint]="t().boundsHint"
     >
       <au-input-time
-        minTime="08:00"
-        maxTime="20:00"
+        [minTime]="boundsMin"
+        [maxTime]="boundsMax"
       />
     </au-form-field>
   `,
 })
 export class ExampleInputTimeBoundsDemo {
   readonly t = docsExampleLive('inputTime');
+  readonly boundsMin = '08:00';
+  readonly boundsMax = '20:00';
 }
