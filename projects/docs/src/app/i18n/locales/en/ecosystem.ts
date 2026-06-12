@@ -6,7 +6,19 @@ export const ECOSYSTEM_EN: EcosystemMessages = {
     lead: 'Matrix synced with the component catalog. Levels match the badges on each docs page.',
     legend:
       'Stable = production-ready · Beta = usable with documented edge cases · Experimental = may change without full deprecation cycle.',
-    columns: { component: 'Component', level: 'Level', since: 'Since' },
+    columns: { component: 'Component', level: 'Level', since: 'Since', note: 'Note' },
+    notes: {
+      autocomplete: 'Listbox overlay; test strictSelection in your flows.',
+      'input-date': 'Native date picker styling varies by browser.',
+      'input-time': 'Native time picker styling varies by browser.',
+      'input-password':
+        'Dedicated password field with reveal toggle; localize revealLabelShow/Hide.',
+      'button-group': 'Layout wrapper for projected au-button; requires ariaLabel or ariaLabelledBy.',
+      'description-list': 'Semantic dl with au-description-item or native dt/dd.',
+      'tag-input': 'Multi-value tags; Enter or comma to add; localize removeTagLabel.',
+      menu: 'Portaled panel; roving tabindex + typeahead (1.2.0).',
+      table: 'Shell + sort header; no built-in data source — bring your own rows.',
+    },
     rows: [],
   },
   designTokens: {

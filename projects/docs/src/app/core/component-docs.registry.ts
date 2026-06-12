@@ -612,7 +612,7 @@ options: AuSelectOption[] = [
     slug: 'link',
     title: 'Link',
     exportName: 'AuLink',
-    selector: 'a[auLink]',
+    selector: 'a[auLink], au-link',
     summary: 'Enlace inline con tokens semánticos.',
     demoComponent: LinkDemo,
     snippet: `import { AuLink } from '@aurea-design-system/components';

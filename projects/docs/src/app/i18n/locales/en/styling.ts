@@ -219,6 +219,17 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-focus-ring', description: 'Focus on the `type="date"` input.' },
     { token: '--au-color-form-error', description: 'Error border and message.' },
   ],
+  'input-time': [
+    { token: '--au-color-date-picker-accent', description: 'Native time segment accent (WebKit).' },
+    { token: '--au-color-date-picker-edit-highlight', description: 'Focused segment background.' },
+    { token: '--au-color-date-picker-icon', description: 'Clock icon in the control row.' },
+    { token: '--au-color-date-picker-icon-hover', description: 'Icon on hover / focus-within.' },
+    { token: '--au-color-form-text', description: 'Selected time text and segments.' },
+    { token: '--au-color-surface-raised', description: 'Field background (via field chrome).' },
+    { token: '--au-radius-field', description: 'Control corners and segment radius.' },
+    { token: '--au-size-field-h-md', description: 'Height aligned with other fields per `size`.' },
+    { token: '--au-color-form-error', description: 'Error border and message.' },
+  ],
   'file-upload': [
     { token: '--au-color-border-subtle', description: 'Dropzone dashed border.' },
     { token: '--au-color-surface-sunken', description: 'Dropzone background.' },

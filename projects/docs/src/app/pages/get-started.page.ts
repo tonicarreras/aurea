@@ -328,7 +328,7 @@ export class GetStartedPage {
         title: s.requirements.title,
         intro: s.requirements.intro,
         requirements: [
-          { name: 'Angular', version: '21.2+', href: 'https://angular.dev/' },
+          { name: 'Angular', version: '22.0+', href: 'https://angular.dev/' },
           { name: 'Node.js', version: '20.19+', href: 'https://nodejs.org/' },
         ],
       },

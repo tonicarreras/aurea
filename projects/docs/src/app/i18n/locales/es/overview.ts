@@ -1134,6 +1134,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     intro: [
       'Menú desplegable con panel en portal anclado a `auMenuTrigger`.',
       'Usa `[(open)]` para estado controlado; los ítems `au-menu-item` cierran al seleccionar.',
+      'Abierto, el scroll de rueda/touch en la página se bloquea sin ocultar la barra (`installPageScrollPrevention`); contenedores con scroll anidado siguen cerrando el panel.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -1163,9 +1164,16 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     ],
     keyboard: [
       'Disparador: Enter/Espacio alterna; Escape cierra.',
-      'Ítems: activación por clic; extiende con tabindex roving si añades patrones compuestos.',
+      'Ítems: flechas ciclan; Inicio/Fin saltan; typeahead por primera letra; Enter/Espacio activan.',
     ],
-    relatedExports: ['AuMenu', 'AuMenuItem', 'AuMenuTrigger', 'AU_MENU'],
+    relatedExports: [
+      'AuMenu',
+      'AuMenuItem',
+      'AuMenuTrigger',
+      'AU_MENU',
+      'installPageScrollPrevention',
+      'lockPageScroll / unlockPageScroll',
+    ],
   },
   popover: {
     intro: [

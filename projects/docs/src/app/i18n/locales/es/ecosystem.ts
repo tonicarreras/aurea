@@ -6,7 +6,20 @@ export const ECOSYSTEM_ES: EcosystemMessages = {
     lead: 'Matriz alineada con el catálogo. Los niveles coinciden con las badges de cada página.',
     legend:
       'Estable = listo para producción · Beta = usable con casos límite documentados · Experimental = puede cambiar sin deprecación completa.',
-    columns: { component: 'Componente', level: 'Nivel', since: 'Desde' },
+    columns: { component: 'Componente', level: 'Nivel', since: 'Desde', note: 'Nota' },
+    notes: {
+      autocomplete: 'Overlay listbox; prueba strictSelection en tus flujos.',
+      'input-date': 'El estilo del selector de fecha nativo varía según el navegador.',
+      'input-time': 'El estilo del selector de hora nativo varía según el navegador.',
+      'input-password':
+        'Campo de contraseña con toggle de revelar; localiza revealLabelShow/Hide.',
+      'button-group':
+        'Contenedor de au-button proyectados; requiere ariaLabel o ariaLabelledBy.',
+      'description-list': 'dl semántico con au-description-item o dt/dd nativos.',
+      'tag-input': 'Etiquetas multi-valor; Enter o coma para añadir; localiza removeTagLabel.',
+      menu: 'Panel portaled; tabindex roving + typeahead (1.2.0).',
+      table: 'Shell + cabecera ordenable; sin data source integrada — aporta tus filas.',
+    },
     rows: [],
   },
   designTokens: {

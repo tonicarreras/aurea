@@ -1197,7 +1197,8 @@ export const STORY_OVERVIEW_SOURCE = {
     "menu": {
       "intro": [
         "Dropdown menu with a portaled panel anchored to `auMenuTrigger`.",
-        "Use `[(open)]` for controlled state; items are `au-menu-item` actions that close on select."
+        "Use `[(open)]` for controlled state; items are `au-menu-item` actions that close on select.",
+        "While open, wheel/touch scroll on the page is blocked without hiding the scrollbar (`installPageScrollPrevention`); nested scroll containers still dismiss the panel."
       ],
       "whenToUse": [
         "Row or toolbar actions that do not need a full dialog.",
@@ -1227,7 +1228,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "keyboard": [
         "Trigger: Enter/Space toggles; Escape closes.",
-        "Items: activate with click; extend with roving tabindex if you add composite patterns."
+        "Items: Arrow keys cycle; Home/End jump; typeahead by first character; Enter/Space activates."
       ]
     },
     "popover": {
@@ -2599,7 +2600,8 @@ export const STORY_OVERVIEW_SOURCE = {
     "menu": {
       "intro": [
         "Menú desplegable con panel en portal anclado a `auMenuTrigger`.",
-        "Usa `[(open)]` para estado controlado; los ítems `au-menu-item` cierran al seleccionar."
+        "Usa `[(open)]` para estado controlado; los ítems `au-menu-item` cierran al seleccionar.",
+        "Abierto, el scroll de rueda/touch en la página se bloquea sin ocultar la barra (`installPageScrollPrevention`); contenedores con scroll anidado siguen cerrando el panel."
       ],
       "whenToUse": [
         "Acciones de fila o barra que no requieren un diálogo completo.",
@@ -2629,7 +2631,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "keyboard": [
         "Disparador: Enter/Espacio alterna; Escape cierra.",
-        "Ítems: activación por clic; extiende con tabindex roving si añades patrones compuestos."
+        "Ítems: flechas ciclan; Inicio/Fin saltan; typeahead por primera letra; Enter/Espacio activan."
       ]
     },
     "popover": {

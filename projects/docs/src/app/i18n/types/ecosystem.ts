@@ -14,7 +14,9 @@ export interface EcosystemMessages {
     title: string;
     lead: string;
     legend: string;
-    columns: { component: string; level: string; since: string };
+    columns: { component: string; level: string; since: string; note: string };
+    /** Optional per-slug notes (sync with `component-maturity.ts`). */
+    notes: Partial<Record<string, string>>;
     rows: EcosystemMaturityRow[];
   };
   designTokens: {
