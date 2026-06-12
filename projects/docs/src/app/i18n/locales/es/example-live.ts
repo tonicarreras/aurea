@@ -160,6 +160,9 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     emailErrorLabel: 'Email',
     emailError: 'Introduce un correo válido.',
     emailErrorPlaceholder: 'correo',
+    sizeSmLabel: 'Pequeño',
+    sizeMdLabel: 'Mediano',
+    sizeLgLabel: 'Grande',
   },
   list: {
     chipsAria: 'Tecnologías seleccionadas',

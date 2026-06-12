@@ -39,6 +39,7 @@ export const MESSAGES_EN: DocsMessages = {
     lead: 'Open-source npm library (MIT): semantic CSS tokens, standalone components, and Angular signal forms. Install guide, component reference, and Storybook.',
     ctaDocs: 'Documentation',
     ctaStorybook: 'Storybook',
+    ctaCrudDemo: 'CRUD demo',
     overviewTitle: 'Principles',
     overviewAria: 'Design principles',
     principles: [
@@ -103,10 +104,15 @@ export const MESSAGES_EN: DocsMessages = {
         expand: 'Show ng add command',
       },
       nextGuides: {
-        title: 'Go deeper',
-        intro: 'See the adoption guide for signal forms — or open the',
-        adoptionLink: 'Adoption guide →',
-        crudDemoLink: 'CRUD reference demo →',
+        title: 'Next steps',
+        crudCardEyebrow: 'Showcase',
+        crudCardTitle: 'Reference CRUD demo',
+        crudCardLead:
+          'The fastest way to see Aurea in action: listing, editing, confirmations, and product patterns on one screen.',
+        crudCardCta: 'Open CRUD demo',
+        adoptionCardTitle: 'Adoption guide',
+        adoptionCardLead: 'Signal forms, accessibility, and conventions for integrating the system in your app.',
+        adoptionCardCta: 'Read the guide',
       },
     },
   },
@@ -181,6 +187,11 @@ export const MESSAGES_EN: DocsMessages = {
   componentsIndex: {
     title: 'Components',
     lead: 'Design system primitives. Each page includes a live preview, maturity badge, and import example.',
+    crudSpotlightEyebrow: 'Showcase',
+    crudSpotlightTitle: 'See them working together',
+    crudSpotlightLead:
+      'Open the CRUD demo: tables, forms, overlays, and feedback in a complete product flow before diving into each component.',
+    crudSpotlightCta: 'View CRUD demo',
     maturityLegend:
       'Maturity: stable = production-ready; beta = usable with noted edge cases; experimental = may change.',
     maturityStable: 'Stable',

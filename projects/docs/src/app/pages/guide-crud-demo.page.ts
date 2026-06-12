@@ -9,6 +9,8 @@ import { DocPage } from '../shared/doc-page';
   imports: [DocPage, DocsCrudDemo],
   template: `
     <docs-page
+      [hero]="true"
+      [eyebrow]="eco().crudDemo.frameTitle"
       [title]="eco().crudDemo.title"
       [lead]="eco().crudDemo.lead"
     >

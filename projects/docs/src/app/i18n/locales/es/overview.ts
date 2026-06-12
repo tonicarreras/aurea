@@ -590,7 +590,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   drawer: {
     intro: [
-      'Panel lateral sobre `<dialog>` nativo: entra desde `start` o `end`, con trampa de foco y bloqueo de scroll como `au-dialog`.',
+      'Panel lateral sobre `<dialog>` nativo: entra desde `start` o `end`, con trampa de foco; el scroll lo gestiona `showModal()`.',
       'Proyecta contenido y pie opcional con `[auDrawerFooter]`.',
     ],
     whenToUse: {

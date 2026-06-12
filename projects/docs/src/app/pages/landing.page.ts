@@ -23,15 +23,18 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         </h1>
         <p class="landing-hero__lead">{{ m().lead }}</p>
         <div class="landing-hero__cta">
+          <a [routerLink]="i18n.link(DOCS_ROUTES.guidesCrudDemo)">
+            <au-button variant="primary">{{ m().ctaCrudDemo }}</au-button>
+          </a>
           <a [routerLink]="i18n.link(DOCS_ROUTES.components)">
-            <au-button variant="primary">{{ m().ctaDocs }}</au-button>
+            <au-button variant="outline">{{ m().ctaDocs }}</au-button>
           </a>
           <a
             [href]="storybookUrl"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <au-button variant="outline">{{ m().ctaStorybook }}</au-button>
+            <au-button variant="ghost">{{ m().ctaStorybook }}</au-button>
           </a>
         </div>
       </section>

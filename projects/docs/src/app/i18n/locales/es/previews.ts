@@ -8,9 +8,17 @@ export const PREVIEWS_ES: PreviewMessages = {
     billing: 'Facturación',
     billingPanel: 'Gestiona métodos de pago.',
   },
-  badge: { accent: 'Nuevo', count: '3' },
+  badge: {
+    draft: 'Borrador',
+    accent: 'Nuevo',
+    success: 'Activo',
+    warning: 'Pendiente',
+    error: 'Error',
+  },
   avatar: {
     name: 'Jane Doe',
+    name2: 'Alex Kim',
+    role: 'Diseño de producto',
     alt: 'Retrato de Jane Doe',
     src: 'https://i.pravatar.cc/128?img=5',
   },
@@ -72,7 +80,12 @@ export const PREVIEWS_ES: PreviewMessages = {
     hint: 'Aparece en tu perfil y en el directorio.',
     placeholder: 'Tu nombre',
   },
-  link: { label: 'Tokens de diseño' },
+  link: {
+    label: 'tokens de diseño',
+    external: 'Documentación de Angular',
+    inlineBefore: 'Consulta la guía de',
+    inlineAfter: 'para mapear tokens semánticos en tu app.',
+  },
   list: { ariaLabel: 'Tecnologías seleccionadas' },
   menu: { trigger: 'Menú', edit: 'Editar', share: 'Compartir' },
   message: {

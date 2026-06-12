@@ -7,15 +7,17 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field
-      [label]="t().emailLabel"
-      [hint]="t().emailHint"
-    >
-      <au-input-text
-        type="email"
-        [placeholder]="t().emailPlaceholder"
-      />
-    </au-form-field>
+    <div class="docs-example-field">
+      <au-form-field
+        [label]="t().emailLabel"
+        [hint]="t().emailHint"
+      >
+        <au-input-text
+          type="email"
+          [placeholder]="t().emailPlaceholder"
+        />
+      </au-form-field>
+    </div>
   `,
 })
 export class ExampleInputTextBasicDemo {
@@ -27,12 +29,14 @@ export class ExampleInputTextBasicDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field
-      [label]="t().userLabel"
-      [hint]="t().userHint"
-    >
-      <au-input-text [placeholder]="t().userPlaceholder" />
-    </au-form-field>
+    <div class="docs-example-field">
+      <au-form-field
+        [label]="t().userLabel"
+        [hint]="t().userHint"
+      >
+        <au-input-text [placeholder]="t().userPlaceholder" />
+      </au-form-field>
+    </div>
   `,
 })
 export class ExampleInputTextHintDemo {
@@ -44,18 +48,48 @@ export class ExampleInputTextHintDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field
-      [label]="t().emailErrorLabel"
-      [errorMessage]="t().emailError"
-      [invalid]="true"
-    >
-      <au-input-text
-        type="email"
-        [placeholder]="t().emailErrorPlaceholder"
-      />
-    </au-form-field>
+    <div class="docs-example-field">
+      <au-form-field
+        [label]="t().emailErrorLabel"
+        [errorMessage]="t().emailError"
+        [invalid]="true"
+      >
+        <au-input-text
+          type="email"
+          [placeholder]="t().emailErrorPlaceholder"
+        />
+      </au-form-field>
+    </div>
   `,
 })
 export class ExampleInputTextErrorDemo {
+  readonly t = docsExampleLive('inputText');
+}
+
+@Component({
+  selector: 'docs-example-input-text-sizes',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuFormField, AuInputText],
+  template: `
+    <div class="docs-example-field docs-demo-stack">
+      <au-form-field [label]="t().sizeSmLabel">
+        <au-input-text
+          size="sm"
+          [placeholder]="t().userPlaceholder"
+        />
+      </au-form-field>
+      <au-form-field [label]="t().sizeMdLabel">
+        <au-input-text [placeholder]="t().userPlaceholder" />
+      </au-form-field>
+      <au-form-field [label]="t().sizeLgLabel">
+        <au-input-text
+          size="lg"
+          [placeholder]="t().userPlaceholder"
+        />
+      </au-form-field>
+    </div>
+  `,
+})
+export class ExampleInputTextSizesDemo {
   readonly t = docsExampleLive('inputText');
 }

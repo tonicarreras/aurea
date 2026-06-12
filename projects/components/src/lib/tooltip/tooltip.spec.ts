@@ -72,20 +72,45 @@ describe('AuTooltip', () => {
     expect(bubble()).toBeFalsy();
   });
 
-  it('shows on focus and hides on blur', async () => {
-    trigger().dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+  it('shows on keyboard focus and hides on blur', async () => {
+    const btn = trigger();
+    vi.spyOn(btn, 'matches').mockImplementation((selector) => selector === ':focus-visible');
+    btn.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
     expect(bubble()?.textContent?.trim()).toBe('Help text');
 
+    btn.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show on programmatic focus (e.g. after a modal closes)', async () => {
+    const btn = trigger();
+    vi.spyOn(btn, 'matches').mockReturnValue(false);
+    btn.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('hides immediately when focus moves into an open dialog', async () => {
+    await showTooltip();
+    const dialog = document.createElement('dialog');
+    dialog.setAttribute('open', '');
+    document.body.append(dialog);
     trigger().dispatchEvent(
-      new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
+      new FocusEvent('focusout', { bubbles: true, relatedTarget: dialog }),
     );
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
     expect(bubble()).toBeFalsy();
+    dialog.remove();
   });
 
   it('respects showDelay and hideDelay', async () => {
@@ -157,6 +182,7 @@ describe('AuTooltip', () => {
 
   it('does not hide when focus moves within the host', async () => {
     const host = trigger();
+    vi.spyOn(host, 'matches').mockImplementation((selector) => selector === ':focus-visible');
     host.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     fixture.detectChanges();
     await fixture.whenStable();

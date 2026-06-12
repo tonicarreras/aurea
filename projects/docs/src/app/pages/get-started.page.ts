@@ -78,13 +78,50 @@ export type GetStartedStep =
           </li>
         }
       </ol>
-      <p class="docs-get-started-next">
-        <strong>{{ i18n.messages().getStarted.steps.nextGuides.title }}</strong>
-        {{ i18n.messages().getStarted.steps.nextGuides.intro }}
-        <a [routerLink]="adoptionLink()">{{ adoptionLinkLabel() }}</a>
-        ·
-        <a [routerLink]="crudDemoLink()">{{ crudDemoLinkLabel() }}</a>
-      </p>
+      <section
+        class="docs-get-started-next"
+        aria-labelledby="docs-get-started-next-title"
+      >
+        <h2
+          id="docs-get-started-next-title"
+          class="docs-get-started-next__title"
+        >
+          {{ i18n.messages().getStarted.steps.nextGuides.title }}
+        </h2>
+        <div class="docs-get-started-next__grid">
+          <a
+            class="docs-get-started-next__card docs-get-started-next__card--featured"
+            [routerLink]="crudDemoLink()"
+          >
+            <span class="docs-get-started-next__eyebrow">{{
+              i18n.messages().getStarted.steps.nextGuides.crudCardEyebrow
+            }}</span>
+            <h3 class="docs-get-started-next__card-title">
+              {{ i18n.messages().getStarted.steps.nextGuides.crudCardTitle }}
+            </h3>
+            <p class="docs-get-started-next__card-lead">
+              {{ i18n.messages().getStarted.steps.nextGuides.crudCardLead }}
+            </p>
+            <span class="docs-get-started-next__card-cta">{{
+              i18n.messages().getStarted.steps.nextGuides.crudCardCta
+            }}</span>
+          </a>
+          <a
+            class="docs-get-started-next__card"
+            [routerLink]="adoptionLink()"
+          >
+            <h3 class="docs-get-started-next__card-title">
+              {{ i18n.messages().getStarted.steps.nextGuides.adoptionCardTitle }}
+            </h3>
+            <p class="docs-get-started-next__card-lead">
+              {{ i18n.messages().getStarted.steps.nextGuides.adoptionCardLead }}
+            </p>
+            <span class="docs-get-started-next__card-cta">{{
+              i18n.messages().getStarted.steps.nextGuides.adoptionCardCta
+            }}</span>
+          </a>
+        </div>
+      </section>
     </docs-page>
   `,
   styles: `
@@ -170,10 +207,86 @@ export type GetStartedStep =
 
     .docs-get-started-next {
       margin-top: var(--au-space-8);
-      max-width: 100%;
+    }
+
+    .docs-get-started-next__title {
+      margin: 0 0 var(--au-space-5);
+      font-size: var(--au-text-xl);
+      font-weight: var(--au-weight-semibold);
+    }
+
+    .docs-get-started-next__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--au-space-5);
+    }
+
+    .docs-get-started-next__card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--au-space-3);
+      min-height: 100%;
+      padding: var(--au-space-6);
+      border-radius: var(--au-radius-lg);
+      border: 1px solid var(--docs-border-fine);
+      background: var(--au-color-surface-raised);
+      text-decoration: none;
+      color: inherit;
+      transition:
+        transform var(--au-duration-default) var(--au-ease-emph),
+        border-color var(--au-duration-short) var(--au-ease-in-out),
+        box-shadow var(--au-duration-short) var(--au-ease-in-out);
+    }
+
+    .docs-get-started-next__card--featured {
+      border-color: color-mix(in srgb, var(--au-color-action-primary) 32%, transparent);
+      background-image: radial-gradient(
+        120% 90% at 0% 0%,
+        color-mix(in srgb, var(--au-color-action-primary) 10%, transparent),
+        transparent 58%
+      );
+    }
+
+    @media (hover: hover) {
+      .docs-get-started-next__card:hover {
+        transform: translateY(-2px);
+        border-color: var(--au-color-accent);
+        box-shadow: var(--docs-elevated-shadow);
+      }
+    }
+
+    .docs-get-started-next__eyebrow {
+      font-size: var(--au-text-xs);
+      font-weight: var(--au-weight-semibold);
+      letter-spacing: var(--au-tracking-caps);
+      text-transform: uppercase;
+      color: var(--au-color-action-primary);
+    }
+
+    .docs-get-started-next__card-title {
+      margin: 0;
+      font-size: var(--au-text-lg);
+      font-weight: var(--au-weight-semibold);
+    }
+
+    .docs-get-started-next__card-lead {
+      margin: 0;
+      flex: 1;
       font-size: var(--au-text-sm);
       line-height: var(--au-leading-relaxed);
       color: var(--au-color-text-secondary);
+    }
+
+    .docs-get-started-next__card-cta {
+      font-size: var(--au-text-sm);
+      font-weight: var(--au-weight-semibold);
+      color: var(--au-color-accent);
+    }
+
+    @media (max-width: 48rem) {
+      .docs-get-started-next__grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .docs-get-started-next a {
@@ -252,15 +365,7 @@ export class GetStartedPage {
     return this.i18n.link(DOCS_ROUTES.guidesAdoption);
   }
 
-  adoptionLinkLabel(): string {
-    return this.i18n.messages().getStarted.steps.nextGuides.adoptionLink;
-  }
-
   crudDemoLink(): string[] {
     return this.i18n.link(DOCS_ROUTES.guidesCrudDemo);
-  }
-
-  crudDemoLinkLabel(): string {
-    return this.i18n.messages().getStarted.steps.nextGuides.crudDemoLink;
   }
 }

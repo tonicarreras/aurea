@@ -55,16 +55,14 @@ describe('AuDialog', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('locks page scroll while open', () => {
+  it('does not mutate page scroll styles (native dialog handles scroll)', () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
-    expect(document.body.style.overflow).toBe('hidden');
-    expect(document.documentElement.style.overflow).toBe('hidden');
+    expect(document.body.style.position).not.toBe('fixed');
+    expect(document.body.style.overflow).not.toBe('hidden');
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
-    expect(document.body.style.overflow).toBe('');
-    expect(document.documentElement.style.overflow).toBe('');
   });
 
   it('renders with md size by default', () => {
@@ -586,19 +584,6 @@ describe('AuDialog', () => {
     const saved = inst.savedFocus;
     inst.openDialogElement(dialog);
     expect(inst.savedFocus).toBe(saved);
-  });
-
-  it('skips redundant scroll lock acquisition', () => {
-    const fix = TestBed.createComponent(AuDialog);
-    fix.detectChanges();
-    const inst = fix.componentInstance as unknown as {
-      scrollLocked: boolean;
-      acquireScrollLock: () => void;
-    };
-    document.body.style.overflow = 'auto';
-    inst.scrollLocked = true;
-    inst.acquireScrollLock();
-    expect(document.body.style.overflow).toBe('auto');
   });
 
   it('savedFocus is null when activeElement is not an HTMLElement', () => {

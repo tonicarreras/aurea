@@ -43,14 +43,14 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('locks page scroll while open', () => {
+  it('does not mutate page scroll styles (native dialog handles scroll)', () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body.style.position).not.toBe('fixed');
+    expect(document.body.style.overflow).not.toBe('hidden');
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
-    expect(document.body.style.overflow).toBe('');
   });
 
   it('applies position and size on host', () => {
@@ -177,27 +177,6 @@ describe('AuDrawer', () => {
     fix.detectChanges();
     const drawer = fix.debugElement.query(By.directive(AuDrawer)).componentInstance as AuDrawer;
     expect(drawer.hasFooter()).toBe(true);
-  });
-
-  it('releases scroll lock on destroy while open', () => {
-    const fix = TestBed.createComponent(AuDrawer);
-    fix.componentRef.setInput('open', true);
-    fix.detectChanges();
-    fix.destroy();
-    expect(document.body.style.overflow).toBe('');
-  });
-
-  it('skips redundant scroll lock acquisition', () => {
-    const fix = TestBed.createComponent(AuDrawer);
-    fix.detectChanges();
-    const inst = fix.componentInstance as unknown as {
-      scrollLocked: boolean;
-      acquireScrollLock: () => void;
-    };
-    document.body.style.overflow = 'auto';
-    inst.scrollLocked = true;
-    inst.acquireScrollLock();
-    expect(document.body.style.overflow).toBe('auto');
   });
 
   it('polyfills close when close is not a function on the instance', () => {

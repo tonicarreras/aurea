@@ -588,7 +588,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   drawer: {
     intro: [
-      'Side panel on native `<dialog>`: slides from `start` or `end`, with the same focus trap and scroll lock as `au-dialog`.',
+      'Side panel on native `<dialog>`: slides from `start` or `end`, with the same focus trap; scroll is handled by `showModal()`.',
       'Project body content and optional footer actions with `[auDrawerFooter]`.',
     ],
     whenToUse: {

@@ -21,6 +21,7 @@ import type { AuTooltipPlacement } from '../overlay/tooltip-position';
  * - Apply to the **focusable trigger** (button, link, icon control).
  * - **Accessibility:** `role="tooltip"` + `aria-describedby` on the host while open.
  * - **Pointer:** show delay / hide delay avoid flicker when crossing the trigger.
+ * - **Focus:** shows on keyboard focus (`:focus-visible`), not on programmatic `.focus()` (e.g. after a modal closes).
  * - **Portal:** bubble is fixed on `document.body` so it is not clipped by overflow.
  *
  * @example
@@ -64,6 +65,7 @@ export class AuTooltip {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly visible = signal(false);
+  private pointerInside = false;
   private showTimer: ReturnType<typeof setTimeout> | undefined;
   private hideTimer: ReturnType<typeof setTimeout> | undefined;
   private bubble: HTMLElement | null = null;
@@ -93,14 +95,19 @@ export class AuTooltip {
   });
 
   protected onPointerEnter(): void {
+    this.pointerInside = true;
     this.scheduleShow();
   }
 
   protected onPointerLeave(): void {
+    this.pointerInside = false;
     this.scheduleHide();
   }
 
   protected onFocusIn(): void {
+    if (!this.shouldShowFromFocus()) {
+      return;
+    }
     this.scheduleShow();
   }
 
@@ -108,6 +115,10 @@ export class AuTooltip {
     const next = event.relatedTarget;
     const anchor = this.host.nativeElement as HTMLElement;
     if (next instanceof Node && anchor.contains(next)) {
+      return;
+    }
+    if (next instanceof Element && next.closest('dialog[open]')) {
+      this.dismissImmediately();
       return;
     }
     this.scheduleHide();
@@ -121,6 +132,14 @@ export class AuTooltip {
     this.visible.set(false);
   }
 
+  private shouldShowFromFocus(): boolean {
+    return (this.host.nativeElement as HTMLElement).matches(':focus-visible');
+  }
+
+  private shouldShow(): boolean {
+    return this.pointerInside || this.shouldShowFromFocus();
+  }
+
   private scheduleShow(): void {
     if (this.auTooltipDisabled() || !this.hasText()) {
       return;
@@ -129,10 +148,21 @@ export class AuTooltip {
     this.clearShowTimer();
     const delay = this.auTooltipShowDelay();
     if (delay <= 0) {
-      this.visible.set(true);
+      if (this.shouldShow()) {
+        this.visible.set(true);
+      }
       return;
     }
-    this.showTimer = setTimeout(() => this.visible.set(true), delay);
+    this.showTimer = setTimeout(() => {
+      if (this.shouldShow()) {
+        this.visible.set(true);
+      }
+    }, delay);
+  }
+
+  private dismissImmediately(): void {
+    this.clearTimers();
+    this.visible.set(false);
   }
 
   private scheduleHide(): void {

@@ -8,9 +8,17 @@ export const PREVIEWS_EN: PreviewMessages = {
     billing: 'Billing',
     billingPanel: 'Manage payment methods.',
   },
-  badge: { accent: 'New', count: '3' },
+  badge: {
+    draft: 'Draft',
+    accent: 'New',
+    success: 'Active',
+    warning: 'Pending',
+    error: 'Error',
+  },
   avatar: {
     name: 'Jane Doe',
+    name2: 'Alex Kim',
+    role: 'Product design',
     alt: 'Portrait of Jane Doe',
     src: 'https://i.pravatar.cc/128?img=5',
   },
@@ -72,7 +80,12 @@ export const PREVIEWS_EN: PreviewMessages = {
     hint: 'Shown on your profile and in the directory.',
     placeholder: 'Your name',
   },
-  link: { label: 'Design tokens' },
+  link: {
+    label: 'design tokens',
+    external: 'Angular documentation',
+    inlineBefore: 'See the',
+    inlineAfter: 'guide to map semantic tokens in your app.',
+  },
   list: { ariaLabel: 'Selected technologies' },
   menu: { trigger: 'Menu', edit: 'Edit', share: 'Share' },
   message: {

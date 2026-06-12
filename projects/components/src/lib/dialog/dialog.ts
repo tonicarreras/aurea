@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
-  DestroyRef,
   ElementRef,
   ViewEncapsulation,
   afterRenderEffect,
@@ -14,7 +13,6 @@ import {
   signal,
 } from '@angular/core';
 import { AuIcon } from '../icon/icon';
-import { lockPageScroll, unlockPageScroll } from '../overlay/page-scroll-lock';
 import { AuDialogFooter } from './dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
 
@@ -56,8 +54,6 @@ export class AuDialog {
   private static nextTitleId = 0;
 
   private readonly host = inject(ElementRef<HTMLElement>);
-  private readonly destroyRef = inject(DestroyRef);
-  private scrollLocked = false;
 
   /** Controls visibility; two-way binding with `[(open)]`. */
   readonly open = model<boolean>(false);
@@ -101,10 +97,6 @@ export class AuDialog {
     this.applyOpenStateToNativeDialog();
   });
 
-  constructor() {
-    this.destroyRef.onDestroy(() => this.releaseScrollLock());
-  }
-
   private nativeDialog(): HTMLDialogElement | null {
     const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
     return el instanceof HTMLDialogElement ? el : null;
@@ -138,7 +130,6 @@ export class AuDialog {
       dialog.setAttribute('open', '');
     }
     if (!wasDisplayed) {
-      this.acquireScrollLock();
       queueMicrotask(() => {
         if (!this.open()) {
           return;
@@ -152,32 +143,12 @@ export class AuDialog {
   }
 
   private closeDialogElement(dialog: HTMLDialogElement): void {
-    const wasDisplayed = this.isDialogDisplayed(dialog);
     if (typeof dialog.close === 'function') {
       dialog.close();
     } else if (dialog.hasAttribute('open')) {
       dialog.removeAttribute('open');
       dialog.dispatchEvent(new Event('close'));
     }
-    if (wasDisplayed) {
-      this.releaseScrollLock();
-    }
-  }
-
-  private acquireScrollLock(): void {
-    if (this.scrollLocked) {
-      return;
-    }
-    lockPageScroll();
-    this.scrollLocked = true;
-  }
-
-  private releaseScrollLock(): void {
-    if (!this.scrollLocked) {
-      return;
-    }
-    unlockPageScroll();
-    this.scrollLocked = false;
   }
 
   private isDialogDisplayed(dialog: HTMLDialogElement): boolean {

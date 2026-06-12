@@ -1,6 +1,6 @@
 /**
  * Blocks page scroll via wheel/touch while keeping the scrollbar visible.
- * For non-modal overlays (menus, popovers). Modals should use {@link lockPageScroll}.
+ * For non-modal overlays (menus, popovers). Modals use native `<dialog showModal()>` scroll blocking.
  */
 export function installPageScrollPrevention(
   document: Document,

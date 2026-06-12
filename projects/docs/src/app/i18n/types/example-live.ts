@@ -157,6 +157,9 @@ export interface ExampleLiveMessages {
     emailErrorLabel: string;
     emailError: string;
     emailErrorPlaceholder: string;
+    sizeSmLabel: string;
+    sizeMdLabel: string;
+    sizeLgLabel: string;
   };
   list: {
     chipsAria: string;

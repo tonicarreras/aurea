@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
-  DestroyRef,
   ElementRef,
   ViewEncapsulation,
   afterRenderEffect,
@@ -14,7 +13,6 @@ import {
   signal,
 } from '@angular/core';
 import { AuIcon } from '../icon/icon';
-import { lockPageScroll, unlockPageScroll } from '../overlay/page-scroll-lock';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
 
@@ -27,7 +25,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * @remarks
  * - **Visibility:** `[(open)]` syncs with native `<dialog>` via `showModal()`.
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
- * - **Accessibility:** same focus trap and scroll lock as `au-dialog`.
+ * - **Accessibility:** same focus trap as `au-dialog`; scroll is handled by native `showModal()`.
  * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
  */
 @Component({
@@ -47,8 +45,7 @@ export class AuDrawer {
   private static nextTitleId = 0;
 
   private readonly host = inject(ElementRef<HTMLElement>);
-  private readonly destroyRef = inject(DestroyRef);
-  private scrollLocked = false;
+  private savedFocus: HTMLElement | null = null;
 
   readonly open = model<boolean>(false);
   readonly close = output<void>();
@@ -71,7 +68,6 @@ export class AuDrawer {
   readonly hasFooter = this.footerPresent.asReadonly();
 
   private readonly titleDomId = `au-drawer-title-${++AuDrawer.nextTitleId}`;
-  private savedFocus: HTMLElement | null = null;
 
   readonly titleHeadingId = computed(() => {
     const custom = this.id();
@@ -81,10 +77,6 @@ export class AuDrawer {
   private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
     this.applyOpenStateToNativeDialog();
   });
-
-  constructor() {
-    this.destroyRef.onDestroy(() => this.releaseScrollLock());
-  }
 
   private nativeDialog(): HTMLDialogElement | null {
     const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
@@ -113,9 +105,6 @@ export class AuDrawer {
           : null;
     }
     const show = dialog.showModal?.bind(dialog);
-    if (!wasDisplayed) {
-      this.acquireScrollLock();
-    }
     if (show) {
       show();
     } else {
@@ -135,32 +124,12 @@ export class AuDrawer {
   }
 
   private closeDialogElement(dialog: HTMLDialogElement): void {
-    const wasDisplayed = this.isDialogDisplayed(dialog);
     if (typeof dialog.close === 'function') {
       dialog.close();
     } else if (dialog.hasAttribute('open')) {
       dialog.removeAttribute('open');
       dialog.dispatchEvent(new Event('close'));
     }
-    if (wasDisplayed) {
-      this.releaseScrollLock();
-    }
-  }
-
-  private acquireScrollLock(): void {
-    if (this.scrollLocked) {
-      return;
-    }
-    lockPageScroll();
-    this.scrollLocked = true;
-  }
-
-  private releaseScrollLock(): void {
-    if (!this.scrollLocked) {
-      return;
-    }
-    unlockPageScroll();
-    this.scrollLocked = false;
   }
 
   private isDialogDisplayed(dialog: HTMLDialogElement): boolean {
