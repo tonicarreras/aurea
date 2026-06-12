@@ -93,6 +93,7 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
   },
   formField: {
     emailLabel: 'Email',
+    emailHint: 'We only use your email for notifications.',
     emailPlaceholder: 'you@example.com',
     userLabel: 'Username',
     userHint: 'Between 3 and 20 characters.',
@@ -147,6 +148,7 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
   },
   inputText: {
     emailLabel: 'Email',
+    emailHint: 'We only use your email for notifications.',
     emailPlaceholder: 'you@example.com',
     userLabel: 'Username',
     userHint: 'Between 3 and 20 characters.',

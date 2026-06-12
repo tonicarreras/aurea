@@ -37,7 +37,7 @@ export interface PreviewMessages {
   inputPassword: { label: string; hint: string };
   inputTime: { label: string };
   inputNumber: { label: string };
-  inputText: { label: string; placeholder: string };
+  inputText: { label: string; hint: string; placeholder: string };
   link: { label: string };
   list: { ariaLabel: string };
   menu: { trigger: string; edit: string; share: string };

@@ -31,6 +31,13 @@
   max-width: 100%;
 }
 
+.au-form-field__header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-1);
+}
+
 .au-form-field__label-host {
   display: block;
 }

@@ -32,9 +32,12 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       description: 'Etiqueta visible sobre el control proyectado.',
     },
     { token: '--au-color-form-error', description: 'Mensaje de error y asterisco de obligatorio.' },
-    { token: '--au-color-text-tertiary', description: 'Texto de hint bajo el control.' },
+    { token: '--au-color-text-tertiary', description: 'Texto de hint bajo la etiqueta.' },
     { token: '--au-text-sm', description: 'Tipografía de label, hint y error.' },
-    { token: '--au-space-2', description: 'Separación vertical entre label, control y mensajes.' },
+    {
+      token: '--au-space-1 / --au-space-2',
+      description: 'Separación en la cabecera (etiqueta + hint) y antes del error.',
+    },
   ],
   fieldset: [
     { token: '--au-fieldset-legend-size', description: 'Tipografía de la leyenda por tamaño.' },

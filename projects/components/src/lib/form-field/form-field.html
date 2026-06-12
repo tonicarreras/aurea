@@ -1,36 +1,40 @@
 <div class="au-form-field__stack">
-  @if (showsLabel()) {
-    <div class="au-form-field__label-host">
-      <label
-        class="au-form-field__label"
-        [attr.for]="controlId()"
-      >
-        {{ label() }}
-        @if (effectiveRequired() && showRequired()) {
-          <span
-            class="au-form-field__required"
-            aria-hidden="true"
-            title="Required"
-            >*</span
+  @if (showsLabel() || hasHint()) {
+    <div class="au-form-field__header">
+      @if (showsLabel()) {
+        <div class="au-form-field__label-host">
+          <label
+            class="au-form-field__label"
+            [attr.for]="controlId()"
           >
-          <span class="au-sr-only">(required)</span>
-        }
-      </label>
+            {{ label() }}
+            @if (effectiveRequired() && showRequired()) {
+              <span
+                class="au-form-field__required"
+                aria-hidden="true"
+                title="Required"
+                >*</span
+              >
+              <span class="au-sr-only">(required)</span>
+            }
+          </label>
+        </div>
+      }
+
+      @if (hasHint()) {
+        <p
+          [id]="hintId()"
+          class="au-form-field__hint"
+        >
+          {{ hint() }}
+        </p>
+      }
     </div>
   }
 
   <div class="au-form-field__control">
     <ng-content />
   </div>
-
-  @if (hasHint()) {
-    <p
-      [id]="hintId()"
-      class="au-form-field__hint"
-    >
-      {{ hint() }}
-    </p>
-  }
 
   @if (isInvalid() && displayError().length > 0) {
     <div

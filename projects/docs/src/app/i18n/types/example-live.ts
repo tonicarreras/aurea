@@ -94,6 +94,7 @@ export interface ExampleLiveMessages {
   };
   formField: {
     emailLabel: string;
+    emailHint: string;
     emailPlaceholder: string;
     userLabel: string;
     userHint: string;
@@ -148,6 +149,7 @@ export interface ExampleLiveMessages {
   };
   inputText: {
     emailLabel: string;
+    emailHint: string;
     emailPlaceholder: string;
     userLabel: string;
     userHint: string;

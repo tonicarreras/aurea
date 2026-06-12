@@ -7,7 +7,10 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field [label]="t().emailLabel">
+    <au-form-field
+      [label]="t().emailLabel"
+      [hint]="t().emailHint"
+    >
       <au-input-text
         type="email"
         [placeholder]="t().emailPlaceholder"

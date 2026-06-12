@@ -29,9 +29,12 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
   'form-field': [
     { token: '--au-color-text-label', description: 'Visible label above the projected control.' },
     { token: '--au-color-form-error', description: 'Error message and required asterisk.' },
-    { token: '--au-color-text-tertiary', description: 'Hint text below the control.' },
+    { token: '--au-color-text-tertiary', description: 'Hint text below the label.' },
     { token: '--au-text-sm', description: 'Label, hint, and error typography.' },
-    { token: '--au-space-2', description: 'Vertical gap between label, control, and messages.' },
+    {
+      token: '--au-space-1 / --au-space-2',
+      description: 'Gap in the header (label + hint) and before the error region.',
+    },
   ],
   fieldset: [
     { token: '--au-fieldset-legend-size', description: 'Legend typography per size.' },

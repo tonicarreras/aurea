@@ -92,8 +92,9 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Label', detail: '`<label for>` tied to child `controlId`.' },
+      { region: 'Hint', detail: 'Optional `<p>` below the label, above the control.' },
       { region: 'Projected control', detail: 'Single focusable control in the default slot.' },
-      { region: 'Hint / error', detail: 'Hint `<p>`; error `role="alert"` with shared styles.' },
+      { region: 'Error', detail: '`role="alert"` message below the control when invalid.' },
     ],
     accessibility: [
       'Child receives `aria-describedby` / `aria-errormessage` from context ids.',

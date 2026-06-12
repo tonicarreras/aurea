@@ -89,11 +89,9 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Etiqueta', detail: '`<label for>` enlazado al `controlId` del hijo.' },
+      { region: 'Hint', detail: '`<p>` opcional bajo la etiqueta, encima del control.' },
       { region: 'Control proyectado', detail: 'Un solo control enfocable en el slot por defecto.' },
-      {
-        region: 'Hint / error',
-        detail: 'Hint en `<p>`; error `role="alert"` con estilos compartidos.',
-      },
+      { region: 'Error', detail: 'Mensaje `role="alert"` bajo el control cuando es inválido.' },
     ],
     accessibility: [
       'El hijo recibe `aria-describedby` / `aria-errormessage` desde los ids del contexto.',

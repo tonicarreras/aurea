@@ -67,7 +67,11 @@ export const PREVIEWS_EN: PreviewMessages = {
   inputPassword: { label: 'Password', hint: 'Use at least 12 characters.' },
   inputTime: { label: 'Start time' },
   inputNumber: { label: 'Quantity' },
-  inputText: { label: 'Name', placeholder: 'Your name' },
+  inputText: {
+    label: 'Name',
+    hint: 'Shown on your profile and in the directory.',
+    placeholder: 'Your name',
+  },
   link: { label: 'Design tokens' },
   list: { ariaLabel: 'Selected technologies' },
   menu: { trigger: 'Menu', edit: 'Edit', share: 'Share' },

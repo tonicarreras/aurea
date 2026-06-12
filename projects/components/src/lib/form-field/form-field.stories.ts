@@ -30,7 +30,7 @@ const meta: Meta<FormFieldStoryArgs> = {
   },
   args: {
     label: 'Email',
-    hint: '',
+    hint: 'We only use your email for notifications.',
     errorMessage: '',
     invalid: false,
     required: true,
@@ -62,8 +62,17 @@ export const WithInput: Story = {
   }),
 };
 
+export const WithHint: Story = {
+  args: {
+    hint: 'Shown below the label, above the control.',
+    required: false,
+  },
+  render: WithInput.render,
+};
+
 export const WithError: Story = {
   args: {
+    hint: '',
     invalid: true,
     errorMessage: 'Enter a valid email address.',
   },

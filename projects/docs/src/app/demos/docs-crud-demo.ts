@@ -264,7 +264,10 @@ type CrudEditModel = {
               >
                 <div class="docs-crud-app__toolbar">
                   <div class="docs-crud-app__toolbar-fields">
-                    <au-form-field [label]="t().filterLabel">
+                    <au-form-field
+                      [label]="t().filterLabel"
+                      [hint]="t().filterHint"
+                    >
                       <au-input-text
                         type="search"
                         [placeholder]="t().filterPlaceholder"
@@ -272,14 +275,20 @@ type CrudEditModel = {
                         (valueChange)="onFilterChange($event)"
                       />
                     </au-form-field>
-                    <au-form-field [label]="t().roleFilterLabel">
+                    <au-form-field
+                      [label]="t().roleFilterLabel"
+                      [hint]="t().roleFilterHint"
+                    >
                       <au-select
                         [options]="roleFilterOptions()"
                         [value]="roleFilter() || null"
                         (valueChange)="onRoleFilterChange($event)"
                       />
                     </au-form-field>
-                    <au-form-field [label]="t().personPickLabel">
+                    <au-form-field
+                      [label]="t().personPickLabel"
+                      [hint]="t().personPickHint"
+                    >
                       <au-autocomplete
                         [placeholder]="t().personPickPlaceholder"
                         [options]="personPickOptions()"
@@ -406,7 +415,10 @@ type CrudEditModel = {
                     </button>
                     <au-accordion-panel panel="filters">
                       <div class="docs-crud-app__advanced">
-                        <au-form-field [label]="t().minProgressLabel">
+                        <au-form-field
+                          [label]="t().minProgressLabel"
+                          [hint]="t().minProgressHint"
+                        >
                           <au-slider
                             [value]="minProgress()"
                             [min]="0"
@@ -765,6 +777,7 @@ type CrudEditModel = {
           <div class="docs-crud-app__dialog-form">
             <au-form-field
               [label]="t().colName"
+              [hint]="t().fieldNameHint"
               [required]="true"
             >
               <au-input-text
@@ -774,6 +787,7 @@ type CrudEditModel = {
             </au-form-field>
             <au-form-field
               [label]="t().fieldEmail"
+              [hint]="t().fieldEmailHint"
               [required]="true"
             >
               <au-input-text
@@ -784,6 +798,7 @@ type CrudEditModel = {
             </au-form-field>
             <au-form-field
               [label]="t().colRole"
+              [hint]="t().fieldRoleHint"
               [required]="true"
             >
               <au-select
@@ -793,6 +808,7 @@ type CrudEditModel = {
             </au-form-field>
             <au-form-field
               [label]="t().colStatus"
+              [hint]="t().fieldStatusHint"
               [required]="true"
             >
               <au-select
@@ -800,19 +816,31 @@ type CrudEditModel = {
                 [options]="statusEditOptions()"
               />
             </au-form-field>
-            <au-form-field [label]="t().fieldJoined">
+            <au-form-field
+              [label]="t().fieldJoined"
+              [hint]="t().fieldJoinedHint"
+            >
               <au-input-date [formField]="editForm.joined" />
             </au-form-field>
-            <au-form-field [label]="t().fieldSkills">
+            <au-form-field
+              [label]="t().fieldSkills"
+              [hint]="t().fieldSkillsHint"
+            >
               <au-tag-input
                 [formField]="editForm.skills"
                 [placeholder]="t().skillsPlaceholder"
               />
             </au-form-field>
-            <au-form-field [label]="t().colProgress">
+            <au-form-field
+              [label]="t().colProgress"
+              [hint]="t().fieldProgressHint"
+            >
               <au-slider [formField]="editForm.progress" />
             </au-form-field>
-            <au-form-field [label]="t().fieldNotes">
+            <au-form-field
+              [label]="t().fieldNotes"
+              [hint]="t().fieldNotesHint"
+            >
               <au-textarea
                 [formField]="editForm.notes"
                 [rows]="3"

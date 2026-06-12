@@ -7,17 +7,21 @@ import type { ComponentDocExample } from '../../../types/example';
 
 export const examples: ComponentDocExample[] = [
   {
-    title: 'Basic field',
-    demoComponent: ExampleFormFieldBasicDemo,
-    code: `<au-form-field label="Email" [required]="true">
-  <au-input-text type="email" placeholder="you@company.com" />
-</au-form-field>`,
-  },
-  {
     title: 'With hint',
     demoComponent: ExampleFormFieldHintDemo,
     code: `<au-form-field label="Username" hint="Between 3 and 20 characters.">
   <au-input-text placeholder="name" />
+</au-form-field>`,
+  },
+  {
+    title: 'Basic field',
+    demoComponent: ExampleFormFieldBasicDemo,
+    code: `<au-form-field
+  label="Email"
+  hint="We only use your email for notifications."
+  [required]="true"
+>
+  <au-input-text type="email" placeholder="you@company.com" />
 </au-form-field>`,
   },
   {
