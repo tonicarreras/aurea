@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuEmptyStateMedia } from './au-empty-state-media.directive';
 import { AuEmptyState } from './empty-state';
 
@@ -67,7 +67,7 @@ export const Default: Story = {
         [size]="size"
         [headingLevel]="headingLevel"
       >
-        <au-button variant="outline" type="button">Clear filters</au-button>
+        <button auButton variant="outline" type="button">Clear filters</button>
       </au-empty-state>
     `,
   }),
@@ -121,7 +121,7 @@ export const CustomSvg: Story = {
           <rect x="12" y="20" width="72" height="56" rx="8" stroke="currentColor" stroke-width="2" />
           <path d="M32 44h32M32 52h20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
-        <au-button type="button">Create project</au-button>
+        <button auButton type="button">Create project</button>
       </au-empty-state>
     `,
   }),

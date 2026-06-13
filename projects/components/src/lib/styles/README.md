@@ -5,7 +5,13 @@
 | File               | Required                                  | Role                                                            |
 | ------------------ | ----------------------------------------- | --------------------------------------------------------------- |
 | `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css` |
-| `aurea-global.css` | Yes for form controls & description lists | Shared CSS + `au-high-contrast-aaa.css` (HC AAA overrides)      |
+| `aurea-global.css` | Yes for form controls & description lists | Shared CSS + primitive directives (bundled from `aurea-global.entry.css`) + `au-high-contrast-aaa.css` |
+
+After editing `aurea-global.entry.css` or primitive `*.css` under `src/lib/`, run:
+
+```bash
+node projects/components/scripts/bundle-aurea-global.mjs
+```
 
 ## Token layers (elevation & focus)
 
@@ -30,7 +36,7 @@ Legacy aliases `--au-field-shadow*` and `--au-chrome-shadow*` remain for externa
 
 Import a file from `styles/` into `aurea-global.css` **only** if at least one applies:
 
-1. **Shared chrome** — one stylesheet targets several `au-*` hosts (e.g. `au-field-chrome.css` for `au-input-text`, `au-textarea`, `au-select`, …).
+1. **Shared chrome** — one stylesheet targets several `au-*` hosts (e.g. `au-field-chrome.css` for `input[auInputText]`, `textarea[auTextarea]`, `au-select`, …).
 2. **Cross-host children** — layout/typography must reach elements rendered by another component or `display: contents` (e.g. `au-description-list.css` for `dt` / `dd` inside `au-description-item`).
 3. **Projected consumer DOM** — markup or directives declared in the parent template (e.g. `au-accordion` → `.au-accordion__item` divs and `button[auAccordionItem]` triggers). Use a child component `styleUrl` when the node is an `au-*` host (e.g. `au-accordion-panel`).
 

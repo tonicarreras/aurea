@@ -12,7 +12,7 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
         [label]="t().label"
         [hint]="t().hint"
       >
-        <au-input-text [placeholder]="t().placeholder" />
+        <input auInputText [placeholder]="t().placeholder" />
       </au-form-field>
     </div>
   `,

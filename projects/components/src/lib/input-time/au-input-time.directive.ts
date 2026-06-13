@@ -1,10 +1,14 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
+  ApplicationRef,
+  Directive,
+  ComponentRef,
+  EnvironmentInjector,
+  Renderer2,
   afterRenderEffect,
   computed,
+  createComponent,
   inject,
+  DestroyRef,
   input,
   model,
   output,
@@ -15,21 +19,39 @@ import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
+import { bindHostDomEvent } from '../au-host-dom-event';
+import { injectHostRef } from '../au-host-element';
 import { tabFocusState } from '../au-tab-focus-state';
 import { openNativePicker } from '../au-open-native-picker';
 import { AuIcon } from '../icon/icon';
 
-/** Time control; project inside {@link AuFormField}. Value format: `HH:mm` (24h). */
-@Component({
-  selector: 'au-input-time',
-  templateUrl: './input-time.html',
-  styleUrl: './input-time.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuIcon],
+/**
+ * Time control on a native `<input type="time">`. Value format: `HH:mm` (24h).
+ * Project inside {@link AuFormField}.
+ */
+@Directive({
+  selector: 'input[auInputTime]',
   host: {
     class: 'au-input-time',
+    '[class.au-input-time--from-tab]': 'fieldFocusByTab()',
     '[attr.data-au-size]': 'size()',
+    '[attr.type]': '"time"',
+    '[id]': 'controlId()',
+    '[attr.name]': 'name() || null',
+    '[attr.min]': 'minTime() ?? null',
+    '[attr.max]': 'maxTime() ?? null',
+    '[attr.placeholder]': 'placeholder() || null',
+    '[attr.autocomplete]': 'autocomplete() ?? null',
+    '[attr.aria-invalid]': 'effectiveInvalid() ? "true" : "false"',
+    '[attr.aria-errormessage]': 'effectiveInvalid() ? formField.errorId() : null',
+    '[attr.aria-describedby]': 'ariaDescribedBy() ?? null',
+    '[attr.aria-required]': 'required() ? "true" : null',
+    '[disabled]': 'disabled()',
+    '[readOnly]': 'readOnly()',
+    '[attr.required]': 'required() ? true : null',
+    '(input)': 'onInput($event)',
+    '(focusin)': 'onControlRowFocusin()',
+    '(focusout)': 'onControlRowFocusout($event)',
   },
 })
 export class AuInputTime implements FormValueControl<string | null> {
@@ -52,8 +74,15 @@ export class AuInputTime implements FormValueControl<string | null> {
   readonly blur = output<void>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly host = injectHostRef<HTMLInputElement>();
+  private readonly renderer = inject(Renderer2);
+  private readonly environmentInjector = inject(EnvironmentInjector);
+  private readonly appRef = inject(ApplicationRef);
   protected readonly fieldFocusByTab = signal(false);
+
+  private pickerIconEl: HTMLButtonElement | null = null;
+  private iconRef: ComponentRef<AuIcon> | null = null;
 
   readonly controlId = computed(() => this.formField.controlId());
   readonly displayError = displayErrorFromErrors(this.errors);
@@ -83,6 +112,7 @@ export class AuInputTime implements FormValueControl<string | null> {
   });
 
   constructor() {
+    bindHostDomEvent(this.host, this.destroyRef, 'blur', () => this.onBlurHost());
     afterRenderEffect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
@@ -90,6 +120,18 @@ export class AuInputTime implements FormValueControl<string | null> {
         required: () => this.required(),
       }),
     );
+
+    afterRenderEffect(() => {
+      const el = this.host.nativeElement;
+      const display = this.inputDisplay();
+      if (el.value !== display) {
+        el.value = display;
+      }
+    });
+
+    afterRenderEffect(() => {
+      this.ensurePickerIcon();
+    });
   }
 
   onInput(event: Event): void {
@@ -132,7 +174,7 @@ export class AuInputTime implements FormValueControl<string | null> {
     }
     event.preventDefault();
     event.stopPropagation();
-    openNativePicker(queryFieldNative<HTMLInputElement>(this.host, '.au-input-time__input'));
+    openNativePicker(this.host.nativeElement);
   }
 
   onControlRowFocusin(): void {
@@ -141,17 +183,55 @@ export class AuInputTime implements FormValueControl<string | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!(event.currentTarget instanceof HTMLElement)) {
-      return;
-    }
-    const to = event.relatedTarget;
-    if (to != null && to instanceof Node && event.currentTarget.contains(to)) {
+    if (this.isInControlGroup(event.relatedTarget)) {
       return;
     }
     this.fieldFocusByTab.set(false);
   }
 
   focus(): void {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-input-time__input').focus();
+    this.host.nativeElement.focus();
+  }
+
+  private isInControlGroup(node: EventTarget | null): boolean {
+    if (node == null || !(node instanceof Node)) {
+      return false;
+    }
+    if (this.host.nativeElement.contains(node)) {
+      return true;
+    }
+    if (this.pickerIconEl?.contains(node)) {
+      return true;
+    }
+    return false;
+  }
+
+  private ensurePickerIcon(): void {
+    const input = this.host.nativeElement;
+    const parent = input.parentNode;
+    if (!(parent instanceof HTMLElement) || this.pickerIconEl?.isConnected) {
+      return;
+    }
+
+    this.renderer.addClass(parent, 'au-input-time__anchor');
+
+    const btn = this.renderer.createElement('button') as HTMLButtonElement;
+    this.renderer.setAttribute(btn, 'type', 'button');
+    this.renderer.addClass(btn, 'au-input-time__icon');
+    this.renderer.setAttribute(btn, 'aria-hidden', 'true');
+    this.renderer.setAttribute(btn, 'tabindex', '-1');
+
+    const iconHost = this.renderer.createElement('span') as HTMLSpanElement;
+    this.iconRef = createComponent(AuIcon, {
+      environmentInjector: this.environmentInjector,
+      hostElement: iconHost,
+    });
+    this.iconRef.setInput('name', 'clock');
+    this.appRef.attachView(this.iconRef.hostView);
+    this.iconRef.changeDetectorRef.detectChanges();
+    this.renderer.appendChild(btn, iconHost);
+    this.renderer.insertBefore(parent, btn, input.nextSibling);
+    this.renderer.listen(btn, 'click', (event: MouseEvent) => this.onPickerIconClick(event));
+    this.pickerIconEl = btn;
   }
 }

@@ -83,7 +83,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuFormField',
         description:
-          'Wrap projected controls (`au-input-text`, `au-select`, …). Provides `AU_FORM_FIELD` for shared ids and validation chrome.',
+          'Wrap projected controls (`input[auInputText]`, `au-select`, …). Provides `AU_FORM_FIELD` for shared ids and validation chrome.',
         rows: FORM_FIELD_CHROME,
       },
     ],
@@ -115,7 +115,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
           i(
             'type',
             "'text' | 'email' | 'number' | …",
-            'Native `<input>` type. Password → `au-input-password`.',
+            'Native `<input>` type. Password → `input[auInputPassword]`.',
             "'text'",
           ),
           i('autocomplete', 'string | undefined', 'Native `autocomplete` attribute.'),
@@ -460,7 +460,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuButtonGroup',
-        description: 'Groups projected `au-button` children; not a form control.',
+        description: 'Groups projected `button[auButton]` children; not a form control.',
         rows: [
           i('ariaLabel', 'string', 'Accessible name for the group.', "''"),
           i('ariaLabelledBy', 'string', 'ID of labelling element.', "''"),
@@ -975,7 +975,7 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuLink',
-        description: 'On `<a auLink>` or `<au-link>`.',
+        description: 'On `<a auLink>` or `<a auLink>`.',
         rows: [
           i('variant', "'default' | 'subtle'", 'Visual emphasis.', "'default'"),
           i('href', 'string', 'Destination URL.', "'#'"),

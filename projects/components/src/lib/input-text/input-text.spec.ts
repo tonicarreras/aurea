@@ -10,11 +10,11 @@ import {
   createFieldFixture,
   queryControl,
 } from '../form-field/form-field.spec-hosts';
-import { AuInputText } from './input-text';
+import { AuInputText } from './au-input-text.directive';
 
 describe('AuInputText', () => {
   function queryInput(fixture: ComponentFixture<AuInputTextTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-text__input'))!
+    return fixture.debugElement.query(By.css('input.au-input-text'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -185,9 +185,7 @@ describe('AuInputText', () => {
     expect(el.getAttribute('autocomplete')).toBe('username');
     expect(el.getAttribute('minlength')).toBe('2');
     expect(el.getAttribute('maxlength')).toBe('10');
-    expect(
-      fix.debugElement.query(By.css('au-input-text')).nativeElement.getAttribute('data-au-size'),
-    ).toBe('lg');
+    expect(queryInput(fix).getAttribute('data-au-size')).toBe('lg');
   });
 
   it('shows error from errors when no manual message', () => {
@@ -218,29 +216,29 @@ describe('AuInputText', () => {
     expect(queryInput(fix).id.startsWith('au-field-')).toBe(true);
   });
 
-  it('applies from-tab on control row after Tab', () => {
+  it('applies from-tab on control after Tab', () => {
     const fix = createFieldFixture(AuInputTextTestHost);
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!;
+    const input = fix.debugElement.query(By.css('input.au-input-text'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    row.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    input.triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
-    expect(row.nativeElement.classList.contains('au-input-text__control-row--from-tab')).toBe(true);
+    expect(input.nativeElement.classList.contains('au-input-text--from-tab')).toBe(true);
   });
 
-  it('clears from-tab after focus leaves control row', () => {
+  it('clears from-tab after focus leaves control', () => {
     const fix = createFieldFixture(AuInputTextTestHost);
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
+    const input = fix.debugElement.query(By.css('input.au-input-text'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-input-text__control-row'))!
+      .query(By.css('input.au-input-text'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
-    expect(row.classList.contains('au-input-text__control-row--from-tab')).toBe(true);
+    expect(input.classList.contains('au-input-text--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
-    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     control(fix).onControlRowFocusout(out);
     fix.detectChanges();
-    expect(row.classList.contains('au-input-text__control-row--from-tab')).toBe(false);
+    expect(input.classList.contains('au-input-text--from-tab')).toBe(false);
   });
 
   it('prefers manual errorMessage over errors', () => {
@@ -257,12 +255,11 @@ describe('AuInputText', () => {
     control(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onControlRowFocusout returns when focus stays inside row', () => {
+  it('onControlRowFocusout returns when focus stays inside control', () => {
     const fix = createFieldFixture(AuInputTextTestHost);
-    const row = fix.debugElement.query(By.css('.au-input-text__control-row'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
-    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     control(fix).onControlRowFocusout(ev);
   });
 

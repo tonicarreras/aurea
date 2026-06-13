@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  ElementRef,
   PLATFORM_ID,
   Renderer2,
   afterRenderEffect,
@@ -14,6 +13,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
@@ -75,7 +75,7 @@ export class AuSelect implements FormValueControl<string | null> {
   readonly blur = output<void>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly highlightedIndex = signal(-1);

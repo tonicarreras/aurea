@@ -3,11 +3,11 @@ import {
   Component,
   computed,
   DestroyRef,
-  ElementRef,
   inject,
   input,
   output,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 
 import { AU_MENU } from './au-menu.token';
 
@@ -30,7 +30,7 @@ import { AU_MENU } from './au-menu.token';
 export class AuMenuItem {
   private readonly menu = inject(AU_MENU);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   readonly disabled = input(false);
   readonly select = output<void>();
@@ -43,7 +43,7 @@ export class AuMenuItem {
   }
 
   private buttonEl(): HTMLButtonElement {
-    return (this.host.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
+    return this.host.nativeElement.querySelector<HTMLButtonElement>(
       '.au-menu-item__btn',
     )!;
   }

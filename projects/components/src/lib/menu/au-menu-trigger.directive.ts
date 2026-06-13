@@ -1,5 +1,6 @@
-import { Directive, ElementRef, inject } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 
+import { injectHostRef } from '../au-host-element';
 import { AU_MENU } from './au-menu.token';
 
 @Directive({
@@ -12,10 +13,10 @@ import { AU_MENU } from './au-menu.token';
 })
 export class AuMenuTrigger {
   protected readonly menu = inject(AU_MENU);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   constructor() {
-    this.menu.registerTrigger(this.host.nativeElement as HTMLElement);
+    this.menu.registerTrigger(this.host.nativeElement);
   }
 
   protected onClick(event: MouseEvent): void {

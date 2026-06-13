@@ -13,7 +13,7 @@ export const examples: ComponentDocExample[] = [
     code: `import { AuPopover, AuPopoverTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-popover [(open)]="open">
-  <au-button auPopoverTrigger>Filtros</au-button>
+  <button auButton auPopoverTrigger>Filtros</button>
   <p>Contenido compacto del panel.</p>
 </au-popover>`,
   },
@@ -22,7 +22,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Alinea el panel a `start` o `end` cuando el espacio en el eje inline es justo.',
     demoComponent: ExamplePopoverPlacementDemo,
     code: `<au-popover [(open)]="open" placement="end">
-  <au-button auPopoverTrigger>Filtros</au-button>
+  <button auButton auPopoverTrigger>Filtros</button>
   <p>Contenido del panel</p>
 </au-popover>`,
   },
@@ -31,9 +31,9 @@ export const examples: ComponentDocExample[] = [
     description: 'Proyecta controles de formulario; cierra con Aplicar o clic fuera.',
     demoComponent: ExamplePopoverFiltersDemo,
     code: `<au-popover [(open)]="filtersOpen">
-  <au-button auPopoverTrigger>Filtros</au-button>
+  <button auButton auPopoverTrigger>Filtros</button>
   <au-form-field label="Estado">
-    <au-checkbox>Solo activos</au-checkbox>
+    <input type="checkbox" auCheckbox>Solo activos
   </au-form-field>
 </au-popover>`,
   },
@@ -41,9 +41,9 @@ export const examples: ComponentDocExample[] = [
     title: 'Apertura controlada',
     description: 'Abre desde otro control con `[(open)]` — útil para ayuda contextual.',
     demoComponent: ExamplePopoverControlledDemo,
-    code: `<au-button type="button" (click)="open.set(true)">Abrir ayuda</au-button>
+    code: `<button auButton type="button" (click)="open.set(true)">Abrir ayuda</button>
 <au-popover [(open)]="open">
-  <au-button auPopoverTrigger>Ayuda</au-button>
+  <button auButton auPopoverTrigger>Ayuda</button>
   <p>Texto de ayuda breve.</p>
 </au-popover>`,
   },

@@ -153,7 +153,7 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-space-2', description: 'Gap between buttons when `[attached]="false"`.' },
     {
       token: '--au-color-border-default',
-      description: 'Shared borders in attached mode (via `au-button`).',
+      description: 'Shared borders in attached mode (via `button[auButton]`).',
     },
   ],
   'input-password': [

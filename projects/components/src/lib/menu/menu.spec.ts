@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AuMenu, auMenuSelfRef } from './menu';
 import { AuMenuItem, AuMenuTrigger } from './index';
 import { resetOpenMenuForTests } from './menu-open-registry';
@@ -16,7 +16,7 @@ import { resetOpenMenuForTests } from './menu-open-registry';
       [(open)]="open"
       [disabled]="disabled"
     >
-      <au-button auMenuTrigger>Open</au-button>
+      <button auButton auMenuTrigger>Open</button>
       <au-menu-item (select)="selected = true">Action</au-menu-item>
       <au-menu-item (select)="onSecond()">Second</au-menu-item>
       <au-menu-item
@@ -48,7 +48,7 @@ class Host {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
-      <au-button auMenuTrigger>Open</au-button>
+      <button auButton auMenuTrigger>Open</button>
     </au-menu>
   `,
 })
@@ -61,11 +61,11 @@ class HostNoItems {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="openA">
-      <au-button auMenuTrigger>Menu A</au-button>
+      <button auButton auMenuTrigger>Menu A</button>
       <au-menu-item>Action A</au-menu-item>
     </au-menu>
     <au-menu [(open)]="openB">
-      <au-button auMenuTrigger>Menu B</au-button>
+      <button auButton auMenuTrigger>Menu B</button>
       <au-menu-item>Action B</au-menu-item>
     </au-menu>
   `,

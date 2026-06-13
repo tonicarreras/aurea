@@ -11,7 +11,7 @@ export const examples: ComponentDocExample[] = [
     title: 'Fecha',
     demoComponent: ExampleInputDateBasicDemo,
     code: `<au-form-field label="Fecha de entrega">
-  <au-input-date />
+  <input auInputDate />
 </au-form-field>`,
   },
   {
@@ -22,14 +22,14 @@ export const examples: ComponentDocExample[] = [
   errorMessage="Selecciona una fecha válida."
   [invalid]="true"
 >
-  <au-input-date />
+  <input auInputDate />
 </au-form-field>`,
   },
   {
     title: 'Con hint',
     demoComponent: ExampleInputDateHintDemo,
     code: `<au-form-field label="Fecha de entrega" hint="Opcional — déjalo vacío para la primera franja disponible.">
-  <au-input-date />
+  <input auInputDate />
 </au-form-field>`,
   },
   {
@@ -38,7 +38,7 @@ export const examples: ComponentDocExample[] = [
       'Usa minDate y maxDate (ISO YYYY-MM-DD) para los atributos nativos min y max.',
     demoComponent: ExampleInputDateRangeDemo,
     code: `<au-form-field label="Fecha de entrega" hint="Solo entregas en 2026.">
-  <au-input-date minDate="2026-01-01" maxDate="2026-12-31" />
+  <input auInputDate minDate="2026-01-01" maxDate="2026-12-31" />
 </au-form-field>`,
   },
 ];

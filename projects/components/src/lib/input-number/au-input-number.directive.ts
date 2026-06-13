@@ -1,10 +1,9 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
+  Directive,
   afterRenderEffect,
   computed,
   inject,
+  DestroyRef,
   input,
   model,
   output,
@@ -15,18 +14,38 @@ import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
+import { bindHostDomEvent } from '../au-host-dom-event';
+import { injectHostRef } from '../au-host-element';
 import { tabFocusState } from '../au-tab-focus-state';
 
-/** Numeric control; project inside {@link AuFormField}. */
-@Component({
-  selector: 'au-input-number',
-  templateUrl: './input-number.html',
-  styleUrl: './input-number.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+/**
+ * Numeric control on a native `<input type="number">`.
+ * Project inside {@link AuFormField}.
+ */
+@Directive({
+  selector: 'input[auInputNumber]',
   host: {
     class: 'au-input-number',
+    '[class.au-input-number--from-tab]': 'fieldFocusByTab()',
     '[attr.data-au-size]': 'size()',
+    '[attr.type]': '"number"',
+    '[id]': 'controlId()',
+    '[attr.name]': 'name() || null',
+    '[attr.placeholder]': 'placeholder() || null',
+    '[attr.autocomplete]': 'autocomplete() ?? null',
+    '[readOnly]': 'readOnly()',
+    '[attr.min]': 'min() ?? null',
+    '[attr.max]': 'max() ?? null',
+    '[attr.step]': 'step() === "any" ? "any" : step()',
+    '[attr.aria-invalid]': 'effectiveInvalid() ? "true" : "false"',
+    '[attr.aria-errormessage]': 'effectiveInvalid() ? formField.errorId() : null',
+    '[attr.aria-describedby]': 'ariaDescribedBy() ?? null',
+    '[attr.aria-required]': 'required() ? "true" : null',
+    '[disabled]': 'disabled()',
+    '[attr.required]': 'required() ? true : null',
+    '(input)': 'onInput($event)',
+    '(focusin)': 'onControlRowFocusin()',
+    '(focusout)': 'onControlRowFocusout($event)',
   },
 })
 export class AuInputNumber implements FormValueControl<number | null> {
@@ -50,7 +69,8 @@ export class AuInputNumber implements FormValueControl<number | null> {
   readonly blur = output<void>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly host = injectHostRef<HTMLInputElement>();
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -81,6 +101,7 @@ export class AuInputNumber implements FormValueControl<number | null> {
   });
 
   constructor() {
+    bindHostDomEvent(this.host, this.destroyRef, 'blur', () => this.onBlurHost());
     afterRenderEffect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
@@ -88,6 +109,14 @@ export class AuInputNumber implements FormValueControl<number | null> {
         required: () => this.required(),
       }),
     );
+
+    afterRenderEffect(() => {
+      const el = this.host.nativeElement;
+      const display = this.inputDisplay();
+      if (el.value !== display) {
+        el.value = display;
+      }
+    });
   }
 
   onInput(event: Event): void {
@@ -115,17 +144,14 @@ export class AuInputNumber implements FormValueControl<number | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!(event.currentTarget instanceof HTMLElement)) {
-      return;
-    }
     const to = event.relatedTarget;
-    if (to != null && to instanceof Node && event.currentTarget.contains(to)) {
+    if (to != null && to instanceof Node && this.host.nativeElement.contains(to)) {
       return;
     }
     this.fieldFocusByTab.set(false);
   }
 
   focus(): void {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-input-number__input').focus();
+    this.host.nativeElement.focus();
   }
 }

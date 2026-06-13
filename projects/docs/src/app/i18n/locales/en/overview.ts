@@ -18,11 +18,11 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       title: 'Alternatives',
       items: [
         'Navigation between views → links (`<a>`) or tabs.',
-        'Toggle an on/off setting → `au-switch`.',
+        'Toggle an on/off setting → `button[auSwitch]`.',
       ],
     },
     anatomy: [
-      { region: 'Host `au-button`', detail: 'Attributes `data-au-variant` and `data-au-size`.' },
+      { region: 'Host `button[auButton]`', detail: 'Attributes `data-au-variant` and `data-au-size`.' },
       { region: 'Native button', detail: 'Content projection; `aria-busy` when `loading`.' },
     ],
     accessibility: [
@@ -37,7 +37,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   'button-group': {
     intro: [
-      'Layout wrapper that groups related `au-button` actions with `role="group"`.',
+      'Layout wrapper that groups related `button[auButton]` actions with `role="group"`.',
       'Default **`attached`** mode shares borders between buttons; set `[attached]="false"` for spaced actions.',
     ],
     whenToUse: {
@@ -52,26 +52,26 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       items: [
         'Exclusive visible choice in a form → `au-radio-group` or `au-tabs` `variant="contained"`.',
         'Multi-select filters → `au-chip-group`.',
-        'Single action → lone `au-button`.',
+        'Single action → lone `button[auButton]`.',
       ],
     },
     anatomy: [
       { region: 'Group', detail: '`role="group"` with `ariaLabel` or `ariaLabelledBy`.' },
       {
-        region: '`au-button`',
+        region: '`button[auButton]`',
         detail: 'Projected children; variants and clicks stay on each button.',
       },
     ],
     accessibility: [
       'Name the group when more than one button is present.',
-      'Each `au-button` keeps its own accessible name and keyboard behavior.',
+      'Each `button[auButton]` keeps its own accessible name and keyboard behavior.',
     ],
     keyboard: ['Tab moves between buttons in document order.'],
     relatedExports: ['type AuButtonGroupOrientation'],
   },
   'form-field': {
     intro: [
-      'Shared label, hint, and error chrome around a projected control (`au-input-text`, `au-select`, `au-radio-group`, etc.).',
+      'Shared label, hint, and error chrome around a projected control (`input[auInputText]`, `au-select`, `au-radio-group`, etc.).',
       'Exposes `AU_FORM_FIELD` via DI so the child gets the same `controlId`, `hintId`, and `errorId` for ARIA wiring.',
       'Checkbox and switch keep their inline `label` on the control; use `au-form-field` for hint and error only.',
     ],
@@ -86,7 +86,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Checkbox with only an inline label and no hint/error → bare `au-checkbox`.',
+        'Checkbox with only an inline label and no hint/error → bare `input[type=checkbox][auCheckbox]`.',
         'Non-form layout → do not wrap.',
       ],
     },
@@ -144,8 +144,8 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Password fields → `au-input-password`.',
-        'Multi-line text → `au-textarea`.',
+        'Password fields → `input[auInputPassword]`.',
+        'Multi-line text → `textarea[auTextarea]`.',
         'Pick from a list → `au-select` or `au-autocomplete`.',
       ],
     },
@@ -174,7 +174,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Single line → `au-input-text`.', 'Rich editor → third-party component.'],
+      items: ['Single line → `input[auInputText]`.', 'Rich editor → third-party component.'],
     },
     anatomy: [
       { region: 'Shell', detail: 'Same as single-line fields.' },
@@ -204,7 +204,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Single on/off preference → `au-switch`.',
+        'Single on/off preference → `button[auSwitch]`.',
         'Single choice in a list → `au-radio-group`.',
       ],
     },
@@ -234,7 +234,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       title: 'Alternatives',
       items: [
         'Mutually exclusive options → `au-radio-group`.',
-        'Legal acceptance → `au-checkbox`.',
+        'Legal acceptance → `input[type=checkbox][auCheckbox]`.',
       ],
     },
     anatomy: [
@@ -290,7 +290,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Short fixed list → `au-select`.', 'Free text without a list → `au-input-text`.'],
+      items: ['Short fixed list → `au-select`.', 'Free text without a list → `input[auInputText]`.'],
     },
     anatomy: [
       { region: 'Search input', detail: 'Combobox with live query.' },
@@ -434,7 +434,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Exact numeric entry → `au-input-number`.',
+        'Exact numeric entry → `input[auInputNumber]`.',
         'Discrete choices → radio group or select.',
       ],
     },
@@ -643,7 +643,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     ],
     accessibility: [
       'Use a heading in the header for hierarchy.',
-      'Footer actions with real buttons (`au-button`).',
+      'Footer actions with real buttons (`button[auButton]`).',
     ],
     relatedExports: ['AuCardFooter'],
   },
@@ -695,7 +695,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Single free-text value → `au-input-text` or `au-textarea`.',
+        'Single free-text value → `input[auInputText]` or `textarea[auTextarea]`.',
         'Predefined filters → `au-chip-group`.',
         'Removable list without typing → `au-list` + `au-chip`.',
       ],
@@ -726,7 +726,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Primary action → `au-button`.',
+        'Primary action → `button[auButton]`.',
         'Primary navigation → tabs or links.',
         'Selectable filters in a row → `au-chip-group`.',
         'Removable tag list → `au-list`.',
@@ -850,7 +850,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       title: 'Alternatives',
       items: [
         'Custom brand icons → your own SVG.',
-        'Icon-only button → set `label` on `au-button`.',
+        'Icon-only button → set `label` on `button[auButton]`.',
         'Standalone loading → `au-spinner`.',
       ],
     },
@@ -870,7 +870,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Spinner on a button → `au-button` `loading`.',
+        'Spinner on a button → `button[auButton]` `loading`.',
         'Inline loading indicator → `au-spinner`.',
         'Empty state → visible copy, not skeleton.',
       ],
@@ -893,7 +893,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Button in-flight state → `au-button` `loading`.',
+        'Button in-flight state → `button[auButton]` `loading`.',
         'Known completion ratio → `au-progress`.',
         'Content placeholders → `au-skeleton`.',
       ],
@@ -1090,7 +1090,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   link: {
     intro: [
-      'Inline link styled with Aurea link tokens on native `<a auLink>` or `<au-link>`.',
+      'Inline link styled with Aurea link tokens on native `<a auLink>` or `<a auLink>`.',
       'Supports default and subtle variants; `external` adds `target="_blank"` and `rel="noopener noreferrer"`.',
     ],
     whenToUse: {
@@ -1103,7 +1103,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     whenNotToUse: {
       title: 'Alternatives',
       items: [
-        'Primary actions → `au-button`.',
+        'Primary actions → `button[auButton]`.',
         'Breadcrumb trail → `au-breadcrumb` items with `href`.',
       ],
     },
@@ -1209,7 +1209,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Nav', detail: '`role="navigation"` with `aria-label="Pagination"`.' },
-      { region: 'Prev / next', detail: '`au-button` ghost controls.' },
+      { region: 'Prev / next', detail: '`button[auButton]` ghost controls.' },
       { region: 'Page buttons', detail: 'Numbered pages; current page styled as active.' },
     ],
     accessibility: [
@@ -1234,7 +1234,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       title: 'Alternatives',
       items: [
         'Loading placeholders for content → `au-skeleton`.',
-        'Button in-flight state → `au-button` `loading`.',
+        'Button in-flight state → `button[auButton]` `loading`.',
       ],
     },
     anatomy: [
@@ -1250,7 +1250,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     intro: [
       'Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`, and `loading`.',
       'Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).',
-      'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.',
+      'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `input[type=checkbox][auCheckbox]`.',
       'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
       'Empty data: project `au-empty-state` as a child (use `size="sm"` and `headingLevel="3"`); otherwise `emptyMessage` is shown.',
     ],
@@ -1324,7 +1324,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Trigger', detail: 'Element with `auTooltip` (e.g. `au-button`).' },
+      { region: 'Trigger', detail: 'Element with `auTooltip` (e.g. `button[auButton]`).' },
       { region: 'Tooltip bubble', detail: 'Class `.au-tooltip` on `document.body`.' },
     ],
     accessibility: [

@@ -13,6 +13,7 @@ import {
   viewChild,
 } from '@angular/core';
 
+import { injectHostRef } from './au-host-element';
 import { TooltipOverlay } from './overlay/tooltip-overlay';
 import type { TemporalPickerOption } from './field-temporal-options';
 
@@ -67,7 +68,7 @@ export class AuInternalTemporalPickerPanel {
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   private readonly overlay = new TooltipOverlay(
     this.document,
@@ -124,7 +125,8 @@ export class AuInternalTemporalPickerPanel {
     }
     const panel = this.panelRef()?.nativeElement;
     const anchor = this.anchor();
-    if (panel?.contains(target) || anchor?.contains(target) || this.host.nativeElement.contains(target)) {
+    const hostEl = this.host.nativeElement;
+    if (panel?.contains(target) || anchor?.contains(target) || hostEl.contains(target)) {
       return;
     }
     this.dismiss.emit();

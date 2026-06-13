@@ -9,7 +9,7 @@ export const examples: ComponentDocExample[] = [
     title: 'Hora',
     demoComponent: ExampleInputTimeBasicDemo,
     code: `<au-form-field label="Hora de inicio">
-  <au-input-time />
+  <input auInputTime />
 </au-form-field>`,
   },
   {
@@ -17,7 +17,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Usa minTime y maxTime (HH:mm) para los atributos nativos min y max.',
     demoComponent: ExampleInputTimeBoundsDemo,
     code: `<au-form-field label="Hora de reserva" hint="Solo horario laboral.">
-  <au-input-time minTime="08:00" maxTime="20:00" />
+  <input auInputTime minTime="08:00" maxTime="20:00" />
 </au-form-field>`,
   },
 ];

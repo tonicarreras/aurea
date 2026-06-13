@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import {
   DestroyRef,
   Directive,
-  ElementRef,
   PLATFORM_ID,
   Renderer2,
   afterRenderEffect,
@@ -11,6 +10,7 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
@@ -26,7 +26,7 @@ import type { AuTooltipPlacement } from '../overlay/tooltip-position';
  *
  * @example
  * ```html
- * <au-button auTooltip="Save changes">Save</au-button>
+ * <button auButton auTooltip="Save changes">Save</button>
  * ```
  */
 @Directive({
@@ -60,7 +60,7 @@ export class AuTooltip {
 
   private static idCounter = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly renderer = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -91,7 +91,7 @@ export class AuTooltip {
     }
     const bubble = this.ensureBubble();
     this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
-    this.overlay.sync(bubble, this.host.nativeElement as HTMLElement, this.auTooltipPlacement());
+    this.overlay.sync(bubble, this.host.nativeElement, this.auTooltipPlacement());
   });
 
   protected onPointerEnter(): void {
@@ -113,7 +113,7 @@ export class AuTooltip {
 
   protected onFocusOut(event: FocusEvent): void {
     const next = event.relatedTarget;
-    const anchor = this.host.nativeElement as HTMLElement;
+    const anchor = this.host.nativeElement;
     if (next instanceof Node && anchor.contains(next)) {
       return;
     }
@@ -133,7 +133,7 @@ export class AuTooltip {
   }
 
   private shouldShowFromFocus(): boolean {
-    return (this.host.nativeElement as HTMLElement).matches(':focus-visible');
+    return this.host.nativeElement.matches(':focus-visible');
   }
 
   private shouldShow(): boolean {

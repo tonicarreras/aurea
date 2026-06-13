@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 
 /**
  * Page navigation for list and table views.

@@ -5,8 +5,13 @@
  * Field errors: aurea-global.css
  */
 
-:host {
-  display: inline-block;
+.au-checkbox__wrapper {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--au-space-2-5);
+  cursor: pointer;
+  user-select: none;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -23,19 +28,6 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* --------------------------------------------------------------------------
-   Wrapper: flex row, checkbox + label
-   -------------------------------------------------------------------------- */
-
-.au-checkbox__wrapper {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: var(--au-space-2-5);
-  cursor: pointer;
-  user-select: none;
 }
 
 /* Label + description + error stack to the right of the box */
@@ -75,18 +67,18 @@
 }
 
 /* Checkbox size by size token */
-:host([data-au-size='sm']) .au-checkbox__element {
+input.au-checkbox__element[data-au-size='sm'] {
   width: var(--au-checkbox-size-sm);
   height: var(--au-checkbox-size-sm);
 }
 
-:host([data-au-size='md']) .au-checkbox__element,
-:host(:not([data-au-size])) .au-checkbox__element {
+input.au-checkbox__element[data-au-size='md'],
+input.au-checkbox__element:not([data-au-size]) {
   width: var(--au-checkbox-size-md);
   height: var(--au-checkbox-size-md);
 }
 
-:host([data-au-size='lg']) .au-checkbox__element {
+input.au-checkbox__element[data-au-size='lg'] {
   width: var(--au-checkbox-size-lg);
   height: var(--au-checkbox-size-lg);
 }
@@ -211,11 +203,11 @@
   user-select: none;
 }
 
-:host([data-au-size='sm']) .au-checkbox__label {
+.au-checkbox__wrapper:has(input.au-checkbox__element[data-au-size='sm']) .au-checkbox__label {
   font-size: var(--au-text-xs);
 }
 
-:host([data-au-size='lg']) .au-checkbox__label {
+.au-checkbox__wrapper:has(input.au-checkbox__element[data-au-size='lg']) .au-checkbox__label {
   font-size: var(--au-text-md);
 }
 
@@ -252,7 +244,7 @@
   box-shadow: var(--au-focus-inset-error);
 }
 
-.au-checkbox .au-field-error {
+.au-checkbox__wrapper .au-field-error {
   width: 100%;
 }
 

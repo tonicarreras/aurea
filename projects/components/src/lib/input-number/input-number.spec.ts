@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuInputNumber } from './input-number';
+import { AuInputNumber } from './au-input-number.directive';
 import {
   AuInputNumberTestHost,
   applyFieldHarnessInputs,
@@ -18,7 +18,7 @@ describe('AuInputNumber', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputNumberTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-number__input'))!
+    return fixture.debugElement.query(By.css('input.au-input-number'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -173,10 +173,9 @@ describe('AuInputNumber', () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
-    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
@@ -184,18 +183,18 @@ describe('AuInputNumber', () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-number__control-row'))!.nativeElement;
+    const input = queryInput(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-input-number__control-row'))!
+      .query(By.css('input.au-input-number'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
-    expect(row.classList.contains('au-input-number__control-row--from-tab')).toBe(true);
+    expect(input.classList.contains('au-input-number--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
-    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
     fix.detectChanges();
-    expect(row.classList.contains('au-input-number__control-row--from-tab')).toBe(false);
+    expect(input.classList.contains('au-input-number--from-tab')).toBe(false);
   });
 
   it('sets hint and aria-describedby', () => {

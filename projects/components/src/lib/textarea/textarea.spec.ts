@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuTextarea } from './textarea';
+import { AuTextarea } from './au-textarea.directive';
 import {
   AuTextareaTestHost,
   applyFieldHarnessInputs,
@@ -18,7 +18,7 @@ describe('AuTextarea', () => {
   }
 
   function queryTextarea(fixture: ComponentFixture<AuTextareaTestHost>): HTMLTextAreaElement {
-    return fixture.debugElement.query(By.css('.au-textarea__input'))!
+    return fixture.debugElement.query(By.css('textarea.au-textarea'))!
       .nativeElement as HTMLTextAreaElement;
   }
 
@@ -91,10 +91,14 @@ describe('AuTextarea', () => {
 
   it('emits blur from native blur', () => {
     const fix = createFieldFixture(AuTextareaTestHost);
+    const inj = TestBed.inject(Injector);
     let n = 0;
-    CONTROL(fix).blur.subscribe(() => n++);
+    const sub = runInInjectionContext(inj, () =>
+      outputToObservable(CONTROL(fix).blur).subscribe(() => n++),
+    );
     fix.detectChanges();
     queryTextarea(fix).dispatchEvent(new FocusEvent('blur'));
+    sub.unsubscribe();
     expect(n).toBe(1);
   });
 
@@ -238,10 +242,9 @@ describe('AuTextarea', () => {
   it('onControlRowFocusout returns when focus stays inside row', () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-textarea__control-row'))!.nativeElement;
     const ta = queryTextarea(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: ta });
-    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(ev, 'currentTarget', { value: ta, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
@@ -258,18 +261,18 @@ describe('AuTextarea', () => {
   it('applies and clears from-tab on control row', () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-textarea__control-row'))!.nativeElement;
+    const ta = queryTextarea(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-textarea__control-row'))!
+      .query(By.css('textarea.au-textarea'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
-    expect(row.classList.contains('au-textarea__control-row--from-tab')).toBe(true);
+    expect(ta.classList.contains('au-textarea--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
-    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(out, 'currentTarget', { value: ta, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
     fix.detectChanges();
-    expect(row.classList.contains('au-textarea__control-row--from-tab')).toBe(false);
+    expect(ta.classList.contains('au-textarea--from-tab')).toBe(false);
   });
 
   it('displayError returns empty when first error has no usable message or kind', () => {

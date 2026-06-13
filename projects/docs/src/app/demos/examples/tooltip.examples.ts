@@ -7,13 +7,13 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button
+    <button auButton
       variant="outline"
       [auTooltip]="t().topText"
       auTooltipPlacement="top"
     >
       {{ t().topButton }}
-    </au-button>
+    </button>
   `,
 })
 export class ExampleTooltipTopDemo {
@@ -25,13 +25,13 @@ export class ExampleTooltipTopDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuTooltip],
   template: `
-    <au-button
+    <button auButton
       variant="ghost"
       [auTooltip]="t().endText"
       auTooltipPlacement="end"
     >
       {{ t().endButton }}
-    </au-button>
+    </button>
   `,
 })
 export class ExampleTooltipRightDemo {

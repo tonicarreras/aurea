@@ -1,10 +1,9 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
+  Directive,
   afterRenderEffect,
   computed,
   inject,
+  DestroyRef,
   input,
   model,
   output,
@@ -15,23 +14,46 @@ import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
-import { queryFieldNative } from '../form-field/form-field';
+import { bindHostDomEvent } from '../au-host-dom-event';
+import { injectHostRef } from '../au-host-element';
 import { tabFocusState } from '../au-tab-focus-state';
-import { AuIcon } from '../icon/icon';
 
-/** Password field with optional reveal toggle. Project inside {@link AuFormField}. */
-@Component({
-  selector: 'au-input-password',
-  templateUrl: './input-password.html',
-  styleUrl: './input-password.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuIcon],
+type TextareaResize = 'none' | 'vertical' | 'both';
+
+/**
+ * Multiline control on a native `<textarea>`.
+ * Project inside {@link AuFormField}.
+ */
+@Directive({
+  selector: 'textarea[auTextarea]',
   host: {
-    class: 'au-input-password',
+    class: 'au-textarea',
+    '[class.au-textarea--from-tab]': 'fieldFocusByTab()',
     '[attr.data-au-size]': 'size()',
+    '[id]': 'controlId()',
+    '[attr.name]': 'name() || null',
+    '[attr.rows]': 'rows()',
+    '[attr.cols]': 'cols() ?? null',
+    '[attr.placeholder]': 'placeholder() || null',
+    '[attr.autocomplete]': 'autocomplete() ?? null',
+    '[readOnly]': 'readOnly()',
+    '[attr.required]': 'required() ? true : null',
+    '[attr.minlength]': 'minLength() ?? null',
+    '[attr.maxlength]': 'maxLength() ?? null',
+    '[attr.wrap]': 'wrap() === "hard" ? "hard" : "soft"',
+    '[attr.spellcheck]': 'spellcheck() === true ? true : spellcheck() === false ? false : null',
+    '[style.resize]': 'resize()',
+    '[attr.aria-invalid]': 'effectiveInvalid() ? "true" : "false"',
+    '[attr.aria-errormessage]': 'effectiveInvalid() ? formField.errorId() : null',
+    '[attr.aria-describedby]': 'ariaDescribedBy() ?? null',
+    '[attr.aria-required]': 'required() ? "true" : null',
+    '[disabled]': 'disabled()',
+    '(input)': 'onInput($event)',
+    '(focusin)': 'onControlRowFocusin()',
+    '(focusout)': 'onControlRowFocusout($event)',
   },
 })
-export class AuInputPassword implements FormValueControl<string | null> {
+export class AuTextarea implements FormValueControl<string | null> {
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
@@ -46,16 +68,18 @@ export class AuInputPassword implements FormValueControl<string | null> {
   readonly autocomplete = input<string | undefined>(undefined);
   readonly minLength = input<number | undefined>(undefined);
   readonly maxLength = input<number | undefined>(undefined);
+  readonly rows = input(4);
+  readonly cols = input<number | undefined>(undefined);
+  readonly resize = input<TextareaResize>('vertical');
+  readonly spellcheck = input<boolean | undefined>(undefined);
+  readonly wrap = input<'soft' | 'hard'>('soft');
   readonly size = input<AuSize>('md');
-  readonly showRevealToggle = input(true);
-  readonly revealLabelShow = input('Show password');
-  readonly revealLabelHide = input('Hide password');
 
   readonly blur = output<void>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
-  protected readonly revealed = signal(false);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly host = injectHostRef<HTMLTextAreaElement>();
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -65,13 +89,6 @@ export class AuInputPassword implements FormValueControl<string | null> {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
   });
-
-  readonly inputType = computed(() => (this.revealed() ? 'text' : 'password'));
-  readonly hasRevealUi = computed(() => this.showRevealToggle());
-
-  readonly revealAriaLabel = computed(() =>
-    this.revealed() ? this.revealLabelHide() : this.revealLabelShow(),
-  );
 
   readonly ariaDescribedBy = computed((): string | null => {
     const ids: string[] = [];
@@ -93,6 +110,7 @@ export class AuInputPassword implements FormValueControl<string | null> {
   });
 
   constructor() {
+    bindHostDomEvent(this.host, this.destroyRef, 'blur', () => this.onBlurHost());
     afterRenderEffect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
@@ -100,13 +118,21 @@ export class AuInputPassword implements FormValueControl<string | null> {
         required: () => this.required(),
       }),
     );
+
+    afterRenderEffect(() => {
+      const el = this.host.nativeElement;
+      const display = this.inputDisplay();
+      if (el.value !== display) {
+        el.value = display;
+      }
+    });
   }
 
   onInput(event: Event): void {
-    if (this.disabled() || this.readOnly()) {
+    if (this.disabled()) {
       return;
     }
-    const raw = (event.target as HTMLInputElement).value;
+    const raw = (event.target as HTMLTextAreaElement).value;
     if (raw === '') {
       this.value.set(null);
       return;
@@ -124,24 +150,14 @@ export class AuInputPassword implements FormValueControl<string | null> {
   }
 
   onControlRowFocusout(event: FocusEvent): void {
-    if (!(event.currentTarget instanceof HTMLElement)) {
-      return;
-    }
     const to = event.relatedTarget;
-    if (to != null && to instanceof Node && event.currentTarget.contains(to)) {
+    if (to != null && to instanceof Node && this.host.nativeElement.contains(to)) {
       return;
     }
     this.fieldFocusByTab.set(false);
   }
 
-  toggleReveal(): void {
-    if (this.disabled() || this.readOnly()) {
-      return;
-    }
-    this.revealed.update((v) => !v);
-  }
-
   focus(): void {
-    queryFieldNative<HTMLInputElement>(this.host, '.au-input-password__input').focus();
+    this.host.nativeElement.focus();
   }
 }

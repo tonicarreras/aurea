@@ -1,9 +1,9 @@
 /**
- * Switch — pill toggle from native checkbox + role="switch".
+ * Switch — pill toggle from native button + role="switch".
  * Field errors: aurea-global.css
  */
 
-:host {
+.au-switch__field {
   display: block;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
@@ -56,43 +56,32 @@
   font-weight: var(--au-weight-semibold);
 }
 
-.au-switch__control-row {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.au-switch__control-row:focus-within {
+button.au-switch:focus-visible {
   outline: none;
 }
 
-.au-switch__control-row:focus-within:not(.au-switch__control-row--from-tab)
-  .au-switch__element:not(:disabled) {
+button.au-switch:focus-visible:not(.au-switch--from-tab):not(:disabled) {
   border-color: var(--au-color-focus-ring);
   box-shadow: var(--au-focus-inset);
 }
 
-.au-switch__control-row--from-tab:focus-within .au-switch__element:not(:disabled) {
+button.au-switch.au-switch--from-tab:focus-visible:not(:disabled) {
   border-color: var(--au-color-switch-track-off-border);
   box-shadow: none;
   outline: var(--au-focus-tab);
   outline-offset: var(--au-focus-tab-offset);
 }
 
-.au-switch__control-row--invalid .au-switch__element:not(:disabled) {
+button.au-switch.au-switch--invalid:not(:disabled) {
   border-color: var(--au-color-form-error);
   box-shadow: var(--au-focus-inset-error);
 }
 
-.au-switch__control-row--invalid .au-switch__element:checked:not(:disabled) {
+button.au-switch.au-switch--invalid:checked:not(:disabled) {
   box-shadow: var(--au-focus-inset-error);
 }
 
-.au-switch__element {
+button.au-switch {
   appearance: none;
   -webkit-appearance: none;
   margin: 0;
@@ -110,32 +99,32 @@
     box-shadow var(--au-duration-short) var(--au-ease-in-out);
 }
 
-.au-switch__element:not(:checked):hover:not(:disabled) {
+button.au-switch:not([aria-checked='true']):hover:not(:disabled) {
   background: var(--au-color-switch-track-off-hover);
   border-color: var(--au-color-switch-track-off-border);
 }
 
-:host([data-au-size='sm']) .au-switch__element {
+button.au-switch[data-au-size='sm'] {
   width: 2.25rem;
   height: 1.25rem;
 }
 
-:host([data-au-size='lg']) .au-switch__element {
+button.au-switch[data-au-size='lg'] {
   width: 3.25rem;
   height: 1.75rem;
 }
 
-.au-switch__element:checked {
+button.au-switch[aria-checked='true'] {
   background: var(--au-color-action-primary);
   border-color: var(--au-color-action-primary);
 }
 
-.au-switch__element:checked::after {
+button.au-switch[aria-checked='true']::after {
   background: var(--au-color-text-on-solid);
   box-shadow: none;
 }
 
-.au-switch__element::after {
+button.au-switch::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -149,48 +138,43 @@
   transition: transform var(--au-duration-short) var(--au-ease-in-out);
 }
 
-:host([data-au-size='sm']) .au-switch__element::after {
+button.au-switch[data-au-size='sm']::after {
   width: 14px;
   height: 14px;
   inset-inline-start: 2px;
 }
 
-:host([data-au-size='lg']) .au-switch__element::after {
+button.au-switch[data-au-size='lg']::after {
   width: 22px;
   height: 22px;
   inset-inline-start: 3px;
 }
 
-.au-switch__element:checked::after {
+button.au-switch[aria-checked='true']::after {
   transform: translate(1.25rem, -50%);
 }
 
-:host-context([dir='rtl']) .au-switch__element:checked::after {
+[dir='rtl'] button.au-switch[aria-checked='true']::after {
   transform: translate(-1.25rem, -50%);
 }
 
-:host([data-au-size='sm']) .au-switch__element:checked::after {
+button.au-switch[data-au-size='sm'][aria-checked='true']::after {
   transform: translate(0.85rem, -50%);
 }
 
-:host-context([dir='rtl']):host([data-au-size='sm']) .au-switch__element:checked::after {
+[dir='rtl'] button.au-switch[data-au-size='sm'][aria-checked='true']::after {
   transform: translate(-0.85rem, -50%);
 }
 
-:host([data-au-size='lg']) .au-switch__element:checked::after {
+button.au-switch[data-au-size='lg'][aria-checked='true']::after {
   transform: translate(1.55rem, -50%);
 }
 
-:host-context([dir='rtl']):host([data-au-size='lg']) .au-switch__element:checked::after {
+[dir='rtl'] button.au-switch[data-au-size='lg'][aria-checked='true']::after {
   transform: translate(-1.55rem, -50%);
 }
 
-.au-switch__element:focus,
-.au-switch__element:focus-visible {
-  outline: none;
-}
-
-.au-switch__element:disabled {
+button.au-switch:disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }
@@ -203,8 +187,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .au-switch__element,
-  .au-switch__element::after {
+  button.au-switch,
+  button.au-switch::after {
     transition: none;
   }
 }

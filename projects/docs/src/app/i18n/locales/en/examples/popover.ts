@@ -13,7 +13,7 @@ export const examples: ComponentDocExample[] = [
     code: `import { AuPopover, AuPopoverTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-popover [(open)]="open">
-  <au-button auPopoverTrigger>Filters</au-button>
+  <button auButton auPopoverTrigger>Filters</button>
   <p>Compact panel content.</p>
 </au-popover>`,
   },
@@ -22,7 +22,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Align the panel to `start` or `end` when space is tight on the inline axis.',
     demoComponent: ExamplePopoverPlacementDemo,
     code: `<au-popover [(open)]="open" placement="end">
-  <au-button auPopoverTrigger>Filters</au-button>
+  <button auButton auPopoverTrigger>Filters</button>
   <p>Panel content</p>
 </au-popover>`,
   },
@@ -31,9 +31,9 @@ export const examples: ComponentDocExample[] = [
     description: 'Project form controls inside the panel; dismiss with Apply or outside click.',
     demoComponent: ExamplePopoverFiltersDemo,
     code: `<au-popover [(open)]="filtersOpen">
-  <au-button auPopoverTrigger>Filters</au-button>
+  <button auButton auPopoverTrigger>Filters</button>
   <au-form-field label="Status">
-    <au-checkbox>Active only</au-checkbox>
+    <input type="checkbox" auCheckbox>Active only
   </au-form-field>
 </au-popover>`,
   },
@@ -41,9 +41,9 @@ export const examples: ComponentDocExample[] = [
     title: 'Controlled open',
     description: 'Open from elsewhere with `[(open)]` — useful for contextual help buttons.',
     demoComponent: ExamplePopoverControlledDemo,
-    code: `<au-button type="button" (click)="open.set(true)">Open help</au-button>
+    code: `<button auButton type="button" (click)="open.set(true)">Open help</button>
 <au-popover [(open)]="open">
-  <au-button auPopoverTrigger>Help</au-button>
+  <button auButton auPopoverTrigger>Help</button>
   <p>Short help text.</p>
 </au-popover>`,
   },

@@ -17,7 +17,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
     >
       <div class="docs-code-panel__bar">
         <div class="docs-code-panel__bar-start">
-          <au-button
+          <button auButton
             variant="ghost"
             size="sm"
             type="button"
@@ -33,11 +33,11 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             @if (showLanguage() && language() !== 'text') {
               <span class="docs-code-panel__lang">{{ languageLabel() }}</span>
             }
-          </au-button>
+          </button>
         </div>
 
         @if (expanded()) {
-          <au-button
+          <button auButton
             variant="outline"
             size="sm"
             type="button"
@@ -47,7 +47,7 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
             [attr.aria-label]="copied() ? copyDoneAriaLabel() : copyAriaLabel()"
           >
             {{ copied() ? copyDoneButtonLabel() : copyButtonLabel() }}
-          </au-button>
+          </button>
         }
       </div>
 

@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuInputPassword } from './input-password';
+import { AuInputPassword } from './au-input-password.directive';
 import {
   AuInputPasswordTestHost,
   applyFieldHarnessInputs,
@@ -18,7 +18,7 @@ describe('AuInputPassword', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputPasswordTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-password__input'))!
+    return fixture.debugElement.query(By.css('input.au-input-password'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -112,21 +112,22 @@ describe('AuInputPassword', () => {
 
   it('onControlRowFocusout handles focus leaving the row', () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
-    const row = fix.debugElement.query(By.css('.au-input-password__control-row'))!.nativeElement;
+    const input = queryInput(fix);
     CONTROL(fix).onControlRowFocusin();
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
-    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
     fix.detectChanges();
   });
 
   it('onControlRowFocusout ignores non-HTMLElement and internal focus moves', () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
+    fix.detectChanges();
     CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
-    const row = fix.debugElement.query(By.css('.au-input-password__control-row'))!.nativeElement;
+    const input = queryInput(fix);
     const reveal = fix.debugElement.query(By.css('.au-input-password__reveal'))!.nativeElement;
     const ev = new FocusEvent('focusout', { relatedTarget: reveal });
-    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 

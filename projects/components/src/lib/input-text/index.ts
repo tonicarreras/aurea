@@ -1,1 +1,1 @@
-export * from './input-text';
+export { AuInputText } from './au-input-text.directive';

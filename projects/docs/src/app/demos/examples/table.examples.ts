@@ -212,7 +212,7 @@ export class ExampleTableLoadingDemo {
         size="sm"
         [headingLevel]="3"
       >
-        <au-button type="button">{{ t().empty.action }}</au-button>
+        <button auButton type="button">{{ t().empty.action }}</button>
       </au-empty-state>
     </au-table>
   `,

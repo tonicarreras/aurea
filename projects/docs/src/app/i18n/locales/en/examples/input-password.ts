@@ -9,7 +9,7 @@ export const examples: ComponentDocExample[] = [
     title: 'Sign in',
     demoComponent: ExampleInputPasswordBasicDemo,
     code: `<au-form-field label="Password" hint="Use at least 12 characters.">
-  <au-input-password autocomplete="current-password" />
+  <input auInputPassword autocomplete="current-password" />
 </au-form-field>`,
   },
   {
@@ -17,7 +17,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Use `autocomplete="new-password"` for account creation flows.',
     demoComponent: ExampleInputPasswordSignUpDemo,
     code: `<au-form-field label="Create password" [required]="true">
-  <au-input-password autocomplete="new-password" [required]="true" />
+  <input auInputPassword autocomplete="new-password" [required]="true" />
 </au-form-field>`,
   },
 ];

@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { expect, userEvent, within } from 'storybook/test';
 
 import { AuBadge } from '../badge/badge';
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuEmptyState } from '../empty-state/empty-state';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
@@ -202,7 +202,7 @@ export const Empty: Story = {
           size="sm"
           [headingLevel]="3"
         >
-          <au-button type="button">Add user</au-button>
+          <button auButton type="button">Add user</button>
         </au-empty-state>
       </au-table>
     `,

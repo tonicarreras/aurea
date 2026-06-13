@@ -17,11 +17,11 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Navigation between views → links (`<a>`) or tabs.",
-        "Toggle an on/off setting → `au-switch`."
+        "Toggle an on/off setting → `button[auSwitch]`."
       ],
       "anatomy": [
         {
-          "region": "Host `au-button`",
+          "region": "Host `button[auButton]`",
           "detail": "Attributes `data-au-variant` and `data-au-size`."
         },
         {
@@ -41,7 +41,7 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     "button-group": {
       "intro": [
-        "Layout wrapper that groups related `au-button` actions with `role=\"group\"`.",
+        "Layout wrapper that groups related `button[auButton]` actions with `role=\"group\"`.",
         "Default **`attached`** mode shares borders between buttons; set `[attached]=\"false\"` for spaced actions."
       ],
       "whenToUse": [
@@ -51,7 +51,7 @@ export const STORY_OVERVIEW_SOURCE = {
       "whenNotToUse": [
         "Exclusive visible choice in a form → `au-radio-group` or `au-tabs` `variant=\"contained\"`.",
         "Multi-select filters → `au-chip-group`.",
-        "Single action → lone `au-button`."
+        "Single action → lone `button[auButton]`."
       ],
       "anatomy": [
         {
@@ -59,13 +59,13 @@ export const STORY_OVERVIEW_SOURCE = {
           "detail": "`role=\"group\"` with `ariaLabel` or `ariaLabelledBy`."
         },
         {
-          "region": "`au-button`",
+          "region": "`button[auButton]`",
           "detail": "Projected children; variants and clicks stay on each button."
         }
       ],
       "accessibility": [
         "Name the group when more than one button is present.",
-        "Each `au-button` keeps its own accessible name and keyboard behavior."
+        "Each `button[auButton]` keeps its own accessible name and keyboard behavior."
       ],
       "keyboard": [
         "Tab moves between buttons in document order."
@@ -73,7 +73,7 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     "form-field": {
       "intro": [
-        "Shared label, hint, and error chrome around a projected control (`au-input-text`, `au-select`, `au-radio-group`, etc.).",
+        "Shared label, hint, and error chrome around a projected control (`input[auInputText]`, `au-select`, `au-radio-group`, etc.).",
         "Exposes `AU_FORM_FIELD` via DI so the child gets the same `controlId`, `hintId`, and `errorId` for ARIA wiring.",
         "Checkbox and switch keep their inline `label` on the control; use `au-form-field` for hint and error only."
       ],
@@ -83,7 +83,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Stable ids with optional `[controlIdInput]`."
       ],
       "whenNotToUse": [
-        "Checkbox with only an inline label and no hint/error → bare `au-checkbox`.",
+        "Checkbox with only an inline label and no hint/error → bare `input[type=checkbox][auCheckbox]`.",
         "Non-form layout → do not wrap."
       ],
       "anatomy": [
@@ -153,8 +153,8 @@ export const STORY_OVERVIEW_SOURCE = {
         "Validation via signal forms or manual `errorMessage` / `invalid`."
       ],
       "whenNotToUse": [
-        "Password fields → `au-input-password`.",
-        "Multi-line text → `au-textarea`.",
+        "Password fields → `input[auInputPassword]`.",
+        "Multi-line text → `textarea[auTextarea]`.",
         "Pick from a list → `au-select` or `au-autocomplete`."
       ],
       "anatomy": [
@@ -190,7 +190,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Content that does not fit on one line."
       ],
       "whenNotToUse": [
-        "Single line → `au-input-text`.",
+        "Single line → `input[auInputText]`.",
         "Rich editor → third-party component."
       ],
       "anatomy": [
@@ -218,7 +218,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "“Select all” pattern with indeterminate state on the parent."
       ],
       "whenNotToUse": [
-        "Single on/off preference → `au-switch`.",
+        "Single on/off preference → `button[auSwitch]`.",
         "Single choice in a list → `au-radio-group`."
       ],
       "anatomy": [
@@ -248,7 +248,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Mutually exclusive options → `au-radio-group`.",
-        "Legal acceptance → `au-checkbox`."
+        "Legal acceptance → `input[type=checkbox][auCheckbox]`."
       ],
       "anatomy": [
         {
@@ -307,7 +307,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Short fixed list → `au-select`.",
-        "Free text without a list → `au-input-text`."
+        "Free text without a list → `input[auInputText]`."
       ],
       "anatomy": [
         {
@@ -459,7 +459,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Settings with a visible min/max and coarse steps."
       ],
       "whenNotToUse": [
-        "Exact numeric entry → `au-input-number`.",
+        "Exact numeric entry → `input[auInputNumber]`.",
         "Discrete choices → radio group or select."
       ],
       "anatomy": [
@@ -683,7 +683,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "accessibility": [
         "Use a heading in the header for hierarchy.",
-        "Footer actions with real buttons (`au-button`)."
+        "Footer actions with real buttons (`button[auButton]`)."
       ]
     },
     "tabs": {
@@ -728,7 +728,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "When each value should stay visible and be removed individually."
       ],
       "whenNotToUse": [
-        "Single free-text value → `au-input-text` or `au-textarea`.",
+        "Single free-text value → `input[auInputText]` or `textarea[auTextarea]`.",
         "Predefined filters → `au-chip-group`.",
         "Removable list without typing → `au-list` + `au-chip`."
       ],
@@ -762,7 +762,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Multi-select categories in a toolbar."
       ],
       "whenNotToUse": [
-        "Primary action → `au-button`.",
+        "Primary action → `button[auButton]`.",
         "Primary navigation → tabs or links.",
         "Selectable filters in a row → `au-chip-group`.",
         "Removable tag list → `au-list`."
@@ -903,7 +903,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Custom brand icons → your own SVG.",
-        "Icon-only button → set `label` on `au-button`.",
+        "Icon-only button → set `label` on `button[auButton]`.",
         "Standalone loading → `au-spinner`."
       ],
       "anatomy": [
@@ -926,7 +926,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Profile header placeholder."
       ],
       "whenNotToUse": [
-        "Spinner on a button → `au-button` `loading`.",
+        "Spinner on a button → `button[auButton]` `loading`.",
         "Inline loading indicator → `au-spinner`.",
         "Empty state → visible copy, not skeleton."
       ],
@@ -950,7 +950,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Visible status copy via `label` when the wait needs context."
       ],
       "whenNotToUse": [
-        "Button in-flight state → `au-button` `loading`.",
+        "Button in-flight state → `button[auButton]` `loading`.",
         "Known completion ratio → `au-progress`.",
         "Content placeholders → `au-skeleton`."
       ],
@@ -1165,7 +1165,7 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     "link": {
       "intro": [
-        "Inline link styled with Aurea link tokens on native `<a auLink>` or `<au-link>`.",
+        "Inline link styled with Aurea link tokens on native `<a auLink>` or `<a auLink>`.",
         "Supports default and subtle variants; `external` adds `target=\"_blank\"` and `rel=\"noopener noreferrer\"`."
       ],
       "whenToUse": [
@@ -1173,7 +1173,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "External references with safe `rel` when `external` is true."
       ],
       "whenNotToUse": [
-        "Primary actions → `au-button`.",
+        "Primary actions → `button[auButton]`.",
         "Breadcrumb trail → `au-breadcrumb` items with `href`."
       ],
       "anatomy": [
@@ -1285,7 +1285,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
         {
           "region": "Prev / next",
-          "detail": "`au-button` ghost controls."
+          "detail": "`button[auButton]` ghost controls."
         },
         {
           "region": "Page buttons",
@@ -1311,7 +1311,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Loading placeholders for content → `au-skeleton`.",
-        "Button in-flight state → `au-button` `loading`."
+        "Button in-flight state → `button[auButton]` `loading`."
       ],
       "anatomy": [
         {
@@ -1332,7 +1332,7 @@ export const STORY_OVERVIEW_SOURCE = {
       "intro": [
         "Material-style data table: pass `[data]` and declare columns with `au-table-column`. Optional `title`, `description`, `striped`, `compact`, `stickyHeader`, and `loading`.",
         "Sort with `sortable` columns, `[(sort)]`, and `clientSort`. Sort icons use shared `au-icon` glyphs (`sort-asc`, `sort-desc`, `sort-neutral`).",
-        "Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `au-checkbox`.",
+        "Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `input[type=checkbox][auCheckbox]`.",
         "Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.",
         "Empty data: project `au-empty-state` as a child (use `size=\"sm\"` and `headingLevel=\"3\"`); otherwise `emptyMessage` is shown."
       ],
@@ -1394,7 +1394,7 @@ export const STORY_OVERVIEW_SOURCE = {
       "anatomy": [
         {
           "region": "Trigger",
-          "detail": "Element with `auTooltip` (e.g. `au-button`)."
+          "detail": "Element with `auTooltip` (e.g. `button[auButton]`)."
         },
         {
           "region": "Tooltip bubble",
@@ -1420,11 +1420,11 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Navegación entre vistas → enlaces (`<a>`) o tabs.",
-        "Conmutar un ajuste on/off → `au-switch`."
+        "Conmutar un ajuste on/off → `button[auSwitch]`."
       ],
       "anatomy": [
         {
-          "region": "Host `au-button`",
+          "region": "Host `button[auButton]`",
           "detail": "Atributos `data-au-variant` y `data-au-size`."
         },
         {
@@ -1444,7 +1444,7 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     "button-group": {
       "intro": [
-        "Contenedor de layout que agrupa acciones `au-button` relacionadas con `role=\"group\"`.",
+        "Contenedor de layout que agrupa acciones `button[auButton]` relacionadas con `role=\"group\"`.",
         "Por defecto **`attached`** une bordes entre botones; `[attached]=\"false\"` los separa."
       ],
       "whenToUse": [
@@ -1454,7 +1454,7 @@ export const STORY_OVERVIEW_SOURCE = {
       "whenNotToUse": [
         "Elección exclusiva en formulario → `au-radio-group` o `au-tabs` `variant=\"contained\"`.",
         "Filtros multi-selección → `au-chip-group`.",
-        "Una sola acción → `au-button` suelto."
+        "Una sola acción → `button[auButton]` suelto."
       ],
       "anatomy": [
         {
@@ -1462,13 +1462,13 @@ export const STORY_OVERVIEW_SOURCE = {
           "detail": "`role=\"group\"` con `ariaLabel` o `ariaLabelledBy`."
         },
         {
-          "region": "`au-button`",
+          "region": "`button[auButton]`",
           "detail": "Hijos proyectados; variantes y clics en cada botón."
         }
       ],
       "accessibility": [
         "Nombra el grupo cuando hay más de un botón.",
-        "Cada `au-button` conserva su nombre accesible y teclado propio."
+        "Cada `button[auButton]` conserva su nombre accesible y teclado propio."
       ],
       "keyboard": [
         "Tab recorre los botones en orden de documento."
@@ -1476,7 +1476,7 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     "form-field": {
       "intro": [
-        "Cromado compartido de etiqueta, hint y error alrededor de un control proyectado (`au-input-text`, `au-select`, `au-radio-group`, etc.).",
+        "Cromado compartido de etiqueta, hint y error alrededor de un control proyectado (`input[auInputText]`, `au-select`, `au-radio-group`, etc.).",
         "Expone `AU_FORM_FIELD` por DI para que el hijo comparta `controlId`, `hintId` y `errorId` en ARIA.",
         "Checkbox y switch mantienen `label` inline en el control; usa `au-form-field` solo para hint y error."
       ],
@@ -1486,7 +1486,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Ids estables con `[controlIdInput]` opcional."
       ],
       "whenNotToUse": [
-        "Checkbox solo con etiqueta inline y sin hint/error → `au-checkbox` sin wrapper.",
+        "Checkbox solo con etiqueta inline y sin hint/error → `input[type=checkbox][auCheckbox]` sin wrapper.",
         "Layout que no es formulario → no envolver."
       ],
       "anatomy": [
@@ -1556,8 +1556,8 @@ export const STORY_OVERVIEW_SOURCE = {
         "Validación con signal forms o `errorMessage` / `invalid` manuales."
       ],
       "whenNotToUse": [
-        "Texto multilínea → `au-textarea`.",
-        "Contraseña → `au-input-password`.",
+        "Texto multilínea → `textarea[auTextarea]`.",
+        "Contraseña → `input[auInputPassword]`.",
         "Elección en lista → `au-select` o `au-autocomplete`."
       ],
       "anatomy": [
@@ -1593,7 +1593,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Contenido que no cabe en una sola línea."
       ],
       "whenNotToUse": [
-        "Una sola línea → `au-input-text`.",
+        "Una sola línea → `input[auInputText]`.",
         "Editor rico → componente de terceros."
       ],
       "anatomy": [
@@ -1621,7 +1621,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Patrón «seleccionar todo» con estado indeterminado en el padre."
       ],
       "whenNotToUse": [
-        "Un solo on/off de configuración → `au-switch`.",
+        "Un solo on/off de configuración → `button[auSwitch]`.",
         "Elección única en lista → `au-radio-group`."
       ],
       "anatomy": [
@@ -1651,7 +1651,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Varias opciones excluyentes → `au-radio-group`.",
-        "Aceptar legal → `au-checkbox`."
+        "Aceptar legal → `input[type=checkbox][auCheckbox]`."
       ],
       "anatomy": [
         {
@@ -1710,7 +1710,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Lista corta fija → `au-select`.",
-        "Texto libre sin lista → `au-input-text`."
+        "Texto libre sin lista → `input[auInputText]`."
       ],
       "anatomy": [
         {
@@ -1862,7 +1862,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Ajustes con min/max visibles y pasos gruesos."
       ],
       "whenNotToUse": [
-        "Entrada numérica exacta → `au-input-number`.",
+        "Entrada numérica exacta → `input[auInputNumber]`.",
         "Opciones discretas → radio group o select."
       ],
       "anatomy": [
@@ -2086,7 +2086,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "accessibility": [
         "Usa heading en cabecera para jerarquía.",
-        "Acciones en footer con botones reales (`au-button`)."
+        "Acciones en footer con botones reales (`button[auButton]`)."
       ]
     },
     "tabs": {
@@ -2131,7 +2131,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Cuando cada valor debe permanecer visible y eliminarse individualmente."
       ],
       "whenNotToUse": [
-        "Un solo valor de texto libre → `au-input-text` o `au-textarea`.",
+        "Un solo valor de texto libre → `input[auInputText]` o `textarea[auTextarea]`.",
         "Filtros predefinidos → `au-chip-group`.",
         "Lista removible sin teclear → `au-list` + `au-chip`."
       ],
@@ -2165,7 +2165,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Selección múltiple de categorías en toolbar."
       ],
       "whenNotToUse": [
-        "Acción principal → `au-button`.",
+        "Acción principal → `button[auButton]`.",
         "Navegación principal → tabs o enlaces.",
         "Filtros seleccionables → `au-chip-group`.",
         "Lista de tags removibles → `au-list`."
@@ -2306,7 +2306,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Iconos de marca → SVG propio.",
-        "Botón solo icono → `label` en `au-button`.",
+        "Botón solo icono → `label` en `button[auButton]`.",
         "Carga standalone → `au-spinner`."
       ],
       "anatomy": [
@@ -2329,7 +2329,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Cabecera de perfil provisional."
       ],
       "whenNotToUse": [
-        "Spinner en botón → `au-button` `loading`.",
+        "Spinner en botón → `button[auButton]` `loading`.",
         "Indicador inline → `au-spinner`.",
         "Estado vacío → texto visible."
       ],
@@ -2353,7 +2353,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Copy de estado visible con `label` cuando hace falta contexto."
       ],
       "whenNotToUse": [
-        "Estado de botón en vuelo → `au-button` `loading`.",
+        "Estado de botón en vuelo → `button[auButton]` `loading`.",
         "Porcentaje conocido → `au-progress`.",
         "Placeholders de contenido → `au-skeleton`."
       ],
@@ -2568,7 +2568,7 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     "link": {
       "intro": [
-        "Enlace inline con tokens Aurea en `<a auLink>` o `<au-link>`.",
+        "Enlace inline con tokens Aurea en `<a auLink>` o `<a auLink>`.",
         "Variantes default y subtle; `external` añade `target=\"_blank\"` y `rel=\"noopener noreferrer\"`."
       ],
       "whenToUse": [
@@ -2576,7 +2576,7 @@ export const STORY_OVERVIEW_SOURCE = {
         "Referencias externas con `rel` seguro cuando `external` es true."
       ],
       "whenNotToUse": [
-        "Acciones principales → `au-button`.",
+        "Acciones principales → `button[auButton]`.",
         "Ruta de migas → ítems de `au-breadcrumb` con `href`."
       ],
       "anatomy": [
@@ -2688,7 +2688,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
         {
           "region": "Anterior / siguiente",
-          "detail": "Controles `au-button` ghost."
+          "detail": "Controles `button[auButton]` ghost."
         },
         {
           "region": "Botones de página",
@@ -2714,7 +2714,7 @@ export const STORY_OVERVIEW_SOURCE = {
       ],
       "whenNotToUse": [
         "Placeholders de contenido → `au-skeleton`.",
-        "Estado de botón en vuelo → `au-button` `loading`."
+        "Estado de botón en vuelo → `button[auButton]` `loading`."
       ],
       "anatomy": [
         {
@@ -2735,7 +2735,7 @@ export const STORY_OVERVIEW_SOURCE = {
       "intro": [
         "Tabla estilo Material: `[data]` + columnas `au-table-column`. Opcional `title`, `description`, `striped`, `compact`, `stickyHeader` y `loading`.",
         "Orden con columnas `sortable`, `[(sort)]` y `clientSort`. Los iconos de orden usan `au-icon` (`sort-asc`, `sort-desc`, `sort-neutral`).",
-        "Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `au-checkbox`.",
+        "Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `input[type=checkbox][auCheckbox]`.",
         "Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.",
         "Datos vacíos: proyecta `au-empty-state` como hijo (`size=\"sm\"`, `headingLevel=\"3\"`); si no, se muestra `emptyMessage`."
       ],
@@ -2797,7 +2797,7 @@ export const STORY_OVERVIEW_SOURCE = {
       "anatomy": [
         {
           "region": "Disparador",
-          "detail": "Elemento con `auTooltip` (p. ej. `au-button`)."
+          "detail": "Elemento con `auTooltip` (p. ej. `button[auButton]`)."
         },
         {
           "region": "Globo",

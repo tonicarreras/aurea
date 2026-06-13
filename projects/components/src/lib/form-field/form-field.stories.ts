@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
-import { AuInputText } from '../input-text/input-text';
+import { AuInputText } from '../input-text';
 import { AuFormField } from './form-field';
 
 /** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */
@@ -55,7 +55,7 @@ export const WithInput: Story = {
           [required]="required"
           [controlIdInput]="controlIdInput"
         >
-          <au-input-text placeholder="you@example.com" />
+          <input auInputText placeholder="you@example.com" />
         </au-form-field>
       </div>
     `,

@@ -50,7 +50,7 @@ export class ExampleCardOutlinedDemo {
       <h3 auCardHeader>{{ t().footerTitle }}</h3>
       <p>{{ t().footerBody }}</p>
       <div auCardFooter>
-        <au-button size="sm">{{ t().footerAction }}</au-button>
+        <button auButton size="sm">{{ t().footerAction }}</button>
       </div>
     </au-card>
   `,

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AU_MENU } from './au-menu.token';
 import { AuMenu } from './menu';
 import { AuMenuItem } from './menu-item';
@@ -13,7 +13,7 @@ import { AuMenuTrigger } from './au-menu-trigger.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
-      <au-button auMenuTrigger>Open</au-button>
+      <button auButton auMenuTrigger>Open</button>
       <au-menu-item
         [disabled]="disabled"
         (select)="selected = true"

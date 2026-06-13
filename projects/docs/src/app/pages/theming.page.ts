@@ -114,30 +114,29 @@ import { DocsTokenList } from '../shared/docs-token-list';
             role="group"
             [attr.aria-label]="i18n.messages().themes.previewThemeLabel"
           >
-            <au-button
+            <button auButton
               size="sm"
               [variant]="appearanceTheme() === 'light' ? 'primary' : 'outline'"
               type="button"
               (click)="appearanceTheme.set('light')"
             >
               {{ i18n.messages().themes.previewLight }}
-            </au-button>
-            <au-button
+            </button>
+            <button auButton
               size="sm"
               [variant]="appearanceTheme() === 'dark' ? 'primary' : 'outline'"
               type="button"
               (click)="appearanceTheme.set('dark')"
             >
               {{ i18n.messages().themes.previewDark }}
-            </au-button>
+            </button>
           </div>
           <div class="docs-theme-preview__a11y">
-            <au-switch
+            <button type="button" auSwitch
               size="sm"
               [label]="i18n.messages().themes.previewHighContrast"
               [checked]="highContrastEnabled()"
-              (checkedChange)="highContrastEnabled.set($event)"
-            />
+              (checkedChange)="highContrastEnabled.set($event)"><span class="au-sr-only">{{ i18n.messages().themes.previewHighContrast }}</span></button>
             <p class="docs-theme-preview__a11y-hint">
               {{ i18n.messages().themes.previewHighContrastHint }}
             </p>
@@ -147,30 +146,30 @@ import { DocsTokenList } from '../shared/docs-token-list';
             role="group"
             [attr.aria-label]="i18n.messages().themes.previewDensityLabel"
           >
-            <au-button
+            <button auButton
               size="sm"
               [variant]="previewDensity() === 'compact' ? 'primary' : 'outline'"
               type="button"
               (click)="previewDensity.set('compact')"
             >
               {{ i18n.messages().themes.previewDensityCompact }}
-            </au-button>
-            <au-button
+            </button>
+            <button auButton
               size="sm"
               [variant]="previewDensity() === 'comfortable' ? 'primary' : 'outline'"
               type="button"
               (click)="previewDensity.set('comfortable')"
             >
               {{ i18n.messages().themes.previewDensityComfortable }}
-            </au-button>
-            <au-button
+            </button>
+            <button auButton
               size="sm"
               [variant]="previewDensity() === 'spacious' ? 'primary' : 'outline'"
               type="button"
               (click)="previewDensity.set('spacious')"
             >
               {{ i18n.messages().themes.previewDensitySpacious }}
-            </au-button>
+            </button>
           </div>
         </au-card>
       </div>

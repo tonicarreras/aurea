@@ -1,10 +1,11 @@
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Injector, runInInjectionContext } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuCheckbox } from './checkbox';
+import { AuCheckbox } from './au-checkbox.directive';
 import {
   AuCheckboxTestHost,
   applyFieldHarnessInputs,
@@ -13,15 +14,23 @@ import {
 } from '../form-field/form-field.spec-hosts';
 
 describe('AuCheckbox standalone', () => {
+  @Component({
+    imports: [AuCheckbox],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<input type="checkbox" auCheckbox [label]="label" />`,
+  })
+  class StandaloneHost {
+    label = 'Accept terms';
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuCheckbox],
+      imports: [StandaloneHost],
     }).compileComponents();
   });
 
   it('renders without a parent au-form-field', () => {
-    const fix = TestBed.createComponent(AuCheckbox);
-    fix.componentRef.setInput('label', 'Accept terms');
+    const fix = TestBed.createComponent(StandaloneHost);
     fix.detectChanges();
     const input = fix.nativeElement.querySelector('.au-checkbox__element') as HTMLInputElement;
     expect(input.id).toMatch(/^au-field-\d+$/);
@@ -261,9 +270,7 @@ describe('AuCheckbox', () => {
       f.componentInstance.size = 'sm';
     });
     expect(queryInput(fix).getAttribute('name')).toBe('agree');
-    expect(
-      fix.debugElement.query(By.css('au-checkbox'))!.nativeElement.getAttribute('data-au-size'),
-    ).toBe('sm');
+    expect(queryInput(fix).getAttribute('data-au-size')).toBe('sm');
   });
 
   it('focus() focuses the native input', () => {
@@ -339,7 +346,7 @@ describe('AuCheckbox', () => {
     const wrapDe = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!;
     const wrap = wrapDe.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    wrapDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
+    wrap.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     fix.detectChanges();
     expect(wrap.classList.contains('au-checkbox__wrapper--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });

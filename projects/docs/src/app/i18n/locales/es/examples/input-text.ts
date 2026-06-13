@@ -12,7 +12,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Hint bajo la etiqueta; el control no ocupa todo el ancho del panel.',
     demoComponent: ExampleInputTextHintDemo,
     code: `<au-form-field label="Usuario" hint="Entre 3 y 20 caracteres.">
-  <au-input-text placeholder="nombre" />
+  <input auInputText placeholder="nombre" />
 </au-form-field>`,
   },
   {
@@ -22,7 +22,7 @@ export const examples: ComponentDocExample[] = [
   label="Email"
   hint="Usamos tu correo solo para avisos."
 >
-  <au-input-text type="email" placeholder="tu@correo.com" />
+  <input auInputText type="email" placeholder="tu@correo.com" />
 </au-form-field>`,
   },
   {
@@ -30,10 +30,10 @@ export const examples: ComponentDocExample[] = [
     description: 'Prop `size`: sm, md (por defecto) y lg.',
     demoComponent: ExampleInputTextSizesDemo,
     code: `<au-form-field label="Pequeño">
-  <au-input-text size="sm" placeholder="nombre" />
+  <input auInputText size="sm" placeholder="nombre" />
 </au-form-field>
 <au-form-field label="Grande">
-  <au-input-text size="lg" placeholder="nombre" />
+  <input auInputText size="lg" placeholder="nombre" />
 </au-form-field>`,
   },
   {
@@ -44,7 +44,7 @@ export const examples: ComponentDocExample[] = [
   errorMessage="Introduce un correo válido."
   [invalid]="true"
 >
-  <au-input-text type="email" />
+  <input auInputText type="email" />
 </au-form-field>`,
   },
 ];

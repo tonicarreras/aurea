@@ -1,15 +1,2424 @@
 /**
- * Aurea shared styles — import after au-tokens.css.
- *
- * Only cross-cutting CSS (see styles/README.md):
- * - field chrome / errors / listbox overlays
- * - description list (dt/dd across hosts)
- * - accordion item shells (projected plain HTML)
+ * GENERATED — do not edit directly.
+ * Source: styles/aurea-global.entry.css
+ * Run: node projects/components/scripts/bundle-aurea-global.mjs
+ */
+/**
+ * Source for aurea-global.css — import after au-tokens.css.
+ * Regenerate bundle: node projects/components/scripts/bundle-aurea-global.mjs
  */
 
-@import './au-field-chrome.css';
-@import './au-field-error.css';
-@import './au-field-listbox.css';
-@import './au-description-list.css';
-@import './au-accordion.css';
-@import './au-high-contrast-aaa.css';
+
+/* --- ../input-text/input-text.css --- */
+/**
+ * Input text — native input with field chrome (see au-field-chrome.css).
+ */
+
+input.au-input-text:focus,
+input.au-input-text:focus-visible {
+  outline: none;
+}
+
+input.au-input-text {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-size-field-px-md);
+}
+
+input.au-input-text[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-size-field-px-sm);
+}
+
+input.au-input-text[data-au-size='md'],
+input.au-input-text:not([data-au-size]) {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 var(--au-size-field-px-md);
+}
+
+input.au-input-text[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-size-field-px-lg);
+}
+
+input.au-input-text::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+  line-height: inherit;
+}
+
+input.au-input-text:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+
+
+/* --- ../textarea/textarea.css --- */
+/**
+ * Textarea — same control grammar as input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
+ */
+
+textarea.au-textarea {
+  --au-textarea-min-h-sm: 4.5rem;
+  --au-textarea-min-h-md: 5.5rem;
+  --au-textarea-min-h-lg: 6.5rem;
+  --au-textarea-pad-block: var(--au-space-3);
+  --au-textarea-pad-inline: var(--au-size-field-px-md);
+}
+
+textarea.au-textarea[data-au-size='sm'] {
+  --au-textarea-pad-block: var(--au-space-2-5);
+  --au-textarea-pad-inline: var(--au-size-field-px-sm);
+}
+
+textarea.au-textarea[data-au-size='md'],
+textarea.au-textarea:not([data-au-size]) {
+  --au-textarea-pad-block: var(--au-space-3);
+  --au-textarea-pad-inline: var(--au-size-field-px-md);
+}
+
+textarea.au-textarea[data-au-size='lg'] {
+  --au-textarea-pad-block: var(--au-space-3-5);
+  --au-textarea-pad-inline: var(--au-size-field-px-lg);
+}
+
+textarea.au-textarea:focus,
+textarea.au-textarea:focus-visible {
+  outline: none;
+}
+
+textarea.au-textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-leading-normal);
+  font-synthesis: none;
+  min-height: var(--au-textarea-min-h-md);
+  max-height: min(70vh, 32rem);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-3));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-md));
+  font-size: var(--au-size-field-text-md);
+  overflow: auto;
+}
+
+textarea.au-textarea[data-au-size='sm'] {
+  min-height: var(--au-textarea-min-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-2-5));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-sm));
+}
+
+textarea.au-textarea[data-au-size='lg'] {
+  min-height: var(--au-textarea-min-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding-block: var(--au-textarea-pad-block, var(--au-space-3-5));
+  padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-lg));
+}
+
+textarea.au-textarea::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+}
+
+textarea.au-textarea:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+  resize: none;
+}
+
+
+
+/* --- ../input-number/input-number.css --- */
+/**
+ * Input number — same field chrome as au-input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
+ */
+
+input.au-input-number:focus,
+input.au-input-number:focus-visible {
+  outline: none;
+}
+
+input.au-input-number {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-size-field-px-md);
+}
+
+input.au-input-number[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-size-field-px-sm);
+}
+
+input.au-input-number[data-au-size='md'],
+input.au-input-number:not([data-au-size]) {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 var(--au-size-field-px-md);
+}
+
+input.au-input-number[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-size-field-px-lg);
+}
+
+input.au-input-number::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+}
+
+input.au-input-number:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+}
+
+
+
+/* --- ../input-date/input-date.css --- */
+/**
+ * Input date — same field chrome as au-input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
+ */
+
+.au-input-date__anchor {
+  position: relative;
+  display: block;
+}
+
+input.au-input-date {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  outline: none;
+  color-scheme: inherit;
+  accent-color: var(--au-color-date-picker-accent);
+}
+
+input.au-input-date[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 calc(var(--au-size-field-px-sm) + 1.5rem) 0 var(--au-size-field-px-sm);
+}
+
+input.au-input-date[data-au-size='md'],
+input.au-input-date:not([data-au-size]) {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
+}
+
+input.au-input-date[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 calc(var(--au-size-field-px-lg) + 2rem) 0 var(--au-size-field-px-lg);
+}
+
+input.au-input-date:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+}
+
+input.au-input-date::-webkit-datetime-edit {
+  padding: 0;
+  color: var(--au-color-form-text);
+}
+
+input.au-input-date::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+input.au-input-date::-webkit-datetime-edit-text {
+  color: var(--au-color-text-tertiary);
+  padding: 0 0.1em;
+}
+
+input.au-input-date::-webkit-datetime-edit-day-field,
+input.au-input-date::-webkit-datetime-edit-month-field,
+input.au-input-date::-webkit-datetime-edit-year-field {
+  padding: 0 0.15em;
+  border-radius: var(--au-radius-field);
+  color: var(--au-color-form-text);
+}
+
+input.au-input-date::-webkit-datetime-edit-day-field:focus,
+input.au-input-date::-webkit-datetime-edit-month-field:focus,
+input.au-input-date::-webkit-datetime-edit-year-field:focus {
+  background-color: var(--au-color-date-picker-edit-highlight);
+  color: var(--au-color-form-text);
+  outline: none;
+}
+
+.au-input-date__icon {
+  position: absolute;
+  inset-inline-end: var(--au-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--au-color-date-picker-icon);
+  transition: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.au-input-date__anchor:has(input.au-input-date[data-au-size='sm']) .au-input-date__icon {
+  inset-inline-end: var(--au-space-2-5);
+}
+
+.au-input-date__anchor:has(input.au-input-date[data-au-size='lg']) .au-input-date__icon {
+  inset-inline-end: var(--au-space-4);
+}
+
+.au-input-date__anchor:has(input.au-input-date[data-au-size='sm']) .au-input-date__icon au-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.au-input-date__anchor:has(input.au-input-date[data-au-size='lg']) .au-input-date__icon au-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.au-input-date__icon au-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.au-input-date__anchor:has(input.au-input-date:not(:disabled):hover) .au-input-date__icon,
+.au-input-date__anchor:focus-within .au-input-date__icon {
+  color: var(--au-color-date-picker-icon-hover);
+}
+
+.au-input-date__anchor:focus-within .au-input-date__icon {
+  color: var(--au-color-date-picker-icon-active);
+}
+
+.au-input-date__anchor:has(input.au-input-date:disabled) .au-input-date__icon {
+  color: var(--au-color-form-disabled-foreground);
+  opacity: 0.9;
+}
+
+input.au-input-date[data-au-bounded-picker] + .au-input-date__icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+input.au-input-date[data-au-bounded-picker]::-webkit-calendar-picker-indicator {
+  pointer-events: none;
+}
+
+input.au-input-date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.75rem;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input.au-input-date[data-au-size='sm']::-webkit-calendar-picker-indicator {
+  width: 2.5rem;
+}
+
+input.au-input-date[data-au-size='lg']::-webkit-calendar-picker-indicator {
+  width: 3rem;
+}
+
+input.au-input-date::-moz-focus-inner {
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-input-date__icon {
+    transition: none;
+  }
+}
+
+
+
+/* --- ../input-time/input-time.css --- */
+/**
+ * Input time — same field chrome as au-input-text.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Field chrome: aurea-global.css
+ */
+
+.au-input-time__anchor {
+  position: relative;
+  display: block;
+}
+
+input.au-input-time {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  outline: none;
+  color-scheme: inherit;
+  accent-color: var(--au-color-date-picker-accent);
+}
+
+input.au-input-time[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 calc(var(--au-size-field-px-sm) + 1.5rem) 0 var(--au-size-field-px-sm);
+}
+
+input.au-input-time[data-au-size='md'],
+input.au-input-time:not([data-au-size]) {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
+}
+
+input.au-input-time[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 calc(var(--au-size-field-px-lg) + 2rem) 0 var(--au-size-field-px-lg);
+}
+
+input.au-input-time:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+}
+
+input.au-input-time::-webkit-datetime-edit {
+  padding: 0;
+  color: var(--au-color-form-text);
+}
+
+input.au-input-time::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+input.au-input-time::-webkit-datetime-edit-text {
+  color: var(--au-color-text-tertiary);
+  padding: 0 0.1em;
+}
+
+input.au-input-time::-webkit-datetime-edit-hour-field,
+input.au-input-time::-webkit-datetime-edit-minute-field,
+input.au-input-time::-webkit-datetime-edit-second-field,
+input.au-input-time::-webkit-datetime-edit-ampm-field {
+  padding: 0 0.15em;
+  border-radius: var(--au-radius-field);
+  color: var(--au-color-form-text);
+}
+
+input.au-input-time::-webkit-datetime-edit-hour-field:focus,
+input.au-input-time::-webkit-datetime-edit-minute-field:focus,
+input.au-input-time::-webkit-datetime-edit-second-field:focus,
+input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
+  background-color: var(--au-color-date-picker-edit-highlight);
+  color: var(--au-color-form-text);
+  outline: none;
+}
+
+.au-input-time__icon {
+  position: absolute;
+  inset-inline-end: var(--au-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--au-color-date-picker-icon);
+  transition: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+.au-input-time__anchor:has(input.au-input-time[data-au-size='sm']) .au-input-time__icon {
+  inset-inline-end: var(--au-space-2-5);
+}
+
+.au-input-time__anchor:has(input.au-input-time[data-au-size='lg']) .au-input-time__icon {
+  inset-inline-end: var(--au-space-4);
+}
+
+.au-input-time__anchor:has(input.au-input-time[data-au-size='sm']) .au-input-time__icon au-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.au-input-time__anchor:has(input.au-input-time[data-au-size='lg']) .au-input-time__icon au-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.au-input-time__icon au-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.au-input-time__anchor:has(input.au-input-time:not(:disabled):hover) .au-input-time__icon,
+.au-input-time__anchor:focus-within .au-input-time__icon {
+  color: var(--au-color-date-picker-icon-hover);
+}
+
+.au-input-time__anchor:focus-within .au-input-time__icon {
+  color: var(--au-color-date-picker-icon-active);
+}
+
+.au-input-time__anchor:has(input.au-input-time:disabled) .au-input-time__icon {
+  color: var(--au-color-form-disabled-foreground);
+  opacity: 0.9;
+}
+
+input.au-input-time::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.75rem;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input.au-input-time[data-au-size='sm']::-webkit-calendar-picker-indicator {
+  width: 2.5rem;
+}
+
+input.au-input-time[data-au-size='lg']::-webkit-calendar-picker-indicator {
+  width: 3rem;
+}
+
+input.au-input-time::-moz-focus-inner {
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-input-time__icon {
+    transition: none;
+  }
+}
+
+
+
+/* --- ../input-password/input-password.css --- */
+/**
+ * Input password — dedicated password field with optional reveal toggle.
+ * Field chrome: aurea-global.css
+ */
+
+.au-input-password__anchor {
+  position: relative;
+  display: block;
+}
+
+input.au-input-password:focus,
+input.au-input-password:focus-visible,
+.au-input-password__reveal:focus,
+.au-input-password__reveal:focus-visible {
+  outline: none;
+}
+
+input.au-input-password {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-size-field-px-md);
+}
+
+input.au-input-password[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-size-field-px-sm);
+}
+
+input.au-input-password[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-size-field-px-lg);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password {
+  padding-inline-end: 0.35rem;
+}
+
+input.au-input-password::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+}
+
+input.au-input-password:disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+.au-input-password__reveal {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  margin: 0;
+  padding-inline: var(--au-space-2-5);
+  border: 0;
+  border-inline-start: 1px solid var(--au-color-border-subtle);
+  border-radius: 0;
+  background: transparent;
+  color: var(--au-color-text-tertiary);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--au-transition-glyph), var(--au-transition-background);
+}
+
+.au-input-password__reveal:hover:not(:disabled) {
+  color: var(--au-color-text-secondary);
+  background: var(--au-color-surface-elevated);
+}
+
+.au-input-password__reveal:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-input-password__reveal {
+    transition: none;
+  }
+}
+
+
+
+/* --- ../checkbox/checkbox.css --- */
+/**
+ * Checkbox — native input with custom visual styling.
+ * Size: `data-au-size` on host (sm | md | lg).
+ * Accessibility: WCAG 2.2 AA — focus rings, 24x24 target, 4.5:1 contrast.
+ * Field errors: aurea-global.css
+ */
+
+.au-checkbox__wrapper {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--au-space-2-5);
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Label + description + error stack to the right of the box */
+.au-checkbox__content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-1);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Checkbox input: hide native, show custom box with checkmark */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__element {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  width: var(--au-checkbox-size-md);
+  height: var(--au-checkbox-size-md);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+  cursor: pointer;
+  transition:
+    border-color var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out),
+    box-shadow var(--au-duration-short) var(--au-ease-in-out);
+  /* Custom checkmark via pseudo-element */
+  position: relative;
+}
+
+/* Checkbox size by size token */
+input.au-checkbox__element[data-au-size='sm'] {
+  width: var(--au-checkbox-size-sm);
+  height: var(--au-checkbox-size-sm);
+}
+
+input.au-checkbox__element[data-au-size='md'],
+input.au-checkbox__element:not([data-au-size]) {
+  width: var(--au-checkbox-size-md);
+  height: var(--au-checkbox-size-md);
+}
+
+input.au-checkbox__element[data-au-size='lg'] {
+  width: var(--au-checkbox-size-lg);
+  height: var(--au-checkbox-size-lg);
+}
+
+/* Hover: darker border */
+.au-checkbox__wrapper:hover .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-chrome-border-color-hover);
+}
+
+/* Checked: action primary fill + checkmark */
+.au-checkbox__element:checked {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+}
+
+.au-checkbox__wrapper:hover .au-checkbox__element:checked:not(:disabled) {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+}
+
+.au-checkbox__element:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  width: 6px;
+  height: 10px;
+  border: solid var(--au-color-text-on-solid);
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+/* Indeterminate: square inside */
+.au-checkbox__element:indeterminate {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+}
+
+.au-checkbox__wrapper:hover .au-checkbox__element:indeterminate:not(:disabled) {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+}
+
+.au-checkbox__element:indeterminate::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  width: 10px;
+  height: 2px;
+  background: var(--au-color-text-on-solid);
+  transform: translate(-50%, -50%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus rings — Tab: outward, pointer: inset/none */
+/* -------------------------------------------------------------------------- */
+
+/* Focus-within on wrapper triggers ring on input */
+.au-checkbox__wrapper:focus-within {
+  outline: none;
+}
+
+/* Inset ring on focus (click / pointer) */
+.au-checkbox__wrapper:focus-within:not(.au-checkbox__wrapper--from-tab)
+  .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-focus-inset);
+}
+
+/* Outer ring on Tab focus */
+.au-checkbox__wrapper--from-tab:focus-within .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-color-form-border);
+  box-shadow: none;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+/* Remove default focus on input itself — wrapper handles it */
+.au-checkbox__element:focus,
+.au-checkbox__element:focus-visible {
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Disabled state */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__wrapper:has(.au-checkbox__element:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.au-checkbox__element:disabled {
+  cursor: not-allowed;
+  background: var(--au-color-form-disabled-surface);
+  border-color: var(--au-color-border-subtle);
+  box-shadow: none;
+}
+
+.au-checkbox__element:checked:disabled {
+  background: var(--au-color-form-disabled-foreground);
+  border-color: var(--au-color-form-disabled-foreground);
+}
+
+.au-checkbox__element:indeterminate:disabled {
+  background: var(--au-color-form-disabled-foreground);
+  border-color: var(--au-color-form-disabled-foreground);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Label */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__label {
+  display: inline;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.au-checkbox__wrapper:has(input.au-checkbox__element[data-au-size='sm']) .au-checkbox__label {
+  font-size: var(--au-text-xs);
+}
+
+.au-checkbox__wrapper:has(input.au-checkbox__element[data-au-size='lg']) .au-checkbox__label {
+  font-size: var(--au-text-md);
+}
+
+.au-checkbox__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  margin-inline-start: 0.125em;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Description */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__description {
+  display: block;
+  width: 100%;
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Validation (signal forms + manual) */
+/* -------------------------------------------------------------------------- */
+
+.au-checkbox__wrapper--invalid .au-checkbox__element:not(:disabled) {
+  border-color: var(--au-color-form-error);
+  box-shadow: var(--au-focus-inset-error);
+}
+
+.au-checkbox__wrapper--invalid .au-checkbox__element:checked:not(:disabled),
+.au-checkbox__wrapper--invalid .au-checkbox__element:indeterminate:not(:disabled) {
+  box-shadow: var(--au-focus-inset-error);
+}
+
+.au-checkbox__wrapper .au-field-error {
+  width: 100%;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .au-checkbox__element {
+    transition: none;
+  }
+}
+
+
+
+/* --- ../switch/switch.css --- */
+/**
+ * Switch — pill toggle from native button + role="switch".
+ * Field errors: aurea-global.css
+ */
+
+.au-switch__field {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.au-switch__field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+.au-switch__label-host {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.au-switch__label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+.au-switch__required {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+button.au-switch:focus-visible {
+  outline: none;
+}
+
+button.au-switch:focus-visible:not(.au-switch--from-tab):not(:disabled) {
+  border-color: var(--au-color-focus-ring);
+  box-shadow: var(--au-focus-inset);
+}
+
+button.au-switch.au-switch--from-tab:focus-visible:not(:disabled) {
+  border-color: var(--au-color-switch-track-off-border);
+  box-shadow: none;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+button.au-switch.au-switch--invalid:not(:disabled) {
+  border-color: var(--au-color-form-error);
+  box-shadow: var(--au-focus-inset-error);
+}
+
+button.au-switch.au-switch--invalid:checked:not(:disabled) {
+  box-shadow: var(--au-focus-inset-error);
+}
+
+button.au-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  width: 2.75rem;
+  height: 1.5rem;
+  border-radius: var(--au-radius-full);
+  border: 1px solid var(--au-color-switch-track-off-border);
+  background: var(--au-color-switch-track-off);
+  transition:
+    border-color var(--au-duration-short) var(--au-ease-in-out),
+    background-color var(--au-duration-short) var(--au-ease-in-out),
+    box-shadow var(--au-duration-short) var(--au-ease-in-out);
+}
+
+button.au-switch:not([aria-checked='true']):hover:not(:disabled) {
+  background: var(--au-color-switch-track-off-hover);
+  border-color: var(--au-color-switch-track-off-border);
+}
+
+button.au-switch[data-au-size='sm'] {
+  width: 2.25rem;
+  height: 1.25rem;
+}
+
+button.au-switch[data-au-size='lg'] {
+  width: 3.25rem;
+  height: 1.75rem;
+}
+
+button.au-switch[aria-checked='true'] {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+}
+
+button.au-switch[aria-checked='true']::after {
+  background: var(--au-color-text-on-solid);
+  box-shadow: none;
+}
+
+button.au-switch::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--au-radius-dot);
+  background: var(--au-color-switch-thumb-off);
+  box-shadow: none;
+  transform: translate(0, -50%);
+  transition: transform var(--au-duration-short) var(--au-ease-in-out);
+}
+
+button.au-switch[data-au-size='sm']::after {
+  width: 14px;
+  height: 14px;
+  inset-inline-start: 2px;
+}
+
+button.au-switch[data-au-size='lg']::after {
+  width: 22px;
+  height: 22px;
+  inset-inline-start: 3px;
+}
+
+button.au-switch[aria-checked='true']::after {
+  transform: translate(1.25rem, -50%);
+}
+
+[dir='rtl'] button.au-switch[aria-checked='true']::after {
+  transform: translate(-1.25rem, -50%);
+}
+
+button.au-switch[data-au-size='sm'][aria-checked='true']::after {
+  transform: translate(0.85rem, -50%);
+}
+
+[dir='rtl'] button.au-switch[data-au-size='sm'][aria-checked='true']::after {
+  transform: translate(-0.85rem, -50%);
+}
+
+button.au-switch[data-au-size='lg'][aria-checked='true']::after {
+  transform: translate(1.55rem, -50%);
+}
+
+[dir='rtl'] button.au-switch[data-au-size='lg'][aria-checked='true']::after {
+  transform: translate(-1.55rem, -50%);
+}
+
+button.au-switch:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.au-switch__hint {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.au-switch,
+  button.au-switch::after {
+    transition: none;
+  }
+}
+
+
+
+/* --- ../button/button.css --- */
+/**
+ * Aurea Button — solid, outline, ghost variants with touch-friendly targets.
+ * Applied via `button[auButton]`.
+ */
+
+button.au-button {
+  --au-button-radius: var(--au-radius-control);
+  --au-button-height-sm: var(--au-size-field-h-sm);
+  --au-button-height-md: var(--au-size-field-h-md);
+  --au-button-height-lg: var(--au-size-field-h-lg);
+  --au-button-font-size-sm: var(--au-text-xs);
+  --au-button-font-size-md: var(--au-text-sm);
+  --au-button-font-size-lg: var(--au-text-sm);
+  --au-button-gap: var(--au-space-2);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-button-gap);
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: var(--au-button-radius);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  letter-spacing: var(--au-tracking-ui);
+  color: var(--au-color-text-primary);
+  cursor: pointer;
+  user-select: none;
+  box-shadow: var(--au-elevation-tactile);
+  transition:
+    var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
+    var(--au-transition-color);
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button.au-button[data-au-size='sm'] {
+  height: var(--au-button-height-sm);
+  padding: 0 var(--au-size-field-px-sm);
+  font-size: var(--au-button-font-size-sm);
+}
+
+button.au-button[data-au-size='md'],
+button.au-button:not([data-au-size]) {
+  height: var(--au-button-height-md);
+  padding: 0 var(--au-size-field-px-md);
+  font-size: var(--au-button-font-size-md);
+}
+
+button.au-button[data-au-size='lg'] {
+  height: var(--au-button-height-lg);
+  min-width: var(--au-touch-target-min);
+  padding: 0 var(--au-space-5);
+  font-size: var(--au-button-font-size-lg);
+}
+
+button.au-button[data-au-variant='primary'] {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+  color: var(--au-color-text-on-solid);
+  box-shadow: var(--au-elevation-tactile-primary);
+}
+
+button.au-button[data-au-variant='primary']:hover:not(:disabled) {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+}
+
+button.au-button[data-au-variant='primary']:active:not(:disabled) {
+  background: var(--au-color-action-primary-pressed);
+  border-color: var(--au-color-action-primary-pressed);
+  box-shadow: var(--au-elevation-tactile-primary);
+}
+
+button.au-button[data-au-variant='secondary'] {
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-color-border-default);
+  color: var(--au-color-text-primary);
+}
+
+button.au-button[data-au-variant='secondary']:hover:not(:disabled) {
+  background: var(--au-color-surface-elevated);
+  border-color: var(--au-color-border-strong);
+}
+
+button.au-button[data-au-variant='secondary']:active:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+  box-shadow: var(--au-elevation-tactile);
+}
+
+button.au-button[data-au-variant='outline'] {
+  background: transparent;
+  border-color: var(--au-color-action-primary);
+  color: var(--au-color-action-primary);
+}
+
+button.au-button[data-au-variant='outline']:hover:not(:disabled) {
+  background: var(--au-color-surface-elevated);
+}
+
+button.au-button[data-au-variant='outline']:active:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+button.au-button[data-au-variant='ghost'] {
+  background: transparent;
+  border-color: transparent;
+  color: var(--au-color-action-primary);
+  box-shadow: none;
+}
+
+button.au-button[data-au-variant='ghost']:hover:not(:disabled) {
+  background: var(--au-color-surface-elevated);
+}
+
+button.au-button[data-au-variant='ghost']:active:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+button.au-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.au-button[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.au-button.au-button--loading {
+  cursor: wait;
+}
+
+button.au-button:focus {
+  outline: none;
+}
+
+button.au-button:focus-visible {
+  outline: none;
+  box-shadow: var(--au-focus-tactile);
+}
+
+button.au-button.au-button--from-tab:focus-visible {
+  box-shadow: none;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+.au-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}
+
+.au-button__content--hidden {
+  visibility: hidden;
+}
+
+button.au-button.au-button--loading .au-button__spinner {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: inherit;
+}
+
+.au-button__spinner au-spinner {
+  flex-shrink: 0;
+  --au-spinner-arc: currentColor;
+  --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.au-button {
+    transition:
+      var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
+      var(--au-transition-color);
+  }
+}
+
+au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button {
+  display: inline-flex;
+}
+
+au-button-group[data-au-orientation='vertical'] button.au-button {
+  display: flex;
+  width: 100%;
+}
+
+au-button-group[data-au-attached] button.au-button {
+  border-radius: 0;
+}
+
+au-button-group[data-au-attached][data-au-orientation='horizontal']
+  button.au-button
+  + button.au-button {
+  margin-inline-start: -1px;
+}
+
+au-button-group[data-au-attached][data-au-orientation='horizontal']
+  button.au-button:first-of-type {
+  border-start-start-radius: var(--au-button-radius);
+  border-end-start-radius: var(--au-button-radius);
+}
+
+au-button-group[data-au-attached][data-au-orientation='horizontal']
+  button.au-button:last-of-type {
+  border-start-end-radius: var(--au-button-radius);
+  border-end-end-radius: var(--au-button-radius);
+}
+
+au-button-group[data-au-attached][data-au-orientation='vertical']
+  button.au-button
+  + button.au-button {
+  margin-block-start: -1px;
+}
+
+au-button-group[data-au-attached][data-au-orientation='vertical']
+  button.au-button:first-of-type {
+  border-start-start-radius: var(--au-button-radius);
+  border-start-end-radius: var(--au-button-radius);
+}
+
+au-button-group[data-au-attached][data-au-orientation='vertical']
+  button.au-button:last-of-type {
+  border-end-start-radius: var(--au-button-radius);
+  border-end-end-radius: var(--au-button-radius);
+}
+
+au-button-group[data-au-attached] button.au-button:hover:not(:disabled),
+au-button-group[data-au-attached] button.au-button:active:not(:disabled) {
+  z-index: 1;
+}
+
+
+
+/* --- ../link/link.css --- */
+a.au-link {
+  display: inline;
+  font-family: var(--au-font-sans);
+  font-size: inherit;
+  font-weight: var(--au-weight-medium);
+  line-height: inherit;
+  color: var(--au-color-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+  transition: var(--au-transition-color);
+}
+
+a.au-link:hover {
+  color: var(--au-color-link-hover);
+}
+
+a.au-link:focus-visible {
+  outline: none;
+  box-shadow: var(--au-focus-inset);
+  border-radius: var(--au-radius-field);
+}
+
+a.au-link[data-au-variant='subtle'] {
+  color: var(--au-color-text-secondary);
+  text-decoration: none;
+}
+
+a.au-link[data-au-variant='subtle']:hover {
+  color: var(--au-color-link);
+  text-decoration: underline;
+}
+
+
+
+
+/* --- ./au-field-chrome.css --- */
+/**
+ * Shared field stack + control-row chrome.
+ * Loaded via aurea-global.css (requires au-tokens.css).
+ *
+ * BEM blocks must use the same element names: __field, __label-host, __label,
+ * __required, __hint, __control-row.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Host baseline (block-level field controls) */
+/* -------------------------------------------------------------------------- */
+
+:is(
+  input.au-input-text,
+  textarea.au-textarea,
+  input.au-input-number,
+  input.au-input-date,
+  input.au-input-time,
+  input.au-input-password,
+  au-tag-input,
+  au-select,
+  au-autocomplete
+) {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+input.au-input-date,
+input.au-input-time,
+input.au-input-password,
+au-tag-input {
+  color-scheme: inherit;
+}
+
+au-select,
+au-autocomplete {
+  overflow: visible;
+}
+
+/* Native directive hosts — chrome on the control element (no __control-row wrapper) */
+:is(input.au-input-text, textarea.au-textarea, input.au-input-number, input.au-input-date, input.au-input-time, input.au-input-password) {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+  transition: var(--au-transition-control);
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+input.au-input-text:hover:not(:disabled):not(:focus),
+textarea.au-textarea:hover:not(:disabled):not(:focus),
+input.au-input-number:hover:not(:disabled):not(:focus),
+input.au-input-date:hover:not(:disabled):not(:focus),
+input.au-input-time:hover:not(:disabled):not(:focus),
+input.au-input-password:hover:not(:disabled):not(:focus) {
+  border-color: var(--au-chrome-border-color-hover);
+}
+
+input.au-input-text[aria-invalid='true']:not(:focus),
+textarea.au-textarea[aria-invalid='true']:not(:focus),
+input.au-input-number[aria-invalid='true']:not(:focus),
+input.au-input-date[aria-invalid='true']:not(:focus),
+input.au-input-time[aria-invalid='true']:not(:focus),
+input.au-input-password[aria-invalid='true']:not(:focus) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+input.au-input-text:focus,
+textarea.au-textarea:focus,
+input.au-input-number:focus,
+input.au-input-date:focus,
+input.au-input-time:focus,
+input.au-input-password:focus {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-focus-inset);
+}
+
+input.au-input-text:focus[aria-invalid='true'],
+textarea.au-textarea:focus[aria-invalid='true'],
+input.au-input-number:focus[aria-invalid='true'],
+input.au-input-date:focus[aria-invalid='true'],
+input.au-input-time:focus[aria-invalid='true'],
+input.au-input-password:focus[aria-invalid='true'] {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-focus-inset-error);
+}
+
+input.au-input-text.au-input-text--from-tab:focus,
+textarea.au-textarea.au-textarea--from-tab:focus,
+input.au-input-number.au-input-number--from-tab:focus,
+input.au-input-date.au-input-date--from-tab:focus,
+input.au-input-time.au-input-time--from-tab:focus,
+input.au-input-password.au-input-password--from-tab:focus {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-chrome-border-color);
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+input.au-input-text.au-input-text--from-tab:focus[aria-invalid='true'],
+textarea.au-textarea.au-textarea--from-tab:focus[aria-invalid='true'],
+input.au-input-number.au-input-number--from-tab:focus[aria-invalid='true'],
+input.au-input-date.au-input-date--from-tab:focus[aria-invalid='true'],
+input.au-input-time.au-input-time--from-tab:focus[aria-invalid='true'],
+input.au-input-password.au-input-password--from-tab:focus[aria-invalid='true'] {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: var(--au-focus-tab-error);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+input.au-input-text:disabled,
+textarea.au-textarea:disabled,
+input.au-input-number:disabled,
+input.au-input-date:disabled,
+input.au-input-time:disabled,
+input.au-input-password:disabled {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
+}
+
+:is(.au-select__field, .au-autocomplete__field) {
+  overflow: visible;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Stack: label + control + help */
+/* -------------------------------------------------------------------------- */
+
+:is(
+  .au-input-text__field,
+  .au-input-number__field,
+  .au-textarea__field,
+  .au-input-date__field,
+  .au-input-time__field,
+  .au-select__field,
+  .au-autocomplete__field
+) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-2);
+  max-width: 100%;
+}
+
+:is(
+  .au-input-text__label-host,
+  .au-input-number__label-host,
+  .au-textarea__label-host,
+  .au-input-date__label-host,
+  .au-input-time__label-host,
+  .au-select__label-host,
+  .au-autocomplete__label-host
+) {
+  display: block;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+:is(
+  .au-input-text__label,
+  .au-input-number__label,
+  .au-textarea__label,
+  .au-input-date__label,
+  .au-input-time__label,
+  .au-select__label,
+  .au-autocomplete__label
+) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.125em;
+  position: relative;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-text-label);
+  letter-spacing: var(--au-tracking-ui);
+}
+
+:is(
+  .au-input-text__required,
+  .au-input-number__required,
+  .au-textarea__required,
+  .au-input-date__required,
+  .au-input-time__required,
+  .au-select__required,
+  .au-autocomplete__required
+) {
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+}
+
+:is(
+  .au-input-text__hint,
+  .au-input-number__hint,
+  .au-textarea__hint,
+  .au-input-date__hint,
+  .au-input-time__hint,
+  .au-select__hint,
+  .au-autocomplete__hint
+) {
+  margin: 0;
+  font-size: var(--au-text-xs);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-tertiary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Control shell */
+/* -------------------------------------------------------------------------- */
+
+:is(
+  .au-input-text__control-row,
+  .au-input-number__control-row,
+  .au-textarea__control-row,
+  .au-input-date__control-row,
+  .au-input-time__control-row,
+  .au-input-password__control-row,
+  .au-tag-input__control-row,
+  .au-select__control-row,
+  .au-autocomplete__control-row
+) {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+  transition: var(--au-transition-control);
+}
+
+.au-select__control-row,
+.au-autocomplete__control-row {
+  align-items: center;
+}
+
+/* Hover: border only */
+:is(
+  .au-input-text__control-row:has(.au-input-text__input:hover:not(:disabled)),
+  .au-input-number__control-row:has(.au-input-number__input:hover:not(:disabled)),
+  .au-textarea__control-row:has(.au-textarea__input:hover:not(:disabled)),
+  .au-input-date__control-row:has(.au-input-date__input:hover:not(:disabled)),
+  .au-input-time__control-row:has(.au-input-time__input:hover:not(:disabled)),
+  .au-input-password__control-row:has(.au-input-password__input:hover:not(:disabled)),
+  .au-tag-input__control-row:has(.au-tag-input__input:hover:not(:disabled))
+):not(:focus-within) {
+  border-color: var(--au-chrome-border-color-hover);
+}
+
+/* Hover: border + fill (combobox) */
+:is(
+  .au-select__control-row:has(.au-select__trigger:hover:not(:disabled)),
+  .au-autocomplete__control-row:has(.au-autocomplete__input:hover:not(:disabled))
+):not(:focus-within) {
+  border-color: var(--au-chrome-border-color-hover);
+  background: var(--au-color-select-field-hover-bg);
+}
+
+/* Error (no focus) */
+:is(
+  .au-input-text__control-row:has(.au-input-text__input[aria-invalid='true']),
+  .au-input-number__control-row:has(.au-input-number__input[aria-invalid='true']),
+  .au-textarea__control-row:has(.au-textarea__input[aria-invalid='true']),
+  .au-input-date__control-row:has(.au-input-date__input[aria-invalid='true']),
+  .au-input-time__control-row:has(.au-input-time__input[aria-invalid='true']),
+  .au-input-password__control-row:has(.au-input-password__input[aria-invalid='true']),
+  .au-tag-input__control-row:has(.au-tag-input__input[aria-invalid='true']),
+  .au-select__control-row:has(.au-select__trigger[aria-invalid='true']),
+  .au-autocomplete__control-row:has(.au-autocomplete__input[aria-invalid='true'])
+):not(:focus-within) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+/* Pointer focus */
+:is(
+  .au-input-text__control-row,
+  .au-input-number__control-row,
+  .au-textarea__control-row,
+  .au-input-date__control-row,
+  .au-input-time__control-row,
+  .au-input-password__control-row,
+  .au-tag-input__control-row,
+  .au-select__control-row,
+  .au-autocomplete__control-row
+):focus-within {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-focus-inset);
+}
+
+:is(
+  .au-input-text__control-row:focus-within:has(.au-input-text__input[aria-invalid='true']),
+  .au-input-number__control-row:focus-within:has(.au-input-number__input[aria-invalid='true']),
+  .au-textarea__control-row:focus-within:has(.au-textarea__input[aria-invalid='true']),
+  .au-input-date__control-row:focus-within:has(.au-input-date__input[aria-invalid='true']),
+  .au-input-time__control-row:focus-within:has(.au-input-time__input[aria-invalid='true']),
+  .au-input-password__control-row:focus-within:has(.au-input-password__input[aria-invalid='true']),
+  .au-tag-input__control-row:focus-within:has(.au-tag-input__input[aria-invalid='true']),
+  .au-select__control-row:focus-within:has(.au-select__trigger[aria-invalid='true']),
+  .au-autocomplete__control-row:focus-within:has(.au-autocomplete__input[aria-invalid='true'])
+) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-focus-inset-error);
+}
+
+/* Tab-only focus → outward outline (matches au-button --from-tab) */
+:is(
+  .au-input-text__control-row--from-tab,
+  .au-input-number__control-row--from-tab,
+  .au-textarea__control-row--from-tab,
+  .au-input-date__control-row--from-tab,
+  .au-input-time__control-row--from-tab,
+  .au-input-password__control-row--from-tab,
+  .au-tag-input__control-row--from-tab,
+  .au-select__control-row--from-tab,
+  .au-autocomplete__control-row--from-tab
+):focus-within {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-chrome-border-color);
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+:is(
+  .au-input-text__control-row--from-tab:focus-within:has(
+      .au-input-text__input[aria-invalid='true']
+    ),
+  .au-input-number__control-row--from-tab:focus-within:has(
+      .au-input-number__input[aria-invalid='true']
+    ),
+  .au-textarea__control-row--from-tab:focus-within:has(.au-textarea__input[aria-invalid='true']),
+  .au-input-date__control-row--from-tab:focus-within:has(
+      .au-input-date__input[aria-invalid='true']
+    ),
+  .au-input-time__control-row--from-tab:focus-within:has(
+      .au-input-time__input[aria-invalid='true']
+    ),
+  .au-input-password__control-row--from-tab:focus-within:has(
+      .au-input-password__input[aria-invalid='true']
+    ),
+  .au-tag-input__control-row--from-tab:focus-within:has(.au-tag-input__input[aria-invalid='true']),
+  .au-select__control-row--from-tab:focus-within:has(.au-select__trigger[aria-invalid='true']),
+  .au-autocomplete__control-row--from-tab:focus-within:has(
+      .au-autocomplete__input[aria-invalid='true']
+    )
+) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: var(--au-focus-tab-error);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+/* Disabled */
+:is(
+  .au-input-text__control-row:has(.au-input-text__input:disabled),
+  .au-input-number__control-row:has(.au-input-number__input:disabled),
+  .au-textarea__control-row:has(.au-textarea__input:disabled),
+  .au-input-date__control-row:has(.au-input-date__input:disabled),
+  .au-input-time__control-row:has(.au-input-time__input:disabled),
+  .au-input-password__control-row:has(.au-input-password__input:disabled),
+  .au-tag-input__control-row:has(.au-tag-input__input:disabled),
+  .au-select__control-row:has(.au-select__trigger:disabled),
+  .au-autocomplete__control-row:has(.au-autocomplete__input:disabled)
+) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
+}
+
+/* Combobox open (no focus) */
+:is(.au-select__control-row--open, .au-autocomplete__control-row--open):not(:focus-within) {
+  border-color: var(--au-chrome-border-color-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .au-input-text__control-row,
+    .au-input-number__control-row,
+    .au-textarea__control-row,
+    .au-input-date__control-row,
+    .au-input-time__control-row,
+    .au-select__control-row,
+    .au-autocomplete__control-row
+  ) {
+    transition: none;
+  }
+}
+
+
+
+/* --- ./au-field-error.css --- */
+/**
+ * Shared validation error message (glyph + text).
+ * Loaded via aurea-global.css.
+ */
+
+.au-field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--au-space-1-5);
+  margin: 0;
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-tight);
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-medium);
+}
+
+.au-field-error__glyph {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 1.1em;
+  line-height: inherit;
+  color: var(--au-color-form-error);
+  font-weight: var(--au-weight-semibold);
+  translate: 0 0.05em;
+}
+
+.au-field-error__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--au-weight-regular);
+}
+
+
+
+/* --- ./au-field-listbox.css --- */
+/**
+ * Shared dropdown list + option rows (au-select, au-autocomplete).
+ * Loaded via aurea-global.css (requires au-tokens.css).
+ *
+ * Hosts set `data-au-listbox-open` while the panel is visible so the whole
+ * component stacks above sibling fields (not only the listbox node).
+ */
+
+:is(au-select, au-autocomplete)[data-au-listbox-open] {
+  position: relative;
+  z-index: var(--au-z-dropdown);
+  overflow: visible;
+}
+
+:is(.au-select__hint, .au-autocomplete__hint),
+:is(.au-select__field, .au-autocomplete__field) > .au-field-error {
+  position: relative;
+  z-index: var(--au-z-base);
+}
+
+:is(.au-select__control-wrap, .au-autocomplete__control-wrap) {
+  position: relative;
+  z-index: var(--au-z-raised);
+}
+
+:is(.au-select__control-wrap, .au-autocomplete__control-wrap):has(.au-field-listbox) {
+  z-index: var(--au-z-dropdown);
+}
+
+.au-field-listbox {
+  position: absolute;
+  z-index: var(--au-z-dropdown);
+  inset-inline: 0;
+  top: calc(100% + var(--au-space-1));
+  margin: 0;
+  padding: var(--au-space-1);
+  list-style: none;
+  max-height: 16rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: var(--au-scroll-smooth);
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-surface);
+  background: var(--au-color-select-menu-bg);
+  color: var(--au-color-select-menu-text);
+  font-family: var(--au-font-sans);
+  box-shadow: var(--au-elevation-overlay);
+}
+
+/* Portaled to document.body (see overlay/field-listbox-overlay.ts) — top/width set in JS */
+.au-field-listbox--overlay {
+  position: fixed;
+  z-index: var(--au-z-dropdown);
+  inset-inline: auto;
+  top: auto;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
+}
+
+:is(au-select, au-autocomplete)[data-au-listbox-open]
+  :is(.au-select__control-row, .au-autocomplete__control-row) {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+:is(au-select, au-autocomplete)[data-au-size='sm'] .au-field-listbox__option {
+  font-size: var(--au-size-field-text-sm);
+}
+
+:is(au-select, au-autocomplete)[data-au-size='lg'] .au-field-listbox__option {
+  font-size: var(--au-size-field-text-lg);
+}
+
+.au-field-listbox__option {
+  position: relative;
+  margin: 0;
+  padding: var(--au-space-2) var(--au-space-3);
+  border-radius: var(--au-radius-control);
+  font-size: var(--au-size-field-text-md);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  cursor: pointer;
+}
+
+.au-field-listbox__option::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 0;
+  width: 2px;
+  background: transparent;
+  border-radius: 0;
+  pointer-events: none;
+}
+
+.au-field-listbox__option--placeholder {
+  color: var(--au-color-text-tertiary);
+  font-weight: var(--au-weight-regular);
+}
+
+.au-field-listbox__option--active:not(.au-field-listbox__option--disabled) {
+  background: var(--au-color-select-option-highlight-bg);
+  color: var(--au-color-select-option-highlight-text);
+  font-weight: var(--au-weight-medium);
+}
+
+.au-field-listbox__option--active:not(.au-field-listbox__option--disabled)::before {
+  background: var(--au-color-select-option-highlight-marker);
+}
+
+.au-field-listbox__option--selected:not(.au-field-listbox__option--disabled) {
+  background: var(--au-color-select-option-selected-bg);
+  color: var(--au-color-select-option-selected-text);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-field-listbox__option--selected:not(.au-field-listbox__option--disabled)::before {
+  background: var(--au-color-select-option-selected-marker);
+}
+
+.au-field-listbox__option--selected.au-field-listbox__option--active:not(
+    .au-field-listbox__option--disabled
+  ) {
+  background: var(--au-color-select-option-selected-bg);
+  color: var(--au-color-select-option-selected-text);
+}
+
+.au-field-listbox__option--selected.au-field-listbox__option--active:not(
+    .au-field-listbox__option--disabled
+  )::before {
+  background: var(--au-color-select-option-selected-marker);
+}
+
+.au-field-listbox__option--disabled {
+  color: var(--au-color-select-option-disabled-text);
+  cursor: not-allowed;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Status items: empty state, loading state                                  */
+/* -------------------------------------------------------------------------- */
+
+.au-field-listbox__item {
+  margin: 0;
+  padding: var(--au-space-3) var(--au-space-4);
+  font-size: var(--au-size-field-text-md);
+  color: var(--au-color-text-tertiary);
+  text-align: center;
+  cursor: default;
+  user-select: none;
+}
+
+.au-field-listbox__item--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--au-space-2);
+}
+
+@media (hover: hover) {
+  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
+      .au-field-listbox__option--selected
+    ) {
+    background: var(--au-color-select-option-highlight-bg);
+    color: var(--au-color-select-option-highlight-text);
+    font-weight: var(--au-weight-medium);
+  }
+
+  .au-field-listbox__option:hover:not(.au-field-listbox__option--disabled):not(
+      .au-field-listbox__option--selected
+    )::before {
+    background: var(--au-color-select-option-highlight-marker);
+  }
+
+  .au-field-listbox__option--selected:hover:not(.au-field-listbox__option--disabled) {
+    background: var(--au-color-select-option-selected-bg);
+    color: var(--au-color-select-option-selected-text);
+    font-weight: var(--au-weight-semibold);
+  }
+
+  .au-field-listbox__option--selected:hover:not(.au-field-listbox__option--disabled)::before {
+    background: var(--au-color-select-option-selected-marker);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-field-listbox {
+    scroll-behavior: auto;
+  }
+
+  .au-field-listbox--overlay {
+    animation: none;
+  }
+}
+
+
+
+/* --- ./au-description-list.css --- */
+/**
+ * Description list — dt/dd typography and layout (global).
+ * Required because `dt` / `dd` render inside `au-description-item` or projected content
+ * (outside `au-description-list` encapsulation).
+ */
+
+au-description-list {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+}
+
+au-description-list .au-description-list__list {
+  margin: 0;
+  padding: 0;
+}
+
+au-description-list .au-description-list__list dt,
+au-description-list .au-description-list__list .au-description-item__term {
+  margin: 0;
+  padding: var(--au-space-3) 0 var(--au-space-1);
+  font-size: var(--au-text-xs);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-tight);
+  letter-spacing: var(--au-tracking-ui);
+  color: var(--au-color-text-label);
+}
+
+au-description-list[data-au-layout='vertical'] .au-description-list__list > :first-child dt,
+au-description-list[data-au-layout='vertical']
+  .au-description-list__list
+  > :first-child
+  .au-description-item__term,
+au-description-list[data-au-layout='vertical'] .au-description-list__list > dt:first-child {
+  padding-top: 0;
+}
+
+au-description-list .au-description-list__list dd,
+au-description-list .au-description-list__list .au-description-item__detail {
+  margin: 0;
+  padding: 0 0 var(--au-space-3);
+  font-size: var(--au-text-sm);
+  line-height: var(--au-leading-normal);
+  color: var(--au-color-text-primary);
+}
+
+au-description-list[data-au-layout='vertical'] .au-description-list__list dd,
+au-description-list[data-au-layout='vertical']
+  .au-description-list__list
+  .au-description-item__detail {
+  border-bottom: 1px solid var(--au-color-border-subtle);
+}
+
+au-description-list[data-au-layout='vertical'] .au-description-list__list > :last-child dd,
+au-description-list[data-au-layout='vertical']
+  .au-description-list__list
+  > :last-child
+  .au-description-item__detail,
+au-description-list[data-au-layout='vertical'] .au-description-list__list > dd:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Native `<dt>` / `<dd>` projected on the list: one shared grid on `<dl>`. */
+au-description-list[data-au-layout='horizontal'] .au-description-list__list {
+  display: grid;
+  grid-template-columns: minmax(8rem, 30%) 1fr;
+  column-gap: var(--au-space-4);
+  row-gap: var(--au-space-2);
+}
+
+/* `au-description-item` rows: stack groups; each group is a two-column grid. */
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list:has(> .au-description-item) {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--au-space-2);
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list > .au-description-item {
+  display: grid;
+  grid-template-columns: minmax(8rem, 30%) 1fr;
+  column-gap: var(--au-space-4);
+  align-items: baseline;
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list dt,
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list
+  .au-description-item__term,
+au-description-list[data-au-layout='horizontal'] .au-description-list__list dd,
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list
+  .au-description-item__detail {
+  padding: var(--au-space-2) 0;
+}
+
+au-description-list[data-au-layout='horizontal'] .au-description-list__list dt,
+au-description-list[data-au-layout='horizontal']
+  .au-description-list__list
+  .au-description-item__term {
+  font-size: var(--au-text-sm);
+}
+
+au-description-list[data-au-columns='2'][data-au-layout='vertical'] .au-description-list__list {
+  column-count: 2;
+  column-gap: var(--au-space-8);
+}
+
+au-description-list[data-au-columns='3'][data-au-layout='vertical'] .au-description-list__list {
+  column-count: 3;
+  column-gap: var(--au-space-8);
+}
+
+
+
+/* --- ./au-accordion.css --- */
+/**
+ * Accordion — projected consumer markup (ng-content).
+ * Root host: accordion.css · Panels: au-accordion-panel.css
+ */
+
+au-accordion .au-accordion__item {
+  border-block-end: 1px solid var(--au-color-border-subtle);
+}
+
+au-accordion:not([data-au-variant='contained']) .au-accordion__item:first-child {
+  border-block-start: 1px solid var(--au-color-border-subtle);
+}
+
+au-accordion[data-au-variant='contained'] .au-accordion__item:first-child {
+  border-block-start: none;
+}
+
+au-accordion[data-au-variant='contained'] .au-accordion__item:last-child {
+  border-block-end: none;
+}
+
+au-accordion button.au-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--au-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: var(--au-accordion-trigger-padding-y, var(--au-space-4))
+    var(--au-accordion-trigger-padding-x, var(--au-space-4));
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-snug);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+au-accordion button.au-accordion__trigger:hover:not(:disabled) {
+  background: var(--au-color-surface-sunken);
+}
+
+au-accordion button.au-accordion__trigger:focus-visible {
+  outline: none;
+  box-shadow: var(--au-focus-inset);
+  z-index: 1;
+}
+
+au-accordion button.au-accordion__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+au-accordion button.au-accordion__trigger::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-inline-end: 2px solid currentColor;
+  border-block-end: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--au-duration-short) var(--au-ease-in-out);
+}
+
+au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after {
+  transform: rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  au-accordion button.au-accordion__trigger::after {
+    transition: none;
+  }
+}
+
+
+
+/* --- ./au-high-contrast-aaa.css --- */
+/**
+ * High-contrast theme enhancements — WCAG 2.2 AAA targets.
+ * Requires `data-au-theme="high-contrast"` or `high-contrast-dark"` on an ancestor.
+ * Pair with au-tokens-high-contrast.css (palette + chrome tokens).
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Controls — 2px borders, no opacity-based disabled states */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast'] button.au-button__element,
+[data-au-theme='high-contrast-dark'] button.au-button__element {
+  border-width: 2px;
+}
+
+[data-au-theme='high-contrast'] button.au-button__element:disabled,
+[data-au-theme='high-contrast'] button.au-button__element[aria-disabled='true'],
+[data-au-theme='high-contrast-dark'] button.au-button__element:disabled,
+[data-au-theme='high-contrast-dark'] button.au-button__element[aria-disabled='true'] {
+  opacity: 1;
+  color: var(--au-color-text-disabled);
+  border-color: var(--au-color-text-disabled);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
+}
+
+[data-au-theme='high-contrast'] button.au-button__element--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] button.au-button__element--from-tab:focus-visible {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast'] .au-select__value--placeholder,
+[data-au-theme='high-contrast-dark'] .au-select__value--placeholder {
+  color: var(--au-color-form-placeholder);
+}
+
+[data-au-theme='high-contrast'] .au-select__trigger:disabled,
+[data-au-theme='high-contrast-dark'] .au-select__trigger:disabled {
+  opacity: 1;
+}
+
+[data-au-theme='high-contrast'] button.au-chip__surface:disabled,
+[data-au-theme='high-contrast-dark'] button.au-chip__surface:disabled {
+  opacity: 1;
+  color: var(--au-color-text-disabled);
+  border-color: var(--au-color-text-disabled);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Progress — taller track, 2px shell */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast'] .au-progress__track,
+[data-au-theme='high-contrast-dark'] .au-progress__track {
+  height: var(--au-progress-track-height);
+  border-width: 2px;
+}
+
+[data-au-theme='high-contrast'] .au-progress__bar,
+[data-au-theme='high-contrast-dark'] .au-progress__bar {
+  box-shadow: inset 0 0 0 1px var(--au-color-border-default);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Table — stronger row dividers */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast'] au-table .au-table__cell,
+[data-au-theme='high-contrast-dark'] au-table .au-table__cell {
+  border-bottom-width: var(--au-table-divider-width);
+  border-bottom-color: var(--au-color-border-default);
+}
+
+[data-au-theme='high-contrast'] au-table .au-table__header-cell,
+[data-au-theme='high-contrast-dark'] au-table .au-table__header-cell {
+  border-bottom-width: var(--au-table-divider-width);
+  border-bottom-color: var(--au-color-border-default);
+}
+
+[data-au-theme='high-contrast'] au-table .au-table__sort-icon,
+[data-au-theme='high-contrast-dark'] au-table .au-table__sort-icon {
+  opacity: 1;
+  color: var(--au-color-text-secondary);
+}
+
+[data-au-theme='high-contrast'] au-table .au-table__header-cell--sorted .au-table__sort-icon,
+[data-au-theme='high-contrast-dark'] au-table .au-table__header-cell--sorted .au-table__sort-icon {
+  color: var(--au-color-action-primary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Fields — tab focus ring (keyboard) */
+/* -------------------------------------------------------------------------- */
+
+[data-au-theme='high-contrast']
+  :is(
+    .au-input-text__control-row--from-tab,
+    .au-input-number__control-row--from-tab,
+    .au-textarea__control-row--from-tab,
+    .au-input-date__control-row--from-tab,
+    .au-input-time__control-row--from-tab,
+    .au-input-password__control-row--from-tab,
+    .au-tag-input__control-row--from-tab,
+    .au-select__control-row--from-tab,
+    .au-autocomplete__control-row--from-tab
+  ):focus-within,
+[data-au-theme='high-contrast-dark']
+  :is(
+    .au-input-text__control-row--from-tab,
+    .au-input-number__control-row--from-tab,
+    .au-textarea__control-row--from-tab,
+    .au-input-date__control-row--from-tab,
+    .au-input-time__control-row--from-tab,
+    .au-input-password__control-row--from-tab,
+    .au-tag-input__control-row--from-tab,
+    .au-select__control-row--from-tab,
+    .au-autocomplete__control-row--from-tab
+  ):focus-within {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast']
+  .au-checkbox__wrapper--from-tab:focus-within
+  .au-checkbox__element:not(:disabled),
+[data-au-theme='high-contrast-dark']
+  .au-checkbox__wrapper--from-tab:focus-within
+  .au-checkbox__element:not(:disabled) {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast'] button.au-chip__surface--from-tab:focus-visible,
+[data-au-theme='high-contrast'] .au-chip__remove--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] button.au-chip__surface--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] .au-chip__remove--from-tab:focus-visible {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+

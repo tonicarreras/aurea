@@ -3,7 +3,6 @@ import {
   Component,
   ContentChild,
   DestroyRef,
-  ElementRef,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
@@ -13,6 +12,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
@@ -46,7 +46,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
 export class AuDrawer {
   private static nextTitleId = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly destroyRef = inject(DestroyRef);
   private savedFocus: HTMLElement | null = null;
   private pageScrollLocked = false;
@@ -87,7 +87,7 @@ export class AuDrawer {
   }
 
   private nativeDialog(): HTMLDialogElement | null {
-    const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
+    const el = this.host.nativeElement.querySelector('dialog');
     return el instanceof HTMLDialogElement ? el : null;
   }
 

@@ -5,10 +5,10 @@ export const GET_STARTED_COMPONENT_SNIPPET = `import { AuButton, AuCheckbox, AuF
   imports: [AuButton, AuCheckbox, AuFormField, AuInputText],
   template: \`
     <au-form-field label="Email" [required]="true">
-      <au-input-text type="email" placeholder="tu@correo.com" />
+      <input auInputText type="email" placeholder="tu@correo.com" />
     </au-form-field>
-    <au-checkbox label="Recordarme" />
-    <au-button variant="primary">Guardar</au-button>
+    <input type="checkbox" auCheckbox label="Recordarme" />
+    <button auButton variant="primary">Guardar</button>
   \`,
 })
 export class ProfileForm {}`;

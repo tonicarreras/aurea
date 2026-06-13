@@ -14,39 +14,39 @@ export const examples: ComponentDocExample[] = [
     title: 'Primary',
     description: 'Acción principal de un formulario o diálogo.',
     demoComponent: ExampleButtonPrimaryDemo,
-    code: `<au-button variant="primary">Guardar</au-button>`,
+    code: `<button auButton variant="primary">Guardar</button>`,
   },
   {
     title: 'Secondary',
     demoComponent: ExampleButtonSecondaryDemo,
-    code: `<au-button variant="secondary">Cancelar</au-button>`,
+    code: `<button auButton variant="secondary">Cancelar</button>`,
   },
   {
     title: 'Outline',
     demoComponent: ExampleButtonOutlineDemo,
-    code: `<au-button variant="outline">Más opciones</au-button>`,
+    code: `<button auButton variant="outline">Más opciones</button>`,
   },
   {
     title: 'Ghost',
     demoComponent: ExampleButtonGhostDemo,
-    code: `<au-button variant="ghost">Descartar</au-button>`,
+    code: `<button auButton variant="ghost">Descartar</button>`,
   },
   {
     title: 'Cargando',
     description: 'Muestra un `au-spinner` decorativo y establece `aria-busy` en el botón.',
     demoComponent: ExampleButtonLoadingDemo,
-    code: `<au-button variant="primary" [loading]="true">Guardando…</au-button>`,
+    code: `<button auButton variant="primary" [loading]="true">Guardando…</button>`,
   },
   {
     title: 'Deshabilitado',
     demoComponent: ExampleButtonDisabledDemo,
-    code: `<au-button variant="primary" [disabled]="true">No disponible</au-button>`,
+    code: `<button auButton variant="primary" [disabled]="true">No disponible</button>`,
   },
   {
     title: 'Tamaños',
     demoComponent: ExampleButtonSizesDemo,
-    code: `<au-button size="sm">Pequeño</au-button>
-<au-button size="md">Mediano</au-button>
-<au-button size="lg">Grande</au-button>`,
+    code: `<button auButton size="sm">Pequeño</button>
+<button auButton size="md">Mediano</button>
+<button auButton size="lg">Grande</button>`,
   },
 ];

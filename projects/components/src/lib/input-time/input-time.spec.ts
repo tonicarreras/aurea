@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { describe, expect, it, vi } from 'vitest';
-import { AuInputTime } from './input-time';
+import { AuInputTime } from './au-input-time.directive';
 import {
   AuInputTimeTestHost,
   applyFieldHarnessInputs,
@@ -19,7 +19,7 @@ describe('AuInputTime', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputTimeTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-time__input'))!
+    return fixture.debugElement.query(By.css('input.au-input-time'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -208,10 +208,9 @@ describe('AuInputTime', () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-time__control-row'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
-    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
@@ -219,18 +218,18 @@ describe('AuInputTime', () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-time__control-row'))!.nativeElement;
+    const input = queryInput(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-input-time__control-row'))!
+      .query(By.css('input.au-input-time'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
-    expect(row.classList.contains('au-input-time__control-row--from-tab')).toBe(true);
+    expect(input.classList.contains('au-input-time--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
-    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
     fix.detectChanges();
-    expect(row.classList.contains('au-input-time__control-row--from-tab')).toBe(false);
+    expect(input.classList.contains('au-input-time--from-tab')).toBe(false);
   });
 
   it('sets hint and aria-describedby', () => {

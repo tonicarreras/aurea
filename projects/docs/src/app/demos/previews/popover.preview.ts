@@ -9,12 +9,12 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--action">
       <au-popover [(open)]="open">
-        <au-button
+        <button auButton
           auPopoverTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().trigger }}</au-button
+          >{{ t().trigger }}</button
         >
         <p class="docs-preview-popover__body">{{ t().content }}</p>
       </au-popover>

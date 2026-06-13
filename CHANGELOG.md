@@ -9,7 +9,38 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
-## [1.6.0] - 2026-06-01
+### Changed (breaking)
+
+- **Native host directives** — primitive controls no longer use custom element selectors. Migrate templates as follows:
+  - `<au-button>` → `<button auButton>`
+  - `<au-input-text>` → `<input auInputText>`
+  - `<au-textarea>` → `<textarea auTextarea>`
+  - `<au-input-number>` → `<input auInputNumber>`
+  - `<au-input-date>` → `<input auInputDate>`
+  - `<au-input-time>` → `<input auInputTime>`
+  - `<au-input-password>` → `<input auInputPassword>`
+  - `<au-checkbox>` → `<input type="checkbox" auCheckbox>`
+  - `<au-switch>` → `<button type="button" auSwitch>`
+  - `<au-link>` → `<a auLink>` (custom element removed; attribute-only)
+- **`AuButton`** — no `@Output() click`; use native `(click)` on the `<button>` host. Loading/disabled states block activation via capture-phase handler.
+- **Styles** — control CSS for migrated primitives is bundled via `aurea-global.css` (directives use `@Directive` without `styleUrl`).
+
+### Migration from 1.6.0
+
+```html
+<!-- Before -->
+<au-button variant="primary" (click)="save()">Save</au-button>
+<au-form-field label="Email">
+  <au-input-text [formField]="form.email" type="email" />
+</au-form-field>
+
+<!-- After -->
+<button auButton variant="primary" type="button" (click)="save()">Save</button>
+<au-form-field label="Email">
+  <input auInputText type="email" [formField]="form.email" />
+</au-form-field>
+```
+
 
 ### Added
 

@@ -13,7 +13,7 @@ export const examples: ComponentDocExample[] = [
     code: `import { AuMenu, AuMenuItem, AuMenuTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-menu [(open)]="open">
-  <au-button auMenuTrigger>Acciones</au-button>
+  <button auButton auMenuTrigger>Acciones</button>
   <au-menu-item (select)="onEdit()">Editar</au-menu-item>
   <au-menu-item>Compartir</au-menu-item>
 </au-menu>`,
@@ -23,7 +23,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Ubicación del panel respecto al trigger (`bottom`, `top`, `start`, `end`, …).',
     demoComponent: ExampleMenuPlacementDemo,
     code: `<au-menu [(open)]="open" placement="top">
-  <au-button auMenuTrigger>Acciones</au-button>
+  <button auButton auMenuTrigger>Acciones</button>
   <au-menu-item>Editar</au-menu-item>
 </au-menu>`,
   },
@@ -32,7 +32,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Usa `[disabled]="true"`; el roving tabindex lo omite al navegar.',
     demoComponent: ExampleMenuDisabledItemDemo,
     code: `<au-menu>
-  <au-button auMenuTrigger>Acciones</au-button>
+  <button auButton auMenuTrigger>Acciones</button>
   <au-menu-item>Editar</au-menu-item>
   <au-menu-item [disabled]="true">Archivar (no disponible)</au-menu-item>
   <au-menu-item>Eliminar</au-menu-item>
@@ -42,9 +42,9 @@ export const examples: ComponentDocExample[] = [
     title: 'Apertura controlada',
     description: 'Controla `[(open)]` desde la app — p. ej. abrir desde otro botón.',
     demoComponent: ExampleMenuControlledDemo,
-    code: `<au-button type="button" (click)="open.set(true)">Abrir menú</au-button>
+    code: `<button auButton type="button" (click)="open.set(true)">Abrir menú</button>
 <au-menu [(open)]="open">
-  <au-button auMenuTrigger>Acciones</au-button>
+  <button auButton auMenuTrigger>Acciones</button>
   <au-menu-item>Editar</au-menu-item>
 </au-menu>`,
   },

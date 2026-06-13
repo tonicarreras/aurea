@@ -12,12 +12,12 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         [(open)]="openBottom"
         placement="bottom"
       >
-        <au-button
+        <button auButton
           auMenuTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().placementBottom }}</au-button
+          >{{ t().placementBottom }}</button
         >
         <au-menu-item>{{ t().edit }}</au-menu-item>
         <au-menu-item>{{ t().duplicate }}</au-menu-item>
@@ -26,12 +26,12 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         [(open)]="openTop"
         placement="top"
       >
-        <au-button
+        <button auButton
           auMenuTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().placementTop }}</au-button
+          >{{ t().placementTop }}</button
         >
         <au-menu-item>{{ t().edit }}</au-menu-item>
         <au-menu-item>{{ t().duplicate }}</au-menu-item>
@@ -51,12 +51,12 @@ export class ExampleMenuPlacementDemo {
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
   template: `
     <au-menu [(open)]="open">
-      <au-button
+      <button auButton
         auMenuTrigger
         size="sm"
         variant="outline"
         type="button"
-        >{{ t().trigger }}</au-button
+        >{{ t().trigger }}</button
       >
       <au-menu-item>{{ t().edit }}</au-menu-item>
       <au-menu-item [disabled]="true">{{ t().archiveDisabled }}</au-menu-item>
@@ -75,20 +75,20 @@ export class ExampleMenuDisabledItemDemo {
   imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton],
   template: `
     <div class="docs-demo-stack">
-      <au-button
+      <button auButton
         size="sm"
         variant="secondary"
         type="button"
         (click)="open.set(true)"
-        >{{ t().openProgrammatically }}</au-button
+        >{{ t().openProgrammatically }}</button
       >
       <au-menu [(open)]="open">
-        <au-button
+        <button auButton
           auMenuTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().trigger }}</au-button
+          >{{ t().trigger }}</button
         >
         <au-menu-item>{{ t().edit }}</au-menu-item>
         <au-menu-item>{{ t().share }}</au-menu-item>

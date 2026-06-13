@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { signal } from '@angular/core';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuFormField } from '../form-field/form-field';
-import { AuInputText } from '../input-text/input-text';
+import { AuInputText } from '../input-text';
 import { AuPopover, AuPopoverTrigger } from './index';
 
 const meta: Meta<AuPopover> = {
@@ -49,10 +49,10 @@ export const Filters: Story = {
       },
       template: `
         <au-popover [(open)]="open">
-          <au-button auPopoverTrigger variant="outline">Filters</au-button>
+          <button type="button" auButton auPopoverTrigger variant="outline">Filters</button>
           <div class="au-story-field">
             <au-form-field label="Search">
-              <au-input-text placeholder="Name…" />
+              <input auInputText placeholder="Name…" />
             </au-form-field>
           </div>
         </au-popover>

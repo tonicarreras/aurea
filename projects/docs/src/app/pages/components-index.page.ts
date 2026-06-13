@@ -38,7 +38,7 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
           </p>
         </div>
         <a [routerLink]="crudDemoLink()">
-          <au-button variant="primary">{{ i18n.messages().componentsIndex.crudSpotlightCta }}</au-button>
+          <button auButton variant="primary">{{ i18n.messages().componentsIndex.crudSpotlightCta }}</button>
         </a>
       </section>
 

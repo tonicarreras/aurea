@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { describe, expect, it, vi } from 'vitest';
-import { AuInputDate } from './input-date';
+import { AuInputDate } from './au-input-date.directive';
 import {
   AuInputDateTestHost,
   applyFieldHarnessInputs,
@@ -19,7 +19,7 @@ describe('AuInputDate', () => {
   }
 
   function queryInput(fixture: ComponentFixture<AuInputDateTestHost>): HTMLInputElement {
-    return fixture.debugElement.query(By.css('.au-input-date__input'))!
+    return fixture.debugElement.query(By.css('input.au-input-date'))!
       .nativeElement as HTMLInputElement;
   }
 
@@ -210,10 +210,9 @@ describe('AuInputDate', () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-date__control-row'))!.nativeElement;
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
-    Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
@@ -221,18 +220,18 @@ describe('AuInputDate', () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.detectChanges();
-    const row = fix.debugElement.query(By.css('.au-input-date__control-row'))!.nativeElement;
+    const input = queryInput(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
-      .query(By.css('.au-input-date__control-row'))!
+      .query(By.css('input.au-input-date'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
     fix.detectChanges();
-    expect(row.classList.contains('au-input-date__control-row--from-tab')).toBe(true);
+    expect(input.classList.contains('au-input-date--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
-    Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
+    Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
     fix.detectChanges();
-    expect(row.classList.contains('au-input-date__control-row--from-tab')).toBe(false);
+    expect(input.classList.contains('au-input-date--from-tab')).toBe(false);
   });
 
   it('sets hint and aria-describedby', () => {
@@ -325,7 +324,7 @@ describe('AuInputDate', () => {
     CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
     fix.detectChanges();
     expect(showPicker).not.toHaveBeenCalled();
-    expect(fix.debugElement.query(By.css('.au-field-bounded-picker'))).toBeTruthy();
+    expect(document.body.querySelector('.au-field-bounded-picker')).toBeTruthy();
   });
 
   it('onPickerIconClick is no-op when disabled or readOnly', () => {

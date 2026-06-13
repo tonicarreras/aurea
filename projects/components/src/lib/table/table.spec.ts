@@ -114,7 +114,7 @@ function sortButtons(root: HTMLElement): HTMLButtonElement[] {
 }
 
 function tableCheckboxes(root: HTMLElement): HTMLInputElement[] {
-  return [...root.querySelectorAll('au-checkbox .au-checkbox__element')] as HTMLInputElement[];
+  return [...root.querySelectorAll('input.au-checkbox__element')] as HTMLInputElement[];
 }
 
 async function createTableHost(): Promise<ComponentFixture<TableHost>> {
@@ -574,7 +574,7 @@ describe('AuTable selection', () => {
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
     const selectAll = root.querySelector(
-      '.au-table__header-cell--select .au-checkbox__element',
+      '.au-table__header-cell--select input.au-checkbox__element',
     ) as HTMLInputElement;
     selectAll.click();
     fixture.detectChanges();
@@ -673,7 +673,7 @@ describe('AuTable selection', () => {
     fixture.detectChanges();
     const table = tableInstance(fixture);
     const checkbox = (fixture.nativeElement as HTMLElement).querySelector(
-      'tbody au-checkbox .au-checkbox__element',
+      'tbody input.au-checkbox__element',
     ) as HTMLInputElement;
     table['onRowClick'](fixture.componentInstance.rows[0], {
       target: checkbox,
@@ -707,7 +707,7 @@ describe('AuTable selection', () => {
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
     const rowCheckbox = root.querySelector(
-      'tbody au-checkbox .au-checkbox__element',
+      'tbody input.au-checkbox__element',
     ) as HTMLInputElement;
     rowCheckbox.click();
     fixture.detectChanges();

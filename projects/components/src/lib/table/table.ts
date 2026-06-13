@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { AuCheckbox } from '../checkbox/checkbox';
+import { AuCheckbox } from '../checkbox/au-checkbox.directive';
 import { AuIcon } from '../icon/icon';
 import { AuSpinner } from '../spinner/spinner';
 import { AuTableColumn } from './au-table-column';
@@ -240,7 +240,7 @@ export class AuTable {
       return;
     }
     const target = event.target as HTMLElement;
-    if (target.closest('button, a, input, select, textarea, label, [role="button"], au-checkbox')) {
+    if (target.closest('button, a, input, select, textarea, label, [role="button"], input[auCheckbox]')) {
       return;
     }
     this.toggleRowSelection(row);

@@ -56,7 +56,7 @@ import { AuFormField, AuInputText } from '@aurea-design-system/components';
       hint="Usamos tu correo solo para avisos."
       [required]="true"
     >
-      <au-input-text type="email" [formField]="profileForm.email" />
+      <input auInputText type="email" [formField]="profileForm.email" />
     </au-form-field>
   \`,
 })

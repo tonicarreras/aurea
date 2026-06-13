@@ -9,8 +9,8 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview">
       <au-button-group [ariaLabel]="t().ariaLabel">
-        <au-button variant="outline">{{ t().cancel }}</au-button>
-        <au-button>{{ t().save }}</au-button>
+        <button auButton variant="outline">{{ t().cancel }}</button>
+        <button auButton>{{ t().save }}</button>
       </au-button-group>
     </div>
   `,

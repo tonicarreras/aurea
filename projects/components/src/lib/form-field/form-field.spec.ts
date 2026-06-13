@@ -8,7 +8,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuInputText } from '../input-text/input-text';
+import { AuInputText } from '../input-text/au-input-text.directive';
 import {
   AU_FORM_FIELD,
   AuFormField,
@@ -363,13 +363,13 @@ describe('injectAuFormField', () => {
 describe('formFieldControlRender', () => {
   it('returns au-form-field template with chrome bindings', () => {
     const args = { ...defaultFieldChromeArgs, label: 'Email' };
-    const result = formFieldControlRender([AuFormField, AuInputText], args, '<au-input-text />');
+    const result = formFieldControlRender([AuFormField, AuInputText], args, '<input auInputText />');
 
     expect(result.props).toBe(args);
     expect(result.moduleMetadata.imports).toEqual([AuFormField, AuInputText]);
     expect(result.template).toContain('[label]="label"');
     expect(result.template).toContain('[controlIdInput]="controlIdInput"');
-    expect(result.template).toContain('<au-input-text />');
+    expect(result.template).toContain('<input auInputText />');
   });
 });
 
@@ -382,10 +382,10 @@ describe('formFieldHintOnlyRender', () => {
       required: false,
       controlIdInput: 'x',
     };
-    const result = formFieldHintOnlyRender([AuFormField], args, '<au-switch />');
+    const result = formFieldHintOnlyRender([AuFormField], args, '<button type="button" auSwitch></button>');
 
     expect(result.template).not.toContain('[label]="label"');
     expect(result.template).toContain('[hint]="hint"');
-    expect(result.template).toContain('<au-switch />');
+    expect(result.template).toContain('<button type="button" auSwitch></button>');
   });
 });

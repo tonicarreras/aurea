@@ -12,7 +12,7 @@ export const examples: ComponentDocExample[] = [
     description: 'Hint under the label; the control stays within a readable field width.',
     demoComponent: ExampleInputTextHintDemo,
     code: `<au-form-field label="Username" hint="Between 3 and 20 characters.">
-  <au-input-text placeholder="name" />
+  <input auInputText placeholder="name" />
 </au-form-field>`,
   },
   {
@@ -22,7 +22,7 @@ export const examples: ComponentDocExample[] = [
   label="Email"
   hint="We only use your email for notifications."
 >
-  <au-input-text type="email" placeholder="you@company.com" />
+  <input auInputText type="email" placeholder="you@company.com" />
 </au-form-field>`,
   },
   {
@@ -30,10 +30,10 @@ export const examples: ComponentDocExample[] = [
     description: '`size` prop: sm, md (default), and lg.',
     demoComponent: ExampleInputTextSizesDemo,
     code: `<au-form-field label="Small">
-  <au-input-text size="sm" placeholder="name" />
+  <input auInputText size="sm" placeholder="name" />
 </au-form-field>
 <au-form-field label="Large">
-  <au-input-text size="lg" placeholder="name" />
+  <input auInputText size="lg" placeholder="name" />
 </au-form-field>`,
   },
   {
@@ -44,7 +44,7 @@ export const examples: ComponentDocExample[] = [
   errorMessage="Enter a valid email address."
   [invalid]="true"
 >
-  <au-input-text type="email" />
+  <input auInputText type="email" />
 </au-form-field>`,
   },
 ];

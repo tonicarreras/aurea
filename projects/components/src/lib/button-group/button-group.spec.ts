@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AuButtonGroup } from './button-group';
 
 describe('AuButtonGroup', () => {
@@ -33,8 +33,8 @@ describe('AuButtonGroup', () => {
       imports: [AuButtonGroup, AuButton],
       template: `
         <au-button-group ariaLabel="Actions">
-          <au-button variant="outline">Cancel</au-button>
-          <au-button>Save</au-button>
+          <button auButton variant="outline">Cancel</button>
+          <button auButton>Save</button>
         </au-button-group>
       `,
     })
@@ -43,7 +43,7 @@ describe('AuButtonGroup', () => {
     TestBed.configureTestingModule({ imports: [Host] });
     const fix = TestBed.createComponent(Host);
     fix.detectChanges();
-    const buttons = fix.nativeElement.querySelectorAll('au-button');
+    const buttons = fix.nativeElement.querySelectorAll('button.au-button');
     expect(buttons.length).toBe(2);
     expect(buttons[0].textContent?.trim()).toBe('Cancel');
   });

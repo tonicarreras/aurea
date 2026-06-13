@@ -12,10 +12,10 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
       [description]="t().description"
     >
       <au-form-field [label]="t().streetLabel">
-        <au-input-text [placeholder]="t().streetPlaceholder" />
+        <input auInputText [placeholder]="t().streetPlaceholder" />
       </au-form-field>
       <au-form-field [label]="t().cityLabel">
-        <au-input-text [placeholder]="t().cityPlaceholder" />
+        <input auInputText [placeholder]="t().cityPlaceholder" />
       </au-form-field>
     </au-fieldset>
   `,
@@ -34,7 +34,7 @@ export class ExampleFieldsetBasicDemo {
       [disabled]="true"
     >
       <au-form-field [label]="t().streetLabel">
-        <au-input-text [placeholder]="t().streetPlaceholder" />
+        <input auInputText [placeholder]="t().streetPlaceholder" />
       </au-form-field>
     </au-fieldset>
   `,

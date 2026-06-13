@@ -11,12 +11,12 @@
 /* -------------------------------------------------------------------------- */
 
 :is(
-  au-input-text,
-  au-input-number,
-  au-textarea,
-  au-input-date,
-  au-input-time,
-  au-input-password,
+  input.au-input-text,
+  textarea.au-textarea,
+  input.au-input-number,
+  input.au-input-date,
+  input.au-input-time,
+  input.au-input-password,
   au-tag-input,
   au-select,
   au-autocomplete
@@ -28,9 +28,9 @@
   text-rendering: optimizeLegibility;
 }
 
-au-input-date,
-au-input-time,
-au-input-password,
+input.au-input-date,
+input.au-input-time,
+input.au-input-password,
 au-tag-input {
   color-scheme: inherit;
 }
@@ -38,6 +38,101 @@ au-tag-input {
 au-select,
 au-autocomplete {
   overflow: visible;
+}
+
+/* Native directive hosts — chrome on the control element (no __control-row wrapper) */
+:is(input.au-input-text, textarea.au-textarea, input.au-input-number, input.au-input-date, input.au-input-time, input.au-input-password) {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+  transition: var(--au-transition-control);
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+input.au-input-text:hover:not(:disabled):not(:focus),
+textarea.au-textarea:hover:not(:disabled):not(:focus),
+input.au-input-number:hover:not(:disabled):not(:focus),
+input.au-input-date:hover:not(:disabled):not(:focus),
+input.au-input-time:hover:not(:disabled):not(:focus),
+input.au-input-password:hover:not(:disabled):not(:focus) {
+  border-color: var(--au-chrome-border-color-hover);
+}
+
+input.au-input-text[aria-invalid='true']:not(:focus),
+textarea.au-textarea[aria-invalid='true']:not(:focus),
+input.au-input-number[aria-invalid='true']:not(:focus),
+input.au-input-date[aria-invalid='true']:not(:focus),
+input.au-input-time[aria-invalid='true']:not(:focus),
+input.au-input-password[aria-invalid='true']:not(:focus) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+input.au-input-text:focus,
+textarea.au-textarea:focus,
+input.au-input-number:focus,
+input.au-input-date:focus,
+input.au-input-time:focus,
+input.au-input-password:focus {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-focus-inset);
+}
+
+input.au-input-text:focus[aria-invalid='true'],
+textarea.au-textarea:focus[aria-invalid='true'],
+input.au-input-number:focus[aria-invalid='true'],
+input.au-input-date:focus[aria-invalid='true'],
+input.au-input-time:focus[aria-invalid='true'],
+input.au-input-password:focus[aria-invalid='true'] {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-focus-inset-error);
+}
+
+input.au-input-text.au-input-text--from-tab:focus,
+textarea.au-textarea.au-textarea--from-tab:focus,
+input.au-input-number.au-input-number--from-tab:focus,
+input.au-input-date.au-input-date--from-tab:focus,
+input.au-input-time.au-input-time--from-tab:focus,
+input.au-input-password.au-input-password--from-tab:focus {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-chrome-border-color);
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+input.au-input-text.au-input-text--from-tab:focus[aria-invalid='true'],
+textarea.au-textarea.au-textarea--from-tab:focus[aria-invalid='true'],
+input.au-input-number.au-input-number--from-tab:focus[aria-invalid='true'],
+input.au-input-date.au-input-date--from-tab:focus[aria-invalid='true'],
+input.au-input-time.au-input-time--from-tab:focus[aria-invalid='true'],
+input.au-input-password.au-input-password--from-tab:focus[aria-invalid='true'] {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: var(--au-focus-tab-error);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+input.au-input-text:disabled,
+textarea.au-textarea:disabled,
+input.au-input-number:disabled,
+input.au-input-date:disabled,
+input.au-input-time:disabled,
+input.au-input-password:disabled {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
 }
 
 :is(.au-select__field, .au-autocomplete__field) {

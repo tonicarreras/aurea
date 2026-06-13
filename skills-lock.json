@@ -18,8 +18,15 @@
     },
     "angular-developer": {
       "source": "angular/skills",
-      "sourceType": "autoskills-registry",
-      "computedHash": "fc045be84cd51d105e4523a555510e3fd465a3e931f9b0049b0dfbdf68775eac"
+      "sourceType": "github",
+      "skillPath": "angular-developer/SKILL.md",
+      "computedHash": "a786c2637f1bece6324d6280b510aa8485b9ccda4a7ec62ca840c4fdab561ced"
+    },
+    "angular-new-app": {
+      "source": "angular/skills",
+      "sourceType": "github",
+      "skillPath": "angular-new-app/SKILL.md",
+      "computedHash": "49bd84ab08bd3498c52f476bed48fbb942dc6dbc0925607e84549adbed34bccf"
     },
     "bun": {
       "source": "midudev/autoskills",

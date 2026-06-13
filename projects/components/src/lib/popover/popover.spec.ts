@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AuPopoverTrigger } from './au-popover-trigger.directive';
 import { AuPopover, auPopoverSelfRef } from './popover';
 
@@ -15,7 +15,7 @@ import { AuPopover, auPopoverSelfRef } from './popover';
       [(open)]="open"
       [disabled]="disabled"
     >
-      <au-button auPopoverTrigger>Filters</au-button>
+      <button auButton auPopoverTrigger>Filters</button>
       <div class="panel-body">Panel</div>
     </au-popover>
   `,

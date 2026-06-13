@@ -15,6 +15,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 
 import { installPageScrollPrevention } from '../overlay/prevent-page-scroll';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
@@ -44,7 +45,7 @@ export function auMenuSelfRef(): typeof AuMenu {
  * @example
  * ```html
  * <au-menu [(open)]="open">
- *   <au-button auMenuTrigger>Actions</au-button>
+ *   <button auButton auMenuTrigger>Actions</button>
  *   <au-menu-item (select)="onEdit()">Edit</au-menu-item>
  * </au-menu>
  * ```
@@ -66,7 +67,7 @@ export class AuMenu {
   readonly placement = input<AuTooltipPlacement>('bottom');
   readonly disabled = input(false);
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
@@ -175,7 +176,7 @@ export class AuMenu {
         return false;
       }
       const panel = this.panelRef()?.nativeElement;
-      const host = this.host.nativeElement as HTMLElement;
+      const host = this.host.nativeElement;
       return host.contains(target) || !!panel?.contains(target);
     };
 
@@ -290,7 +291,7 @@ export class AuMenu {
     if (!(target instanceof Node)) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
+    const host = this.host.nativeElement;
     const panel = this.panelRef()?.nativeElement;
     if (host.contains(target) || panel?.contains(target)) {
       return;

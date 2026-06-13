@@ -12,7 +12,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         [label]="t().emailLabel"
         [hint]="t().emailHint"
       >
-        <au-input-text
+        <input auInputText
           type="email"
           [placeholder]="t().emailPlaceholder"
         />
@@ -34,7 +34,7 @@ export class ExampleInputTextBasicDemo {
         [label]="t().userLabel"
         [hint]="t().userHint"
       >
-        <au-input-text [placeholder]="t().userPlaceholder" />
+        <input auInputText [placeholder]="t().userPlaceholder" />
       </au-form-field>
     </div>
   `,
@@ -54,7 +54,7 @@ export class ExampleInputTextHintDemo {
         [errorMessage]="t().emailError"
         [invalid]="true"
       >
-        <au-input-text
+        <input auInputText
           type="email"
           [placeholder]="t().emailErrorPlaceholder"
         />
@@ -73,16 +73,16 @@ export class ExampleInputTextErrorDemo {
   template: `
     <div class="docs-example-field docs-demo-stack">
       <au-form-field [label]="t().sizeSmLabel">
-        <au-input-text
+        <input auInputText
           size="sm"
           [placeholder]="t().userPlaceholder"
         />
       </au-form-field>
       <au-form-field [label]="t().sizeMdLabel">
-        <au-input-text [placeholder]="t().userPlaceholder" />
+        <input auInputText [placeholder]="t().userPlaceholder" />
       </au-form-field>
       <au-form-field [label]="t().sizeLgLabel">
-        <au-input-text
+        <input auInputText
           size="lg"
           [placeholder]="t().userPlaceholder"
         />

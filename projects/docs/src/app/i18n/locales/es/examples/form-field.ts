@@ -10,7 +10,7 @@ export const examples: ComponentDocExample[] = [
     title: 'Con hint',
     demoComponent: ExampleFormFieldHintDemo,
     code: `<au-form-field label="Usuario" hint="Entre 3 y 20 caracteres.">
-  <au-input-text placeholder="nombre" />
+  <input auInputText placeholder="nombre" />
 </au-form-field>`,
   },
   {
@@ -21,7 +21,7 @@ export const examples: ComponentDocExample[] = [
   hint="Usamos tu correo solo para avisos."
   [required]="true"
 >
-  <au-input-text type="email" placeholder="tu@correo.com" />
+  <input auInputText type="email" placeholder="tu@correo.com" />
 </au-form-field>`,
   },
   {
@@ -32,7 +32,7 @@ export const examples: ComponentDocExample[] = [
   errorMessage="Introduce un correo válido."
   [invalid]="true"
 >
-  <au-input-text type="email" />
+  <input auInputText type="email" />
 </au-form-field>`,
   },
 ];

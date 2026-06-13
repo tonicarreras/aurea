@@ -162,7 +162,7 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-space-2', description: 'Separación entre botones con `[attached]="false"`.' },
     {
       token: '--au-color-border-default',
-      description: 'Bordes compartidos en modo attached (vía `au-button`).',
+      description: 'Bordes compartidos en modo attached (vía `button[auButton]`).',
     },
   ],
   'input-password': [

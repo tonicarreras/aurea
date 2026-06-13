@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuSnackbar, type AuSnackbarPosition, type AuSnackbarVariant } from './snackbar';
 
 const meta: Meta<AuSnackbar> = {
@@ -66,7 +66,7 @@ function snackbarStory(triggerLabel?: string): Story {
       moduleMetadata: { imports: [AuSnackbar, AuButton] },
       template: `
         <div class="au-story-stage">
-          <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
+          <button auButton type="button" (click)="open.set(true)">{{ triggerLabel }}</button>
           <au-snackbar
             [(open)]="open"
             [message]="message"
@@ -148,9 +148,9 @@ export const Stacked: Story = {
     template: `
       <div class="au-story-stage">
         <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-          <au-button type="button" (click)="openA.set(true)">Toast A</au-button>
-          <au-button type="button" (click)="openB.set(true)">Toast B</au-button>
-          <au-button type="button" (click)="openC.set(true)">Toast C</au-button>
+          <button auButton type="button" (click)="openA.set(true)">Toast A</button>
+          <button auButton type="button" (click)="openB.set(true)">Toast B</button>
+          <button auButton type="button" (click)="openC.set(true)">Toast C</button>
         </div>
         <au-snackbar
         [(open)]="openA"

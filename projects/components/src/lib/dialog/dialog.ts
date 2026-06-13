@@ -2,16 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
-  ElementRef,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from './dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
@@ -32,8 +31,8 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
  * <au-dialog [(open)]="showDialog" title="Confirm">
  *   <p>Are you sure?</p>
  *   <div auDialogFooter>
- *     <au-button variant="secondary" (click)="showDialog = false">Cancel</au-button>
- *     <au-button (click)="confirm()">Confirm</au-button>
+ *     <button auButton variant="secondary" (click)="showDialog = false">Cancel</button>
+ *     <button auButton (click)="confirm()">Confirm</button>
  *   </div>
  * </au-dialog>
  * ```
@@ -53,7 +52,7 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
 export class AuDialog {
   private static nextTitleId = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   /** Controls visibility; two-way binding with `[(open)]`. */
   readonly open = model<boolean>(false);
@@ -98,7 +97,7 @@ export class AuDialog {
   });
 
   private nativeDialog(): HTMLDialogElement | null {
-    const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
+    const el = this.host.nativeElement.querySelector('dialog');
     return el instanceof HTMLDialogElement ? el : null;
   }
 

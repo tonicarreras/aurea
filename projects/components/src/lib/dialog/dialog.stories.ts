@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuDialog } from './dialog';
 import { AuDialogFooter } from './dialog-footer.directive';
 
@@ -53,7 +53,7 @@ function dialogStory(config: { triggerLabel?: string; body: string; footer?: str
       moduleMetadata: { imports: [AuDialog, AuButton, AuDialogFooter] },
       template: `
         <div class="au-story-stage">
-          <au-button type="button" (click)="open.set(true)">{{ triggerLabel }}</au-button>
+          <button auButton type="button" (click)="open.set(true)">{{ triggerLabel }}</button>
           <au-dialog
           [(open)]="open"
           [title]="title"
@@ -78,8 +78,8 @@ export const Default: Story = {
     body: '<p>Esta acción no se puede deshacer.</p>',
     footer: `
           <div auDialogFooter>
-            <au-button style="margin-right: var(--au-space-2);" variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>
-            <au-button type="button" (click)="open.set(false)">Eliminar</au-button>
+            <button auButton style="margin-right: var(--au-space-2);" variant="secondary" type="button" (click)="open.set(false)">Cancelar</button>
+            <button auButton type="button" (click)="open.set(false)">Eliminar</button>
           </div>`,
   }),
   args: {
@@ -100,8 +100,8 @@ export const SmallSize: Story = {
     body: '<p>¿Continuar con esta operación?</p>',
     footer: `
           <div auDialogFooter>
-            <au-button variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>
-            <au-button type="button" (click)="open.set(false)">Continuar</au-button>
+            <button auButton variant="secondary" type="button" (click)="open.set(false)">Cancelar</button>
+            <button auButton type="button" (click)="open.set(false)">Continuar</button>
           </div>`,
   }),
   args: {
@@ -130,8 +130,8 @@ export const FullScreen: Story = {
           <p>El scroll sigue funcionando dentro del cuerpo.</p>`,
     footer: `
           <div auDialogFooter>
-            <au-button variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>
-            <au-button type="button" (click)="open.set(false)">Confirmar</au-button>
+            <button auButton variant="secondary" type="button" (click)="open.set(false)">Cancelar</button>
+            <button auButton type="button" (click)="open.set(false)">Confirmar</button>
           </div>`,
   }),
   args: {
@@ -145,8 +145,8 @@ export const WithFooter: Story = {
     body: '<p>Contenido del diálogo.</p>',
     footer: `
           <div auDialogFooter>
-            <au-button variant="secondary" type="button" (click)="open.set(false)">Cancelar</au-button>
-            <au-button type="button" (click)="open.set(false)">Guardar</au-button>
+            <button auButton variant="secondary" type="button" (click)="open.set(false)">Cancelar</button>
+            <button auButton type="button" (click)="open.set(false)">Guardar</button>
           </div>`,
   }),
   args: {

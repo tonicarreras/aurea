@@ -4,7 +4,12 @@
  * Field chrome: aurea-global.css
  */
 
-.au-input-time__input {
+.au-input-time__anchor {
+  position: relative;
+  display: block;
+}
+
+input.au-input-time {
   display: block;
   width: 100%;
   min-width: 0;
@@ -12,9 +17,6 @@
   margin: 0;
   box-sizing: border-box;
   padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
-  border: 0;
-  border-radius: 0;
-  background: transparent;
   font: inherit;
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
@@ -26,63 +28,62 @@
   accent-color: var(--au-color-date-picker-accent);
 }
 
-:host([data-au-size='sm']) .au-input-time__input {
+input.au-input-time[data-au-size='sm'] {
   height: var(--au-size-field-h-sm);
   line-height: var(--au-size-field-h-sm);
   font-size: var(--au-size-field-text-sm);
   padding: 0 calc(var(--au-size-field-px-sm) + 1.5rem) 0 var(--au-size-field-px-sm);
 }
 
-:host([data-au-size='md']) .au-input-time__input,
-:host(:not([data-au-size])) .au-input-time__input {
+input.au-input-time[data-au-size='md'],
+input.au-input-time:not([data-au-size]) {
   height: var(--au-size-field-h-md);
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
   padding: 0 calc(var(--au-size-field-px-md) + 1.75rem) 0 var(--au-size-field-px-md);
 }
 
-:host([data-au-size='lg']) .au-input-time__input {
+input.au-input-time[data-au-size='lg'] {
   height: var(--au-size-field-h-lg);
   line-height: var(--au-size-field-h-lg);
   font-size: var(--au-size-field-text-lg);
   padding: 0 calc(var(--au-size-field-px-lg) + 2rem) 0 var(--au-size-field-px-lg);
 }
 
-.au-input-time__input:disabled {
+input.au-input-time:disabled {
   color: var(--au-color-form-disabled-foreground);
   cursor: not-allowed;
   opacity: 0.9;
   background: transparent;
 }
 
-/* Inline time segments (Chromium / Safari) */
-.au-input-time__input::-webkit-datetime-edit {
+input.au-input-time::-webkit-datetime-edit {
   padding: 0;
   color: var(--au-color-form-text);
 }
 
-.au-input-time__input::-webkit-datetime-edit-fields-wrapper {
+input.au-input-time::-webkit-datetime-edit-fields-wrapper {
   padding: 0;
 }
 
-.au-input-time__input::-webkit-datetime-edit-text {
+input.au-input-time::-webkit-datetime-edit-text {
   color: var(--au-color-text-tertiary);
   padding: 0 0.1em;
 }
 
-.au-input-time__input::-webkit-datetime-edit-hour-field,
-.au-input-time__input::-webkit-datetime-edit-minute-field,
-.au-input-time__input::-webkit-datetime-edit-second-field,
-.au-input-time__input::-webkit-datetime-edit-ampm-field {
+input.au-input-time::-webkit-datetime-edit-hour-field,
+input.au-input-time::-webkit-datetime-edit-minute-field,
+input.au-input-time::-webkit-datetime-edit-second-field,
+input.au-input-time::-webkit-datetime-edit-ampm-field {
   padding: 0 0.15em;
   border-radius: var(--au-radius-field);
   color: var(--au-color-form-text);
 }
 
-.au-input-time__input::-webkit-datetime-edit-hour-field:focus,
-.au-input-time__input::-webkit-datetime-edit-minute-field:focus,
-.au-input-time__input::-webkit-datetime-edit-second-field:focus,
-.au-input-time__input::-webkit-datetime-edit-ampm-field:focus {
+input.au-input-time::-webkit-datetime-edit-hour-field:focus,
+input.au-input-time::-webkit-datetime-edit-minute-field:focus,
+input.au-input-time::-webkit-datetime-edit-second-field:focus,
+input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
   background-color: var(--au-color-date-picker-edit-highlight);
   color: var(--au-color-form-text);
   outline: none;
@@ -97,24 +98,27 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
   color: var(--au-color-date-picker-icon);
   transition: color var(--au-duration-short) var(--au-ease-in-out);
 }
 
-:host([data-au-size='sm']) .au-input-time__icon {
+.au-input-time__anchor:has(input.au-input-time[data-au-size='sm']) .au-input-time__icon {
   inset-inline-end: var(--au-space-2-5);
 }
 
-:host([data-au-size='lg']) .au-input-time__icon {
+.au-input-time__anchor:has(input.au-input-time[data-au-size='lg']) .au-input-time__icon {
   inset-inline-end: var(--au-space-4);
 }
 
-:host([data-au-size='sm']) .au-input-time__icon au-icon {
+.au-input-time__anchor:has(input.au-input-time[data-au-size='sm']) .au-input-time__icon au-icon {
   width: 0.875rem;
   height: 0.875rem;
 }
 
-:host([data-au-size='lg']) .au-input-time__icon au-icon {
+.au-input-time__anchor:has(input.au-input-time[data-au-size='lg']) .au-input-time__icon au-icon {
   width: 1.125rem;
   height: 1.125rem;
 }
@@ -124,21 +128,21 @@
   height: 1rem;
 }
 
-.au-input-time__control-row:has(.au-input-time__input:not(:disabled):hover) .au-input-time__icon,
-.au-input-time__control-row:focus-within .au-input-time__icon {
+.au-input-time__anchor:has(input.au-input-time:not(:disabled):hover) .au-input-time__icon,
+.au-input-time__anchor:focus-within .au-input-time__icon {
   color: var(--au-color-date-picker-icon-hover);
 }
 
-.au-input-time__control-row:focus-within .au-input-time__icon {
+.au-input-time__anchor:focus-within .au-input-time__icon {
   color: var(--au-color-date-picker-icon-active);
 }
 
-.au-input-time__control-row:has(.au-input-time__input:disabled) .au-input-time__icon {
+.au-input-time__anchor:has(input.au-input-time:disabled) .au-input-time__icon {
   color: var(--au-color-form-disabled-foreground);
   opacity: 0.9;
 }
 
-.au-input-time__input::-webkit-calendar-picker-indicator {
+input.au-input-time::-webkit-calendar-picker-indicator {
   position: absolute;
   inset-inline-end: 0;
   top: 0;
@@ -153,15 +157,15 @@
   appearance: none;
 }
 
-:host([data-au-size='sm']) .au-input-time__input::-webkit-calendar-picker-indicator {
+input.au-input-time[data-au-size='sm']::-webkit-calendar-picker-indicator {
   width: 2.5rem;
 }
 
-:host([data-au-size='lg']) .au-input-time__input::-webkit-calendar-picker-indicator {
+input.au-input-time[data-au-size='lg']::-webkit-calendar-picker-indicator {
   width: 3rem;
 }
 
-.au-input-time__input::-moz-focus-inner {
+input.au-input-time::-moz-focus-inner {
   border: 0;
 }
 

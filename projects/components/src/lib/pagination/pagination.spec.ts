@@ -29,9 +29,9 @@ describe('AuPagination', () => {
     fixture.detectChanges();
     component.pageChange.subscribe((p) => emitted.push(p));
 
-    const buttons = fixture.nativeElement.querySelectorAll('au-button');
+    const buttons = fixture.nativeElement.querySelectorAll('button.au-button');
     const page3 = [...buttons].find((b: HTMLElement) => b.textContent?.trim() === '3');
-    page3?.querySelector('button')?.click();
+    page3?.click();
     fixture.detectChanges();
     expect(emitted).toEqual([3]);
   });
@@ -122,12 +122,12 @@ describe('AuPagination', () => {
     fixture.detectChanges();
     component.pageChange.subscribe((p) => emitted.push(p));
 
-    const buttons = fixture.nativeElement.querySelectorAll('au-button');
+    const buttons = fixture.nativeElement.querySelectorAll('button.au-button');
     const prevBtn = [...buttons].find((b: HTMLElement) => b.textContent?.trim() === 'Prev');
     const nextBtn = [...buttons].find((b: HTMLElement) => b.textContent?.trim() === 'Next');
-    prevBtn?.querySelector('button')?.click();
+    prevBtn?.click();
     expect(emitted).toEqual([2]);
-    nextBtn?.querySelector('button')?.click();
+    nextBtn?.click();
     expect(emitted).toEqual([2, 4]);
   });
 });

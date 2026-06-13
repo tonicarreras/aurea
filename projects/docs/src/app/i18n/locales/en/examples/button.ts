@@ -14,39 +14,39 @@ export const examples: ComponentDocExample[] = [
     title: 'Primary',
     description: 'Primary action in a form or dialog.',
     demoComponent: ExampleButtonPrimaryDemo,
-    code: `<au-button variant="primary">Save</au-button>`,
+    code: `<button auButton variant="primary">Save</button>`,
   },
   {
     title: 'Secondary',
     demoComponent: ExampleButtonSecondaryDemo,
-    code: `<au-button variant="secondary">Cancel</au-button>`,
+    code: `<button auButton variant="secondary">Cancel</button>`,
   },
   {
     title: 'Outline',
     demoComponent: ExampleButtonOutlineDemo,
-    code: `<au-button variant="outline">More options</au-button>`,
+    code: `<button auButton variant="outline">More options</button>`,
   },
   {
     title: 'Ghost',
     demoComponent: ExampleButtonGhostDemo,
-    code: `<au-button variant="ghost">Discard</au-button>`,
+    code: `<button auButton variant="ghost">Discard</button>`,
   },
   {
     title: 'Loading',
     description: 'Shows a decorative `au-spinner` and sets `aria-busy` on the button.',
     demoComponent: ExampleButtonLoadingDemo,
-    code: `<au-button variant="primary" [loading]="true">Saving…</au-button>`,
+    code: `<button auButton variant="primary" [loading]="true">Saving…</button>`,
   },
   {
     title: 'Disabled',
     demoComponent: ExampleButtonDisabledDemo,
-    code: `<au-button variant="primary" [disabled]="true">Unavailable</au-button>`,
+    code: `<button auButton variant="primary" [disabled]="true">Unavailable</button>`,
   },
   {
     title: 'Sizes',
     demoComponent: ExampleButtonSizesDemo,
-    code: `<au-button size="sm">Small</au-button>
-<au-button size="md">Medium</au-button>
-<au-button size="lg">Large</au-button>`,
+    code: `<button auButton size="sm">Small</button>
+<button auButton size="md">Medium</button>
+<button auButton size="lg">Large</button>`,
   },
 ];

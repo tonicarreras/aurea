@@ -1,7 +1,6 @@
 import {
   DestroyRef,
   Directive,
-  ElementRef,
   afterNextRender,
   computed,
   inject,
@@ -10,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { tabFocusState } from '../au-tab-focus-state';
+import { injectHostRef } from '../au-host-element';
 import { AuAccordion } from './accordion';
 
 /**
@@ -38,7 +38,7 @@ import { AuAccordion } from './accordion';
 })
 export class AuAccordionItem {
   private readonly accordion = inject(AuAccordion);
-  private readonly host = inject(ElementRef<HTMLButtonElement>);
+  private readonly host = injectHostRef<HTMLButtonElement>();
   private readonly destroyRef = inject(DestroyRef);
 
   readonly auAccordionItem = input.required<string>();
@@ -46,7 +46,7 @@ export class AuAccordionItem {
 
   protected readonly focusByTab = signal(false);
 
-  readonly hostElement = computed(() => this.host.nativeElement as HTMLButtonElement);
+  readonly hostElement = computed(() => this.host.nativeElement);
   readonly triggerId = computed(() => this.accordion.triggerIdFor(this.auAccordionItem()));
   readonly panelId = computed(() => this.accordion.panelIdFor(this.auAccordionItem()));
   readonly isExpanded = computed(() => this.accordion.isExpanded(this.auAccordionItem()));

@@ -3,17 +3,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AuAutocomplete } from '../autocomplete/autocomplete';
-import { AuCheckbox } from '../checkbox/checkbox';
-import { AuInputDate } from '../input-date/input-date';
-import { AuInputPassword } from '../input-password/input-password';
-import { AuInputTime } from '../input-time/input-time';
+import { AuCheckbox } from '../checkbox/au-checkbox.directive';
+import { AuInputDate } from '../input-date/au-input-date.directive';
+import { AuInputPassword } from '../input-password/au-input-password.directive';
+import { AuInputTime } from '../input-time/au-input-time.directive';
 import { AuTagInput } from '../tag-input/tag-input';
-import { AuInputNumber } from '../input-number/input-number';
-import { AuInputText } from '../input-text/input-text';
+import { AuInputNumber } from '../input-number/au-input-number.directive';
+import { AuInputText } from '../input-text/au-input-text.directive';
 import { AuRadioGroup } from '../radio-group/radio-group';
 import { AuSelect } from '../select/select';
-import { AuSwitch } from '../switch/switch';
-import { AuTextarea } from '../textarea/textarea';
+import { AuSwitch } from '../switch/au-switch.directive';
+import { AuTextarea } from '../textarea/au-textarea.directive';
 import { AuFormField } from './form-field';
 
 const nullToEmptyString = (v: string | null | undefined) => (v == null ? '' : String(v));
@@ -71,7 +71,8 @@ const fieldHarnessBindings = `
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-input-text
+      <input
+        auInputText
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
@@ -118,7 +119,8 @@ export class AuInputTextTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-textarea
+      <textarea
+        auTextarea
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
@@ -133,7 +135,7 @@ export class AuInputTextTestHost {
         [wrap]="wrap"
         [spellcheck]="spellcheck"
         [size]="size"
-      />
+      ></textarea>
     </au-form-field>
   `,
 })
@@ -167,7 +169,8 @@ export class AuTextareaTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-input-number
+      <input
+        auInputNumber
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
@@ -212,7 +215,8 @@ export class AuInputNumberTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-input-date
+      <input
+        auInputDate
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
@@ -257,7 +261,8 @@ export class AuInputDateTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-input-time
+      <input
+        auInputTime
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
@@ -302,7 +307,8 @@ export class AuInputTimeTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-input-password
+      <input
+        auInputPassword
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
@@ -392,7 +398,9 @@ export class AuTagInputTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-switch
+      <button
+        type="button"
+        auSwitch
         [(checked)]="checked"
         [label]="label"
         [errors]="$any(errors)"
@@ -402,7 +410,7 @@ export class AuTagInputTestHost {
         [showRequired]="showRequired"
         [name]="name"
         [size]="size"
-      />
+      ><span class="au-sr-only">{{ label }}</span></button>
     </au-form-field>
   `,
 })
@@ -431,7 +439,9 @@ export class AuSwitchTestHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-form-field ${fieldHarnessBindings}>
-      <au-checkbox
+      <input
+        type="checkbox"
+        auCheckbox
         [(checked)]="checked"
         [label]="label"
         [description]="description"
@@ -619,5 +629,9 @@ export function queryControl<C>(
   fixture: ComponentFixture<unknown>,
   directive: new (...args: unknown[]) => C,
 ): C {
-  return fixture.debugElement.query(By.directive(directive))!.componentInstance as C;
+  const de = fixture.debugElement.query(By.directive(directive));
+  if (!de) {
+    throw new Error(`Control directive not found: ${directive.name}`);
+  }
+  return de.injector.get<C>(directive);
 }

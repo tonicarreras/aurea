@@ -17,7 +17,7 @@ export const examples: ComponentDocExample[] = [
   title="No results found"
   description="Try adjusting your filters or search term."
 >
-  <au-button variant="outline" type="button">Clear filters</au-button>
+  <button auButton variant="outline" type="button">Clear filters</button>
 </au-empty-state>`,
   },
   {
@@ -35,7 +35,7 @@ export const examples: ComponentDocExample[] = [
     size="sm"
     [headingLevel]="3"
   >
-    <au-button type="button">Add user</au-button>
+    <button auButton type="button">Add user</button>
   </au-empty-state>
 </au-table>`,
   },
@@ -49,7 +49,7 @@ export const examples: ComponentDocExample[] = [
   <svg auEmptyStateMedia aria-hidden="true" width="96" height="96" viewBox="0 0 96 96">
     <!-- illustration paths -->
   </svg>
-  <au-button type="button">Create project</au-button>
+  <button auButton type="button">Create project</button>
 </au-empty-state>`,
   },
 ];

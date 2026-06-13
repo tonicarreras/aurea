@@ -18,13 +18,6 @@ class AnchorHost {
   external = false;
 }
 
-@Component({
-  imports: [AuLink],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<au-link>Inline</au-link>`,
-})
-class ElementHost {}
-
 describe('AuLink', () => {
   describe('anchor host', () => {
     it('sets href on host', () => {
@@ -60,28 +53,32 @@ describe('AuLink', () => {
     });
 
     it('transforms null href to #', () => {
-      const fixture = TestBed.createComponent(AuLink);
-      fixture.componentRef.setInput('href', null as unknown as string);
+      @Component({
+        imports: [AuLink],
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        template: `<a auLink [href]="href">Docs</a>`,
+      })
+      class NullHrefHost {
+        href = null as unknown as string;
+      }
+      const fixture = TestBed.createComponent(NullHrefHost);
       fixture.detectChanges();
-      expect(fixture.nativeElement.getAttribute('href')).toBe('#');
-    });
-  });
-
-  describe('au-link element', () => {
-    it('creates with default href', () => {
-      const fixture = TestBed.createComponent(ElementHost);
-      fixture.detectChanges();
-      const el = fixture.nativeElement.querySelector('au-link') as HTMLElement;
-      expect(el.classList.contains('au-link')).toBe(true);
-      expect(el.getAttribute('href')).toBe('#');
+      const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
+      expect(anchor.getAttribute('href')).toBe('#');
     });
 
     it('applies subtle variant', () => {
-      const fixture = TestBed.createComponent(AuLink);
-      fixture.componentRef.setInput('variant', 'subtle');
+      @Component({
+        imports: [AuLink],
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        template: `<a auLink variant="subtle">Docs</a>`,
+      })
+      class SubtleHost {}
+
+      const fixture = TestBed.createComponent(SubtleHost);
       fixture.detectChanges();
-      expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('subtle');
-      expect(fixture.componentInstance.hasCustomHref()).toBe(false);
+      const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
+      expect(anchor.getAttribute('data-au-variant')).toBe('subtle');
     });
   });
 });

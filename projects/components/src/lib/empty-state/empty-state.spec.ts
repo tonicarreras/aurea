@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AuEmptyStateMedia } from './au-empty-state-media.directive';
 import { AuEmptyState } from './empty-state';
 
@@ -219,7 +219,7 @@ describe('AuEmptyState', () => {
       imports: [AuEmptyState, AuButton],
       template: `
         <au-empty-state title="Empty">
-          <au-button type="button">Create item</au-button>
+          <button auButton type="button">Create item</button>
         </au-empty-state>
       `,
     })
@@ -228,7 +228,7 @@ describe('AuEmptyState', () => {
     const actionsFixture = TestBed.createComponent(ActionsHost);
     actionsFixture.detectChanges();
     expect(
-      actionsFixture.nativeElement.querySelector('.au-empty-state__actions au-button'),
+      actionsFixture.nativeElement.querySelector('.au-empty-state__actions button.au-button'),
     ).not.toBeNull();
   });
 

@@ -10,7 +10,7 @@ export const examples: ComponentDocExample[] = [
     title: 'With limits',
     demoComponent: ExampleInputNumberBasicDemo,
     code: `<au-form-field label="Quantity">
-  <au-input-number [min]="0" [max]="10" />
+  <input auInputNumber [min]="0" [max]="10" />
 </au-form-field>`,
   },
   {
@@ -21,14 +21,14 @@ export const examples: ComponentDocExample[] = [
   errorMessage="Enter a value between 1 and 10."
   [invalid]="true"
 >
-  <au-input-number [min]="1" [max]="10" />
+  <input auInputNumber [min]="1" [max]="10" />
 </au-form-field>`,
   },
   {
     title: 'With hint',
     demoComponent: ExampleInputNumberHintDemo,
     code: `<au-form-field label="Units" hint="Maximum 99 per order.">
-  <au-input-number [min]="0" [max]="99" />
+  <input auInputNumber [min]="0" [max]="99" />
 </au-form-field>`,
   },
 ];

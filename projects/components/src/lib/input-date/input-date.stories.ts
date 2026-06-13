@@ -9,7 +9,7 @@ import {
   formFieldControlRender,
   type FieldChromeStoryArgs,
 } from '../form-field';
-import { AuInputDate } from './input-date';
+import { AuInputDate } from './au-input-date.directive';
 
 interface InputDateStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -62,7 +62,7 @@ const meta: Meta<InputDateStoryArgs> = {
     formFieldControlRender(
       [AuFormField, AuInputDate],
       args,
-      `<au-input-date
+      `<input auInputDate
   [(value)]="value"
   [placeholder]="placeholder"
   [minDate]="minDate"

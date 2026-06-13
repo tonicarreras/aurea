@@ -117,8 +117,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
 @Component({
   imports: [AuButton],
   template: \`
-    <au-button variant="primary">Guardar</au-button>
-    <au-button variant="outline">Cancelar</au-button>
+    <button auButton variant="primary">Guardar</button>
+    <button auButton variant="outline">Cancelar</button>
   \`,
 })
 export class Example {}`,
@@ -128,13 +128,13 @@ export class Example {}`,
     title: 'Button group',
     exportName: 'AuButtonGroup',
     selector: 'au-button-group',
-    summary: 'Agrupa acciones `au-button` relacionadas.',
+    summary: 'Agrupa acciones `button[auButton]` relacionadas.',
     demoComponent: ButtonGroupDemo,
     snippet: `import { AuButton, AuButtonGroup } from '@aurea-design-system/components';
 
 <au-button-group ariaLabel="Document actions">
-  <au-button variant="outline">Cancel</au-button>
-  <au-button>Save</au-button>
+  <button auButton variant="outline">Cancel</button>
+  <button auButton>Save</button>
 </au-button-group>`,
   },
   {
@@ -148,7 +148,7 @@ export class Example {}`,
     snippet: `import { AuFormField, AuInputText } from '@aurea-design-system/components';
 
 <au-form-field label="Email" hint="Work address" [required]="true">
-  <au-input-text type="email" placeholder="you@company.com" />
+  <input auInputText type="email" placeholder="you@company.com" />
 </au-form-field>`,
   },
   {
@@ -162,7 +162,7 @@ export class Example {}`,
 
 <au-fieldset legend="Shipping address" description="Where we deliver your order.">
   <au-form-field label="Street">
-    <au-input-text />
+    <input auInputText />
   </au-form-field>
 </au-fieldset>`,
   },
@@ -177,7 +177,7 @@ export class Example {}`,
     snippet: `import { AuFormField, AuInputText } from '@aurea-design-system/components';
 
 <au-form-field label="Email">
-  <au-input-text type="email" placeholder="you@company.com" />
+  <input auInputText type="email" placeholder="you@company.com" />
 </au-form-field>`,
   },
   {
@@ -190,7 +190,7 @@ export class Example {}`,
     snippet: `import { AuFormField, AuTextarea } from '@aurea-design-system/components';
 
 <au-form-field label="Notes">
-  <au-textarea [rows]="4" />
+  <textarea auTextarea [rows]="4"></textarea>
 </au-form-field>`,
   },
   {
@@ -202,7 +202,7 @@ export class Example {}`,
     demoComponent: CheckboxDemo,
     snippet: `import { AuCheckbox } from '@aurea-design-system/components';
 
-<au-checkbox label="Recordarme" />`,
+<input type="checkbox" auCheckbox label="Recordarme" />`,
   },
   {
     slug: 'switch',
@@ -214,7 +214,7 @@ export class Example {}`,
     snippet: `import { AuFormField, AuSwitch } from '@aurea-design-system/components';
 
 <au-form-field hint="You can change this in system settings.">
-  <au-switch label="Notifications" />
+  <button type="button" auSwitch label="Notifications"></button>
 </au-form-field>`,
   },
   {
@@ -294,7 +294,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuFormField, AuInputNumber } from '@aurea-design-system/components';
 
 <au-form-field label="Quantity">
-  <au-input-number [min]="0" [max]="99" />
+  <input auInputNumber [min]="0" [max]="99" />
 </au-form-field>`,
   },
   {
@@ -320,7 +320,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuFormField, AuInputDate } from '@aurea-design-system/components';
 
 <au-form-field label="Date">
-  <au-input-date />
+  <input auInputDate />
 </au-form-field>`,
   },
   {
@@ -333,7 +333,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuFormField, AuInputTime } from '@aurea-design-system/components';
 
 <au-form-field label="Time">
-  <au-input-time />
+  <input auInputTime />
 </au-form-field>`,
   },
   {
@@ -346,7 +346,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuFormField, AuInputPassword } from '@aurea-design-system/components';
 
 <au-form-field label="Password">
-  <au-input-password autocomplete="current-password" />
+  <input auInputPassword autocomplete="current-password" />
 </au-form-field>`,
   },
   {
@@ -374,7 +374,7 @@ options: AuSelectOption[] = [
 <au-dialog [(open)]="open" title="Confirmar">
   <p>¿Continuar?</p>
   <div auDialogFooter>
-    <au-button (click)="open = false">Cerrar</au-button>
+    <button auButton (click)="open = false">Cerrar</button>
   </div>
 </au-dialog>`,
   },
@@ -390,7 +390,7 @@ options: AuSelectOption[] = [
 <au-drawer [(open)]="open" title="Filters">
   <p>Content</p>
   <div auDrawerFooter>
-    <au-button (click)="open = false">Close</au-button>
+    <button auButton (click)="open = false">Close</button>
   </div>
 </au-drawer>`,
   },
@@ -629,7 +629,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuMenu, AuMenuItem, AuMenuTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-menu>
-  <au-button auMenuTrigger>Actions</au-button>
+  <button auButton auMenuTrigger>Actions</button>
   <au-menu-item>Edit</au-menu-item>
 </au-menu>`,
   },
@@ -654,7 +654,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuPopover, AuPopoverTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-popover>
-  <au-button auPopoverTrigger>Filters</au-button>
+  <button auButton auPopoverTrigger>Filters</button>
   <!-- panel content -->
 </au-popover>`,
   },
@@ -703,7 +703,7 @@ options: AuSelectOption[] = [
     demoComponent: TooltipDemo,
     snippet: `import { AuTooltip, AuButton } from '@aurea-design-system/components';
 
-<au-button auTooltip="Más información">?</au-button>`,
+<button auButton auTooltip="Más información">?</button>`,
   },
 ];
 

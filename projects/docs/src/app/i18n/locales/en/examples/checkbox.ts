@@ -9,17 +9,17 @@ export const examples: ComponentDocExample[] = [
   {
     title: 'Unchecked',
     demoComponent: ExampleCheckboxBasicDemo,
-    code: `<au-checkbox label="I accept the terms" />`,
+    code: `<input type="checkbox" auCheckbox label="I accept the terms" />`,
   },
   {
     title: 'Checked',
     demoComponent: ExampleCheckboxCheckedDemo,
-    code: `<au-checkbox label="Newsletter" [checked]="true" />`,
+    code: `<input type="checkbox" auCheckbox label="Newsletter" [checked]="true" />`,
   },
   {
     title: 'Indeterminate',
     description: 'Useful for “select all” patterns with partial selection.',
     demoComponent: ExampleCheckboxIndeterminateDemo,
-    code: `<au-checkbox label="Select all" [indeterminate]="true" />`,
+    code: `<input type="checkbox" auCheckbox label="Select all" [indeterminate]="true" />`,
   },
 ];

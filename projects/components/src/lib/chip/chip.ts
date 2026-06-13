@@ -1,14 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
 import { AuListItem } from '../list/au-list-item.directive';
 import { tabFocusState } from '../au-tab-focus-state';
@@ -93,7 +92,7 @@ export class AuChip {
 
   protected readonly focusByTab = signal(false);
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   readonly removeAriaLabel = computed(() => {
     const custom = this.removeLabel().trim();
@@ -150,7 +149,7 @@ export class AuChip {
 
   /** Moves focus to the chip control (selectable) or remove button (removable). */
   focus(): void {
-    const root = this.host.nativeElement as HTMLElement;
+    const root = this.host.nativeElement;
     const surface = root.querySelector('.au-chip__surface');
     if (surface instanceof HTMLButtonElement) {
       surface.focus();

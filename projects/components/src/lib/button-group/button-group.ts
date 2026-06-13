@@ -14,8 +14,8 @@ export type AuButtonGroupOrientation = 'horizontal' | 'vertical';
  * @example
  * ```html
  * <au-button-group ariaLabel="Document actions">
- *   <au-button variant="outline">Cancel</au-button>
- *   <au-button>Save</au-button>
+ *   <button auButton variant="outline">Cancel</button>
+ *   <button auButton>Save</button>
  * </au-button-group>
  * ```
  */

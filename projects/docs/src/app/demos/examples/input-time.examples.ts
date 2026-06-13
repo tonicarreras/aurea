@@ -8,7 +8,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuInputTime],
   template: `
     <au-form-field [label]="t().basicLabel">
-      <au-input-time />
+      <input auInputTime />
     </au-form-field>
   `,
 })
@@ -25,7 +25,7 @@ export class ExampleInputTimeBasicDemo {
       [label]="t().boundsLabel"
       [hint]="t().boundsHint"
     >
-      <au-input-time
+      <input auInputTime
         [minTime]="boundsMin"
         [maxTime]="boundsMax"
       />

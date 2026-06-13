@@ -77,14 +77,14 @@ import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system
 @Component({
   imports: [AuButton, AuCheckbox, AuDivider, AuTooltip],
   template: `
-    <au-button variant="primary">Save</au-button>
-    <au-button
+    <button auButton variant="primary">Save</button>
+    <button auButton
       variant="outline"
       auTooltip="Extra help"
       >?</au-button
     >
     <au-divider />
-    <au-checkbox label="Remember me" />
+    <input type="checkbox" auCheckbox label="Remember me" />
   `,
 })
 export class Example {}
@@ -114,7 +114,7 @@ import { AuFormField, AuInputText } from '@aurea-design-system/components';
       hint="We only use this for account notices."
       [required]="true"
     >
-      <au-input-text
+      <input auInputText
         [formField]="fieldRoot.email"
         type="email"
         placeholder="you@company.com"
@@ -154,20 +154,20 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 
 | Export               | Selector / API          | Notes                                                                 |
 | -------------------- | ----------------------- | --------------------------------------------------------------------- |
-| `AuButton`           | `<au-button>`           | Variants, loading, focus ring                                         |
-| `AuInputText`        | `<au-input-text>`       | `[formField]` or `[(value)]` + `au-form-field`                        |
-| `AuTextarea`         | `<au-textarea>`         | Same as input-text                                                    |
+| `AuButton`           | `<button auButton>`           | Variants, loading, focus ring                                         |
+| `AuInputText`        | `<input auInputText>`       | `[formField]` or `[(value)]` + `au-form-field`                        |
+| `AuTextarea`         | `<textarea auTextarea>`         | Same as input-text                                                    |
 | `AuFormField`        | `<au-form-field>`       | Label / hint / error wrapper                                          |
-| `AuCheckbox`         | `<au-checkbox>`         |                                                                       |
+| `AuCheckbox`         | `<input type="checkbox" auCheckbox>`         |                                                                       |
 | `AuSelect`           | `<au-select>`           | Portaled listbox                                                      |
 | `AuAutocomplete`     | `<au-autocomplete>`     |                                                                       |
-| `AuSwitch`           | `<au-switch>`           |                                                                       |
+| `AuSwitch`           | `<button type="button" auSwitch>`           |                                                                       |
 | `AuRadioGroup`       | `<au-radio-group>`      |                                                                       |
-| `AuInputNumber`      | `<au-input-number>`     |                                                                       |
-| `AuInputDate`        | `<au-input-date>`       | Native date field (stable **1.5.0**)                                  |
-| `AuInputTime`        | `<au-input-time>`       | Native time field (stable **1.5.0**)                                  |
-| `AuInputPassword`    | `<au-input-password>`   | Password with reveal toggle (stable **1.6.0**)                        |
-| `AuButtonGroup`      | `<au-button-group>`     | Groups `au-button` actions (stable **1.6.0**)                         |
+| `AuInputNumber`      | `<input auInputNumber>`     |                                                                       |
+| `AuInputDate`        | `<input auInputDate>`       | Native date field (stable **1.5.0**)                                  |
+| `AuInputTime`        | `<input auInputTime>`       | Native time field (stable **1.5.0**)                                  |
+| `AuInputPassword`    | `<input auInputPassword>`   | Password with reveal toggle (stable **1.6.0**)                        |
+| `AuButtonGroup`      | `<au-button-group>`     | Groups `button[auButton]` actions (stable **1.6.0**)                         |
 | `AuTagInput`         | `<au-tag-input>`        | Multi-value tags (stable **1.6.0**)                                   |
 | `AuDialog`           | `<au-dialog>`           | Native `<dialog>`                                                     |
 | `AuCard`             | `<au-card>`             | `AuCardFooter` directive                                              |

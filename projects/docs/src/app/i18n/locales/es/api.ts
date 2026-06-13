@@ -78,7 +78,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuFormField',
         description:
-          'Envuelve controles proyectados (`au-input-text`, `au-select`, …). Provee `AU_FORM_FIELD` para ids y cromado de validación.',
+          'Envuelve controles proyectados (`input[auInputText]`, `au-select`, …). Provee `AU_FORM_FIELD` para ids y cromado de validación.',
         rows: FORM_FIELD_CHROME,
       },
     ],
@@ -110,7 +110,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
           i(
             'type',
             "'text' | 'email' | 'number' | …",
-            'Tipo nativo del `<input>`. Contraseña → `au-input-password`.',
+            'Tipo nativo del `<input>`. Contraseña → `input[auInputPassword]`.',
             "'text'",
           ),
           i('autocomplete', 'string | undefined', 'Atributo `autocomplete`.'),
@@ -445,7 +445,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuButtonGroup',
-        description: 'Agrupa hijos `au-button` proyectados; no es control de formulario.',
+        description: 'Agrupa hijos `button[auButton]` proyectados; no es control de formulario.',
         rows: [
           i('ariaLabel', 'string', 'Nombre accesible del grupo.', "''"),
           i('ariaLabelledBy', 'string', 'ID del elemento que etiqueta.', "''"),
@@ -967,7 +967,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
     sections: [
       {
         title: 'AuLink',
-        description: 'En `<a auLink>` o `<au-link>`.',
+        description: 'En `<a auLink>` o `<a auLink>`.',
         rows: [
           i('variant', "'default' | 'subtle'", 'Énfasis visual.', "'default'"),
           i('href', 'string', 'URL de destino.', "'#'"),
