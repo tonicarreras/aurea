@@ -55,7 +55,7 @@ au-dialog .au-dialog__native:not([open]) {
 }
 
 au-dialog .au-dialog__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
+  background: var(--au-color-overlay-scrim);
   animation: au-dialog-backdrop-in var(--au-motion-modal);
 }
 

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
+  DestroyRef,
   ElementRef,
   ViewEncapsulation,
   afterRenderEffect,
@@ -15,6 +16,7 @@ import {
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
+import { lockPageScroll, unlockPageScroll } from '../overlay/page-scroll-lock';
 
 export type AuDrawerPosition = 'start' | 'end';
 export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
@@ -25,7 +27,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * @remarks
  * - **Visibility:** `[(open)]` syncs with native `<dialog>` via `showModal()`.
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
- * - **Accessibility:** same focus trap as `au-dialog`; scroll is handled by native `showModal()`.
+ * - **Accessibility:** same focus trap as `au-dialog`; page scroll is locked while open.
  * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
  */
 @Component({
@@ -45,7 +47,9 @@ export class AuDrawer {
   private static nextTitleId = 0;
 
   private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
   private savedFocus: HTMLElement | null = null;
+  private pageScrollLocked = false;
 
   readonly open = model<boolean>(false);
   readonly close = output<void>();
@@ -78,6 +82,10 @@ export class AuDrawer {
     this.applyOpenStateToNativeDialog();
   });
 
+  constructor() {
+    this.destroyRef.onDestroy(() => this.unlockPageScrollIfNeeded());
+  }
+
   private nativeDialog(): HTMLDialogElement | null {
     const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
     return el instanceof HTMLDialogElement ? el : null;
@@ -99,6 +107,7 @@ export class AuDrawer {
   private openDialogElement(dialog: HTMLDialogElement): void {
     const wasDisplayed = this.isDialogDisplayed(dialog);
     if (!wasDisplayed) {
+      this.lockPageScrollIfNeeded();
       this.savedFocus =
         typeof document !== 'undefined' && document.activeElement instanceof HTMLElement
           ? document.activeElement
@@ -124,11 +133,15 @@ export class AuDrawer {
   }
 
   private closeDialogElement(dialog: HTMLDialogElement): void {
+    const wasDisplayed = this.isDialogDisplayed(dialog);
     if (typeof dialog.close === 'function') {
       dialog.close();
     } else if (dialog.hasAttribute('open')) {
       dialog.removeAttribute('open');
       dialog.dispatchEvent(new Event('close'));
+    }
+    if (wasDisplayed) {
+      this.unlockPageScrollIfNeeded();
     }
   }
 
@@ -198,5 +211,21 @@ export class AuDrawer {
     if (el?.isConnected) {
       el.focus();
     }
+  }
+
+  private lockPageScrollIfNeeded(): void {
+    if (this.pageScrollLocked) {
+      return;
+    }
+    lockPageScroll();
+    this.pageScrollLocked = true;
+  }
+
+  private unlockPageScrollIfNeeded(): void {
+    if (!this.pageScrollLocked) {
+      return;
+    }
+    unlockPageScroll();
+    this.pageScrollLocked = false;
   }
 }

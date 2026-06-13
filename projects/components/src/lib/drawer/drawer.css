@@ -42,7 +42,7 @@ au-drawer .au-drawer__native:not([open]) {
 }
 
 au-drawer .au-drawer__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
+  background: var(--au-color-overlay-scrim);
   animation: au-drawer-backdrop-in var(--au-motion-modal);
 }
 

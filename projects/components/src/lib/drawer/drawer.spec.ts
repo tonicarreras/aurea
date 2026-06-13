@@ -43,14 +43,15 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('does not mutate page scroll styles (native dialog handles scroll)', () => {
+  it('locks page scroll while open and restores on close', () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.detectChanges();
+    expect(document.body.style.overflow).toBe('hidden');
     expect(document.body.style.position).not.toBe('fixed');
-    expect(document.body.style.overflow).not.toBe('hidden');
     fix.componentRef.setInput('open', false);
     fix.detectChanges();
+    expect(document.body.style.overflow).not.toBe('hidden');
   });
 
   it('applies position and size on host', () => {

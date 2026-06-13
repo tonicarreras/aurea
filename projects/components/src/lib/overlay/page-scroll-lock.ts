@@ -3,9 +3,6 @@
 let lockCount = 0;
 let savedScrollY = 0;
 let savedBodyOverflow = '';
-let savedBodyPosition = '';
-let savedBodyTop = '';
-let savedBodyWidth = '';
 let savedBodyPaddingRight = '';
 let savedHtmlOverflow = '';
 
@@ -20,22 +17,16 @@ export function lockPageScroll(): void {
   if (lockCount === 0) {
     savedScrollY = window.scrollY;
     savedBodyOverflow = document.body.style.overflow;
-    savedBodyPosition = document.body.style.position;
-    savedBodyTop = document.body.style.top;
-    savedBodyWidth = document.body.style.width;
     savedBodyPaddingRight = document.body.style.paddingRight;
     savedHtmlOverflow = document.documentElement.style.overflow;
 
     const scrollbarWidth = getScrollbarWidth();
 
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${savedScrollY}px`;
-    document.body.style.width = '100%';
+    document.documentElement.style.overflow = 'hidden';
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
     }
-    document.documentElement.style.overflow = 'hidden';
   }
   lockCount++;
 }
@@ -47,12 +38,11 @@ export function unlockPageScroll(): void {
   lockCount = Math.max(0, lockCount - 1);
   if (lockCount === 0) {
     document.body.style.overflow = savedBodyOverflow;
-    document.body.style.position = savedBodyPosition;
-    document.body.style.top = savedBodyTop;
-    document.body.style.width = savedBodyWidth;
     document.body.style.paddingRight = savedBodyPaddingRight;
     document.documentElement.style.overflow = savedHtmlOverflow;
-    window.scrollTo(0, savedScrollY);
+    if (window.scrollY !== savedScrollY) {
+      window.scrollTo(0, savedScrollY);
+    }
   }
 }
 
@@ -61,16 +51,10 @@ export function resetPageScrollLockForTests(): void {
   lockCount = 0;
   savedScrollY = 0;
   savedBodyOverflow = '';
-  savedBodyPosition = '';
-  savedBodyTop = '';
-  savedBodyWidth = '';
   savedBodyPaddingRight = '';
   savedHtmlOverflow = '';
   if (typeof document !== 'undefined') {
     document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
     document.body.style.paddingRight = '';
     document.documentElement.style.overflow = '';
   }

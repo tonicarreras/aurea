@@ -7,33 +7,32 @@ describe('page-scroll-lock', () => {
     resetPageScrollLockForTests();
   });
 
-  it('locks and restores body and html overflow', () => {
+  it('locks and restores body and html overflow without fixing the body', () => {
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'visible';
 
     lockPageScroll();
     expect(document.body.style.overflow).toBe('hidden');
-    expect(document.body.style.position).toBe('fixed');
+    expect(document.body.style.position).not.toBe('fixed');
     expect(document.documentElement.style.overflow).toBe('hidden');
 
     unlockPageScroll();
     expect(document.body.style.overflow).toBe('auto');
-    expect(document.body.style.position).toBe('');
+    expect(document.body.style.position).not.toBe('fixed');
     expect(document.documentElement.style.overflow).toBe('visible');
   });
 
-  it('preserves scroll position through lock and unlock', () => {
+  it('restores scroll position on unlock when the page drifted', () => {
     const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
-    vi.spyOn(window, 'scrollY', 'get').mockReturnValue(240);
+    const scrollY = vi.spyOn(window, 'scrollY', 'get');
+    scrollY.mockReturnValueOnce(240).mockReturnValueOnce(0);
 
     lockPageScroll();
-    expect(document.body.style.top).toBe('-240px');
-
     unlockPageScroll();
     expect(scrollTo).toHaveBeenCalledWith(0, 240);
 
     scrollTo.mockRestore();
-    vi.restoreAllMocks();
+    scrollY.mockRestore();
   });
 
   it('ref-counts nested locks', () => {

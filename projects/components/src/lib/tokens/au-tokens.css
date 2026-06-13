@@ -566,6 +566,7 @@
   --au-size-field-text-sm: 0.8125rem;
   --au-size-field-text-md: 0.9375rem;
   --au-size-field-text-lg: 1rem;
+  --au-color-overlay-scrim: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
   --au-scroll-smooth: smooth;
   /* Density v2 — comfortable default; override with [data-au-density] */
   --au-density-space-scale: 1;
@@ -837,6 +838,7 @@
   --au-field-shadow: var(--au-elevation-flat);
   --au-field-shadow-focus: var(--au-focus-inset);
   --au-field-shadow-focus-error: var(--au-focus-inset-error);
+  --au-color-overlay-scrim: color-mix(in srgb, #000000 62%, transparent);
   --au-scroll-smooth: smooth;
 }
 
@@ -846,17 +848,9 @@
   --au-floating-panel-border: var(--au-color-border-default);
 }
 
-[data-au-theme='dark'] au-dialog .au-dialog__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
-}
-
 [data-au-theme='dark'] au-drawer {
   --au-drawer-shadow-end: -10px 0 28px rgba(0, 0, 0, 0.28);
   --au-drawer-shadow-start: 10px 0 28px rgba(0, 0, 0, 0.28);
-}
-
-[data-au-theme='dark'] au-drawer .au-drawer__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
 }
 
 /* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */
