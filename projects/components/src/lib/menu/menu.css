@@ -58,8 +58,3 @@
   overflow: hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-menu__panel.au-floating-panel.au-tooltip__bubble--overlay {
-    animation: none;
-  }
-}

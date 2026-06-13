@@ -80,7 +80,7 @@ export class AuButton {
 
   constructor() {
     bindHostDomEvent(
-      this.host as ElementRef<HTMLElement>,
+      this.host,
       this.destroyRef,
       'click',
       (event) => this.onHostClick(event as MouseEvent),

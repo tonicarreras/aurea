@@ -1,16 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   DestroyRef,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
+  contentChild,
   inject,
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
 import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
@@ -62,14 +61,9 @@ export class AuDrawer {
   readonly position = input<AuDrawerPosition>('end');
   readonly size = input<AuDrawerSize>('md');
 
-  private readonly footerPresent = signal(false);
+  readonly footerSlot = contentChild(AuDialogFooter);
 
-  @ContentChild(AuDialogFooter)
-  set footerSlot(slot: AuDialogFooter | undefined) {
-    this.footerPresent.set(slot != null);
-  }
-
-  readonly hasFooter = this.footerPresent.asReadonly();
+  readonly hasFooter = computed(() => this.footerSlot() !== undefined);
 
   private readonly titleDomId = `au-drawer-title-${++AuDrawer.nextTitleId}`;
 
@@ -153,10 +147,7 @@ export class AuDrawer {
   }
 
   onCloseButtonClick(): void {
-    const dialog = this.nativeDialog();
-    if (dialog) {
-      this.closeDialogElement(dialog);
-    }
+    this.open.set(false);
   }
 
   onDialogClick(event: MouseEvent): void {
@@ -188,12 +179,6 @@ export class AuDrawer {
   onDialogCancel(event: Event): void {
     if (!this.closeOnEscape()) {
       event.preventDefault();
-      return;
-    }
-    event.preventDefault();
-    const dialog = this.nativeDialog();
-    if (dialog && this.isDialogDisplayed(dialog)) {
-      this.closeDialogElement(dialog);
     }
   }
 

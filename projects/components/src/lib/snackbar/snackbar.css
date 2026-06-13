@@ -224,8 +224,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-snackbar__surface {
-    animation: none;
-  }
-}

@@ -238,8 +238,3 @@ au-tabs[data-au-size='lg'] .au-tabs__panel {
   margin-bottom: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-tabs__tab {
-    transition: none;
-  }
-}

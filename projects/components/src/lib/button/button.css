@@ -179,13 +179,6 @@ button.au-button.au-button--loading .au-button__spinner {
   --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  button.au-button {
-    transition:
-      var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
-      var(--au-transition-color);
-  }
-}
 
 au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button {
   display: inline-flex;

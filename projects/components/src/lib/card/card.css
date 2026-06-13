@@ -130,8 +130,3 @@ au-card .au-card__footer {
   border-top: 1px solid var(--au-color-border-subtle);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  au-card .au-card__container {
-    transition: none;
-  }
-}

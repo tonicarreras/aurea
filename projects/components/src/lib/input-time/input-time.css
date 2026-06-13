@@ -169,8 +169,3 @@ input.au-input-time::-moz-focus-inner {
   border: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-input-time__icon {
-    transition: none;
-  }
-}

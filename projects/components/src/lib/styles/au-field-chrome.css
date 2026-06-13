@@ -399,16 +399,3 @@ input.au-input-password:disabled {
   border-color: var(--au-chrome-border-color-hover);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :is(
-    .au-input-text__control-row,
-    .au-input-number__control-row,
-    .au-textarea__control-row,
-    .au-input-date__control-row,
-    .au-input-time__control-row,
-    .au-select__control-row,
-    .au-autocomplete__control-row
-  ) {
-    transition: none;
-  }
-}

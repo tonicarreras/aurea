@@ -186,9 +186,3 @@ button.au-switch:disabled {
   color: var(--au-color-text-tertiary);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  button.au-switch,
-  button.au-switch::after {
-    transition: none;
-  }
-}

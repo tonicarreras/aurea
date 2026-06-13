@@ -184,12 +184,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-field-listbox {
-    scroll-behavior: auto;
-  }
-
-  .au-field-listbox--overlay {
-    animation: none;
-  }
-}

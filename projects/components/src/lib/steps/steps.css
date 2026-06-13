@@ -138,8 +138,3 @@ au-steps[data-au-layout='sections'] .au-steps__panel--active {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-steps__panel--active {
-    animation: none;
-  }
-}

@@ -25,10 +25,7 @@ import {
   syncNativeTemporalValue,
 } from '../field-temporal-bounds';
 import { AuInternalTemporalPickerPanel } from '../field-bounded-temporal-picker';
-import {
-  buildDatePickerOptions,
-  hasTemporalBounds,
-} from '../field-temporal-options';
+import { buildDatePickerOptions, hasTemporalBounds } from '../field-temporal-options';
 import { bindHostDomEvent } from '../au-host-dom-event';
 import { injectHostRef } from '../au-host-element';
 import { tabFocusState } from '../au-tab-focus-state';

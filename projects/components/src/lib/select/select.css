@@ -102,8 +102,3 @@
   inset-inline-end: var(--au-space-4);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-select__icon {
-    transition: none;
-  }
-}

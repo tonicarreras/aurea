@@ -161,11 +161,7 @@
   position: fixed;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-tooltip__bubble {
-    transition: none;
-  }
-}
+
 
 /* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
 .au-floating-panel {
@@ -296,11 +292,7 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-floating-panel.au-tooltip__bubble--overlay {
-    animation: none;
-  }
-}
+
 
 /* UI transitions: one easing for color, one “logical” for motion */
 :root {
@@ -861,5 +853,14 @@
   [data-au-theme='high-contrast'],
   [data-au-theme='high-contrast-dark'] {
     --au-scroll-smooth: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
   }
 }

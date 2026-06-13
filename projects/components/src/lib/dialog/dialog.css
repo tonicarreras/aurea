@@ -198,9 +198,3 @@ au-dialog [auDialogFooter] {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  au-dialog .au-dialog__native::backdrop,
-  au-dialog .au-dialog__panel {
-    animation: none;
-  }
-}

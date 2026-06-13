@@ -183,9 +183,3 @@ button.au-chip__surface--from-tab:focus-visible,
   outline-offset: var(--au-focus-tab-offset);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-chip__surface,
-  .au-chip__remove {
-    transition: none;
-  }
-}

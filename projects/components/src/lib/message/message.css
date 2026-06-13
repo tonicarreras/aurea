@@ -194,8 +194,3 @@
   --au-message-title: var(--au-color-feedback-info-title);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-message__close {
-    transition: none;
-  }
-}

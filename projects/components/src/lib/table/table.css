@@ -265,8 +265,3 @@ au-table .au-table__loading-row td {
   text-align: center;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  au-table .au-table__grid tbody tr {
-    transition: none;
-  }
-}

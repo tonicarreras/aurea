@@ -176,8 +176,3 @@ input.au-input-date::-moz-focus-inner {
   border: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-input-date__icon {
-    transition: none;
-  }
-}

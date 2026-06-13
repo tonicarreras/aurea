@@ -34,10 +34,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-progress__bar--indeterminate {
-    animation: none;
-    width: 100%;
-    opacity: 0.6;
-  }
-}

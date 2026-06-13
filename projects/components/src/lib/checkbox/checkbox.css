@@ -252,8 +252,3 @@ input.au-checkbox__element[data-au-size='lg'] {
 /* Reduced motion */
 /* -------------------------------------------------------------------------- */
 
-@media (prefers-reduced-motion: reduce) {
-  .au-checkbox__element {
-    transition: none;
-  }
-}

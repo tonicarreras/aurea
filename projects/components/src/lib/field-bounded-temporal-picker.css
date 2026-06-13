@@ -49,8 +49,3 @@
   opacity: 0.72;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-field-bounded-picker__option {
-    transition: var(--au-transition-background), var(--au-transition-color);
-  }
-}

@@ -205,10 +205,3 @@ au-drawer [auDialogFooter] {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  au-drawer .au-drawer__native::backdrop,
-  au-drawer .au-drawer__panel {
-    animation: none;
-    will-change: auto;
-  }
-}
