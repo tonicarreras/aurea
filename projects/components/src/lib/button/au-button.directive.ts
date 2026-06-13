@@ -3,7 +3,6 @@ import {
   ComponentRef,
   Directive,
   DestroyRef,
-  ElementRef,
   EnvironmentInjector,
   Renderer2,
   afterRenderEffect,

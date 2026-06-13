@@ -20,9 +20,6 @@ export function canConsumeWheelDelta(el: Element, deltaY: number, deltaX: number
     return el.scrollTop + el.clientHeight < el.scrollHeight;
   }
 
-  if (deltaX === 0) {
-    return false;
-  }
   if (deltaX < 0) {
     return el.scrollLeft > 0;
   }

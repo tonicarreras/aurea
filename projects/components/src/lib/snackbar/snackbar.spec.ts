@@ -516,7 +516,7 @@ describe('AuSnackbar', () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'No RO');
-    expect(async () => await fix.whenStable()).not.toThrow();
+    await fix.whenStable();
     vi.unstubAllGlobals();
   });
 

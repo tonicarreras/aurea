@@ -275,7 +275,7 @@ describe('AuDrawer', () => {
     const fix = TestBed.createComponent(AuDrawer);
     vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     fix.componentRef.setInput('open', true);
-    expect(async () => await fix.whenStable()).not.toThrow();
+    await fix.whenStable();
   });
 
   it('uses native showModal/close when present on the element', async () => {
@@ -417,12 +417,36 @@ describe('AuDrawer', () => {
     await fix.whenStable();
     const dialog = queryNativeDialog(fix);
     dialog.querySelector('.au-drawer__panel')?.remove();
+    fix.componentRef.setInput('open', false);
+    await fix.whenStable();
+    fix.componentRef.setInput('open', true);
     (
       fix.componentInstance as unknown as { openDialogElement(d: HTMLDialogElement): void }
     ).openDialogElement(dialog);
     await new Promise<void>((resolve) => {
       queueMicrotask(() => resolve());
     });
+  });
+
+  it('openDialogElement microtask focuses the panel when it is present', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    fix.componentRef.setInput('title', 'Menu');
+    await fix.whenStable();
+    fix.componentRef.setInput('open', true);
+    const dialog = queryNativeDialog(fix);
+    const closeBtn = dialog.querySelector('.au-drawer__close') as HTMLButtonElement;
+
+    fix.componentRef.setInput('open', false);
+    await fix.whenStable();
+    fix.componentRef.setInput('open', true);
+    (
+      fix.componentInstance as unknown as { openDialogElement(d: HTMLDialogElement): void }
+    ).openDialogElement(dialog);
+    await new Promise<void>((resolve) => {
+      queueMicrotask(() => resolve());
+    });
+
+    expect(document.activeElement).toBe(closeBtn);
   });
 
   it('closeDialogElement polyfills close when native close is unavailable', async () => {
@@ -432,9 +456,9 @@ describe('AuDrawer', () => {
     el.setAttribute('open', '');
     Object.defineProperty(el, 'close', { value: undefined, configurable: true });
     const dispatchSpy = vi.spyOn(el, 'dispatchEvent');
-    (fix.componentInstance as unknown as { closeDialogElement(d: HTMLDialogElement): void }).closeDialogElement(
-      el,
-    );
+    (
+      fix.componentInstance as unknown as { closeDialogElement(d: HTMLDialogElement): void }
+    ).closeDialogElement(el);
     expect(el.hasAttribute('open')).toBe(false);
     expect(dispatchSpy).toHaveBeenCalled();
     delete (el as unknown as { close?: unknown }).close;
@@ -446,9 +470,9 @@ describe('AuDrawer', () => {
     const el = queryNativeDialog(fix);
     Object.defineProperty(el, 'close', { value: undefined, configurable: true });
     const dispatchSpy = vi.spyOn(el, 'dispatchEvent');
-    (fix.componentInstance as unknown as { closeDialogElement(d: HTMLDialogElement): void }).closeDialogElement(
-      el,
-    );
+    (
+      fix.componentInstance as unknown as { closeDialogElement(d: HTMLDialogElement): void }
+    ).closeDialogElement(el);
     expect(dispatchSpy).not.toHaveBeenCalled();
     delete (el as unknown as { close?: unknown }).close;
   });

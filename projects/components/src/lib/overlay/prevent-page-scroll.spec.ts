@@ -6,21 +6,62 @@ import {
   installPageScrollPrevention,
 } from './prevent-page-scroll';
 
+function defineScrollMetrics(
+  el: Element,
+  metrics: Record<string, number>,
+  writableKeys: string[] = [],
+): void {
+  for (const [key, value] of Object.entries(metrics)) {
+    Object.defineProperty(el, key, {
+      value,
+      writable: writableKeys.includes(key),
+      configurable: true,
+    });
+  }
+}
+
 describe('canConsumeWheelDelta', () => {
   it('returns false at scroll top when scrolling up', () => {
     const el = document.createElement('div');
-    Object.defineProperty(el, 'scrollTop', { value: 0, writable: true });
-    Object.defineProperty(el, 'scrollHeight', { value: 400 });
-    Object.defineProperty(el, 'clientHeight', { value: 200 });
+    defineScrollMetrics(el, { scrollTop: 0, scrollHeight: 400, clientHeight: 200 }, ['scrollTop']);
     expect(canConsumeWheelDelta(el, -10, 0)).toBe(false);
   });
 
   it('returns true when content can scroll down', () => {
     const el = document.createElement('div');
-    Object.defineProperty(el, 'scrollTop', { value: 0, writable: true });
-    Object.defineProperty(el, 'scrollHeight', { value: 400 });
-    Object.defineProperty(el, 'clientHeight', { value: 200 });
+    defineScrollMetrics(el, { scrollTop: 0, scrollHeight: 400, clientHeight: 200 }, ['scrollTop']);
     expect(canConsumeWheelDelta(el, 10, 0)).toBe(true);
+  });
+
+  it('returns false at scroll bottom when scrolling down', () => {
+    const el = document.createElement('div');
+    defineScrollMetrics(el, { scrollTop: 200, scrollHeight: 400, clientHeight: 200 }, ['scrollTop']);
+    expect(canConsumeWheelDelta(el, 10, 0)).toBe(false);
+  });
+
+  it('reports vertical overflow when deltaY is zero', () => {
+    const el = document.createElement('div');
+    defineScrollMetrics(el, { scrollHeight: 400, clientHeight: 200 });
+    expect(canConsumeWheelDelta(el, 0, 0)).toBe(true);
+    defineScrollMetrics(el, { scrollHeight: 200, clientHeight: 200 });
+    expect(canConsumeWheelDelta(el, 0, 0)).toBe(false);
+  });
+
+  it('handles horizontal wheel deltas', () => {
+    const el = document.createElement('div');
+    defineScrollMetrics(
+      el,
+      { scrollLeft: 10, scrollWidth: 400, clientWidth: 200 },
+      ['scrollLeft'],
+    );
+    expect(canConsumeWheelDelta(el, 0, -5)).toBe(true);
+
+    defineScrollMetrics(el, { scrollLeft: 0, scrollWidth: 400, clientWidth: 200 }, ['scrollLeft']);
+    expect(canConsumeWheelDelta(el, 0, -5)).toBe(false);
+    expect(canConsumeWheelDelta(el, 0, 5)).toBe(true);
+
+    defineScrollMetrics(el, { scrollLeft: 200, scrollWidth: 400, clientWidth: 200 }, ['scrollLeft']);
+    expect(canConsumeWheelDelta(el, 0, 5)).toBe(false);
   });
 });
 
@@ -29,9 +70,7 @@ describe('createModalScrollAllowPredicate', () => {
     const dialog = document.createElement('dialog');
     const body = document.createElement('div');
     body.className = 'au-dialog__body';
-    Object.defineProperty(body, 'scrollTop', { value: 50, writable: true });
-    Object.defineProperty(body, 'scrollHeight', { value: 400 });
-    Object.defineProperty(body, 'clientHeight', { value: 200 });
+    defineScrollMetrics(body, { scrollTop: 50, scrollHeight: 400, clientHeight: 200 }, ['scrollTop']);
     dialog.append(body);
     document.body.append(dialog);
 
@@ -42,6 +81,59 @@ describe('createModalScrollAllowPredicate', () => {
     const permitted = new WheelEvent('wheel', { deltaY: 10, bubbles: true, cancelable: true });
     body.dispatchEvent(permitted);
     expect(allow(body, permitted)).toBe(true);
+
+    dialog.remove();
+  });
+
+  it('returns false when overlay root is missing', () => {
+    const allow = createModalScrollAllowPredicate(() => null, '.au-dialog__body');
+    expect(allow(document.body)).toBe(false);
+  });
+
+  it('returns false when target is outside the overlay root', () => {
+    const dialog = document.createElement('dialog');
+    document.body.append(dialog);
+    const allow = createModalScrollAllowPredicate(() => dialog, '.au-dialog__body');
+    expect(allow(document.body)).toBe(false);
+    dialog.remove();
+  });
+
+  it('returns false for text nodes inside the scroll body', () => {
+    const dialog = document.createElement('dialog');
+    const body = document.createElement('div');
+    body.className = 'au-dialog__body';
+    const text = document.createTextNode('label');
+    body.append(text);
+    dialog.append(body);
+    document.body.append(dialog);
+
+    const allow = createModalScrollAllowPredicate(() => dialog, '.au-dialog__body');
+    expect(allow(text)).toBe(false);
+
+    dialog.remove();
+  });
+
+  it('returns false when target is not inside the scroll body selector', () => {
+    const dialog = document.createElement('dialog');
+    const header = document.createElement('header');
+    dialog.append(header);
+    document.body.append(dialog);
+
+    const allow = createModalScrollAllowPredicate(() => dialog, '.au-dialog__body');
+    expect(allow(header)).toBe(false);
+
+    dialog.remove();
+  });
+
+  it('allows touchmove inside the scroll body', () => {
+    const dialog = document.createElement('dialog');
+    const body = document.createElement('div');
+    body.className = 'au-dialog__body';
+    dialog.append(body);
+    document.body.append(dialog);
+
+    const allow = createModalScrollAllowPredicate(() => dialog, '.au-dialog__body');
+    expect(allow(body, new TouchEvent('touchmove'))).toBe(true);
 
     dialog.remove();
   });

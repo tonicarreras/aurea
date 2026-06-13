@@ -534,7 +534,7 @@ describe('AuDialog', () => {
     const fix = TestBed.createComponent(AuDialog);
     vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     fix.componentRef.setInput('open', true);
-    expect(async () => await fix.whenStable()).not.toThrow();
+    await fix.whenStable();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
   });
 

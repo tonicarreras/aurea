@@ -131,7 +131,9 @@ export class AuDrawer {
           return;
         }
         const panel = dialog.querySelector<HTMLElement>('.au-drawer__panel');
-        panel && focusInitialInDialogPanel(panel);
+        if (panel) {
+          focusInitialInDialogPanel(panel);
+        }
       });
     }
   }
