@@ -28,14 +28,14 @@ describe('AuInputText', () => {
     }).compileComponents();
   });
 
-  it('sets null when cleared', () => {
+  it('sets null when cleared',async  () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.value = 'abc';
     });
     const el = queryInput(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(control(fix).value()).toBeNull();
   });
 
@@ -44,13 +44,13 @@ describe('AuInputText', () => {
     expect(control(fix).inputDisplay()).toBe('');
   });
 
-  it('binds value on input (model) and input reflects value', () => {
+  it('binds value on input (model) and input reflects value',async  () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const comp = control(fix);
     const el = queryInput(fix);
     el.value = 'hello';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(comp.value()).toBe('hello');
   });
 
@@ -106,11 +106,11 @@ describe('AuInputText', () => {
     control(fix).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost', () => {
+  it('emits blur from onBlurHost',async  () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     let n = 0;
     control(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     control(fix).onBlurHost();
     expect(n).toBe(1);
   });
@@ -216,28 +216,28 @@ describe('AuInputText', () => {
     expect(queryInput(fix).id.startsWith('au-field-')).toBe(true);
   });
 
-  it('applies from-tab on control after Tab', () => {
+  it('applies from-tab on control after Tab',async  () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const input = fix.debugElement.query(By.css('input.au-input-text'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     input.triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.nativeElement.classList.contains('au-input-text--from-tab')).toBe(true);
   });
 
-  it('clears from-tab after focus leaves control', () => {
+  it('clears from-tab after focus leaves control',async  () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const input = fix.debugElement.query(By.css('input.au-input-text'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('input.au-input-text'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.classList.contains('au-input-text--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     control(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.classList.contains('au-input-text--from-tab')).toBe(false);
   });
 
@@ -284,14 +284,14 @@ describe('AuInputText', () => {
     expect(control(fix).displayError()).toBe('');
   });
 
-  it('treats null field harness strings as empty', () => {
+  it('treats null field harness strings as empty',async  () => {
     const fix = TestBed.createComponent(AuInputTextTestHost);
     applyFieldHarnessInputs(fix, {
       label: null as unknown as string,
       hint: undefined as unknown as string,
       errorMessage: null as unknown as string,
     });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.ffLabel()).toBe('');
     expect(fix.componentInstance.ffHint()).toBe('');
     expect(fix.componentInstance.ffErrorMessage()).toBe('');

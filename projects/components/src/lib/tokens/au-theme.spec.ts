@@ -49,28 +49,28 @@ describe('AuTheme', () => {
     vi.unstubAllGlobals();
   });
 
-  it('sets data-au-theme="dark" on host', () => {
+  it('sets data-au-theme="dark" on host', async () => {
     const fix = TestBed.createComponent(ThemeHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#host') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('dark');
   });
 
-  it('sets data-au-theme="light" when bound to light', () => {
+  it('sets data-au-theme="light" when bound to light', async () => {
     const fix = TestBed.createComponent(ThemeHostLight);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#host2') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('light');
   });
 
-  it('sets data-au-theme="high-contrast-dark" on host', () => {
+  it('sets data-au-theme="high-contrast-dark" on host', async () => {
     const fix = TestBed.createComponent(ThemeHostHcDark);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#hcDark') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('high-contrast-dark');
   });
 
-  it('uses prefers-color-scheme when mode is system (dark)', () => {
+  it('uses prefers-color-scheme when mode is system (dark)',async  () => {
     const mq = {
       matches: true,
       addEventListener: vi.fn(),
@@ -81,13 +81,13 @@ describe('AuTheme', () => {
       vi.fn(() => mq as unknown as MediaQueryList),
     );
     const fix = TestBed.createComponent(ThemeHostSystem);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('dark');
     expect(mq.addEventListener).toHaveBeenCalled();
   });
 
-  it('uses prefers-color-scheme when mode is system (light)', () => {
+  it('uses prefers-color-scheme when mode is system (light)',async  () => {
     const mq = {
       matches: false,
       addEventListener: vi.fn(),
@@ -98,12 +98,12 @@ describe('AuTheme', () => {
       vi.fn(() => mq as unknown as MediaQueryList),
     );
     const fix = TestBed.createComponent(ThemeHostSystem);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('light');
   });
 
-  it('updates when prefers-color-scheme changes', () => {
+  it('updates when prefers-color-scheme changes',async  () => {
     let matches = false;
     let changeHandler: (() => void) | undefined;
     const mq = {
@@ -120,24 +120,24 @@ describe('AuTheme', () => {
       vi.fn(() => mq as unknown as MediaQueryList),
     );
     const fix = TestBed.createComponent(ThemeHostSystem);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('light');
     matches = true;
     changeHandler?.();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(el.getAttribute('data-au-theme')).toBe('dark');
   });
 
-  it('skips matchMedia when undefined', () => {
+  it('skips matchMedia when undefined',async  () => {
     vi.stubGlobal('matchMedia', undefined as unknown as typeof matchMedia);
     const fix = TestBed.createComponent(ThemeHostSystem);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = fix.nativeElement.querySelector('#sys') as HTMLElement;
     expect(el.getAttribute('data-au-theme')).toBe('light');
   });
 
-  it('removes matchMedia listener on destroy', () => {
+  it('removes matchMedia listener on destroy',async  () => {
     const remove = vi.fn();
     const mq = {
       matches: false,
@@ -149,7 +149,7 @@ describe('AuTheme', () => {
       vi.fn(() => mq as unknown as MediaQueryList),
     );
     const fix = TestBed.createComponent(ThemeHostSystem);
-    fix.detectChanges();
+    await fix.whenStable();
     fix.destroy();
     expect(remove).toHaveBeenCalled();
   });

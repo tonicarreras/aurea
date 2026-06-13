@@ -20,39 +20,39 @@ class AnchorHost {
 
 describe('AuLink', () => {
   describe('anchor host', () => {
-    it('sets href on host', () => {
+    it('sets href on host',async  () => {
       const fixture = TestBed.createComponent(AnchorHost);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('href')).toBe('/docs');
     });
 
-    it('sets external link attributes', () => {
+    it('sets external link attributes',async  () => {
       const fixture = TestBed.createComponent(AnchorHost);
       fixture.componentInstance.external = true;
-      fixture.detectChanges();
+      await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('target')).toBe('_blank');
       expect(anchor.getAttribute('rel')).toContain('noopener');
     });
 
-    it('omits target when not external', () => {
+    it('omits target when not external',async  () => {
       const fixture = TestBed.createComponent(AnchorHost);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('target')).toBeNull();
       expect(anchor.getAttribute('rel')).toBeNull();
     });
 
-    it('falls back to # for empty href', () => {
+    it('falls back to # for empty href',async  () => {
       const fixture = TestBed.createComponent(AnchorHost);
       fixture.componentInstance.href = '';
-      fixture.detectChanges();
+      await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('href')).toBe('#');
     });
 
-    it('transforms null href to #', () => {
+    it('transforms null href to #',async  () => {
       @Component({
         imports: [AuLink],
         changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,12 +62,12 @@ describe('AuLink', () => {
         href = null as unknown as string;
       }
       const fixture = TestBed.createComponent(NullHrefHost);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('href')).toBe('#');
     });
 
-    it('applies subtle variant', () => {
+    it('applies subtle variant',async  () => {
       @Component({
         imports: [AuLink],
         changeDetection: ChangeDetectionStrategy.OnPush,
@@ -76,7 +76,7 @@ describe('AuLink', () => {
       class SubtleHost {}
 
       const fixture = TestBed.createComponent(SubtleHost);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('data-au-variant')).toBe('subtle');
     });

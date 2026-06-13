@@ -12,7 +12,7 @@ describe('AuDivider', () => {
 
     fixture = TestBed.createComponent(AuDivider);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -28,47 +28,47 @@ describe('AuDivider', () => {
     expect(host.getAttribute('data-au-labeled')).toBeNull();
   });
 
-  it('applies vertical orientation', () => {
+  it('applies vertical orientation',async  () => {
     fixture.componentRef.setInput('orientation', 'vertical');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('aria-orientation')).toBe('vertical');
     expect(host.getAttribute('data-au-orientation')).toBe('vertical');
   });
 
-  it('applies inset on the host', () => {
+  it('applies inset on the host',async  () => {
     fixture.componentRef.setInput('inset', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-inset')).toBe('');
   });
 
-  it('renders a centered label between rules', () => {
+  it('renders a centered label between rules',async  () => {
     fixture.componentRef.setInput('label', 'or');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-labeled')).toBe('');
     expect(host.querySelector('.au-divider__label')?.textContent?.trim()).toBe('or');
     expect(host.querySelectorAll('.au-divider__rule').length).toBe(2);
   });
 
-  it('ignores whitespace-only labels', () => {
+  it('ignores whitespace-only labels',async  () => {
     fixture.componentRef.setInput('label', '   ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.hasLabel()).toBe(false);
     expect(fixture.nativeElement.querySelector('.au-divider__label')).toBeNull();
   });
 
-  it('transforms null label to empty string', () => {
+  it('transforms null label to empty string',async  () => {
     fixture.componentRef.setInput('label', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.resolvedLabel()).toBe('');
     expect(component.hasLabel()).toBe(false);
   });
 
-  it('does not render labeled layout when orientation is vertical', () => {
+  it('does not render labeled layout when orientation is vertical',async  () => {
     fixture.componentRef.setInput('orientation', 'vertical');
     fixture.componentRef.setInput('label', 'or');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-labeled')).toBeNull();
     expect(fixture.nativeElement.querySelector('.au-divider__label')).toBeNull();
   });

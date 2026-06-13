@@ -243,9 +243,9 @@ describe('AuSteps', () => {
     vi.unstubAllGlobals();
   });
 
-  it('defaults layout to tabs and size to md', () => {
+  it('defaults layout to tabs and size to md',async  () => {
     const fix = TestBed.createComponent(AuSteps);
-    fix.detectChanges();
+    await fix.whenStable();
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-layout')).toBe('tabs');
     expect(host.getAttribute('data-au-size')).toBe('md');
@@ -253,19 +253,19 @@ describe('AuSteps', () => {
 
   it('selects first step when value is empty', async () => {
     const fix = TestBed.createComponent(TestStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('overview');
   });
 
   it('shows all panels in sections layout', async () => {
     const fix = TestBed.createComponent(SectionsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
-    fix.detectChanges();
+    await fix.whenStable();
     const panels = fix.nativeElement.querySelectorAll('[role="region"]');
     expect(panels.length).toBe(2);
     const hidden = [...panels].filter((p: Element) => p.hasAttribute('hidden'));
@@ -319,22 +319,22 @@ describe('AuSteps', () => {
     }
 
     const fix = TestBed.createComponent(FlexPanelHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
-    fix.detectChanges();
+    await fix.whenStable();
     const apiPanel = fix.nativeElement.querySelector('[auStepPanel="api"]') as HTMLElement;
     expect(getComputedStyle(apiPanel).display).toBe('none');
   });
 
   it('switches panel on step click', async () => {
     const fix = TestBed.createComponent(TestStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
     const apiStep = fix.nativeElement.querySelector('button[auStep="api"]') as HTMLButtonElement;
     apiStep.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('api');
     const panel = fix.nativeElement.querySelector('[auStepPanel="api"]') as HTMLElement;
     expect(panel.hasAttribute('hidden')).toBe(false);
@@ -342,7 +342,7 @@ describe('AuSteps', () => {
 
   it('keyboard navigation uses first step when current value is unknown', async () => {
     const fix = TestBed.createComponent(TestThreeStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
     const steps = fix.debugElement.query(By.directive(AuSteps))!.componentInstance as AuSteps;
@@ -352,13 +352,13 @@ describe('AuSteps', () => {
       'keydown',
       new KeyboardEvent('keydown', { key: 'End', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('c');
   });
 
   it('navigates steps with arrow keys', async () => {
     const fix = TestBed.createComponent(TestThreeStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
@@ -366,19 +366,19 @@ describe('AuSteps', () => {
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('b');
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
   });
 
   it('navigates to first and last step with Home and End', async () => {
     const fix = TestBed.createComponent(TestThreeStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
@@ -386,19 +386,19 @@ describe('AuSteps', () => {
       'keydown',
       new KeyboardEvent('keydown', { key: 'End', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('c');
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'Home', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
   });
 
   it('ignores unrelated keys on steplist', async () => {
     const fix = TestBed.createComponent(TestThreeStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
@@ -410,7 +410,7 @@ describe('AuSteps', () => {
 
   it('skips disabled steps in keyboard navigation', async () => {
     const fix = TestBed.createComponent(TestStepsWithDisabledHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushStepsSelection();
     const list = fix.debugElement.query(By.css('.au-steps__list'))!;
@@ -418,23 +418,23 @@ describe('AuSteps', () => {
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('c');
   });
 
   it('does not select disabled step on click', async () => {
     const fix = TestBed.createComponent(TestStepsWithDisabledHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const disabled = fix.nativeElement.querySelector('button[auStep="b"]') as HTMLButtonElement;
     disabled.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
   });
 
   it('prevents default when clicking a disabled step', async () => {
     const fix = TestBed.createComponent(TestStepsWithDisabledHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const step = fix.debugElement.query(By.css('button[auStep="b"]'))!;
     const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
@@ -445,7 +445,7 @@ describe('AuSteps', () => {
 
   it('uses custom id prefix for step and panel ids', async () => {
     const fix = TestBed.createComponent(TestStepsWithIdHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const step = fix.nativeElement.querySelector('button[auStep="profile"]') as HTMLButtonElement;
     expect(step.id).toBe('settings-step-profile');
@@ -460,17 +460,17 @@ describe('AuSteps', () => {
     expect(ev.defaultPrevented).toBe(false);
   });
 
-  it('stepIdFor and panelIdFor use resolved id', () => {
+  it('stepIdFor and panelIdFor use resolved id',async  () => {
     const fix = TestBed.createComponent(AuSteps);
     fix.componentRef.setInput('id', 'x');
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.stepIdFor('one')).toBe('x-step-one');
     expect(fix.componentInstance.panelIdFor('one')).toBe('x-panel-one');
   });
 
   it('does not register the same step twice', async () => {
     const fix = TestBed.createComponent(TestStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const steps = fix.debugElement.query(By.directive(AuSteps))!.componentInstance as AuSteps;
     const first = fix.debugElement.query(By.directive(AuStep))!.injector.get(AuStep);
@@ -478,15 +478,15 @@ describe('AuSteps', () => {
     expect(steps.getEnabledSteps().length).toBe(2);
   });
 
-  it('resolvedId is generated when id input is empty', () => {
+  it('resolvedId is generated when id input is empty',async  () => {
     const fix = TestBed.createComponent(AuSteps);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.resolvedId()).toMatch(/^au-steps-\d+$/);
   });
 
   it('does not emit valueChange when selecting the current step', async () => {
     const fix = TestBed.createComponent(TestStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const steps = fix.debugElement.query(By.directive(AuSteps))!.componentInstance as AuSteps;
     let count = 0;
@@ -497,9 +497,9 @@ describe('AuSteps', () => {
 
   it('resets to first enabled step when value is unknown', async () => {
     const fix = TestBed.createComponent(TestStepsUnknownValueHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
   });
 
@@ -528,18 +528,18 @@ describe('AuSteps', () => {
     document.body.append(panel);
 
     const fix = TestBed.createComponent(SectionsScrollHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
 
     const apiStep = fix.nativeElement.querySelector('button[auStep="api"]') as HTMLButtonElement;
     apiStep.click();
-    fix.detectChanges();
+    await fix.whenStable();
 
     expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
     panel.remove();
   });
 
-  it('scrollToPanel calls scrollIntoView when element exists', () => {
+  it('scrollToPanel calls scrollIntoView when element exists',async  () => {
     const panel = document.createElement('div');
     panel.id = 'doc-panel-api';
     const scrollIntoView = vi.fn();
@@ -548,15 +548,15 @@ describe('AuSteps', () => {
 
     const fix = TestBed.createComponent(AuSteps);
     fix.componentRef.setInput('id', 'doc');
-    fix.detectChanges();
+    await fix.whenStable();
     fix.componentInstance.scrollToPanel('api');
     expect(scrollIntoView).toHaveBeenCalled();
     panel.remove();
   });
 
-  it('scrollToPanel is noop when document is undefined', () => {
+  it('scrollToPanel is noop when document is undefined',async  () => {
     const fix = TestBed.createComponent(AuSteps);
-    fix.detectChanges();
+    await fix.whenStable();
     const saved = globalThis.document;
     vi.stubGlobal('document', undefined);
     try {
@@ -568,7 +568,7 @@ describe('AuSteps', () => {
 
   it('focuses step from keyboard navigation', async () => {
     const fix = TestBed.createComponent(TestThreeStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const bStep = fix.nativeElement.querySelector('button[auStep="b"]') as HTMLButtonElement;
     const focusSpy = vi.spyOn(bStep, 'focus');
@@ -577,29 +577,29 @@ describe('AuSteps', () => {
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(focusSpy).toHaveBeenCalled();
   });
 
   it('applies focus-by-tab class after Tab key', async () => {
     const fix = TestBed.createComponent(TestStepsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     const overview = fix.nativeElement.querySelector(
       'button[auStep="overview"]',
     ) as HTMLButtonElement;
     overview.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(overview.classList.contains('au-steps__step--from-tab')).toBe(true);
     overview.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(overview.classList.contains('au-steps__step--from-tab')).toBe(false);
   });
 
   it('sections steps use aria-current instead of tab role', async () => {
     const fix = TestBed.createComponent(SectionsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const overview = fix.nativeElement.querySelector(
       'button[auStep="overview"]',

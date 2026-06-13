@@ -28,25 +28,25 @@ describe('AuInputNumber', () => {
     }).compileComponents();
   });
 
-  it('sets numeric value on input', () => {
+  it('sets numeric value on input',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'Amount' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '12';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe(12);
   });
 
-  it('sets null when cleared', () => {
+  it('sets null when cleared',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'Amount' }, (f) => {
       f.componentInstance.value = 5;
     });
     const el = queryInput(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -55,7 +55,7 @@ describe('AuInputNumber', () => {
     applyFieldHarnessInputs(fix, { label: 'N' });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -70,11 +70,11 @@ describe('AuInputNumber', () => {
     applyFieldHarnessInputs(fix, { label: 'N' });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '3';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -83,7 +83,7 @@ describe('AuInputNumber', () => {
     expect(await p).toBeNull();
   });
 
-  it('does not emit when disabled', () => {
+  it('does not emit when disabled',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.componentInstance.disabled = true;
@@ -93,7 +93,7 @@ describe('AuInputNumber', () => {
     const sub = runInInjectionContext(inj, () =>
       outputToObservable(comp.value).subscribe(() => n++),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '9';
     el.dispatchEvent(new Event('input'));
@@ -101,7 +101,7 @@ describe('AuInputNumber', () => {
     expect(n).toBe(0);
   });
 
-  it('does not update model when readOnly', () => {
+  it('does not update model when readOnly',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
       f.componentInstance.value = 1;
       f.componentInstance.readOnly = true;
@@ -109,16 +109,16 @@ describe('AuInputNumber', () => {
     const el = queryInput(fix);
     el.value = '99';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe(1);
   });
 
-  it('does not update model when parsed number is not finite', () => {
+  it('does not update model when parsed number is not finite',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost, { label: 'N' }, (f) => {
       f.componentInstance.value = 2;
     });
     CONTROL(fix).onInput({ target: { value: 'Infinity' } } as unknown as Event);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe(2);
   });
 
@@ -141,21 +141,21 @@ describe('AuInputNumber', () => {
     expect(queryInput(fix).getAttribute('step')).toBe('any');
   });
 
-  it('shows error and aria-invalid', () => {
+  it('shows error and aria-invalid',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     applyFieldHarnessInputs(fix, { controlId: 'num1' });
     applyFieldHarnessInputs(fix, { errorMessage: 'Bad' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     expect(el.getAttribute('aria-invalid')).toBe('true');
     expect(el.getAttribute('aria-errormessage')).toBe('num1-error');
   });
 
-  it('focus() focuses input', () => {
+  it('focus() focuses input',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     const spy = vi.spyOn(el, 'focus');
     CONTROL(fix).focus();
@@ -163,45 +163,45 @@ describe('AuInputNumber', () => {
     spy.mockRestore();
   });
 
-  it('onControlRowFocusout early exit', () => {
+  it('onControlRowFocusout early exit',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onControlRowFocusout when focus stays in row', () => {
+  it('onControlRowFocusout when focus stays in row',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
-  it('clears from-tab after leaving row', () => {
+  it('clears from-tab after leaving row',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('input.au-input-number'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.classList.contains('au-input-number--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.classList.contains('au-input-number--from-tab')).toBe(false);
   });
 
-  it('sets hint and aria-describedby', () => {
+  it('sets hint and aria-describedby',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     applyFieldHarnessInputs(fix, { hint: 'Numbers only' });
-    fix.detectChanges();
+    await fix.whenStable();
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
     expect(queryInput(fix).getAttribute('aria-describedby')).toBe(hint.id);
   });
@@ -227,10 +227,10 @@ describe('AuInputNumber', () => {
     expect(CONTROL(fix).placeholder()).toBe('e.g. 42');
   });
 
-  it('inputDisplay empty for null value', () => {
+  it('inputDisplay empty for null value',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).inputDisplay()).toBe('');
   });
 
@@ -241,35 +241,35 @@ describe('AuInputNumber', () => {
     expect(CONTROL(fix).inputDisplay()).toBe('');
   });
 
-  it('shows error from errors input', () => {
+  it('shows error from errors input',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.componentInstance.errors = [{ kind: 'min', message: 'Too small' }];
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).displayError()).toBe('Too small');
   });
 
-  it('displayError uses kind when message missing', () => {
+  it('displayError uses kind when message missing',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.componentInstance.errors = [{ kind: 'pattern' }] as any;
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).displayError()).toBe('pattern');
   });
 
-  it('displayError empty when first error has no usable text', () => {
+  it('displayError empty when first error has no usable text',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     fix.componentInstance.errors = [{ message: '', kind: '' }] as any;
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).displayError()).toBe('');
   });
 
-  it('uses explicit id for resolvedId', () => {
+  it('uses explicit id for resolvedId',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     applyFieldHarnessInputs(fix, { controlId: 'my-num' });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).id).toBe('my-num');
   });
 
@@ -279,12 +279,12 @@ describe('AuInputNumber', () => {
     CONTROL(fix).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost', () => {
+  it('emits blur from onBlurHost',async  () => {
     const fix = createFieldFixture(AuInputNumberTestHost);
     applyFieldHarnessInputs(fix, { label: 'N' });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onBlurHost();
     expect(n).toBe(1);
   });

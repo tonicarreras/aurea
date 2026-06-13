@@ -19,11 +19,11 @@ describe('AuEmptyState', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('renders title, description, and icon with region semantics', () => {
+  it('renders title, description, and icon with region semantics',async  () => {
     fixture.componentRef.setInput('title', 'No items yet');
     fixture.componentRef.setInput('description', 'Create your first item to get started.');
     fixture.componentRef.setInput('icon', 'search');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(host().getAttribute('role')).toBe('region');
     expect(host().getAttribute('data-au-size')).toBe('md');
@@ -37,17 +37,17 @@ describe('AuEmptyState', () => {
     );
   });
 
-  it('omits icon when icon input is undefined', () => {
+  it('omits icon when icon input is undefined',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__media')).toBeNull();
   });
 
-  it('renders imageSrc when set', () => {
+  it('renders imageSrc when set',async  () => {
     fixture.componentRef.setInput('title', 'Inbox zero');
     fixture.componentRef.setInput('imageSrc', '/assets/inbox-empty.svg');
     fixture.componentRef.setInput('imageAlt', 'Empty inbox illustration');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const img = host().querySelector(
       '.au-empty-state__media[data-au-media-kind="image"] img',
     ) as HTMLImageElement;
@@ -56,10 +56,10 @@ describe('AuEmptyState', () => {
     expect(host().querySelector('.au-empty-state__media')?.getAttribute('aria-hidden')).toBeNull();
   });
 
-  it('treats empty imageAlt as decorative', () => {
+  it('treats empty imageAlt as decorative',async  () => {
     fixture.componentRef.setInput('title', 'Inbox zero');
     fixture.componentRef.setInput('imageSrc', '/assets/inbox-empty.svg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const img = host().querySelector('img') as HTMLImageElement;
     expect(img.alt).toBe('');
     expect(host().querySelector('.au-empty-state__media')?.getAttribute('aria-hidden')).toBe(
@@ -67,33 +67,33 @@ describe('AuEmptyState', () => {
     );
   });
 
-  it('ignores blank imageSrc', () => {
+  it('ignores blank imageSrc',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('imageSrc', '   ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__media')).toBeNull();
   });
 
-  it('coerces null imageSrc to undefined', () => {
+  it('coerces null imageSrc to undefined',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('imageSrc', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__media')).toBeNull();
   });
 
-  it('coerces null imageAlt to empty string', () => {
+  it('coerces null imageAlt to empty string',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('imageSrc', '/assets/empty.svg');
     fixture.componentRef.setInput('imageAlt', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect((host().querySelector('img') as HTMLImageElement).alt).toBe('');
   });
 
-  it('prefers imageSrc over icon when both are set', () => {
+  it('prefers imageSrc over icon when both are set',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('icon', 'search');
     fixture.componentRef.setInput('imageSrc', '/assets/empty.svg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('img')).not.toBeNull();
     expect(host().querySelector('au-icon')).toBeNull();
     expect(fixture.componentInstance.showImage()).toBe(true);
@@ -176,41 +176,41 @@ describe('AuEmptyState', () => {
     expect(priorityFixture.nativeElement.querySelector('au-icon')).toBeNull();
   });
 
-  it('omits title and aria-labelledby when title is blank', () => {
+  it('omits title and aria-labelledby when title is blank',async  () => {
     fixture.componentRef.setInput('title', '   ');
     fixture.componentRef.setInput('description', 'Still here');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__title')).toBeNull();
     expect(host().getAttribute('aria-labelledby')).toBeNull();
     expect(host().querySelector('.au-empty-state__description')?.textContent).toBe('Still here');
   });
 
-  it('omits description when blank', () => {
+  it('omits description when blank',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('description', '');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__description')).toBeNull();
   });
 
-  it('applies size on the host', () => {
+  it('applies size on the host',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('size', 'lg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().getAttribute('data-au-size')).toBe('lg');
   });
 
-  it('renders h3 title when headingLevel is 3', () => {
+  it('renders h3 title when headingLevel is 3',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('headingLevel', 3);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('h3.au-empty-state__title')).not.toBeNull();
     expect(host().querySelector('h2.au-empty-state__title')).toBeNull();
   });
 
-  it('renders h4 title when headingLevel is 4', () => {
+  it('renders h4 title when headingLevel is 4',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
     fixture.componentRef.setInput('headingLevel', 4);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('h4.au-empty-state__title')).not.toBeNull();
   });
 
@@ -232,26 +232,26 @@ describe('AuEmptyState', () => {
     ).not.toBeNull();
   });
 
-  it('hides actions container when nothing is projected', () => {
+  it('hides actions container when nothing is projected',async  () => {
     fixture.componentRef.setInput('title', 'Empty');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const actions = host().querySelector('.au-empty-state__actions') as HTMLElement;
     expect(actions).not.toBeNull();
     expect(actions.children.length).toBe(0);
   });
 
-  it('trims whitespace from title and description inputs', () => {
+  it('trims whitespace from title and description inputs',async  () => {
     fixture.componentRef.setInput('title', '  No users  ');
     fixture.componentRef.setInput('description', '  Try again  ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__title')?.textContent).toBe('No users');
     expect(host().querySelector('.au-empty-state__description')?.textContent).toBe('Try again');
   });
 
-  it('coerces nullish title and description to empty strings', () => {
+  it('coerces nullish title and description to empty strings',async  () => {
     fixture.componentRef.setInput('title', null as unknown as string);
     fixture.componentRef.setInput('description', undefined as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(host().querySelector('.au-empty-state__title')).toBeNull();
     expect(host().querySelector('.au-empty-state__description')).toBeNull();
   });

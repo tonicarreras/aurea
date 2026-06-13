@@ -13,7 +13,7 @@ describe('AuSpinner', () => {
 
     fixture = TestBed.createComponent(AuSpinner);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -34,15 +34,15 @@ describe('AuSpinner', () => {
     expect(fixture.nativeElement.querySelector('.au-spinner__svg')).toBeTruthy();
   });
 
-  it('applies size on the host', () => {
+  it('applies size on the host',async  () => {
     fixture.componentRef.setInput('size', 'lg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-size')).toBe('lg');
   });
 
-  it('shows visible label copy and links it with aria-labelledby', () => {
+  it('shows visible label copy and links it with aria-labelledby',async  () => {
     fixture.componentRef.setInput('label', 'Saving changes');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     const labelEl = host.querySelector('.au-spinner__label');
     expect(labelEl?.textContent).toBe('Saving changes');
@@ -51,22 +51,22 @@ describe('AuSpinner', () => {
     expect(host.classList.contains('au-spinner--labeled')).toBe(true);
   });
 
-  it('trims whitespace from label', () => {
+  it('trims whitespace from label',async  () => {
     fixture.componentRef.setInput('label', '  Fetching  ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-spinner__label')?.textContent).toBe('Fetching');
   });
 
-  it('falls back to glyph-only when label is empty', () => {
+  it('falls back to glyph-only when label is empty',async  () => {
     fixture.componentRef.setInput('label', '   ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-spinner__label')).toBeNull();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Loading');
   });
 
-  it('omits live-region semantics when decorative', () => {
+  it('omits live-region semantics when decorative',async  () => {
     fixture.componentRef.setInput('decorative', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('role')).toBeNull();
     expect(host.getAttribute('aria-busy')).toBeNull();
@@ -75,10 +75,10 @@ describe('AuSpinner', () => {
     expect(host.classList.contains('au-spinner--decorative')).toBe(true);
   });
 
-  it('hides visible label when decorative even if label is set', () => {
+  it('hides visible label when decorative even if label is set',async  () => {
     fixture.componentRef.setInput('label', 'Saving changes');
     fixture.componentRef.setInput('decorative', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-spinner__label')).toBeNull();
   });
 

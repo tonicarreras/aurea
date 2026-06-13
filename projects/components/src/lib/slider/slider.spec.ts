@@ -31,7 +31,7 @@ describe('AuSlider', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [SliderHost] }).compileComponents();
     fixture = TestBed.createComponent(SliderHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('renders a range input with value output', () => {
@@ -44,11 +44,11 @@ describe('AuSlider', () => {
     expect(input.getAttribute('aria-describedby')).not.toBeNull();
   });
 
-  it('updates value on input', () => {
+  it('updates value on input',async  () => {
     const input = fixture.nativeElement.querySelector('.au-slider__input') as HTMLInputElement;
     input.value = '75';
     input.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.volume).toBe(75);
   });
 });
@@ -61,29 +61,29 @@ describe('AuSlider standalone', () => {
     fixture = TestBed.createComponent(AuSlider);
   });
 
-  it('ignores input when disabled', () => {
+  it('ignores input when disabled',async  () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.componentRef.setInput('value', 10);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const input = fixture.nativeElement.querySelector('.au-slider__input') as HTMLInputElement;
     input.value = '80';
     input.dispatchEvent(new Event('input'));
     expect(fixture.componentInstance.value()).toBe(10);
   });
 
-  it('ignores non-finite range values', () => {
+  it('ignores non-finite range values',async  () => {
     fixture.componentRef.setInput('value', 10);
-    fixture.detectChanges();
+    await fixture.whenStable();
     fixture.componentInstance.onInput({
       target: { value: 'not-a-number' },
     } as unknown as Event);
     expect(fixture.componentInstance.value()).toBe(10);
   });
 
-  it('ignores input when readOnly', () => {
+  it('ignores input when readOnly',async  () => {
     fixture.componentRef.setInput('readOnly', true);
     fixture.componentRef.setInput('value', 10);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const input = fixture.nativeElement.querySelector('.au-slider__input') as HTMLInputElement;
     input.value = '80';
     input.dispatchEvent(new Event('input'));
@@ -99,7 +99,7 @@ describe('AuSlider standalone', () => {
     expect(focusSpy).toHaveBeenCalled();
   });
 
-  it('emits blur and clears tab focus styling', () => {
+  it('emits blur and clears tab focus styling',async  () => {
     let blurred = false;
     fixture.componentInstance.blur.subscribe(() => (blurred = true));
     const row = fixture.nativeElement.querySelector('.au-slider__control-row') as HTMLElement;
@@ -108,23 +108,23 @@ describe('AuSlider standalone', () => {
       new Event('blur'),
     );
     row.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(blurred).toBe(true);
   });
 
-  it('builds aria-describedby from hint, error, and value output', () => {
+  it('builds aria-describedby from hint, error, and value output',async  () => {
     fixture.componentRef.setInput('showValue', true);
     fixture.componentRef.setInput('invalid', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const describedBy = (
       fixture.nativeElement.querySelector('.au-slider__input') as HTMLInputElement
     ).getAttribute('aria-describedby');
     expect(describedBy).toContain('-value');
   });
 
-  it('keeps tab focus styling when focus moves within the control row', () => {
+  it('keeps tab focus styling when focus moves within the control row',async  () => {
     fixture.componentRef.setInput('showValue', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const row = fixture.nativeElement.querySelector('.au-slider__control-row') as HTMLElement;
     const output = fixture.nativeElement.querySelector('.au-slider__value') as HTMLElement;
     row.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: output }));

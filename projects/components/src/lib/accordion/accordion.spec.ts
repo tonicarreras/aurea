@@ -47,7 +47,7 @@ describe('AuAccordion', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [AccordionHost] }).compileComponents();
     fixture = TestBed.createComponent(AccordionHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('defaults to plain variant', () => {
@@ -64,10 +64,10 @@ describe('AuAccordion', () => {
     expect(root.querySelector('[id$="-panel-two"]')?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('toggles sections when multiple is true', () => {
+  it('toggles sections when multiple is true',async  () => {
     const buttons = fixture.nativeElement.querySelectorAll('.au-accordion__trigger');
     (buttons[1] as HTMLButtonElement).click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.expanded).toEqual(['one', 'two']);
   });
 
@@ -113,12 +113,12 @@ describe('AuAccordion', () => {
     expect(singleFixture.componentInstance.expanded).toEqual(['two']);
   });
 
-  it('collapses an expanded section on second click', () => {
+  it('collapses an expanded section on second click',async  () => {
     const button = fixture.nativeElement.querySelector(
       '.au-accordion__trigger',
     ) as HTMLButtonElement;
     button.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.expanded).toEqual([]);
   });
 

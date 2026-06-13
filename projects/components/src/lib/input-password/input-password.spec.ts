@@ -28,9 +28,9 @@ describe('AuInputPassword', () => {
     }).compileComponents();
   });
 
-  it('sets value on input and null when cleared', () => {
+  it('sets value on input and null when cleared',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = 'secret';
     el.dispatchEvent(new Event('input'));
@@ -40,60 +40,60 @@ describe('AuInputPassword', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('toggles reveal', () => {
+  it('toggles reveal',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).type).toBe('password');
     fix.debugElement.query(By.css('.au-input-password__reveal'))!.nativeElement.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).type).toBe('text');
   });
 
-  it('shows aria-invalid when invalid', () => {
+  it('shows aria-invalid when invalid',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.invalid = true;
     });
     applyFieldHarnessInputs(fix, { errorMessage: 'Required' });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
-  it('sets hint and aria-describedby', () => {
+  it('sets hint and aria-describedby',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, {
       label: 'Password',
       hint: 'Min 12 chars',
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!
       .nativeElement as HTMLElement;
     expect(input.getAttribute('aria-describedby')).toBe(hint.id);
   });
 
-  it('binds existing value to the native input', () => {
+  it('binds existing value to the native input',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.value = 'preset';
     });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).value).toBe('preset');
   });
 
-  it('does not update when disabled', () => {
+  it('does not update when disabled',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.disabled = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = 'secret';
     el.dispatchEvent(new Event('input'));
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('does not toggle reveal when disabled', () => {
+  it('does not toggle reveal when disabled',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.disabled = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     (
       fix.debugElement.query(By.css('.au-input-password__reveal'))!
         .nativeElement as HTMLButtonElement
@@ -101,28 +101,28 @@ describe('AuInputPassword', () => {
     expect(queryInput(fix).type).toBe('password');
   });
 
-  it('does not toggle reveal when readOnly', () => {
+  it('does not toggle reveal when readOnly',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.readOnly = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).toggleReveal();
     expect(queryInput(fix).type).toBe('password');
   });
 
-  it('onControlRowFocusout handles focus leaving the row', () => {
+  it('onControlRowFocusout handles focus leaving the row',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
     const input = queryInput(fix);
     CONTROL(fix).onControlRowFocusin();
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
   });
 
-  it('onControlRowFocusout ignores non-HTMLElement and internal focus moves', () => {
+  it('onControlRowFocusout ignores non-HTMLElement and internal focus moves',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
     const input = queryInput(fix);
     const reveal = fix.debugElement.query(By.css('.au-input-password__reveal'))!.nativeElement;
@@ -135,7 +135,7 @@ describe('AuInputPassword', () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const valueP = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -150,9 +150,9 @@ describe('AuInputPassword', () => {
     expect(blurN).toBe(1);
   });
 
-  it('focus() focuses the native input', () => {
+  it('focus() focuses the native input',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const spy = vi.spyOn(input, 'focus');
     CONTROL(fix).focus();
@@ -166,26 +166,26 @@ describe('AuInputPassword', () => {
     expect(CONTROL(fix).placeholder()).toBe('');
   });
 
-  it('uses custom reveal aria labels', () => {
+  it('uses custom reveal aria labels',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.revealLabelShow = 'Mostrar';
       f.componentInstance.revealLabelHide = 'Ocultar';
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const btn = fix.debugElement.query(By.css('.au-input-password__reveal'))!
       .nativeElement as HTMLButtonElement;
     expect(btn.getAttribute('aria-label')).toBe('Mostrar');
     btn.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(btn.getAttribute('aria-label')).toBe('Ocultar');
     expect(btn.getAttribute('aria-pressed')).toBe('true');
   });
 
-  it('hides reveal toggle when showRevealToggle is false', () => {
+  it('hides reveal toggle when showRevealToggle is false',async  () => {
     const fix = createFieldFixture(AuInputPasswordTestHost, { label: 'Password' }, (f) => {
       f.componentInstance.showRevealToggle = false;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-input-password__reveal'))).toBeFalsy();
   });
 });

@@ -29,9 +29,9 @@ describe('AuCheckbox standalone', () => {
     }).compileComponents();
   });
 
-  it('renders without a parent au-form-field', () => {
+  it('renders without a parent au-form-field',async  () => {
     const fix = TestBed.createComponent(StandaloneHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const input = fix.nativeElement.querySelector('.au-checkbox__element') as HTMLInputElement;
     expect(input.id).toMatch(/^au-field-\d+$/);
     expect(fix.nativeElement.querySelector('.au-checkbox__label')?.textContent).toContain(
@@ -68,12 +68,12 @@ describe('AuCheckbox', () => {
 
   it('binds checked value on change (model)', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const comp = CONTROL(fix);
     const el = queryInput(fix);
     el.checked = true;
     el.dispatchEvent(new Event('change'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(comp.checked()).toBe(true);
   });
 
@@ -81,7 +81,7 @@ describe('AuCheckbox', () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.checked).pipe(take(1))),
     );
@@ -246,7 +246,7 @@ describe('AuCheckbox', () => {
     expect(n).toBe(1);
   });
 
-  it('does not emit when disabled', () => {
+  it('does not emit when disabled',async  () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.disabled = true;
     });
@@ -256,7 +256,7 @@ describe('AuCheckbox', () => {
     const sub = runInInjectionContext(inj, () =>
       outputToObservable(comp.checked).subscribe(() => n++),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.checked = true;
     el.dispatchEvent(new Event('change'));
@@ -273,9 +273,9 @@ describe('AuCheckbox', () => {
     expect(queryInput(fix).getAttribute('data-au-size')).toBe('sm');
   });
 
-  it('focus() focuses the native input', () => {
+  it('focus() focuses the native input',async  () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     const spy = vi.spyOn(el, 'focus');
     CONTROL(fix).focus();
@@ -283,9 +283,9 @@ describe('AuCheckbox', () => {
     spy.mockRestore();
   });
 
-  it('generates id when id input is empty', () => {
+  it('generates id when id input is empty',async  () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).id.startsWith('au-field-')).toBe(true);
   });
 
@@ -314,9 +314,9 @@ describe('AuCheckbox', () => {
     expect(input.getAttribute('aria-describedby')).toContain(hint?.nativeElement.id);
   });
 
-  it('onControlFocusout returns early for non-HTMLElement currentTarget', () => {
+  it('onControlFocusout returns early for non-HTMLElement currentTarget',async  () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const ev = { currentTarget: {}, relatedTarget: null } as unknown as FocusEvent;
     CONTROL(fix).onControlFocusout(ev);
   });
@@ -339,7 +339,7 @@ describe('AuCheckbox', () => {
     expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
   });
 
-  it('clears focus-by-tab when focus leaves wrapper', () => {
+  it('clears focus-by-tab when focus leaves wrapper',async  () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'X';
     });
@@ -347,12 +347,12 @@ describe('AuCheckbox', () => {
     const wrap = wrapDe.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     wrap.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(wrap.classList.contains('au-checkbox__wrapper--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: wrap, configurable: true });
     CONTROL(fix).onControlFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(wrap.classList.contains('au-checkbox__wrapper--from-tab')).toBe(false);
   });
 
@@ -374,12 +374,12 @@ describe('AuCheckbox', () => {
     expect(CONTROL(fix).description()).toBe('2');
   });
 
-  it('applies sr-only to label content when hideLabel is true', () => {
+  it('applies sr-only to label content when hideLabel is true',async  () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'Pick me';
       f.componentInstance.hideLabel = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const content = fix.nativeElement.querySelector('.au-checkbox__content') as HTMLElement;
     expect(content.classList.contains('au-sr-only')).toBe(true);
   });

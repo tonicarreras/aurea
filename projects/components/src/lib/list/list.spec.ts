@@ -13,7 +13,7 @@ describe('AuList', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(AuList);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -26,27 +26,27 @@ describe('AuList', () => {
     expect(host.classList.contains('au-list')).toBe(true);
   });
 
-  it('sets aria-label when provided', () => {
+  it('sets aria-label when provided',async  () => {
     fixture.componentRef.setInput('ariaLabel', 'Technologies');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Technologies');
   });
 
-  it('sets aria-labelledby when provided', () => {
+  it('sets aria-labelledby when provided',async  () => {
     fixture.componentRef.setInput('ariaLabelledBy', 'tags-heading');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBe('tags-heading');
   });
 
-  it('treats null ariaLabel as empty', () => {
+  it('treats null ariaLabel as empty',async  () => {
     fixture.componentRef.setInput('ariaLabel', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBeNull();
   });
 
-  it('treats null ariaLabelledBy as empty', () => {
+  it('treats null ariaLabelledBy as empty',async  () => {
     fixture.componentRef.setInput('ariaLabelledBy', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBeNull();
   });
 });
@@ -71,24 +71,24 @@ class ListWithItemsHost {
 }
 
 describe('AuListItem', () => {
-  it('sets listitem inside au-list', () => {
+  it('sets listitem inside au-list',async  () => {
     const fix = TestBed.createComponent(ListWithItemsHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const items = fix.nativeElement.querySelectorAll('[auListItem]');
     expect(items[0].getAttribute('role')).toBe('listitem');
     expect(items[1].getAttribute('role')).toBe('listitem');
   });
 
-  it('suppresses listitem when auListItemDisabled is true', () => {
+  it('suppresses listitem when auListItemDisabled is true',async  () => {
     const fix = TestBed.createComponent(ListWithItemsHost);
     fix.componentInstance.skip = true;
-    fix.detectChanges();
+    await fix.whenStable();
     const items = fix.nativeElement.querySelectorAll('[auListItem]');
     expect(items[0].getAttribute('role')).toBe('listitem');
     expect(items[1].getAttribute('role')).toBeNull();
   });
 
-  it('omits listitem outside au-list', () => {
+  it('omits listitem outside au-list',async  () => {
     @Component({
       imports: [AuListItem],
       template: `<span auListItem>Solo</span>`,
@@ -96,7 +96,7 @@ describe('AuListItem', () => {
     class SoloHost {}
 
     const fix = TestBed.createComponent(SoloHost);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.nativeElement.querySelector('span')?.getAttribute('role')).toBeNull();
   });
 });

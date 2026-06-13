@@ -32,100 +32,100 @@ describe('AuTagInput', () => {
     await TestBed.configureTestingModule({ imports: [AuTagInputTestHost] }).compileComponents();
   });
 
-  it('adds tag on Enter', () => {
+  it('adds tag on Enter',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'angular');
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toEqual(['angular']);
   });
 
-  it('adds tag on comma and trims trailing comma', () => {
+  it('adds tag on comma and trims trailing comma',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'vue,');
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: ',', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toEqual(['vue']);
   });
 
-  it('removes tag on chip button click', () => {
+  it('removes tag on chip button click',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.value = ['a', 'b'];
     });
-    fix.detectChanges();
+    await fix.whenStable();
     fix.debugElement.query(By.css('.au-tag-input__chip-remove'))!.nativeElement.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toEqual(['b']);
   });
 
-  it('does not remove last tag on Backspace when value is empty', () => {
+  it('does not remove last tag on Backspace when value is empty',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
-    fix.detectChanges();
+    await fix.whenStable();
     queryInput(fix).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true }),
     );
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('does not commit draft on blur when disabled', () => {
+  it('does not commit draft on blur when disabled',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.disabled = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'skip');
     queryInput(fix).dispatchEvent(new FocusEvent('blur'));
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('sets readonly on the draft input when readOnly', () => {
+  it('sets readonly on the draft input when readOnly',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     expect(input.readOnly).toBe(true);
     expect(input.disabled).toBe(false);
   });
 
-  it('does not commit draft on blur when readOnly', () => {
+  it('does not commit draft on blur when readOnly',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
     });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'skip');
     queryInput(fix).dispatchEvent(new FocusEvent('blur'));
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('removes last tag on Backspace when draft is empty', () => {
+  it('removes last tag on Backspace when draft is empty',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.value = ['only'];
     });
-    fix.detectChanges();
+    await fix.whenStable();
     queryInput(fix).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('commits draft on blur', () => {
+  it('commits draft on blur',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, '  react  ');
     queryInput(fix).dispatchEvent(new FocusEvent('blur'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toEqual(['react']);
   });
 
-  it('respects maxTags and allowDuplicates', () => {
+  it('respects maxTags and allowDuplicates',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.maxTags = 1;
       f.componentInstance.value = ['a'];
     });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'b');
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     expect(CONTROL(fix).value()).toEqual(['a']);
@@ -133,18 +133,18 @@ describe('AuTagInput', () => {
     fix.componentInstance.maxTags = undefined;
     fix.componentInstance.allowDuplicates = false;
     fix.componentInstance.value = ['dup'];
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'dup');
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     expect(CONTROL(fix).value()).toEqual(['dup']);
   });
 
-  it('does not mutate when disabled or readOnly', () => {
+  it('does not mutate when disabled or readOnly',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.disabled = true;
       f.componentInstance.value = ['x'];
     });
-    fix.detectChanges();
+    await fix.whenStable();
     typeDraft(fix, 'y');
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     expect(CONTROL(fix).value()).toEqual(['x']);
@@ -156,7 +156,7 @@ describe('AuTagInput', () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -165,18 +165,18 @@ describe('AuTagInput', () => {
     expect(await p).toEqual(['go']);
   });
 
-  it('focus() focuses the draft input', () => {
+  it('focus() focuses the draft input',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const spy = vi.spyOn(input, 'focus');
     CONTROL(fix).focus();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('sets hint aria-describedby and ignores empty commit', () => {
+  it('sets hint aria-describedby and ignores empty commit',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags', hint: 'Add skills' });
-    fix.detectChanges();
+    await fix.whenStable();
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!
       .nativeElement as HTMLElement;
     expect(queryInput(fix).getAttribute('aria-describedby')).toBe(hint.id);
@@ -186,22 +186,22 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('includes error id in aria-describedby when invalid', () => {
+  it('includes error id in aria-describedby when invalid',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags', hint: 'Add tags' }, (f) => {
       f.componentInstance.invalid = true;
     });
     applyFieldHarnessInputs(fix, { errorMessage: 'Required', controlId: 'ti1' });
-    fix.detectChanges();
+    await fix.whenStable();
     const describedBy = queryInput(fix).getAttribute('aria-describedby') ?? '';
     expect(describedBy).toContain('ti1-error');
   });
 
-  it('does not remove tags when readOnly', () => {
+  it('does not remove tags when readOnly',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
       f.componentInstance.value = ['keep'];
     });
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).removeTag(0);
     expect(CONTROL(fix).value()).toEqual(['keep']);
   });
@@ -232,9 +232,9 @@ describe('AuTagInput', () => {
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
-  it('ignores removeTag out of range', () => {
+  it('ignores removeTag out of range',async  () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).removeTag(-1);
     CONTROL(fix).removeTag(99);
     expect(CONTROL(fix).value()).toEqual([]);

@@ -50,25 +50,25 @@ describe('AuInputDate', () => {
     expect(CONTROL(fix).placeholder()).toBe('Pick a date');
   });
 
-  it('sets value on input', () => {
+  it('sets value on input',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'Start' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '2026-01-15';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('2026-01-15');
   });
 
-  it('sets null when cleared', () => {
+  it('sets null when cleared',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'Start' }, (f) => {
       f.componentInstance.value = '2026-01-01';
     });
     const el = queryInput(fix);
     el.value = '';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -79,10 +79,10 @@ describe('AuInputDate', () => {
     expect(CONTROL(fix).inputDisplay()).toBe('');
   });
 
-  it('inputDisplay is empty when value is null', () => {
+  it('inputDisplay is empty when value is null',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).inputDisplay()).toBe('');
   });
 
@@ -91,7 +91,7 @@ describe('AuInputDate', () => {
     applyFieldHarnessInputs(fix, { label: 'D' });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -101,7 +101,7 @@ describe('AuInputDate', () => {
     expect(await p).toBe('2026-02-01');
   });
 
-  it('does not emit when disabled', () => {
+  it('does not emit when disabled',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.disabled = true;
@@ -111,7 +111,7 @@ describe('AuInputDate', () => {
     const sub = runInInjectionContext(inj, () =>
       outputToObservable(comp.value).subscribe(() => n++),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '2026-03-01';
     el.dispatchEvent(new Event('input'));
@@ -119,7 +119,7 @@ describe('AuInputDate', () => {
     expect(n).toBe(0);
   });
 
-  it('does not update model when readOnly', () => {
+  it('does not update model when readOnly',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.value = '2026-01-01';
       f.componentInstance.readOnly = true;
@@ -127,16 +127,16 @@ describe('AuInputDate', () => {
     const el = queryInput(fix);
     el.value = '2026-12-31';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('2026-01-01');
   });
 
-  it('sets min max attributes', () => {
+  it('sets min max attributes',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.minDate = '2026-01-01';
     fix.componentInstance.maxDate = '2026-12-31';
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     expect(el.getAttribute('min')).toBe('2026-01-01');
     expect(el.getAttribute('max')).toBe('2026-12-31');
@@ -144,55 +144,55 @@ describe('AuInputDate', () => {
     expect(el.max).toBe('2026-12-31');
   });
 
-  it('rejects input outside minDate and maxDate', () => {
+  it('rejects input outside minDate and maxDate',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minDate = '2026-01-01';
       f.componentInstance.maxDate = '2026-12-31';
       f.componentInstance.value = '2026-06-15';
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '2025-12-31';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('2026-06-15');
     expect(el.value).toBe('2026-06-15');
 
     el.value = '2027-01-01';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('2026-06-15');
     expect(el.value).toBe('2026-06-15');
   });
 
-  it('accepts input within minDate and maxDate', () => {
+  it('accepts input within minDate and maxDate',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minDate = '2026-01-01';
       f.componentInstance.maxDate = '2026-12-31';
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     el.value = '2026-03-20';
     el.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('2026-03-20');
   });
 
-  it('shows error and aria-invalid', () => {
+  it('shows error and aria-invalid',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { controlId: 'd1' });
     applyFieldHarnessInputs(fix, { errorMessage: 'Bad' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     expect(el.getAttribute('aria-invalid')).toBe('true');
     expect(el.getAttribute('aria-errormessage')).toBe('d1-error');
   });
 
-  it('focus() focuses input', () => {
+  it('focus() focuses input',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
-    fix.detectChanges();
+    await fix.whenStable();
     const el = queryInput(fix);
     const spy = vi.spyOn(el, 'focus');
     CONTROL(fix).focus();
@@ -200,78 +200,78 @@ describe('AuInputDate', () => {
     spy.mockRestore();
   });
 
-  it('onControlRowFocusout early exit', () => {
+  it('onControlRowFocusout early exit',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onControlRowFocusout when focus stays in row', () => {
+  it('onControlRowFocusout when focus stays in row',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const ev = new FocusEvent('focusout', { relatedTarget: input });
     Object.defineProperty(ev, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
-  it('clears from-tab after leaving row', () => {
+  it('clears from-tab after leaving row',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('input.au-input-date'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.classList.contains('au-input-date--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: input, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.classList.contains('au-input-date--from-tab')).toBe(false);
   });
 
-  it('sets hint and aria-describedby', () => {
+  it('sets hint and aria-describedby',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { hint: 'ISO format' });
-    fix.detectChanges();
+    await fix.whenStable();
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!.nativeElement;
     expect(queryInput(fix).getAttribute('aria-describedby')).toBe(hint.id);
   });
 
-  it('shows error from errors input', () => {
+  it('shows error from errors input',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.errors = [{ kind: 'required', message: 'Pick a date' }];
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).displayError()).toBe('Pick a date');
   });
 
-  it('displayError uses kind when message missing', () => {
+  it('displayError uses kind when message missing',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.errors = [{ kind: 'pattern' }] as any;
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).displayError()).toBe('pattern');
   });
 
-  it('displayError empty when first error has no usable text', () => {
+  it('displayError empty when first error has no usable text',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.errors = [{ message: '', kind: '' }] as any;
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).displayError()).toBe('');
   });
 
-  it('uses explicit id for resolvedId', () => {
+  it('uses explicit id for resolvedId',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { controlId: 'my-date' });
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).id).toBe('my-date');
   });
 
@@ -280,12 +280,12 @@ describe('AuInputDate', () => {
     CONTROL(fix).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost', () => {
+  it('emits blur from onBlurHost',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onBlurHost();
     expect(n).toBe(1);
   });
@@ -297,9 +297,9 @@ describe('AuInputDate', () => {
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
-  it('onPickerIconClick opens native picker when enabled', () => {
+  it('onPickerIconClick opens native picker when enabled',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const showPicker = vi.fn();
     input.showPicker = showPicker;
@@ -312,27 +312,27 @@ describe('AuInputDate', () => {
     expect(showPicker).toHaveBeenCalledOnce();
   });
 
-  it('onPickerIconClick opens bounded list instead of native picker when min/max set', () => {
+  it('onPickerIconClick opens bounded list instead of native picker when min/max set',async  () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minDate = '2026-01-01';
       f.componentInstance.maxDate = '2026-12-31';
     });
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     const showPicker = vi.fn();
     input.showPicker = showPicker;
     CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(showPicker).not.toHaveBeenCalled();
     expect(document.body.querySelector('.au-field-bounded-picker')).toBeTruthy();
   });
 
-  it('onPickerIconClick is no-op when disabled or readOnly', () => {
+  it('onPickerIconClick is no-op when disabled or readOnly', async () => {
     for (const flag of ['disabled', 'readOnly'] as const) {
       const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
         f.componentInstance[flag] = true;
       });
-      fix.detectChanges();
+      await fix.whenStable();
       const input = queryInput(fix);
       const showPicker = vi.fn();
       input.showPicker = showPicker;

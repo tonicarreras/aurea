@@ -44,7 +44,7 @@ describe('AuRadioGroup', () => {
     expect(legend.textContent).toContain('Pick');
   });
 
-  it('updates value when a radio is selected', () => {
+  it('updates value when a radio is selected',async  () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -52,7 +52,7 @@ describe('AuRadioGroup', () => {
     const radios = queryRadios(fix);
     radios[1]!.checked = true;
     radios[1]!.dispatchEvent(new Event('change'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('b');
   });
 
@@ -63,7 +63,7 @@ describe('AuRadioGroup', () => {
     });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -73,7 +73,7 @@ describe('AuRadioGroup', () => {
     expect(await p).toBe('a');
   });
 
-  it('does not emit when disabled', () => {
+  it('does not emit when disabled',async  () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -85,7 +85,7 @@ describe('AuRadioGroup', () => {
     const sub = runInInjectionContext(inj, () =>
       outputToObservable(comp.value).subscribe(() => n++),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     const radios = queryRadios(fix);
     radios[1]!.dispatchEvent(new Event('change'));
     sub.unsubscribe();
@@ -174,14 +174,14 @@ describe('AuRadioGroup', () => {
     CONTROL(fix).onShellFocusin();
   });
 
-  it('emits blur when focus leaves shell', () => {
+  it('emits blur when focus leaves shell',async  () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     const shell = fix.debugElement.query(By.css('.au-radio-group__shell'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: shell, configurable: true });
@@ -189,20 +189,20 @@ describe('AuRadioGroup', () => {
     expect(n).toBe(1);
   });
 
-  it('onShellFocusout returns early for non-HTMLElement', () => {
+  it('onShellFocusout returns early for non-HTMLElement',async  () => {
     const fix = createFieldFixture(AuRadioGroupTestHost);
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onShellFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onShellFocusout returns when focus stays inside shell', () => {
+  it('onShellFocusout returns when focus stays inside shell',async  () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     const shell = fix.debugElement.query(By.css('.au-radio-group__shell'))!.nativeElement;
     const inner = queryRadios(fix)[0]!;
     const ev = new FocusEvent('focusout', { relatedTarget: inner });

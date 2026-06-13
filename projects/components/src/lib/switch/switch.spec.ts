@@ -27,13 +27,13 @@ describe('AuSwitch', () => {
     }).compileComponents();
   });
 
-  it('binds checked on click', () => {
+  it('binds checked on click',async  () => {
     const fix = createFieldFixture(AuSwitchTestHost, { label: 'Enable' }, (f) => {
       f.componentInstance.label = 'Enable';
     });
     const el = querySwitch(fix);
     el.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(control(fix).checked()).toBe(true);
   });
 
@@ -107,18 +107,18 @@ describe('AuSwitch', () => {
     spy.mockRestore();
   });
 
-  it('clears from-tab when focus leaves control', () => {
+  it('clears from-tab when focus leaves control',async  () => {
     const fix = createFieldFixture(AuSwitchTestHost);
     const el = querySwitch(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     fix.debugElement
       .query(By.css('button.au-switch'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(el.classList.contains('au-switch--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     control(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(el.classList.contains('au-switch--from-tab')).toBe(false);
   });
 

@@ -10,24 +10,24 @@ describe('AuButtonGroup', () => {
     }).compileComponents();
   });
 
-  it('sets group role and aria-label', () => {
+  it('sets group role and aria-label',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
     fix.componentRef.setInput('ariaLabel', 'Actions');
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.nativeElement.getAttribute('role')).toBe('group');
     expect(fix.nativeElement.getAttribute('aria-label')).toBe('Actions');
   });
 
-  it('marks attached and orientation on the host', () => {
+  it('marks attached and orientation on the host',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
     fix.componentRef.setInput('attached', false);
     fix.componentRef.setInput('orientation', 'vertical');
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.nativeElement.hasAttribute('data-au-attached')).toBe(false);
     expect(fix.nativeElement.getAttribute('data-au-orientation')).toBe('vertical');
   });
 
-  it('projects au-button children', () => {
+  it('projects au-button children',async  () => {
     @Component({
       selector: 'au-button-group-spec-host',
       imports: [AuButtonGroup, AuButton],
@@ -42,38 +42,38 @@ describe('AuButtonGroup', () => {
 
     TestBed.configureTestingModule({ imports: [Host] });
     const fix = TestBed.createComponent(Host);
-    fix.detectChanges();
+    await fix.whenStable();
     const buttons = fix.nativeElement.querySelectorAll('button.au-button');
     expect(buttons.length).toBe(2);
     expect(buttons[0].textContent?.trim()).toBe('Cancel');
   });
 
-  it('coerces nullish ariaLabel to empty string', () => {
+  it('coerces nullish ariaLabel to empty string',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
     fix.componentRef.setInput('ariaLabel', null as unknown as string);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.ariaLabel()).toBe('');
     expect(fix.componentInstance.resolvedAriaLabel()).toBeNull();
   });
 
-  it('sets aria-labelledby when provided', () => {
+  it('sets aria-labelledby when provided',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
     fix.componentRef.setInput('ariaLabelledBy', 'actions-label');
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.nativeElement.getAttribute('aria-labelledby')).toBe('actions-label');
   });
 
-  it('coerces nullish ariaLabelledBy to empty string', () => {
+  it('coerces nullish ariaLabelledBy to empty string',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
     fix.componentRef.setInput('ariaLabelledBy', null as unknown as string);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.ariaLabelledBy()).toBe('');
     expect(fix.componentInstance.resolvedAriaLabelledBy()).toBeNull();
   });
 
-  it('scrolls focused buttons into view on focusin', () => {
+  it('scrolls focused buttons into view on focusin',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
-    fix.detectChanges();
+    await fix.whenStable();
     const target = document.createElement('button');
     target.scrollIntoView = vi.fn();
     fix.nativeElement.querySelector('.au-button-group__inner')?.appendChild(target);
@@ -84,9 +84,9 @@ describe('AuButtonGroup', () => {
     });
   });
 
-  it('ignores focusin when target is not an HTMLElement', () => {
+  it('ignores focusin when target is not an HTMLElement',async  () => {
     const fix = TestBed.createComponent(AuButtonGroup);
-    fix.detectChanges();
+    await fix.whenStable();
     const inner = fix.nativeElement.querySelector('.au-button-group__inner') as HTMLElement;
     const event = new FocusEvent('focusin', { bubbles: true });
     Object.defineProperty(event, 'target', { value: document });
