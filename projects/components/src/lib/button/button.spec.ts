@@ -104,14 +104,14 @@ describe('AuButton', () => {
     );
   });
 
-  it('forwards native click to parent handler once per activation', () => {
+  it('forwards native click to parent handler once per activation', async () => {
     const hostFixture = TestBed.createComponent(ButtonClickHost);
-    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.nativeElement.querySelector('button').click();
     expect(hostFixture.componentInstance.count).toBe(1);
   });
 
-  it('does not invoke parent click handler when disabled', () => {
+  it('does not invoke parent click handler when disabled', async () => {
     @Component({
       imports: [AuButton],
       template: `<button auButton type="button" [disabled]="true" (click)="count = count + 1">Go</button>`,
@@ -120,12 +120,12 @@ describe('AuButton', () => {
       count = 0;
     }
     const hostFixture = TestBed.createComponent(DisabledClickHost);
-    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.nativeElement.querySelector('button').click();
     expect(hostFixture.componentInstance.count).toBe(0);
   });
 
-  it('does not invoke parent click handler when loading', () => {
+  it('does not invoke parent click handler when loading', async () => {
     @Component({
       imports: [AuButton],
       template: `<button auButton type="button" [loading]="true" (click)="count = count + 1">Go</button>`,
@@ -134,7 +134,7 @@ describe('AuButton', () => {
       count = 0;
     }
     const hostFixture = TestBed.createComponent(LoadingClickHost);
-    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.nativeElement.querySelector('button').click();
     expect(hostFixture.componentInstance.count).toBe(0);
   });
@@ -226,14 +226,14 @@ describe('AuButton loading with projected text', () => {
     expect(fix.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
   });
 
-  it('uses md spinner size on lg loading buttons', () => {
+  it('uses md spinner size on lg loading buttons', async () => {
     @Component({
       imports: [AuButton],
       template: `<button auButton type="button" size="lg" [loading]="true">Save</button>`,
     })
     class LgLoadingHost {}
     const hostFixture = TestBed.createComponent(LgLoadingHost);
-    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     expect(hostFixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size')).toBe(
       'md',
     );

@@ -56,7 +56,7 @@ describe('AuBadge', () => {
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');
   });
 
-  it('renders projected content when label is empty', () => {
+  it('renders projected content when label is empty', async () => {
     @Component({
       imports: [AuBadge],
       template: `<au-badge variant="success">Active</au-badge>`,
@@ -64,7 +64,7 @@ describe('AuBadge', () => {
     class ProjectedHost {}
 
     const projected = TestBed.createComponent(ProjectedHost);
-    projected.detectChanges();
+    await projected.whenStable();
     expect(projected.nativeElement.textContent).toContain('Active');
     expect(projected.nativeElement.querySelector('au-badge')?.getAttribute('data-au-variant')).toBe(
       'success',

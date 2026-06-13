@@ -212,16 +212,16 @@ describe('AuSnackbar', () => {
     vi.useRealTimers();
   });
 
-  it('stacks newer snackbars on the edge and offsets older ones', () => {
+  it('stacks newer snackbars on the edge and offsets older ones', async () => {
     const first = TestBed.createComponent(AuSnackbar);
     first.componentRef.setInput('open', true);
     first.componentRef.setInput('message', 'Primero');
-    first.detectChanges();
+    await first.whenStable();
 
     const second = TestBed.createComponent(AuSnackbar);
     second.componentRef.setInput('open', true);
     second.componentRef.setInput('message', 'Segundo');
-    second.detectChanges();
+    await second.whenStable();
 
     expect(second.nativeElement.style.getPropertyValue('--au-snackbar-stack-offset')).toBe('0px');
     expect(
@@ -234,18 +234,18 @@ describe('AuSnackbar', () => {
     );
   });
 
-  it('only the topmost stacked snackbar uses an active live region', () => {
+  it('only the topmost stacked snackbar uses an active live region', async () => {
     const first = TestBed.createComponent(AuSnackbar);
     first.componentRef.setInput('open', true);
     first.componentRef.setInput('variant', 'success');
     first.componentRef.setInput('message', 'First');
-    first.detectChanges();
+    await first.whenStable();
 
     const second = TestBed.createComponent(AuSnackbar);
     second.componentRef.setInput('open', true);
     second.componentRef.setInput('variant', 'error');
     second.componentRef.setInput('message', 'Second');
-    second.detectChanges();
+    await second.whenStable();
 
     const firstSurface = querySurface(first)!.nativeElement as HTMLElement;
     const secondSurface = querySurface(second)!.nativeElement as HTMLElement;
@@ -253,24 +253,24 @@ describe('AuSnackbar', () => {
     expect(secondSurface.getAttribute('aria-live')).toBe('assertive');
   });
 
-  it('Escape dismisses only the topmost snackbar in the stack', () => {
+  it('Escape dismisses only the topmost snackbar in the stack', async () => {
     const first = TestBed.createComponent(AuSnackbar);
     const firstDismiss = vi.fn();
     first.componentInstance.dismiss.subscribe(firstDismiss);
     first.componentRef.setInput('open', true);
     first.componentRef.setInput('message', 'Primero');
     first.componentRef.setInput('durationMs', 0);
-    first.detectChanges();
+    await first.whenStable();
 
     const second = TestBed.createComponent(AuSnackbar);
     second.componentRef.setInput('open', true);
     second.componentRef.setInput('message', 'Segundo');
     second.componentRef.setInput('durationMs', 0);
-    second.detectChanges();
+    await second.whenStable();
 
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    second.detectChanges();
-    first.detectChanges();
+    await second.whenStable();
+    await first.whenStable();
 
     expect(second.componentInstance.open()).toBe(false);
     expect(first.componentInstance.open()).toBe(true);

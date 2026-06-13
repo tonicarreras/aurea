@@ -4,6 +4,9 @@ import {
   AuButton,
   AuCard,
   AuDensityDirective,
+  AuFormField,
+  AuInputText,
+  AuLink,
   AuSwitch,
   AuTheme,
 } from '@aurea-design-system/components';
@@ -25,6 +28,9 @@ import { DocsTokenList } from '../shared/docs-token-list';
     DocsTokenList,
     AuButton,
     AuCard,
+    AuFormField,
+    AuInputText,
+    AuLink,
     AuTheme,
     AuSwitch,
     AuDensityDirective,
@@ -184,6 +190,64 @@ import { DocsTokenList } from '../shared/docs-token-list';
         [expandLabel]="i18n.messages().themes.brandExpand"
       />
 
+      <h2>{{ i18n.messages().themes.brandExampleHeading }}</h2>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.brandExampleBody" />
+      </p>
+      <div
+        class="docs-brand-example"
+        [class.docs-brand-example--custom]="customBrandEnabled()"
+        [auTheme]="appearanceTheme()"
+      >
+        <div
+          class="docs-brand-example__toolbar"
+          role="group"
+          [attr.aria-label]="i18n.messages().themes.brandExampleToggleLabel"
+        >
+          <button
+            type="button"
+            auButton
+            size="sm"
+            [variant]="customBrandEnabled() ? 'outline' : 'primary'"
+            (click)="customBrandEnabled.set(false)"
+          >
+            {{ i18n.messages().themes.brandExampleDefault }}
+          </button>
+          <button
+            type="button"
+            auButton
+            size="sm"
+            [variant]="customBrandEnabled() ? 'primary' : 'outline'"
+            (click)="customBrandEnabled.set(true)"
+          >
+            {{ i18n.messages().themes.brandExampleCustom }}
+          </button>
+        </div>
+        <div class="docs-brand-example__sample">
+          <div class="docs-brand-example__actions">
+            <button type="button" auButton variant="primary">
+              {{ i18n.messages().themes.brandExamplePrimary }}
+            </button>
+            <button type="button" auButton variant="outline">
+              {{ i18n.messages().themes.brandExampleOutline }}
+            </button>
+            <a auLink href="#brand-example">{{ i18n.messages().themes.brandExampleLink }}</a>
+          </div>
+          <au-form-field [label]="i18n.messages().themes.brandExampleFieldLabel">
+            <input
+              auInputText
+              type="email"
+              [placeholder]="i18n.messages().themes.brandExampleFieldPlaceholder"
+            />
+          </au-form-field>
+        </div>
+      </div>
+      <docs-code-block
+        [code]="brandExampleCssSnippet"
+        language="css"
+        [expandLabel]="i18n.messages().themes.brandExampleCssExpand"
+      />
+
       <h2>{{ i18n.messages().themes.overrideLevelsHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.overrideLevelsBody" />
@@ -327,6 +391,56 @@ import { DocsTokenList } from '../shared/docs-token-list';
       color: var(--au-color-text-secondary);
     }
 
+    .docs-brand-example {
+      margin-top: var(--au-space-4);
+      padding: var(--au-space-6);
+      border-radius: var(--au-radius-lg);
+      border: 1px solid var(--au-color-border-subtle);
+      background: var(--au-color-surface-canvas);
+    }
+
+    .docs-brand-example--custom,
+    .docs-brand-example--custom[data-au-theme='light'] {
+      --au-color-action-primary: #ea580c;
+      --au-color-action-primary-hover: #c2410c;
+      --au-color-action-primary-pressed: #9a3412;
+      --au-color-link: var(--au-color-action-primary);
+      --au-color-link-hover: var(--au-color-action-primary-hover);
+      --au-color-focus-ring: #ea580c;
+      --au-color-focus-inner: #fed7aa;
+    }
+
+    .docs-brand-example--custom[data-au-theme='dark'] {
+      --au-color-action-primary: #fb923c;
+      --au-color-action-primary-hover: #fdba74;
+      --au-color-action-primary-pressed: #fed7aa;
+      --au-color-link: var(--au-color-action-primary);
+      --au-color-link-hover: var(--au-color-action-primary-hover);
+      --au-color-focus-ring: #fb923c;
+      --au-color-focus-inner: #ffedd5;
+    }
+
+    .docs-brand-example__toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--au-space-2);
+      margin-bottom: var(--au-space-5);
+    }
+
+    .docs-brand-example__sample {
+      display: flex;
+      flex-direction: column;
+      gap: var(--au-space-5);
+      max-width: 24rem;
+    }
+
+    .docs-brand-example__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--au-space-3);
+    }
+
     .docs-theme-group {
       margin-top: var(--au-space-8);
     }
@@ -406,6 +520,7 @@ export class ThemingPage {
   readonly DOCS_ROUTES = DOCS_ROUTES;
   readonly appearanceTheme = signal<DocsAppearanceTheme>('light');
   readonly highContrastEnabled = signal(false);
+  readonly customBrandEnabled = signal(false);
   readonly previewDensity = signal<'compact' | 'comfortable' | 'spacious'>('comfortable');
 
   readonly resolvedTheme = computed(() =>
@@ -449,17 +564,38 @@ export class ThemingPage {
 <!-- Dark + high contrast -->
 <html data-au-theme="high-contrast-dark">`;
 
-  readonly brandSnippet = `/* After au-tokens.css */
+  readonly brandSnippet = `/* theme-brand.css — load after au-tokens.css */
 :root,
 [data-au-theme='light'] {
-  --au-color-action-primary: #0066cc;
-  --au-color-action-primary-hover: #0052a3;
-  --au-color-focus-ring: #0066cc;
+  --au-color-action-primary: #ea580c;
+  --au-color-action-primary-hover: #c2410c;
+  --au-color-action-primary-pressed: #9a3412;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
+  --au-color-focus-ring: #ea580c;
   --au-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 [data-au-theme='dark'] {
-  --au-color-action-primary: #5eb0ff;
-  --au-color-focus-ring: #5eb0ff;
+  --au-color-action-primary: #fb923c;
+  --au-color-action-primary-hover: #fdba74;
+  --au-color-focus-ring: #fb923c;
+}`;
+
+  readonly brandExampleCssSnippet = `/* Scoped demo (docs only). In your app, use a global file: */
+.my-app-shell[data-au-theme='light'],
+:root,
+[data-au-theme='light'] {
+  --au-color-action-primary: #ea580c;
+  --au-color-action-primary-hover: #c2410c;
+  --au-color-action-primary-pressed: #9a3412;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-focus-ring: #ea580c;
+}
+
+[data-au-theme='dark'] {
+  --au-color-action-primary: #fb923c;
+  --au-color-action-primary-hover: #fdba74;
+  --au-color-focus-ring: #fb923c;
 }`;
 }

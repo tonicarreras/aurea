@@ -150,12 +150,12 @@
         },
         {
             "name": "ButtonStoryArgs",
-            "id": "interface-ButtonStoryArgs-9807012481dd84b6297c292510a2a27b5167628b552e069e9248d93b2d86978334283f7ca1896b8ccc2ba5943f1157202a80a74277e87b5a38e30168ae3e0022",
+            "id": "interface-ButtonStoryArgs-3ff57c7c7acba83996c51120546aaa9ec4a480c96a0ef5eca4a1c5f1897065e53695a07b8c88c64f1c6960b2b2ab8650a7d753117f4abe8f49a8eaf9a43ad918",
             "file": "projects/components/src/lib/button/button.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn, expect } from 'storybook/test';\n\nimport { AuButton } from './au-button.directive';\n\ninterface ButtonStoryArgs {\n  variant: 'primary' | 'secondary' | 'outline' | 'ghost';\n  size: 'sm' | 'md' | 'lg';\n  disabled: boolean;\n  loading: boolean;\n  type: 'button' | 'submit' | 'reset';\n  name: string;\n  label: string;\n  onClick: ReturnType<typeof fn>;\n}\n\nconst storyImports = { imports: [AuButton] };\n\nfunction buttonRender(args: Record<string, unknown>, template: string) {\n  return { props: args, moduleMetadata: storyImports, template };\n}\n\nconst meta: Meta<ButtonStoryArgs> = {\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    onClick: {\n      description: 'Native `(click)` handler on the host button (Storybook demo).',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n    disabled: false,\n    loading: false,\n    type: 'button',\n    name: '',\n    label: '',\n    onClick: fn(),\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<ButtonStoryArgs>;\n\nexport const Primary: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Primary</button>`,\n    ),\n};\n\nexport const Secondary: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Secondary</button>`,\n    ),\n};\n\nexport const Outline: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Outline</button>`,\n    ),\n};\n\nexport const Ghost: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n};\n\nexport const Disabled: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"onClick($event)\">Disabled</button>`,\n    ),\n};\n\nexport const Loading: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"onClick($event)\">Processing...</button>`,\n    ),\n};\n\nexport const Small: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Small</button>`,\n    ),\n};\n\nexport const Large: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Large (Touch)</button>`,\n    ),\n};\n\nexport const FocusRing: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <button auButton [variant]=\"variant\" (click)=\"onClick($event)\">Tab to me</button>\n        <button auButton [variant]=\"'secondary'\">Next element</button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n};\n\nexport const AllVariants: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <button auButton variant=\"primary\">Primary</button>\n        <button auButton variant=\"secondary\">Secondary</button>\n        <button auButton variant=\"outline\">Outline</button>\n        <button auButton variant=\"ghost\">Ghost</button>\n      </div>\n    `,\n    ),\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { fn, expect } from 'storybook/test';\n\nimport { AuButton } from './au-button.directive';\n\ninterface ButtonStoryArgs {\n  variant: 'primary' | 'secondary' | 'outline' | 'ghost';\n  size: 'sm' | 'md' | 'lg';\n  disabled: boolean;\n  loading: boolean;\n  type: 'button' | 'submit' | 'reset';\n  name: string;\n  label: string;\n  onClick: ReturnType<typeof fn>;\n}\n\nconst storyImports = { imports: [AuButton] };\n\nfunction buttonRender(args: Record<string, unknown>, template: string) {\n  return { props: args, moduleMetadata: storyImports, template };\n}\n\nconst meta: Meta<ButtonStoryArgs> = {\n  title: 'Aurea/Button',\n  component: AuButton,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'outline', 'ghost'],\n      description:\n        'Visual style: primary (solid), secondary (filled), outline (border-only), ghost (text-only).',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density: sm (compact), md (default), lg (touch-friendly, 44px min).',\n      table: { category: 'Appearance' },\n    },\n    disabled: {\n      control: 'boolean',\n      description: 'Disables interaction and suppresses click events.',\n      table: { category: 'State' },\n    },\n    loading: {\n      control: 'boolean',\n      description: 'Shows spinner and suppresses clicks.',\n      table: { category: 'State' },\n    },\n    type: {\n      control: 'select',\n      options: ['button', 'submit', 'reset'],\n      description: 'Native HTML type.',\n      table: { category: 'Form' },\n    },\n    name: {\n      control: 'text',\n      description: 'Native `name` attribute for form submission.',\n      table: { category: 'Form' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible label (for icons only; use ng-content for text).',\n      table: { category: 'Accessibility' },\n    },\n    onClick: {\n      description: 'Native `(click)` handler on the host button (Storybook demo).',\n      table: { category: 'Events' },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n    disabled: false,\n    loading: false,\n    type: 'button',\n    name: '',\n    label: '',\n    onClick: fn(),\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<ButtonStoryArgs>;\n\nexport const Primary: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Primary</button>`,\n    ),\n};\n\nexport const Secondary: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Secondary</button>`,\n    ),\n};\n\nexport const Outline: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Outline</button>`,\n    ),\n};\n\nexport const Ghost: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n};\n\nexport const Disabled: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"onClick($event)\">Disabled</button>`,\n    ),\n};\n\nexport const Loading: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"onClick($event)\">Processing...</button>`,\n    ),\n};\n\nexport const Small: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Small</button>`,\n    ),\n};\n\nexport const Large: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Large (Touch)</button>`,\n    ),\n};\n\nexport const FocusRing: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <button type=\"button\" auButton [variant]=\"variant\" (click)=\"onClick($event)\">Tab to me</button>\n        <button type=\"button\" auButton [variant]=\"'secondary'\">Next element</button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n};\n\nexport const AllVariants: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <button type=\"button\" auButton variant=\"primary\">Primary</button>\n        <button type=\"button\" auButton variant=\"secondary\">Secondary</button>\n        <button type=\"button\" auButton variant=\"outline\">Outline</button>\n        <button type=\"button\" auButton variant=\"ghost\">Ghost</button>\n      </div>\n    `,\n    ),\n};\n",
             "properties": [
                 {
                     "name": "disabled",
@@ -1855,12 +1855,12 @@
         },
         {
             "name": "TooltipStoryArgs",
-            "id": "interface-TooltipStoryArgs-a0e7d8d1ff3f488afdf75d5c916c14122621df2458f1cfa59c2f4df60be1f77226bbab9441b4c056ec8b2c17422c5710c346da1956fd19cdebb4b64ae8536d06",
+            "id": "interface-TooltipStoryArgs-d9c9e81f59f45c78e0953983a470ec76dad66d1762b9008b696d5e1c53cad868c40e88a6b2555248bf089f2961a8e90488968eb2eba41228cf24bb93322bbfc2",
             "file": "projects/components/src/lib/tooltip/tooltip.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { AuTooltipPlacement } from '../overlay/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: AuTooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('tooltip'),\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <div class=\"au-story-stage\">\n        <button auButton\n          variant=\"outline\"\n          [auTooltip]=\"text\"\n          [auTooltipPlacement]=\"placement\"\n          [auTooltipShowDelay]=\"showDelay\"\n          [auTooltipHideDelay]=\"hideDelay\"\n          [auTooltipDisabled]=\"disabled\"\n        >\n          Hover or focus me\n        </button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuButton } from '../button';\nimport { AuTooltip } from './au-tooltip.directive';\nimport type { AuTooltipPlacement } from '../overlay/tooltip-position';\n\nconst storyImports = { imports: [AuTooltip, AuButton] };\n\ninterface TooltipStoryArgs {\n  text: string;\n  placement: AuTooltipPlacement;\n  showDelay: number;\n  hideDelay: number;\n  disabled: boolean;\n}\n\nconst meta: Meta<TooltipStoryArgs> = {\n  title: 'Aurea/Tooltip',\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('tooltip'),\n  argTypes: {\n    text: { control: 'text', table: { category: 'Content' } },\n    placement: {\n      control: 'select',\n      options: ['top', 'bottom', 'start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    showDelay: { control: 'number', table: { category: 'Behavior' } },\n    hideDelay: { control: 'number', table: { category: 'Behavior' } },\n    disabled: { control: 'boolean', table: { category: 'State' } },\n  },\n  args: {\n    text: 'Additional context for this control.',\n    placement: 'top',\n    showDelay: 200,\n    hideDelay: 100,\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<TooltipStoryArgs>;\n\nexport const Default: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <div class=\"au-story-stage\">\n        <button type=\"button\" auButton\n          variant=\"outline\"\n          [auTooltip]=\"text\"\n          [auTooltipPlacement]=\"placement\"\n          [auTooltipShowDelay]=\"showDelay\"\n          [auTooltipHideDelay]=\"hideDelay\"\n          [auTooltipDisabled]=\"disabled\"\n        >\n          Hover or focus me\n        </button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n};\n\nexport const PlacementBottom: Story = {\n  args: { placement: 'bottom', text: 'Shown below the trigger' },\n  render: Default.render,\n};\n\nexport const LongText: Story = {\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n};\n\nexport const Instant: Story = {\n  args: { showDelay: 0, hideDelay: 0, text: 'No show/hide delay' },\n  render: Default.render,\n};\n\nexport const Disabled: Story = {\n  args: { disabled: true, text: 'You should not see this' },\n  render: Default.render,\n};\n",
             "properties": [
                 {
                     "name": "disabled",
@@ -1946,7 +1946,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <button auButton variant=\"primary\">Primary</button>\n        <button auButton variant=\"secondary\">Secondary</button>\n        <button auButton variant=\"outline\">Outline</button>\n        <button auButton variant=\"ghost\">Ghost</button>\n      </div>\n    `,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <button type=\"button\" auButton variant=\"primary\">Primary</button>\n        <button type=\"button\" auButton variant=\"secondary\">Secondary</button>\n        <button type=\"button\" auButton variant=\"outline\">Outline</button>\n        <button type=\"button\" auButton variant=\"ghost\">Ghost</button>\n      </div>\n    `,\n    ),\n}"
             },
             {
                 "name": "AllVariants",
@@ -2440,7 +2440,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <button auButton auMenuTrigger variant=\"outline\">Actions</button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
+                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <button type=\"button\" auButton auMenuTrigger variant=\"outline\">Actions</button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2570,7 +2570,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <div class=\"au-story-stage\">\n        <button auButton\n          variant=\"outline\"\n          [auTooltip]=\"text\"\n          [auTooltipPlacement]=\"placement\"\n          [auTooltipShowDelay]=\"showDelay\"\n          [auTooltipHideDelay]=\"hideDelay\"\n          [auTooltipDisabled]=\"disabled\"\n        >\n          Hover or focus me\n        </button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <div class=\"au-story-stage\">\n        <button type=\"button\" auButton\n          variant=\"outline\"\n          [auTooltip]=\"text\"\n          [auTooltipPlacement]=\"placement\"\n          [auTooltipShowDelay]=\"showDelay\"\n          [auTooltipHideDelay]=\"hideDelay\"\n          [auTooltipDisabled]=\"disabled\"\n        >\n          Hover or focus me\n        </button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n}"
             },
             {
                 "name": "Determinate",
@@ -2600,7 +2600,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"onClick($event)\">Disabled</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"onClick($event)\">Disabled</button>`,\n    ),\n}"
             },
             {
                 "name": "Disabled",
@@ -2780,7 +2780,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: {\n        imports: [AuPopover, AuPopoverTrigger, AuButton, AuFormField, AuInputText],\n      },\n      template: `\n        <au-popover [(open)]=\"open\">\n          <button auButton auPopoverTrigger variant=\"outline\">Filters</button>\n          <div class=\"au-story-field\">\n            <au-form-field label=\"Search\">\n              <input auInputText placeholder=\"Name…\" />\n            </au-form-field>\n          </div>\n        </au-popover>\n      `,\n    };\n  },\n}"
+                "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: {\n        imports: [AuPopover, AuPopoverTrigger, AuButton, AuFormField, AuInputText],\n      },\n      template: `\n        <au-popover [(open)]=\"open\">\n          <button type=\"button\" auButton auPopoverTrigger variant=\"outline\">Filters</button>\n          <div class=\"au-story-field\">\n            <au-form-field label=\"Search\">\n              <input auInputText placeholder=\"Name…\" />\n            </au-form-field>\n          </div>\n        </au-popover>\n      `,\n    };\n  },\n}"
             },
             {
                 "name": "FocusRing",
@@ -2790,7 +2790,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <button auButton [variant]=\"variant\" (click)=\"onClick($event)\">Tab to me</button>\n        <button auButton [variant]=\"'secondary'\">Next element</button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <button type=\"button\" auButton [variant]=\"variant\" (click)=\"onClick($event)\">Tab to me</button>\n        <button type=\"button\" auButton [variant]=\"'secondary'\">Next element</button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
             },
             {
                 "name": "FocusRing",
@@ -2820,7 +2820,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n}"
             },
             {
                 "name": "groupedOptions",
@@ -2960,7 +2960,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Large (Touch)</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Large (Touch)</button>`,\n    ),\n}"
             },
             {
                 "name": "Large",
@@ -3060,7 +3060,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"onClick($event)\">Processing...</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"onClick($event)\">Processing...</button>`,\n    ),\n}"
             },
             {
                 "name": "LongText",
@@ -3086,21 +3086,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuAvatar>",
-                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AutocompleteStoryArgs>",
                 "defaultValue": "{\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAvatar>",
+                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3590,7 +3590,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Outline</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Outline</button>`,\n    ),\n}"
             },
             {
                 "name": "Outline",
@@ -3652,7 +3652,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Primary</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Primary</button>`,\n    ),\n}"
             },
             {
                 "name": "ProjectedContent",
@@ -3712,7 +3712,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
-                "defaultValue": "(args) => ({\n  props: args,\n  moduleMetadata: { imports: [AuButtonGroup, AuButton] },\n  template: `\n    <au-button-group\n      [ariaLabel]=\"ariaLabel\"\n      [attached]=\"attached\"\n      [orientation]=\"orientation\"\n    >\n      <button auButton variant=\"outline\">Cancel</button>\n      <button auButton variant=\"secondary\">Draft</button>\n      <button auButton>Publish</button>\n    </au-button-group>\n  `,\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  moduleMetadata: { imports: [AuButtonGroup, AuButton] },\n  template: `\n    <au-button-group\n      [ariaLabel]=\"ariaLabel\"\n      [attached]=\"attached\"\n      [orientation]=\"orientation\"\n    >\n      <button type=\"button\" auButton variant=\"outline\">Cancel</button>\n      <button type=\"button\" auButton variant=\"secondary\">Draft</button>\n      <button type=\"button\" auButton>Publish</button>\n    </au-button-group>\n  `,\n})"
             },
             {
                 "name": "Required",
@@ -3812,7 +3812,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Secondary</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Secondary</button>`,\n    ),\n}"
             },
             {
                 "name": "Selectable",
@@ -3932,7 +3932,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Small</button>`,\n    ),\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Small</button>`,\n    ),\n}"
             },
             {
                 "name": "Small",
@@ -5093,8 +5093,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "rawtype": "StoryObj<AutocompleteStoryArgs>",
+                "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5104,8 +5104,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AutocompleteStoryArgs>",
-                "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5626,7 +5626,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "unknown",
-                    "defaultValue": "(args) => ({\n  props: args,\n  moduleMetadata: { imports: [AuButtonGroup, AuButton] },\n  template: `\n    <au-button-group\n      [ariaLabel]=\"ariaLabel\"\n      [attached]=\"attached\"\n      [orientation]=\"orientation\"\n    >\n      <button auButton variant=\"outline\">Cancel</button>\n      <button auButton variant=\"secondary\">Draft</button>\n      <button auButton>Publish</button>\n    </au-button-group>\n  `,\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  moduleMetadata: { imports: [AuButtonGroup, AuButton] },\n  template: `\n    <au-button-group\n      [ariaLabel]=\"ariaLabel\"\n      [attached]=\"attached\"\n      [orientation]=\"orientation\"\n    >\n      <button type=\"button\" auButton variant=\"outline\">Cancel</button>\n      <button type=\"button\" auButton variant=\"secondary\">Draft</button>\n      <button type=\"button\" auButton>Publish</button>\n    </au-button-group>\n  `,\n})"
                 },
                 {
                     "name": "Spaced",
@@ -5658,7 +5658,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <button auButton variant=\"primary\">Primary</button>\n        <button auButton variant=\"secondary\">Secondary</button>\n        <button auButton variant=\"outline\">Outline</button>\n        <button auButton variant=\"ghost\">Ghost</button>\n      </div>\n    `,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Quick reference showing all four variants in a row.',\n      },\n    },\n  },\n  render: () =>\n    buttonRender(\n      {},\n      `\n      <div style=\"display: flex; gap: 12px; flex-wrap: wrap; align-items: center;\">\n        <button type=\"button\" auButton variant=\"primary\">Primary</button>\n        <button type=\"button\" auButton variant=\"secondary\">Secondary</button>\n        <button type=\"button\" auButton variant=\"outline\">Outline</button>\n        <button type=\"button\" auButton variant=\"ghost\">Ghost</button>\n      </div>\n    `,\n    ),\n}"
                 },
                 {
                     "name": "Disabled",
@@ -5668,7 +5668,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"onClick($event)\">Disabled</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Disabled buttons have **`aria-disabled`** and **`disabled`**. Focus is still reachable for screen reader announcements but click events are suppressed.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    disabled: true,\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [disabled]=\"disabled\" (click)=\"onClick($event)\">Disabled</button>`,\n    ),\n}"
                 },
                 {
                     "name": "FocusRing",
@@ -5678,7 +5678,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <button auButton [variant]=\"variant\" (click)=\"onClick($event)\">Tab to me</button>\n        <button auButton [variant]=\"'secondary'\">Next element</button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Focus ring: **outer ring on Tab**, **inset ring on click**. The **play** function demonstrates tab navigation vs pointer focus.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `\n      <div style=\"display: flex; gap: 16px; align-items: center;\">\n        <button type=\"button\" auButton [variant]=\"variant\" (click)=\"onClick($event)\">Tab to me</button>\n        <button type=\"button\" auButton [variant]=\"'secondary'\">Next element</button>\n      </div>\n    `,\n    ),\n  play: async ({ canvasElement }) => {\n    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;\n    if (firstButton) {\n      firstButton.focus();\n      await expect(firstButton).toHaveFocus();\n    }\n  },\n}"
                 },
                 {
                     "name": "Ghost",
@@ -5688,7 +5688,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n}"
                 },
                 {
                     "name": "Large",
@@ -5698,7 +5698,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Large (Touch)</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Large size (**`size=\"lg\"`**) meets the 44×44px touch target recommendation (WCAG 2.5.8).',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'lg',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Large (Touch)</button>`,\n    ),\n}"
                 },
                 {
                     "name": "Loading",
@@ -5708,7 +5708,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"onClick($event)\">Processing...</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Loading state shows a spinner with **`aria-busy=\"true\"`**. Click events are suppressed while loading.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    loading: true,\n    label: 'Processing',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [loading]=\"loading\" [label]=\"label\" (click)=\"onClick($event)\">Processing...</button>`,\n    ),\n}"
                 },
                 {
                     "name": "meta",
@@ -5728,7 +5728,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Outline</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Outline** variant with transparent background and accent border. Use for secondary CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'outline',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Outline</button>`,\n    ),\n}"
                 },
                 {
                     "name": "Primary",
@@ -5738,7 +5738,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Primary</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Default **primary** variant with solid accent background. Use for main CTAs.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Primary</button>`,\n    ),\n}"
                 },
                 {
                     "name": "Secondary",
@@ -5748,7 +5748,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Secondary</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          '**Secondary** variant with filled surface and neutral border. Use for supporting actions.',\n      },\n    },\n  },\n  args: {\n    variant: 'secondary',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Secondary</button>`,\n    ),\n}"
                 },
                 {
                     "name": "Small",
@@ -5758,7 +5758,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Small</button>`,\n    ),\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Small size (**`size=\"sm\"`**) for dense layouts like tables or compact toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'primary',\n    size: 'sm',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" (click)=\"onClick($event)\">Small</button>`,\n    ),\n}"
                 },
                 {
                     "name": "storyImports",
@@ -7664,7 +7664,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <button auButton auMenuTrigger variant=\"outline\">Actions</button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
+                    "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: storyImports,\n      template: `\n        <au-menu [(open)]=\"open\">\n          <button type=\"button\" auButton auMenuTrigger variant=\"outline\">Actions</button>\n          <au-menu-item>Edit</au-menu-item>\n          <au-menu-item>Duplicate</au-menu-item>\n          <au-menu-item>Archive</au-menu-item>\n        </au-menu>\n      `,\n    };\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -8072,7 +8072,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <div class=\"au-story-stage\">\n        <button auButton\n          variant=\"outline\"\n          [auTooltip]=\"text\"\n          [auTooltipPlacement]=\"placement\"\n          [auTooltipShowDelay]=\"showDelay\"\n          [auTooltipHideDelay]=\"hideDelay\"\n          [auTooltipDisabled]=\"disabled\"\n        >\n          Hover or focus me\n        </button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: storyImports,\n    template: `\n      <div class=\"au-story-stage\">\n        <button type=\"button\" auButton\n          variant=\"outline\"\n          [auTooltip]=\"text\"\n          [auTooltipPlacement]=\"placement\"\n          [auTooltipShowDelay]=\"showDelay\"\n          [auTooltipHideDelay]=\"hideDelay\"\n          [auTooltipDisabled]=\"disabled\"\n        >\n          Hover or focus me\n        </button>\n      </div>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const trigger = within(canvasElement).getByRole('button', { name: /hover or focus/i });\n    await userEvent.hover(trigger);\n    const doc = canvasElement.ownerDocument;\n    const tooltip = await within(doc.body).findByRole('tooltip');\n    await expect(tooltip).toHaveTextContent(/additional context/i);\n    await userEvent.unhover(trigger);\n  },\n}"
                 },
                 {
                     "name": "Disabled",
@@ -8230,7 +8230,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: {\n        imports: [AuPopover, AuPopoverTrigger, AuButton, AuFormField, AuInputText],\n      },\n      template: `\n        <au-popover [(open)]=\"open\">\n          <button auButton auPopoverTrigger variant=\"outline\">Filters</button>\n          <div class=\"au-story-field\">\n            <au-form-field label=\"Search\">\n              <input auInputText placeholder=\"Name…\" />\n            </au-form-field>\n          </div>\n        </au-popover>\n      `,\n    };\n  },\n}"
+                    "defaultValue": "{\n  render: () => {\n    const open = signal(false);\n    return {\n      props: { open },\n      moduleMetadata: {\n        imports: [AuPopover, AuPopoverTrigger, AuButton, AuFormField, AuInputText],\n      },\n      template: `\n        <au-popover [(open)]=\"open\">\n          <button type=\"button\" auButton auPopoverTrigger variant=\"outline\">Filters</button>\n          <div class=\"au-story-field\">\n            <au-form-field label=\"Search\">\n              <input auInputText placeholder=\"Name…\" />\n            </au-form-field>\n          </div>\n        </au-popover>\n      `,\n    };\n  },\n}"
                 },
                 {
                     "name": "meta",
@@ -8891,19 +8891,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/avatar/avatar.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuAvatar>",
-                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/autocomplete/autocomplete.stories.ts": [
                 {
                     "name": "Story",
@@ -8911,6 +8898,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AutocompleteStoryArgs>",
                     "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/avatar/avatar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAvatar>",
+                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

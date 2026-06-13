@@ -158,6 +158,18 @@ export const MESSAGES_EN: DocsMessages = {
     brandBody:
       'Create a small stylesheet loaded <strong>after</strong> <code>au-tokens.css</code>. Override semantic tokens on <code>:root</code> and per theme — no fork of the library required.',
     brandExpand: 'Show brand override CSS',
+    brandExampleHeading: 'Live example',
+    brandExampleBody:
+      'Toggle <strong>Custom brand</strong> to apply token overrides on this container only — the same pattern as a global <code>theme-brand.css</code> loaded after <code>au-tokens.css</code>. Switch light/dark in the preview above to see both palettes.',
+    brandExampleToggleLabel: 'Brand preset',
+    brandExampleDefault: 'Default Aurea',
+    brandExampleCustom: 'Custom brand',
+    brandExamplePrimary: 'Primary action',
+    brandExampleOutline: 'Secondary',
+    brandExampleLink: 'Learn more',
+    brandExampleFieldLabel: 'Email',
+    brandExampleFieldPlaceholder: 'you@company.com',
+    brandExampleCssExpand: 'Show CSS for this example',
     overrideLevelsHeading: 'Three override levels',
     overrideLevelsBody:
       'Pick the narrowest level that solves your need. Prefer tokens over targeting internal class names.',

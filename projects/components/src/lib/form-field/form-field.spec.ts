@@ -141,9 +141,9 @@ describe('AuFormField AU_FORM_FIELD provider', () => {
     }).compileComponents();
   });
 
-  it('provides AU_FORM_FIELD to projected children via forwardRef', () => {
+  it('provides AU_FORM_FIELD to projected children via forwardRef', async () => {
     const hostFix = TestBed.createComponent(FormFieldProviderHost);
-    hostFix.detectChanges();
+    await hostFix.whenStable();
     const field = hostFix.debugElement.query(By.directive(AuFormField))!
       .componentInstance as AuFormField;
     const probe = hostFix.debugElement.query(By.directive(FormFieldChildProbe))!

@@ -146,7 +146,7 @@ describe('AuTextarea', () => {
     expect(queryTextarea(fix).getAttribute('wrap')).toBe('hard');
   });
 
-  it('sets spellcheck when true or false', () => {
+  it('sets spellcheck when true or false', async () => {
     const fixTrue = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.spellcheck = true;
     });
@@ -158,7 +158,7 @@ describe('AuTextarea', () => {
     expect(queryTextarea(fixFalse).getAttribute('spellcheck')).toBe('false');
 
     const fixUndef = createFieldFixture(AuTextareaTestHost);
-    fixUndef.detectChanges();
+    await fixUndef.whenStable();
     expect(queryTextarea(fixUndef).getAttribute('spellcheck')).toBeNull();
   });
 

@@ -506,6 +506,7 @@ describe('AuSteps', () => {
   it('re-selects first step after unregistering the active step', async () => {
     const fix = TestBed.createComponent(TestStepsHost);
     fix.detectChanges();
+    await fix.whenStable();
     await flushStepsSelection();
     const steps = fix.debugElement.query(By.directive(AuSteps))!.componentInstance as AuSteps;
     const apiStep = fix.debugElement
@@ -514,9 +515,11 @@ describe('AuSteps', () => {
       .find((s) => s.auStep() === 'api')!;
     fix.componentInstance.active = 'api';
     fix.detectChanges();
+    await fix.whenStable();
     steps.unregisterStep(apiStep);
     await flushStepsSelection();
     fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('overview');
   });
 

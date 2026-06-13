@@ -158,6 +158,18 @@ export const MESSAGES_ES: DocsMessages = {
     brandBody:
       'Crea una hoja de estilos pequeña cargada <strong>después</strong> de <code>au-tokens.css</code>. Sobrescribe tokens semánticos en <code>:root</code> y por tema — sin fork de la librería.',
     brandExpand: 'Ver CSS de marca',
+    brandExampleHeading: 'Ejemplo en vivo',
+    brandExampleBody:
+      'Activa <strong>Marca personalizada</strong> para aplicar overrides de tokens solo en este contenedor — el mismo patrón que un <code>theme-brand.css</code> global cargado después de <code>au-tokens.css</code>. Cambia claro/oscuro en la vista previa de arriba para ver ambas paletas.',
+    brandExampleToggleLabel: 'Preset de marca',
+    brandExampleDefault: 'Aurea por defecto',
+    brandExampleCustom: 'Marca personalizada',
+    brandExamplePrimary: 'Acción principal',
+    brandExampleOutline: 'Secundario',
+    brandExampleLink: 'Saber más',
+    brandExampleFieldLabel: 'Correo',
+    brandExampleFieldPlaceholder: 'tu@empresa.com',
+    brandExampleCssExpand: 'Ver CSS de este ejemplo',
     overrideLevelsHeading: 'Tres niveles de override',
     overrideLevelsBody:
       'Elige el nivel más acotado que resuelva tu caso. Prefiere tokens antes que clases internas.',

@@ -145,22 +145,22 @@ describe('AuTooltip', () => {
   it('does not show when disabled or text is empty', async () => {
     const disabledFix = TestBed.createComponent(TooltipHost);
     disabledFix.componentInstance.disabled = true;
-    disabledFix.detectChanges();
+    await disabledFix.whenStable();
     disabledFix.nativeElement
       .querySelector('.trigger')!
       .dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    disabledFix.detectChanges();
+    await disabledFix.whenStable();
     await disabledFix.whenStable();
     expect(document.body.querySelector('.au-tooltip__bubble')).toBeFalsy();
     disabledFix.destroy();
 
     const emptyFix = TestBed.createComponent(TooltipHost);
     emptyFix.componentInstance.text = '   ';
-    emptyFix.detectChanges();
+    await emptyFix.whenStable();
     emptyFix.nativeElement
       .querySelector('.trigger')!
       .dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    emptyFix.detectChanges();
+    await emptyFix.whenStable();
     await emptyFix.whenStable();
     expect(document.body.querySelector('.au-tooltip__bubble')).toBeFalsy();
     emptyFix.destroy();
@@ -216,10 +216,10 @@ describe('AuTooltip', () => {
     vi.useRealTimers();
   });
 
-  it('transforms null auTooltip input to empty string', () => {
+  it('transforms null auTooltip input to empty string', async () => {
     const tipFix = TestBed.createComponent(TooltipHost);
     tipFix.componentInstance.text = null as unknown as string;
-    tipFix.detectChanges();
+    await tipFix.whenStable();
     const directive = tipFix.debugElement.query(By.directive(AuTooltip))!.injector.get(AuTooltip);
     expect(directive.hasText()).toBe(false);
     tipFix.destroy();

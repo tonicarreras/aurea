@@ -71,7 +71,7 @@ describe('AuAccordion', () => {
     expect(fixture.componentInstance.expanded).toEqual(['one', 'two']);
   });
 
-  it('replaces expanded section when multiple is false', () => {
+  it('replaces expanded section when multiple is false', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
       template: `
@@ -106,10 +106,10 @@ describe('AuAccordion', () => {
     }
 
     const singleFixture = TestBed.createComponent(SingleExpandHost);
-    singleFixture.detectChanges();
+    await singleFixture.whenStable();
     const buttons = singleFixture.nativeElement.querySelectorAll('.au-accordion__trigger');
     (buttons[1] as HTMLButtonElement).click();
-    singleFixture.detectChanges();
+    await singleFixture.whenStable();
     expect(singleFixture.componentInstance.expanded).toEqual(['two']);
   });
 
@@ -122,7 +122,7 @@ describe('AuAccordion', () => {
     expect(fixture.componentInstance.expanded).toEqual([]);
   });
 
-  it('ignores clicks on disabled triggers', () => {
+  it('ignores clicks on disabled triggers', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
       template: `
@@ -145,11 +145,11 @@ describe('AuAccordion', () => {
     }
 
     const disabledFixture = TestBed.createComponent(DisabledHost);
-    disabledFixture.detectChanges();
+    await disabledFixture.whenStable();
     (
       disabledFixture.nativeElement.querySelector('.au-accordion__trigger') as HTMLButtonElement
     ).click();
-    disabledFixture.detectChanges();
+    await disabledFixture.whenStable();
     expect(disabledFixture.componentInstance.expanded).toEqual([]);
   });
 
@@ -186,7 +186,7 @@ describe('AuAccordion', () => {
 });
 
 describe('AuAccordion variant', () => {
-  it('applies contained surface attributes', () => {
+  it('applies contained surface attributes', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
       template: `
@@ -211,14 +211,14 @@ describe('AuAccordion variant', () => {
     }
 
     const containedFixture = TestBed.createComponent(ContainedHost);
-    containedFixture.detectChanges();
+    await containedFixture.whenStable();
     const accordion = containedFixture.nativeElement.querySelector('au-accordion') as HTMLElement;
     expect(accordion.getAttribute('data-au-variant')).toBe('contained');
   });
 });
 
 describe('AuAccordion keyboard edge cases', () => {
-  it('does not duplicate registry entries', () => {
+  it('does not duplicate registry entries', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
       template: `
@@ -239,7 +239,7 @@ describe('AuAccordion keyboard edge cases', () => {
 
     TestBed.configureTestingModule({ imports: [RegistryHost] });
     const registryFixture = TestBed.createComponent(RegistryHost);
-    registryFixture.detectChanges();
+    await registryFixture.whenStable();
     const accordion = registryFixture.debugElement.query(
       By.directive(AuAccordion),
     ).componentInstance;
@@ -250,9 +250,9 @@ describe('AuAccordion keyboard edge cases', () => {
     expect(accordion.getEnabledItems().length).toBe(1);
   });
 
-  it('ignores unrelated keys and empty registries', () => {
+  it('ignores unrelated keys and empty registries', async () => {
     const accordionFixture = TestBed.createComponent(AuAccordion);
-    accordionFixture.detectChanges();
+    await accordionFixture.whenStable();
     const accordion = accordionFixture.componentInstance;
     accordion.onRootKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
     accordion.onRootKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }));

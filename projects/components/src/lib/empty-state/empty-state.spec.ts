@@ -100,7 +100,7 @@ describe('AuEmptyState', () => {
     expect(fixture.componentInstance.showIcon()).toBe(false);
   });
 
-  it('evaluates media signals for projected content', () => {
+  it('evaluates media signals for projected content', async () => {
     @Component({
       imports: [AuEmptyState, AuEmptyStateMedia],
       template: `
@@ -112,14 +112,14 @@ describe('AuEmptyState', () => {
     class MediaSignalsHost {}
 
     const mediaFixture = TestBed.createComponent(MediaSignalsHost);
-    mediaFixture.detectChanges();
+    await mediaFixture.whenStable();
     const emptyState = mediaFixture.debugElement.children[0].componentInstance as AuEmptyState;
     expect(emptyState.hasProjectedMedia()).toBe(true);
     expect(emptyState.showImage()).toBe(false);
     expect(emptyState.showIcon()).toBe(false);
   });
 
-  it('projects custom media via auEmptyStateMedia', () => {
+  it('projects custom media via auEmptyStateMedia', async () => {
     @Component({
       imports: [AuEmptyState, AuEmptyStateMedia],
       template: `
@@ -142,7 +142,7 @@ describe('AuEmptyState', () => {
     class MediaHost {}
 
     const mediaFixture = TestBed.createComponent(MediaHost);
-    mediaFixture.detectChanges();
+    await mediaFixture.whenStable();
     const media = mediaFixture.nativeElement.querySelector(
       '.au-empty-state__media[data-au-media-kind="custom"] svg',
     ) as SVGElement | null;
@@ -150,7 +150,7 @@ describe('AuEmptyState', () => {
     expect(mediaFixture.nativeElement.querySelector('au-icon')).toBeNull();
   });
 
-  it('prefers projected media over imageSrc and icon', () => {
+  it('prefers projected media over imageSrc and icon', async () => {
     @Component({
       imports: [AuEmptyState, AuEmptyStateMedia],
       template: `
@@ -166,7 +166,7 @@ describe('AuEmptyState', () => {
     class PriorityHost {}
 
     const priorityFixture = TestBed.createComponent(PriorityHost);
-    priorityFixture.detectChanges();
+    await priorityFixture.whenStable();
     expect(
       priorityFixture.nativeElement.querySelector(
         '.au-empty-state__media[data-au-media-kind="custom"] span',
@@ -214,7 +214,7 @@ describe('AuEmptyState', () => {
     expect(host().querySelector('h4.au-empty-state__title')).not.toBeNull();
   });
 
-  it('projects actions into the actions container', () => {
+  it('projects actions into the actions container', async () => {
     @Component({
       imports: [AuEmptyState, AuButton],
       template: `
@@ -226,7 +226,7 @@ describe('AuEmptyState', () => {
     class ActionsHost {}
 
     const actionsFixture = TestBed.createComponent(ActionsHost);
-    actionsFixture.detectChanges();
+    await actionsFixture.whenStable();
     expect(
       actionsFixture.nativeElement.querySelector('.au-empty-state__actions button.au-button'),
     ).not.toBeNull();

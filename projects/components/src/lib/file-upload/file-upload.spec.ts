@@ -67,7 +67,7 @@ describe('AuFileUpload', () => {
     expect(emitted).toEqual([file]);
   });
 
-  it('reflects accept on the native input', () => {
+  it('reflects accept on the native input', async () => {
     @Component({
       imports: [AuFormField, AuFileUpload],
       template: `
@@ -79,7 +79,7 @@ describe('AuFileUpload', () => {
     class AcceptHost {}
 
     const acceptFixture = TestBed.createComponent(AcceptHost);
-    acceptFixture.detectChanges();
+    await acceptFixture.whenStable();
     expect(
       (
         acceptFixture.nativeElement.querySelector('.au-file-upload__input') as HTMLInputElement
@@ -119,7 +119,7 @@ describe('AuFileUpload', () => {
   it('does not remove files when disabled', async () => {
     const disabledFixture = TestBed.createComponent(AuFileUpload);
     disabledFixture.componentRef.setInput('disabled', true);
-    disabledFixture.detectChanges();
+    await disabledFixture.whenStable();
     const file = createFile('draft.pdf');
     disabledFixture.componentInstance.value.set([file]);
     disabledFixture.componentInstance['removeFile'](0);
@@ -129,7 +129,7 @@ describe('AuFileUpload', () => {
   it('replaces files when multiple is false', async () => {
     const singleFixture = TestBed.createComponent(AuFileUpload);
     singleFixture.componentRef.setInput('multiple', false);
-    singleFixture.detectChanges();
+    await singleFixture.whenStable();
     const first = createFile('a.txt');
     const second = createFile('b.txt');
     singleFixture.componentInstance['addFiles']([first]);
@@ -222,7 +222,7 @@ describe('AuFileUpload standalone', () => {
     expect(describedBy).toBeTruthy();
   });
 
-  it('links aria-describedby to field hint inside form-field', () => {
+  it('links aria-describedby to field hint inside form-field', async () => {
     @Component({
       imports: [AuFormField, AuFileUpload],
       template: `
@@ -237,13 +237,13 @@ describe('AuFileUpload standalone', () => {
     class HintHost {}
 
     const hintFixture = TestBed.createComponent(HintHost);
-    hintFixture.detectChanges();
+    await hintFixture.whenStable();
     const uploadInstance = hintFixture.debugElement.query(By.directive(AuFileUpload))
       .componentInstance as AuFileUpload;
     expect(uploadInstance.ariaDescribedBy()).toContain('hint');
   });
 
-  it('uses the form-field control id on the native input', () => {
+  it('uses the form-field control id on the native input', async () => {
     @Component({
       imports: [AuFormField, AuFileUpload],
       template: `
@@ -255,7 +255,7 @@ describe('AuFileUpload standalone', () => {
     class IdHost {}
 
     const idFixture = TestBed.createComponent(IdHost);
-    idFixture.detectChanges();
+    await idFixture.whenStable();
     const uploadInstance = idFixture.debugElement.query(By.directive(AuFileUpload))
       .componentInstance as AuFileUpload;
     const input = idFixture.nativeElement.querySelector(

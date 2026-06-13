@@ -110,6 +110,17 @@ export interface DocsMessages {
     brandHeading: string;
     brandBody: string;
     brandExpand: string;
+    brandExampleHeading: string;
+    brandExampleBody: string;
+    brandExampleToggleLabel: string;
+    brandExampleDefault: string;
+    brandExampleCustom: string;
+    brandExamplePrimary: string;
+    brandExampleOutline: string;
+    brandExampleLink: string;
+    brandExampleFieldLabel: string;
+    brandExampleFieldPlaceholder: string;
+    brandExampleCssExpand: string;
     overrideLevelsHeading: string;
     overrideLevelsBody: string;
     overrideGlobalTitle: string;

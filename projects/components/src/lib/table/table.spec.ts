@@ -368,14 +368,14 @@ describe('AuTable custom cell', () => {
   it('projects auTableCell template', async () => {
     await TestBed.configureTestingModule({ imports: [CustomCellHost] }).compileComponents();
     const f = TestBed.createComponent(CustomCellHost);
-    f.detectChanges();
+    await f.whenStable();
     expect(f.nativeElement.querySelector('.custom')?.textContent).toBe('X');
   });
 
   it('queries auTableCell content child on the column', async () => {
     await TestBed.configureTestingModule({ imports: [CustomCellHost] }).compileComponents();
     const f = TestBed.createComponent(CustomCellHost);
-    f.detectChanges();
+    await f.whenStable();
     const column = f.debugElement.query(By.directive(AuTableColumn))
       .componentInstance as AuTableColumn;
     expect(column.cellDef()).toBeTruthy();
@@ -485,12 +485,12 @@ describe('AuTable accessor column', () => {
   it('uses accessor for numeric sort compare', async () => {
     await TestBed.configureTestingModule({ imports: [AccessorHost] }).compileComponents();
     const f = TestBed.createComponent(AccessorHost);
-    f.detectChanges();
+    await f.whenStable();
     const btn = (f.nativeElement as HTMLElement).querySelector(
       '.au-table__sort-btn',
     ) as HTMLButtonElement;
     btn.click();
-    f.detectChanges();
+    await f.whenStable();
     const first = (f.nativeElement as HTMLElement).querySelector('tbody tr td');
     expect(first?.textContent?.trim()).toBe('1');
   });

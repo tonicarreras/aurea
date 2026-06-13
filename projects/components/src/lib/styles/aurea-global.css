@@ -398,11 +398,6 @@ input.au-input-date::-moz-focus-inner {
   border: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-input-date__icon {
-    transition: none;
-  }
-}
 
 
 
@@ -578,11 +573,6 @@ input.au-input-time::-moz-focus-inner {
   border: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-input-time__icon {
-    transition: none;
-  }
-}
 
 
 
@@ -677,11 +667,6 @@ input.au-input-password:disabled {
   opacity: 0.45;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-input-password__reveal {
-    transition: none;
-  }
-}
 
 
 
@@ -940,11 +925,6 @@ input.au-checkbox__element[data-au-size='lg'] {
 /* Reduced motion */
 /* -------------------------------------------------------------------------- */
 
-@media (prefers-reduced-motion: reduce) {
-  .au-checkbox__element {
-    transition: none;
-  }
-}
 
 
 
@@ -1137,12 +1117,6 @@ button.au-switch:disabled {
   color: var(--au-color-text-tertiary);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  button.au-switch,
-  button.au-switch::after {
-    transition: none;
-  }
-}
 
 
 
@@ -1328,13 +1302,6 @@ button.au-button.au-button--loading .au-button__spinner {
   --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  button.au-button {
-    transition:
-      var(--au-transition-background), var(--au-transition-border), var(--au-transition-shadow),
-      var(--au-transition-color);
-  }
-}
 
 au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button {
   display: inline-flex;
@@ -1831,19 +1798,6 @@ input.au-input-password:disabled {
   border-color: var(--au-chrome-border-color-hover);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :is(
-    .au-input-text__control-row,
-    .au-input-number__control-row,
-    .au-textarea__control-row,
-    .au-input-date__control-row,
-    .au-input-time__control-row,
-    .au-select__control-row,
-    .au-autocomplete__control-row
-  ) {
-    transition: none;
-  }
-}
 
 
 
@@ -2069,15 +2023,6 @@ input.au-input-password:disabled {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-field-listbox {
-    scroll-behavior: auto;
-  }
-
-  .au-field-listbox--overlay {
-    animation: none;
-  }
-}
 
 
 
@@ -2271,11 +2216,6 @@ au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after
   transform: rotate(-135deg);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  au-accordion button.au-accordion__trigger::after {
-    transition: none;
-  }
-}
 
 
 
