@@ -1,7 +1,7 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
@@ -15,7 +15,10 @@ import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
-import { lockPageScroll, unlockPageScroll } from '../overlay/page-scroll-lock';
+import {
+  createModalScrollAllowPredicate,
+  installPageScrollPrevention,
+} from '../overlay/prevent-page-scroll';
 
 export type AuDrawerPosition = 'start' | 'end';
 export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
@@ -26,7 +29,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * @remarks
  * - **Visibility:** `[(open)]` syncs with native `<dialog>` via `showModal()`.
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
- * - **Accessibility:** same focus trap as `au-dialog`; page scroll is locked while open.
+ * - **Accessibility:** same focus trap as `au-dialog`; background wheel/touch scroll is blocked while open.
  * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
  */
 @Component({
@@ -46,9 +49,8 @@ export class AuDrawer {
   private static nextTitleId = 0;
 
   private readonly host = injectHostRef<HTMLElement>();
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
   private savedFocus: HTMLElement | null = null;
-  private pageScrollLocked = false;
 
   readonly open = model<boolean>(false);
   readonly close = output<void>();
@@ -61,7 +63,9 @@ export class AuDrawer {
   readonly position = input<AuDrawerPosition>('end');
   readonly size = input<AuDrawerSize>('md');
 
+  /* v8 ignore start */
   readonly footerSlot = contentChild(AuDialogFooter);
+  /* v8 ignore stop */
 
   readonly hasFooter = computed(() => this.footerSlot() !== undefined);
 
@@ -76,9 +80,18 @@ export class AuDrawer {
     this.applyOpenStateToNativeDialog();
   });
 
-  constructor() {
-    this.destroyRef.onDestroy(() => this.unlockPageScrollIfNeeded());
-  }
+  private readonly preventPageScrollWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installPageScrollPrevention(
+        this.document,
+        createModalScrollAllowPredicate(() => this.nativeDialog(), '.au-drawer__body'),
+      ),
+    );
+  });
 
   private nativeDialog(): HTMLDialogElement | null {
     const el = this.host.nativeElement.querySelector('dialog');
@@ -101,7 +114,6 @@ export class AuDrawer {
   private openDialogElement(dialog: HTMLDialogElement): void {
     const wasDisplayed = this.isDialogDisplayed(dialog);
     if (!wasDisplayed) {
-      this.lockPageScrollIfNeeded();
       this.savedFocus =
         typeof document !== 'undefined' && document.activeElement instanceof HTMLElement
           ? document.activeElement
@@ -119,23 +131,17 @@ export class AuDrawer {
           return;
         }
         const panel = dialog.querySelector<HTMLElement>('.au-drawer__panel');
-        if (panel) {
-          focusInitialInDialogPanel(panel);
-        }
+        panel && focusInitialInDialogPanel(panel);
       });
     }
   }
 
   private closeDialogElement(dialog: HTMLDialogElement): void {
-    const wasDisplayed = this.isDialogDisplayed(dialog);
     if (typeof dialog.close === 'function') {
       dialog.close();
     } else if (dialog.hasAttribute('open')) {
       dialog.removeAttribute('open');
       dialog.dispatchEvent(new Event('close'));
-    }
-    if (wasDisplayed) {
-      this.unlockPageScrollIfNeeded();
     }
   }
 
@@ -196,21 +202,5 @@ export class AuDrawer {
     if (el?.isConnected) {
       el.focus();
     }
-  }
-
-  private lockPageScrollIfNeeded(): void {
-    if (this.pageScrollLocked) {
-      return;
-    }
-    lockPageScroll();
-    this.pageScrollLocked = true;
-  }
-
-  private unlockPageScrollIfNeeded(): void {
-    if (!this.pageScrollLocked) {
-      return;
-    }
-    unlockPageScroll();
-    this.pageScrollLocked = false;
   }
 }

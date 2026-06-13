@@ -18,26 +18,30 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
         [(open)]="openStart"
         placement="start"
       >
-        <button auButton
+        <button
+          auButton
           auPopoverTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().placementStart }}</button
         >
+          {{ t().placementStart }}
+        </button>
         <p class="docs-example-popover__body">{{ t().content }}</p>
       </au-popover>
       <au-popover
         [(open)]="openEnd"
         placement="end"
       >
-        <button auButton
+        <button
+          auButton
           auPopoverTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().placementEnd }}</button
         >
+          {{ t().placementEnd }}
+        </button>
         <p class="docs-example-popover__body">{{ t().content }}</p>
       </au-popover>
     </div>
@@ -63,34 +67,46 @@ export class ExamplePopoverPlacementDemo {
   imports: [AuPopover, AuPopoverTrigger, AuButton, AuFormField, AuCheckbox],
   template: `
     <au-popover [(open)]="open">
-      <button auButton
+      <button
+        auButton
         auPopoverTrigger
         size="sm"
         variant="outline"
         type="button"
-        >{{ t().filtersTrigger }}</button
       >
+        {{ t().filtersTrigger }}
+      </button>
       <div class="docs-example-popover__filters">
         <au-form-field [label]="t().statusLabel">
-          <input type="checkbox" auCheckbox>{{ t().activeOnly }}
+          <input
+            type="checkbox"
+            auCheckbox
+          />{{ t().activeOnly }}
         </au-form-field>
         <au-form-field [label]="t().roleLabel">
-          <input type="checkbox" auCheckbox>{{ t().engineersOnly }}
+          <input
+            type="checkbox"
+            auCheckbox
+          />{{ t().engineersOnly }}
         </au-form-field>
         <div class="docs-example-popover__actions">
-          <button auButton
+          <button
+            auButton
             size="sm"
             variant="ghost"
             type="button"
             (click)="open.set(false)"
-            >{{ t().clear }}</button
           >
-          <button auButton
+            {{ t().clear }}
+          </button>
+          <button
+            auButton
             size="sm"
             type="button"
             (click)="open.set(false)"
-            >{{ t().apply }}</button
           >
+            {{ t().apply }}
+          </button>
         </div>
       </div>
     </au-popover>
@@ -122,21 +138,25 @@ export class ExamplePopoverFiltersDemo {
   imports: [AuPopover, AuPopoverTrigger, AuButton],
   template: `
     <div class="docs-demo-stack">
-      <button auButton
+      <button
+        auButton
         size="sm"
         variant="secondary"
         type="button"
         (click)="open.set(true)"
-        >{{ t().openProgrammatically }}</button
       >
+        {{ t().openProgrammatically }}
+      </button>
       <au-popover [(open)]="open">
-        <button auButton
+        <button
+          auButton
           auPopoverTrigger
           size="sm"
           variant="outline"
           type="button"
-          >{{ t().trigger }}</button
         >
+          {{ t().trigger }}
+        </button>
         <p class="docs-example-popover__body">{{ t().helpContent }}</p>
       </au-popover>
     </div>

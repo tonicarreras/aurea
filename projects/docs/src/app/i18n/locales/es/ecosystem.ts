@@ -11,10 +11,9 @@ export const ECOSYSTEM_ES: EcosystemMessages = {
       autocomplete: 'Overlay listbox; prueba strictSelection en tus flujos.',
       'input-date': 'El estilo del selector de fecha nativo varía según el navegador.',
       'input-time': 'El estilo del selector de hora nativo varía según el navegador.',
-      'input-password':
-        'Campo de contraseña con toggle de revelar; localiza revealLabelShow/Hide.',
+      'input-password': 'Campo de contraseña con toggle de revelar; localiza revealLabelShow/Hide.',
       'button-group':
-        'Contenedor de au-button proyectados; requiere ariaLabel o ariaLabelledBy.',
+        'Contenedor de `button[auButton]` proyectados; requiere ariaLabel o ariaLabelledBy.',
       'description-list': 'dl semántico con au-description-item o dt/dd nativos.',
       'tag-input': 'Etiquetas multi-valor; Enter o coma para añadir; localiza removeTagLabel.',
       menu: 'Panel portaled; tabindex roving + typeahead (1.2.0).',

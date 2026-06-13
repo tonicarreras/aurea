@@ -6,7 +6,13 @@ import { AuButton, type AuButtonVariant } from './au-button.directive';
 @Component({
   imports: [AuButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<button auButton type="button" [loading]="loading">Save changes</button>`,
+  template: `<button
+    auButton
+    type="button"
+    [loading]="loading"
+  >
+    Save changes
+  </button>`,
 })
 class ButtonLoadingHost {
   loading = true;
@@ -15,7 +21,13 @@ class ButtonLoadingHost {
 @Component({
   imports: [AuButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<button auButton type="button" (click)="count = count + 1">Go</button>`,
+  template: `<button
+    auButton
+    type="button"
+    (click)="count = count + 1"
+  >
+    Go
+  </button>`,
 })
 class ButtonClickHost {
   count = 0;
@@ -87,16 +99,18 @@ describe('AuButton', () => {
   });
 
   it('applies host classes', () => {
-    expect(fixture.nativeElement.querySelector('button').classList.contains('au-button')).toBe(true);
+    expect(fixture.nativeElement.querySelector('button').classList.contains('au-button')).toBe(
+      true,
+    );
   });
 
-  it('sets data-au-size attribute',async  () => {
+  it('sets data-au-size attribute', async () => {
     fixture.componentRef.setInput('size', 'lg');
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('button').getAttribute('data-au-size')).toBe('lg');
   });
 
-  it('sets data-au-variant attribute',async  () => {
+  it('sets data-au-variant attribute', async () => {
     fixture.componentRef.setInput('variant', 'outline');
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('button').getAttribute('data-au-variant')).toBe(
@@ -114,7 +128,14 @@ describe('AuButton', () => {
   it('does not invoke parent click handler when disabled', async () => {
     @Component({
       imports: [AuButton],
-      template: `<button auButton type="button" [disabled]="true" (click)="count = count + 1">Go</button>`,
+      template: `<button
+        auButton
+        type="button"
+        [disabled]="true"
+        (click)="count = count + 1"
+      >
+        Go
+      </button>`,
     })
     class DisabledClickHost {
       count = 0;
@@ -128,7 +149,14 @@ describe('AuButton', () => {
   it('does not invoke parent click handler when loading', async () => {
     @Component({
       imports: [AuButton],
-      template: `<button auButton type="button" [loading]="true" (click)="count = count + 1">Go</button>`,
+      template: `<button
+        auButton
+        type="button"
+        [loading]="true"
+        (click)="count = count + 1"
+      >
+        Go
+      </button>`,
     })
     class LoadingClickHost {
       count = 0;
@@ -139,13 +167,13 @@ describe('AuButton', () => {
     expect(hostFixture.componentInstance.count).toBe(0);
   });
 
-  it('sets aria-busy when loading',async  () => {
+  it('sets aria-busy when loading', async () => {
     fixture.componentRef.setInput('loading', true);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('button').getAttribute('aria-busy')).toBe('true');
   });
 
-  it('uses aria-disabled instead of native disabled when loading',async  () => {
+  it('uses aria-disabled instead of native disabled when loading', async () => {
     fixture.componentRef.setInput('loading', true);
     await fixture.whenStable();
     const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
@@ -153,7 +181,7 @@ describe('AuButton', () => {
     expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 
-  it('sets disabled attribute when disabled',async  () => {
+  it('sets disabled attribute when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('button').hasAttribute('disabled')).toBe(true);
@@ -167,7 +195,7 @@ describe('AuButton', () => {
     spy.mockRestore();
   });
 
-  it('sets native name, type, and aria-label from inputs',async  () => {
+  it('sets native name, type, and aria-label from inputs', async () => {
     fixture.componentRef.setInput('name', 'submit-btn');
     fixture.componentRef.setInput('buttonType', 'submit');
     fixture.componentRef.setInput('label', 'Send form');
@@ -178,7 +206,7 @@ describe('AuButton', () => {
     expect(btn.getAttribute('aria-label')).toBe('Send form');
   });
 
-  it('applies from-tab class after Tab then focusin',async  () => {
+  it('applies from-tab class after Tab then focusin', async () => {
     const btnDe = fixture.debugElement.query(By.css('button'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     btnDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
@@ -189,7 +217,7 @@ describe('AuButton', () => {
     expect(btnDe.nativeElement.classList.contains('au-button--from-tab')).toBe(false);
   });
 
-  it('prevents default on click when disabled',async  () => {
+  it('prevents default on click when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
     await fixture.whenStable();
     const ev = new MouseEvent('click', { cancelable: true, bubbles: true });
@@ -198,13 +226,23 @@ describe('AuButton', () => {
     expect(ev.defaultPrevented).toBe(true);
   });
 
-  it('prevents default on click when loading',async  () => {
+  it('prevents default on click when loading', async () => {
     fixture.componentRef.setInput('loading', true);
     await fixture.whenStable();
     const ev = new MouseEvent('click', { cancelable: true, bubbles: true });
     const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     button.dispatchEvent(ev);
     expect(ev.defaultPrevented).toBe(true);
+  });
+
+  it('removes spinner chrome when loading becomes false', async () => {
+    fixture.componentRef.setInput('loading', true);
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
+    fixture.componentRef.setInput('loading', false);
+    await fixture.whenStable();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.au-button__spinner')).toBeFalsy();
   });
 });
 
@@ -215,7 +253,7 @@ describe('AuButton loading with projected text', () => {
     }).compileComponents();
   });
 
-  it('hides projected text visually and exposes it via aria-label',async  () => {
+  it('hides projected text visually and exposes it via aria-label', async () => {
     const fix = TestBed.createComponent(ButtonLoadingHost);
     await fix.whenStable();
     const button = fix.nativeElement.querySelector('button') as HTMLButtonElement;
@@ -226,16 +264,61 @@ describe('AuButton loading with projected text', () => {
     expect(fix.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
   });
 
+  it('reuses an existing content wrapper', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        [loading]="true"
+      >
+        <span class="au-button__content">Pre-wrapped</span>
+      </button>`,
+    })
+    class PreWrappedHost {}
+
+    const fix = TestBed.createComponent(PreWrappedHost);
+    await fix.whenStable();
+    expect(fix.nativeElement.querySelectorAll('.au-button__content').length).toBe(1);
+  });
+
+  it('omits aria-label when loading text is blank', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        [loading]="true"
+      >
+        <span class="au-button__content"> </span>
+      </button>`,
+    })
+    class BlankLoadingHost {}
+
+    const fix = TestBed.createComponent(BlankLoadingHost);
+    await fix.whenStable();
+    expect(
+      (fix.nativeElement.querySelector('button') as HTMLButtonElement).getAttribute('aria-label'),
+    ).toBeNull();
+  });
+
   it('uses md spinner size on lg loading buttons', async () => {
     @Component({
       imports: [AuButton],
-      template: `<button auButton type="button" size="lg" [loading]="true">Save</button>`,
+      template: `<button
+        auButton
+        type="button"
+        size="lg"
+        [loading]="true"
+      >
+        Save
+      </button>`,
     })
     class LgLoadingHost {}
     const hostFixture = TestBed.createComponent(LgLoadingHost);
     await hostFixture.whenStable();
-    expect(hostFixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size')).toBe(
-      'md',
-    );
+    expect(
+      hostFixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size'),
+    ).toBe('md');
   });
 });

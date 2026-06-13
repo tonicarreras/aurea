@@ -15,17 +15,17 @@
   font-weight: var(--au-weight-medium);
 }
 
-.docs-code-panel__copy--done .au-button__element {
+.docs-code-panel__copy--done button.au-button {
   border-color: color-mix(in srgb, var(--au-color-semantic-success) 50%, transparent);
   color: var(--au-color-semantic-success);
 }
 
-.docs-crud-frame__group au-button {
+.docs-crud-frame__group button.au-button {
   display: inline-flex;
   vertical-align: middle;
 }
 
-.docs-crud-frame__group--a11y au-switch {
+.docs-crud-frame__group--a11y button.au-switch {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;

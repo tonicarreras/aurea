@@ -5,7 +5,10 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
   button: [
     { concern: 'Primary action', examples: '`--au-color-action-primary`, hover/pressed variants' },
     { concern: 'Focus', examples: '`--au-focus-tactile`, `--au-focus-tab`' },
-    { concern: 'Elevation', examples: '`--au-elevation-tactile`, `--au-elevation-tactile-primary`' },
+    {
+      concern: 'Elevation',
+      examples: '`--au-elevation-tactile`, `--au-elevation-tactile-primary`',
+    },
     { concern: 'Size', examples: '`--au-size-field-h-*`, `--au-touch-target-min` (lg)' },
   ],
   'form-field': [
@@ -87,7 +90,8 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
   dialog: [
     {
       concern: 'Modal',
-      examples: '`--au-color-surface-inverted` (backdrop), `--au-z-modal`, `--au-elevation-overlay`',
+      examples:
+        '`--au-color-surface-inverted` (backdrop), `--au-z-modal`, `--au-elevation-overlay`',
     },
   ],
   card: [

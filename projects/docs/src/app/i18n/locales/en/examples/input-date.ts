@@ -34,8 +34,7 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Date range',
-    description:
-      'Use minDate and maxDate (ISO YYYY-MM-DD) for native min and max attributes.',
+    description: 'Use minDate and maxDate (ISO YYYY-MM-DD) for native min and max attributes.',
     demoComponent: ExampleInputDateRangeDemo,
     code: `<au-form-field label="Delivery date" hint="Deliveries in 2026 only.">
   <input auInputDate minDate="2026-01-01" maxDate="2026-12-31" />

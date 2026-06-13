@@ -7,11 +7,13 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <button auButton
+    <button
+      auButton
       type="button"
       (click)="open.set(true)"
-      >{{ t().showSuccess }}</button
     >
+      {{ t().showSuccess }}
+    </button>
     <au-snackbar
       [(open)]="open"
       [message]="t().successMessage"
@@ -30,11 +32,13 @@ export class ExampleSnackbarSuccessDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuSnackbar],
   template: `
-    <button auButton
+    <button
+      auButton
       type="button"
       (click)="open.set(true)"
-      >{{ t().showError }}</button
     >
+      {{ t().showError }}
+    </button>
     <au-snackbar
       [(open)]="open"
       [message]="t().errorMessage"

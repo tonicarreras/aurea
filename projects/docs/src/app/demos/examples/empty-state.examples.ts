@@ -24,11 +24,13 @@ const demoStyles = `
       title="No results found"
       description="Try adjusting your filters or search term."
     >
-      <button auButton
+      <button
+        auButton
         variant="outline"
         type="button"
-        >Clear filters</button
       >
+        Clear filters
+      </button>
     </au-empty-state>
   </div>`,
   styles: demoStyles,
@@ -60,7 +62,12 @@ export class ExampleEmptyStateDefaultDemo {}
         size="sm"
         [headingLevel]="3"
       >
-        <button auButton type="button">Add user</button>
+        <button
+          auButton
+          type="button"
+        >
+          Add user
+        </button>
       </au-empty-state>
     </au-table>
   </div>`,
@@ -93,7 +100,12 @@ export class ExampleEmptyStateTableDemo {}
         size="sm"
         [headingLevel]="3"
       >
-        <button auButton type="button">Añadir usuario</button>
+        <button
+          auButton
+          type="button"
+        >
+          Añadir usuario
+        </button>
       </au-empty-state>
     </au-table>
   </div>`,
@@ -135,7 +147,12 @@ export class ExampleEmptyStateTableEsDemo {}
           stroke-linecap="round"
         />
       </svg>
-      <button auButton type="button">Create project</button>
+      <button
+        auButton
+        type="button"
+      >
+        Create project
+      </button>
     </au-empty-state>
   </div>`,
   styles: demoStyles,

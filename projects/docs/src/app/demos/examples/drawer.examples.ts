@@ -7,11 +7,13 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuDrawer, AuDialogFooter],
   template: `
-    <button auButton
+    <button
+      auButton
       type="button"
       (click)="open.set(true)"
-      >{{ t().trigger }}</button
     >
+      {{ t().trigger }}
+    </button>
     <au-drawer
       [(open)]="open"
       [title]="t().title"
@@ -19,17 +21,21 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
     >
       <p>{{ t().body }}</p>
       <div auDrawerFooter>
-        <button auButton
+        <button
+          auButton
           variant="secondary"
           type="button"
           (click)="open.set(false)"
-          >{{ t().cancel }}</button
         >
-        <button auButton
+          {{ t().cancel }}
+        </button>
+        <button
+          auButton
           type="button"
           (click)="open.set(false)"
-          >{{ t().apply }}</button
         >
+          {{ t().apply }}
+        </button>
       </div>
     </au-drawer>
   `,

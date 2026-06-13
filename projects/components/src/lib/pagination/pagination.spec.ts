@@ -22,7 +22,7 @@ describe('AuPagination', () => {
     expect(host.getAttribute('aria-label')).toBe('Pagination');
   });
 
-  it('emits pageChange when a page button is clicked',async  () => {
+  it('emits pageChange when a page button is clicked', async () => {
     const emitted: number[] = [];
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('pageCount', 5);
@@ -36,7 +36,7 @@ describe('AuPagination', () => {
     expect(emitted).toEqual([3]);
   });
 
-  it('does not emit when navigating to the current page',async  () => {
+  it('does not emit when navigating to the current page', async () => {
     const emitted: number[] = [];
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('pageCount', 5);
@@ -46,7 +46,7 @@ describe('AuPagination', () => {
     expect(emitted).toEqual([]);
   });
 
-  it('does not emit when disabled',async  () => {
+  it('does not emit when disabled', async () => {
     const emitted: number[] = [];
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('disabled', true);
@@ -56,7 +56,7 @@ describe('AuPagination', () => {
     expect(emitted).toEqual([]);
   });
 
-  it('clamps page and pageCount to safe bounds',async  () => {
+  it('clamps page and pageCount to safe bounds', async () => {
     fixture.componentRef.setInput('page', 0);
     fixture.componentRef.setInput('pageCount', 0);
     await fixture.whenStable();
@@ -64,20 +64,20 @@ describe('AuPagination', () => {
     expect(component.safePage()).toBe(1);
   });
 
-  it('lists all pages when pageCount <= 7',async  () => {
+  it('lists all pages when pageCount <= 7', async () => {
     fixture.componentRef.setInput('pageCount', 5);
     await fixture.whenStable();
     expect(component.pageItems()).toEqual([1, 2, 3, 4, 5]);
   });
 
-  it('collapses page list when pageCount > 7',async  () => {
+  it('collapses page list when pageCount > 7', async () => {
     fixture.componentRef.setInput('page', 5);
     fixture.componentRef.setInput('pageCount', 12);
     await fixture.whenStable();
     expect(component.pageItems()).toEqual([1, 4, 5, 6, 12]);
   });
 
-  it('shows ellipsis between non-adjacent pages',async  () => {
+  it('shows ellipsis between non-adjacent pages', async () => {
     fixture.componentRef.setInput('page', 5);
     fixture.componentRef.setInput('pageCount', 12);
     await fixture.whenStable();
@@ -92,7 +92,7 @@ describe('AuPagination', () => {
     expect(showEllipsis(0, component.pageItems())).toBe(false);
   });
 
-  it('prev and next navigate by one page',async  () => {
+  it('prev and next navigate by one page', async () => {
     const emitted: number[] = [];
     fixture.componentRef.setInput('page', 3);
     fixture.componentRef.setInput('pageCount', 5);
@@ -103,7 +103,7 @@ describe('AuPagination', () => {
     expect(emitted).toEqual([2, 4]);
   });
 
-  it('disables prev on first page and next on last',async  () => {
+  it('disables prev on first page and next on last', async () => {
     fixture.componentRef.setInput('page', 1);
     fixture.componentRef.setInput('pageCount', 3);
     await fixture.whenStable();
@@ -115,7 +115,7 @@ describe('AuPagination', () => {
     expect(component.canNext()).toBe(false);
   });
 
-  it('clicking Prev and Next buttons triggers navigation',async  () => {
+  it('clicking Prev and Next buttons triggers navigation', async () => {
     const emitted: number[] = [];
     fixture.componentRef.setInput('page', 3);
     fixture.componentRef.setInput('pageCount', 5);

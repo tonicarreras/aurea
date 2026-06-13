@@ -116,7 +116,7 @@ export class AuTabs {
     event.preventDefault();
 
     const currentIndex = enabled.findIndex((t) => t.auTab() === this.value());
-    const start = currentIndex >= 0 ? currentIndex : 0;
+    const start = Math.max(0, currentIndex);
     let targetIndex = start;
 
     switch (event.key) {

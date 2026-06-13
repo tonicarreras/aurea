@@ -40,7 +40,8 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Segmentos enlazados',
-    description: 'Cada ítem excepto la página actual puede llevar `href` para subir en la jerarquía.',
+    description:
+      'Cada ítem excepto la página actual puede llevar `href` para subir en la jerarquía.',
     demoComponent: ExampleBreadcrumbLinksOnlyDemo,
     code: `<au-breadcrumb [items]="[
   { label: 'Docs', href: '/docs' },

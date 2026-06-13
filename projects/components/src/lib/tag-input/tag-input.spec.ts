@@ -32,7 +32,7 @@ describe('AuTagInput', () => {
     await TestBed.configureTestingModule({ imports: [AuTagInputTestHost] }).compileComponents();
   });
 
-  it('adds tag on Enter',async  () => {
+  it('adds tag on Enter', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     await fix.whenStable();
     typeDraft(fix, 'angular');
@@ -41,7 +41,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual(['angular']);
   });
 
-  it('adds tag on comma and trims trailing comma',async  () => {
+  it('adds tag on comma and trims trailing comma', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     await fix.whenStable();
     typeDraft(fix, 'vue,');
@@ -50,7 +50,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual(['vue']);
   });
 
-  it('removes tag on chip button click',async  () => {
+  it('removes tag on chip button click', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.value = ['a', 'b'];
     });
@@ -60,7 +60,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual(['b']);
   });
 
-  it('does not remove last tag on Backspace when value is empty',async  () => {
+  it('does not remove last tag on Backspace when value is empty', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     await fix.whenStable();
     queryInput(fix).dispatchEvent(
@@ -69,7 +69,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('does not commit draft on blur when disabled',async  () => {
+  it('does not commit draft on blur when disabled', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.disabled = true;
     });
@@ -79,7 +79,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('sets readonly on the draft input when readOnly',async  () => {
+  it('sets readonly on the draft input when readOnly', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
     });
@@ -89,7 +89,7 @@ describe('AuTagInput', () => {
     expect(input.disabled).toBe(false);
   });
 
-  it('does not commit draft on blur when readOnly',async  () => {
+  it('does not commit draft on blur when readOnly', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
     });
@@ -99,7 +99,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('removes last tag on Backspace when draft is empty',async  () => {
+  it('removes last tag on Backspace when draft is empty', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.value = ['only'];
     });
@@ -111,7 +111,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('commits draft on blur',async  () => {
+  it('commits draft on blur', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     await fix.whenStable();
     typeDraft(fix, '  react  ');
@@ -120,7 +120,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual(['react']);
   });
 
-  it('respects maxTags and allowDuplicates',async  () => {
+  it('respects maxTags and allowDuplicates', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.maxTags = 1;
       f.componentInstance.value = ['a'];
@@ -139,7 +139,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual(['dup']);
   });
 
-  it('does not mutate when disabled or readOnly',async  () => {
+  it('does not mutate when disabled or readOnly', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.disabled = true;
       f.componentInstance.value = ['x'];
@@ -165,7 +165,7 @@ describe('AuTagInput', () => {
     expect(await p).toEqual(['go']);
   });
 
-  it('focus() focuses the draft input',async  () => {
+  it('focus() focuses the draft input', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     await fix.whenStable();
     const input = queryInput(fix);
@@ -174,7 +174,7 @@ describe('AuTagInput', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('sets hint aria-describedby and ignores empty commit',async  () => {
+  it('sets hint aria-describedby and ignores empty commit', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags', hint: 'Add skills' });
     await fix.whenStable();
     const hint = fix.debugElement.query(By.css('.au-form-field__hint'))!
@@ -186,7 +186,7 @@ describe('AuTagInput', () => {
     expect(CONTROL(fix).value()).toEqual([]);
   });
 
-  it('includes error id in aria-describedby when invalid',async  () => {
+  it('includes error id in aria-describedby when invalid', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags', hint: 'Add tags' }, (f) => {
       f.componentInstance.invalid = true;
     });
@@ -196,7 +196,7 @@ describe('AuTagInput', () => {
     expect(describedBy).toContain('ti1-error');
   });
 
-  it('does not remove tags when readOnly',async  () => {
+  it('does not remove tags when readOnly', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' }, (f) => {
       f.componentInstance.readOnly = true;
       f.componentInstance.value = ['keep'];
@@ -232,7 +232,7 @@ describe('AuTagInput', () => {
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
-  it('ignores removeTag out of range',async  () => {
+  it('ignores removeTag out of range', async () => {
     const fix = createFieldFixture(AuTagInputTestHost, { label: 'Tags' });
     await fix.whenStable();
     CONTROL(fix).removeTag(-1);

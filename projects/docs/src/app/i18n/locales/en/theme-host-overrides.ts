@@ -47,17 +47,17 @@ export const THEME_HOST_OVERRIDES_EN: ThemeHostOverride[] = [
     description: 'Icon accent and title color on the host.',
   },
   {
-    host: 'au-textarea',
+    host: 'textarea.au-textarea',
     token: '--au-textarea-min-h-md',
     description: 'Minimum height; `size` on the host adjusts sm/md/lg presets.',
   },
   {
-    host: 'au-textarea',
+    host: 'textarea.au-textarea',
     token: '--au-textarea-pad-block',
     description: 'Vertical padding inside the native textarea.',
   },
   {
-    host: 'au-textarea',
+    host: 'textarea.au-textarea',
     token: '--au-textarea-pad-inline',
     description: 'Horizontal padding; aligns with field `size` presets.',
   },

@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { describe, expect, it, vi } from 'vitest';
 import {
   AuSwitchTestHost,
   createFieldFixture,
@@ -27,7 +28,7 @@ describe('AuSwitch', () => {
     }).compileComponents();
   });
 
-  it('binds checked on click',async  () => {
+  it('binds checked on click', async () => {
     const fix = createFieldFixture(AuSwitchTestHost, { label: 'Enable' }, (f) => {
       f.componentInstance.label = 'Enable';
     });
@@ -107,7 +108,7 @@ describe('AuSwitch', () => {
     spy.mockRestore();
   });
 
-  it('clears from-tab when focus leaves control',async  () => {
+  it('clears from-tab when focus leaves control', async () => {
     const fix = createFieldFixture(AuSwitchTestHost);
     const el = querySwitch(fix);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -182,5 +183,82 @@ describe('AuSwitch', () => {
     const field = fix.debugElement.query(By.css('.au-switch__field'))!.nativeElement as HTMLElement;
     expect(field.textContent).toContain('*');
     expect(field.textContent).toContain('(required)');
+  });
+
+  it('removes inline label when label input is cleared', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
+      f.componentInstance.label = 'Notifications';
+    });
+    await fix.whenStable();
+    const dir = control(fix);
+    vi.spyOn(dir, 'label').mockReturnValue('');
+    (dir as unknown as { syncLabel(): void }).syncLabel();
+    await fix.whenStable();
+    expect(fix.debugElement.query(By.css('.au-switch__label-host'))).toBeFalsy();
+  });
+
+  it('onControlRowFocusout returns when focus moves to inline label', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
+      f.componentInstance.label = 'Notifications';
+    });
+    await fix.whenStable();
+    const label = fix.debugElement.query(By.css('.au-switch__label'))!.nativeElement;
+    control(fix).onControlRowFocusout(new FocusEvent('focusout', { relatedTarget: label }));
+    expect(querySwitch(fix).classList.contains('au-switch--from-tab')).toBe(false);
+  });
+
+  it('prevents toggle when disabled', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
+      f.componentInstance.disabled = true;
+      f.componentInstance.checked = false;
+    });
+    await fix.whenStable();
+    const ev = new MouseEvent('click', { cancelable: true, bubbles: true });
+    control(fix).onToggle(ev);
+    expect(ev.defaultPrevented).toBe(true);
+    expect(control(fix).checked()).toBe(false);
+  });
+
+  it('skips ensureFieldShell when field shell already exists', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
+      f.componentInstance.label = 'Notifications';
+    });
+    await fix.whenStable();
+    const dir = control(fix) as unknown as { ensureFieldShell(): void };
+    dir.ensureFieldShell();
+    dir.ensureFieldShell();
+    expect(fix.debugElement.queryAll(By.css('.au-switch__field')).length).toBe(1);
+  });
+
+  it('emits blur from native blur event', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost);
+    let n = 0;
+    control(fix).blur.subscribe(() => n++);
+    await fix.whenStable();
+    querySwitch(fix).dispatchEvent(new FocusEvent('blur'));
+    expect(n).toBe(1);
+  });
+
+  it('syncLabel returns early when field shell is unavailable', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost);
+    await fix.whenStable();
+    const dir = control(fix) as unknown as { syncLabel(): void; fieldEl: HTMLElement | null };
+    const btn = querySwitch(fix);
+    btn.parentElement?.removeChild(btn);
+    dir.fieldEl = null;
+    expect(() => dir.syncLabel()).not.toThrow();
+  });
+
+  it('updates existing inline label via syncLabel', async () => {
+    const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
+      f.componentInstance.label = 'First';
+    });
+    await fix.whenStable();
+    const dir = control(fix);
+    vi.spyOn(dir, 'label').mockReturnValue('Second');
+    (dir as unknown as { syncLabel(): void }).syncLabel();
+    expect(
+      fix.debugElement.query(By.css('.au-switch__label'))!.nativeElement.textContent,
+    ).toContain('Second');
   });
 });

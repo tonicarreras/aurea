@@ -14,39 +14,39 @@ export const examples: ComponentDocExample[] = [
     title: 'Primary',
     description: 'Primary action in a form or dialog.',
     demoComponent: ExampleButtonPrimaryDemo,
-    code: `<button auButton variant="primary">Save</button>`,
+    code: `<button type="button" auButton variant="primary">Save</button>`,
   },
   {
     title: 'Secondary',
     demoComponent: ExampleButtonSecondaryDemo,
-    code: `<button auButton variant="secondary">Cancel</button>`,
+    code: `<button type="button" auButton variant="secondary">Cancel</button>`,
   },
   {
     title: 'Outline',
     demoComponent: ExampleButtonOutlineDemo,
-    code: `<button auButton variant="outline">More options</button>`,
+    code: `<button type="button" auButton variant="outline">More options</button>`,
   },
   {
     title: 'Ghost',
     demoComponent: ExampleButtonGhostDemo,
-    code: `<button auButton variant="ghost">Discard</button>`,
+    code: `<button type="button" auButton variant="ghost">Discard</button>`,
   },
   {
     title: 'Loading',
     description: 'Shows a decorative `au-spinner` and sets `aria-busy` on the button.',
     demoComponent: ExampleButtonLoadingDemo,
-    code: `<button auButton variant="primary" [loading]="true">Saving…</button>`,
+    code: `<button type="button" auButton variant="primary" [loading]="true">Saving…</button>`,
   },
   {
     title: 'Disabled',
     demoComponent: ExampleButtonDisabledDemo,
-    code: `<button auButton variant="primary" [disabled]="true">Unavailable</button>`,
+    code: `<button type="button" auButton variant="primary" [disabled]="true">Unavailable</button>`,
   },
   {
     title: 'Sizes',
     demoComponent: ExampleButtonSizesDemo,
-    code: `<button auButton size="sm">Small</button>
-<button auButton size="md">Medium</button>
-<button auButton size="lg">Large</button>`,
+    code: `<button type="button" auButton size="sm">Small</button>
+<button type="button" auButton size="md">Medium</button>
+<button type="button" auButton size="lg">Large</button>`,
   },
 ];

@@ -69,4 +69,3 @@ au-accordion button.au-accordion__trigger::after {
 au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after {
   transform: rotate(-135deg);
 }
-

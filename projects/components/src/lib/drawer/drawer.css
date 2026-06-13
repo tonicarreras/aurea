@@ -150,6 +150,7 @@ au-drawer .au-drawer__body {
   min-height: 0;
   padding: var(--au-space-4);
   overflow-y: auto;
+  overscroll-behavior: contain;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-secondary);
@@ -204,4 +205,3 @@ au-drawer [auDialogFooter] {
     transform: translate3d(0, 0, 0);
   }
 }
-

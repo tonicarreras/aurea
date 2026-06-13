@@ -9,7 +9,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
+import type { ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
@@ -40,7 +40,7 @@ import { injectHostRef } from '../au-host-element';
     '(change)': 'onChange($event)',
   },
 })
-export class AuCheckbox implements FormCheckboxControl {
+export class AuCheckbox {
   readonly checked = model(false);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });

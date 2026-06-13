@@ -13,7 +13,8 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
         [hint]="t().hint"
         [required]="true"
       >
-        <input auInputText
+        <input
+          auInputText
           type="email"
           [placeholder]="t().placeholder"
         />

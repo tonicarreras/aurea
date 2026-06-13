@@ -16,7 +16,7 @@ export const SEO_ES: DocsSeoMessages = {
   getStarted: {
     title: 'Empezar — Instalar Aurea en Angular 22',
     description:
-      'Requisitos, instalación de @aurea-design-system/components, tokens globales y tu primer ejemplo con au-button.',
+      'Requisitos, instalación de @aurea-design-system/components, tokens globales y tu primer ejemplo con `button auButton`.',
   },
   guidesAdoption: {
     title: 'Guía de adopción — Aurea Design System',

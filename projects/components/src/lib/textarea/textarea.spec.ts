@@ -39,7 +39,7 @@ describe('AuTextarea', () => {
     expect(comp.value()).toBe('line\n2');
   });
 
-  it('sets null when cleared',async  () => {
+  it('sets null when cleared', async () => {
     const fix = createFieldFixture(AuTextareaTestHost, { label: 'Notes' }, (f) => {
       f.componentInstance.value = 'text';
     });
@@ -89,7 +89,7 @@ describe('AuTextarea', () => {
     CONTROL(fix).onControlRowFocusin();
   });
 
-  it('emits blur from native blur',async  () => {
+  it('emits blur from native blur', async () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     const inj = TestBed.inject(Injector);
     let n = 0;
@@ -102,7 +102,7 @@ describe('AuTextarea', () => {
     expect(n).toBe(1);
   });
 
-  it('focus() focuses the native textarea',async  () => {
+  it('focus() focuses the native textarea', async () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     await fix.whenStable();
     const el = queryTextarea(fix);
@@ -209,7 +209,7 @@ describe('AuTextarea', () => {
     expect(queryTextarea(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
-  it('does not emit when disabled',async  () => {
+  it('does not emit when disabled', async () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.disabled = true;
     });
@@ -227,19 +227,19 @@ describe('AuTextarea', () => {
     expect(n).toBe(0);
   });
 
-  it('generates id when id omitted',async  () => {
+  it('generates id when id omitted', async () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     await fix.whenStable();
     expect(queryTextarea(fix).id.startsWith('au-field-')).toBe(true);
   });
 
-  it('onControlRowFocusout ignores non-HTMLElement',async  () => {
+  it('onControlRowFocusout ignores non-HTMLElement', async () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     await fix.whenStable();
     CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onControlRowFocusout returns when focus stays inside row',async  () => {
+  it('onControlRowFocusout returns when focus stays inside row', async () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     await fix.whenStable();
     const ta = queryTextarea(fix);
@@ -258,7 +258,7 @@ describe('AuTextarea', () => {
     ).toBe('Manual');
   });
 
-  it('applies and clears from-tab on control row',async  () => {
+  it('applies and clears from-tab on control row', async () => {
     const fix = createFieldFixture(AuTextareaTestHost);
     await fix.whenStable();
     const ta = queryTextarea(fix);

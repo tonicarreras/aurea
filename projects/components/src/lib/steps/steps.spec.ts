@@ -243,7 +243,7 @@ describe('AuSteps', () => {
     vi.unstubAllGlobals();
   });
 
-  it('defaults layout to tabs and size to md',async  () => {
+  it('defaults layout to tabs and size to md', async () => {
     const fix = TestBed.createComponent(AuSteps);
     await fix.whenStable();
     const host = fix.nativeElement as HTMLElement;
@@ -460,7 +460,7 @@ describe('AuSteps', () => {
     expect(ev.defaultPrevented).toBe(false);
   });
 
-  it('stepIdFor and panelIdFor use resolved id',async  () => {
+  it('stepIdFor and panelIdFor use resolved id', async () => {
     const fix = TestBed.createComponent(AuSteps);
     fix.componentRef.setInput('id', 'x');
     await fix.whenStable();
@@ -478,7 +478,7 @@ describe('AuSteps', () => {
     expect(steps.getEnabledSteps().length).toBe(2);
   });
 
-  it('resolvedId is generated when id input is empty',async  () => {
+  it('resolvedId is generated when id input is empty', async () => {
     const fix = TestBed.createComponent(AuSteps);
     await fix.whenStable();
     expect(fix.componentInstance.resolvedId()).toMatch(/^au-steps-\d+$/);
@@ -542,7 +542,7 @@ describe('AuSteps', () => {
     panel.remove();
   });
 
-  it('scrollToPanel calls scrollIntoView when element exists',async  () => {
+  it('scrollToPanel calls scrollIntoView when element exists', async () => {
     const panel = document.createElement('div');
     panel.id = 'doc-panel-api';
     const scrollIntoView = vi.fn();
@@ -557,7 +557,7 @@ describe('AuSteps', () => {
     panel.remove();
   });
 
-  it('scrollToPanel is noop when document is undefined',async  () => {
+  it('scrollToPanel is noop when document is undefined', async () => {
     const fix = TestBed.createComponent(AuSteps);
     await fix.whenStable();
     const saved = globalThis.document;

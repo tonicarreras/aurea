@@ -16,7 +16,7 @@ describe('AuTabs', () => {
     }).compileComponents();
   });
 
-  it('defaults variant to line and size to md',async  () => {
+  it('defaults variant to line and size to md', async () => {
     const fix = TestBed.createComponent(AuTabs);
     await fix.whenStable();
     const host = fix.nativeElement as HTMLElement;
@@ -25,7 +25,7 @@ describe('AuTabs', () => {
     expect(host.getAttribute('data-au-orientation')).toBe('horizontal');
   });
 
-  it('applies variant and orientation attributes',async  () => {
+  it('applies variant and orientation attributes', async () => {
     const fix = TestBed.createComponent(AuTabs);
     fix.componentRef.setInput('variant', 'contained');
     fix.componentRef.setInput('orientation', 'vertical');
@@ -68,7 +68,7 @@ describe('AuTabs', () => {
     expect(visible[0]!.textContent).toContain('Profile body');
   });
 
-  it('switches panel on tab click',async  () => {
+  it('switches panel on tab click', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     await fix.whenStable();
     const billingTab = fix.nativeElement.querySelector(
@@ -81,7 +81,7 @@ describe('AuTabs', () => {
     expect(panel.hasAttribute('hidden')).toBe(false);
   });
 
-  it('emits valueChange when selection changes',async  () => {
+  it('emits valueChange when selection changes', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     await fix.whenStable();
     let next = '';
@@ -122,7 +122,7 @@ describe('AuTabs', () => {
     expect(billing.getAttribute('tabindex')).toBe('-1');
   });
 
-  it('links tab aria-controls to panel id',async  () => {
+  it('links tab aria-controls to panel id', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     await fix.whenStable();
     const profile = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
@@ -190,6 +190,21 @@ describe('AuTabs', () => {
     expect(fix.componentInstance.active).toBe('c');
   });
 
+  it('horizontal keyboard uses ArrowRight when value does not match a tab', async () => {
+    const fix = TestBed.createComponent(TestThreeTabsComponent);
+    await fix.whenStable();
+    await flushTabsSelection();
+    fix.componentInstance.active = 'missing';
+    await fix.whenStable();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
+    await fix.whenStable();
+    expect(fix.componentInstance.active).toBe('b');
+  });
+
   it('jumps to first and last tab with Home and End', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.active = 'b';
@@ -208,6 +223,20 @@ describe('AuTabs', () => {
     );
     await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
+  });
+
+  it('starts keyboard navigation from the first tab when the active value is unknown', async () => {
+    const fix = TestBed.createComponent(TestThreeTabsComponent);
+    fix.componentInstance.active = 'missing';
+    await fix.whenStable();
+    await fix.whenStable();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
+    await fix.whenStable();
+    expect(fix.componentInstance.active).toBe('b');
   });
 
   it('uses ArrowDown in vertical orientation', async () => {
@@ -272,7 +301,7 @@ describe('AuTabs', () => {
     expect(ev.defaultPrevented).toBe(false);
   });
 
-  it('tabIdFor and panelIdFor use resolved id',async  () => {
+  it('tabIdFor and panelIdFor use resolved id', async () => {
     const fix = TestBed.createComponent(AuTabs);
     fix.componentRef.setInput('id', 'x');
     await fix.whenStable();
@@ -301,7 +330,7 @@ describe('AuTabs', () => {
     expect(tabs.getEnabledTabs().length).toBe(2);
   });
 
-  it('resolvedId is generated when id input is empty',async  () => {
+  it('resolvedId is generated when id input is empty', async () => {
     const fix = TestBed.createComponent(AuTabs);
     await fix.whenStable();
     expect(fix.componentInstance.resolvedId()).toMatch(/^au-tabs-\d+$/);

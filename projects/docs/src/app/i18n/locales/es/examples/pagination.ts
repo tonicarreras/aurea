@@ -22,7 +22,8 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Primera y última página',
-    description: 'Anterior/siguiente se deshabilitan en los extremos; los números se acotan a `[1, pageCount]`.',
+    description:
+      'Anterior/siguiente se deshabilitan en los extremos; los números se acotan a `[1, pageCount]`.',
     demoComponent: ExamplePaginationEdgesDemo,
     code: `<au-pagination [page]="1" [pageCount]="8" />
 <au-pagination [page]="8" [pageCount]="8" />`,

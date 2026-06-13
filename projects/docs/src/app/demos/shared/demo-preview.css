@@ -74,19 +74,19 @@
   :where(
     au-form-field,
     au-fieldset,
-    au-input-text,
-    au-textarea,
+    input.au-input-text,
+    textarea.au-textarea,
     au-select,
     au-autocomplete,
-    au-input-number,
-    au-input-date,
-    au-input-time,
-    au-input-password,
+    input.au-input-number,
+    input.au-input-date,
+    input.au-input-time,
+    input.au-input-password,
     au-tag-input,
     au-slider,
     au-file-upload,
     au-radio-group,
-    au-switch,
+    button.au-switch,
     au-progress
   ) {
   width: 100%;

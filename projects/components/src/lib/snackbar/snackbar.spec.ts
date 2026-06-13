@@ -20,14 +20,14 @@ describe('AuSnackbar', () => {
     return fixture.debugElement.query(By.css('.au-snackbar__surface'));
   }
 
-  it('does not render surface when closed',async  () => {
+  it('does not render surface when closed', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', false);
     await fix.whenStable();
     expect(querySurface(fix)).toBeNull();
   });
 
-  it('renders message when open',async  () => {
+  it('renders message when open', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Saved');
@@ -36,7 +36,7 @@ describe('AuSnackbar', () => {
     expect(message.textContent?.trim()).toBe('Saved');
   });
 
-  it('defaults variant to default and position to bottom-center',async  () => {
+  it('defaults variant to default and position to bottom-center', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     await fix.whenStable();
     const host = fix.nativeElement as HTMLElement;
@@ -44,7 +44,7 @@ describe('AuSnackbar', () => {
     expect(host.getAttribute('data-au-position')).toBe('bottom-center');
   });
 
-  it('does not render an icon for the default variant',async  () => {
+  it('does not render an icon for the default variant', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'default');
@@ -53,7 +53,7 @@ describe('AuSnackbar', () => {
     expect(fix.nativeElement.querySelector('.au-snackbar__icon')).toBeNull();
   });
 
-  it('renders a semantic icon when variant is not default',async  () => {
+  it('renders a semantic icon when variant is not default', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'success');
@@ -61,7 +61,7 @@ describe('AuSnackbar', () => {
     expect(fix.nativeElement.querySelector('.au-snackbar__icon')).not.toBeNull();
   });
 
-  it('hides icon when showIcon is false',async  () => {
+  it('hides icon when showIcon is false', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'error');
@@ -70,7 +70,7 @@ describe('AuSnackbar', () => {
     expect(fix.nativeElement.querySelector('.au-snackbar__icon')).toBeNull();
   });
 
-  it('maps variant to icon names',async  () => {
+  it('maps variant to icon names', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('variant', 'info');
     await fix.whenStable();
@@ -86,7 +86,7 @@ describe('AuSnackbar', () => {
     expect(fix.componentInstance.variantIcon()).toBeNull();
   });
 
-  it('applies variant and position attributes',async  () => {
+  it('applies variant and position attributes', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('variant', 'error');
     fix.componentRef.setInput('position', 'top-end');
@@ -96,7 +96,7 @@ describe('AuSnackbar', () => {
     expect(host.getAttribute('data-au-position')).toBe('top-end');
   });
 
-  it('uses role alert and assertive live region for error variant',async  () => {
+  it('uses role alert and assertive live region for error variant', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'error');
@@ -107,7 +107,7 @@ describe('AuSnackbar', () => {
     expect(surface.getAttribute('aria-live')).toBe('assertive');
   });
 
-  it('uses role status and polite live region for success variant',async  () => {
+  it('uses role status and polite live region for success variant', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'success');
@@ -118,7 +118,7 @@ describe('AuSnackbar', () => {
     expect(surface.getAttribute('aria-live')).toBe('polite');
   });
 
-  it('uses role alert and assertive live region for warning variant',async  () => {
+  it('uses role alert and assertive live region for warning variant', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('variant', 'warning');
@@ -129,7 +129,7 @@ describe('AuSnackbar', () => {
     expect(surface.getAttribute('aria-live')).toBe('assertive');
   });
 
-  it('closes via close button and emits dismiss',async  () => {
+  it('closes via close button and emits dismiss', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     const dismiss = vi.fn();
     fix.componentInstance.dismiss.subscribe(dismiss);
@@ -145,7 +145,7 @@ describe('AuSnackbar', () => {
     expect(querySurface(fix)).toBeNull();
   });
 
-  it('omits actions row when there is no action or close control',async  () => {
+  it('omits actions row when there is no action or close control', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Sin acciones');
@@ -155,7 +155,7 @@ describe('AuSnackbar', () => {
     expect(fix.nativeElement.querySelector('.au-snackbar__actions')).toBeNull();
   });
 
-  it('hides close button when showCloseButton is false',async  () => {
+  it('hides close button when showCloseButton is false', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Hi');
@@ -164,7 +164,7 @@ describe('AuSnackbar', () => {
     expect(fix.debugElement.query(By.css('.au-snackbar__close'))).toBeNull();
   });
 
-  it('emits action and closes when action is clicked',async  () => {
+  it('emits action and closes when action is clicked', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     const action = vi.fn();
     fix.componentInstance.action.subscribe(action);
@@ -277,7 +277,7 @@ describe('AuSnackbar', () => {
     expect(firstDismiss).not.toHaveBeenCalled();
   });
 
-  it('closes on Escape via document keydown',async  () => {
+  it('closes on Escape via document keydown', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Hi');
@@ -287,7 +287,7 @@ describe('AuSnackbar', () => {
     expect(fix.componentInstance.open()).toBe(false);
   });
 
-  it('ignores Escape when closed',async  () => {
+  it('ignores Escape when closed', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', false);
     await fix.whenStable();
@@ -303,7 +303,7 @@ describe('AuSnackbar', () => {
     expect(dismiss).not.toHaveBeenCalled();
   });
 
-  it('attaches host to document.body while open',async  () => {
+  it('attaches host to document.body while open', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Portaled');
@@ -331,7 +331,7 @@ describe('AuSnackbar', () => {
     await TestBed.configureTestingModule({ imports: [AuSnackbar] }).compileComponents();
   });
 
-  it('attachToBody appends host when it has no parent node',async  () => {
+  it('attachToBody appends host when it has no parent node', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     const host = fix.nativeElement;
     host.remove();
@@ -347,7 +347,7 @@ describe('AuSnackbar', () => {
     expect(() => inst.restoreFromBody()).not.toThrow();
   });
 
-  it('restoreFromBody is noop when host was never portaled to body',async  () => {
+  it('restoreFromBody is noop when host was never portaled to body', async () => {
     const wrapper = document.createElement('div');
     document.body.appendChild(wrapper);
     const fix = TestBed.createComponent(AuSnackbar);
@@ -367,7 +367,7 @@ describe('AuSnackbar', () => {
     wrapper.remove();
   });
 
-  it('attachToBody is noop when host is already on document.body',async  () => {
+  it('attachToBody is noop when host is already on document.body', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -381,7 +381,7 @@ describe('AuSnackbar', () => {
     expect(inst.bodyAnchor).toBe(anchor);
   });
 
-  it('restores host to its anchor parent on destroy',async  () => {
+  it('restores host to its anchor parent on destroy', async () => {
     const wrapper = document.createElement('div');
     document.body.append(wrapper);
     const fix = TestBed.createComponent(AuSnackbar);
@@ -394,7 +394,7 @@ describe('AuSnackbar', () => {
     wrapper.remove();
   });
 
-  it('reuses the stack id when syncStack runs while already open',async  () => {
+  it('reuses the stack id when syncStack runs while already open', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -407,7 +407,7 @@ describe('AuSnackbar', () => {
     expect(inst.stackId).toBe(stackId);
   });
 
-  it('shows action without close when only actionLabel is set',async  () => {
+  it('shows action without close when only actionLabel is set', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('message', 'Con acción');
@@ -418,7 +418,7 @@ describe('AuSnackbar', () => {
     expect(fix.nativeElement.querySelector('.au-snackbar__close')).toBeNull();
   });
 
-  it('relayouts stack when ResizeObserver fires',async  () => {
+  it('relayouts stack when ResizeObserver fires', async () => {
     const callbacks: ResizeObserverCallback[] = [];
     const observe = vi.fn();
     const disconnect = vi.fn();
@@ -452,7 +452,7 @@ describe('AuSnackbar', () => {
     vi.unstubAllGlobals();
   });
 
-  it('observeStackResize is noop without surface or stack id',async  () => {
+  it('observeStackResize is noop without surface or stack id', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     await fix.whenStable();
     const inst = fix.componentInstance as unknown as {
@@ -466,7 +466,7 @@ describe('AuSnackbar', () => {
     expect(() => inst.observeStackResize(surface)).not.toThrow();
   });
 
-  it('observeStackResize returns early after the stack entry is torn down',async  () => {
+  it('observeStackResize returns early after the stack entry is torn down', async () => {
     const ResizeObserverMock = vi.fn(function (this: ResizeObserver) {
       return Object.assign(this, { observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() });
     });
@@ -490,7 +490,7 @@ describe('AuSnackbar', () => {
     vi.unstubAllGlobals();
   });
 
-  it('observeStackResize disconnects a prior observer before attaching',async  () => {
+  it('observeStackResize disconnects a prior observer before attaching', async () => {
     const disconnect = vi.fn();
     const observe = vi.fn();
     const ResizeObserverMock = vi.fn(function (this: ResizeObserver) {
@@ -511,7 +511,7 @@ describe('AuSnackbar', () => {
     vi.unstubAllGlobals();
   });
 
-  it('skips ResizeObserver when it is not available',async  () => {
+  it('skips ResizeObserver when it is not available', async () => {
     vi.stubGlobal('ResizeObserver', undefined);
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
@@ -538,7 +538,7 @@ describe('AuSnackbar', () => {
     await TestBed.configureTestingModule({ imports: [AuSnackbar] }).compileComponents();
   });
 
-  it('projects slot content when message is empty',async  () => {
+  it('projects slot content when message is empty', async () => {
     const fix = TestBed.createComponent(SnackbarSlotHost);
     await fix.whenStable();
     const custom = fix.debugElement.query(By.css('.snackbar-slot-custom'))!;

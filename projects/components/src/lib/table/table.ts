@@ -240,7 +240,11 @@ export class AuTable {
       return;
     }
     const target = event.target as HTMLElement;
-    if (target.closest('button, a, input, select, textarea, label, [role="button"], input[auCheckbox]')) {
+    if (
+      target.closest(
+        'button, a, input, select, textarea, label, [role="button"], input[auCheckbox]',
+      )
+    ) {
       return;
     }
     this.toggleRowSelection(row);

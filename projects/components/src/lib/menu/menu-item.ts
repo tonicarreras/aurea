@@ -43,9 +43,7 @@ export class AuMenuItem {
   }
 
   private buttonEl(): HTMLButtonElement {
-    return this.host.nativeElement.querySelector<HTMLButtonElement>(
-      '.au-menu-item__btn',
-    )!;
+    return this.host.nativeElement.querySelector<HTMLButtonElement>('.au-menu-item__btn')!;
   }
 
   focus(): void {

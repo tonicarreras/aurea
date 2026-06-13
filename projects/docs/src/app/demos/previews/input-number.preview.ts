@@ -9,7 +9,8 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--field">
       <au-form-field [label]="t().label">
-        <input auInputNumber
+        <input
+          auInputNumber
           [min]="0"
           [max]="10"
         />

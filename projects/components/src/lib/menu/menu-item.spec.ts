@@ -13,7 +13,12 @@ import { AuMenuTrigger } from './au-menu-trigger.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
-      <button auButton auMenuTrigger>Open</button>
+      <button
+        auButton
+        auMenuTrigger
+      >
+        Open
+      </button>
       <au-menu-item
         [disabled]="disabled"
         (select)="selected = true"
@@ -33,7 +38,7 @@ describe('AuMenuItem', () => {
     document.body.querySelectorAll('.au-menu__panel').forEach((el) => el.remove());
   });
 
-  it('emits select and closes menu',async  () => {
+  it('emits select and closes menu', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const item = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
@@ -43,7 +48,7 @@ describe('AuMenuItem', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('does not emit when disabled',async  () => {
+  it('does not emit when disabled', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.disabled = true;
     await fixture.whenStable();
@@ -57,7 +62,7 @@ describe('AuMenuItem', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('focuses the item button and marks it active',async  () => {
+  it('focuses the item button and marks it active', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -71,7 +76,7 @@ describe('AuMenuItem', () => {
     expect(menu.isActiveMenuItem(itemCmp)).toBe(true);
   });
 
-  it('exposes label text for typeahead',async  () => {
+  it('exposes label text for typeahead', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -80,7 +85,7 @@ describe('AuMenuItem', () => {
     expect(itemCmp.labelText()).toBe('Action');
   });
 
-  it('labelText returns empty string when button has no text content',async  () => {
+  it('labelText returns empty string when button has no text content', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -93,7 +98,7 @@ describe('AuMenuItem', () => {
     expect(itemCmp.labelText()).toBe('');
   });
 
-  it('sets roving tabindex via focus handler',async  () => {
+  it('sets roving tabindex via focus handler', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -104,7 +109,7 @@ describe('AuMenuItem', () => {
     expect(btn.getAttribute('tabindex')).toBe('0');
   });
 
-  it('containsElement matches nodes inside and outside the button',async  () => {
+  it('containsElement matches nodes inside and outside the button', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -116,7 +121,7 @@ describe('AuMenuItem', () => {
     expect(itemCmp.containsElement(document.body)).toBe(false);
   });
 
-  it('unregisters from menu on destroy',async  () => {
+  it('unregisters from menu on destroy', async () => {
     const unregister = vi.fn();
 
     @Component({

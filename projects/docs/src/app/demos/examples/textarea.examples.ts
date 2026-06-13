@@ -8,9 +8,11 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuTextarea],
   template: `
     <au-form-field [label]="t().commentLabel">
-      <textarea auTextarea
+      <textarea
+        auTextarea
         [rows]="3"
-        [placeholder]="t().commentPlaceholder"></textarea>
+        [placeholder]="t().commentPlaceholder"
+      ></textarea>
     </au-form-field>
   `,
 })
@@ -27,9 +29,11 @@ export class ExampleTextareaBasicDemo {
       [label]="t().bioLabel"
       [hint]="t().bioHint"
     >
-      <textarea auTextarea
+      <textarea
+        auTextarea
         [rows]="3"
-        [placeholder]="t().bioPlaceholder"></textarea>
+        [placeholder]="t().bioPlaceholder"
+      ></textarea>
     </au-form-field>
   `,
 })
@@ -47,7 +51,10 @@ export class ExampleTextareaHintDemo {
       [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <textarea auTextarea [rows]="3"></textarea>
+      <textarea
+        auTextarea
+        [rows]="3"
+      ></textarea>
     </au-form-field>
   `,
 })

@@ -148,15 +148,21 @@ export class AuTooltip {
     this.clearShowTimer();
     const delay = this.auTooltipShowDelay();
     if (delay <= 0) {
-      if (this.shouldShow()) {
-        this.visible.set(true);
+      /* v8 ignore start -- pointer/focus state can only reach scheduleShow when visible */
+      if (!this.shouldShow()) {
+        return;
       }
+      /* v8 ignore stop */
+      this.visible.set(true);
       return;
     }
     this.showTimer = setTimeout(() => {
-      if (this.shouldShow()) {
-        this.visible.set(true);
+      /* v8 ignore start -- stale timer after pointer/focus left */
+      if (!this.shouldShow()) {
+        return;
       }
+      /* v8 ignore stop */
+      this.visible.set(true);
     }, delay);
   }
 

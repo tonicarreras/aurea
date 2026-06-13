@@ -63,7 +63,7 @@
   gap: var(--au-space-2);
 }
 
-.docs-mobile-menu__links au-button {
+.docs-mobile-menu__links button.au-button {
   width: 100%;
 }
 

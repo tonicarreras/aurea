@@ -41,7 +41,14 @@ au-autocomplete {
 }
 
 /* Native directive hosts — chrome on the control element (no __control-row wrapper) */
-:is(input.au-input-text, textarea.au-textarea, input.au-input-number, input.au-input-date, input.au-input-time, input.au-input-password) {
+:is(
+  input.au-input-text,
+  textarea.au-textarea,
+  input.au-input-number,
+  input.au-input-date,
+  input.au-input-time,
+  input.au-input-password
+) {
   position: relative;
   z-index: 0;
   display: block;
@@ -398,4 +405,3 @@ input.au-input-password:disabled {
 :is(.au-select__control-row--open, .au-autocomplete__control-row--open):not(:focus-within) {
   border-color: var(--au-chrome-border-color-hover);
 }
-

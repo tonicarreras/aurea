@@ -229,14 +229,20 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-error', description: 'Borde y mensaje de error.' },
   ],
   'input-time': [
-    { token: '--au-color-date-picker-accent', description: 'Acento de segmentos nativos (WebKit).' },
+    {
+      token: '--au-color-date-picker-accent',
+      description: 'Acento de segmentos nativos (WebKit).',
+    },
     { token: '--au-color-date-picker-edit-highlight', description: 'Fondo del segmento con foco.' },
     { token: '--au-color-date-picker-icon', description: 'Icono de reloj en la fila del control.' },
     { token: '--au-color-date-picker-icon-hover', description: 'Icono en hover / focus-within.' },
     { token: '--au-color-form-text', description: 'Texto y segmentos de la hora.' },
     { token: '--au-color-surface-raised', description: 'Fondo del campo (vía field chrome).' },
     { token: '--au-radius-field', description: 'Esquinas del control y de segmentos.' },
-    { token: '--au-size-field-h-md', description: 'Altura alineada con otros campos según `size`.' },
+    {
+      token: '--au-size-field-h-md',
+      description: 'Altura alineada con otros campos según `size`.',
+    },
     { token: '--au-color-form-error', description: 'Borde y mensaje de error.' },
   ],
   'file-upload': [

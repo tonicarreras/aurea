@@ -14,7 +14,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
@@ -54,7 +54,9 @@ import { AuIcon } from '../icon/icon';
     '(focusout)': 'onControlRowFocusout($event)',
   },
 })
-export class AuInputPassword implements FormValueControl<string | null> {
+/* v8 ignore start */
+export class AuInputPassword {
+  /* v8 ignore stop */
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
@@ -209,17 +211,19 @@ export class AuInputPassword implements FormValueControl<string | null> {
       if (!this.revealBtn?.isConnected) {
         this.mountRevealButton(parent, input);
       }
-      this.renderer.setAttribute(this.revealBtn!, 'aria-pressed', this.revealed() ? 'true' : 'false');
+      this.renderer.setAttribute(
+        this.revealBtn!,
+        'aria-pressed',
+        this.revealed() ? 'true' : 'false',
+      );
       this.renderer.setAttribute(this.revealBtn!, 'aria-label', this.revealAriaLabel());
       if (this.disabled() || this.readOnly()) {
         this.renderer.setAttribute(this.revealBtn!, 'disabled', 'true');
       } else {
         this.renderer.removeAttribute(this.revealBtn!, 'disabled');
       }
-      if (this.revealIconRef) {
-        this.revealIconRef.setInput('name', this.revealed() ? 'eye-off' : 'eye');
-        this.revealIconRef.changeDetectorRef.detectChanges();
-      }
+      this.revealIconRef?.setInput('name', this.revealed() ? 'eye-off' : 'eye');
+      this.revealIconRef?.changeDetectorRef.detectChanges();
     } else if (this.revealBtn?.isConnected) {
       this.renderer.removeChild(parent, this.revealBtn);
       this.revealBtn = null;

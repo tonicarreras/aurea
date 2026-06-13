@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { AuLink } from './link';
 
@@ -20,14 +21,14 @@ class AnchorHost {
 
 describe('AuLink', () => {
   describe('anchor host', () => {
-    it('sets href on host',async  () => {
+    it('sets href on host', async () => {
       const fixture = TestBed.createComponent(AnchorHost);
       await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('href')).toBe('/docs');
     });
 
-    it('sets external link attributes',async  () => {
+    it('sets external link attributes', async () => {
       const fixture = TestBed.createComponent(AnchorHost);
       fixture.componentInstance.external = true;
       await fixture.whenStable();
@@ -36,7 +37,7 @@ describe('AuLink', () => {
       expect(anchor.getAttribute('rel')).toContain('noopener');
     });
 
-    it('omits target when not external',async  () => {
+    it('omits target when not external', async () => {
       const fixture = TestBed.createComponent(AnchorHost);
       await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
@@ -44,7 +45,7 @@ describe('AuLink', () => {
       expect(anchor.getAttribute('rel')).toBeNull();
     });
 
-    it('falls back to # for empty href',async  () => {
+    it('falls back to # for empty href', async () => {
       const fixture = TestBed.createComponent(AnchorHost);
       fixture.componentInstance.href = '';
       await fixture.whenStable();
@@ -52,11 +53,15 @@ describe('AuLink', () => {
       expect(anchor.getAttribute('href')).toBe('#');
     });
 
-    it('transforms null href to #',async  () => {
+    it('transforms null href to #', async () => {
       @Component({
         imports: [AuLink],
         changeDetection: ChangeDetectionStrategy.OnPush,
-        template: `<a auLink [href]="href">Docs</a>`,
+        template: `<a
+          auLink
+          [href]="href"
+          >Docs</a
+        >`,
       })
       class NullHrefHost {
         href = null as unknown as string;
@@ -67,11 +72,15 @@ describe('AuLink', () => {
       expect(anchor.getAttribute('href')).toBe('#');
     });
 
-    it('applies subtle variant',async  () => {
+    it('applies subtle variant', async () => {
       @Component({
         imports: [AuLink],
         changeDetection: ChangeDetectionStrategy.OnPush,
-        template: `<a auLink variant="subtle">Docs</a>`,
+        template: `<a
+          auLink
+          variant="subtle"
+          >Docs</a
+        >`,
       })
       class SubtleHost {}
 
@@ -79,6 +88,31 @@ describe('AuLink', () => {
       await fixture.whenStable();
       const anchor = fixture.nativeElement.querySelector('a') as HTMLAnchorElement;
       expect(anchor.getAttribute('data-au-variant')).toBe('subtle');
+    });
+
+    it('hasCustomHref reflects non-default href', async () => {
+      const fixture = TestBed.createComponent(AnchorHost);
+      await fixture.whenStable();
+      const dir = fixture.debugElement.query(By.directive(AuLink)).injector.get(AuLink);
+      expect(dir.hasCustomHref()).toBe(true);
+    });
+
+    it('hasCustomHref is false for placeholder href', async () => {
+      @Component({
+        imports: [AuLink],
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        template: `<a
+          auLink
+          href="#"
+          >Docs</a
+        >`,
+      })
+      class DefaultHrefHost {}
+
+      const fixture = TestBed.createComponent(DefaultHrefHost);
+      await fixture.whenStable();
+      const dir = fixture.debugElement.query(By.directive(AuLink)).injector.get(AuLink);
+      expect(dir.hasCustomHref()).toBe(false);
     });
   });
 });

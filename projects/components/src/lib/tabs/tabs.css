@@ -237,4 +237,3 @@ au-tabs[data-au-size='lg'] .au-tabs__panel {
 .au-tabs__panel :is(h1, h2, h3, h4, h5, h6, p):last-child {
   margin-bottom: 0;
 }
-

@@ -15,7 +15,12 @@ import { AuPopover, auPopoverSelfRef } from './popover';
       [(open)]="open"
       [disabled]="disabled"
     >
-      <button auButton auPopoverTrigger>Filters</button>
+      <button
+        auButton
+        auPopoverTrigger
+      >
+        Filters
+      </button>
       <div class="panel-body">Panel</div>
     </au-popover>
   `,
@@ -41,7 +46,7 @@ describe('AuPopover', () => {
     document.body.querySelectorAll('.au-popover__panel').forEach((el) => el.remove());
   });
 
-  it('emits openChange when toggled',async  () => {
+  it('emits openChange when toggled', async () => {
     const fixture = TestBed.createComponent(Host);
     const emissions: boolean[] = [];
     popoverInstance(fixture).open.subscribe((v: boolean) => emissions.push(v));
@@ -55,7 +60,7 @@ describe('AuPopover', () => {
     expect(emissions).toEqual([true, false]);
   });
 
-  it('detaches overlay when destroyed while open',async  () => {
+  it('detaches overlay when destroyed while open', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -63,7 +68,7 @@ describe('AuPopover', () => {
     fixture.destroy();
   });
 
-  it('opens on trigger click',async  () => {
+  it('opens on trigger click', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
@@ -73,7 +78,7 @@ describe('AuPopover', () => {
     expect(document.body.querySelector('.au-popover__panel')).toBeTruthy();
   });
 
-  it('does not toggle when disabled',async  () => {
+  it('does not toggle when disabled', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.disabled = true;
     await fixture.whenStable();
@@ -83,7 +88,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('ignores document click when closed',async  () => {
+  it('ignores document click when closed', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -91,7 +96,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('keeps open when clicking inside the portaled panel',async  () => {
+  it('keeps open when clicking inside the portaled panel', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -102,7 +107,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('ignores non-Escape keys',async  () => {
+  it('ignores non-Escape keys', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -111,7 +116,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('closes on Escape',async  () => {
+  it('closes on Escape', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -120,7 +125,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('closes on outside click',async  () => {
+  it('closes on outside click', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -129,7 +134,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('ignores document click when target is not a Node',async  () => {
+  it('ignores document click when target is not a Node', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -140,7 +145,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('no-op close when already closed',async  () => {
+  it('no-op close when already closed', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const popover = popoverInstance(fixture);
@@ -149,7 +154,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('closes when the page scrolls outside the panel',async  () => {
+  it('closes when the page scrolls outside the panel', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -158,7 +163,7 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('stays open when scrolling inside the panel',async  () => {
+  it('stays open when scrolling inside the panel', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();

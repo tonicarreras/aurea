@@ -24,4 +24,3 @@
 :host(:not(.au-accordion__panel--expanded)) .au-accordion__panel-inner {
   padding-block: 0;
 }
-

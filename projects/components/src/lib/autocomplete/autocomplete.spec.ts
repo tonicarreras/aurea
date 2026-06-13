@@ -36,7 +36,7 @@ describe('AuAutocomplete', () => {
     }).compileComponents();
   });
 
-  it('listboxNative returns undefined when the listbox node is not in the document',async  () => {
+  it('listboxNative returns undefined when the listbox node is not in the document', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -50,7 +50,7 @@ describe('AuAutocomplete', () => {
     spy.mockRestore();
   });
 
-  it('syncListboxOverlay no-ops when the input is outside the control row',async  () => {
+  it('syncListboxOverlay no-ops when the input is outside the control row', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -67,7 +67,7 @@ describe('AuAutocomplete', () => {
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
   });
 
-  it('filters options and selects on mousedown',async  () => {
+  it('filters options and selects on mousedown', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -84,7 +84,7 @@ describe('AuAutocomplete', () => {
     expect(input.value).toBe('Barcelona');
   });
 
-  it('sets null when cleared',async  () => {
+  it('sets null when cleared', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -129,7 +129,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('opens list on focus',async  () => {
+  it('opens list on focus', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -138,7 +138,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
   });
 
-  it('onInputFocus seeds query from selection when panel was closed',async  () => {
+  it('onInputFocus seeds query from selection when panel was closed', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -159,7 +159,7 @@ describe('AuAutocomplete', () => {
     expect(comp['query']()).toBe('bar');
   });
 
-  it('keyboard ArrowDown and Enter selects option',async  () => {
+  it('keyboard ArrowDown and Enter selects option', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -171,7 +171,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBe('mad');
   });
 
-  it('Escape clears query when there is no selected value',async  () => {
+  it('Escape clears query when there is no selected value', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -185,7 +185,7 @@ describe('AuAutocomplete', () => {
     expect(input.value).toBe('');
   });
 
-  it('Escape closes panel and restores query',async  () => {
+  it('Escape closes panel and restores query', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -200,7 +200,7 @@ describe('AuAutocomplete', () => {
     expect(input.value).toBe('Madrid');
   });
 
-  it('strictSelection clears invalid query on blur',async  () => {
+  it('strictSelection clears invalid query on blur', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -217,7 +217,7 @@ describe('AuAutocomplete', () => {
     expect(input.value).toBe('');
   });
 
-  it('treats whitespace-only query as below minFilterLength',async  () => {
+  it('treats whitespace-only query as below minFilterLength', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 1;
@@ -230,7 +230,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('respects minFilterLength',async  () => {
+  it('respects minFilterLength', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 2;
@@ -253,7 +253,7 @@ describe('AuAutocomplete', () => {
     );
   });
 
-  it('shows no-results row when filter matches nothing',async  () => {
+  it('shows no-results row when filter matches nothing', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -275,7 +275,7 @@ describe('AuAutocomplete', () => {
     expect(input.getAttribute('aria-describedby')).toContain('-hint');
   });
 
-  it('emits blur',async  () => {
+  it('emits blur', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -293,7 +293,7 @@ describe('AuAutocomplete', () => {
     (CONTROL(fix) as unknown as { onControlRowFocusin(): void }).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost',async  () => {
+  it('emits blur from onBlurHost', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -315,7 +315,7 @@ describe('AuAutocomplete', () => {
     spy.mockRestore();
   });
 
-  it('skips disabled options on ArrowDown',async  () => {
+  it('skips disabled options on ArrowDown', async () => {
     const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
@@ -335,7 +335,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Beta');
   });
 
-  it('Home and End move highlight',async  () => {
+  it('Home and End move highlight', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -358,7 +358,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('onInput is a no-op when readOnly',async  () => {
+  it('onInput is a no-op when readOnly', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
@@ -371,7 +371,7 @@ describe('AuAutocomplete', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('does not emit when disabled on input',async  () => {
+  it('does not emit when disabled on input', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
@@ -471,7 +471,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).listboxId()).toBe('city-ac-listbox');
   });
 
-  it('filters case-sensitively when caseSensitive is true',async  () => {
+  it('filters case-sensitively when caseSensitive is true', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.caseSensitive = true;
@@ -488,7 +488,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(0);
   });
 
-  it('does not run handlers when readOnly',async  () => {
+  it('does not run handlers when readOnly', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
@@ -505,7 +505,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('highlights option on pointer enter',async  () => {
+  it('highlights option on pointer enter', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -521,7 +521,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('ignores pointer enter on disabled option',async  () => {
+  it('ignores pointer enter on disabled option', async () => {
     const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
@@ -543,7 +543,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('ArrowUp opens panel and highlights last option',async  () => {
+  it('ArrowUp opens panel and highlights last option', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -558,7 +558,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Valencia');
   });
 
-  it('keyboard no-ops when panel closed for Home, End, Enter, Escape',async  () => {
+  it('keyboard no-ops when panel closed for Home, End, Enter, Escape', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -570,7 +570,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('Enter does not select when no highlightable option',async  () => {
+  it('Enter does not select when no highlightable option', async () => {
     const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
@@ -583,7 +583,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('clears aria-activedescendant when highlight is past filtered length',async  () => {
+  it('clears aria-activedescendant when highlight is past filtered length', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [{ value: 'mad', label: 'Madrid' }];
     });
@@ -597,7 +597,7 @@ describe('AuAutocomplete', () => {
     expect(queryInput(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
-  it('omits aria-activedescendant when no option is active',async  () => {
+  it('omits aria-activedescendant when no option is active', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [];
     });
@@ -606,7 +606,7 @@ describe('AuAutocomplete', () => {
     expect(queryInput(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
-  it('keeps no active option when list is all disabled',async  () => {
+  it('keeps no active option when list is all disabled', async () => {
     const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
@@ -623,7 +623,7 @@ describe('AuAutocomplete', () => {
     expect(input.getAttribute('aria-activedescendant')).toBeNull();
   });
 
-  it('ArrowDown wraps from last to first highlightable',async  () => {
+  it('ArrowDown wraps from last to first highlightable', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -640,7 +640,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('strictSelection false does not commit invalid text on blur',async  () => {
+  it('strictSelection false does not commit invalid text on blur', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.strictSelection = false;
@@ -658,7 +658,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBe('mad');
   });
 
-  it('findOptionByLabel is case-sensitive when caseSensitive is true',async  () => {
+  it('findOptionByLabel is case-sensitive when caseSensitive is true', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.caseSensitive = true;
@@ -681,7 +681,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('commitQueryOnClose matches option by value string',async  () => {
+  it('commitQueryOnClose matches option by value string', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -698,7 +698,7 @@ describe('AuAutocomplete', () => {
     expect(input.value).toBe('Barcelona');
   });
 
-  it('setValue does not emit when value unchanged',async  () => {
+  it('setValue does not emit when value unchanged', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -770,7 +770,7 @@ describe('AuAutocomplete', () => {
     ).not.toContain('*');
   });
 
-  it('applies and clears from-tab on control row',async  () => {
+  it('applies and clears from-tab on control row', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -788,7 +788,7 @@ describe('AuAutocomplete', () => {
     expect(row.classList.contains('au-autocomplete__control-row--from-tab')).toBe(false);
   });
 
-  it('does not open panel when disabled on focus',async  () => {
+  it('does not open panel when disabled on focus', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
@@ -814,7 +814,7 @@ describe('AuAutocomplete', () => {
     expect(fixReadOnly.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('ArrowUp wraps from first to last highlightable option',async  () => {
+  it('ArrowUp wraps from first to last highlightable option', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -831,7 +831,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Valencia');
   });
 
-  it('lastHighlightableIndex is -1 when every option is disabled',async  () => {
+  it('lastHighlightableIndex is -1 when every option is disabled', async () => {
     const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
@@ -858,7 +858,7 @@ describe('AuAutocomplete', () => {
     expect(queryInput(fix2).value).toBe('Barcelona');
   });
 
-  it('ignores unhandled keys in onKeydown',async  () => {
+  it('ignores unhandled keys in onKeydown', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -887,7 +887,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('shows query while panel is open and selected label when closed',async  () => {
+  it('shows query while panel is open and selected label when closed', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -908,7 +908,7 @@ describe('AuAutocomplete', () => {
     expect(queryInput(fix2).value).toBe('Barcelona');
   });
 
-  it('keeps partial query when deleting below minFilterLength after a selection',async  () => {
+  it('keeps partial query when deleting below minFilterLength after a selection', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 2;
@@ -925,7 +925,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-field-listbox'))).toBeFalsy();
   });
 
-  it('ArrowDown does not open empty panel below minFilterLength',async  () => {
+  it('ArrowDown does not open empty panel below minFilterLength', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 2;
@@ -936,7 +936,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('ArrowDown opens panel when closed',async  () => {
+  it('ArrowDown opens panel when closed', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -951,7 +951,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('ArrowDown moves highlight when panel is already open',async  () => {
+  it('ArrowDown moves highlight when panel is already open', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -967,7 +967,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Barcelona');
   });
 
-  it('ArrowUp from unset highlight uses nextHighlightableIndex',async  () => {
+  it('ArrowUp from unset highlight uses nextHighlightableIndex', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -988,7 +988,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Valencia');
   });
 
-  it('ArrowDown on empty list keeps highlight unset',async  () => {
+  it('ArrowDown on empty list keeps highlight unset', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [];
     });
@@ -1027,7 +1027,7 @@ describe('AuAutocomplete', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('onInputFocus keeps highlight when already set',async  () => {
+  it('onInputFocus keeps highlight when already set', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -1045,7 +1045,7 @@ describe('AuAutocomplete', () => {
     expect(comp.highlightedIndex()).toBe(1);
   });
 
-  it('commitQueryOnClose leaves query when strictSelection is false',async  () => {
+  it('commitQueryOnClose leaves query when strictSelection is false', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.strictSelection = false;
@@ -1060,7 +1060,7 @@ describe('AuAutocomplete', () => {
     expect(comp.query()).toBe('free text');
   });
 
-  it('commitQueryOnClose matches label with caseSensitive',async  () => {
+  it('commitQueryOnClose matches label with caseSensitive', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.caseSensitive = true;
@@ -1077,7 +1077,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBe('mad');
   });
 
-  it('Enter on closed panel is a no-op',async  () => {
+  it('Enter on closed panel is a no-op', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -1086,7 +1086,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('Escape restores selected label in the query',async  () => {
+  it('Escape restores selected label in the query', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -1101,7 +1101,7 @@ describe('AuAutocomplete', () => {
     expect(input.value).toBe('Madrid');
   });
 
-  it('inputValue keeps typed query when selected option label is null',async  () => {
+  it('inputValue keeps typed query when selected option label is null', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [{ value: 'x', label: null as unknown as string }];
       f.componentInstance.value = 'x';

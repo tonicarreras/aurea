@@ -8,28 +8,34 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   imports: [AuButton, AuDrawer, AuDialogFooter],
   template: `
     <div class="docs-preview docs-preview--action">
-      <button auButton
+      <button
+        auButton
         type="button"
         (click)="open.set(true)"
-        >{{ t().open }}</button
       >
+        {{ t().open }}
+      </button>
       <au-drawer
         [(open)]="open"
         [title]="t().title"
       >
         <p>{{ t().body }}</p>
         <div auDrawerFooter>
-          <button auButton
+          <button
+            auButton
             variant="secondary"
             type="button"
             (click)="open.set(false)"
-            >{{ t().cancel }}</button
           >
-          <button auButton
+            {{ t().cancel }}
+          </button>
+          <button
+            auButton
             type="button"
             (click)="open.set(false)"
-            >{{ t().apply }}</button
           >
+            {{ t().apply }}
+          </button>
         </div>
       </au-drawer>
     </div>

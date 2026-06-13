@@ -78,7 +78,7 @@ describe('AuFormField', () => {
     expect(auFormFieldSelfRef()).toBe(AuFormField);
   });
 
-  it('renders label with for attribute',async  () => {
+  it('renders label with for attribute', async () => {
     fixture.componentRef.setInput('label', 'Email');
     fixture.componentRef.setInput('controlIdInput', 'email');
     await fixture.whenStable();
@@ -87,14 +87,14 @@ describe('AuFormField', () => {
     expect(label.getAttribute('for')).toBe('email');
   });
 
-  it('shows error when invalid',async  () => {
+  it('shows error when invalid', async () => {
     fixture.componentRef.setInput('invalid', true);
     fixture.componentRef.setInput('errorMessage', 'Required');
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-field-error')).not.toBeNull();
   });
 
-  it('renders hint with id',async  () => {
+  it('renders hint with id', async () => {
     fixture.componentRef.setInput('hint', 'We never share your email.');
     fixture.componentRef.setInput('controlIdInput', 'email');
     await fixture.whenStable();
@@ -102,32 +102,32 @@ describe('AuFormField', () => {
     expect(hint.id).toBe('email-hint');
   });
 
-  it('treats null errorMessage as empty',async  () => {
+  it('treats null errorMessage as empty', async () => {
     fixture.componentRef.setInput('errorMessage', null as unknown as string);
     fixture.componentRef.setInput('invalid', true);
     await fixture.whenStable();
     expect(fixture.componentInstance.isInvalid()).toBe(true);
   });
 
-  it('treats null hint as empty',async  () => {
+  it('treats null hint as empty', async () => {
     fixture.componentRef.setInput('hint', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.componentInstance.hasHint()).toBe(false);
   });
 
-  it('treats null label as empty',async  () => {
+  it('treats null label as empty', async () => {
     fixture.componentRef.setInput('label', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.componentInstance.hasLabel()).toBe(false);
   });
 
-  it('treats null controlId as auto id',async  () => {
+  it('treats null controlId as auto id', async () => {
     fixture.componentRef.setInput('controlIdInput', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.componentInstance.controlId()).toMatch(/^au-field-\d+$/);
   });
 
-  it('uses auto id when controlId is only whitespace',async  () => {
+  it('uses auto id when controlId is only whitespace', async () => {
     fixture.componentRef.setInput('controlIdInput', '   ');
     await fixture.whenStable();
     expect(fixture.componentInstance.controlId()).toMatch(/^au-field-\d+$/);
@@ -224,7 +224,7 @@ describe('AuFormField showsLabel', () => {
 });
 
 describe('queryFieldNative', () => {
-  it('returns the element matching the selector inside the host',async  () => {
+  it('returns the element matching the selector inside the host', async () => {
     const fixture = TestBed.createComponent(ProbeHost);
     await fixture.whenStable();
     const input = queryFieldNative<HTMLInputElement>(
@@ -235,7 +235,7 @@ describe('queryFieldNative', () => {
     expect(input.classList.contains('probe-input')).toBe(true);
   });
 
-  it('throws when no element matches the selector',async  () => {
+  it('throws when no element matches the selector', async () => {
     const fixture = TestBed.createComponent(ProbeHost);
     await fixture.whenStable();
     expect(() => queryFieldNative(fixture.componentInstance.host, '.missing')).toThrow(
@@ -340,7 +340,7 @@ describe('injectAuFormField', () => {
   })
   class WrappedStandaloneHost {}
 
-  it('returns the host standalone context when no ancestor field exists',async  () => {
+  it('returns the host standalone context when no ancestor field exists', async () => {
     const fix = TestBed.createComponent(BareStandaloneHost);
     await fix.whenStable();
     const probeDe = fix.debugElement.query(By.directive(StandaloneFieldProbe))!;
@@ -348,7 +348,7 @@ describe('injectAuFormField', () => {
     expect(probe.ctx).toBe(probeDe.injector.get(AU_FORM_FIELD));
   });
 
-  it('returns the ancestor au-form-field context when wrapped',async  () => {
+  it('returns the ancestor au-form-field context when wrapped', async () => {
     const fix = TestBed.createComponent(WrappedStandaloneHost);
     await fix.whenStable();
     const parentField = fix.debugElement.query(By.directive(AuFormField))!
@@ -363,7 +363,11 @@ describe('injectAuFormField', () => {
 describe('formFieldControlRender', () => {
   it('returns au-form-field template with chrome bindings', () => {
     const args = { ...defaultFieldChromeArgs, label: 'Email' };
-    const result = formFieldControlRender([AuFormField, AuInputText], args, '<input auInputText />');
+    const result = formFieldControlRender(
+      [AuFormField, AuInputText],
+      args,
+      '<input auInputText />',
+    );
 
     expect(result.props).toBe(args);
     expect(result.moduleMetadata.imports).toEqual([AuFormField, AuInputText]);
@@ -382,7 +386,11 @@ describe('formFieldHintOnlyRender', () => {
       required: false,
       controlIdInput: 'x',
     };
-    const result = formFieldHintOnlyRender([AuFormField], args, '<button type="button" auSwitch></button>');
+    const result = formFieldHintOnlyRender(
+      [AuFormField],
+      args,
+      '<button type="button" auSwitch></button>',
+    );
 
     expect(result.template).not.toContain('[label]="label"');
     expect(result.template).toContain('[hint]="hint"');

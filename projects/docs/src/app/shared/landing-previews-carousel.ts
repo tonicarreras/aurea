@@ -31,7 +31,8 @@ function chunkPages<T>(items: T[], size: number): T[][] {
       aria-roledescription="carousel"
     >
       <div class="landing-carousel__toolbar">
-        <button auButton
+        <button
+          auButton
           variant="outline"
           size="sm"
           type="button"
@@ -47,7 +48,8 @@ function chunkPages<T>(items: T[], size: number): T[][] {
         >
           {{ ui().carouselPageStatus(pageIndex() + 1, totalPages()) }}
         </p>
-        <button auButton
+        <button
+          auButton
           variant="outline"
           size="sm"
           type="button"

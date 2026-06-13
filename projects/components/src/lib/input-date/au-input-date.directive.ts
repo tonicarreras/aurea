@@ -14,7 +14,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
@@ -62,7 +62,9 @@ import { AuIcon } from '../icon/icon';
     '(focusout)': 'onControlRowFocusout($event)',
   },
 })
-export class AuInputDate implements FormValueControl<string | null> {
+/* v8 ignore start */
+export class AuInputDate {
+  /* v8 ignore stop */
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);

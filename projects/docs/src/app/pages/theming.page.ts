@@ -120,7 +120,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
             role="group"
             [attr.aria-label]="i18n.messages().themes.previewThemeLabel"
           >
-            <button auButton
+            <button
+              auButton
               size="sm"
               [variant]="appearanceTheme() === 'light' ? 'primary' : 'outline'"
               type="button"
@@ -128,7 +129,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
             >
               {{ i18n.messages().themes.previewLight }}
             </button>
-            <button auButton
+            <button
+              auButton
               size="sm"
               [variant]="appearanceTheme() === 'dark' ? 'primary' : 'outline'"
               type="button"
@@ -138,11 +140,16 @@ import { DocsTokenList } from '../shared/docs-token-list';
             </button>
           </div>
           <div class="docs-theme-preview__a11y">
-            <button type="button" auSwitch
+            <button
+              type="button"
+              auSwitch
               size="sm"
               [label]="i18n.messages().themes.previewHighContrast"
               [checked]="highContrastEnabled()"
-              (checkedChange)="highContrastEnabled.set($event)"><span class="au-sr-only">{{ i18n.messages().themes.previewHighContrast }}</span></button>
+              (checkedChange)="highContrastEnabled.set($event)"
+            >
+              <span class="au-sr-only">{{ i18n.messages().themes.previewHighContrast }}</span>
+            </button>
             <p class="docs-theme-preview__a11y-hint">
               {{ i18n.messages().themes.previewHighContrastHint }}
             </p>
@@ -152,7 +159,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
             role="group"
             [attr.aria-label]="i18n.messages().themes.previewDensityLabel"
           >
-            <button auButton
+            <button
+              auButton
               size="sm"
               [variant]="previewDensity() === 'compact' ? 'primary' : 'outline'"
               type="button"
@@ -160,7 +168,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
             >
               {{ i18n.messages().themes.previewDensityCompact }}
             </button>
-            <button auButton
+            <button
+              auButton
               size="sm"
               [variant]="previewDensity() === 'comfortable' ? 'primary' : 'outline'"
               type="button"
@@ -168,7 +177,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
             >
               {{ i18n.messages().themes.previewDensityComfortable }}
             </button>
-            <button auButton
+            <button
+              auButton
               size="sm"
               [variant]="previewDensity() === 'spacious' ? 'primary' : 'outline'"
               type="button"
@@ -225,13 +235,25 @@ import { DocsTokenList } from '../shared/docs-token-list';
         </div>
         <div class="docs-brand-example__sample">
           <div class="docs-brand-example__actions">
-            <button type="button" auButton variant="primary">
+            <button
+              type="button"
+              auButton
+              variant="primary"
+            >
               {{ i18n.messages().themes.brandExamplePrimary }}
             </button>
-            <button type="button" auButton variant="outline">
+            <button
+              type="button"
+              auButton
+              variant="outline"
+            >
               {{ i18n.messages().themes.brandExampleOutline }}
             </button>
-            <a auLink href="#brand-example">{{ i18n.messages().themes.brandExampleLink }}</a>
+            <a
+              auLink
+              href="#brand-example"
+              >{{ i18n.messages().themes.brandExampleLink }}</a
+            >
           </div>
           <au-form-field [label]="i18n.messages().themes.brandExampleFieldLabel">
             <input
@@ -520,7 +542,7 @@ export class ThemingPage {
   readonly DOCS_ROUTES = DOCS_ROUTES;
   readonly appearanceTheme = signal<DocsAppearanceTheme>('light');
   readonly highContrastEnabled = signal(false);
-  readonly customBrandEnabled = signal(false);
+  readonly customBrandEnabled = signal(true);
   readonly previewDensity = signal<'compact' | 'comfortable' | 'spacious'>('comfortable');
 
   readonly resolvedTheme = computed(() =>

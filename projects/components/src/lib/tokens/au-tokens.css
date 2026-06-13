@@ -161,8 +161,6 @@
   position: fixed;
 }
 
-
-
 /* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
 .au-floating-panel {
   --au-floating-panel-bg: color-mix(in srgb, var(--au-color-surface-raised) 90%, transparent);
@@ -291,8 +289,6 @@
     transform: translateX(0) scale(1);
   }
 }
-
-
 
 /* UI transitions: one easing for color, one “logical” for motion */
 :root {

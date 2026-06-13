@@ -11,7 +11,8 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
       [label]="t().emailLabel"
       [hint]="t().emailHint"
     >
-      <input auInputText
+      <input
+        auInputText
         type="email"
         [placeholder]="t().emailPlaceholder"
       />
@@ -31,7 +32,10 @@ export class ExampleFormFieldBasicDemo {
       [label]="t().userLabel"
       [hint]="t().userHint"
     >
-      <input auInputText [placeholder]="t().userPlaceholder" />
+      <input
+        auInputText
+        [placeholder]="t().userPlaceholder"
+      />
     </au-form-field>
   `,
 })
@@ -49,7 +53,8 @@ export class ExampleFormFieldHintDemo {
       [errorMessage]="t().emailError"
       [invalid]="true"
     >
-      <input auInputText
+      <input
+        auInputText
         type="email"
         [placeholder]="t().emailErrorPlaceholder"
       />

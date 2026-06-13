@@ -12,7 +12,10 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
         [label]="t().label"
         [hint]="t().hint"
       >
-        <input auInputPassword autocomplete="current-password" />
+        <input
+          auInputPassword
+          autocomplete="current-password"
+        />
       </au-form-field>
     </div>
   `,

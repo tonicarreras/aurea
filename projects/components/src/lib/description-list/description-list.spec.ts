@@ -8,7 +8,7 @@ describe('AuDescriptionList', () => {
     await TestBed.configureTestingModule({ imports: [AuDescriptionList] }).compileComponents();
   });
 
-  it('renders layout and columns host attributes',async  () => {
+  it('renders layout and columns host attributes', async () => {
     const fix = TestBed.createComponent(AuDescriptionList);
     fix.componentRef.setInput('layout', 'horizontal');
     fix.componentRef.setInput('columns', 2);
@@ -17,7 +17,7 @@ describe('AuDescriptionList', () => {
     expect(fix.nativeElement.getAttribute('data-au-columns')).toBe('2');
   });
 
-  it('projects description items into the inner dl',async  () => {
+  it('projects description items into the inner dl', async () => {
     @Component({
       selector: 'au-description-list-items-host',
       imports: [AuDescriptionList, AuDescriptionItem],
@@ -39,7 +39,7 @@ describe('AuDescriptionList', () => {
     expect(terms[1].textContent?.trim()).toBe('Role');
   });
 
-  it('renders horizontal items as div groups with dt and dd inside the dl',async  () => {
+  it('renders horizontal items as div groups with dt and dd inside the dl', async () => {
     @Component({
       selector: 'au-description-list-horizontal-host',
       imports: [AuDescriptionList, AuDescriptionItem],
@@ -63,7 +63,7 @@ describe('AuDescriptionList', () => {
     expect(dl.querySelector('au-description-item')).toBeNull();
   });
 
-  it('projects native dt and dd into the inner dl',async  () => {
+  it('projects native dt and dd into the inner dl', async () => {
     @Component({
       selector: 'au-description-list-spec-host',
       imports: [AuDescriptionList],

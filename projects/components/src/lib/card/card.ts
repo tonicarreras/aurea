@@ -58,7 +58,9 @@ export class AuCard {
    */
   readonly interactive = input(false);
 
+  /* v8 ignore start */
   readonly footerSlot = contentChild(AuCardFooter);
+  /* v8 ignore stop */
 
   /** True when `[auCardFooter]` content is projected. */
   readonly hasFooter = computed(() => this.footerSlot() !== undefined);

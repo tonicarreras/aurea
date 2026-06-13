@@ -26,25 +26,25 @@ describe('AuList', () => {
     expect(host.classList.contains('au-list')).toBe(true);
   });
 
-  it('sets aria-label when provided',async  () => {
+  it('sets aria-label when provided', async () => {
     fixture.componentRef.setInput('ariaLabel', 'Technologies');
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Technologies');
   });
 
-  it('sets aria-labelledby when provided',async  () => {
+  it('sets aria-labelledby when provided', async () => {
     fixture.componentRef.setInput('ariaLabelledBy', 'tags-heading');
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBe('tags-heading');
   });
 
-  it('treats null ariaLabel as empty',async  () => {
+  it('treats null ariaLabel as empty', async () => {
     fixture.componentRef.setInput('ariaLabel', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBeNull();
   });
 
-  it('treats null ariaLabelledBy as empty',async  () => {
+  it('treats null ariaLabelledBy as empty', async () => {
     fixture.componentRef.setInput('ariaLabelledBy', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBeNull();
@@ -71,7 +71,7 @@ class ListWithItemsHost {
 }
 
 describe('AuListItem', () => {
-  it('sets listitem inside au-list',async  () => {
+  it('sets listitem inside au-list', async () => {
     const fix = TestBed.createComponent(ListWithItemsHost);
     await fix.whenStable();
     const items = fix.nativeElement.querySelectorAll('[auListItem]');
@@ -79,7 +79,7 @@ describe('AuListItem', () => {
     expect(items[1].getAttribute('role')).toBe('listitem');
   });
 
-  it('suppresses listitem when auListItemDisabled is true',async  () => {
+  it('suppresses listitem when auListItemDisabled is true', async () => {
     const fix = TestBed.createComponent(ListWithItemsHost);
     fix.componentInstance.skip = true;
     await fix.whenStable();
@@ -88,7 +88,7 @@ describe('AuListItem', () => {
     expect(items[1].getAttribute('role')).toBeNull();
   });
 
-  it('omits listitem outside au-list',async  () => {
+  it('omits listitem outside au-list', async () => {
     @Component({
       imports: [AuListItem],
       template: `<span auListItem>Solo</span>`,

@@ -18,7 +18,7 @@ describe('AuAvatar', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('renders initials from a full name',async  () => {
+  it('renders initials from a full name', async () => {
     fixture.componentRef.setInput('name', 'Jane Doe');
     await fixture.whenStable();
     expect(fixture.nativeElement.textContent?.trim()).toBe('JD');
@@ -26,19 +26,19 @@ describe('AuAvatar', () => {
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Jane Doe');
   });
 
-  it('renders single-word initials',async  () => {
+  it('renders single-word initials', async () => {
     fixture.componentRef.setInput('name', 'Aurea');
     await fixture.whenStable();
     expect(fixture.nativeElement.textContent?.trim()).toBe('AU');
   });
 
-  it('renders placeholder when name is empty',async  () => {
+  it('renders placeholder when name is empty', async () => {
     await fixture.whenStable();
     expect(fixture.nativeElement.textContent?.trim()).toBe('?');
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('?');
   });
 
-  it('renders image when src is set',async  () => {
+  it('renders image when src is set', async () => {
     fixture.componentRef.setInput('src', 'https://example.com/a.png');
     fixture.componentRef.setInput('alt', 'Jane Doe');
     await fixture.whenStable();
@@ -48,7 +48,7 @@ describe('AuAvatar', () => {
     expect(fixture.nativeElement.getAttribute('role')).toBeNull();
   });
 
-  it('falls back to initials when the image fails to load',async  () => {
+  it('falls back to initials when the image fails to load', async () => {
     fixture.componentRef.setInput('src', 'https://example.com/broken.png');
     fixture.componentRef.setInput('alt', 'Jane Doe');
     fixture.componentRef.setInput('name', 'Jane Doe');
@@ -60,7 +60,7 @@ describe('AuAvatar', () => {
     expect(fixture.nativeElement.textContent?.trim()).toBe('JD');
   });
 
-  it('applies size and shape on host',async  () => {
+  it('applies size and shape on host', async () => {
     fixture.componentRef.setInput('size', 'lg');
     fixture.componentRef.setInput('shape', 'square');
     await fixture.whenStable();
@@ -69,7 +69,7 @@ describe('AuAvatar', () => {
     expect(host.getAttribute('data-au-shape')).toBe('square');
   });
 
-  it('hides from accessibility tree when decorative',async  () => {
+  it('hides from accessibility tree when decorative', async () => {
     fixture.componentRef.setInput('name', 'Jane Doe');
     fixture.componentRef.setInput('decorative', true);
     await fixture.whenStable();

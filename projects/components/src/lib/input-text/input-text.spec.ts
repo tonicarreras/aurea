@@ -28,7 +28,7 @@ describe('AuInputText', () => {
     }).compileComponents();
   });
 
-  it('sets null when cleared',async  () => {
+  it('sets null when cleared', async () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.value = 'abc';
     });
@@ -44,7 +44,7 @@ describe('AuInputText', () => {
     expect(control(fix).inputDisplay()).toBe('');
   });
 
-  it('binds value on input (model) and input reflects value',async  () => {
+  it('binds value on input (model) and input reflects value', async () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const comp = control(fix);
     const el = queryInput(fix);
@@ -106,7 +106,7 @@ describe('AuInputText', () => {
     control(fix).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost',async  () => {
+  it('emits blur from onBlurHost', async () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     let n = 0;
     control(fix).blur.subscribe(() => n++);
@@ -216,7 +216,7 @@ describe('AuInputText', () => {
     expect(queryInput(fix).id.startsWith('au-field-')).toBe(true);
   });
 
-  it('applies from-tab on control after Tab',async  () => {
+  it('applies from-tab on control after Tab', async () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const input = fix.debugElement.query(By.css('input.au-input-text'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -225,7 +225,7 @@ describe('AuInputText', () => {
     expect(input.nativeElement.classList.contains('au-input-text--from-tab')).toBe(true);
   });
 
-  it('clears from-tab after focus leaves control',async  () => {
+  it('clears from-tab after focus leaves control', async () => {
     const fix = createFieldFixture(AuInputTextTestHost);
     const input = fix.debugElement.query(By.css('input.au-input-text'))!.nativeElement;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -284,7 +284,7 @@ describe('AuInputText', () => {
     expect(control(fix).displayError()).toBe('');
   });
 
-  it('treats null field harness strings as empty',async  () => {
+  it('treats null field harness strings as empty', async () => {
     const fix = TestBed.createComponent(AuInputTextTestHost);
     applyFieldHarnessInputs(fix, {
       label: null as unknown as string,

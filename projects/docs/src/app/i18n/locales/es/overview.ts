@@ -22,7 +22,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Host `button[auButton]`', detail: 'Atributos `data-au-variant` y `data-au-size`.' },
+      {
+        region: 'Host `button[auButton]`',
+        detail: 'Atributos `data-au-variant` y `data-au-size`.',
+      },
       { region: 'Botón nativo', detail: 'Proyección de contenido; `aria-busy` cuando `loading`.' },
     ],
     accessibility: [
@@ -57,7 +60,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     anatomy: [
       { region: 'Grupo', detail: '`role="group"` con `ariaLabel` o `ariaLabelledBy`.' },
-      { region: '`button[auButton]`', detail: 'Hijos proyectados; variantes y clics en cada botón.' },
+      {
+        region: '`button[auButton]`',
+        detail: 'Hijos proyectados; variantes y clics en cada botón.',
+      },
     ],
     accessibility: [
       'Nombra el grupo cuando hay más de un botón.',
@@ -223,7 +229,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   switch: {
     intro: [
-      'Interruptor on/off con `role="switch"` sobre checkbox nativo estilizado.',
+      'Interruptor on/off con `role="switch"` en un `<button type="button">` nativo.',
       'Comparte shell de campo (borde, error, hint) con el resto de formularios.',
     ],
     whenToUse: {
@@ -235,7 +241,10 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Varias opciones excluyentes → `au-radio-group`.', 'Aceptar legal → `input[type=checkbox][auCheckbox]`.'],
+      items: [
+        'Varias opciones excluyentes → `au-radio-group`.',
+        'Aceptar legal → `input[type=checkbox][auCheckbox]`.',
+      ],
     },
     anatomy: [
       { region: 'Pista y thumb', detail: 'Tokens `--au-color-switch-track-*` y thumb.' },
@@ -1121,8 +1130,8 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Ancla', detail: 'Host `au-link` con `data-au-variant`.' },
-      { region: 'Contenido proyectado', detail: 'Texto del enlace en el slot por defecto.' },
+      { region: 'Ancla', detail: 'Host `a[auLink]` con `data-au-variant`.' },
+      { region: 'Texto del enlace', detail: 'Contenido nativo del ancla entre las etiquetas.' },
     ],
     accessibility: [
       'Anillo de foco visible (`--au-shadow-focus-ring`) con teclado.',

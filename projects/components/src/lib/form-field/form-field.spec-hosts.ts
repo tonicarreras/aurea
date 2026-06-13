@@ -410,7 +410,9 @@ export class AuTagInputTestHost {
         [showRequired]="showRequired"
         [name]="name"
         [size]="size"
-      ><span class="au-sr-only">{{ label }}</span></button>
+      >
+        <span class="au-sr-only">{{ label }}</span>
+      </button>
     </au-form-field>
   `,
 })

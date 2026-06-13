@@ -10,7 +10,7 @@ describe('AuDescriptionItem', () => {
     }).compileComponents();
   });
 
-  it('renders term and projected description inside the parent dl',async  () => {
+  it('renders term and projected description inside the parent dl', async () => {
     @Component({
       selector: 'au-description-item-spec-host',
       imports: [AuDescriptionList, AuDescriptionItem],
@@ -31,7 +31,7 @@ describe('AuDescriptionItem', () => {
     expect(dl.querySelector('au-description-item')).toBeNull();
   });
 
-  it('coerces nullish term to empty string',async  () => {
+  it('coerces nullish term to empty string', async () => {
     const fix = TestBed.createComponent(AuDescriptionItem);
     fix.componentRef.setInput('term', null as unknown as string);
     await fix.whenStable();

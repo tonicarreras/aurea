@@ -29,18 +29,35 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ```html
 <!-- Before -->
-<au-button variant="primary" (click)="save()">Save</au-button>
+<au-button
+  variant="primary"
+  (click)="save()"
+  >Save</au-button
+>
 <au-form-field label="Email">
-  <au-input-text [formField]="form.email" type="email" />
+  <au-input-text
+    [formField]="form.email"
+    type="email"
+  />
 </au-form-field>
 
 <!-- After -->
-<button auButton variant="primary" type="button" (click)="save()">Save</button>
+<button
+  auButton
+  variant="primary"
+  type="button"
+  (click)="save()"
+>
+  Save
+</button>
 <au-form-field label="Email">
-  <input auInputText type="email" [formField]="form.email" />
+  <input
+    auInputText
+    type="email"
+    [formField]="form.email"
+  />
 </au-form-field>
 ```
-
 
 ### Added
 

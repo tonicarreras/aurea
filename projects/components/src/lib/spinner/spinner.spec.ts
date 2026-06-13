@@ -34,13 +34,13 @@ describe('AuSpinner', () => {
     expect(fixture.nativeElement.querySelector('.au-spinner__svg')).toBeTruthy();
   });
 
-  it('applies size on the host',async  () => {
+  it('applies size on the host', async () => {
     fixture.componentRef.setInput('size', 'lg');
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-size')).toBe('lg');
   });
 
-  it('shows visible label copy and links it with aria-labelledby',async  () => {
+  it('shows visible label copy and links it with aria-labelledby', async () => {
     fixture.componentRef.setInput('label', 'Saving changes');
     await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
@@ -51,20 +51,20 @@ describe('AuSpinner', () => {
     expect(host.classList.contains('au-spinner--labeled')).toBe(true);
   });
 
-  it('trims whitespace from label',async  () => {
+  it('trims whitespace from label', async () => {
     fixture.componentRef.setInput('label', '  Fetching  ');
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-spinner__label')?.textContent).toBe('Fetching');
   });
 
-  it('falls back to glyph-only when label is empty',async  () => {
+  it('falls back to glyph-only when label is empty', async () => {
     fixture.componentRef.setInput('label', '   ');
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-spinner__label')).toBeNull();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Loading');
   });
 
-  it('omits live-region semantics when decorative',async  () => {
+  it('omits live-region semantics when decorative', async () => {
     fixture.componentRef.setInput('decorative', true);
     await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
@@ -75,7 +75,7 @@ describe('AuSpinner', () => {
     expect(host.classList.contains('au-spinner--decorative')).toBe(true);
   });
 
-  it('hides visible label when decorative even if label is set',async  () => {
+  it('hides visible label when decorative even if label is set', async () => {
     fixture.componentRef.setInput('label', 'Saving changes');
     fixture.componentRef.setInput('decorative', true);
     await fixture.whenStable();

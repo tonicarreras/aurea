@@ -2,9 +2,9 @@
 
 ## What consumers import
 
-| File               | Required                                  | Role                                                            |
-| ------------------ | ----------------------------------------- | --------------------------------------------------------------- |
-| `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css` |
+| File               | Required                                  | Role                                                                                                   |
+| ------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css`                                        |
 | `aurea-global.css` | Yes for form controls & description lists | Shared CSS + primitive directives (bundled from `aurea-global.entry.css`) + `au-high-contrast-aaa.css` |
 
 After editing `aurea-global.entry.css` or primitive `*.css` under `src/lib/`, run:
@@ -17,16 +17,16 @@ node projects/components/scripts/bundle-aurea-global.mjs
 
 Components use **role tokens**, not raw `--au-shadow-*` primitives:
 
-| Role | Token | Use for |
-| ---- | ----- | ------- |
-| Flat surface | `--au-elevation-flat` | Inputs, cards, tables, chips, badges |
-| Tactile control | `--au-elevation-tactile` | Buttons (secondary/outline) |
-| Raised toast | `--au-elevation-raised` | Snackbar |
-| Floating panel | `--au-elevation-floating` | Menu, popover (`.au-floating-panel`) |
-| Overlay | `--au-elevation-overlay` | Dialog, drawer, tooltip, listbox |
-| Inset focus | `--au-focus-inset` / `--au-focus-inset-error` | Pointer focus on flat controls |
-| Tactile focus | `--au-focus-tactile` | Pointer focus on buttons |
-| Tab focus | `--au-focus-tab` / `--au-focus-tab-error` | Keyboard Tab (`--from-tab` pattern) |
+| Role            | Token                                         | Use for                              |
+| --------------- | --------------------------------------------- | ------------------------------------ |
+| Flat surface    | `--au-elevation-flat`                         | Inputs, cards, tables, chips, badges |
+| Tactile control | `--au-elevation-tactile`                      | Buttons (secondary/outline)          |
+| Raised toast    | `--au-elevation-raised`                       | Snackbar                             |
+| Floating panel  | `--au-elevation-floating`                     | Menu, popover (`.au-floating-panel`) |
+| Overlay         | `--au-elevation-overlay`                      | Dialog, drawer, tooltip, listbox     |
+| Inset focus     | `--au-focus-inset` / `--au-focus-inset-error` | Pointer focus on flat controls       |
+| Tactile focus   | `--au-focus-tactile`                          | Pointer focus on buttons             |
+| Tab focus       | `--au-focus-tab` / `--au-focus-tab-error`     | Keyboard Tab (`--from-tab` pattern)  |
 
 Shared borders: `--au-chrome-border`, `--au-chrome-border-color-hover`.
 

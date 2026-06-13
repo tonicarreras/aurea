@@ -11,7 +11,8 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
       [label]="t().rangeLabel"
       [hint]="t().rangeHint"
     >
-      <input auInputDate
+      <input
+        auInputDate
         [minDate]="rangeMin"
         [maxDate]="rangeMax"
       />

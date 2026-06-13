@@ -44,7 +44,7 @@ describe('AuRadioGroup', () => {
     expect(legend.textContent).toContain('Pick');
   });
 
-  it('updates value when a radio is selected',async  () => {
+  it('updates value when a radio is selected', async () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -73,7 +73,7 @@ describe('AuRadioGroup', () => {
     expect(await p).toBe('a');
   });
 
-  it('does not emit when disabled',async  () => {
+  it('does not emit when disabled', async () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -174,7 +174,7 @@ describe('AuRadioGroup', () => {
     CONTROL(fix).onShellFocusin();
   });
 
-  it('emits blur when focus leaves shell',async  () => {
+  it('emits blur when focus leaves shell', async () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
@@ -189,13 +189,13 @@ describe('AuRadioGroup', () => {
     expect(n).toBe(1);
   });
 
-  it('onShellFocusout returns early for non-HTMLElement',async  () => {
+  it('onShellFocusout returns early for non-HTMLElement', async () => {
     const fix = createFieldFixture(AuRadioGroupTestHost);
     await fix.whenStable();
     CONTROL(fix).onShellFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onShellFocusout returns when focus stays inside shell',async  () => {
+  it('onShellFocusout returns when focus stays inside shell', async () => {
     const fix = createFieldFixture(AuRadioGroupTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });

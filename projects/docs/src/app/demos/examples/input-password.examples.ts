@@ -11,7 +11,10 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
       [label]="t().basicLabel"
       [hint]="t().basicHint"
     >
-      <input auInputPassword autocomplete="current-password" />
+      <input
+        auInputPassword
+        autocomplete="current-password"
+      />
     </au-form-field>
   `,
 })
@@ -28,7 +31,8 @@ export class ExampleInputPasswordBasicDemo {
       [label]="t().signUpLabel"
       [required]="true"
     >
-      <input auInputPassword
+      <input
+        auInputPassword
         autocomplete="new-password"
         [required]="true"
       />

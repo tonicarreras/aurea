@@ -28,7 +28,7 @@ class ItemHost {
 }
 
 describe('AuAccordionItem', () => {
-  it('focuses the host button',async  () => {
+  it('focuses the host button', async () => {
     TestBed.configureTestingModule({ imports: [ItemHost] });
     const fixture = TestBed.createComponent(ItemHost);
     await fixture.whenStable();
@@ -43,7 +43,7 @@ describe('AuAccordionItem', () => {
     expect(focusSpy).toHaveBeenCalled();
   });
 
-  it('prevents click when disabled',async  () => {
+  it('prevents click when disabled', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
       template: `

@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,12 +6,17 @@ import {
   afterRenderEffect,
   computed,
   contentChild,
+  inject,
   input,
   model,
   output,
 } from '@angular/core';
 import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
+import {
+  createModalScrollAllowPredicate,
+  installPageScrollPrevention,
+} from '../overlay/prevent-page-scroll';
 import { AuDialogFooter } from './dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
 
@@ -23,6 +29,7 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
  * - **Accessibility:** `aria-labelledby` when `title` is set; `aria-label` when only `ariaLabel` is set.
  * - **Dismiss:** backdrop click (outside panel), Escape (`closeOnEscape`), close button.
  * - **Focus:** Tab cycles within the panel; focus returns to the trigger on close (WCAG modal pattern).
+ * - **Scroll:** background wheel/touch scroll is blocked while open; scroll inside `.au-dialog__body` still works.
  * - **Footer:** import `AuDialogFooter` in the host that projects `[auDialogFooter]`.
  *
  * @example
@@ -52,6 +59,7 @@ export class AuDialog {
   private static nextTitleId = 0;
 
   private readonly host = injectHostRef<HTMLElement>();
+  private readonly document = inject(DOCUMENT);
 
   /** Controls visibility; two-way binding with `[(open)]`. */
   readonly open = model<boolean>(false);
@@ -70,7 +78,9 @@ export class AuDialog {
   readonly closeOnEscape = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg' | 'full'>('md');
 
+  /* v8 ignore start */
   readonly footerSlot = contentChild(AuDialogFooter);
+  /* v8 ignore stop */
 
   /** True when `[auDialogFooter]` content is projected. */
   readonly hasFooter = computed(() => this.footerSlot() !== undefined);
@@ -88,6 +98,19 @@ export class AuDialog {
   /** Syncs `open` to the native `<dialog>` once the view is in the DOM. */
   private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
     this.applyOpenStateToNativeDialog();
+  });
+
+  private readonly preventPageScrollWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installPageScrollPrevention(
+        this.document,
+        createModalScrollAllowPredicate(() => this.nativeDialog(), '.au-dialog__body'),
+      ),
+    );
   });
 
   private nativeDialog(): HTMLDialogElement | null {
@@ -138,10 +161,13 @@ export class AuDialog {
   private closeDialogElement(dialog: HTMLDialogElement): void {
     if (typeof dialog.close === 'function') {
       dialog.close();
-    } else if (dialog.hasAttribute('open')) {
-      dialog.removeAttribute('open');
-      dialog.dispatchEvent(new Event('close'));
+      return;
     }
+    if (!dialog.hasAttribute('open')) {
+      return;
+    }
+    dialog.removeAttribute('open');
+    dialog.dispatchEvent(new Event('close'));
   }
 
   private isDialogDisplayed(dialog: HTMLDialogElement): boolean {

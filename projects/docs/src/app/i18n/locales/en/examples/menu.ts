@@ -29,7 +29,8 @@ export const examples: ComponentDocExample[] = [
   },
   {
     title: 'Disabled item',
-    description: 'Set `[disabled]="true"` on an item; it stays focusable only via skip in roving tabindex.',
+    description:
+      'Set `[disabled]="true"` on an item; it stays focusable only via skip in roving tabindex.',
     demoComponent: ExampleMenuDisabledItemDemo,
     code: `<au-menu>
   <button auButton auMenuTrigger>Actions</button>

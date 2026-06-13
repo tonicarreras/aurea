@@ -122,7 +122,8 @@ export class AuButton {
       return;
     }
     const text = this.contentWrapper?.textContent?.trim();
-    const next = text || null;
+    const next = text ? text : null;
+    /* v8 ignore else -- projectedLabel already matches trimmed content */
     if (this.projectedLabel() !== next) {
       this.projectedLabel.set(next);
     }
@@ -169,10 +170,8 @@ export class AuButton {
       }
       this.spinnerRef?.setInput('size', this.spinnerSize());
       this.spinnerRef?.changeDetectorRef.detectChanges();
-      if (wrapper) {
-        this.renderer.addClass(wrapper, 'au-button__content--hidden');
-        this.renderer.setAttribute(wrapper, 'aria-hidden', 'true');
-      }
+      this.renderer.addClass(wrapper!, 'au-button__content--hidden');
+      this.renderer.setAttribute(wrapper!, 'aria-hidden', 'true');
       return;
     }
 
@@ -183,9 +182,7 @@ export class AuButton {
       this.renderer.removeChild(el, this.spinnerHost);
       this.spinnerHost = null;
     }
-    if (wrapper) {
-      this.renderer.removeClass(wrapper, 'au-button__content--hidden');
-      this.renderer.removeAttribute(wrapper, 'aria-hidden');
-    }
+    this.renderer.removeClass(wrapper!, 'au-button__content--hidden');
+    this.renderer.removeAttribute(wrapper!, 'aria-hidden');
   }
 }

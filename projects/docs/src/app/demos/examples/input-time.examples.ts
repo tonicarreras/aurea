@@ -25,7 +25,8 @@ export class ExampleInputTimeBasicDemo {
       [label]="t().boundsLabel"
       [hint]="t().boundsHint"
     >
-      <input auInputTime
+      <input
+        auInputTime
         [minTime]="boundsMin"
         [maxTime]="boundsMax"
       />

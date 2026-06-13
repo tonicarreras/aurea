@@ -87,7 +87,7 @@ describe('AuFileUpload', () => {
     ).toBe('.pdf');
   });
 
-  it('adds files from the native input',async  () => {
+  it('adds files from the native input', async () => {
     const file = createFile('notes.txt');
     upload['addFiles']([file]);
     await fixture.whenStable();
@@ -107,7 +107,7 @@ describe('AuFileUpload', () => {
     expect(clickSpy).toHaveBeenCalled();
   });
 
-  it('removes a listed file',async  () => {
+  it('removes a listed file', async () => {
     const file = createFile('draft.pdf');
     upload.value.set([file]);
     await fixture.whenStable();
@@ -147,7 +147,7 @@ describe('AuFileUpload standalone', () => {
     await fixture.whenStable();
   });
 
-  it('sets dragover host class',async  () => {
+  it('sets dragover host class', async () => {
     fixture.componentInstance['onDragOver']({
       preventDefault: () => undefined,
     } as DragEvent);
@@ -161,7 +161,7 @@ describe('AuFileUpload standalone', () => {
     expect(fixture.componentInstance['formatSize'](2 * 1024 * 1024)).toBe('2.0 MB');
   });
 
-  it('handles drop and dragleave',async  () => {
+  it('handles drop and dragleave', async () => {
     const file = createFile('drop.txt');
     fixture.componentInstance['onDrop']({
       preventDefault: () => undefined,
@@ -175,7 +175,7 @@ describe('AuFileUpload standalone', () => {
     expect(fixture.nativeElement.classList.contains('au-file-upload--dragover')).toBe(false);
   });
 
-  it('ignores interactions when disabled',async  () => {
+  it('ignores interactions when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
     await fixture.whenStable();
     fixture.componentInstance['onBrowseClick']();
@@ -206,14 +206,14 @@ describe('AuFileUpload standalone', () => {
     expect(input.value).toBe('');
   });
 
-  it('ignores dragover when disabled',async  () => {
+  it('ignores dragover when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
     await fixture.whenStable();
     fixture.componentInstance['onDragOver']({ preventDefault: () => undefined } as DragEvent);
     expect(fixture.componentInstance['dragOver']()).toBe(false);
   });
 
-  it('links aria-describedby to field errors when invalid',async  () => {
+  it('links aria-describedby to field errors when invalid', async () => {
     fixture.componentRef.setInput('invalid', true);
     await fixture.whenStable();
     const describedBy = fixture.nativeElement
@@ -264,7 +264,7 @@ describe('AuFileUpload standalone', () => {
     expect(input.id).toBe(uploadInstance.controlId());
   });
 
-  it('syncs invalid state from signal-form errors',async  () => {
+  it('syncs invalid state from signal-form errors', async () => {
     fixture.componentRef.setInput('errors', [{ kind: 'required', message: 'Pick a file.' }]);
     await fixture.whenStable();
     expect(

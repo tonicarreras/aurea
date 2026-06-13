@@ -10,7 +10,7 @@ describe('AuFieldset', () => {
     fixture = TestBed.createComponent(AuFieldset);
   });
 
-  it('renders legend and description',async  () => {
+  it('renders legend and description', async () => {
     fixture.componentRef.setInput('legend', 'Address');
     fixture.componentRef.setInput('description', 'Shipping details');
     await fixture.whenStable();
@@ -20,13 +20,13 @@ describe('AuFieldset', () => {
     expect(root.querySelector('fieldset')?.disabled).toBe(false);
   });
 
-  it('omits legend when blank',async  () => {
+  it('omits legend when blank', async () => {
     fixture.componentRef.setInput('legend', '   ');
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-fieldset__legend')).toBeNull();
   });
 
-  it('disables the native fieldset',async  () => {
+  it('disables the native fieldset', async () => {
     fixture.componentRef.setInput('disabled', true);
     await fixture.whenStable();
     expect((fixture.nativeElement.querySelector('fieldset') as HTMLFieldSetElement).disabled).toBe(
@@ -34,13 +34,13 @@ describe('AuFieldset', () => {
     );
   });
 
-  it('coerces nullish description to empty',async  () => {
+  it('coerces nullish description to empty', async () => {
     fixture.componentRef.setInput('description', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-fieldset__description')).toBeNull();
   });
 
-  it('coerces nullish legend to empty',async  () => {
+  it('coerces nullish legend to empty', async () => {
     fixture.componentRef.setInput('legend', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-fieldset__legend')).toBeNull();

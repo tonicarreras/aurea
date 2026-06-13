@@ -179,7 +179,6 @@ button.au-button.au-button--loading .au-button__spinner {
   --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
-
 au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button {
   display: inline-flex;
 }
@@ -199,14 +198,12 @@ au-button-group[data-au-attached][data-au-orientation='horizontal']
   margin-inline-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal']
-  button.au-button:first-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button:first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-end-start-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal']
-  button.au-button:last-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button:last-of-type {
   border-start-end-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }
@@ -217,14 +214,12 @@ au-button-group[data-au-attached][data-au-orientation='vertical']
   margin-block-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical']
-  button.au-button:first-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-button:first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-start-end-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical']
-  button.au-button:last-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-button:last-of-type {
   border-end-start-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }

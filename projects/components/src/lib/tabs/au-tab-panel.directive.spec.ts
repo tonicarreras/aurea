@@ -32,7 +32,7 @@ describe('AuTabPanel', () => {
 class TestTabsPanelComponent {}
 
 describe('AuTabPanel integration', () => {
-  it('sets tabpanel role and ids',async  () => {
+  it('sets tabpanel role and ids', async () => {
     const fix = TestBed.createComponent(TestTabsPanelComponent);
     await fix.whenStable();
     const panel = fix.nativeElement.querySelector('[auTabPanel]') as HTMLElement;

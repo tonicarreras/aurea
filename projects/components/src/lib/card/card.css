@@ -129,4 +129,3 @@ au-card .au-card__footer {
   padding: var(--au-card-footer-gap, var(--au-space-4)) 0 0;
   border-top: 1px solid var(--au-color-border-subtle);
 }
-

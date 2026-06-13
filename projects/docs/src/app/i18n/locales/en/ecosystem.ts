@@ -13,7 +13,8 @@ export const ECOSYSTEM_EN: EcosystemMessages = {
       'input-time': 'Native time picker styling varies by browser.',
       'input-password':
         'Dedicated password field with reveal toggle; localize revealLabelShow/Hide.',
-      'button-group': 'Layout wrapper for projected au-button; requires ariaLabel or ariaLabelledBy.',
+      'button-group':
+        'Layout wrapper for projected `button[auButton]` children; requires ariaLabel or ariaLabelledBy.',
       'description-list': 'Semantic dl with au-description-item or native dt/dd.',
       'tag-input': 'Multi-value tags; Enter or comma to add; localize removeTagLabel.',
       menu: 'Portaled panel; roving tabindex + typeahead (1.2.0).',

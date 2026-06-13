@@ -16,7 +16,12 @@ import { resetOpenMenuForTests } from './menu-open-registry';
       [(open)]="open"
       [disabled]="disabled"
     >
-      <button auButton auMenuTrigger>Open</button>
+      <button
+        auButton
+        auMenuTrigger
+      >
+        Open
+      </button>
       <au-menu-item (select)="selected = true">Action</au-menu-item>
       <au-menu-item (select)="onSecond()">Second</au-menu-item>
       <au-menu-item
@@ -48,7 +53,12 @@ class Host {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
-      <button auButton auMenuTrigger>Open</button>
+      <button
+        auButton
+        auMenuTrigger
+      >
+        Open
+      </button>
     </au-menu>
   `,
 })
@@ -61,11 +71,21 @@ class HostNoItems {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="openA">
-      <button auButton auMenuTrigger>Menu A</button>
+      <button
+        auButton
+        auMenuTrigger
+      >
+        Menu A
+      </button>
       <au-menu-item>Action A</au-menu-item>
     </au-menu>
     <au-menu [(open)]="openB">
-      <button auButton auMenuTrigger>Menu B</button>
+      <button
+        auButton
+        auMenuTrigger
+      >
+        Menu B
+      </button>
       <au-menu-item>Action B</au-menu-item>
     </au-menu>
   `,
@@ -92,7 +112,7 @@ describe('AuMenu', () => {
     document.body.querySelectorAll('.au-menu__panel').forEach((el) => el.remove());
   });
 
-  it('closes the previously open menu when another opens',async  () => {
+  it('closes the previously open menu when another opens', async () => {
     const fixture = TestBed.createComponent(TwoMenusHost);
     await fixture.whenStable();
     const triggers = fixture.nativeElement.querySelectorAll('button');
@@ -107,7 +127,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.openB).toBe(true);
   });
 
-  it('emits openChange when toggled',async  () => {
+  it('emits openChange when toggled', async () => {
     const fixture = TestBed.createComponent(Host);
     const emissions: boolean[] = [];
     menuInstance(fixture).open.subscribe((v: boolean) => emissions.push(v));
@@ -121,7 +141,7 @@ describe('AuMenu', () => {
     expect(emissions).toEqual([true, false]);
   });
 
-  it('detaches overlay when destroyed while open',async  () => {
+  it('detaches overlay when destroyed while open', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -129,7 +149,7 @@ describe('AuMenu', () => {
     fixture.destroy();
   });
 
-  it('opens on trigger click and selects an item',async  () => {
+  it('opens on trigger click and selects an item', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
@@ -148,7 +168,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('does not toggle when disabled',async  () => {
+  it('does not toggle when disabled', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.disabled = true;
     await fixture.whenStable();
@@ -158,7 +178,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('ignores non-Escape keys',async  () => {
+  it('ignores non-Escape keys', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -167,7 +187,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('closes on Escape',async  () => {
+  it('closes on Escape', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -176,7 +196,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('ignores document click when closed',async  () => {
+  it('ignores document click when closed', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -184,7 +204,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('keeps open when clicking inside the portaled panel',async  () => {
+  it('keeps open when clicking inside the portaled panel', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -195,7 +215,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('ignores Escape when closed',async  () => {
+  it('ignores Escape when closed', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -203,7 +223,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('closes on outside click',async  () => {
+  it('closes on outside click', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -212,7 +232,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('ignores document click when target is not a Node',async  () => {
+  it('ignores document click when target is not a Node', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -223,7 +243,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('no-op close when already closed',async  () => {
+  it('no-op close when already closed', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const menu = menuInstance(fixture);
@@ -232,7 +252,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('keeps open when clicking inside the menu host',async  () => {
+  it('keeps open when clicking inside the menu host', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
@@ -242,7 +262,7 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('prevents wheel scroll without hiding the page scrollbar',async  () => {
+  it('prevents wheel scroll without hiding the page scrollbar', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
@@ -258,6 +278,18 @@ describe('AuMenu', () => {
     expect(fixture.componentInstance.open).toBe(true);
   });
 
+  it('prevents wheel when the event target is not a Node', async () => {
+    const fixture = TestBed.createComponent(Host);
+    await fixture.whenStable();
+    const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    trigger.click();
+    await fixture.whenStable();
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    Object.defineProperty(wheel, 'target', { value: {}, configurable: true });
+    document.body.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+  });
+
   describe('keyboard navigation', () => {
     function getPanel(_fixture: ReturnType<typeof TestBed.createComponent<Host>>): HTMLElement {
       return document.body.querySelector('.au-menu__panel')!;
@@ -271,7 +303,7 @@ describe('AuMenu', () => {
       ) as HTMLButtonElement[];
     }
 
-    it('moves focus on ArrowDown',async  () => {
+    it('moves focus on ArrowDown', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -283,7 +315,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[1]);
     });
 
-    it('moves focus on ArrowUp and wraps around',async  () => {
+    it('moves focus on ArrowUp and wraps around', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -296,7 +328,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('wraps ArrowDown from last to first',async  () => {
+    it('wraps ArrowDown from last to first', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -309,7 +341,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('wraps ArrowUp from first to last',async  () => {
+    it('wraps ArrowUp from first to last', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -321,7 +353,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[btn.length - 1]);
     });
 
-    it('moves to first item on Home',async  () => {
+    it('moves to first item on Home', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -334,7 +366,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('moves to last item on End',async  () => {
+    it('moves to last item on End', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -346,7 +378,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[btn.length - 1]);
     });
 
-    it('skips disabled items on arrow navigation',async  () => {
+    it('skips disabled items on arrow navigation', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.thirdDisabled = true;
       fixture.componentInstance.open = true;
@@ -365,7 +397,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('ignores non-navigation keys',async  () => {
+    it('ignores non-navigation keys', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -378,7 +410,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('no-ops panel keydown when closed (direct call)',async  () => {
+    it('no-ops panel keydown when closed (direct call)', async () => {
       const fixture = TestBed.createComponent(Host);
       await fixture.whenStable();
       const menu = menuInstance(fixture);
@@ -389,7 +421,7 @@ describe('AuMenu', () => {
       expect(fixture.componentInstance.open).toBe(false);
     });
 
-    it('no-ops panel keydown with empty item list (direct call)',async  () => {
+    it('no-ops panel keydown with empty item list (direct call)', async () => {
       const fixture = TestBed.createComponent(HostNoItems);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -402,7 +434,7 @@ describe('AuMenu', () => {
       expect(fixture.componentInstance.open).toBe(true);
     });
 
-    it('findFocusedItemIndex returns -1 when activeElement is null',async  () => {
+    it('findFocusedItemIndex returns -1 when activeElement is null', async () => {
       const fixture = TestBed.createComponent(Host);
       await fixture.whenStable();
       const menu = menuInstance(fixture) as unknown as {
@@ -428,7 +460,7 @@ describe('AuMenu', () => {
       }
     });
 
-    it('no-ops panel keydown when activeElement is null',async  () => {
+    it('no-ops panel keydown when activeElement is null', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -451,7 +483,7 @@ describe('AuMenu', () => {
       }
     });
 
-    it('registerMenuItem handles duplicate registration',async  () => {
+    it('registerMenuItem handles duplicate registration', async () => {
       const fixture = TestBed.createComponent(Host);
       await fixture.whenStable();
       const menu = menuInstance(fixture) as unknown as {
@@ -465,7 +497,7 @@ describe('AuMenu', () => {
       expect(menu.enabledMenuItems().length).toBe(items.length);
     });
 
-    it('closes when the page scrolls outside the panel',async  () => {
+    it('closes when the page scrolls outside the panel', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -474,7 +506,7 @@ describe('AuMenu', () => {
       expect(fixture.componentInstance.open).toBe(false);
     });
 
-    it('stays open when scrolling inside the panel',async  () => {
+    it('stays open when scrolling inside the panel', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -484,7 +516,7 @@ describe('AuMenu', () => {
       expect(fixture.componentInstance.open).toBe(true);
     });
 
-    it('unregisterMenuItem removes items from keyboard navigation',async  () => {
+    it('unregisterMenuItem removes items from keyboard navigation', async () => {
       const fixture = TestBed.createComponent(Host);
       await fixture.whenStable();
       const menu = menuInstance(fixture) as unknown as {
@@ -500,7 +532,7 @@ describe('AuMenu', () => {
       expect(menu.activeMenuItem()).toBeNull();
     });
 
-    it('sets roving tabindex so only the active item is tabbable',async  () => {
+    it('sets roving tabindex so only the active item is tabbable', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -515,7 +547,7 @@ describe('AuMenu', () => {
       expect(btn[1].getAttribute('tabindex')).toBe('0');
     });
 
-    it('typeahead focuses the next item matching the typed character',async  () => {
+    it('typeahead focuses the next item matching the typed character', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -528,7 +560,7 @@ describe('AuMenu', () => {
       expect(btn[1].textContent?.trim()).toBe('Second');
     });
 
-    it('ignores typeahead for non-character keys',async  () => {
+    it('ignores typeahead for non-character keys', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -539,7 +571,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('no-ops typeahead when there are no enabled items (direct call)',async  () => {
+    it('no-ops typeahead when there are no enabled items (direct call)', async () => {
       const fixture = TestBed.createComponent(HostNoItems);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -550,7 +582,7 @@ describe('AuMenu', () => {
       expect(() => menu.handleTypeahead.call(menu, 'a')).not.toThrow();
     });
 
-    it('no-ops typeahead for punctuation (direct call)',async  () => {
+    it('no-ops typeahead for punctuation (direct call)', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -562,7 +594,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('typeahead wraps to earlier items when no match after current',async  () => {
+    it('typeahead wraps to earlier items when no match after current', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -575,7 +607,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('ignores typeahead when no item matches the character',async  () => {
+    it('ignores typeahead when no item matches the character', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -586,7 +618,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[0]);
     });
 
-    it('typeahead searches from the first item when no item is focused (direct call)',async  () => {
+    it('typeahead searches from the first item when no item is focused (direct call)', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();
@@ -601,7 +633,7 @@ describe('AuMenu', () => {
       expect(document.activeElement).toBe(btn[1]);
     });
 
-    it('skips undefined entries while typeahead iterates items (direct call)',async  () => {
+    it('skips undefined entries while typeahead iterates items (direct call)', async () => {
       const fixture = TestBed.createComponent(Host);
       await fixture.whenStable();
       const menu = menuInstance(fixture) as unknown as {
@@ -621,7 +653,7 @@ describe('AuMenu', () => {
       menu.handleTypeahead('s');
     });
 
-    it('cleans up listeners when destroyed while open',async  () => {
+    it('cleans up listeners when destroyed while open', async () => {
       const fixture = TestBed.createComponent(Host);
       fixture.componentInstance.open = true;
       await fixture.whenStable();

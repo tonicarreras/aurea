@@ -706,9 +706,7 @@ describe('AuTable selection', () => {
     const fixture = TestBed.createComponent(MultiSelectHost);
     await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
-    const rowCheckbox = root.querySelector(
-      'tbody input.au-checkbox__element',
-    ) as HTMLInputElement;
+    const rowCheckbox = root.querySelector('tbody input.au-checkbox__element') as HTMLInputElement;
     rowCheckbox.click();
     await fixture.whenStable();
     rowCheckbox.click();

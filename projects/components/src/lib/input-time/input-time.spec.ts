@@ -50,7 +50,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).placeholder()).toBe('Pick a time');
   });
 
-  it('sets value on input',async  () => {
+  it('sets value on input', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'Start' });
     await fix.whenStable();
@@ -61,7 +61,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).value()).toBe('14:30');
   });
 
-  it('sets null when cleared',async  () => {
+  it('sets null when cleared', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'Start' }, (f) => {
       f.componentInstance.value = '09:00';
     });
@@ -79,7 +79,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).inputDisplay()).toBe('');
   });
 
-  it('inputDisplay is empty when value is null',async  () => {
+  it('inputDisplay is empty when value is null', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     await fix.whenStable();
@@ -101,7 +101,7 @@ describe('AuInputTime', () => {
     expect(await p).toBe('16:45');
   });
 
-  it('does not emit when disabled',async  () => {
+  it('does not emit when disabled', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.disabled = true;
@@ -119,7 +119,7 @@ describe('AuInputTime', () => {
     expect(n).toBe(0);
   });
 
-  it('does not uptime model when readOnly',async  () => {
+  it('does not uptime model when readOnly', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
       f.componentInstance.value = '09:00';
       f.componentInstance.readOnly = true;
@@ -131,7 +131,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).value()).toBe('09:00');
   });
 
-  it('sets min max attributes',async  () => {
+  it('sets min max attributes', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.minTime = '08:00';
@@ -142,7 +142,7 @@ describe('AuInputTime', () => {
     expect(el.getAttribute('max')).toBe('20:00');
   });
 
-  it('rejects input outside minTime and maxTime',async  () => {
+  it('rejects input outside minTime and maxTime', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minTime = '08:00';
       f.componentInstance.maxTime = '20:00';
@@ -163,7 +163,7 @@ describe('AuInputTime', () => {
     expect(el.value).toBe('12:00');
   });
 
-  it('accepts input within minTime and maxTime',async  () => {
+  it('accepts input within minTime and maxTime', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minTime = '08:00';
       f.componentInstance.maxTime = '20:00';
@@ -176,7 +176,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).value()).toBe('14:30');
   });
 
-  it('shows error and aria-invalid',async  () => {
+  it('shows error and aria-invalid', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { controlId: 'd1' });
@@ -187,7 +187,7 @@ describe('AuInputTime', () => {
     expect(el.getAttribute('aria-errormessage')).toBe('d1-error');
   });
 
-  it('focus() focuses input',async  () => {
+  it('focus() focuses input', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     await fix.whenStable();
@@ -198,13 +198,13 @@ describe('AuInputTime', () => {
     spy.mockRestore();
   });
 
-  it('onControlRowFocusout early exit',async  () => {
+  it('onControlRowFocusout early exit', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     await fix.whenStable();
     CONTROL(fix).onControlRowFocusout({ currentTarget: {} } as FocusEvent);
   });
 
-  it('onControlRowFocusout when focus stays in row',async  () => {
+  it('onControlRowFocusout when focus stays in row', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     await fix.whenStable();
@@ -214,7 +214,7 @@ describe('AuInputTime', () => {
     CONTROL(fix).onControlRowFocusout(ev);
   });
 
-  it('clears from-tab after leaving row',async  () => {
+  it('clears from-tab after leaving row', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     await fix.whenStable();
@@ -232,7 +232,7 @@ describe('AuInputTime', () => {
     expect(input.classList.contains('au-input-time--from-tab')).toBe(false);
   });
 
-  it('sets hint and aria-describedby',async  () => {
+  it('sets hint and aria-describedby', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { hint: 'ISO format' });
@@ -241,7 +241,7 @@ describe('AuInputTime', () => {
     expect(queryInput(fix).getAttribute('aria-describedby')).toBe(hint.id);
   });
 
-  it('shows error from errors input',async  () => {
+  it('shows error from errors input', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.errors = [{ kind: 'required', message: 'Pick a time' }];
@@ -249,7 +249,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).displayError()).toBe('Pick a time');
   });
 
-  it('displayError uses kind when message missing',async  () => {
+  it('displayError uses kind when message missing', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.errors = [{ kind: 'pattern' }] as any;
@@ -257,7 +257,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).displayError()).toBe('pattern');
   });
 
-  it('displayError empty when first error has no usable text',async  () => {
+  it('displayError empty when first error has no usable text', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     fix.componentInstance.errors = [{ message: '', kind: '' }] as any;
@@ -265,7 +265,7 @@ describe('AuInputTime', () => {
     expect(CONTROL(fix).displayError()).toBe('');
   });
 
-  it('uses explicit id for resolvedId',async  () => {
+  it('uses explicit id for resolvedId', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     applyFieldHarnessInputs(fix, { controlId: 'my-time' });
@@ -278,7 +278,7 @@ describe('AuInputTime', () => {
     CONTROL(fix).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost',async  () => {
+  it('emits blur from onBlurHost', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost);
     applyFieldHarnessInputs(fix, { label: 'D' });
     let n = 0;
@@ -288,6 +288,35 @@ describe('AuInputTime', () => {
     expect(n).toBe(1);
   });
 
+  it('emits blur from native blur event', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    let n = 0;
+    CONTROL(fix).blur.subscribe(() => n++);
+    await fix.whenStable();
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(new FocusEvent('blur'));
+    expect(n).toBe(1);
+  });
+
+  it('opens native picker via icon button click listener', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const input = queryInput(fix);
+    const showPicker = vi.fn();
+    input.showPicker = showPicker;
+    fix.debugElement.query(By.css('.au-input-time__icon'))!.nativeElement.click();
+    expect(showPicker).toHaveBeenCalledOnce();
+  });
+
+  it('skips ensurePickerIcon when icon is already mounted', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const dir = CONTROL(fix) as unknown as { ensurePickerIcon(): void };
+    dir.ensurePickerIcon();
+    dir.ensurePickerIcon();
+    expect(fix.debugElement.queryAll(By.css('.au-input-time__icon')).length).toBe(1);
+  });
+
   it('effectiveInvalid from invalid input without message', () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
       f.componentInstance.invalid = true;
@@ -295,7 +324,7 @@ describe('AuInputTime', () => {
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
-  it('onPickerIconClick opens native picker when enabled',async  () => {
+  it('onPickerIconClick opens native picker when enabled', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
     const input = queryInput(fix);
@@ -322,5 +351,17 @@ describe('AuInputTime', () => {
       CONTROL(fix).onPickerIconClick(new MouseEvent('click'));
       expect(showPicker).not.toHaveBeenCalled();
     }
+  });
+
+  it('keeps from-tab when focus moves to picker icon', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    queryInput(fix).dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await fix.whenStable();
+    const icon = fix.debugElement.query(By.css('.au-input-time__icon'))!
+      .nativeElement as HTMLElement;
+    CONTROL(fix).onControlRowFocusout(new FocusEvent('focusout', { relatedTarget: icon }));
+    expect(queryInput(fix).classList.contains('au-input-time--from-tab')).toBe(true);
   });
 });

@@ -25,25 +25,25 @@ describe('AuChipGroup', () => {
     expect(host.classList.contains('au-chip-group')).toBe(true);
   });
 
-  it('sets aria-label when provided',async  () => {
+  it('sets aria-label when provided', async () => {
     fixture.componentRef.setInput('ariaLabel', 'Filters');
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Filters');
   });
 
-  it('treats null ariaLabel as empty',async  () => {
+  it('treats null ariaLabel as empty', async () => {
     fixture.componentRef.setInput('ariaLabel', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBeNull();
   });
 
-  it('sets aria-labelledby when provided',async  () => {
+  it('sets aria-labelledby when provided', async () => {
     fixture.componentRef.setInput('ariaLabelledBy', 'filters-label');
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBe('filters-label');
   });
 
-  it('treats null ariaLabelledBy as empty',async  () => {
+  it('treats null ariaLabelledBy as empty', async () => {
     fixture.componentRef.setInput('ariaLabelledBy', null as unknown as string);
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBeNull();
@@ -83,7 +83,7 @@ describe('AuChipGroup', () => {
 class ChipGroupHost {}
 
 describe('AuChipGroup integration', () => {
-  it('wraps selectable chips',async  () => {
+  it('wraps selectable chips', async () => {
     const fix = TestBed.createComponent(ChipGroupHost);
     await fix.whenStable();
     expect(fix.nativeElement.querySelector('au-chip-group')?.getAttribute('role')).toBe('group');

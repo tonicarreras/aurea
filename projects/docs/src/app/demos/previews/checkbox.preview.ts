@@ -9,8 +9,14 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--stack">
       <div class="docs-demo-stack">
-        <input type="checkbox" auCheckbox [label]="t().terms" />
-        <input type="checkbox" auCheckbox
+        <input
+          type="checkbox"
+          auCheckbox
+          [label]="t().terms"
+        />
+        <input
+          type="checkbox"
+          auCheckbox
           [label]="t().newsletter"
           [checked]="true"
         />

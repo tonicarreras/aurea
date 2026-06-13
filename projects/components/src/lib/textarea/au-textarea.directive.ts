@@ -9,7 +9,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
@@ -53,7 +53,9 @@ type TextareaResize = 'none' | 'vertical' | 'both';
     '(focusout)': 'onControlRowFocusout($event)',
   },
 })
-export class AuTextarea implements FormValueControl<string | null> {
+/* v8 ignore start */
+export class AuTextarea {
+  /* v8 ignore stop */
   readonly value = model<string | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);

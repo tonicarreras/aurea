@@ -103,9 +103,7 @@ describe('AuTooltip', () => {
     const dialog = document.createElement('dialog');
     dialog.setAttribute('open', '');
     document.body.append(dialog);
-    trigger().dispatchEvent(
-      new FocusEvent('focusout', { bubbles: true, relatedTarget: dialog }),
-    );
+    trigger().dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: dialog }));
     await fixture.whenStable();
     await fixture.whenStable();
     await fixture.whenStable();
@@ -250,5 +248,47 @@ describe('AuTooltip', () => {
     api.removeBubble();
     expect(document.body.contains(el)).toBe(false);
     expect(api.bubble).toBeNull();
+  });
+
+  it('does not show immediately with zero delay when text is empty', async () => {
+    fixture.componentInstance.text = '';
+    fixture.componentInstance.showDelay = 0;
+    fixture.detectChanges();
+    trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    await fixture.whenStable();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show after zero delay when pointer already left', async () => {
+    fixture.componentInstance.showDelay = 50;
+    fixture.detectChanges();
+    trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    trigger().dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 60));
+    fixture.detectChanges();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show with zero delay when focus is not focus-visible', async () => {
+    fixture.componentInstance.showDelay = 0;
+    fixture.detectChanges();
+    trigger().dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await fixture.whenStable();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show after a delayed schedule when pointer already left', async () => {
+    vi.useFakeTimers();
+    try {
+      fixture.componentInstance.showDelay = 100;
+      fixture.detectChanges();
+      trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      trigger().dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+      vi.advanceTimersByTime(100);
+      fixture.detectChanges();
+      expect(bubble()).toBeFalsy();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

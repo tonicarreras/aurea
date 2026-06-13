@@ -21,14 +21,14 @@ describe('AuBadge', () => {
     expect(component).toBeTruthy();
   });
 
-  it('renders label text',async  () => {
+  it('renders label text', async () => {
     fixture.componentRef.setInput('label', '3');
     await fixture.whenStable();
     expect(fixture.nativeElement.textContent).toContain('3');
     expect(component.hasLabel()).toBe(true);
   });
 
-  it('supports dot mode without label',async  () => {
+  it('supports dot mode without label', async () => {
     fixture.componentRef.setInput('label', '');
     fixture.componentRef.setInput('dot', true);
     await fixture.whenStable();
@@ -37,20 +37,20 @@ describe('AuBadge', () => {
     expect(component.hasLabel()).toBe(false);
   });
 
-  it('trims whitespace from label',async  () => {
+  it('trims whitespace from label', async () => {
     fixture.componentRef.setInput('label', '  hi  ');
     await fixture.whenStable();
     expect(component.resolvedLabel()).toBe('hi');
   });
 
-  it('transforms null label to empty string',async  () => {
+  it('transforms null label to empty string', async () => {
     fixture.componentRef.setInput('label', null as unknown as string);
     await fixture.whenStable();
     expect(component.resolvedLabel()).toBe('');
     expect(component.hasLabel()).toBe(false);
   });
 
-  it('sets variant on host',async  () => {
+  it('sets variant on host', async () => {
     fixture.componentRef.setInput('variant', 'success');
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');

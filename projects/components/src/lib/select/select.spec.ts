@@ -45,7 +45,7 @@ describe('AuSelect', () => {
     }).compileComponents();
   });
 
-  it('portals listbox to document.body while open',async  () => {
+  it('portals listbox to document.body while open', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -80,7 +80,7 @@ describe('AuSelect', () => {
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
   });
 
-  it('binds value when an option is chosen',async  () => {
+  it('binds value when an option is chosen', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -108,7 +108,7 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).placeholder()).toBe('');
   });
 
-  it('sets null when placeholder option is chosen',async  () => {
+  it('sets null when placeholder option is chosen', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Choose';
@@ -166,7 +166,7 @@ describe('AuSelect', () => {
     expect(errText?.nativeElement.textContent?.trim()).toBe('This field is required');
   });
 
-  it('does not emit when disabled and changing',async  () => {
+  it('does not emit when disabled and changing', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
@@ -183,7 +183,7 @@ describe('AuSelect', () => {
     expect(n).toBe(0);
   });
 
-  it('renders placeholder option when provided',async  () => {
+  it('renders placeholder option when provided', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Select one...';
@@ -195,7 +195,7 @@ describe('AuSelect', () => {
     expect(options[0].nativeElement.textContent?.trim()).toBe('Select one...');
   });
 
-  it('renders option disabled when option has disabled flag',async  () => {
+  it('renders option disabled when option has disabled flag', async () => {
     const optionsWithDisabled: AuSelectOption[] = [
       { value: 'opt1', label: 'Option One' },
       { value: 'opt2', label: 'Option Two', disabled: true },
@@ -235,7 +235,7 @@ describe('AuSelect', () => {
     (CONTROL(fix) as unknown as { onControlRowFocusin(): void }).onControlRowFocusin();
   });
 
-  it('emits blur from trigger blur',async  () => {
+  it('emits blur from trigger blur', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -293,7 +293,7 @@ describe('AuSelect', () => {
     expect(label.textContent).not.toContain('*');
   });
 
-  it('omits placeholder option when placeholder empty',async  () => {
+  it('omits placeholder option when placeholder empty', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -366,7 +366,7 @@ describe('AuSelect', () => {
     ).toBe('Manual');
   });
 
-  it('applies and clears from-tab on control row',async  () => {
+  it('applies and clears from-tab on control row', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -517,7 +517,7 @@ describe('AuSelect', () => {
     ).toBe('Beta');
   });
 
-  it('trigger click toggles panel closed',async  () => {
+  it('trigger click toggles panel closed', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -545,7 +545,7 @@ describe('AuSelect', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('onTriggerClick is a no-op when disabled only',async  () => {
+  it('onTriggerClick is a no-op when disabled only', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
@@ -555,7 +555,7 @@ describe('AuSelect', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('onTriggerClick is a no-op when readOnly only',async  () => {
+  it('onTriggerClick is a no-op when readOnly only', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
@@ -565,7 +565,7 @@ describe('AuSelect', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('highlights placeholder row on pointer enter',async  () => {
+  it('highlights placeholder row on pointer enter', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Choose';
@@ -639,7 +639,7 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('setValue does not emit when value unchanged',async  () => {
+  it('setValue does not emit when value unchanged', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'opt1';
@@ -656,7 +656,7 @@ describe('AuSelect', () => {
     expect(n).toBe(0);
   });
 
-  it('highlights option on pointer enter',async  () => {
+  it('highlights option on pointer enter', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -671,7 +671,7 @@ describe('AuSelect', () => {
     ).toBe('Option Two');
   });
 
-  it('ignores pointer enter on disabled option',async  () => {
+  it('ignores pointer enter on disabled option', async () => {
     const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
@@ -757,7 +757,7 @@ describe('AuSelect', () => {
     );
   });
 
-  it('activeDescendantId is null when highlight is out of range',async  () => {
+  it('activeDescendantId is null when highlight is out of range', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -809,7 +809,7 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('nextHighlightableIndex returns -1 when list is empty',async  () => {
+  it('nextHighlightableIndex returns -1 when list is empty', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = [];
     });
@@ -824,7 +824,7 @@ describe('AuSelect', () => {
     expect(comp.highlightedIndex()).toBe(-1);
   });
 
-  it('nextHighlightableIndex returns current when no enabled target exists',async  () => {
+  it('nextHighlightableIndex returns current when no enabled target exists', async () => {
     const opts: AuSelectOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
@@ -843,7 +843,7 @@ describe('AuSelect', () => {
     expect(comp.highlightedIndex()).toBe(0);
   });
 
-  it('ArrowUp from unset highlight uses last enabled index',async  () => {
+  it('ArrowUp from unset highlight uses last enabled index', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -881,7 +881,7 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).placeholderOptionIndex()).toBe(-1);
   });
 
-  it('openPanel keeps highlight when already set',async  () => {
+  it('openPanel keeps highlight when already set', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -913,7 +913,7 @@ describe('AuSelect', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('onTriggerClick is a no-op when disabled and readOnly',async  () => {
+  it('onTriggerClick is a no-op when disabled and readOnly', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
@@ -950,7 +950,7 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).value()).toBe('opt2');
   });
 
-  it('pointer enter on option row resolves index with placeholder offset',async  () => {
+  it('pointer enter on option row resolves index with placeholder offset', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Choose';
@@ -985,7 +985,7 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('ArrowDown from unset highlight starts search at index -1',async  () => {
+  it('ArrowDown from unset highlight starts search at index -1', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });

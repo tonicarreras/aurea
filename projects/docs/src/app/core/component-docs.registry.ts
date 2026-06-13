@@ -108,7 +108,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     slug: 'button',
     title: 'Button',
     exportName: 'AuButton',
-    selector: 'au-button',
+    selector: 'button[auButton]',
     summary:
       'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
     demoComponent: ButtonDemo,
@@ -117,8 +117,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
 @Component({
   imports: [AuButton],
   template: \`
-    <button auButton variant="primary">Guardar</button>
-    <button auButton variant="outline">Cancelar</button>
+    <button type="button" auButton variant="primary">Guardar</button>
+    <button type="button" auButton variant="outline">Cancelar</button>
   \`,
 })
 export class Example {}`,
@@ -170,7 +170,7 @@ export class Example {}`,
     slug: 'input-text',
     title: 'Input text',
     exportName: 'AuInputText',
-    selector: 'au-input-text',
+    selector: 'input[auInputText]',
     summary:
       'Control de una línea; envuelve en `au-form-field` para label, hint y error. Signal forms con `formField`.',
     demoComponent: InputTextDemo,
@@ -184,7 +184,7 @@ export class Example {}`,
     slug: 'textarea',
     title: 'Textarea',
     exportName: 'AuTextarea',
-    selector: 'au-textarea',
+    selector: 'textarea[auTextarea]',
     summary: 'Texto multilínea con la misma gramática visual que el resto de campos.',
     demoComponent: TextareaDemo,
     snippet: `import { AuFormField, AuTextarea } from '@aurea-design-system/components';
@@ -197,7 +197,7 @@ export class Example {}`,
     slug: 'checkbox',
     title: 'Checkbox',
     exportName: 'AuCheckbox',
-    selector: 'au-checkbox',
+    selector: 'input[type=checkbox][auCheckbox]',
     summary: 'Selección booleana con estado indeterminado y descripción opcional.',
     demoComponent: CheckboxDemo,
     snippet: `import { AuCheckbox } from '@aurea-design-system/components';
@@ -208,7 +208,7 @@ export class Example {}`,
     slug: 'switch',
     title: 'Switch',
     exportName: 'AuSwitch',
-    selector: 'au-switch',
+    selector: 'button[auSwitch]',
     summary: 'Alternar configuraciones on/off con rol de switch y etiqueta asociada.',
     demoComponent: SwitchDemo,
     snippet: `import { AuFormField, AuSwitch } from '@aurea-design-system/components';
@@ -288,7 +288,7 @@ options: AuSelectOption[] = [
     slug: 'input-number',
     title: 'Input number',
     exportName: 'AuInputNumber',
-    selector: 'au-input-number',
+    selector: 'input[auInputNumber]',
     summary: 'Valor numérico con incremento/decremento y límites opcionales.',
     demoComponent: InputNumberDemo,
     snippet: `import { AuFormField, AuInputNumber } from '@aurea-design-system/components';
@@ -314,7 +314,7 @@ options: AuSelectOption[] = [
     slug: 'input-date',
     title: 'Input date',
     exportName: 'AuInputDate',
-    selector: 'au-input-date',
+    selector: 'input[auInputDate]',
     summary: 'Selector de fecha nativo estilizado con tokens Aurea.',
     demoComponent: InputDateDemo,
     snippet: `import { AuFormField, AuInputDate } from '@aurea-design-system/components';
@@ -327,7 +327,7 @@ options: AuSelectOption[] = [
     slug: 'input-time',
     title: 'Input time',
     exportName: 'AuInputTime',
-    selector: 'au-input-time',
+    selector: 'input[auInputTime]',
     summary: 'Selector de hora nativo estilizado con tokens Aurea.',
     demoComponent: InputTimeDemo,
     snippet: `import { AuFormField, AuInputTime } from '@aurea-design-system/components';
@@ -340,7 +340,7 @@ options: AuSelectOption[] = [
     slug: 'input-password',
     title: 'Input password',
     exportName: 'AuInputPassword',
-    selector: 'au-input-password',
+    selector: 'input[auInputPassword]',
     summary: 'Campo de contraseña con toggle de revelar y tokens Aurea.',
     demoComponent: InputPasswordDemo,
     snippet: `import { AuFormField, AuInputPassword } from '@aurea-design-system/components';
@@ -612,7 +612,7 @@ options: AuSelectOption[] = [
     slug: 'link',
     title: 'Link',
     exportName: 'AuLink',
-    selector: 'a[auLink], au-link',
+    selector: 'a[auLink]',
     summary: 'Enlace inline con tokens semánticos.',
     demoComponent: LinkDemo,
     snippet: `import { AuLink } from '@aurea-design-system/components';

@@ -8,7 +8,6 @@
  * Regenerate bundle: node projects/components/scripts/bundle-aurea-global.mjs
  */
 
-
 /* --- ../input-text/input-text.css --- */
 /**
  * Input text — native input with field chrome (see au-field-chrome.css).
@@ -68,8 +67,6 @@ input.au-input-text:disabled {
   cursor: not-allowed;
   opacity: 0.9;
 }
-
-
 
 /* --- ../textarea/textarea.css --- */
 /**
@@ -153,8 +150,6 @@ textarea.au-textarea:disabled {
   resize: none;
 }
 
-
-
 /* --- ../input-number/input-number.css --- */
 /**
  * Input number — same field chrome as au-input-text.
@@ -216,8 +211,6 @@ input.au-input-number:disabled {
   opacity: 0.9;
   background: transparent;
 }
-
-
 
 /* --- ../input-date/input-date.css --- */
 /**
@@ -398,9 +391,6 @@ input.au-input-date::-moz-focus-inner {
   border: 0;
 }
 
-
-
-
 /* --- ../input-time/input-time.css --- */
 /**
  * Input time — same field chrome as au-input-text.
@@ -573,9 +563,6 @@ input.au-input-time::-moz-focus-inner {
   border: 0;
 }
 
-
-
-
 /* --- ../input-password/input-password.css --- */
 /**
  * Input password — dedicated password field with optional reveal toggle.
@@ -666,9 +653,6 @@ input.au-input-password:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }
-
-
-
 
 /* --- ../checkbox/checkbox.css --- */
 /**
@@ -925,9 +909,6 @@ input.au-checkbox__element[data-au-size='lg'] {
 /* Reduced motion */
 /* -------------------------------------------------------------------------- */
 
-
-
-
 /* --- ../switch/switch.css --- */
 /**
  * Switch — pill toggle from native button + role="switch".
@@ -1117,9 +1098,6 @@ button.au-switch:disabled {
   color: var(--au-color-text-tertiary);
 }
 
-
-
-
 /* --- ../button/button.css --- */
 /**
  * Aurea Button — solid, outline, ghost variants with touch-friendly targets.
@@ -1302,7 +1280,6 @@ button.au-button.au-button--loading .au-button__spinner {
   --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
-
 au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button {
   display: inline-flex;
 }
@@ -1322,14 +1299,12 @@ au-button-group[data-au-attached][data-au-orientation='horizontal']
   margin-inline-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal']
-  button.au-button:first-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button:first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-end-start-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal']
-  button.au-button:last-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button:last-of-type {
   border-start-end-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }
@@ -1340,14 +1315,12 @@ au-button-group[data-au-attached][data-au-orientation='vertical']
   margin-block-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical']
-  button.au-button:first-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-button:first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-start-end-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical']
-  button.au-button:last-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-button:last-of-type {
   border-end-start-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }
@@ -1356,8 +1329,6 @@ au-button-group[data-au-attached] button.au-button:hover:not(:disabled),
 au-button-group[data-au-attached] button.au-button:active:not(:disabled) {
   z-index: 1;
 }
-
-
 
 /* --- ../link/link.css --- */
 a.au-link {
@@ -1392,9 +1363,6 @@ a.au-link[data-au-variant='subtle']:hover {
   color: var(--au-color-link);
   text-decoration: underline;
 }
-
-
-
 
 /* --- ./au-field-chrome.css --- */
 /**
@@ -1440,7 +1408,14 @@ au-autocomplete {
 }
 
 /* Native directive hosts — chrome on the control element (no __control-row wrapper) */
-:is(input.au-input-text, textarea.au-textarea, input.au-input-number, input.au-input-date, input.au-input-time, input.au-input-password) {
+:is(
+  input.au-input-text,
+  textarea.au-textarea,
+  input.au-input-number,
+  input.au-input-date,
+  input.au-input-time,
+  input.au-input-password
+) {
   position: relative;
   z-index: 0;
   display: block;
@@ -1798,9 +1773,6 @@ input.au-input-password:disabled {
   border-color: var(--au-chrome-border-color-hover);
 }
 
-
-
-
 /* --- ./au-field-error.css --- */
 /**
  * Shared validation error message (glyph + text).
@@ -1833,8 +1805,6 @@ input.au-input-password:disabled {
   min-width: 0;
   font-weight: var(--au-weight-regular);
 }
-
-
 
 /* --- ./au-field-listbox.css --- */
 /**
@@ -2023,9 +1993,6 @@ input.au-input-password:disabled {
   }
 }
 
-
-
-
 /* --- ./au-description-list.css --- */
 /**
  * Description list — dt/dd typography and layout (global).
@@ -2141,8 +2108,6 @@ au-description-list[data-au-columns='3'][data-au-layout='vertical'] .au-descript
   column-gap: var(--au-space-8);
 }
 
-
-
 /* --- ./au-accordion.css --- */
 /**
  * Accordion — projected consumer markup (ng-content).
@@ -2215,9 +2180,6 @@ au-accordion button.au-accordion__trigger::after {
 au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after {
   transform: rotate(-135deg);
 }
-
-
-
 
 /* --- ./au-high-contrast-aaa.css --- */
 /**
@@ -2360,5 +2322,3 @@ au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after
   outline-width: 3px;
   outline-offset: 2px;
 }
-
-

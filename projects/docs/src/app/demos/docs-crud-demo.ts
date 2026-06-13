@@ -152,7 +152,8 @@ type CrudEditModel = {
             role="group"
             [attr.aria-label]="t().themeLabel"
           >
-            <button auButton
+            <button
+              auButton
               size="sm"
               type="button"
               [variant]="appearanceTheme() === 'light' ? 'primary' : 'ghost'"
@@ -160,7 +161,8 @@ type CrudEditModel = {
             >
               {{ t().themeLight }}
             </button>
-            <button auButton
+            <button
+              auButton
               size="sm"
               type="button"
               [variant]="appearanceTheme() === 'dark' ? 'primary' : 'ghost'"
@@ -175,11 +177,16 @@ type CrudEditModel = {
             role="group"
             [attr.aria-label]="t().highContrastLabel"
           >
-            <button type="button" auSwitch
+            <button
+              type="button"
+              auSwitch
               size="sm"
               [checked]="highContrastEnabled()"
               (checkedChange)="highContrastEnabled.set($event)"
-              aria-labelledby="docs-crud-a11y-label"><span class="au-sr-only">{{ t().highContrastLabel }}</span></button>
+              aria-labelledby="docs-crud-a11y-label"
+            >
+              <span class="au-sr-only">{{ t().highContrastLabel }}</span>
+            </button>
             <span
               class="docs-crud-frame__inline-label"
               id="docs-crud-a11y-label"
@@ -193,7 +200,8 @@ type CrudEditModel = {
             role="group"
             [attr.aria-label]="t().densityLabel"
           >
-            <button auButton
+            <button
+              auButton
               size="sm"
               type="button"
               [variant]="previewDensity() === 'compact' ? 'primary' : 'ghost'"
@@ -201,7 +209,8 @@ type CrudEditModel = {
             >
               {{ t().densityCompact }}
             </button>
-            <button auButton
+            <button
+              auButton
               size="sm"
               type="button"
               [variant]="previewDensity() === 'comfortable' ? 'primary' : 'ghost'"
@@ -209,7 +218,8 @@ type CrudEditModel = {
             >
               {{ t().densityComfortable }}
             </button>
-            <button auButton
+            <button
+              auButton
               size="sm"
               type="button"
               [variant]="previewDensity() === 'spacious' ? 'primary' : 'ghost'"
@@ -268,7 +278,8 @@ type CrudEditModel = {
                       [label]="t().filterLabel"
                       [hint]="t().filterHint"
                     >
-                      <input auInputText
+                      <input
+                        auInputText
                         type="search"
                         [placeholder]="t().filterPlaceholder"
                         [value]="filter()"
@@ -302,7 +313,8 @@ type CrudEditModel = {
                       [ariaLabel]="t().colActions"
                       [attached]="true"
                     >
-                      <button auButton
+                      <button
+                        auButton
                         type="button"
                         class="docs-crud-app__btn-add"
                         [auTooltip]="t().newPerson"
@@ -317,27 +329,33 @@ type CrudEditModel = {
                         {{ t().newPerson }}
                       </button>
                       <au-popover placement="bottom">
-                        <button auButton
+                        <button
+                          auButton
                           auPopoverTrigger
                           variant="outline"
                           type="button"
-                          >{{ t().exportMenu }}</button
                         >
+                          {{ t().exportMenu }}
+                        </button>
                         <div class="docs-crud-app__export-popover">
-                          <button auButton
+                          <button
+                            auButton
                             variant="ghost"
                             size="sm"
                             type="button"
                             (click)="exportData('csv')"
-                            >{{ t().exportCsv }}</button
                           >
-                          <button auButton
+                            {{ t().exportCsv }}
+                          </button>
+                          <button
+                            auButton
                             variant="ghost"
                             size="sm"
                             type="button"
                             (click)="exportData('json')"
-                            >{{ t().exportJson }}</button
                           >
+                            {{ t().exportJson }}
+                          </button>
                         </div>
                       </au-popover>
                     </au-button-group>
@@ -428,7 +446,9 @@ type CrudEditModel = {
                           />
                         </au-form-field>
                         <div class="docs-crud-app__advanced-toggle">
-                          <input type="checkbox" auCheckbox
+                          <input
+                            type="checkbox"
+                            auCheckbox
                             [label]="t().remoteOnlyLabel"
                             [checked]="awayOnly()"
                             (checkedChange)="onAwayOnlyChange($event)"
@@ -444,20 +464,24 @@ type CrudEditModel = {
                 <au-message variant="info">
                   <div class="docs-crud-app__selection-bar">
                     <span>{{ selectedCountMessage() }}</span>
-                    <button auButton
+                    <button
+                      auButton
                       size="sm"
                       variant="outline"
                       type="button"
                       (click)="clearSelection()"
-                      >{{ t().clearSelection }}</button
                     >
-                    <button auButton
+                      {{ t().clearSelection }}
+                    </button>
+                    <button
+                      auButton
                       size="sm"
                       variant="secondary"
                       type="button"
                       (click)="bulkDelete()"
-                      >{{ t().bulkDelete }}</button
                     >
+                      {{ t().bulkDelete }}
+                    </button>
                   </div>
                 </au-message>
               }
@@ -480,12 +504,14 @@ type CrudEditModel = {
                     [title]="t().emptyTitle"
                     [description]="t().emptyDescription"
                   >
-                    <button auButton
+                    <button
+                      auButton
                       variant="outline"
                       type="button"
                       (click)="resetFilters()"
-                      >{{ t().emptyReset }}</button
                     >
+                      {{ t().emptyReset }}
+                    </button>
                   </au-empty-state>
                 } @else {
                   <au-table
@@ -592,23 +618,27 @@ type CrudEditModel = {
                         let-row
                       >
                         <div class="docs-crud-app__row-actions">
-                          <button auButton
+                          <button
+                            auButton
                             size="sm"
                             variant="ghost"
                             type="button"
                             [auTooltip]="t().viewProfile"
                             (click)="openDrawer(row)"
-                            >{{ t().viewProfile }}</button
                           >
+                            {{ t().viewProfile }}
+                          </button>
                           <au-menu>
-                            <button auButton
+                            <button
+                              auButton
                               auMenuTrigger
                               variant="ghost"
                               size="sm"
                               type="button"
                               [attr.aria-label]="t().colActions + ' — ' + row.name"
-                              >⋯</button
                             >
+                              ⋯
+                            </button>
                             <au-menu-item (select)="openEdit(row)">{{ t().edit }}</au-menu-item>
                             <au-menu-item (select)="openDelete(row)">{{ t().delete }}</au-menu-item>
                           </au-menu>
@@ -753,18 +783,22 @@ type CrudEditModel = {
             </div>
           }
           <div auDrawerFooter>
-            <button auButton
+            <button
+              auButton
               variant="outline"
               type="button"
               (click)="drawerOpen.set(false)"
-              >{{ t().drawerClose }}</button
             >
+              {{ t().drawerClose }}
+            </button>
             @if (detailRow(); as person) {
-              <button auButton
+              <button
+                auButton
                 type="button"
                 (click)="openEditFromDrawer(person)"
-                >{{ t().edit }}</button
               >
+                {{ t().edit }}
+              </button>
             }
           </div>
         </au-drawer>
@@ -780,7 +814,8 @@ type CrudEditModel = {
               [hint]="t().fieldNameHint"
               [required]="true"
             >
-              <input auInputText
+              <input
+                auInputText
                 [formField]="editForm.name"
                 autocomplete="name"
               />
@@ -790,7 +825,8 @@ type CrudEditModel = {
               [hint]="t().fieldEmailHint"
               [required]="true"
             >
-              <input auInputText
+              <input
+                auInputText
                 [formField]="editForm.email"
                 type="email"
                 autocomplete="email"
@@ -820,7 +856,10 @@ type CrudEditModel = {
               [label]="t().fieldJoined"
               [hint]="t().fieldJoinedHint"
             >
-              <input auInputDate [formField]="editForm.joined" />
+              <input
+                auInputDate
+                [formField]="editForm.joined"
+              />
             </au-form-field>
             <au-form-field
               [label]="t().fieldSkills"
@@ -841,23 +880,29 @@ type CrudEditModel = {
               [label]="t().fieldNotes"
               [hint]="t().fieldNotesHint"
             >
-              <textarea auTextarea
+              <textarea
+                auTextarea
                 [formField]="editForm.notes"
-                [rows]="3"></textarea>
+                [rows]="3"
+              ></textarea>
             </au-form-field>
           </div>
           <div auDialogFooter>
-            <button auButton
+            <button
+              auButton
               variant="outline"
               type="button"
               (click)="editOpen.set(false)"
-              >{{ t().cancel }}</button
             >
-            <button auButton
+              {{ t().cancel }}
+            </button>
+            <button
+              auButton
               type="button"
               (click)="saveEdit()"
-              >{{ t().save }}</button
             >
+              {{ t().save }}
+            </button>
           </div>
         </au-dialog>
 
@@ -873,18 +918,22 @@ type CrudEditModel = {
             </p>
           }
           <div auDialogFooter>
-            <button auButton
+            <button
+              auButton
               variant="outline"
               type="button"
               (click)="deleteOpen.set(false)"
-              >{{ t().cancel }}</button
             >
-            <button auButton
+              {{ t().cancel }}
+            </button>
+            <button
+              auButton
               variant="secondary"
               type="button"
               (click)="confirmDelete()"
-              >{{ t().delete }}</button
             >
+              {{ t().delete }}
+            </button>
           </div>
         </au-dialog>
 

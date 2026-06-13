@@ -70,7 +70,7 @@ describe('AuTheme', () => {
     expect(el.getAttribute('data-au-theme')).toBe('high-contrast-dark');
   });
 
-  it('uses prefers-color-scheme when mode is system (dark)',async  () => {
+  it('uses prefers-color-scheme when mode is system (dark)', async () => {
     const mq = {
       matches: true,
       addEventListener: vi.fn(),
@@ -87,7 +87,7 @@ describe('AuTheme', () => {
     expect(mq.addEventListener).toHaveBeenCalled();
   });
 
-  it('uses prefers-color-scheme when mode is system (light)',async  () => {
+  it('uses prefers-color-scheme when mode is system (light)', async () => {
     const mq = {
       matches: false,
       addEventListener: vi.fn(),
@@ -103,7 +103,7 @@ describe('AuTheme', () => {
     expect(el.getAttribute('data-au-theme')).toBe('light');
   });
 
-  it('updates when prefers-color-scheme changes',async  () => {
+  it('updates when prefers-color-scheme changes', async () => {
     let matches = false;
     let changeHandler: (() => void) | undefined;
     const mq = {
@@ -129,7 +129,7 @@ describe('AuTheme', () => {
     expect(el.getAttribute('data-au-theme')).toBe('dark');
   });
 
-  it('skips matchMedia when undefined',async  () => {
+  it('skips matchMedia when undefined', async () => {
     vi.stubGlobal('matchMedia', undefined as unknown as typeof matchMedia);
     const fix = TestBed.createComponent(ThemeHostSystem);
     await fix.whenStable();
@@ -137,7 +137,7 @@ describe('AuTheme', () => {
     expect(el.getAttribute('data-au-theme')).toBe('light');
   });
 
-  it('removes matchMedia listener on destroy',async  () => {
+  it('removes matchMedia listener on destroy', async () => {
     const remove = vi.fn();
     const mq = {
       matches: false,

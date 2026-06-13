@@ -22,7 +22,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Host `button[auButton]`', detail: 'Attributes `data-au-variant` and `data-au-size`.' },
+      {
+        region: 'Host `button[auButton]`',
+        detail: 'Attributes `data-au-variant` and `data-au-size`.',
+      },
       { region: 'Native button', detail: 'Content projection; `aria-busy` when `loading`.' },
     ],
     accessibility: [
@@ -220,7 +223,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   switch: {
     intro: [
-      'On/off switch with `role="switch"` on a styled native checkbox.',
+      'On/off switch with `role="switch"` on a native `<button type="button">`.',
       'Shares field shell (border, error, hint) with other form controls.',
     ],
     whenToUse: {
@@ -290,7 +293,10 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Short fixed list → `au-select`.', 'Free text without a list → `input[auInputText]`.'],
+      items: [
+        'Short fixed list → `au-select`.',
+        'Free text without a list → `input[auInputText]`.',
+      ],
     },
     anatomy: [
       { region: 'Search input', detail: 'Combobox with live query.' },
@@ -1108,8 +1114,8 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       ],
     },
     anatomy: [
-      { region: 'Anchor', detail: 'Host `au-link` with `data-au-variant`.' },
-      { region: 'Projected content', detail: 'Link text in the default slot.' },
+      { region: 'Anchor', detail: 'Host `a[auLink]` with `data-au-variant`.' },
+      { region: 'Link text', detail: 'Native anchor content between opening and closing tags.' },
     ],
     accessibility: [
       'Visible focus ring (`--au-shadow-focus-ring`) on keyboard focus.',

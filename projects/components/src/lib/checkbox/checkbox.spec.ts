@@ -5,6 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { describe, expect, it, vi } from 'vitest';
 import { AuCheckbox } from './au-checkbox.directive';
 import {
   AuCheckboxTestHost,
@@ -17,7 +18,11 @@ describe('AuCheckbox standalone', () => {
   @Component({
     imports: [AuCheckbox],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `<input type="checkbox" auCheckbox [label]="label" />`,
+    template: `<input
+      type="checkbox"
+      auCheckbox
+      [label]="label"
+    />`,
   })
   class StandaloneHost {
     label = 'Accept terms';
@@ -29,7 +34,7 @@ describe('AuCheckbox standalone', () => {
     }).compileComponents();
   });
 
-  it('renders without a parent au-form-field',async  () => {
+  it('renders without a parent au-form-field', async () => {
     const fix = TestBed.createComponent(StandaloneHost);
     await fix.whenStable();
     const input = fix.nativeElement.querySelector('.au-checkbox__element') as HTMLInputElement;
@@ -246,7 +251,7 @@ describe('AuCheckbox', () => {
     expect(n).toBe(1);
   });
 
-  it('does not emit when disabled',async  () => {
+  it('does not emit when disabled', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.disabled = true;
     });
@@ -273,7 +278,7 @@ describe('AuCheckbox', () => {
     expect(queryInput(fix).getAttribute('data-au-size')).toBe('sm');
   });
 
-  it('focus() focuses the native input',async  () => {
+  it('focus() focuses the native input', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
     await fix.whenStable();
     const el = queryInput(fix);
@@ -283,7 +288,7 @@ describe('AuCheckbox', () => {
     spy.mockRestore();
   });
 
-  it('generates id when id input is empty',async  () => {
+  it('generates id when id input is empty', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
     await fix.whenStable();
     expect(queryInput(fix).id.startsWith('au-field-')).toBe(true);
@@ -314,7 +319,7 @@ describe('AuCheckbox', () => {
     expect(input.getAttribute('aria-describedby')).toContain(hint?.nativeElement.id);
   });
 
-  it('onControlFocusout returns early for non-HTMLElement currentTarget',async  () => {
+  it('onControlFocusout returns early for non-HTMLElement currentTarget', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost);
     await fix.whenStable();
     const ev = { currentTarget: {}, relatedTarget: null } as unknown as FocusEvent;
@@ -339,7 +344,7 @@ describe('AuCheckbox', () => {
     expect(queryInput(fix).getAttribute('aria-required')).toBe('true');
   });
 
-  it('clears focus-by-tab when focus leaves wrapper',async  () => {
+  it('clears focus-by-tab when focus leaves wrapper', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'X';
     });
@@ -374,7 +379,7 @@ describe('AuCheckbox', () => {
     expect(CONTROL(fix).description()).toBe('2');
   });
 
-  it('applies sr-only to label content when hideLabel is true',async  () => {
+  it('applies sr-only to label content when hideLabel is true', async () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'Pick me';
       f.componentInstance.hideLabel = true;
@@ -382,5 +387,68 @@ describe('AuCheckbox', () => {
     await fix.whenStable();
     const content = fix.nativeElement.querySelector('.au-checkbox__content') as HTMLElement;
     expect(content.classList.contains('au-sr-only')).toBe(true);
+  });
+
+  it('removes label node when label is cleared after render', async () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.label = 'Terms';
+      f.componentInstance.description = 'Details';
+    });
+    await fix.whenStable();
+    const dir = CONTROL(fix);
+    vi.spyOn(dir, 'label').mockReturnValue('');
+    (dir as unknown as { syncLabelContent(): void }).syncLabelContent();
+    await fix.whenStable();
+    expect(fix.nativeElement.querySelector('.au-checkbox__label')).toBeFalsy();
+  });
+
+  it('removes description when cleared after render', async () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
+      f.componentInstance.description = 'Details';
+    });
+    await fix.whenStable();
+    const dir = CONTROL(fix);
+    vi.spyOn(dir, 'description').mockReturnValue('');
+    (dir as unknown as { syncLabelContent(): void }).syncLabelContent();
+    await fix.whenStable();
+    expect(fix.nativeElement.querySelector('.au-checkbox__description')).toBeFalsy();
+  });
+
+  it('ensureShell returns when parent is not an HTMLElement', async () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, { label: 'Terms' });
+    await fix.whenStable();
+    const dir = CONTROL(fix) as unknown as {
+      ensureShell(): void;
+      host: { nativeElement: HTMLInputElement };
+    };
+    const input = dir.host.nativeElement;
+    document.createDocumentFragment().appendChild(input);
+    expect(() => dir.ensureShell()).not.toThrow();
+  });
+
+  it('syncWrapperState returns when wrapper is missing', () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, { label: 'Terms' });
+    const dir = CONTROL(fix) as unknown as { syncWrapperState(): void; wrapperEl: null };
+    dir.wrapperEl = null;
+    expect(() => dir.syncWrapperState()).not.toThrow();
+  });
+
+  it('syncLabelContent returns when content node is missing', () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, { label: 'Terms' });
+    const dir = CONTROL(fix) as unknown as { syncLabelContent(): void; contentEl: null };
+    dir.contentEl = null;
+    expect(() => dir.syncLabelContent()).not.toThrow();
+  });
+
+  it('emits blur from wrapper focusout listener', async () => {
+    const fix = createFieldFixture(AuCheckboxTestHost, { label: 'Terms' });
+    let n = 0;
+    CONTROL(fix).blur.subscribe(() => n++);
+    await fix.whenStable();
+    const wrapper = fix.debugElement.query(By.css('.au-checkbox__wrapper'))!.nativeElement;
+    wrapper.dispatchEvent(
+      new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
+    );
+    expect(n).toBe(1);
   });
 });

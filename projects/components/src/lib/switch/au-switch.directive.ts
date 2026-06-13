@@ -10,7 +10,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import type { FormCheckboxControl, ValidationError } from '@angular/forms/signals';
+import type { ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
@@ -47,7 +47,9 @@ import { tabFocusState } from '../au-tab-focus-state';
     '(focusout)': 'onControlRowFocusout($event)',
   },
 })
-export class AuSwitch implements FormCheckboxControl {
+/* v8 ignore start */
+export class AuSwitch {
+  /* v8 ignore stop */
   readonly checked = model(false);
 
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });

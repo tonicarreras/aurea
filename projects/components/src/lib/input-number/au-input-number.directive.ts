@@ -9,7 +9,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import type { ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
@@ -48,7 +48,9 @@ import { tabFocusState } from '../au-tab-focus-state';
     '(focusout)': 'onControlRowFocusout($event)',
   },
 })
-export class AuInputNumber implements FormValueControl<number | null> {
+/* v8 ignore start */
+export class AuInputNumber {
+  /* v8 ignore stop */
   readonly value = model<number | null>(null);
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);

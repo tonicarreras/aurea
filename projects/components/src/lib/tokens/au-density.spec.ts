@@ -10,7 +10,7 @@ import { AuDensityDirective } from './au-density';
 class Host {}
 
 describe('AuDensityDirective', () => {
-  it('sets data-au-density on the host',async  () => {
+  it('sets data-au-density on the host', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const el = fixture.nativeElement.querySelector('div') as HTMLElement;

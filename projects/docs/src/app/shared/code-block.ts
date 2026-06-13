@@ -17,7 +17,8 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
     >
       <div class="docs-code-panel__bar">
         <div class="docs-code-panel__bar-start">
-          <button auButton
+          <button
+            auButton
             variant="ghost"
             size="sm"
             type="button"
@@ -37,7 +38,8 @@ import { type CodeLanguage, highlightCode } from './code-highlight';
         </div>
 
         @if (expanded()) {
-          <button auButton
+          <button
+            auButton
             variant="outline"
             size="sm"
             type="button"

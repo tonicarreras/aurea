@@ -28,7 +28,7 @@ describe('AuDivider', () => {
     expect(host.getAttribute('data-au-labeled')).toBeNull();
   });
 
-  it('applies vertical orientation',async  () => {
+  it('applies vertical orientation', async () => {
     fixture.componentRef.setInput('orientation', 'vertical');
     await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
@@ -36,13 +36,13 @@ describe('AuDivider', () => {
     expect(host.getAttribute('data-au-orientation')).toBe('vertical');
   });
 
-  it('applies inset on the host',async  () => {
+  it('applies inset on the host', async () => {
     fixture.componentRef.setInput('inset', true);
     await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-inset')).toBe('');
   });
 
-  it('renders a centered label between rules',async  () => {
+  it('renders a centered label between rules', async () => {
     fixture.componentRef.setInput('label', 'or');
     await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
@@ -51,21 +51,21 @@ describe('AuDivider', () => {
     expect(host.querySelectorAll('.au-divider__rule').length).toBe(2);
   });
 
-  it('ignores whitespace-only labels',async  () => {
+  it('ignores whitespace-only labels', async () => {
     fixture.componentRef.setInput('label', '   ');
     await fixture.whenStable();
     expect(component.hasLabel()).toBe(false);
     expect(fixture.nativeElement.querySelector('.au-divider__label')).toBeNull();
   });
 
-  it('transforms null label to empty string',async  () => {
+  it('transforms null label to empty string', async () => {
     fixture.componentRef.setInput('label', null as unknown as string);
     await fixture.whenStable();
     expect(component.resolvedLabel()).toBe('');
     expect(component.hasLabel()).toBe(false);
   });
 
-  it('does not render labeled layout when orientation is vertical',async  () => {
+  it('does not render labeled layout when orientation is vertical', async () => {
     fixture.componentRef.setInput('orientation', 'vertical');
     fixture.componentRef.setInput('label', 'or');
     await fixture.whenStable();

@@ -38,7 +38,12 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
           </p>
         </div>
         <a [routerLink]="crudDemoLink()">
-          <button auButton variant="primary">{{ i18n.messages().componentsIndex.crudSpotlightCta }}</button>
+          <button
+            auButton
+            variant="primary"
+          >
+            {{ i18n.messages().componentsIndex.crudSpotlightCta }}
+          </button>
         </a>
       </section>
 
@@ -99,7 +104,11 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
       padding: var(--au-space-6);
       border-radius: var(--au-radius-lg);
       border: 1px solid color-mix(in srgb, var(--au-color-action-primary) 28%, transparent);
-      background: color-mix(in srgb, var(--au-color-action-primary) 6%, var(--au-color-surface-raised));
+      background: color-mix(
+        in srgb,
+        var(--au-color-action-primary) 6%,
+        var(--au-color-surface-raised)
+      );
     }
 
     .docs-components-spotlight__content {

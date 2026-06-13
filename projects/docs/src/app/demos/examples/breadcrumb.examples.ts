@@ -6,9 +6,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   selector: 'docs-example-breadcrumb-two-level',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuBreadcrumb],
-  template: `
-    <au-breadcrumb [items]="items()" />
-  `,
+  template: ` <au-breadcrumb [items]="items()" /> `,
 })
 export class ExampleBreadcrumbTwoLevelDemo {
   readonly t = docsExampleLive('breadcrumb');
@@ -22,9 +20,7 @@ export class ExampleBreadcrumbTwoLevelDemo {
   selector: 'docs-example-breadcrumb-deep',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuBreadcrumb],
-  template: `
-    <au-breadcrumb [items]="items()" />
-  `,
+  template: ` <au-breadcrumb [items]="items()" /> `,
 })
 export class ExampleBreadcrumbDeepDemo {
   readonly t = docsExampleLive('breadcrumb');
@@ -43,9 +39,7 @@ export class ExampleBreadcrumbDeepDemo {
   selector: 'docs-example-breadcrumb-links-only',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuBreadcrumb],
-  template: `
-    <au-breadcrumb [items]="items()" />
-  `,
+  template: ` <au-breadcrumb [items]="items()" /> `,
 })
 export class ExampleBreadcrumbLinksOnlyDemo {
   readonly t = docsExampleLive('breadcrumb');

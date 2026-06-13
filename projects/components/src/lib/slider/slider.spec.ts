@@ -44,7 +44,7 @@ describe('AuSlider', () => {
     expect(input.getAttribute('aria-describedby')).not.toBeNull();
   });
 
-  it('updates value on input',async  () => {
+  it('updates value on input', async () => {
     const input = fixture.nativeElement.querySelector('.au-slider__input') as HTMLInputElement;
     input.value = '75';
     input.dispatchEvent(new Event('input'));
@@ -61,7 +61,7 @@ describe('AuSlider standalone', () => {
     fixture = TestBed.createComponent(AuSlider);
   });
 
-  it('ignores input when disabled',async  () => {
+  it('ignores input when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.componentRef.setInput('value', 10);
     await fixture.whenStable();
@@ -71,7 +71,7 @@ describe('AuSlider standalone', () => {
     expect(fixture.componentInstance.value()).toBe(10);
   });
 
-  it('ignores non-finite range values',async  () => {
+  it('ignores non-finite range values', async () => {
     fixture.componentRef.setInput('value', 10);
     await fixture.whenStable();
     fixture.componentInstance.onInput({
@@ -80,7 +80,7 @@ describe('AuSlider standalone', () => {
     expect(fixture.componentInstance.value()).toBe(10);
   });
 
-  it('ignores input when readOnly',async  () => {
+  it('ignores input when readOnly', async () => {
     fixture.componentRef.setInput('readOnly', true);
     fixture.componentRef.setInput('value', 10);
     await fixture.whenStable();
@@ -99,7 +99,7 @@ describe('AuSlider standalone', () => {
     expect(focusSpy).toHaveBeenCalled();
   });
 
-  it('emits blur and clears tab focus styling',async  () => {
+  it('emits blur and clears tab focus styling', async () => {
     let blurred = false;
     fixture.componentInstance.blur.subscribe(() => (blurred = true));
     const row = fixture.nativeElement.querySelector('.au-slider__control-row') as HTMLElement;
@@ -112,7 +112,7 @@ describe('AuSlider standalone', () => {
     expect(blurred).toBe(true);
   });
 
-  it('builds aria-describedby from hint, error, and value output',async  () => {
+  it('builds aria-describedby from hint, error, and value output', async () => {
     fixture.componentRef.setInput('showValue', true);
     fixture.componentRef.setInput('invalid', true);
     await fixture.whenStable();
@@ -122,7 +122,7 @@ describe('AuSlider standalone', () => {
     expect(describedBy).toContain('-value');
   });
 
-  it('keeps tab focus styling when focus moves within the control row',async  () => {
+  it('keeps tab focus styling when focus moves within the control row', async () => {
     fixture.componentRef.setInput('showValue', true);
     await fixture.whenStable();
     const row = fixture.nativeElement.querySelector('.au-slider__control-row') as HTMLElement;

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
-import { resetPageScrollLockForTests } from '../overlay/page-scroll-lock';
 import { AuDrawer } from './drawer';
 
 describe('AuDrawer', () => {
@@ -22,39 +21,75 @@ describe('AuDrawer', () => {
     await TestBed.configureTestingModule({
       imports: [AuDrawer],
     }).compileComponents();
-    resetPageScrollLockForTests();
   });
 
-  afterEach(() => {
-    resetPageScrollLockForTests();
-  });
-
-  it('keeps native dialog closed when open is false',async  () => {
+  it('keeps native dialog closed when open is false', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', false);
     await fix.whenStable();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
   });
 
-  it('opens native dialog when open is true',async  () => {
+  it('opens native dialog when open is true', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('locks page scroll while open and restores on close',async  () => {
+  it('prevents page wheel scroll while open without mutating body layout', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
-    expect(document.body.style.overflow).toBe('hidden');
     expect(document.body.style.position).not.toBe('fixed');
+    expect(document.body.style.overflow).not.toBe('hidden');
+
+    const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+
     fix.componentRef.setInput('open', false);
     await fix.whenStable();
-    expect(document.body.style.overflow).not.toBe('hidden');
+
+    const allowed = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(allowed);
+    expect(allowed.defaultPrevented).toBe(false);
   });
 
-  it('applies position and size on host',async  () => {
+  it('allows wheel scroll inside the drawer panel when it can consume delta', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    fix.componentRef.setInput('open', true);
+    await fix.whenStable();
+    const body = queryNativeDialog(fix).querySelector('.au-drawer__body') as HTMLElement;
+    Object.defineProperty(body, 'scrollTop', { value: 50, writable: true });
+    Object.defineProperty(body, 'scrollHeight', { value: 400, configurable: true });
+    Object.defineProperty(body, 'clientHeight', { value: 200, configurable: true });
+    const permitted = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 10 });
+    body.dispatchEvent(permitted);
+    expect(permitted.defaultPrevented).toBe(false);
+  });
+
+  it('blocks wheel on the drawer backdrop', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    fix.componentRef.setInput('open', true);
+    await fix.whenStable();
+    const dialog = queryNativeDialog(fix);
+    const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 10 });
+    dialog.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+  });
+
+  it('blocks wheel events without a node target', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    fix.componentRef.setInput('open', true);
+    await fix.whenStable();
+    const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    Object.defineProperty(blocked, 'target', { value: null, configurable: true });
+    document.body.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+  });
+
+  it('applies position and size on host', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('position', 'start');
@@ -64,7 +99,7 @@ describe('AuDrawer', () => {
     expect(fix.nativeElement.getAttribute('data-au-size')).toBe('lg');
   });
 
-  it('closes on backdrop click when enabled',async  () => {
+  it('closes on backdrop click when enabled', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -76,7 +111,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(dialog)).toBe(false);
   });
 
-  it('ignores backdrop click when closeOnBackdrop is false',async  () => {
+  it('ignores backdrop click when closeOnBackdrop is false', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('closeOnBackdrop', false);
@@ -88,7 +123,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(dialog)).toBe(true);
   });
 
-  it('prevents cancel when closeOnEscape is false',async  () => {
+  it('prevents cancel when closeOnEscape is false', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('closeOnEscape', false);
@@ -99,7 +134,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('triggers onDialogClose via native dialog close event',async  () => {
+  it('triggers onDialogClose via native dialog close event', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -112,7 +147,7 @@ describe('AuDrawer', () => {
     expect(fix.componentInstance.open()).toBe(false);
   });
 
-  it('closes on close button click',async  () => {
+  it('closes on close button click', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', 'Settings');
@@ -123,7 +158,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
   });
 
-  it('keeps open when clicking inside the panel',async  () => {
+  it('keeps open when clicking inside the panel', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -133,7 +168,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('closes on Escape via cancel when closeOnEscape is true',async  () => {
+  it('closes on Escape via cancel when closeOnEscape is true', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -145,7 +180,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
   });
 
-  it('handles Tab keydown inside the panel',async  () => {
+  it('handles Tab keydown inside the panel', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', 'Settings');
@@ -158,14 +193,14 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('no-ops keydown when closed',async  () => {
+  it('no-ops keydown when closed', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     await fix.whenStable();
     fix.componentInstance.onDialogKeydown(new KeyboardEvent('keydown', { key: 'Tab' }));
     expect(fix.componentInstance.open()).toBe(false);
   });
 
-  it('detects projected drawer footer',async  () => {
+  it('detects projected drawer footer', async () => {
     @Component({
       imports: [AuDrawer, AuDialogFooter],
       template: `
@@ -182,7 +217,7 @@ describe('AuDrawer', () => {
     expect(drawer.hasFooter()).toBe(true);
   });
 
-  it('polyfills close when close is not a function on the instance',async  () => {
+  it('polyfills close when close is not a function on the instance', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -197,7 +232,7 @@ describe('AuDrawer', () => {
     }
   });
 
-  it('returns early from backdrop click when target is inside the panel',async  () => {
+  it('returns early from backdrop click when target is inside the panel', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -208,7 +243,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('no-ops keydown when the panel is missing',async  () => {
+  it('no-ops keydown when the panel is missing', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -236,14 +271,14 @@ describe('AuDrawer', () => {
     }
   });
 
-  it('tolerates missing dialog node in host during render sync',async  () => {
+  it('tolerates missing dialog node in host during render sync', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
     fix.componentRef.setInput('open', true);
     expect(async () => await fix.whenStable()).not.toThrow();
   });
 
-  it('uses native showModal/close when present on the element',async  () => {
+  it('uses native showModal/close when present on the element', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     await fix.whenStable();
     const el = queryNativeDialog(fix);
@@ -275,7 +310,7 @@ describe('AuDrawer', () => {
     expect(() => fix.componentInstance.onCloseButtonClick()).not.toThrow();
   });
 
-  it('ignores backdrop click when dialog node is missing',async  () => {
+  it('ignores backdrop click when dialog node is missing', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
@@ -285,7 +320,7 @@ describe('AuDrawer', () => {
     expect(() => fix.componentInstance.onDialogClick(ev)).not.toThrow();
   });
 
-  it('no-ops cancel when the dialog is not displayed',async  () => {
+  it('no-ops cancel when the dialog is not displayed', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     await fix.whenStable();
     const event = new Event('cancel', { cancelable: true });
@@ -293,18 +328,6 @@ describe('AuDrawer', () => {
     // closeOnEscape defaults to true → no preventDefault
     expect(event.defaultPrevented).toBe(false);
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
-  });
-
-  it('skips scroll unlock when closing an already closed dialog element',async  () => {
-    const fix = TestBed.createComponent(AuDrawer);
-    await fix.whenStable();
-    const el = queryNativeDialog(fix);
-    const inst = fix.componentInstance as unknown as {
-      closeDialogElement: (dialog: HTMLDialogElement) => void;
-    };
-    document.body.style.overflow = 'auto';
-    inst.closeDialogElement(el);
-    expect(document.body.style.overflow).toBe('auto');
   });
 
   it('skips focus save when native dialog is already open', async () => {
@@ -356,7 +379,7 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('uses custom id prefix for the title heading',async  () => {
+  it('uses custom id prefix for the title heading', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('id', 'settings');
     fix.componentRef.setInput('title', 'Settings');
@@ -365,5 +388,68 @@ describe('AuDrawer', () => {
     expect(fix.componentInstance.titleHeadingId()).toBe('settings-title');
     const heading = fix.nativeElement.querySelector('.au-drawer__title') as HTMLElement;
     expect(heading.id).toBe('settings-title');
+  });
+
+  it('applyOpenStateToNativeDialog returns when dialog node is missing', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    await fix.whenStable();
+    const inst = fix.componentInstance as unknown as { applyOpenStateToNativeDialog(): void };
+    vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
+    expect(() => inst.applyOpenStateToNativeDialog()).not.toThrow();
+  });
+
+  it('openDialogElement microtask skips focus when already closed', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    await fix.whenStable();
+    fix.componentRef.setInput('open', false);
+    const dialog = queryNativeDialog(fix);
+    (
+      fix.componentInstance as unknown as { openDialogElement(d: HTMLDialogElement): void }
+    ).openDialogElement(dialog);
+    await new Promise<void>((resolve) => {
+      queueMicrotask(() => resolve());
+    });
+  });
+
+  it('openDialogElement microtask skips focus when panel is missing', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    fix.componentRef.setInput('open', true);
+    await fix.whenStable();
+    const dialog = queryNativeDialog(fix);
+    dialog.querySelector('.au-drawer__panel')?.remove();
+    (
+      fix.componentInstance as unknown as { openDialogElement(d: HTMLDialogElement): void }
+    ).openDialogElement(dialog);
+    await new Promise<void>((resolve) => {
+      queueMicrotask(() => resolve());
+    });
+  });
+
+  it('closeDialogElement polyfills close when native close is unavailable', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    await fix.whenStable();
+    const el = queryNativeDialog(fix);
+    el.setAttribute('open', '');
+    Object.defineProperty(el, 'close', { value: undefined, configurable: true });
+    const dispatchSpy = vi.spyOn(el, 'dispatchEvent');
+    (fix.componentInstance as unknown as { closeDialogElement(d: HTMLDialogElement): void }).closeDialogElement(
+      el,
+    );
+    expect(el.hasAttribute('open')).toBe(false);
+    expect(dispatchSpy).toHaveBeenCalled();
+    delete (el as unknown as { close?: unknown }).close;
+  });
+
+  it('closeDialogElement is noop when polyfilled dialog is already closed', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    await fix.whenStable();
+    const el = queryNativeDialog(fix);
+    Object.defineProperty(el, 'close', { value: undefined, configurable: true });
+    const dispatchSpy = vi.spyOn(el, 'dispatchEvent');
+    (fix.componentInstance as unknown as { closeDialogElement(d: HTMLDialogElement): void }).closeDialogElement(
+      el,
+    );
+    expect(dispatchSpy).not.toHaveBeenCalled();
+    delete (el as unknown as { close?: unknown }).close;
   });
 });
