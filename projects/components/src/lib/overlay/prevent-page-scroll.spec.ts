@@ -35,7 +35,9 @@ describe('canConsumeWheelDelta', () => {
 
   it('returns false at scroll bottom when scrolling down', () => {
     const el = document.createElement('div');
-    defineScrollMetrics(el, { scrollTop: 200, scrollHeight: 400, clientHeight: 200 }, ['scrollTop']);
+    defineScrollMetrics(el, { scrollTop: 200, scrollHeight: 400, clientHeight: 200 }, [
+      'scrollTop',
+    ]);
     expect(canConsumeWheelDelta(el, 10, 0)).toBe(false);
   });
 
@@ -49,18 +51,16 @@ describe('canConsumeWheelDelta', () => {
 
   it('handles horizontal wheel deltas', () => {
     const el = document.createElement('div');
-    defineScrollMetrics(
-      el,
-      { scrollLeft: 10, scrollWidth: 400, clientWidth: 200 },
-      ['scrollLeft'],
-    );
+    defineScrollMetrics(el, { scrollLeft: 10, scrollWidth: 400, clientWidth: 200 }, ['scrollLeft']);
     expect(canConsumeWheelDelta(el, 0, -5)).toBe(true);
 
     defineScrollMetrics(el, { scrollLeft: 0, scrollWidth: 400, clientWidth: 200 }, ['scrollLeft']);
     expect(canConsumeWheelDelta(el, 0, -5)).toBe(false);
     expect(canConsumeWheelDelta(el, 0, 5)).toBe(true);
 
-    defineScrollMetrics(el, { scrollLeft: 200, scrollWidth: 400, clientWidth: 200 }, ['scrollLeft']);
+    defineScrollMetrics(el, { scrollLeft: 200, scrollWidth: 400, clientWidth: 200 }, [
+      'scrollLeft',
+    ]);
     expect(canConsumeWheelDelta(el, 0, 5)).toBe(false);
   });
 });
@@ -70,7 +70,9 @@ describe('createModalScrollAllowPredicate', () => {
     const dialog = document.createElement('dialog');
     const body = document.createElement('div');
     body.className = 'au-dialog__body';
-    defineScrollMetrics(body, { scrollTop: 50, scrollHeight: 400, clientHeight: 200 }, ['scrollTop']);
+    defineScrollMetrics(body, { scrollTop: 50, scrollHeight: 400, clientHeight: 200 }, [
+      'scrollTop',
+    ]);
     dialog.append(body);
     document.body.append(dialog);
 
