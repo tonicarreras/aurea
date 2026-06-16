@@ -11,6 +11,7 @@ import {
   type Signal,
 } from '@angular/core';
 import type { ValidationError } from '@angular/forms/signals';
+import { injectAuFieldId } from './au-field-id-generator';
 
 /** Validation state reported by a projected field control. */
 export interface AuFormFieldControlState {
@@ -114,11 +115,9 @@ export function queryFieldNative<T extends HTMLElement>(host: ElementRef, select
   return el;
 }
 
-let nextStandaloneFieldId = 0;
-
 /** Minimal {@link AuFormFieldContext} when checkbox/switch are not wrapped in `au-form-field`. */
 export function createStandaloneAuFormFieldContext(): AuFormFieldContext {
-  const autoId = `au-field-${++nextStandaloneFieldId}`;
+  const autoId = injectAuFieldId();
   const controlState = signal<AuFormFieldControlState | null>(null);
 
   const label = signal('');
@@ -173,8 +172,6 @@ export function injectAuFormField(): AuFormFieldContext {
   return inject(AU_FORM_FIELD);
 }
 
-let nextFieldId = 0;
-
 /**
  * Design-system **form field**: label, hint, and error chrome around a projected control.
  *
@@ -202,7 +199,7 @@ let nextFieldId = 0;
   providers: [{ provide: AU_FORM_FIELD, useExisting: forwardRef(auFormFieldSelfRef) }],
 })
 export class AuFormField implements AuFormFieldContext {
-  private readonly autoId = `au-field-${++nextFieldId}`;
+  private readonly autoId = injectAuFieldId();
 
   private readonly controlState = signal<AuFormFieldControlState | null>(null);
 

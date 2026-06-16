@@ -2,6 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  Renderer2,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
@@ -13,6 +15,16 @@ import {
 } from '@angular/core';
 import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
+import {
+  ensureModalDialogPortaledToBody,
+  restoreModalDialogPortal,
+  type ModalDialogPortalState,
+} from '../overlay/modal-dialog-portal';
+import {
+  createModalDialogInteractionAllowPredicate,
+  isModalPanelOrFloatingOverlayClick,
+} from '../overlay/modal-backdrop-click';
+import { installOutsideInteractionBlock } from '../overlay/floating-panel-interaction-guard';
 import {
   createModalScrollAllowPredicate,
   installPageScrollPrevention,
@@ -30,6 +42,8 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
  * - **Dismiss:** backdrop click (outside panel), Escape (`closeOnEscape`), close button.
  * - **Focus:** Tab cycles within the panel; focus returns to the trigger on close (WCAG modal pattern).
  * - **Scroll:** background wheel/touch scroll is blocked while open; scroll inside `.au-dialog__body` still works.
+ * - **Pointer:** background clicks are blocked while open so portaled dialogs do not leak interaction to the page.
+ * - **Portal:** native `<dialog>` moves to `document.body` while open so it is not clipped by ancestor overflow.
  * - **Footer:** import `AuDialogFooter` in the host that projects `[auDialogFooter]`.
  *
  * @example
@@ -60,6 +74,10 @@ export class AuDialog {
 
   private readonly host = injectHostRef<HTMLElement>();
   private readonly document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly dialogPortal: ModalDialogPortalState = { anchor: null, unbindHostContext: null };
+  private nativeDialogEl: HTMLDialogElement | null = null;
 
   /** Controls visibility; two-way binding with `[(open)]`. */
   readonly open = model<boolean>(false);
@@ -95,6 +113,14 @@ export class AuDialog {
     return custom ? `${custom}-title` : this.titleDomId;
   });
 
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      if (this.nativeDialogEl) {
+        restoreModalDialogPortal(this.document, this.nativeDialogEl, this.dialogPortal);
+      }
+    });
+  }
+
   /** Syncs `open` to the native `<dialog>` once the view is in the DOM. */
   private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
     this.applyOpenStateToNativeDialog();
@@ -113,9 +139,26 @@ export class AuDialog {
     );
   });
 
+  private readonly blockOutsideInteractionWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installOutsideInteractionBlock(
+        this.document,
+        createModalDialogInteractionAllowPredicate(() => this.nativeDialogEl),
+      ),
+    );
+  });
+
   private nativeDialog(): HTMLDialogElement | null {
+    if (this.nativeDialogEl?.isConnected) {
+      return this.nativeDialogEl;
+    }
     const el = this.host.nativeElement.querySelector('dialog');
-    return el instanceof HTMLDialogElement ? el : null;
+    this.nativeDialogEl = el instanceof HTMLDialogElement ? el : null;
+    return this.nativeDialogEl;
   }
 
   private applyOpenStateToNativeDialog(): void {
@@ -139,6 +182,13 @@ export class AuDialog {
           ? document.activeElement
           : null;
     }
+    ensureModalDialogPortaledToBody(
+      this.document,
+      this.renderer,
+      dialog,
+      this.dialogPortal,
+      this.host.nativeElement,
+    );
     const show = dialog.showModal?.bind(dialog);
     if (show) {
       show();
@@ -186,7 +236,7 @@ export class AuDialog {
       return;
     }
     const target = event.target;
-    if (target instanceof Element && target.closest('.au-dialog__panel')) {
+    if (isModalPanelOrFloatingOverlayClick(target, '.au-dialog__panel')) {
       return;
     }
     const dialog = this.nativeDialog();

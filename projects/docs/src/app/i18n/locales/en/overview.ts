@@ -460,31 +460,46 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
   },
   'input-date': {
     intro: [
-      'Native date picker (`<input type="date">`) with Aurea tokens on icon and OS popup.',
+      'Date picker with Aurea calendar (`<input type="date">` + custom month grid).',
       'Value as ISO `YYYY-MM-DD` or `null`.',
     ],
     whenToUse: {
       title: 'When to use',
-      items: ['Calendar dates with the OS picker.', 'Range filters with `minDate` / `maxDate`.'],
+      items: [
+        'Calendar dates with an accessible, cross-browser month grid.',
+        'Range filters with `minDate` / `maxDate`.',
+      ],
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['Custom inline calendar → composite component or external library.'],
+      items: [
+        'Date range selection (start/end) → two fields or a composite component.',
+        'Always-visible inline calendar → custom layout on top of this control.',
+      ],
     },
     anatomy: [
-      { region: 'Native input', detail: 'Tokens `--au-color-date-picker-*` for icon and accent.' },
+      { region: 'Native input', detail: 'Manual ISO entry; calendar icon opens the panel.' },
+      {
+        region: '`.au-date-calendar` panel',
+        detail: 'Monday-first month grid with month navigation and keyboard support.',
+      },
     ],
-    accessibility: ['Linked label and errors; native OS picker behavior.'],
+    accessibility: [
+      'Linked label and errors; panel uses `role="dialog"` and a `role="grid"` day matrix.',
+      'Input exposes `aria-haspopup="dialog"` and `aria-expanded`; focus returns to the field on close.',
+      'Keyboard: arrows, Home/End, PageUp/PageDown, Enter/Space, and Escape.',
+      'While open, wheel/touch on the page is blocked (`installPageScrollPrevention`); outside scroll dismisses.',
+    ],
   },
   'input-time': {
     intro: [
-      'Native time picker (`<input type="time">`) with Aurea tokens on icon and OS popup.',
+      'Time picker with Aurea panel (`<input type="time">` + hour/minute columns).',
       'Value as 24h `HH:mm` or `null`.',
     ],
     whenToUse: {
       title: 'When to use',
       items: [
-        'Clock times with the OS picker.',
+        'Clock times with accessible, cross-browser hour/minute columns.',
         'Business-hour filters with `minTime` / `maxTime`.',
       ],
     },
@@ -493,11 +508,17 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       items: ['Custom duration steppers → composite component or external library.'],
     },
     anatomy: [
-      { region: 'Native input', detail: 'Tokens `--au-color-date-picker-*` for icon and accent.' },
+      { region: 'Native input', detail: 'Manual `HH:mm` entry; clock icon opens the panel.' },
+      {
+        region: '`.au-time-picker` panel',
+        detail: 'Scrollable hour (0–23) and minute (0–59) columns.',
+      },
     ],
     accessibility: [
-      'Linked label, hint, and errors via `au-form-field` (`aria-invalid`, `aria-describedby`).',
-      'Decorative clock icon (`aria-hidden`); picker opens via native control.',
+      'Linked label, hint, and errors; panel uses `role="dialog"` and `role="listbox"` columns.',
+      'Input exposes `aria-haspopup="dialog"` and `aria-expanded`; focus returns to the field on close.',
+      'Keyboard: arrows, Home/End, PageUp/PageDown (columns), Enter/Space, and Escape.',
+      'While open, wheel/touch on the page is blocked; outside scroll dismisses.',
     ],
   },
   'input-password': {

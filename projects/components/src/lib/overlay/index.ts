@@ -17,3 +17,16 @@ export {
   resolveFieldListboxPortalRoot,
 } from './field-listbox-overlay';
 export { lockPageScroll, unlockPageScroll } from './page-scroll-lock';
+export {
+  bindPortaledModalHostContextObserver,
+  clearPortaledModalHostContext,
+  ensureModalDialogPortaledToBody,
+  needsModalDialogPortal,
+  restoreModalDialogPortal,
+  syncPortaledModalHostContext,
+  type ModalDialogPortalState,
+} from './modal-dialog-portal';
+export {
+  createModalDialogInteractionAllowPredicate,
+  isModalPanelOrFloatingOverlayClick,
+} from './modal-backdrop-click';

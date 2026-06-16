@@ -95,7 +95,8 @@ input.au-input-date::-webkit-datetime-edit-year-field:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   border: 0;
   padding: 0;
   background: transparent;
@@ -140,12 +141,12 @@ input.au-input-date::-webkit-datetime-edit-year-field:focus {
   opacity: 0.9;
 }
 
-input.au-input-date[data-au-bounded-picker] + .au-input-date__icon {
+input.au-input-date[data-au-calendar-picker] + .au-input-date__icon {
   pointer-events: auto;
   cursor: pointer;
 }
 
-input.au-input-date[data-au-bounded-picker]::-webkit-calendar-picker-indicator {
+input.au-input-date[data-au-calendar-picker]::-webkit-calendar-picker-indicator {
   pointer-events: none;
 }
 

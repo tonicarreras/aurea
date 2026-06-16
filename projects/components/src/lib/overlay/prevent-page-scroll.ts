@@ -12,7 +12,7 @@ export type ScrollAllowPredicate = (
 export function canConsumeWheelDelta(el: Element, deltaY: number, deltaX: number): boolean {
   if (Math.abs(deltaY) >= Math.abs(deltaX)) {
     if (deltaY === 0) {
-      return el.scrollHeight > el.clientHeight;
+      return false;
     }
     if (deltaY < 0) {
       return el.scrollTop > 0;
@@ -20,6 +20,9 @@ export function canConsumeWheelDelta(el: Element, deltaY: number, deltaX: number
     return el.scrollTop + el.clientHeight < el.scrollHeight;
   }
 
+  if (deltaX === 0) {
+    return false;
+  }
   if (deltaX < 0) {
     return el.scrollLeft > 0;
   }

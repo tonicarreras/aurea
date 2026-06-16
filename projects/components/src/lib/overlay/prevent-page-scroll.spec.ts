@@ -41,12 +41,46 @@ describe('canConsumeWheelDelta', () => {
     expect(canConsumeWheelDelta(el, 10, 0)).toBe(false);
   });
 
-  it('reports vertical overflow when deltaY is zero', () => {
+  it('returns false when deltaY is zero even with vertical overflow', () => {
     const el = document.createElement('div');
     defineScrollMetrics(el, { scrollHeight: 400, clientHeight: 200 });
-    expect(canConsumeWheelDelta(el, 0, 0)).toBe(true);
-    defineScrollMetrics(el, { scrollHeight: 200, clientHeight: 200 });
     expect(canConsumeWheelDelta(el, 0, 0)).toBe(false);
+  });
+
+  it('blocks vertical wheel at scroll edge when horizontal overflow exists', () => {
+    const el = document.createElement('div');
+    defineScrollMetrics(
+      el,
+      {
+        scrollTop: 200,
+        scrollHeight: 400,
+        clientHeight: 200,
+        scrollLeft: 0,
+        scrollWidth: 600,
+        clientWidth: 200,
+      },
+      ['scrollTop', 'scrollLeft'],
+    );
+    expect(canConsumeWheelDelta(el, 10, 0)).toBe(false);
+  });
+
+  it('blocks vertical wheel when only horizontal overflow exists', () => {
+    const el = document.createElement('div');
+    defineScrollMetrics(el, {
+      scrollTop: 0,
+      scrollHeight: 200,
+      clientHeight: 200,
+      scrollLeft: 0,
+      scrollWidth: 600,
+      clientWidth: 200,
+    });
+    expect(canConsumeWheelDelta(el, 10, 0)).toBe(false);
+  });
+
+  it('returns false when horizontal delta is zero after axis classification', () => {
+    const el = document.createElement('div');
+    defineScrollMetrics(el, { scrollLeft: 10, scrollWidth: 400, clientWidth: 200 }, ['scrollLeft']);
+    expect(canConsumeWheelDelta(el, Number.NaN, 0)).toBe(false);
   });
 
   it('handles horizontal wheel deltas', () => {

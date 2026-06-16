@@ -836,7 +836,7 @@
   --au-floating-panel-border: var(--au-color-border-default);
 }
 
-[data-au-theme='dark'] au-drawer {
+[data-au-theme='dark'] :is(au-drawer, .au-drawer__native) {
   --au-drawer-shadow-end: -10px 0 28px rgba(0, 0, 0, 0.28);
   --au-drawer-shadow-start: 10px 0 28px rgba(0, 0, 0, 0.28);
 }

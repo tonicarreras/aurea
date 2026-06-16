@@ -2,6 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  Renderer2,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
@@ -15,6 +17,16 @@ import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
+import {
+  ensureModalDialogPortaledToBody,
+  restoreModalDialogPortal,
+  type ModalDialogPortalState,
+} from '../overlay/modal-dialog-portal';
+import {
+  createModalDialogInteractionAllowPredicate,
+  isModalPanelOrFloatingOverlayClick,
+} from '../overlay/modal-backdrop-click';
+import { installOutsideInteractionBlock } from '../overlay/floating-panel-interaction-guard';
 import {
   createModalScrollAllowPredicate,
   installPageScrollPrevention,
@@ -30,6 +42,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * - **Visibility:** `[(open)]` syncs with native `<dialog>` via `showModal()`.
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
  * - **Accessibility:** same focus trap as `au-dialog`; background wheel/touch scroll is blocked while open.
+ * - **Portal:** native `<dialog>` moves to `document.body` while open so it is not clipped by ancestor overflow.
  * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
  */
 @Component({
@@ -50,6 +63,10 @@ export class AuDrawer {
 
   private readonly host = injectHostRef<HTMLElement>();
   private readonly document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly dialogPortal: ModalDialogPortalState = { anchor: null, unbindHostContext: null };
+  private nativeDialogEl: HTMLDialogElement | null = null;
   private savedFocus: HTMLElement | null = null;
 
   readonly open = model<boolean>(false);
@@ -76,6 +93,14 @@ export class AuDrawer {
     return custom ? `${custom}-title` : this.titleDomId;
   });
 
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      if (this.nativeDialogEl) {
+        restoreModalDialogPortal(this.document, this.nativeDialogEl, this.dialogPortal);
+      }
+    });
+  }
+
   private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
     this.applyOpenStateToNativeDialog();
   });
@@ -93,9 +118,26 @@ export class AuDrawer {
     );
   });
 
+  private readonly blockOutsideInteractionWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installOutsideInteractionBlock(
+        this.document,
+        createModalDialogInteractionAllowPredicate(() => this.nativeDialogEl),
+      ),
+    );
+  });
+
   private nativeDialog(): HTMLDialogElement | null {
+    if (this.nativeDialogEl?.isConnected) {
+      return this.nativeDialogEl;
+    }
     const el = this.host.nativeElement.querySelector('dialog');
-    return el instanceof HTMLDialogElement ? el : null;
+    this.nativeDialogEl = el instanceof HTMLDialogElement ? el : null;
+    return this.nativeDialogEl;
   }
 
   private applyOpenStateToNativeDialog(): void {
@@ -119,6 +161,13 @@ export class AuDrawer {
           ? document.activeElement
           : null;
     }
+    ensureModalDialogPortaledToBody(
+      this.document,
+      this.renderer,
+      dialog,
+      this.dialogPortal,
+      this.host.nativeElement,
+    );
     const show = dialog.showModal?.bind(dialog);
     if (show) {
       show();
@@ -163,7 +212,7 @@ export class AuDrawer {
       return;
     }
     const target = event.target;
-    if (target instanceof Element && target.closest('.au-drawer__panel')) {
+    if (isModalPanelOrFloatingOverlayClick(target, '.au-drawer__panel')) {
       return;
     }
     const dialog = this.nativeDialog();

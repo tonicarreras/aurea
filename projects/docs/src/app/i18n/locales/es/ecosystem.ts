@@ -9,8 +9,8 @@ export const ECOSYSTEM_ES: EcosystemMessages = {
     columns: { component: 'Componente', level: 'Nivel', since: 'Desde', note: 'Nota' },
     notes: {
       autocomplete: 'Overlay listbox; prueba strictSelection en tus flujos.',
-      'input-date': 'El estilo del selector de fecha nativo varía según el navegador.',
-      'input-time': 'El estilo del selector de hora nativo varía según el navegador.',
+      'input-date': 'Calendario mensual Aurea; min/max deshabilitan días fuera de rango.',
+      'input-time': 'Panel Aurea hora/minuto; min/max deshabilitan franjas fuera de rango.',
       'input-password': 'Campo de contraseña con toggle de revelar; localiza revealLabelShow/Hide.',
       'button-group':
         'Contenedor de `button[auButton]` proyectados; requiere ariaLabel o ariaLabelledBy.',

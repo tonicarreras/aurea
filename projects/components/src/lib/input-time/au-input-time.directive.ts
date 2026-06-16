@@ -19,10 +19,15 @@ import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
 import { displayErrorFromErrors, effectiveInvalidWithField } from '../form-field/form-field';
 import { syncFormFieldControlState } from '../form-field/form-field';
+import {
+  applyNativeTemporalMinMax,
+  isWithinTemporalBounds,
+  syncNativeTemporalValue,
+} from '../field-temporal-bounds';
+import { AuInternalTimePickerPanel } from '../field-time-picker-panel';
 import { bindHostDomEvent } from '../au-host-dom-event';
 import { injectHostRef } from '../au-host-element';
 import { tabFocusState } from '../au-tab-focus-state';
-import { openNativePicker } from '../au-open-native-picker';
 import { AuIcon } from '../icon/icon';
 
 /**
@@ -35,11 +40,12 @@ import { AuIcon } from '../icon/icon';
     class: 'au-input-time',
     '[class.au-input-time--from-tab]': 'fieldFocusByTab()',
     '[attr.data-au-size]': 'size()',
+    '[attr.data-au-time-picker]': '""',
+    '[attr.aria-haspopup]': '"dialog"',
+    '[attr.aria-expanded]': 'pickerOpen() ? "true" : "false"',
     '[attr.type]': '"time"',
     '[id]': 'controlId()',
     '[attr.name]': 'name() || null',
-    '[attr.min]': 'minTime() ?? null',
-    '[attr.max]': 'maxTime() ?? null',
     '[attr.placeholder]': 'placeholder() || null',
     '[attr.autocomplete]': 'autocomplete() ?? null',
     '[attr.aria-invalid]': 'effectiveInvalid() ? "true" : "false"',
@@ -49,7 +55,9 @@ import { AuIcon } from '../icon/icon';
     '[disabled]': 'disabled()',
     '[readOnly]': 'readOnly()',
     '[attr.required]': 'required() ? true : null',
+    '(click)': 'onNativeInputClick($event)',
     '(input)': 'onInput($event)',
+    '(change)': 'onChange($event)',
     '(focusin)': 'onControlRowFocusin()',
     '(focusout)': 'onControlRowFocusout($event)',
   },
@@ -82,9 +90,12 @@ export class AuInputTime {
   private readonly environmentInjector = inject(EnvironmentInjector);
   private readonly appRef = inject(ApplicationRef);
   protected readonly fieldFocusByTab = signal(false);
+  protected readonly pickerOpen = signal(false);
 
   private pickerIconEl: HTMLButtonElement | null = null;
   private iconRef: ComponentRef<AuIcon> | null = null;
+  private pickerPanelRef: ComponentRef<AuInternalTimePickerPanel> | null = null;
+  private anchorHost: HTMLElement | null = null;
 
   readonly controlId = computed(() => this.formField.controlId());
   readonly displayError = displayErrorFromErrors(this.errors);
@@ -124,15 +135,10 @@ export class AuInputTime {
     );
 
     afterRenderEffect(() => {
-      const el = this.host.nativeElement;
-      const display = this.inputDisplay();
-      if (el.value !== display) {
-        el.value = display;
-      }
-    });
-
-    afterRenderEffect(() => {
-      this.ensurePickerIcon();
+      this.ensurePickerChrome();
+      applyNativeTemporalMinMax(this.host.nativeElement, this.minTime(), this.maxTime());
+      syncNativeTemporalValue(this.host.nativeElement, this.inputDisplay());
+      this.syncPickerPanel();
     });
   }
 
@@ -140,33 +146,34 @@ export class AuInputTime {
     if (this.disabled() || this.readOnly()) {
       return;
     }
-    const input = event.target as HTMLInputElement;
-    const raw = input.value;
+    this.reconcileNativeValue(event.target as HTMLInputElement);
+  }
+
+  onChange(event: Event): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    this.reconcileNativeValue(event.target as HTMLInputElement);
+  }
+
+  private reconcileNativeValue(el: HTMLInputElement): void {
+    const raw = el.value;
     if (raw === '') {
       this.value.set(null);
       return;
     }
-    if (!this.isWithinTimeBounds(raw)) {
-      input.value = this.inputDisplay();
+    if (!isWithinTemporalBounds(raw, this.minTime(), this.maxTime())) {
+      el.value = this.inputDisplay();
       return;
     }
     this.value.set(raw);
   }
 
-  /** `HH:mm` (24h) compares lexicographically when bounds use the same format. */
-  private isWithinTimeBounds(time: string): boolean {
-    const min = this.minTime();
-    const max = this.maxTime();
-    if (min && time < min) {
-      return false;
-    }
-    if (max && time > max) {
-      return false;
-    }
-    return true;
-  }
-
   onBlurHost(): void {
+    const el = this.host.nativeElement;
+    if (!this.disabled() && !this.readOnly()) {
+      this.reconcileNativeValue(el);
+    }
     this.blur.emit();
   }
 
@@ -176,7 +183,37 @@ export class AuInputTime {
     }
     event.preventDefault();
     event.stopPropagation();
-    openNativePicker(this.host.nativeElement);
+    this.ensurePickerChrome();
+    this.pickerOpen.set(true);
+    this.syncPickerPanel();
+  }
+
+  onNativeInputClick(event: MouseEvent): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    event.preventDefault();
+    this.ensurePickerChrome();
+    this.togglePicker();
+    this.syncPickerPanel();
+  }
+
+  protected togglePicker(): void {
+    this.pickerOpen.update((open) => !open);
+  }
+
+  protected closePicker(): void {
+    this.pickerOpen.set(false);
+    queueMicrotask(() => {
+      if (this.host.nativeElement.isConnected) {
+        this.host.nativeElement.focus();
+      }
+    });
+  }
+
+  protected onPickerPick(next: string): void {
+    this.value.set(next);
+    this.host.nativeElement.value = next;
   }
 
   onControlRowFocusin(): void {
@@ -208,32 +245,60 @@ export class AuInputTime {
     return false;
   }
 
-  private ensurePickerIcon(): void {
+  private ensurePickerChrome(): void {
     const input = this.host.nativeElement;
     const parent = input.parentNode;
-    if (!(parent instanceof HTMLElement) || this.pickerIconEl?.isConnected) {
+    if (!(parent instanceof HTMLElement)) {
       return;
     }
 
-    this.renderer.addClass(parent, 'au-input-time__anchor');
+    if (!this.anchorHost?.isConnected) {
+      this.anchorHost = parent;
+      this.renderer.addClass(parent, 'au-input-time__anchor');
+    }
 
-    const btn = this.renderer.createElement('button') as HTMLButtonElement;
-    this.renderer.setAttribute(btn, 'type', 'button');
-    this.renderer.addClass(btn, 'au-input-time__icon');
-    this.renderer.setAttribute(btn, 'aria-hidden', 'true');
-    this.renderer.setAttribute(btn, 'tabindex', '-1');
+    if (!this.pickerIconEl?.isConnected) {
+      const btn = this.renderer.createElement('button') as HTMLButtonElement;
+      this.renderer.setAttribute(btn, 'type', 'button');
+      this.renderer.addClass(btn, 'au-input-time__icon');
+      this.renderer.setAttribute(btn, 'aria-hidden', 'true');
+      this.renderer.setAttribute(btn, 'tabindex', '-1');
 
-    const iconHost = this.renderer.createElement('span') as HTMLSpanElement;
-    this.iconRef = createComponent(AuIcon, {
-      environmentInjector: this.environmentInjector,
-      hostElement: iconHost,
-    });
-    this.iconRef.setInput('name', 'clock');
-    this.appRef.attachView(this.iconRef.hostView);
-    this.iconRef.changeDetectorRef.detectChanges();
-    this.renderer.appendChild(btn, iconHost);
-    this.renderer.insertBefore(parent, btn, input.nextSibling);
-    this.renderer.listen(btn, 'click', (event: MouseEvent) => this.onPickerIconClick(event));
-    this.pickerIconEl = btn;
+      const iconHost = this.renderer.createElement('span') as HTMLSpanElement;
+      this.iconRef = createComponent(AuIcon, {
+        environmentInjector: this.environmentInjector,
+        hostElement: iconHost,
+      });
+      this.iconRef.setInput('name', 'clock');
+      this.appRef.attachView(this.iconRef.hostView);
+      this.iconRef.changeDetectorRef.detectChanges();
+      this.renderer.appendChild(btn, iconHost);
+      this.renderer.insertBefore(parent, btn, input.nextSibling);
+      this.renderer.listen(btn, 'click', (event: MouseEvent) => this.onPickerIconClick(event));
+      this.pickerIconEl = btn;
+    }
+
+    if (!this.pickerPanelRef) {
+      this.pickerPanelRef = createComponent(AuInternalTimePickerPanel, {
+        environmentInjector: this.environmentInjector,
+      });
+      this.pickerPanelRef.setInput('ariaLabel', 'Choose a time');
+      this.pickerPanelRef.instance.pick.subscribe((next) => this.onPickerPick(next));
+      this.pickerPanelRef.instance.dismiss.subscribe(() => this.closePicker());
+      this.appRef.attachView(this.pickerPanelRef.hostView);
+      this.renderer.appendChild(parent, this.pickerPanelRef.location.nativeElement);
+    }
+  }
+
+  private syncPickerPanel(): void {
+    if (!this.pickerPanelRef) {
+      return;
+    }
+    this.pickerPanelRef.setInput('open', this.pickerOpen());
+    this.pickerPanelRef.setInput('selected', this.value());
+    this.pickerPanelRef.setInput('minTime', this.minTime());
+    this.pickerPanelRef.setInput('maxTime', this.maxTime());
+    this.pickerPanelRef.setInput('anchor', this.anchorHost ?? this.host.nativeElement);
+    this.pickerPanelRef.changeDetectorRef.detectChanges();
   }
 }

@@ -288,6 +288,20 @@ describe('AuInputTime', () => {
     expect(n).toBe(1);
   });
 
+  it('skips reconcile on blur when disabled or readOnly', async () => {
+    for (const flag of ['disabled', 'readOnly'] as const) {
+      const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+        f.componentInstance[flag] = true;
+        f.componentInstance.value = '09:00';
+      });
+      await fix.whenStable();
+      const el = queryInput(fix);
+      el.value = '10:00';
+      CONTROL(fix).onBlurHost();
+      expect(CONTROL(fix).value()).toBe('09:00');
+    }
+  });
+
   it('emits blur from native blur event', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     let n = 0;
@@ -298,22 +312,56 @@ describe('AuInputTime', () => {
     expect(n).toBe(1);
   });
 
-  it('opens native picker via icon button click listener', async () => {
+  it('reconciles value on native change event', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const el = queryInput(fix);
+    el.value = '16:20';
+    el.dispatchEvent(new Event('change'));
+    await fix.whenStable();
+    expect(CONTROL(fix).value()).toBe('16:20');
+  });
+
+  it('ignores change when disabled', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.disabled = true;
+      f.componentInstance.value = '09:00';
+    });
+    await fix.whenStable();
+    const el = queryInput(fix);
+    el.value = '10:00';
+    el.dispatchEvent(new Event('change'));
+    expect(CONTROL(fix).value()).toBe('09:00');
+  });
+
+  it('toggles picker closed on second native input click', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
     const input = queryInput(fix);
-    const showPicker = vi.fn();
-    input.showPicker = showPicker;
-    fix.debugElement.query(By.css('.au-input-time__icon'))!.nativeElement.click();
-    expect(showPicker).toHaveBeenCalledOnce();
+    input.click();
+    await fix.whenStable();
+    input.click();
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
   });
 
-  it('skips ensurePickerIcon when icon is already mounted', async () => {
+  it('opens time picker via calendar icon button click', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minTime = '08:00';
+      f.componentInstance.maxTime = '20:00';
+    });
+    await fix.whenStable();
+    fix.debugElement.query(By.css('.au-input-time__icon'))!.nativeElement.click();
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+  });
+
+  it('skips ensurePickerChrome when icon is already mounted', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
-    const dir = CONTROL(fix) as unknown as { ensurePickerIcon(): void };
-    dir.ensurePickerIcon();
-    dir.ensurePickerIcon();
+    const dir = CONTROL(fix) as unknown as { ensurePickerChrome(): void };
+    dir.ensurePickerChrome();
+    dir.ensurePickerChrome();
     expect(fix.debugElement.queryAll(By.css('.au-input-time__icon')).length).toBe(1);
   });
 
@@ -324,7 +372,7 @@ describe('AuInputTime', () => {
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });
 
-  it('onPickerIconClick opens native picker when enabled', async () => {
+  it('onPickerIconClick opens time picker panel', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
     const input = queryInput(fix);
@@ -334,9 +382,13 @@ describe('AuInputTime', () => {
     const preventDefault = vi.spyOn(event, 'preventDefault');
     const stopPropagation = vi.spyOn(event, 'stopPropagation');
     CONTROL(fix).onPickerIconClick(event);
+    await fix.whenStable();
     expect(preventDefault).toHaveBeenCalled();
     expect(stopPropagation).toHaveBeenCalled();
-    expect(showPicker).toHaveBeenCalledOnce();
+    expect(showPicker).not.toHaveBeenCalled();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+    expect(queryInput(fix).getAttribute('aria-haspopup')).toBe('dialog');
+    expect(queryInput(fix).getAttribute('aria-expanded')).toBe('true');
   });
 
   it('onPickerIconClick is no-op when disabled or readOnly', async () => {
@@ -363,5 +415,93 @@ describe('AuInputTime', () => {
       .nativeElement as HTMLElement;
     CONTROL(fix).onControlRowFocusout(new FocusEvent('focusout', { relatedTarget: icon }));
     expect(queryInput(fix).classList.contains('au-input-time--from-tab')).toBe(true);
+  });
+
+  it('ignores native click when disabled', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.disabled = true;
+    });
+    await fix.whenStable();
+    queryInput(fix).click();
+    expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
+  });
+
+  it('ignores native click when readOnly', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.readOnly = true;
+    });
+    await fix.whenStable();
+    queryInput(fix).click();
+    expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
+  });
+
+  it('opens picker when clicking the native input', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    queryInput(fix).click();
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+  });
+
+  it('updates value when picking from time panel', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.minTime = '08:00';
+      f.componentInstance.maxTime = '20:00';
+    });
+    await fix.whenStable();
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    await fix.whenStable();
+    const minute = document.body.querySelector(
+      '.au-time-picker__column:last-of-type .au-time-picker__option:not([disabled])',
+    ) as HTMLButtonElement;
+    minute.click();
+    await fix.whenStable();
+    expect(CONTROL(fix).value()).toBeTruthy();
+  });
+
+  it('returns focus to the input when the picker dismisses', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const input = queryInput(fix);
+    const focusSpy = vi.spyOn(input, 'focus');
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    (CONTROL(fix) as unknown as { closePicker(): void }).closePicker();
+    await fix.whenStable();
+    expect(focusSpy).toHaveBeenCalled();
+    focusSpy.mockRestore();
+  });
+
+  it('closePicker skips focus when input is disconnected', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const input = queryInput(fix);
+    const focusSpy = vi.spyOn(input, 'focus');
+    document.createDocumentFragment().appendChild(input);
+    (CONTROL(fix) as unknown as { closePicker(): void }).closePicker();
+    await fix.whenStable();
+    expect(focusSpy).not.toHaveBeenCalled();
+    focusSpy.mockRestore();
+  });
+
+  it('syncPickerPanel no-ops when panel ref is missing', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const dir = CONTROL(fix) as unknown as {
+      syncPickerPanel(): void;
+      pickerPanelRef: null;
+    };
+    dir.pickerPanelRef = null;
+    expect(() => dir.syncPickerPanel()).not.toThrow();
+  });
+
+  it('ensurePickerChrome returns when parent is not an HTMLElement', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const dir = CONTROL(fix) as unknown as { ensurePickerChrome(): void };
+    const input = queryInput(fix);
+    document.createDocumentFragment().appendChild(input);
+    expect(() => dir.ensurePickerChrome()).not.toThrow();
   });
 });

@@ -463,36 +463,46 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
   },
   'input-date': {
     intro: [
-      'Selector de fecha nativo (`<input type="date">`) con tokens Aurea en icono y popup del SO.',
+      'Selector de fecha con calendario Aurea (`<input type="date">` + panel mensual propio).',
       'Valor en formato ISO `YYYY-MM-DD` o `null`.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
       items: [
-        'Fechas de calendario con picker del sistema operativo.',
+        'Fechas de calendario con rejilla mensual accesible y coherente entre navegadores.',
         'Filtros de rango con `minDate` / `maxDate`.',
       ],
     },
     whenNotToUse: {
       title: 'Alternativas',
-      items: ['Calendario inline personalizado → componente compuesto o librería externa.'],
+      items: [
+        'Selección de rango de fechas (inicio/fin) → dos campos o componente compuesto.',
+        'Calendario inline siempre visible → layout personalizado encima de este control.',
+      ],
     },
     anatomy: [
-      { region: 'Input nativo', detail: 'Tokens `--au-color-date-picker-*` para icono y acento.' },
+      { region: 'Input nativo', detail: 'Entrada manual ISO; icono de calendario abre el panel.' },
+      {
+        region: 'Panel `.au-date-calendar`',
+        detail: 'Rejilla mensual (lunes primero), navegación por mes y teclado.',
+      },
     ],
     accessibility: [
-      'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
+      'Label y mensajes de error enlazados; panel con `role="dialog"` y rejilla `role="grid"`.',
+      'Input con `aria-haspopup="dialog"` y `aria-expanded`; al cerrar, el foco vuelve al campo.',
+      'Teclado: flechas, Home/End, PageUp/PageDown, Enter/Espacio y Escape.',
+      'Abierto, rueda/touch en la página se bloquea (`installPageScrollPrevention`); scroll fuera cierra el panel.',
     ],
   },
   'input-time': {
     intro: [
-      'Selector de hora nativo (`<input type="time">`) con tokens Aurea en icono y popup del SO.',
+      'Selector de hora con panel Aurea (`<input type="time">` + columnas hora/minuto).',
       'Valor en formato 24h `HH:mm` o `null`.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
       items: [
-        'Horas del reloj con picker del sistema operativo.',
+        'Horas del reloj con columnas accesibles y coherentes entre navegadores.',
         'Filtros de horario laboral con `minTime` / `maxTime`.',
       ],
     },
@@ -501,11 +511,17 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       items: ['Steppers de duración personalizados → componente compuesto o librería externa.'],
     },
     anatomy: [
-      { region: 'Input nativo', detail: 'Tokens `--au-color-date-picker-*` para icono y acento.' },
+      { region: 'Input nativo', detail: 'Entrada manual `HH:mm`; icono de reloj abre el panel.' },
+      {
+        region: 'Panel `.au-time-picker`',
+        detail: 'Columnas desplazables de horas (0–23) y minutos (0–59).',
+      },
     ],
     accessibility: [
-      'Label, hint y errores enlazados vía `au-form-field` (`aria-invalid`, `aria-describedby`).',
-      'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
+      'Label, hint y errores enlazados; panel con `role="dialog"` y listas `role="listbox"`.',
+      'Input con `aria-haspopup="dialog"` y `aria-expanded`; al cerrar, el foco vuelve al campo.',
+      'Teclado: flechas, Home/End, PageUp/PageDown (columnas), Enter/Espacio y Escape.',
+      'Abierto, rueda/touch en la página se bloquea; scroll fuera cierra el panel.',
     ],
   },
   'input-password': {

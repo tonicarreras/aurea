@@ -152,6 +152,9 @@ export class AuButton {
     const el = this.host.nativeElement;
     const loading = this.loading();
     const wrapper = this.contentWrapper;
+    if (!wrapper) {
+      return;
+    }
 
     if (loading) {
       if (!this.spinnerHost) {
@@ -169,8 +172,8 @@ export class AuButton {
       }
       this.spinnerRef?.setInput('size', this.spinnerSize());
       this.spinnerRef?.changeDetectorRef.detectChanges();
-      this.renderer.addClass(wrapper!, 'au-button__content--hidden');
-      this.renderer.setAttribute(wrapper!, 'aria-hidden', 'true');
+      this.renderer.addClass(wrapper, 'au-button__content--hidden');
+      this.renderer.setAttribute(wrapper, 'aria-hidden', 'true');
       return;
     }
 
@@ -181,7 +184,7 @@ export class AuButton {
       this.renderer.removeChild(el, this.spinnerHost);
       this.spinnerHost = null;
     }
-    this.renderer.removeClass(wrapper!, 'au-button__content--hidden');
-    this.renderer.removeAttribute(wrapper!, 'aria-hidden');
+    this.renderer.removeClass(wrapper, 'au-button__content--hidden');
+    this.renderer.removeAttribute(wrapper, 'aria-hidden');
   }
 }

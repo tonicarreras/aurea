@@ -8,6 +8,7 @@
  * Regenerate bundle: node projects/components/scripts/bundle-aurea-global.mjs
  */
 
+
 /* --- ../input-text/input-text.css --- */
 /**
  * Input text — native input with field chrome (see au-field-chrome.css).
@@ -67,6 +68,8 @@ input.au-input-text:disabled {
   cursor: not-allowed;
   opacity: 0.9;
 }
+
+
 
 /* --- ../textarea/textarea.css --- */
 /**
@@ -150,6 +153,8 @@ textarea.au-textarea:disabled {
   resize: none;
 }
 
+
+
 /* --- ../input-number/input-number.css --- */
 /**
  * Input number — same field chrome as au-input-text.
@@ -211,6 +216,8 @@ input.au-input-number:disabled {
   opacity: 0.9;
   background: transparent;
 }
+
+
 
 /* --- ../input-date/input-date.css --- */
 /**
@@ -310,7 +317,8 @@ input.au-input-date::-webkit-datetime-edit-year-field:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   border: 0;
   padding: 0;
   background: transparent;
@@ -355,12 +363,12 @@ input.au-input-date::-webkit-datetime-edit-year-field:focus {
   opacity: 0.9;
 }
 
-input.au-input-date[data-au-bounded-picker] + .au-input-date__icon {
+input.au-input-date[data-au-calendar-picker] + .au-input-date__icon {
   pointer-events: auto;
   cursor: pointer;
 }
 
-input.au-input-date[data-au-bounded-picker]::-webkit-calendar-picker-indicator {
+input.au-input-date[data-au-calendar-picker]::-webkit-calendar-picker-indicator {
   pointer-events: none;
 }
 
@@ -390,6 +398,8 @@ input.au-input-date[data-au-size='lg']::-webkit-calendar-picker-indicator {
 input.au-input-date::-moz-focus-inner {
   border: 0;
 }
+
+
 
 /* --- ../input-time/input-time.css --- */
 /**
@@ -491,7 +501,8 @@ input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   border: 0;
   padding: 0;
   background: transparent;
@@ -536,6 +547,15 @@ input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
   opacity: 0.9;
 }
 
+input.au-input-time[data-au-time-picker] + .au-input-time__icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+input.au-input-time[data-au-time-picker]::-webkit-calendar-picker-indicator {
+  pointer-events: none;
+}
+
 input.au-input-time::-webkit-calendar-picker-indicator {
   position: absolute;
   inset-inline-end: 0;
@@ -563,15 +583,32 @@ input.au-input-time::-moz-focus-inner {
   border: 0;
 }
 
+
+
 /* --- ../input-password/input-password.css --- */
 /**
  * Input password — dedicated password field with optional reveal toggle.
  * Field chrome: aurea-global.css
+ *
+ * With reveal: the anchor is the control shell (border + states); input and toggle sit in one row.
  */
 
 .au-input-password__anchor {
   position: relative;
   display: block;
+  width: 100%;
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal) {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+  transition: var(--au-transition-control);
 }
 
 input.au-input-password:focus,
@@ -597,6 +634,71 @@ input.au-input-password {
   padding: 0 var(--au-size-field-px-md);
 }
 
+.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password {
+  flex: 1 1 auto;
+  width: auto;
+  position: static;
+  z-index: auto;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal:not(:disabled):hover) {
+  border-color: var(--au-chrome-border-color-hover);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal[aria-invalid='true']:not(:focus)) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-form-error-bg);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal):focus-within {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-focus-inset);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal):focus-within:has(
+    input.au-input-password[aria-invalid='true']
+  ) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-focus-inset-error);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal.au-input-password--from-tab:focus) {
+  box-shadow: none;
+  background: var(--au-color-surface-raised);
+  border-color: var(--au-chrome-border-color);
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal.au-input-password--from-tab:focus[aria-invalid='true']) {
+  border-color: var(--au-color-form-error);
+  background: var(--au-color-surface-raised);
+  box-shadow: none;
+  outline: var(--au-focus-tab-error);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal:disabled) {
+  border-color: var(--au-color-border-subtle);
+  background: var(--au-color-form-disabled-surface);
+  box-shadow: none;
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password:hover,
+.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password:focus,
+.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password[aria-invalid='true'],
+.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password:disabled {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  outline: none;
+}
+
 input.au-input-password[data-au-size='sm'] {
   height: var(--au-size-field-h-sm);
   line-height: var(--au-size-field-h-sm);
@@ -609,10 +711,6 @@ input.au-input-password[data-au-size='lg'] {
   line-height: var(--au-size-field-h-lg);
   font-size: var(--au-size-field-text-lg);
   padding: 0 var(--au-size-field-px-lg);
-}
-
-.au-input-password__anchor:has(input.au-input-password--with-reveal) input.au-input-password {
-  padding-inline-end: 0.35rem;
 }
 
 input.au-input-password::placeholder {
@@ -636,12 +734,19 @@ input.au-input-password:disabled {
   padding-inline: var(--au-space-2-5);
   border: 0;
   border-inline-start: 1px solid var(--au-color-border-subtle);
-  border-radius: 0;
+  border-start-end-radius: var(--au-radius-field);
+  border-end-end-radius: var(--au-radius-field);
   background: transparent;
   color: var(--au-color-text-tertiary);
   cursor: pointer;
   user-select: none;
   transition: var(--au-transition-glyph), var(--au-transition-background);
+}
+
+.au-input-password__reveal .au-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
 }
 
 .au-input-password__reveal:hover:not(:disabled) {
@@ -653,6 +758,17 @@ input.au-input-password:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal:disabled) .au-input-password__reveal {
+  border-inline-start-color: var(--au-color-border-subtle);
+}
+
+.au-input-password__anchor:has(input.au-input-password--with-reveal[aria-invalid='true']:not(:focus))
+  .au-input-password__reveal {
+  border-inline-start-color: color-mix(in srgb, var(--au-color-form-error) 35%, var(--au-color-border-subtle));
+}
+
+
 
 /* --- ../checkbox/checkbox.css --- */
 /**
@@ -905,9 +1021,7 @@ input.au-checkbox__element[data-au-size='lg'] {
   width: 100%;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Reduced motion */
-/* -------------------------------------------------------------------------- */
+
 
 /* --- ../switch/switch.css --- */
 /**
@@ -1097,6 +1211,8 @@ button.au-switch:disabled {
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-tertiary);
 }
+
+
 
 /* --- ../button/button.css --- */
 /**
@@ -1330,6 +1446,8 @@ au-button-group[data-au-attached] button.au-button:active:not(:disabled) {
   z-index: 1;
 }
 
+
+
 /* --- ../link/link.css --- */
 a.au-link {
   display: inline;
@@ -1363,6 +1481,9 @@ a.au-link[data-au-variant='subtle']:hover {
   color: var(--au-color-link);
   text-decoration: underline;
 }
+
+
+
 
 /* --- ./au-field-chrome.css --- */
 /**
@@ -1773,6 +1894,8 @@ input.au-input-password:disabled {
   border-color: var(--au-chrome-border-color-hover);
 }
 
+
+
 /* --- ./au-field-error.css --- */
 /**
  * Shared validation error message (glyph + text).
@@ -1805,6 +1928,8 @@ input.au-input-password:disabled {
   min-width: 0;
   font-weight: var(--au-weight-regular);
 }
+
+
 
 /* --- ./au-field-listbox.css --- */
 /**
@@ -1993,6 +2118,8 @@ input.au-input-password:disabled {
   }
 }
 
+
+
 /* --- ./au-description-list.css --- */
 /**
  * Description list — dt/dd typography and layout (global).
@@ -2108,6 +2235,8 @@ au-description-list[data-au-columns='3'][data-au-layout='vertical'] .au-descript
   column-gap: var(--au-space-8);
 }
 
+
+
 /* --- ./au-accordion.css --- */
 /**
  * Accordion — projected consumer markup (ng-content).
@@ -2180,6 +2309,8 @@ au-accordion button.au-accordion__trigger::after {
 au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after {
   transform: rotate(-135deg);
 }
+
+
 
 /* --- ./au-high-contrast-aaa.css --- */
 /**
@@ -2322,3 +2453,5 @@ au-accordion button.au-accordion__trigger.au-accordion__trigger--expanded::after
   outline-width: 3px;
   outline-offset: 2px;
 }
+
+

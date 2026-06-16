@@ -59,13 +59,13 @@ describe('AuInternalTemporalPickerPanel', () => {
     document.body.querySelectorAll('.au-field-bounded-picker').forEach((el) => el.remove());
   });
 
-  function createHost(): ReturnType<typeof TestBed.createComponent<Host>> {
+  async function createHost(): Promise<ReturnType<typeof TestBed.createComponent<Host>>> {
     const fix = TestBed.createComponent(Host);
-    fix.detectChanges();
+    await fix.whenStable();
     return fix;
   }
 
-  function panelInstance(fix: ReturnType<typeof createHost>): AuInternalTemporalPickerPanel {
+  function panelInstance(fix: ReturnType<typeof TestBed.createComponent<Host>>): AuInternalTemporalPickerPanel {
     return fix.debugElement.query(By.directive(AuInternalTemporalPickerPanel))
       .componentInstance as AuInternalTemporalPickerPanel;
   }
@@ -75,23 +75,20 @@ describe('AuInternalTemporalPickerPanel', () => {
   }
 
   it('renders options when open', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     expect(panelOptions().length).toBe(2);
   });
 
   it('does not render panel when closed', async () => {
-    const fix = createHost();
+    const fix = await createHost();
     fix.componentInstance.open = false;
-    fix.detectChanges();
     await fix.whenStable();
     expect(fix.nativeElement.querySelector('.au-field-bounded-picker')).toBeNull();
   });
 
   it('emits pick and dismiss for enabled option', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     const btn = document.body.querySelector(
       '.au-field-bounded-picker__option:not([disabled])',
@@ -101,15 +98,15 @@ describe('AuInternalTemporalPickerPanel', () => {
     expect(fix.componentInstance.dismissCount).toBe(1);
   });
 
-  it('ignores disabled option picks', () => {
-    const fix = createHost();
+  it('ignores disabled option picks', async () => {
+    const fix = await createHost();
     panelInstance(fix).onPick(OPTIONS[1]);
     expect(fix.componentInstance.picked).toBeNull();
     expect(fix.componentInstance.dismissCount).toBe(0);
   });
 
-  it('dismisses on Escape in panel', () => {
-    const fix = createHost();
+  it('dismisses on Escape in panel', async () => {
+    const fix = await createHost();
     const ev = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true });
     panelInstance(fix).onPanelKeydown(ev);
     expect(ev.defaultPrevented).toBe(true);
@@ -117,8 +114,7 @@ describe('AuInternalTemporalPickerPanel', () => {
   });
 
   it('dismisses on Escape via host panel keydown binding', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     const panel = document.body.querySelector('.au-field-bounded-picker') as HTMLElement;
     const ev = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true });
@@ -128,8 +124,7 @@ describe('AuInternalTemporalPickerPanel', () => {
   });
 
   it('ignores non-Escape keys in panel', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     const panel = document.body.querySelector('.au-field-bounded-picker') as HTMLElement;
     const ev = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
@@ -138,32 +133,30 @@ describe('AuInternalTemporalPickerPanel', () => {
     expect(fix.componentInstance.dismissCount).toBe(0);
   });
 
-  it('dismisses on Escape at document level', () => {
-    const fix = createHost();
+  it('dismisses on Escape at document level', async () => {
+    const fix = await createHost();
     const ev = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true });
     panelInstance(fix).onDocumentKeydown(ev);
     expect(fix.componentInstance.dismissCount).toBe(1);
   });
 
-  it('ignores document Escape when closed', () => {
+  it('ignores document Escape when closed', async () => {
     const fix = TestBed.createComponent(Host);
     fix.componentInstance.open = false;
-    fix.detectChanges();
+    await fix.whenStable();
     panelInstance(fix).onDocumentKeydown(new KeyboardEvent('keydown', { key: 'Escape' }));
     expect(fix.componentInstance.dismissCount).toBe(0);
   });
 
   it('dismisses on outside click', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(fix.componentInstance.dismissCount).toBe(1);
   });
 
   it('ignores click inside panel', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     const panelEl = document.body.querySelector('.au-field-bounded-picker') as HTMLElement;
     panelEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -171,8 +164,7 @@ describe('AuInternalTemporalPickerPanel', () => {
   });
 
   it('ignores click on anchor', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     fix.nativeElement
       .querySelector('.anchor')!
@@ -181,8 +173,7 @@ describe('AuInternalTemporalPickerPanel', () => {
   });
 
   it('ignores click on host element', async () => {
-    const fix = createHost();
-    await fix.whenStable();
+    const fix = await createHost();
     await fix.whenStable();
     fix.nativeElement
       .querySelector('au-internal-temporal-picker-panel')!
@@ -190,8 +181,8 @@ describe('AuInternalTemporalPickerPanel', () => {
     expect(fix.componentInstance.dismissCount).toBe(0);
   });
 
-  it('ignores document click when target is not a Node', () => {
-    const fix = createHost();
+  it('ignores document click when target is not a Node', async () => {
+    const fix = await createHost();
     const ev = new MouseEvent('click', { bubbles: true });
     Object.defineProperty(ev, 'target', { value: null, configurable: true });
     panelInstance(fix).onDocumentClick(ev);
@@ -205,7 +196,6 @@ describe('AuInternalTemporalPickerPanel', () => {
       providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
     }).compileComponents();
     const fix = TestBed.createComponent(Host);
-    fix.detectChanges();
     await fix.whenStable();
     document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(fix.componentInstance.dismissCount).toBe(0);
@@ -220,8 +210,6 @@ describe('AuInternalTemporalPickerPanel', () => {
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('options', OPTIONS);
     fix.componentRef.setInput('anchor', null);
-    fix.detectChanges();
-    await fix.whenStable();
     await fix.whenStable();
     expect(fix.nativeElement.querySelector('.au-field-bounded-picker')).toBeTruthy();
   });

@@ -6,8 +6,15 @@ import { AuDrawer } from './drawer';
 
 describe('AuDrawer', () => {
   function queryNativeDialog(fixture: ComponentFixture<AuDrawer>): HTMLDialogElement {
-    return fixture.debugElement.query(By.css('.au-drawer__native'))!
-      .nativeElement as HTMLDialogElement;
+    const inFixture = fixture.debugElement.query(By.css('.au-drawer__native'));
+    if (inFixture) {
+      return inFixture.nativeElement as HTMLDialogElement;
+    }
+    const inDocument = document.body.querySelector('.au-drawer__native');
+    if (inDocument instanceof HTMLDialogElement) {
+      return inDocument;
+    }
+    throw new Error('drawer dialog not found');
   }
 
   function isDialogOpen(dialog: HTMLDialogElement): boolean {
@@ -35,6 +42,29 @@ describe('AuDrawer', () => {
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
+  });
+
+  it('portals native dialog to document.body when opened inside overflow containers', async () => {
+    @Component({
+      template: `
+        <div style="overflow: hidden">
+          <au-drawer [(open)]="open" />
+        </div>
+      `,
+      imports: [AuDrawer],
+    })
+    class Host {
+      open = true;
+    }
+
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+    const fix = TestBed.createComponent(Host);
+    fix.detectChanges();
+    await fix.whenStable();
+    const dialog = fix.debugElement.query(By.css('.au-drawer__native'))!
+      .nativeElement as HTMLDialogElement;
+    expect(dialog.parentElement).toBe(document.body);
+    fix.destroy();
   });
 
   it('prevents page wheel scroll while open without mutating body layout', async () => {

@@ -681,6 +681,19 @@ describe('AuTable selection', () => {
     expect(fixture.componentInstance.selection.length).toBe(0);
   });
 
+  it('ignores row click on combobox controls', async () => {
+    await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
+    const fixture = TestBed.createComponent(MultiSelectHost);
+    await fixture.whenStable();
+    const table = tableInstance(fixture);
+    const combobox = document.createElement('button');
+    combobox.setAttribute('role', 'combobox');
+    table['onRowClick'](fixture.componentInstance.rows[0], {
+      target: combobox,
+    } as unknown as MouseEvent);
+    expect(fixture.componentInstance.selection.length).toBe(0);
+  });
+
   it('deselects row in single mode when toggled again', async () => {
     await TestBed.configureTestingModule({ imports: [SingleSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(SingleSelectHost);

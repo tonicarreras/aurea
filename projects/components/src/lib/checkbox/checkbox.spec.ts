@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { describe, expect, it, vi } from 'vitest';
+import { AU_FIELD_AUTO_ID_PATTERN } from '../form-field/au-field-id-generator';
 import { AuCheckbox } from './au-checkbox.directive';
 import {
   AuCheckboxTestHost,
@@ -38,7 +39,7 @@ describe('AuCheckbox standalone', () => {
     const fix = TestBed.createComponent(StandaloneHost);
     await fix.whenStable();
     const input = fix.nativeElement.querySelector('.au-checkbox__element') as HTMLInputElement;
-    expect(input.id).toMatch(/^au-field-\d+$/);
+    expect(input.id).toMatch(AU_FIELD_AUTO_ID_PATTERN);
     expect(fix.nativeElement.querySelector('.au-checkbox__label')?.textContent).toContain(
       'Accept terms',
     );

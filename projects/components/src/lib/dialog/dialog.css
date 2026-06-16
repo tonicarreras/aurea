@@ -1,9 +1,15 @@
 /**
  * Dialog — modal panel aligned with au-card surface and spacing.
  * ViewEncapsulation.None: host tokens and ::backdrop on native <dialog>.
+ * Styles target `.au-dialog__native` so portaling the dialog to `document.body` keeps chrome.
  */
 
 au-dialog {
+  display: contents;
+}
+
+au-dialog,
+.au-dialog__native {
   --au-dialog-radius: var(--au-radius-modal);
   --au-dialog-bg: var(--au-color-surface-raised);
   --au-dialog-border: var(--au-chrome-border);
@@ -14,27 +20,26 @@ au-dialog {
   --au-dialog-max-width-md: 35rem;
   --au-dialog-max-width-lg: 45rem;
 
-  display: contents;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-au-dialog[data-au-size='sm'] .au-dialog__panel {
+:is(au-dialog[data-au-size='sm'], .au-dialog__native[data-au-size='sm']) .au-dialog__panel {
   max-width: var(--au-dialog-max-width-sm);
 }
 
-au-dialog[data-au-size='md'] .au-dialog__panel,
-au-dialog:not([data-au-size]) .au-dialog__panel {
+:is(au-dialog[data-au-size='md'], .au-dialog__native[data-au-size='md']) .au-dialog__panel,
+:is(au-dialog:not([data-au-size]), .au-dialog__native:not([data-au-size])) .au-dialog__panel {
   max-width: var(--au-dialog-max-width-md);
 }
 
-au-dialog[data-au-size='lg'] .au-dialog__panel {
+:is(au-dialog[data-au-size='lg'], .au-dialog__native[data-au-size='lg']) .au-dialog__panel {
   max-width: var(--au-dialog-max-width-lg);
 }
 
-au-dialog .au-dialog__native {
+.au-dialog__native {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,16 +57,16 @@ au-dialog .au-dialog__native {
   overscroll-behavior: none;
 }
 
-au-dialog .au-dialog__native:not([open]) {
+.au-dialog__native:not([open]) {
   display: none;
 }
 
-au-dialog .au-dialog__native::backdrop {
+.au-dialog__native::backdrop {
   background: var(--au-color-overlay-scrim);
   animation: au-dialog-backdrop-in var(--au-motion-modal);
 }
 
-au-dialog .au-dialog__panel {
+.au-dialog__native .au-dialog__panel {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -74,13 +79,13 @@ au-dialog .au-dialog__panel {
   animation: au-dialog-panel-in var(--au-motion-modal);
 }
 
-au-dialog[data-au-size='full'] .au-dialog__native {
+:is(au-dialog[data-au-size='full'] .au-dialog__native, .au-dialog__native[data-au-size='full']) {
   align-items: stretch;
   justify-content: stretch;
   padding: var(--au-space-4);
 }
 
-au-dialog[data-au-size='full'] .au-dialog__panel {
+:is(au-dialog[data-au-size='full'], .au-dialog__native[data-au-size='full']) .au-dialog__panel {
   flex: 1 1 auto;
   width: 100%;
   max-width: none;
@@ -90,7 +95,7 @@ au-dialog[data-au-size='full'] .au-dialog__panel {
   border-radius: var(--au-radius-surface);
 }
 
-au-dialog .au-dialog__header {
+.au-dialog__native .au-dialog__header {
   display: flex;
   flex-shrink: 0;
   align-items: flex-start;
@@ -100,7 +105,7 @@ au-dialog .au-dialog__header {
   border-bottom: 1px solid var(--au-color-border-subtle);
 }
 
-au-dialog .au-dialog__title {
+.au-dialog__native .au-dialog__title {
   margin: 0;
   padding: var(--au-space-0-5) 0 0;
   font-size: var(--au-text-lg);
@@ -110,7 +115,7 @@ au-dialog .au-dialog__title {
   color: var(--au-color-text-primary);
 }
 
-au-dialog .au-dialog__close {
+.au-dialog__native .au-dialog__close {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -129,19 +134,19 @@ au-dialog .au-dialog__close {
     var(--au-transition-shadow);
 }
 
-au-dialog .au-dialog__close:hover {
+.au-dialog__native .au-dialog__close:hover {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-subtle);
   color: var(--au-color-text-primary);
 }
 
-au-dialog .au-dialog__close:focus-visible {
+.au-dialog__native .au-dialog__close:focus-visible {
   outline: none;
   border-color: var(--au-color-focus-ring);
   box-shadow: var(--au-focus-inset);
 }
 
-au-dialog .au-dialog__body {
+.au-dialog__native .au-dialog__body {
   flex: 1 1 auto;
   min-height: 0;
   padding: var(--au-space-4);
@@ -152,15 +157,15 @@ au-dialog .au-dialog__body {
   color: var(--au-color-text-secondary);
 }
 
-au-dialog .au-dialog__body > * {
+.au-dialog__native .au-dialog__body > * {
   margin: 0;
 }
 
-au-dialog .au-dialog__body > * + * {
+.au-dialog__native .au-dialog__body > * + * {
   margin-top: var(--au-space-3);
 }
 
-au-dialog .au-dialog__footer {
+.au-dialog__native .au-dialog__footer {
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
@@ -171,7 +176,8 @@ au-dialog .au-dialog__footer {
   border-top: 1px solid var(--au-color-border-subtle);
 }
 
-au-dialog .au-dialog__footer [auDialogFooter],
+.au-dialog__native .au-dialog__footer [auDialogFooter],
+.au-dialog__native [auDialogFooter],
 au-dialog [auDialogFooter] {
   display: flex;
   flex-wrap: wrap;

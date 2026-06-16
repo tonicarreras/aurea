@@ -242,7 +242,7 @@ export class AuTable {
     const target = event.target as HTMLElement;
     if (
       target.closest(
-        'button, a, input, select, textarea, label, [role="button"], input[auCheckbox]',
+        'button, a, input, select, textarea, label, dialog, [role="button"], [role="combobox"], [role="listbox"], [role="option"], input[auCheckbox], .au-field-listbox, au-select, au-menu, au-dialog, au-drawer',
       )
     ) {
       return;

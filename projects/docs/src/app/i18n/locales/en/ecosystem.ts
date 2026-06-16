@@ -9,8 +9,8 @@ export const ECOSYSTEM_EN: EcosystemMessages = {
     columns: { component: 'Component', level: 'Level', since: 'Since', note: 'Note' },
     notes: {
       autocomplete: 'Listbox overlay; test strictSelection in your flows.',
-      'input-date': 'Native date picker styling varies by browser.',
-      'input-time': 'Native time picker styling varies by browser.',
+      'input-date': 'Aurea month-grid calendar; min/max disable out-of-range days.',
+      'input-time': 'Aurea hour/minute panel; min/max disable out-of-range slots.',
       'input-password':
         'Dedicated password field with reveal toggle; localize revealLabelShow/Hide.',
       'button-group':

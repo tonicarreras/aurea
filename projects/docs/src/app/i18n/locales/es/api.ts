@@ -367,7 +367,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuInputDate',
         description:
-          'Proyecta dentro de `au-form-field`. Selector nativo `type="date"`; ISO `YYYY-MM-DD` o `null`.',
+          'Proyecta dentro de `au-form-field`. Input `type="date"` con panel de calendario Aurea; ISO `YYYY-MM-DD` o `null`.',
         rows: [
           m('value', 'ModelSignal<string | null>', 'Fecha como string ISO.'),
           i('errors', 'ValidationError[]', 'Signal forms.', '[]'),
@@ -390,7 +390,7 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       {
         title: 'AuInputTime',
         description:
-          'Proyecta dentro de `au-form-field`. Selector nativo `type="time"`; valor `HH:mm` o `null`.',
+          'Proyecta dentro de `au-form-field`. Input `type="time"` con panel Aurea; valor `HH:mm` o `null`.',
         rows: [
           m('value', 'ModelSignal<string | null>', 'Hora como string 24h.'),
           i('errors', 'ValidationError[]', 'Signal forms.', '[]'),

@@ -153,16 +153,16 @@
   --au-floating-panel-border: #000000;
 }
 
-[data-au-theme='high-contrast'] au-dialog .au-dialog__native::backdrop {
+[data-au-theme='high-contrast'] :is(au-dialog .au-dialog__native, .au-dialog__native)::backdrop {
   background: rgba(0, 0, 0, 0.72);
 }
 
-[data-au-theme='high-contrast'] au-drawer {
+[data-au-theme='high-contrast'] :is(au-drawer, .au-drawer__native) {
   --au-drawer-shadow-end: 0 0 0 1px var(--au-color-border-default);
   --au-drawer-shadow-start: 0 0 0 1px var(--au-color-border-default);
 }
 
-[data-au-theme='high-contrast'] au-drawer .au-drawer__native::backdrop {
+[data-au-theme='high-contrast'] :is(au-drawer .au-drawer__native, .au-drawer__native)::backdrop {
   background: rgba(0, 0, 0, 0.72);
 }
 
@@ -314,15 +314,15 @@
   --au-floating-panel-border: #ffffff;
 }
 
-[data-au-theme='high-contrast-dark'] au-dialog .au-dialog__native::backdrop {
+[data-au-theme='high-contrast-dark'] :is(au-dialog .au-dialog__native, .au-dialog__native)::backdrop {
   background: rgba(255, 255, 255, 0.2);
 }
 
-[data-au-theme='high-contrast-dark'] au-drawer {
+[data-au-theme='high-contrast-dark'] :is(au-drawer, .au-drawer__native) {
   --au-drawer-shadow-end: 0 0 0 2px var(--au-color-border-default);
   --au-drawer-shadow-start: 0 0 0 2px var(--au-color-border-default);
 }
 
-[data-au-theme='high-contrast-dark'] au-drawer .au-drawer__native::backdrop {
+[data-au-theme='high-contrast-dark'] :is(au-drawer .au-drawer__native, .au-drawer__native)::backdrop {
   background: rgba(255, 255, 255, 0.2);
 }

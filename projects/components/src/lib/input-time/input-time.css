@@ -97,7 +97,8 @@ input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   border: 0;
   padding: 0;
   background: transparent;
@@ -140,6 +141,15 @@ input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
 .au-input-time__anchor:has(input.au-input-time:disabled) .au-input-time__icon {
   color: var(--au-color-form-disabled-foreground);
   opacity: 0.9;
+}
+
+input.au-input-time[data-au-time-picker] + .au-input-time__icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+input.au-input-time[data-au-time-picker]::-webkit-calendar-picker-indicator {
+  pointer-events: none;
 }
 
 input.au-input-time::-webkit-calendar-picker-indicator {

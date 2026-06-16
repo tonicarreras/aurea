@@ -63,6 +63,13 @@
   display: block;
 }
 
+.au-form-field__control.au-input-password__anchor:has(.au-input-password--with-reveal) {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+}
+
 .au-form-field__hint {
   margin: 0;
   font-size: var(--au-text-xs);

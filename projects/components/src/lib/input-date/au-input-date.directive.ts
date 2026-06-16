@@ -24,12 +24,10 @@ import {
   isWithinTemporalBounds,
   syncNativeTemporalValue,
 } from '../field-temporal-bounds';
-import { AuInternalTemporalPickerPanel } from '../field-bounded-temporal-picker';
-import { buildDatePickerOptions, hasTemporalBounds } from '../field-temporal-options';
+import { AuInternalDateCalendarPanel } from '../field-date-calendar-panel';
 import { bindHostDomEvent } from '../au-host-dom-event';
 import { injectHostRef } from '../au-host-element';
 import { tabFocusState } from '../au-tab-focus-state';
-import { openNativePicker } from '../au-open-native-picker';
 import { AuIcon } from '../icon/icon';
 
 /**
@@ -42,7 +40,9 @@ import { AuIcon } from '../icon/icon';
     class: 'au-input-date',
     '[class.au-input-date--from-tab]': 'fieldFocusByTab()',
     '[attr.data-au-size]': 'size()',
-    '[attr.data-au-bounded-picker]': 'useBoundedPicker() ? "" : null',
+    '[attr.data-au-calendar-picker]': '""',
+    '[attr.aria-haspopup]': '"dialog"',
+    '[attr.aria-expanded]': 'pickerOpen() ? "true" : "false"',
     '[attr.type]': '"date"',
     '[id]': 'controlId()',
     '[attr.name]': 'name() || null',
@@ -94,11 +94,8 @@ export class AuInputDate {
 
   private pickerIconEl: HTMLButtonElement | null = null;
   private iconRef: ComponentRef<AuIcon> | null = null;
-  private pickerPanelRef: ComponentRef<AuInternalTemporalPickerPanel> | null = null;
+  private pickerPanelRef: ComponentRef<AuInternalDateCalendarPanel> | null = null;
   private anchorHost: HTMLElement | null = null;
-
-  readonly useBoundedPicker = computed(() => hasTemporalBounds(this.minDate(), this.maxDate()));
-  readonly pickerOptions = computed(() => buildDatePickerOptions(this.minDate(), this.maxDate()));
 
   readonly controlId = computed(() => this.formField.controlId());
   readonly displayError = displayErrorFromErrors(this.errors);
@@ -187,18 +184,12 @@ export class AuInputDate {
     event.preventDefault();
     event.stopPropagation();
     this.ensurePickerChrome();
-    if (this.useBoundedPicker()) {
-      this.pickerOpen.set(true);
-      this.syncPickerPanel();
-      return;
-    }
-    const el = this.host.nativeElement;
-    applyNativeTemporalMinMax(el, this.minDate(), this.maxDate());
-    openNativePicker(el);
+    this.pickerOpen.set(true);
+    this.syncPickerPanel();
   }
 
   onNativeInputClick(event: MouseEvent): void {
-    if (!this.useBoundedPicker() || this.disabled() || this.readOnly()) {
+    if (this.disabled() || this.readOnly()) {
       return;
     }
     event.preventDefault();
@@ -213,6 +204,11 @@ export class AuInputDate {
 
   protected closePicker(): void {
     this.pickerOpen.set(false);
+    queueMicrotask(() => {
+      if (this.host.nativeElement.isConnected) {
+        this.host.nativeElement.focus();
+      }
+    });
   }
 
   protected onPickerPick(next: string): void {
@@ -282,8 +278,8 @@ export class AuInputDate {
       this.pickerIconEl = btn;
     }
 
-    if (this.useBoundedPicker() && !this.pickerPanelRef) {
-      this.pickerPanelRef = createComponent(AuInternalTemporalPickerPanel, {
+    if (!this.pickerPanelRef) {
+      this.pickerPanelRef = createComponent(AuInternalDateCalendarPanel, {
         environmentInjector: this.environmentInjector,
       });
       this.pickerPanelRef.setInput('ariaLabel', 'Choose a date');
@@ -299,9 +295,10 @@ export class AuInputDate {
       return;
     }
     this.pickerPanelRef.setInput('open', this.pickerOpen());
-    this.pickerPanelRef.setInput('options', this.pickerOptions());
     this.pickerPanelRef.setInput('selected', this.value());
-    this.pickerPanelRef.setInput('anchor', this.host.nativeElement);
+    this.pickerPanelRef.setInput('minDate', this.minDate());
+    this.pickerPanelRef.setInput('maxDate', this.maxDate());
+    this.pickerPanelRef.setInput('anchor', this.anchorHost ?? this.host.nativeElement);
     this.pickerPanelRef.changeDetectorRef.detectChanges();
   }
 }

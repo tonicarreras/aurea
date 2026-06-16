@@ -103,7 +103,7 @@ export const CalendarTheming: Story = {
     docs: {
       description: {
         story:
-          'Abre el calendario nativo y cambia **Tema** en la barra. El popup sigue siendo del navegador (`accent-color` en Firefox, `color-scheme`); los segmentos inline usan tokens Aurea (WebKit y Firefox). En Chromium/Safari el icono es el de Aurea; en Firefox se usa el icono nativo (no se puede ocultar por CSS).',
+          'Abre el calendario Aurea (rejilla mensual accesible) y cambia **Tema** en la barra. Los días fuera de `minDate`/`maxDate` aparecen deshabilitados; el segmento inline del input sigue usando tokens nativos del navegador.',
       },
     },
   },

@@ -180,6 +180,30 @@ describe('TooltipOverlay', () => {
     wrap.remove();
   });
 
+  it('portals bubble to an open modal dialog when the anchor is inside it', () => {
+    const dialog = document.createElement('dialog');
+    dialog.setAttribute('open', '');
+    const panel = document.createElement('div');
+    panel.className = 'au-dialog__panel';
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
+    const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
+    wrap.append(anchor, bubble);
+    panel.append(wrap);
+    dialog.append(panel);
+    document.body.append(dialog);
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    expect(bubble.parentElement).toBe(dialog);
+    (overlay as unknown as { anchor: Comment | null }).anchor = null;
+    overlay.detach();
+    expect(dialog.contains(bubble)).toBe(false);
+    dialog.remove();
+  });
+
   it('detach is safe when nothing is active', () => {
     expect(() => createOverlay().detach()).not.toThrow();
   });
@@ -278,6 +302,63 @@ describe('TooltipOverlay', () => {
     anchor.getBoundingClientRect = () => new DOMRect(10, 80, 30, 20);
     window.dispatchEvent(new Event('scroll'));
     expect(bubble.style.top).not.toBe(topBefore);
+    overlay.detach();
+    anchor.remove();
+    bubble.remove();
+  });
+
+  it('does not reposition when scrolling inside a floating panel', () => {
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(10, 10, 30, 20);
+    const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
+    const column = document.createElement('div');
+    bubble.append(column);
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 40, 60);
+    document.body.append(anchor, bubble);
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    const topBefore = bubble.style.top;
+    column.dispatchEvent(new Event('scroll', { bubbles: true }));
+    expect(bubble.style.top).toBe(topBefore);
+    overlay.detach();
+    anchor.remove();
+    bubble.remove();
+  });
+
+  it('reuses the visible bubble rect when repositioning after the first layout', () => {
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(10, 10, 30, 20);
+    const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 40, 20);
+    document.body.append(anchor, bubble);
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    expect(bubble.style.visibility).not.toBe('hidden');
+    anchor.getBoundingClientRect = () => new DOMRect(10, 80, 30, 20);
+    window.dispatchEvent(new Event('resize'));
+    expect(bubble.style.visibility).not.toBe('hidden');
+    overlay.detach();
+    anchor.remove();
+    bubble.remove();
+  });
+
+  it('remeasures when a visible portaled bubble reports zero size', () => {
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(10, 10, 30, 20);
+    const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
+    let calls = 0;
+    bubble.getBoundingClientRect = () => {
+      calls += 1;
+      return calls === 1 ? new DOMRect(0, 0, 40, 20) : new DOMRect(0, 0, 0, 0);
+    };
+    document.body.append(anchor, bubble);
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom');
+    window.dispatchEvent(new Event('resize'));
+    expect(bubble.style.visibility).not.toBe('hidden');
     overlay.detach();
     anchor.remove();
     bubble.remove();
@@ -495,6 +576,34 @@ describe('FieldListboxOverlay', () => {
     expect(listbox.style.top).toBe('54px');
     window.dispatchEvent(new Event('resize'));
     expect(listbox.style.width).toBe('120px');
+    overlay.detach();
+    listbox.remove();
+    anchor.remove();
+  });
+
+  it('does not reposition when scrolling inside the portaled listbox', () => {
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 10,
+        left: 0,
+        width: 100,
+        top: 0,
+        right: 100,
+        height: 10,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    const scroller = document.createElement('div');
+    listbox.append(scroller);
+    document.body.append(anchor, listbox);
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+    const topBefore = listbox.style.top;
+    scroller.dispatchEvent(new Event('scroll', { bubbles: true }));
+    expect(listbox.style.top).toBe(topBefore);
     overlay.detach();
     listbox.remove();
     anchor.remove();

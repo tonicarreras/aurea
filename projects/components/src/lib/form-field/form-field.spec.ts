@@ -9,6 +9,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AuInputText } from '../input-text/au-input-text.directive';
+import { AuCheckbox } from '../checkbox/au-checkbox.directive';
 import {
   AU_FORM_FIELD,
   AuFormField,
@@ -18,12 +19,17 @@ import {
   queryFieldNative,
   syncFormFieldControlState,
 } from './form-field';
+import { AU_FIELD_AUTO_ID_PATTERN } from './au-field-id-generator';
 import { AuInputTextTestHost, createFieldFixture } from './form-field.spec-hosts';
 import {
   defaultFieldChromeArgs,
   formFieldControlRender,
   formFieldHintOnlyRender,
 } from './form-field.stories-chrome';
+
+function standaloneFormFieldContext(): ReturnType<typeof createStandaloneAuFormFieldContext> {
+  return TestBed.runInInjectionContext(() => createStandaloneAuFormFieldContext());
+}
 
 @Component({
   selector: 'au-test-form-field-child',
@@ -40,6 +46,26 @@ class FormFieldChildProbe {
   template: '<au-form-field label="Probe"><au-test-form-field-child /></au-form-field>',
 })
 class FormFieldProviderHost {}
+
+@Component({
+  imports: [AuFormField, AuInputText, AuCheckbox],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <au-form-field label="Email">
+      <input
+        auInputText
+        type="email"
+      />
+    </au-form-field>
+    <input
+      type="checkbox"
+      auCheckbox
+      [hideLabel]="true"
+      label="Select row"
+    />
+  `,
+})
+class FieldAndCheckboxIdHost {}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -124,13 +150,38 @@ describe('AuFormField', () => {
   it('treats null controlId as auto id', async () => {
     fixture.componentRef.setInput('controlIdInput', null as unknown as string);
     await fixture.whenStable();
-    expect(fixture.componentInstance.controlId()).toMatch(/^au-field-\d+$/);
+    expect(fixture.componentInstance.controlId()).toMatch(AU_FIELD_AUTO_ID_PATTERN);
   });
 
   it('uses auto id when controlId is only whitespace', async () => {
     fixture.componentRef.setInput('controlIdInput', '   ');
     await fixture.whenStable();
-    expect(fixture.componentInstance.controlId()).toMatch(/^au-field-\d+$/);
+    expect(fixture.componentInstance.controlId()).toMatch(AU_FIELD_AUTO_ID_PATTERN);
+  });
+
+  it('does not reuse auto ids allocated to standalone field controls', async () => {
+    const fieldId = fixture.componentInstance.controlId();
+    const standalone = standaloneFormFieldContext();
+    expect(standalone.controlId()).not.toBe(fieldId);
+  });
+});
+
+describe('AuFormField auto ids with standalone controls', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [FieldAndCheckboxIdHost] }).compileComponents();
+  });
+
+  it('keeps form-field label for distinct from standalone checkbox ids', async () => {
+    const fix = TestBed.createComponent(FieldAndCheckboxIdHost);
+    await fix.whenStable();
+    const label = fix.nativeElement.querySelector('.au-form-field__label') as HTMLLabelElement;
+    const input = fix.nativeElement.querySelector('input.au-input-text') as HTMLInputElement;
+    const checkbox = fix.nativeElement.querySelector(
+      'input.au-checkbox__element',
+    ) as HTMLInputElement;
+    expect(label.getAttribute('for')).toBe(input.id);
+    expect(label.getAttribute('for')).not.toBe(checkbox.id);
+    expect(input.id).not.toBe(checkbox.id);
   });
 });
 
@@ -189,8 +240,12 @@ describe('AuFormField with projected control', () => {
 });
 
 describe('syncFormFieldControlState', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+  });
+
   it('pushes validation state into the form field context', () => {
-    const formField = createStandaloneAuFormFieldContext();
+    const formField = standaloneFormFieldContext();
     const sync = syncFormFieldControlState(formField, {
       displayError: () => 'Invalid email',
       effectiveInvalid: () => true,
@@ -245,24 +300,28 @@ describe('queryFieldNative', () => {
 });
 
 describe('createStandaloneAuFormFieldContext', () => {
-  it('assigns unique control, hint, and error ids', () => {
-    const a = createStandaloneAuFormFieldContext();
-    const b = createStandaloneAuFormFieldContext();
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+  });
 
-    expect(a.controlId()).toMatch(/^au-field-\d+$/);
+  it('assigns unique control, hint, and error ids', () => {
+    const a = standaloneFormFieldContext();
+    const b = standaloneFormFieldContext();
+
+    expect(a.controlId()).toMatch(AU_FIELD_AUTO_ID_PATTERN);
     expect(b.controlId()).not.toBe(a.controlId());
     expect(a.hintId()).toBe(`${a.controlId()}-hint`);
     expect(a.errorId()).toBe(`${a.controlId()}-error`);
   });
 
   it('reports invalid from the manual errorMessage signal', () => {
-    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
     ctx.errorMessage.set('  Required field  ');
     expect(ctx.isInvalid()).toBe(true);
   });
 
   it('prefers manual errorMessage over control displayError', () => {
-    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
     ctx.errorMessage.set('Wrapper error');
     ctx.updateControlState({
       displayError: 'Control error',
@@ -275,7 +334,7 @@ describe('createStandaloneAuFormFieldContext', () => {
   });
 
   it('uses control displayError when manual errorMessage is empty', () => {
-    const ctx = createStandaloneAuFormFieldContext();
+    const ctx = standaloneFormFieldContext();
     ctx.updateControlState({
       displayError: 'Control error',
       effectiveInvalid: false,
@@ -285,13 +344,13 @@ describe('createStandaloneAuFormFieldContext', () => {
   });
 
   it('reports invalid from the invalid flag alone', () => {
-    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
     ctx.invalid.set(true);
     expect(ctx.isInvalid()).toBe(true);
   });
 
   it('reports invalid from control effectiveInvalid alone', () => {
-    const ctx = createStandaloneAuFormFieldContext();
+    const ctx = standaloneFormFieldContext();
     ctx.updateControlState({
       displayError: '',
       effectiveInvalid: true,
@@ -301,12 +360,12 @@ describe('createStandaloneAuFormFieldContext', () => {
   });
 
   it('is not invalid when all signals are clear', () => {
-    const ctx = createStandaloneAuFormFieldContext();
+    const ctx = standaloneFormFieldContext();
     expect(ctx.isInvalid()).toBe(false);
   });
 
   it('syncs writable field metadata signals', () => {
-    const ctx = createStandaloneAuFormFieldContext() as WritableFormFieldContext;
+    const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
     ctx.label.set('Label');
     ctx.hint.set('Hint');
     ctx.required.set(true);
