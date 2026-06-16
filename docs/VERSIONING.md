@@ -50,8 +50,8 @@ Minimum notice: **two MINOR releases** before removal. Each entry must list targ
 
 | Aurea     | Angular (`@angular/core`) | Node (tooling) | Status      |
 | --------- | ------------------------- | -------------- | ----------- |
-| **1.x**   | **21.2.x** — `^21.2.0`    | 20.19+         | Active      |
-| 0.3–0.4.x | 21.2.x                    | 20.19+         | Maintenance |
+| **2.x**   | **22.0.x** — `^22.0.0`    | 20.19+         | Active      |
+| **1.x**   | **21.2.x** — `^21.2.0`    | 20.19+         | Maintenance |
 
 - **Signal forms** (`[formField]`, `form()`) require Angular **21.2+**.
 - **Standalone** components only; **zoneless** supported per [Angular docs](https://angular.dev/guide/zoneless).

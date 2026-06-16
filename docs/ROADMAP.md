@@ -13,6 +13,7 @@ Public plan for `@aurea-design-system/components`. History lives in [CHANGELOG.m
 | **1.4.0** | Avatar + drawer stable                                                                                   |
 | **1.5.0** | Full catalog stable (incl. `AuInputTime`); snackbar/chip a11y fixes                                      |
 | **1.6.0** | `AuInputPassword`, `AuButtonGroup`, `AuDescriptionList`, `AuTagInput`; password split from `AuInputText` |
+| **2.0.0** | Native host directives; Angular 22; bounded date/time pickers; overlay scrim and interaction guards     |
 
 Live status: [maturity matrix](https://aurea-ds.netlify.app/en/maturity) · [roadmap page](https://aurea-ds.netlify.app/en/roadmap).
 
