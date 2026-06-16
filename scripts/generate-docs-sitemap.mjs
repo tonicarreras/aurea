@@ -57,7 +57,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls
   .map((entry) => {
-    const [, locale, ...rest] = entry.loc.replace(SITE + '/', '').split('/');
+    const [locale, ...rest] = entry.loc.replace(SITE + '/', '').split('/');
     const altLinks = LOCALES.map(
       (alt) => `    <xhtml:link rel="alternate" hreflang="${alt}" href="${loc(alt, ...rest)}"/>`,
     ).join('\n');

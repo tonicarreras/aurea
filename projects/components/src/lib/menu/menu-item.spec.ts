@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AU_MENU } from './au-menu.token';
 import { AuMenu } from './menu';
 import { AuMenuItem } from './menu-item';
@@ -13,7 +13,12 @@ import { AuMenuTrigger } from './au-menu-trigger.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <au-menu [(open)]="open">
-      <au-button auMenuTrigger>Open</au-button>
+      <button
+        auButton
+        auMenuTrigger
+      >
+        Open
+      </button>
       <au-menu-item
         [disabled]="disabled"
         (select)="selected = true"
@@ -33,34 +38,34 @@ describe('AuMenuItem', () => {
     document.body.querySelectorAll('.au-menu__panel').forEach((el) => el.remove());
   });
 
-  it('emits select and closes menu', () => {
+  it('emits select and closes menu', async () => {
     const fixture = TestBed.createComponent(Host);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const item = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
     item.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selected).toBe(true);
     expect(fixture.componentInstance.open).toBe(false);
   });
 
-  it('does not emit when disabled', () => {
+  it('does not emit when disabled', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.disabled = true;
-    fixture.detectChanges();
+    await fixture.whenStable();
     const item = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
     expect(item.disabled).toBe(true);
     const itemCmp = fixture.debugElement.queryAll(By.directive(AuMenuItem))[0]
       .componentInstance as AuMenuItem;
     (itemCmp as unknown as { onClick: (e: MouseEvent) => void }).onClick(new MouseEvent('click'));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selected).toBe(false);
     expect(fixture.componentInstance.open).toBe(true);
   });
 
-  it('focuses the item button and marks it active', () => {
+  it('focuses the item button and marks it active', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
-    fixture.detectChanges();
+    await fixture.whenStable();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
     const menu = fixture.debugElement.query(By.directive(AuMenu)).componentInstance as AuMenu;
@@ -71,19 +76,19 @@ describe('AuMenuItem', () => {
     expect(menu.isActiveMenuItem(itemCmp)).toBe(true);
   });
 
-  it('exposes label text for typeahead', () => {
+  it('exposes label text for typeahead', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
-    fixture.detectChanges();
+    await fixture.whenStable();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
     expect(itemCmp.labelText()).toBe('Action');
   });
 
-  it('labelText returns empty string when button has no text content', () => {
+  it('labelText returns empty string when button has no text content', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
-    fixture.detectChanges();
+    await fixture.whenStable();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
     vi.spyOn(
@@ -93,21 +98,21 @@ describe('AuMenuItem', () => {
     expect(itemCmp.labelText()).toBe('');
   });
 
-  it('sets roving tabindex via focus handler', () => {
+  it('sets roving tabindex via focus handler', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
-    fixture.detectChanges();
+    await fixture.whenStable();
     const btn = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
     expect(btn.getAttribute('tabindex')).toBe('0');
     btn.dispatchEvent(new FocusEvent('focus'));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(btn.getAttribute('tabindex')).toBe('0');
   });
 
-  it('containsElement matches nodes inside and outside the button', () => {
+  it('containsElement matches nodes inside and outside the button', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
-    fixture.detectChanges();
+    await fixture.whenStable();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
     const btn = document.body.querySelector('.au-menu-item__btn') as HTMLButtonElement;
@@ -116,7 +121,7 @@ describe('AuMenuItem', () => {
     expect(itemCmp.containsElement(document.body)).toBe(false);
   });
 
-  it('unregisters from menu on destroy', () => {
+  it('unregisters from menu on destroy', async () => {
     const unregister = vi.fn();
 
     @Component({
@@ -138,7 +143,7 @@ describe('AuMenuItem', () => {
     class DestroyHost {}
 
     const fixture = TestBed.createComponent(DestroyHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const itemCmp = fixture.debugElement.query(By.directive(AuMenuItem))
       .componentInstance as AuMenuItem;
     fixture.destroy();

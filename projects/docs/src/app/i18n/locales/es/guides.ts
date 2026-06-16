@@ -51,8 +51,12 @@ import { AuFormField, AuInputText } from '@aurea-design-system/components';
 @Component({
   imports: [AuFormField, AuInputText, FormField],
   template: \`
-    <au-form-field label="Email" [required]="true">
-      <au-input-text type="email" [formField]="profileForm.email" />
+    <au-form-field
+      label="Email"
+      hint="Usamos tu correo solo para avisos."
+      [required]="true"
+    >
+      <input auInputText type="email" [formField]="profileForm.email" />
     </au-form-field>
   \`,
 })
@@ -67,8 +71,8 @@ export class ProfileEmail {
         expandLabel: 'Ver ejemplo',
       },
       {
-        heading: 'Etiqueta y errores en au-form-field',
-        body: 'No dupliques label en el control interno. au-form-field enlaza aria-describedby y muestra los mensajes del campo.',
+        heading: 'Etiqueta, hint y errores en au-form-field',
+        body: 'No dupliques label en el control interno. El hint va bajo la etiqueta; au-form-field enlaza aria-describedby y muestra los mensajes del campo.',
       },
       {
         heading: 'Enviar y marcar touched',

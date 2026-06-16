@@ -34,6 +34,7 @@ export interface DocsMessages {
     lead: string;
     ctaDocs: string;
     ctaStorybook: string;
+    ctaCrudDemo: string;
     overviewTitle: string;
     overviewAria: string;
     principles: { title: string; text: string; accent: string }[];
@@ -66,9 +67,13 @@ export interface DocsMessages {
       ngAdd: { title: string; intro: string; expand: string };
       nextGuides: {
         title: string;
-        intro: string;
-        adoptionLink: string;
-        crudDemoLink: string;
+        crudCardEyebrow: string;
+        crudCardTitle: string;
+        crudCardLead: string;
+        crudCardCta: string;
+        adoptionCardTitle: string;
+        adoptionCardLead: string;
+        adoptionCardCta: string;
       };
     };
   };
@@ -105,6 +110,17 @@ export interface DocsMessages {
     brandHeading: string;
     brandBody: string;
     brandExpand: string;
+    brandExampleHeading: string;
+    brandExampleBody: string;
+    brandExampleToggleLabel: string;
+    brandExampleDefault: string;
+    brandExampleCustom: string;
+    brandExamplePrimary: string;
+    brandExampleOutline: string;
+    brandExampleLink: string;
+    brandExampleFieldLabel: string;
+    brandExampleFieldPlaceholder: string;
+    brandExampleCssExpand: string;
     overrideLevelsHeading: string;
     overrideLevelsBody: string;
     overrideGlobalTitle: string;
@@ -129,6 +145,10 @@ export interface DocsMessages {
   componentsIndex: {
     title: string;
     lead: string;
+    crudSpotlightEyebrow: string;
+    crudSpotlightTitle: string;
+    crudSpotlightLead: string;
+    crudSpotlightCta: string;
     maturityLegend: string;
     maturityStable: string;
     maturityBeta: string;

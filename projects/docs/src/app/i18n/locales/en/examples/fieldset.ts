@@ -13,7 +13,7 @@ export const examples: ComponentDocExample[] = [
 
 <au-fieldset legend="Shipping address" description="Where we deliver your order.">
   <au-form-field label="Street">
-    <au-input-text />
+    <input auInputText />
   </au-form-field>
 </au-fieldset>`,
   },
@@ -23,7 +23,7 @@ export const examples: ComponentDocExample[] = [
     demoComponent: ExampleFieldsetDisabledDemo,
     code: `<au-fieldset legend="Shipping address" [disabled]="true">
   <au-form-field label="Street">
-    <au-input-text />
+    <input auInputText />
   </au-form-field>
 </au-fieldset>`,
   },

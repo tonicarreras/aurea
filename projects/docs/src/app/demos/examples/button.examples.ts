@@ -7,7 +7,12 @@ import { DEMO_ROW } from '../shared/demo-layout';
   selector: 'docs-example-button-primary',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="primary">{{ t().primary }}</au-button>`,
+  template: `<button
+    auButton
+    variant="primary"
+  >
+    {{ t().primary }}
+  </button>`,
 })
 export class ExampleButtonPrimaryDemo {
   readonly t = docsExampleLive('button');
@@ -17,7 +22,12 @@ export class ExampleButtonPrimaryDemo {
   selector: 'docs-example-button-secondary',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="secondary">{{ t().secondary }}</au-button>`,
+  template: `<button
+    auButton
+    variant="secondary"
+  >
+    {{ t().secondary }}
+  </button>`,
 })
 export class ExampleButtonSecondaryDemo {
   readonly t = docsExampleLive('button');
@@ -27,7 +37,12 @@ export class ExampleButtonSecondaryDemo {
   selector: 'docs-example-button-outline',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="outline">{{ t().outline }}</au-button>`,
+  template: `<button
+    auButton
+    variant="outline"
+  >
+    {{ t().outline }}
+  </button>`,
 })
 export class ExampleButtonOutlineDemo {
   readonly t = docsExampleLive('button');
@@ -37,7 +52,12 @@ export class ExampleButtonOutlineDemo {
   selector: 'docs-example-button-ghost',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button variant="ghost">{{ t().ghost }}</au-button>`,
+  template: `<button
+    auButton
+    variant="ghost"
+  >
+    {{ t().ghost }}
+  </button>`,
 })
 export class ExampleButtonGhostDemo {
   readonly t = docsExampleLive('button');
@@ -47,11 +67,13 @@ export class ExampleButtonGhostDemo {
   selector: 'docs-example-button-loading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button
+  template: `<button
+    auButton
     variant="primary"
     [loading]="true"
-    >{{ t().loading }}</au-button
-  >`,
+  >
+    {{ t().loading }}
+  </button>`,
 })
 export class ExampleButtonLoadingDemo {
   readonly t = docsExampleLive('button');
@@ -61,11 +83,13 @@ export class ExampleButtonLoadingDemo {
   selector: 'docs-example-button-disabled',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton],
-  template: `<au-button
+  template: `<button
+    auButton
     variant="primary"
     [disabled]="true"
-    >{{ t().disabled }}</au-button
-  >`,
+  >
+    {{ t().disabled }}
+  </button>`,
 })
 export class ExampleButtonDisabledDemo {
   readonly t = docsExampleLive('button');
@@ -77,9 +101,24 @@ export class ExampleButtonDisabledDemo {
   imports: [AuButton],
   template: `
     <div class="docs-demo-row">
-      <au-button size="sm">{{ t().sizeSm }}</au-button>
-      <au-button size="md">{{ t().sizeMd }}</au-button>
-      <au-button size="lg">{{ t().sizeLg }}</au-button>
+      <button
+        auButton
+        size="sm"
+      >
+        {{ t().sizeSm }}
+      </button>
+      <button
+        auButton
+        size="md"
+      >
+        {{ t().sizeMd }}
+      </button>
+      <button
+        auButton
+        size="lg"
+      >
+        {{ t().sizeLg }}
+      </button>
     </div>
   `,
   styles: [DEMO_ROW],

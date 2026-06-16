@@ -1,4 +1,4 @@
-:host {
+a.au-link {
   display: inline;
   font-family: var(--au-font-sans);
   font-size: inherit;
@@ -11,22 +11,22 @@
   transition: var(--au-transition-color);
 }
 
-:host(:hover) {
+a.au-link:hover {
   color: var(--au-color-link-hover);
 }
 
-:host(:focus-visible) {
+a.au-link:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
   border-radius: var(--au-radius-field);
 }
 
-:host([data-au-variant='subtle']) {
+a.au-link[data-au-variant='subtle'] {
   color: var(--au-color-text-secondary);
   text-decoration: none;
 }
 
-:host([data-au-variant='subtle']:hover) {
+a.au-link[data-au-variant='subtle']:hover {
   color: var(--au-color-link);
   text-decoration: underline;
 }

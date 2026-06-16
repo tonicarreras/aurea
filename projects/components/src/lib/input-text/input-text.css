@@ -1,29 +1,19 @@
 /**
- * Input text — crisp border, no faux-3D fill.
- * Size: `data-au-size` on host (sm | md | lg).
- * Field chrome: aurea-global.css
+ * Input text — native input with field chrome (see au-field-chrome.css).
  */
 
-/* -------------------------------------------------------------------------- */
-/* Input */
-/* -------------------------------------------------------------------------- */
-
-.au-input-text__input:focus,
-.au-input-text__input:focus-visible {
+input.au-input-text:focus,
+input.au-input-text:focus-visible {
   outline: none;
 }
 
-.au-input-text__input {
+input.au-input-text {
   display: block;
-  flex: 1 1 auto;
-  min-width: 0;
   width: 100%;
+  min-width: 0;
   height: var(--au-size-field-h-md);
   margin: 0;
   box-sizing: border-box;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
   font: inherit;
@@ -33,37 +23,36 @@
   padding: 0 var(--au-size-field-px-md);
 }
 
-:host([data-au-size='sm']) .au-input-text__input {
+input.au-input-text[data-au-size='sm'] {
   height: var(--au-size-field-h-sm);
   line-height: var(--au-size-field-h-sm);
   font-size: var(--au-size-field-text-sm);
   padding: 0 var(--au-size-field-px-sm);
 }
 
-:host([data-au-size='md']) .au-input-text__input,
-:host(:not([data-au-size])) .au-input-text__input {
+input.au-input-text[data-au-size='md'],
+input.au-input-text:not([data-au-size]) {
   height: var(--au-size-field-h-md);
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
   padding: 0 var(--au-size-field-px-md);
 }
 
-:host([data-au-size='lg']) .au-input-text__input {
+input.au-input-text[data-au-size='lg'] {
   height: var(--au-size-field-h-lg);
   line-height: var(--au-size-field-h-lg);
   font-size: var(--au-size-field-text-lg);
   padding: 0 var(--au-size-field-px-lg);
 }
 
-.au-input-text__input::placeholder {
+input.au-input-text::placeholder {
   color: var(--au-color-form-placeholder);
   opacity: 1;
   line-height: inherit;
 }
 
-.au-input-text__input:disabled {
+input.au-input-text:disabled {
   color: var(--au-color-form-disabled-foreground);
   cursor: not-allowed;
   opacity: 0.9;
-  background: transparent;
 }

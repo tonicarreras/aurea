@@ -197,7 +197,12 @@ import { DocsTokenList } from '../shared/docs-token-list';
             [routerLink]="i18n.link(DOCS_ROUTES.components)"
             class="docs-component-not-found__link"
           >
-            <au-button variant="outline">{{ i18n.messages().componentDoc.backToIndex }}</au-button>
+            <button
+              auButton
+              variant="outline"
+            >
+              {{ i18n.messages().componentDoc.backToIndex }}
+            </button>
           </a>
         </p>
       </docs-page>

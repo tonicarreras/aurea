@@ -24,7 +24,9 @@
               class="au-table__header-cell au-table__header-cell--select"
             >
               @if (selectionMode() === 'multiple') {
-                <au-checkbox
+                <input
+                  type="checkbox"
+                  auCheckbox
                   class="au-table__select-checkbox"
                   size="sm"
                   [hideLabel]="true"
@@ -106,7 +108,9 @@
             >
               @if (selectionMode() !== 'none') {
                 <td class="au-table__cell au-table__cell--select">
-                  <au-checkbox
+                  <input
+                    type="checkbox"
+                    auCheckbox
                     class="au-table__select-checkbox"
                     size="sm"
                     [hideLabel]="true"

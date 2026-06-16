@@ -37,7 +37,7 @@ describe('AuTooltip', () => {
       imports: [TooltipHost],
     }).compileComponents();
     fixture = TestBed.createComponent(TooltipHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   afterEach(() => {
@@ -54,9 +54,9 @@ describe('AuTooltip', () => {
 
   async function showTooltip(): Promise<void> {
     trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
+    await fixture.whenStable();
+    await fixture.whenStable();
   }
 
   it('shows and hides the tooltip on hover', async () => {
@@ -66,26 +66,49 @@ describe('AuTooltip', () => {
     expect(trigger().getAttribute('aria-describedby')).toMatch(/^au-tooltip-/);
 
     trigger().dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
+    await fixture.whenStable();
+    await fixture.whenStable();
     expect(bubble()).toBeFalsy();
   });
 
-  it('shows on focus and hides on blur', async () => {
-    trigger().dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-    fixture.detectChanges();
+  it('shows on keyboard focus and hides on blur', async () => {
+    const btn = trigger();
+    vi.spyOn(btn, 'matches').mockImplementation((selector) => selector === ':focus-visible');
+    btn.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     await fixture.whenStable();
-    fixture.detectChanges();
+    await fixture.whenStable();
+    await fixture.whenStable();
     expect(bubble()?.textContent?.trim()).toBe('Help text');
 
-    trigger().dispatchEvent(
-      new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
-    );
-    fixture.detectChanges();
+    btn.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }));
     await fixture.whenStable();
-    fixture.detectChanges();
+    await fixture.whenStable();
+    await fixture.whenStable();
     expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show on programmatic focus (e.g. after a modal closes)', async () => {
+    const btn = trigger();
+    vi.spyOn(btn, 'matches').mockReturnValue(false);
+    btn.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await fixture.whenStable();
+    await fixture.whenStable();
+    await fixture.whenStable();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('hides immediately when focus moves into an open dialog', async () => {
+    await showTooltip();
+    const dialog = document.createElement('dialog');
+    dialog.setAttribute('open', '');
+    document.body.append(dialog);
+    trigger().dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: dialog }));
+    await fixture.whenStable();
+    await fixture.whenStable();
+    await fixture.whenStable();
+    expect(bubble()).toBeFalsy();
+    dialog.remove();
   });
 
   it('respects showDelay and hideDelay', async () => {
@@ -120,22 +143,22 @@ describe('AuTooltip', () => {
   it('does not show when disabled or text is empty', async () => {
     const disabledFix = TestBed.createComponent(TooltipHost);
     disabledFix.componentInstance.disabled = true;
-    disabledFix.detectChanges();
+    await disabledFix.whenStable();
     disabledFix.nativeElement
       .querySelector('.trigger')!
       .dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    disabledFix.detectChanges();
+    await disabledFix.whenStable();
     await disabledFix.whenStable();
     expect(document.body.querySelector('.au-tooltip__bubble')).toBeFalsy();
     disabledFix.destroy();
 
     const emptyFix = TestBed.createComponent(TooltipHost);
     emptyFix.componentInstance.text = '   ';
-    emptyFix.detectChanges();
+    await emptyFix.whenStable();
     emptyFix.nativeElement
       .querySelector('.trigger')!
       .dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    emptyFix.detectChanges();
+    await emptyFix.whenStable();
     await emptyFix.whenStable();
     expect(document.body.querySelector('.au-tooltip__bubble')).toBeFalsy();
     emptyFix.destroy();
@@ -144,27 +167,28 @@ describe('AuTooltip', () => {
   it('closes on Escape', async () => {
     await showTooltip();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(bubble()).toBeFalsy();
   });
 
   it('ignores unrelated keys', async () => {
     await showTooltip();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(bubble()?.textContent?.trim()).toBe('Help text');
   });
 
   it('does not hide when focus moves within the host', async () => {
     const host = trigger();
+    vi.spyOn(host, 'matches').mockImplementation((selector) => selector === ':focus-visible');
     host.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
+    await fixture.whenStable();
+    await fixture.whenStable();
     const inner = document.createElement('span');
     host.append(inner);
     host.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: inner }));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(bubble()?.textContent?.trim()).toBe('Help text');
     inner.remove();
   });
@@ -190,10 +214,10 @@ describe('AuTooltip', () => {
     vi.useRealTimers();
   });
 
-  it('transforms null auTooltip input to empty string', () => {
+  it('transforms null auTooltip input to empty string', async () => {
     const tipFix = TestBed.createComponent(TooltipHost);
     tipFix.componentInstance.text = null as unknown as string;
-    tipFix.detectChanges();
+    await tipFix.whenStable();
     const directive = tipFix.debugElement.query(By.directive(AuTooltip))!.injector.get(AuTooltip);
     expect(directive.hasText()).toBe(false);
     tipFix.destroy();
@@ -224,5 +248,47 @@ describe('AuTooltip', () => {
     api.removeBubble();
     expect(document.body.contains(el)).toBe(false);
     expect(api.bubble).toBeNull();
+  });
+
+  it('does not show immediately with zero delay when text is empty', async () => {
+    fixture.componentInstance.text = '';
+    fixture.componentInstance.showDelay = 0;
+    fixture.detectChanges();
+    trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    await fixture.whenStable();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show after zero delay when pointer already left', async () => {
+    fixture.componentInstance.showDelay = 50;
+    fixture.detectChanges();
+    trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    trigger().dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 60));
+    fixture.detectChanges();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show with zero delay when focus is not focus-visible', async () => {
+    fixture.componentInstance.showDelay = 0;
+    fixture.detectChanges();
+    trigger().dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await fixture.whenStable();
+    expect(bubble()).toBeFalsy();
+  });
+
+  it('does not show after a delayed schedule when pointer already left', async () => {
+    vi.useFakeTimers();
+    try {
+      fixture.componentInstance.showDelay = 100;
+      fixture.detectChanges();
+      trigger().dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      trigger().dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+      vi.advanceTimersByTime(100);
+      fixture.detectChanges();
+      expect(bubble()).toBeFalsy();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

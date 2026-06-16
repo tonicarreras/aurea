@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import type { Type } from '@angular/core';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuCardFooter } from './card-footer.directive';
 import { AuCard } from './card';
 
@@ -101,8 +101,8 @@ export const WithFooter: Story = {
         <h3 auCardHeader>Confirm</h3>
         <p auCardBody>Review the summary before continuing.</p>
         <div auCardFooter>
-          <au-button style="margin-right: var(--au-space-2);" variant="secondary" type="button">Cancel</au-button>
-          <au-button type="button">Continue</au-button>
+          <button auButton style="margin-right: var(--au-space-2);" variant="secondary" type="button">Cancel</button>
+          <button auButton type="button">Continue</button>
         </div>
       </au-card>
     `,

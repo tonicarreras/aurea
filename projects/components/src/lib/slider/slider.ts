@@ -1,15 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 
 import type { AuSize } from '../au-size';
@@ -58,7 +57,7 @@ export class AuSlider implements FormValueControl<number> {
   readonly blur = output<void>();
 
   protected readonly formField = injectAuFormField();
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());

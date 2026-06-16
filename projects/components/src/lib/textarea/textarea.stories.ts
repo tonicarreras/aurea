@@ -10,7 +10,7 @@ import {
   formFieldControlRender,
   type FieldChromeStoryArgs,
 } from '../form-field';
-import { AuTextarea } from './textarea';
+import { AuTextarea } from './au-textarea.directive';
 
 type TextareaResize = 'none' | 'vertical' | 'both';
 
@@ -138,7 +138,7 @@ const meta: Meta<TextareaStoryArgs> = {
     formFieldControlRender(
       [AuFormField, AuTextarea],
       args,
-      `<au-textarea
+      `<textarea auTextarea
   [(value)]="value"
   [placeholder]="placeholder"
   [rows]="rows"
@@ -155,8 +155,7 @@ const meta: Meta<TextareaStoryArgs> = {
   [maxLength]="maxLength"
   [size]="size"
   [invalid]="invalid"
-  [errors]="$any(errors)"
-/>`,
+  [errors]="$any(errors)"></textarea>`,
     ),
 };
 

@@ -8,6 +8,8 @@
  * - Palette: slate neutrals + one accent; state colors (success, warning) separate from brand.
  * - Theme: `data-au-theme` on an ancestor (`html`, app shell, or Storybook) + `color-scheme` in dark.
  * - Usage: only `--au-*` variables in product; reserve raw names for documented primitives.
+ * - Layers: primitives (`--au-shadow-*`) → roles (`--au-elevation-*`, `--au-focus-*`) → components.
+ *   Components must use role tokens, not raw elevation primitives.
  */
 
 /* ==========================================================================
@@ -89,14 +91,19 @@
   --au-focus-ring-width: 1px;
   /* Offset 0: ring aligns with control outline */
   --au-focus-ring-offset: 0;
+  /* Tab navigation — outward outline (keyboard only, `--from-tab` pattern) */
+  --au-focus-tab-width: 2px;
+  --au-focus-tab-offset: 2px;
+  --au-focus-tab-offset-loose: 4px;
   /* Checkbox sizes: min 24x24 for WCAG 2.5.8 target size */
   --au-checkbox-size-sm: 1.125rem; /* 18px */
   --au-checkbox-size-md: 1.25rem; /* 20px */
   --au-checkbox-size-lg: 1.5rem; /* 24px */
 }
 
-/* Elevation: subtle depth — control → raised → float → overlay (product UI, not marketing) */
+/* Elevation primitives — control → raised → float → overlay (compose via --au-elevation-* roles) */
 :root {
+  --au-elevation-flat: none;
   --au-shadow-hairline: 0 1px 0 rgba(15, 23, 42, 0.06);
   --au-shadow-control: 0 1px 2px rgba(15, 20, 26, 0.06), 0 0 0 1px rgba(15, 20, 26, 0.04);
   --au-shadow-raised: 0 1px 2px rgba(15, 20, 26, 0.06), 0 2px 4px rgba(15, 20, 26, 0.04);
@@ -143,7 +150,7 @@
   font-weight: var(--au-weight-regular);
   line-height: var(--au-leading-normal);
   letter-spacing: var(--au-tracking-ui);
-  box-shadow: var(--au-shadow-overlay);
+  box-shadow: var(--au-elevation-overlay);
   pointer-events: none;
   z-index: var(--au-z-popover);
   -webkit-font-smoothing: antialiased;
@@ -152,12 +159,6 @@
 
 .au-tooltip__bubble--overlay {
   position: fixed;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-tooltip__bubble {
-    transition: none;
-  }
 }
 
 /* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
@@ -172,7 +173,7 @@
   background: var(--au-floating-panel-bg);
   color: var(--au-color-text-primary);
   border: 1px solid var(--au-floating-panel-border);
-  box-shadow: var(--au-shadow-floating);
+  box-shadow: var(--au-elevation-floating);
   font-family: var(--au-font-sans);
   z-index: var(--au-z-dropdown);
   pointer-events: auto;
@@ -289,12 +290,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .au-floating-panel.au-tooltip__bubble--overlay {
-    animation: none;
-  }
-}
-
 /* UI transitions: one easing for color, one “logical” for motion */
 :root {
   --au-duration-instant: 0ms;
@@ -370,13 +365,10 @@
   --au-color-border-subtle: #e0e4ea;
   --au-color-border-default: #c8ced7;
   --au-color-border-strong: #8d98a6;
-  /* Control chrome — same recipe as au-button (secondary): 1px border-default + shadow-button */
+  /* Control chrome — shared border recipe (flat surfaces + tactile buttons) */
   --au-chrome-border: 1px solid var(--au-color-border-default);
   --au-chrome-border-color: var(--au-color-border-default);
   --au-chrome-border-color-hover: var(--au-color-border-strong);
-  --au-chrome-shadow: var(--au-shadow-button);
-  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
-  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
   --au-color-form-border: var(--au-color-border-default);
   --au-color-form-border-hover: var(--au-color-border-strong);
   /* Accent / link / button */
@@ -528,10 +520,30 @@
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
-  /* Ring shadow: single composition (components) */
+  /* Focus ring primitives */
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  /* Elevation roles — use in component CSS */
+  --au-elevation-tactile: var(--au-shadow-button);
+  --au-elevation-tactile-primary: var(--au-shadow-button-primary);
+  --au-elevation-raised: var(--au-shadow-raised);
+  --au-elevation-float: var(--au-shadow-float);
+  --au-elevation-floating: var(--au-shadow-floating);
+  --au-elevation-overlay: var(--au-shadow-overlay);
+  /* Focus roles */
+  --au-focus-inset: var(--au-shadow-focus-ring);
+  --au-focus-inset-error: var(--au-shadow-focus-ring-error);
+  --au-focus-tactile: var(--au-shadow-focus-control);
+  --au-focus-tactile-error: var(--au-shadow-focus-control-error);
+  --au-focus-tab: var(--au-focus-tab-width) solid var(--au-color-focus-ring);
+  --au-focus-tab-error: var(--au-focus-tab-width) solid var(--au-color-form-error);
+  /* Legacy aliases (prefer role tokens above) */
+  --au-chrome-shadow: var(--au-elevation-tactile);
+  --au-chrome-shadow-focus: var(--au-focus-tactile);
+  --au-chrome-shadow-focus-error: var(--au-focus-tactile-error);
+  --au-field-shadow: var(--au-elevation-flat);
+  --au-field-shadow-focus: var(--au-focus-inset);
+  --au-field-shadow-focus-error: var(--au-focus-inset-error);
   /* Field sizing */
   --au-size-field-h-sm: 2rem;
   --au-size-field-h-md: 2.25rem;
@@ -542,6 +554,7 @@
   --au-size-field-text-sm: 0.8125rem;
   --au-size-field-text-md: 0.9375rem;
   --au-size-field-text-lg: 1rem;
+  --au-color-overlay-scrim: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
   --au-scroll-smooth: smooth;
   /* Density v2 — comfortable default; override with [data-au-density] */
   --au-density-space-scale: 1;
@@ -629,9 +642,6 @@
   --au-chrome-border: 1px solid var(--au-color-border-default);
   --au-chrome-border-color: var(--au-color-border-default);
   --au-chrome-border-color-hover: var(--au-color-border-strong);
-  --au-chrome-shadow: var(--au-shadow-button);
-  --au-chrome-shadow-focus: var(--au-shadow-focus-control);
-  --au-chrome-shadow-focus-error: var(--au-shadow-focus-control-error);
   --au-color-form-border: var(--au-color-border-default);
   --au-color-form-border-hover: var(--au-color-border-strong);
   /* Accent — lighter sky blue (readable on dark surfaces; avoids light-mode #1059c8) */
@@ -776,7 +786,6 @@
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
-  --au-shadow-field-inset: inset 0 0 0 1px var(--au-color-form-border);
   /* Dark shadows: hairline edge + soft depth (avoid muddy black haze) */
   --au-shadow-hairline: 0 1px 0 rgba(255, 255, 255, 0.06);
   --au-shadow-control: 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.06);
@@ -793,9 +802,31 @@
   --au-shadow-focus-control: 0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-focus-ring);
   --au-shadow-focus-control-error:
     0 1px 2px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--au-color-form-error);
-  /* Rings */
+  /* Focus ring primitives */
   --au-shadow-focus-ring: 0 0 0 var(--au-focus-ring-width) var(--au-color-focus-ring);
   --au-shadow-focus-ring-error: 0 0 0 var(--au-focus-ring-width) var(--au-color-semantic-error);
+  /* Elevation roles */
+  --au-elevation-tactile: var(--au-shadow-button);
+  --au-elevation-tactile-primary: var(--au-shadow-button-primary);
+  --au-elevation-raised: var(--au-shadow-raised);
+  --au-elevation-float: var(--au-shadow-float);
+  --au-elevation-floating: var(--au-shadow-floating);
+  --au-elevation-overlay: var(--au-shadow-overlay);
+  /* Focus roles */
+  --au-focus-inset: var(--au-shadow-focus-ring);
+  --au-focus-inset-error: var(--au-shadow-focus-ring-error);
+  --au-focus-tactile: var(--au-shadow-focus-control);
+  --au-focus-tactile-error: var(--au-shadow-focus-control-error);
+  --au-focus-tab: var(--au-focus-tab-width) solid var(--au-color-focus-ring);
+  --au-focus-tab-error: var(--au-focus-tab-width) solid var(--au-color-form-error);
+  /* Legacy aliases */
+  --au-chrome-shadow: var(--au-elevation-tactile);
+  --au-chrome-shadow-focus: var(--au-focus-tactile);
+  --au-chrome-shadow-focus-error: var(--au-focus-tactile-error);
+  --au-field-shadow: var(--au-elevation-flat);
+  --au-field-shadow-focus: var(--au-focus-inset);
+  --au-field-shadow-focus-error: var(--au-focus-inset-error);
+  --au-color-overlay-scrim: color-mix(in srgb, #000000 62%, transparent);
   --au-scroll-smooth: smooth;
 }
 
@@ -805,17 +836,9 @@
   --au-floating-panel-border: var(--au-color-border-default);
 }
 
-[data-au-theme='dark'] au-dialog .au-dialog__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
-}
-
-[data-au-theme='dark'] au-drawer {
+[data-au-theme='dark'] :is(au-drawer, .au-drawer__native) {
   --au-drawer-shadow-end: -10px 0 28px rgba(0, 0, 0, 0.28);
   --au-drawer-shadow-start: 10px 0 28px rgba(0, 0, 0, 0.28);
-}
-
-[data-au-theme='dark'] au-drawer .au-drawer__native::backdrop {
-  background: color-mix(in srgb, var(--au-color-surface-inverted) 38%, transparent);
 }
 
 /* When the site uses `prefers-reduced-motion: reduce`, components disable smooth scrolling */
@@ -826,5 +849,14 @@
   [data-au-theme='high-contrast'],
   [data-au-theme='high-contrast-dark'] {
     --au-scroll-smooth: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
   }
 }

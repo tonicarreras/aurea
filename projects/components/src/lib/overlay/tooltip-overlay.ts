@@ -2,6 +2,8 @@ import { isPlatformBrowser } from '@angular/common';
 import type { DestroyRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
+import { resolveFieldListboxPortalRoot } from './field-listbox-overlay';
+import { shouldSkipRepositionOnScroll } from './overlay-reposition';
 import { computeTooltipPosition, type AuTooltipPlacement } from './tooltip-position';
 import {
   bindPortaledThemeContextObserver,
@@ -25,18 +27,27 @@ export function readCssLengthPx(
   return Number.isFinite(px) && px > 0 ? px : fallbackPx;
 }
 
-/** Portals a tooltip bubble to `document.body` with `position: fixed`. */
+/**
+ * Portals a tooltip bubble with `position: fixed`.
+ * Default target is `document.body`; when the anchor sits inside an open modal
+ * `<dialog>`, the bubble is appended to that dialog (top-layer stacking).
+ */
 export class TooltipOverlay {
   private anchor: Comment | null = null;
   private activeBubble: HTMLElement | null = null;
   private activeAnchor: HTMLElement | null = null;
+  private activePortalRoot: HTMLElement | null = null;
   private resolvedPlacement: AuTooltipPlacement = 'top';
   private unbindThemeContext: (() => void) | null = null;
 
-  private readonly onWindowChange = (): void => {
-    if (this.activeBubble && this.activeAnchor) {
-      this.position(this.activeBubble, this.activeAnchor, this.resolvedPlacement);
+  private readonly onWindowChange = (event?: Event): void => {
+    if (!this.activeBubble || !this.activeAnchor) {
+      return;
     }
+    if (shouldSkipRepositionOnScroll(event, this.activeBubble)) {
+      return;
+    }
+    this.position(this.activeBubble, this.activeAnchor, this.resolvedPlacement);
   };
 
   constructor(
@@ -60,7 +71,9 @@ export class TooltipOverlay {
       this.detach();
       return placement;
     }
-    this.ensurePortaled(bubble);
+    const portalRoot = resolveFieldListboxPortalRoot(anchor, this.document);
+    this.ensurePortaled(bubble, portalRoot);
+    this.activePortalRoot = portalRoot;
     syncPortaledThemeContext(bubble, anchor);
     this.unbindThemeContext?.();
     this.unbindThemeContext = bindPortaledThemeContextObserver(bubble, anchor);
@@ -91,15 +104,22 @@ export class TooltipOverlay {
       this.anchor.parentNode.insertBefore(bubble, this.anchor);
       this.anchor.remove();
       this.anchor = null;
+    } else if (
+      this.activePortalRoot &&
+      bubble.parentElement === this.activePortalRoot &&
+      this.activePortalRoot !== this.document.body
+    ) {
+      bubble.remove();
     } else if (bubble.parentElement === this.document.body) {
       bubble.remove();
     }
     this.activeBubble = null;
     this.activeAnchor = null;
+    this.activePortalRoot = null;
   }
 
-  private ensurePortaled(bubble: HTMLElement): void {
-    if (bubble.parentElement === this.document.body) {
+  private ensurePortaled(bubble: HTMLElement, portalRoot: HTMLElement): void {
+    if (bubble.parentElement === portalRoot) {
       return;
     }
     const parent = bubble.parentNode;
@@ -107,7 +127,7 @@ export class TooltipOverlay {
       this.anchor = this.document.createComment('au-tooltip-anchor');
       parent.insertBefore(this.anchor, bubble);
     }
-    this.renderer.appendChild(this.document.body, bubble);
+    this.renderer.appendChild(portalRoot, bubble);
   }
 
   private position(
@@ -122,7 +142,7 @@ export class TooltipOverlay {
       ? readCssLengthPx(this.document, '--au-floating-gap', 10)
       : readCssLengthPx(this.document, '--au-tooltip-gap', 12);
     const anchorRect = anchor.getBoundingClientRect();
-    const bubbleRect = this.measureBubble(bubble);
+    const bubbleRect = this.readBubbleRect(bubble);
     const view = this.document.defaultView;
     const viewport = {
       width: view?.innerWidth ?? 0,
@@ -157,6 +177,20 @@ export class TooltipOverlay {
     const y = clampValue(anchorCenterY - coords.top, inset, bubbleRect.height - inset);
     bubble.style.setProperty('--au-floating-arrow-x', `${x}px`);
     bubble.style.setProperty('--au-floating-arrow-y', `${y}px`);
+  }
+
+  private readBubbleRect(bubble: HTMLElement): DOMRect {
+    if (
+      bubble.style.position === 'fixed' &&
+      bubble.style.visibility !== 'hidden' &&
+      bubble.isConnected
+    ) {
+      const rect = bubble.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        return rect;
+      }
+    }
+    return this.measureBubble(bubble);
   }
 
   private measureBubble(bubble: HTMLElement): DOMRect {

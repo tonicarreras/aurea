@@ -1,0 +1,142 @@
+.au-date-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-3);
+  min-width: 17.5rem;
+  max-width: min(20rem, calc(100vw - var(--au-space-8)));
+  padding: var(--au-space-3);
+  overscroll-behavior: contain;
+}
+
+.au-date-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--au-space-2);
+}
+
+.au-date-calendar__title {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-semibold);
+  line-height: var(--au-leading-snug);
+  color: var(--au-color-text-primary);
+  text-align: center;
+}
+
+.au-date-calendar__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--au-space-8);
+  height: var(--au-space-8);
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--au-radius-control);
+  background: transparent;
+  color: var(--au-color-text-secondary);
+  cursor: pointer;
+  transition:
+    var(--au-transition-background), var(--au-transition-border), var(--au-transition-color);
+}
+
+.au-date-calendar__nav:hover:not(:disabled) {
+  background: var(--au-color-state-hover);
+  color: var(--au-color-text-primary);
+}
+
+.au-date-calendar__nav:focus-visible {
+  outline: none;
+  border-color: var(--au-color-focus-ring);
+  box-shadow: var(--au-focus-inset);
+}
+
+.au-date-calendar__nav:disabled {
+  color: var(--au-color-text-disabled);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.au-date-calendar__nav au-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.au-date-calendar__weekdays,
+.au-date-calendar__week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--au-space-0-5);
+}
+
+.au-date-calendar__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.75rem;
+  font-size: var(--au-text-2xs);
+  font-weight: var(--au-weight-semibold);
+  letter-spacing: var(--au-tracking-caps);
+  text-transform: uppercase;
+  color: var(--au-color-text-tertiary);
+}
+
+.au-date-calendar__day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.25rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--au-radius-control);
+  background: transparent;
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-regular);
+  line-height: 1;
+  color: var(--au-color-text-primary);
+  cursor: pointer;
+  transition:
+    var(--au-transition-background), var(--au-transition-border), var(--au-transition-color);
+}
+
+.au-date-calendar__day:hover:not(:disabled) {
+  background: var(--au-color-state-hover);
+}
+
+.au-date-calendar__day:focus-visible {
+  outline: none;
+  border-color: var(--au-color-focus-ring);
+  box-shadow: var(--au-focus-inset);
+}
+
+.au-date-calendar__day--outside {
+  color: var(--au-color-text-tertiary);
+}
+
+.au-date-calendar__day--today:not(:disabled) {
+  border-color: var(--au-color-border-default);
+}
+
+.au-date-calendar__day--selected:not(:disabled) {
+  background: var(--au-color-action-primary);
+  border-color: var(--au-color-action-primary);
+  color: var(--au-color-text-on-solid);
+  font-weight: var(--au-weight-semibold);
+}
+
+.au-date-calendar__day--selected:not(:disabled):hover {
+  background: var(--au-color-action-primary-hover);
+  border-color: var(--au-color-action-primary-hover);
+  color: var(--au-color-text-on-solid);
+}
+
+.au-date-calendar__day:disabled {
+  color: var(--au-color-text-disabled);
+  cursor: not-allowed;
+  opacity: 0.45;
+}

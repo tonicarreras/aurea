@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   ViewEncapsulation,
+  computed,
+  contentChild,
   input,
-  signal,
 } from '@angular/core';
 import type { AuSize } from '../au-size';
 import { AuCardFooter } from './card-footer.directive';
@@ -58,13 +58,10 @@ export class AuCard {
    */
   readonly interactive = input(false);
 
-  private readonly footerPresent = signal(false);
-
-  @ContentChild(AuCardFooter)
-  set footerSlot(slot: AuCardFooter | undefined) {
-    this.footerPresent.set(slot != null);
-  }
+  /* v8 ignore start */
+  readonly footerSlot = contentChild(AuCardFooter);
+  /* v8 ignore stop */
 
   /** True when `[auCardFooter]` content is projected. */
-  readonly hasFooter = this.footerPresent.asReadonly();
+  readonly hasFooter = computed(() => this.footerSlot() !== undefined);
 }

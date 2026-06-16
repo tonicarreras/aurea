@@ -24,7 +24,7 @@ const extrasEn = {
 
 | Mode | Where | Validation |
 |------|--------|------------|
-| Signal forms | \`[formField]\` on \`au-input-text\`; \`form()\` in your component | Schema drives \`errors\` / \`invalid\`; \`au-form-field\` shows the message |
+| Signal forms | \`[formField]\` on \`input[auInputText]\`; \`form()\` in your component | Schema drives \`errors\` / \`invalid\`; \`au-form-field\` shows the message |
 | Manual | \`[(value)]\` + \`au-form-field\` \`errorMessage\` / \`invalid\` | Parent sets chrome (see **With error** story) |
 
 Full \`form()\` example: **\`@aurea-design-system/components\` README** → *Signal forms*.
@@ -36,7 +36,7 @@ Full \`form()\` example: **\`@aurea-design-system/components\` README** → *Sig
 3. **With error**: screen reader should hear \`aria-errormessage\`.`,
   popover: `### Form controls in panels
 
-Project \`au-input-text\`, \`au-select\`, and other field controls **inside \`au-form-field\`** — they require \`AU_FORM_FIELD\` via DI.`,
+Project \`input[auInputText]\`, \`au-select\`, and other field controls **inside \`au-form-field\`** — they require \`AU_FORM_FIELD\` via DI.`,
   'form-field': `### Related exports
 
 \`AU_FORM_FIELD\`, \`AuFormFieldContext\` — import from \`@aurea-design-system/components\`.`,
@@ -47,7 +47,7 @@ const extrasEs = {
 
 | Modo | Dónde | Validación |
 |------|--------|------------|
-| Signal forms | \`[formField]\` en \`au-input-text\`; \`form()\` en tu componente | El esquema define \`errors\` / \`invalid\`; \`au-form-field\` muestra el mensaje |
+| Signal forms | \`[formField]\` en \`input[auInputText]\`; \`form()\` en tu componente | El esquema define \`errors\` / \`invalid\`; \`au-form-field\` muestra el mensaje |
 | Manual | \`[(value)]\` + \`errorMessage\` / \`invalid\` en \`au-form-field\` | El padre controla el cromado (story **With error**) |
 
 Ejemplo completo con \`form()\`: README de **\`@aurea-design-system/components\`** → *Signal forms*.
@@ -59,7 +59,7 @@ Ejemplo completo con \`form()\`: README de **\`@aurea-design-system/components\`
 3. **With error**: el lector debe anunciar \`aria-errormessage\`.`,
   popover: `### Controles en paneles
 
-Los controles \`au-input-text\`, \`au-select\`, etc. **dentro de \`au-form-field\`** requieren \`AU_FORM_FIELD\` por DI.`,
+Los controles \`input[auInputText]\`, \`au-select\`, etc. **dentro de \`au-form-field\`** requieren \`AU_FORM_FIELD\` por DI.`,
   'form-field': `### Exportaciones relacionadas
 
 \`AU_FORM_FIELD\`, \`AuFormFieldContext\` — import desde \`@aurea-design-system/components\`.`,

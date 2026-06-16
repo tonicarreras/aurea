@@ -7,8 +7,12 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuFormField, AuInputText],
   template: `
-    <au-form-field [label]="t().emailLabel">
-      <au-input-text
+    <au-form-field
+      [label]="t().emailLabel"
+      [hint]="t().emailHint"
+    >
+      <input
+        auInputText
         type="email"
         [placeholder]="t().emailPlaceholder"
       />
@@ -28,7 +32,10 @@ export class ExampleFormFieldBasicDemo {
       [label]="t().userLabel"
       [hint]="t().userHint"
     >
-      <au-input-text [placeholder]="t().userPlaceholder" />
+      <input
+        auInputText
+        [placeholder]="t().userPlaceholder"
+      />
     </au-form-field>
   `,
 })
@@ -46,7 +53,8 @@ export class ExampleFormFieldHintDemo {
       [errorMessage]="t().emailError"
       [invalid]="true"
     >
-      <au-input-text
+      <input
+        auInputText
         type="email"
         [placeholder]="t().emailErrorPlaceholder"
       />

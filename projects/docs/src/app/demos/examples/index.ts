@@ -13,6 +13,7 @@ export * from './autocomplete.examples';
 export * from './radio-group.examples';
 export * from './input-number.examples';
 export * from './input-date.examples';
+export * from './input-date-range.example';
 export * from './dialog.examples';
 export * from './card.examples';
 export * from './tabs.examples';

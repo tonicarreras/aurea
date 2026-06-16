@@ -8,7 +8,8 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuInputNumber],
   template: `
     <au-form-field [label]="t().basicLabel">
-      <au-input-number
+      <input
+        auInputNumber
         [min]="0"
         [max]="10"
       />
@@ -29,7 +30,8 @@ export class ExampleInputNumberBasicDemo {
       [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-input-number
+      <input
+        auInputNumber
         [min]="1"
         [max]="10"
       />
@@ -49,7 +51,8 @@ export class ExampleInputNumberErrorDemo {
       [label]="t().hintLabel"
       [hint]="t().hint"
     >
-      <au-input-number
+      <input
+        auInputNumber
         [min]="0"
         [max]="99"
       />

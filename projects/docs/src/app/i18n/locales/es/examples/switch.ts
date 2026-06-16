@@ -9,12 +9,12 @@ export const examples: ComponentDocExample[] = [
   {
     title: 'Switch básico',
     demoComponent: ExampleSwitchBasicDemo,
-    code: `<au-switch label="Notificaciones push" />`,
+    code: `<button type="button" auSwitch label="Notificaciones push"></button>`,
   },
   {
     title: 'Desactivado',
     demoComponent: ExampleSwitchDisabledDemo,
-    code: `<au-switch label="Modo avión" [checked]="true" [disabled]="true" />`,
+    code: `<button type="button" auSwitch label="Modo avión" [checked]="true" [disabled]="true"></button>`,
   },
   {
     title: 'Obligatorio con error',
@@ -25,7 +25,7 @@ export const examples: ComponentDocExample[] = [
   [required]="true"
   [invalid]="true"
 >
-  <au-switch label="Acepto la política de privacidad" />
+  <button type="button" auSwitch label="Acepto la política de privacidad"></button>
 </au-form-field>`,
   },
 ];

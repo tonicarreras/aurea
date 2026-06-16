@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, within } from 'storybook/test';
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuButtonGroup } from './button-group';
 
 const meta: Meta<AuButtonGroup> = {
@@ -37,9 +37,9 @@ const renderButtons: Story['render'] = (args) => ({
       [attached]="attached"
       [orientation]="orientation"
     >
-      <au-button variant="outline">Cancel</au-button>
-      <au-button variant="secondary">Draft</au-button>
-      <au-button>Publish</au-button>
+      <button type="button" auButton variant="outline">Cancel</button>
+      <button type="button" auButton variant="secondary">Draft</button>
+      <button type="button" auButton>Publish</button>
     </au-button-group>
   `,
 });

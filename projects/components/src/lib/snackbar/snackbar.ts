@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  ElementRef,
   PLATFORM_ID,
   Renderer2,
   afterRenderEffect,
@@ -14,6 +13,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 
 import { AuIcon, type AuIconName } from '../icon/icon';
 import {
@@ -75,7 +75,7 @@ export type AuSnackbarPosition =
 })
 export class AuSnackbar {
   private readonly destroyRef = inject(DestroyRef);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
@@ -205,7 +205,7 @@ export class AuSnackbar {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
+    const host = this.host.nativeElement;
     if (host.parentElement === this.document.body) {
       return;
     }
@@ -222,7 +222,7 @@ export class AuSnackbar {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
+    const host = this.host.nativeElement;
     const surface = host.querySelector<HTMLElement>('.au-snackbar__surface');
 
     if (this.stackId === null) {
@@ -270,7 +270,7 @@ export class AuSnackbar {
     if (!isPlatformBrowser(this.platformId) || !this.bodyAnchor?.parentNode) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
+    const host = this.host.nativeElement;
     if (host.parentElement === this.document.body) {
       clearPortaledThemeContext(host);
       this.bodyAnchor.parentNode?.insertBefore(host, this.bodyAnchor);

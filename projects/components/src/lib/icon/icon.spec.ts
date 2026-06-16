@@ -11,7 +11,7 @@ describe('AuIcon', () => {
 
     fixture = TestBed.createComponent(AuIcon);
     fixture.componentRef.setInput('name', 'info');
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -24,19 +24,19 @@ describe('AuIcon', () => {
     expect(host.getAttribute('data-au-icon')).toBe('info');
   });
 
-  it('renders each glyph', () => {
+  it('renders each glyph', async () => {
     for (const name of AU_ICON_NAMES) {
       fixture.componentRef.setInput('name', name);
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(fixture.nativeElement.querySelector('.au-icon__svg')).not.toBeNull();
     }
   });
 
-  it('reflects size on the host', () => {
+  it('reflects size on the host', async () => {
     fixture.componentRef.setInput('name', 'info');
     for (const size of ['xs', 'sm', 'md', 'lg'] as const) {
       fixture.componentRef.setInput('size', size);
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect((fixture.nativeElement as HTMLElement).getAttribute('data-au-size')).toBe(size);
     }
   });

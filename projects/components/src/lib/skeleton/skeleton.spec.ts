@@ -12,7 +12,7 @@ describe('AuSkeleton', () => {
 
     fixture = TestBed.createComponent(AuSkeleton);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -33,123 +33,123 @@ describe('AuSkeleton', () => {
     expect(host.getAttribute('data-au-size')).toBe('md');
   });
 
-  it('applies circular variant dimensions from size', () => {
+  it('applies circular variant dimensions from size', async () => {
     fixture.componentRef.setInput('variant', 'circular');
     fixture.componentRef.setInput('size', 'lg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('circular');
     expect(host.style.height).toBe('3rem');
     expect(host.style.borderRadius).toBe('var(--au-radius-dot)');
   });
 
-  it('applies custom width and height overrides', () => {
+  it('applies custom width and height overrides', async () => {
     fixture.componentRef.setInput('variant', 'rectangular');
     fixture.componentRef.setInput('width', '12rem');
     fixture.componentRef.setInput('height', '4rem');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.style.width).toBe('12rem');
     expect(host.style.height).toBe('4rem');
   });
 
-  it('uses button height tokens for button variant', () => {
+  it('uses button height tokens for button variant', async () => {
     fixture.componentRef.setInput('variant', 'button');
     fixture.componentRef.setInput('size', 'sm');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.style.height).toBe('var(--au-size-field-h-sm)');
     expect(host.style.borderRadius).toBe('var(--au-radius-control)');
   });
 
-  it('supports wave animation and none', () => {
+  it('supports wave animation and none', async () => {
     fixture.componentRef.setInput('animation', 'wave');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-animation')).toBe('wave');
 
     fixture.componentRef.setInput('animation', 'none');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-animation')).toBe('none');
   });
 
-  it('applies rounded variant radius preset', () => {
+  it('applies rounded variant radius preset', async () => {
     fixture.componentRef.setInput('variant', 'rounded');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-surface)');
   });
 
-  it('applies custom radius override', () => {
+  it('applies custom radius override', async () => {
     fixture.componentRef.setInput('radius', '1rem');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.borderRadius).toBe('1rem');
   });
 
-  it('treats null radius input as undefined', () => {
+  it('treats null radius input as undefined', async () => {
     fixture.componentRef.setInput('variant', 'text');
     fixture.componentRef.setInput('radius', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-field)');
   });
 
-  it('treats empty width input as undefined', () => {
+  it('treats empty width input as undefined', async () => {
     fixture.componentRef.setInput('variant', 'rectangular');
     fixture.componentRef.setInput('width', '   ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.width).toBe('100%');
   });
 
-  it('treats null width and height inputs as undefined', () => {
+  it('treats null width and height inputs as undefined', async () => {
     fixture.componentRef.setInput('variant', 'rectangular');
     fixture.componentRef.setInput('width', null as unknown as string);
     fixture.componentRef.setInput('height', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.width).toBe('100%');
     expect(fixture.nativeElement.style.height).toBe('5rem');
   });
 
-  it('applies text line heights for sm and lg', () => {
+  it('applies text line heights for sm and lg', async () => {
     fixture.componentRef.setInput('variant', 'text');
     fixture.componentRef.setInput('size', 'sm');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('0.75rem');
 
     fixture.componentRef.setInput('size', 'lg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('1.125rem');
   });
 
-  it('applies circular sm and md sizes', () => {
+  it('applies circular sm and md sizes', async () => {
     fixture.componentRef.setInput('variant', 'circular');
     fixture.componentRef.setInput('size', 'sm');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('2rem');
 
     fixture.componentRef.setInput('size', 'md');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('2.5rem');
   });
 
-  it('applies button md and lg heights', () => {
+  it('applies button md and lg heights', async () => {
     fixture.componentRef.setInput('variant', 'button');
     fixture.componentRef.setInput('size', 'md');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('var(--au-size-field-h-md)');
 
     fixture.componentRef.setInput('size', 'lg');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('var(--au-touch-target-min)');
   });
 
-  it('applies rectangular default height and radius presets', () => {
+  it('applies rectangular default height and radius presets', async () => {
     fixture.componentRef.setInput('variant', 'rectangular');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.height).toBe('5rem');
     expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-control)');
   });
 
-  it('applies text variant radius preset', () => {
+  it('applies text variant radius preset', async () => {
     fixture.componentRef.setInput('variant', 'text');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.style.borderRadius).toBe('var(--au-radius-field)');
   });
 });

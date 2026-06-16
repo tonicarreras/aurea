@@ -16,21 +16,21 @@ describe('AuTabs', () => {
     }).compileComponents();
   });
 
-  it('defaults variant to line and size to md', () => {
+  it('defaults variant to line and size to md', async () => {
     const fix = TestBed.createComponent(AuTabs);
-    fix.detectChanges();
+    await fix.whenStable();
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('line');
     expect(host.getAttribute('data-au-size')).toBe('md');
     expect(host.getAttribute('data-au-orientation')).toBe('horizontal');
   });
 
-  it('applies variant and orientation attributes', () => {
+  it('applies variant and orientation attributes', async () => {
     const fix = TestBed.createComponent(AuTabs);
     fix.componentRef.setInput('variant', 'contained');
     fix.componentRef.setInput('orientation', 'vertical');
     fix.componentRef.setInput('size', 'lg');
-    fix.detectChanges();
+    await fix.whenStable();
     const host = fix.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-variant')).toBe('contained');
     expect(host.getAttribute('data-au-orientation')).toBe('vertical');
@@ -39,7 +39,7 @@ describe('AuTabs', () => {
 
   it('renders tablist with aria-label', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'))!.nativeElement;
     expect(list.getAttribute('role')).toBe('tablist');
@@ -49,7 +49,7 @@ describe('AuTabs', () => {
 
   it('selects first tab when value is empty', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushTabsSelection();
     expect(fix.componentInstance.active).toBe('profile');
@@ -57,10 +57,10 @@ describe('AuTabs', () => {
 
   it('shows only the active panel', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushTabsSelection();
-    fix.detectChanges();
+    await fix.whenStable();
     const panels = fix.nativeElement.querySelectorAll('[role="tabpanel"]');
     expect(panels.length).toBe(2);
     const visible = [...panels].filter((p: Element) => !p.hasAttribute('hidden'));
@@ -68,22 +68,22 @@ describe('AuTabs', () => {
     expect(visible[0]!.textContent).toContain('Profile body');
   });
 
-  it('switches panel on tab click', () => {
+  it('switches panel on tab click', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     const billingTab = fix.nativeElement.querySelector(
       'button[auTab="billing"]',
     ) as HTMLButtonElement;
     billingTab.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('billing');
     const panel = fix.nativeElement.querySelector('[auTabPanel="billing"]') as HTMLElement;
     expect(panel.hasAttribute('hidden')).toBe(false);
   });
 
-  it('emits valueChange when selection changes', () => {
+  it('emits valueChange when selection changes', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     let next = '';
     fix.debugElement
       .query(By.directive(AuTabs))!
@@ -97,10 +97,10 @@ describe('AuTabs', () => {
 
   it('does not emit valueChange when selecting the same tab', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     fix.componentInstance.active = 'profile';
-    fix.detectChanges();
+    await fix.whenStable();
     const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
     let count = 0;
     tabs.value.subscribe(() => count++);
@@ -110,10 +110,10 @@ describe('AuTabs', () => {
 
   it('marks selected tab with aria-selected and tabindex 0', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushTabsSelection();
-    fix.detectChanges();
+    await fix.whenStable();
     const profile = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
     const billing = fix.nativeElement.querySelector('button[auTab="billing"]') as HTMLButtonElement;
     expect(profile.getAttribute('aria-selected')).toBe('true');
@@ -122,9 +122,9 @@ describe('AuTabs', () => {
     expect(billing.getAttribute('tabindex')).toBe('-1');
   });
 
-  it('links tab aria-controls to panel id', () => {
+  it('links tab aria-controls to panel id', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     const profile = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
     const panel = fix.nativeElement.querySelector('[auTabPanel="profile"]') as HTMLElement;
     expect(profile.getAttribute('aria-controls')).toBe(panel.id);
@@ -132,101 +132,130 @@ describe('AuTabs', () => {
 
   it('moves selection on ArrowRight', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('b');
   });
 
   it('moves selection on ArrowLeft', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.active = 'b';
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
   });
 
   it('keyboard nav uses index 0 when value does not match a tab', async () => {
     const fix = TestBed.createComponent(TestTabsUnknownValueComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushTabsSelection();
     fix.componentInstance.active = 'missing';
-    fix.detectChanges();
+    await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('b');
   });
 
   it('vertical keyboard uses ArrowUp when value does not match a tab', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.orientation = 'vertical';
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     await flushTabsSelection();
     fix.componentInstance.active = 'missing';
-    fix.detectChanges();
+    await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('c');
+  });
+
+  it('horizontal keyboard uses ArrowRight when value does not match a tab', async () => {
+    const fix = TestBed.createComponent(TestThreeTabsComponent);
+    await fix.whenStable();
+    await flushTabsSelection();
+    fix.componentInstance.active = 'missing';
+    await fix.whenStable();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
+    await fix.whenStable();
+    expect(fix.componentInstance.active).toBe('b');
   });
 
   it('jumps to first and last tab with Home and End', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.active = 'b';
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'End', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('c');
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'Home', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
+  });
+
+  it('starts keyboard navigation from the first tab when the active value is unknown', async () => {
+    const fix = TestBed.createComponent(TestThreeTabsComponent);
+    fix.componentInstance.active = 'missing';
+    await fix.whenStable();
+    await fix.whenStable();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
+    await fix.whenStable();
+    expect(fix.componentInstance.active).toBe('b');
   });
 
   it('uses ArrowDown in vertical orientation', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.orientation = 'vertical';
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('b');
   });
 
   it('ignores unrelated keys on tablist', async () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     const ev = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
@@ -236,30 +265,30 @@ describe('AuTabs', () => {
 
   it('skips disabled tabs in keyboard navigation', async () => {
     const fix = TestBed.createComponent(TestTabsWithDisabledComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const list = fix.debugElement.query(By.css('.au-tabs__list'));
     list.triggerEventHandler(
       'keydown',
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('c');
   });
 
   it('does not select disabled tab on click', async () => {
     const fix = TestBed.createComponent(TestTabsWithDisabledComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const disabled = fix.nativeElement.querySelector('button[auTab="b"]') as HTMLButtonElement;
     disabled.click();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
   });
 
   it('uses custom id prefix for tab and panel ids', async () => {
     const fix = TestBed.createComponent(TestTabsWithIdComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await fix.whenStable();
     const tab = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
     expect(tab.id).toBe('settings-tab-profile');
@@ -272,17 +301,17 @@ describe('AuTabs', () => {
     expect(ev.defaultPrevented).toBe(false);
   });
 
-  it('tabIdFor and panelIdFor use resolved id', () => {
+  it('tabIdFor and panelIdFor use resolved id', async () => {
     const fix = TestBed.createComponent(AuTabs);
     fix.componentRef.setInput('id', 'x');
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.tabIdFor('one')).toBe('x-tab-one');
     expect(fix.componentInstance.panelIdFor('one')).toBe('x-panel-one');
   });
 
   it('prevents default when clicking a disabled tab', async () => {
     const fix = TestBed.createComponent(TestTabsWithDisabledComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushTabsSelection();
     const tab = fix.debugElement.query(By.css('button[auTab="b"]'))!;
     const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
@@ -293,7 +322,7 @@ describe('AuTabs', () => {
 
   it('does not register the same tab twice', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
-    fix.detectChanges();
+    await fix.whenStable();
     await flushTabsSelection();
     const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
     const first = fix.debugElement.query(By.directive(AuTab))!.injector.get(AuTab);
@@ -301,9 +330,9 @@ describe('AuTabs', () => {
     expect(tabs.getEnabledTabs().length).toBe(2);
   });
 
-  it('resolvedId is generated when id input is empty', () => {
+  it('resolvedId is generated when id input is empty', async () => {
     const fix = TestBed.createComponent(AuTabs);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.componentInstance.resolvedId()).toMatch(/^au-tabs-\d+$/);
   });
 });

@@ -1,12 +1,18 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AuButton } from './button';
+import { AuButton, type AuButtonVariant } from './au-button.directive';
 
 @Component({
   imports: [AuButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<au-button [loading]="loading">Save changes</au-button>`,
+  template: `<button
+    auButton
+    type="button"
+    [loading]="loading"
+  >
+    Save changes
+  </button>`,
 })
 class ButtonLoadingHost {
   loading = true;
@@ -15,178 +21,237 @@ class ButtonLoadingHost {
 @Component({
   imports: [AuButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<au-button (click)="count = count + 1">Go</au-button>`,
+  template: `<button
+    auButton
+    type="button"
+    (click)="count = count + 1"
+  >
+    Go
+  </button>`,
 })
 class ButtonClickHost {
   count = 0;
 }
 
+@Component({
+  imports: [AuButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <button
+      auButton
+      type="button"
+      [variant]="variant()"
+      [size]="size()"
+      [disabled]="disabled()"
+      [loading]="loading()"
+      [name]="name()"
+      [type]="buttonType()"
+      [label]="label()"
+      (click)="onClick($event)"
+    >
+      Test
+    </button>
+  `,
+})
+class ButtonHost {
+  readonly variant = input<AuButtonVariant>('primary');
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
+  readonly disabled = input(false);
+  readonly loading = input(false);
+  readonly name = input('');
+  readonly buttonType = input<'button' | 'submit' | 'reset'>('button');
+  readonly label = input('');
+
+  clicks: MouseEvent[] = [];
+  onClick(event: MouseEvent): void {
+    this.clicks.push(event);
+  }
+}
+
 describe('AuButton', () => {
-  let component: AuButton;
-  let fixture: ComponentFixture<AuButton>;
+  let fixture: ComponentFixture<ButtonHost>;
+  let directive: AuButton;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuButton],
+      imports: [ButtonHost],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AuButton);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture = TestBed.createComponent(ButtonHost);
+    directive = fixture.debugElement.query(By.directive(AuButton))!.injector.get(AuButton);
+    await fixture.whenStable();
   });
 
   it('creates', () => {
-    expect(component).toBeTruthy();
+    expect(directive).toBeTruthy();
   });
 
   it('has default variant primary', () => {
-    expect(component.variant()).toBe('primary');
+    expect(directive.variant()).toBe('primary');
   });
 
   it('has default size md', () => {
-    expect(component.size()).toBe('md');
+    expect(directive.size()).toBe('md');
   });
 
   it('renders button element', () => {
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('button')).toBeTruthy();
   });
 
   it('applies host classes', () => {
-    const host = fixture.nativeElement;
-    expect(host.classList.contains('au-button')).toBe(true);
+    expect(fixture.nativeElement.querySelector('button').classList.contains('au-button')).toBe(
+      true,
+    );
   });
 
-  it('sets data-au-size attribute', () => {
+  it('sets data-au-size attribute', async () => {
     fixture.componentRef.setInput('size', 'lg');
-    fixture.detectChanges();
-    const host = fixture.nativeElement;
-    expect(host.getAttribute('data-au-size')).toBe('lg');
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('button').getAttribute('data-au-size')).toBe('lg');
   });
 
-  it('sets data-au-variant attribute', () => {
+  it('sets data-au-variant attribute', async () => {
     fixture.componentRef.setInput('variant', 'outline');
-    fixture.detectChanges();
-    const host = fixture.nativeElement;
-    expect(host.getAttribute('data-au-variant')).toBe('outline');
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('button').getAttribute('data-au-variant')).toBe(
+      'outline',
+    );
   });
 
-  it('emits click event', async () => {
-    const emitted: MouseEvent[] = [];
-    component.click.subscribe((e) => emitted.push(e));
-
-    const button = fixture.nativeElement.querySelector('button');
-    button.click();
-
-    expect(emitted.length).toBe(1);
-  });
-
-  it('invokes parent (click) handler once per activation', async () => {
+  it('forwards native click to parent handler once per activation', async () => {
     const hostFixture = TestBed.createComponent(ButtonClickHost);
-    hostFixture.detectChanges();
-
+    await hostFixture.whenStable();
     hostFixture.nativeElement.querySelector('button').click();
-
     expect(hostFixture.componentInstance.count).toBe(1);
   });
 
-  it('does not emit click when disabled', () => {
-    fixture.componentRef.setInput('disabled', true);
-    fixture.detectChanges();
-
-    const emitted: MouseEvent[] = [];
-    component.click.subscribe((e) => emitted.push(e));
-
-    const button = fixture.nativeElement.querySelector('button');
-    button.click();
-
-    expect(emitted.length).toBe(0);
+  it('does not invoke parent click handler when disabled', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        [disabled]="true"
+        (click)="count = count + 1"
+      >
+        Go
+      </button>`,
+    })
+    class DisabledClickHost {
+      count = 0;
+    }
+    const hostFixture = TestBed.createComponent(DisabledClickHost);
+    await hostFixture.whenStable();
+    hostFixture.nativeElement.querySelector('button').click();
+    expect(hostFixture.componentInstance.count).toBe(0);
   });
 
-  it('does not emit click when loading', () => {
-    fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-
-    const emitted: MouseEvent[] = [];
-    component.click.subscribe((e) => emitted.push(e));
-
-    const button = fixture.nativeElement.querySelector('button');
-    button.click();
-
-    expect(emitted.length).toBe(0);
+  it('does not invoke parent click handler when loading', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        [loading]="true"
+        (click)="count = count + 1"
+      >
+        Go
+      </button>`,
+    })
+    class LoadingClickHost {
+      count = 0;
+    }
+    const hostFixture = TestBed.createComponent(LoadingClickHost);
+    await hostFixture.whenStable();
+    hostFixture.nativeElement.querySelector('button').click();
+    expect(hostFixture.componentInstance.count).toBe(0);
   });
 
-  it('sets aria-busy when loading', () => {
+  it('sets aria-busy when loading', async () => {
     fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.getAttribute('aria-busy')).toBe('true');
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('button').getAttribute('aria-busy')).toBe('true');
   });
 
-  it('uses aria-disabled instead of native disabled when loading', () => {
+  it('uses aria-disabled instead of native disabled when loading', async () => {
     fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-
+    await fixture.whenStable();
     const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     expect(button.hasAttribute('disabled')).toBe(false);
     expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 
-  it('sets disabled attribute when disabled', () => {
+  it('sets disabled attribute when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.hasAttribute('disabled')).toBe(true);
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('button').hasAttribute('disabled')).toBe(true);
   });
 
   it('focus() forwards to native button', () => {
     const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     const spy = vi.spyOn(button, 'focus');
-    component.focus();
+    directive.focus();
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });
 
-  it('sets native name, type, and aria-label from inputs', () => {
+  it('sets native name, type, and aria-label from inputs', async () => {
     fixture.componentRef.setInput('name', 'submit-btn');
-    fixture.componentRef.setInput('type', 'submit');
+    fixture.componentRef.setInput('buttonType', 'submit');
     fixture.componentRef.setInput('label', 'Send form');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const btn = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     expect(btn.getAttribute('name')).toBe('submit-btn');
     expect(btn.getAttribute('type')).toBe('submit');
     expect(btn.getAttribute('aria-label')).toBe('Send form');
   });
 
-  it('applies from-tab class after Tab then focusin', () => {
+  it('applies from-tab class after Tab then focusin', async () => {
     const btnDe = fixture.debugElement.query(By.css('button'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     btnDe.triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fixture.detectChanges();
-    expect(btnDe.nativeElement.classList.contains('au-button__element--from-tab')).toBe(true);
+    await fixture.whenStable();
+    expect(btnDe.nativeElement.classList.contains('au-button--from-tab')).toBe(true);
     btnDe.triggerEventHandler('focusout', new FocusEvent('focusout'));
-    fixture.detectChanges();
-    expect(btnDe.nativeElement.classList.contains('au-button__element--from-tab')).toBe(false);
+    await fixture.whenStable();
+    expect(btnDe.nativeElement.classList.contains('au-button--from-tab')).toBe(false);
   });
 
-  it('prevents default on click when disabled', () => {
+  it('prevents default on click when disabled', async () => {
     fixture.componentRef.setInput('disabled', true);
-    fixture.detectChanges();
-    const btnDe = fixture.debugElement.query(By.css('button'))!;
-    const ev = new MouseEvent('click', { cancelable: true });
-    btnDe.triggerEventHandler('click', ev);
+    await fixture.whenStable();
+    const ev = new MouseEvent('click', { cancelable: true, bubbles: true });
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    button.dispatchEvent(ev);
     expect(ev.defaultPrevented).toBe(true);
   });
 
-  it('prevents default on click when loading', () => {
+  it('prevents default on click when loading', async () => {
     fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-    const btnDe = fixture.debugElement.query(By.css('button'))!;
-    const ev = new MouseEvent('click', { cancelable: true });
-    btnDe.triggerEventHandler('click', ev);
+    await fixture.whenStable();
+    const ev = new MouseEvent('click', { cancelable: true, bubbles: true });
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    button.dispatchEvent(ev);
     expect(ev.defaultPrevented).toBe(true);
+  });
+
+  it('removes spinner chrome when loading becomes false', async () => {
+    fixture.componentRef.setInput('loading', true);
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
+    fixture.componentRef.setInput('loading', false);
+    await fixture.whenStable();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.au-button__spinner')).toBeFalsy();
+  });
+
+  it('syncLoadingChrome no-ops when the content wrapper is missing', () => {
+    const dir = directive as unknown as {
+      syncLoadingChrome(): void;
+      contentWrapper: HTMLSpanElement | null;
+    };
+    dir.contentWrapper = null;
+    expect(() => dir.syncLoadingChrome()).not.toThrow();
   });
 });
 
@@ -197,9 +262,9 @@ describe('AuButton loading with projected text', () => {
     }).compileComponents();
   });
 
-  it('hides projected text visually and exposes it via aria-label', () => {
+  it('hides projected text visually and exposes it via aria-label', async () => {
     const fix = TestBed.createComponent(ButtonLoadingHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const button = fix.nativeElement.querySelector('button') as HTMLButtonElement;
     const content = fix.nativeElement.querySelector('.au-button__content') as HTMLElement;
     expect(content.classList.contains('au-button__content--hidden')).toBe(true);
@@ -208,13 +273,61 @@ describe('AuButton loading with projected text', () => {
     expect(fix.nativeElement.querySelector('.au-button__spinner')).toBeTruthy();
   });
 
-  it('uses md spinner size on lg loading buttons', () => {
-    const fixture = TestBed.createComponent(AuButton);
-    fixture.componentRef.setInput('size', 'lg');
-    fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size')).toBe(
-      'md',
-    );
+  it('reuses an existing content wrapper', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        [loading]="true"
+      >
+        <span class="au-button__content">Pre-wrapped</span>
+      </button>`,
+    })
+    class PreWrappedHost {}
+
+    const fix = TestBed.createComponent(PreWrappedHost);
+    await fix.whenStable();
+    expect(fix.nativeElement.querySelectorAll('.au-button__content').length).toBe(1);
+  });
+
+  it('omits aria-label when loading text is blank', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        [loading]="true"
+      >
+        <span class="au-button__content"> </span>
+      </button>`,
+    })
+    class BlankLoadingHost {}
+
+    const fix = TestBed.createComponent(BlankLoadingHost);
+    await fix.whenStable();
+    expect(
+      (fix.nativeElement.querySelector('button') as HTMLButtonElement).getAttribute('aria-label'),
+    ).toBeNull();
+  });
+
+  it('uses md spinner size on lg loading buttons', async () => {
+    @Component({
+      imports: [AuButton],
+      template: `<button
+        auButton
+        type="button"
+        size="lg"
+        [loading]="true"
+      >
+        Save
+      </button>`,
+    })
+    class LgLoadingHost {}
+    const hostFixture = TestBed.createComponent(LgLoadingHost);
+    await hostFixture.whenStable();
+    expect(
+      hostFixture.nativeElement.querySelector('au-spinner')?.getAttribute('data-au-size'),
+    ).toBe('md');
   });
 });

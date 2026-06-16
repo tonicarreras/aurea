@@ -8,7 +8,13 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuSwitch],
   template: `
     <au-form-field>
-      <au-switch [label]="t().push" />
+      <button
+        type="button"
+        auSwitch
+        [label]="t().push"
+      >
+        <span class="au-sr-only">{{ t().push }}</span>
+      </button>
     </au-form-field>
   `,
 })
@@ -22,11 +28,15 @@ export class ExampleSwitchBasicDemo {
   imports: [AuFormField, AuSwitch],
   template: `
     <au-form-field>
-      <au-switch
+      <button
+        type="button"
+        auSwitch
         [label]="t().airplane"
         [checked]="true"
         [disabled]="true"
-      />
+      >
+        <span class="au-sr-only">{{ t().airplane }}</span>
+      </button>
     </au-form-field>
   `,
 })
@@ -43,7 +53,13 @@ export class ExampleSwitchDisabledDemo {
       [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-switch [label]="t().privacy" />
+      <button
+        type="button"
+        auSwitch
+        [label]="t().privacy"
+      >
+        <span class="au-sr-only">{{ t().privacy }}</span>
+      </button>
     </au-form-field>
   `,
 })

@@ -47,7 +47,8 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
       >
         <header class="docs-mobile-menu__header">
           <h2 class="docs-mobile-menu__title">{{ locale.messages().shell.settingsMenuAria }}</h2>
-          <au-button
+          <button
+            auButton
             variant="ghost"
             size="sm"
             type="button"
@@ -58,7 +59,7 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
               name="close"
               size="sm"
             />
-          </au-button>
+          </button>
         </header>
 
         <div class="docs-mobile-menu__body">
@@ -89,30 +90,33 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
           <au-divider />
 
           <div class="docs-mobile-menu__links">
-            <au-button
+            <button
+              auButton
               variant="outline"
               size="sm"
               type="button"
               (click)="openExternal(links.github)"
             >
               {{ locale.messages().shell.githubLabel }}
-            </au-button>
-            <au-button
+            </button>
+            <button
+              auButton
               variant="outline"
               size="sm"
               type="button"
               (click)="openExternal(links.npm)"
             >
               {{ locale.messages().shell.npmLabel }}
-            </au-button>
-            <au-button
+            </button>
+            <button
+              auButton
               variant="outline"
               size="sm"
               type="button"
               (click)="openExternal(links.storybook)"
             >
               {{ locale.messages().shell.storybookLabel }}
-            </au-button>
+            </button>
           </div>
         </div>
       </div>

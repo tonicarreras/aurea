@@ -2,13 +2,13 @@ import {
   afterNextRender,
   DestroyRef,
   Directive,
-  ElementRef,
   computed,
   inject,
   input,
   signal,
 } from '@angular/core';
 import { tabFocusState } from '../au-tab-focus-state';
+import { injectHostRef } from '../au-host-element';
 import { AuTabs } from './tabs';
 
 /**
@@ -39,7 +39,7 @@ import { AuTabs } from './tabs';
 })
 export class AuTab {
   private readonly tabs = inject(AuTabs);
-  private readonly host = inject(ElementRef<HTMLButtonElement>);
+  private readonly host = injectHostRef<HTMLButtonElement>();
   private readonly destroyRef = inject(DestroyRef);
 
   /** Tab key; must match the paired `auTabPanel` value. */
@@ -63,7 +63,7 @@ export class AuTab {
   });
 
   focus(): void {
-    (this.host.nativeElement as HTMLElement).focus();
+    this.host.nativeElement.focus();
   }
 
   protected onClick(event: MouseEvent): void {

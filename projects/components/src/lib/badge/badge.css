@@ -27,7 +27,7 @@
   background: var(--au-badge-bg);
   color: var(--au-badge-color);
   border: var(--au-badge-border);
-  box-shadow: var(--au-chrome-shadow);
+  box-shadow: var(--au-elevation-flat);
 }
 
 :host([data-au-dot]) {

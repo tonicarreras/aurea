@@ -97,7 +97,7 @@ export const examples: ComponentDocExample[] = [
     size="sm"
     [headingLevel]="3"
   >
-    <au-button type="button">Añadir usuario</au-button>
+    <button auButton type="button">Añadir usuario</button>
   </au-empty-state>
 </au-table>`,
   },

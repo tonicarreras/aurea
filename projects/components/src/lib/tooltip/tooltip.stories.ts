@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { expect, userEvent, within } from 'storybook/test';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuTooltip } from './au-tooltip.directive';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
@@ -49,7 +49,7 @@ export const Default: Story = {
     moduleMetadata: storyImports,
     template: `
       <div class="au-story-stage">
-        <au-button
+        <button type="button" auButton
           variant="outline"
           [auTooltip]="text"
           [auTooltipPlacement]="placement"
@@ -58,7 +58,7 @@ export const Default: Story = {
           [auTooltipDisabled]="disabled"
         >
           Hover or focus me
-        </au-button>
+        </button>
       </div>
     `,
   }),

@@ -15,7 +15,9 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 
+import { installPageScrollPrevention } from '../overlay/prevent-page-scroll';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_MENU } from './au-menu.token';
@@ -34,7 +36,8 @@ export function auMenuSelfRef(): typeof AuMenu {
  * - **Open state:** `[(open)]` with `openChange` output.
  * - **Trigger:** `auMenuTrigger` on the control that toggles the panel.
  * - **Items:** `au-menu-item` emits `select` and closes the menu.
- * - **Dismiss:** outside click and Escape.
+ * - **Dismiss:** outside click, Escape, and scroll outside the panel (e.g. nested scroll containers).
+ * - **Scroll:** wheel/touch on the page is blocked while open (scrollbar stays visible); nested scroll still dismisses.
  * - **Exclusive open:** opening one menu closes any other open menu on the page.
  * - **Keyboard:** Arrow keys cycle items; Home/End jump to ends; typeahead by first character; Enter/Space activates; Escape closes.
  * - **Focus:** moves to the first item on open, returns to the trigger on close.
@@ -42,7 +45,7 @@ export function auMenuSelfRef(): typeof AuMenu {
  * @example
  * ```html
  * <au-menu [(open)]="open">
- *   <au-button auMenuTrigger>Actions</au-button>
+ *   <button auButton auMenuTrigger>Actions</button>
  *   <au-menu-item (select)="onEdit()">Edit</au-menu-item>
  * </au-menu>
  * ```
@@ -64,7 +67,7 @@ export class AuMenu {
   readonly placement = input<AuTooltipPlacement>('bottom');
   readonly disabled = input(false);
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
@@ -161,6 +164,23 @@ export class AuMenu {
       this.savedTrigger = trigger;
       this.focusMenuItem(items[0]);
     }
+  });
+
+  private readonly preventPageScrollWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    const isScrollAllowed = (target: EventTarget | null): boolean => {
+      if (!(target instanceof Node)) {
+        return false;
+      }
+      const panel = this.panelRef()?.nativeElement;
+      const host = this.host.nativeElement;
+      return host.contains(target) || !!panel?.contains(target);
+    };
+
+    onCleanup(installPageScrollPrevention(this.document, isScrollAllowed));
   });
 
   private readonly dismissOnScroll = afterRenderEffect((onCleanup) => {
@@ -271,7 +291,7 @@ export class AuMenu {
     if (!(target instanceof Node)) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
+    const host = this.host.nativeElement;
     const panel = this.panelRef()?.nativeElement;
     if (host.contains(target) || panel?.contains(target)) {
       return;

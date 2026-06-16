@@ -9,10 +9,30 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--row">
       <div class="docs-demo-row">
-        <au-button variant="primary">{{ t().primary }}</au-button>
-        <au-button variant="secondary">{{ t().secondary }}</au-button>
-        <au-button variant="outline">{{ t().outline }}</au-button>
-        <au-button variant="ghost">{{ t().ghost }}</au-button>
+        <button
+          auButton
+          variant="primary"
+        >
+          {{ t().primary }}
+        </button>
+        <button
+          auButton
+          variant="secondary"
+        >
+          {{ t().secondary }}
+        </button>
+        <button
+          auButton
+          variant="outline"
+        >
+          {{ t().outline }}
+        </button>
+        <button
+          auButton
+          variant="ghost"
+        >
+          {{ t().ghost }}
+        </button>
       </div>
     </div>
   `,

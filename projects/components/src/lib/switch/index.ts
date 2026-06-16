@@ -1,1 +1,1 @@
-export * from './switch';
+export { AuSwitch } from './au-switch.directive';

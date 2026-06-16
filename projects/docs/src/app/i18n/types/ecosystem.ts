@@ -14,7 +14,9 @@ export interface EcosystemMessages {
     title: string;
     lead: string;
     legend: string;
-    columns: { component: string; level: string; since: string };
+    columns: { component: string; level: string; since: string; note: string };
+    /** Optional per-slug notes (sync with `component-maturity.ts`). */
+    notes: Partial<Record<string, string>>;
     rows: EcosystemMaturityRow[];
   };
   designTokens: {
@@ -41,11 +43,15 @@ export interface EcosystemMessages {
     pageTitle: string;
     pageSubtitle: string;
     filterLabel: string;
+    filterHint: string;
     filterPlaceholder: string;
     roleFilterLabel: string;
+    roleFilterHint: string;
     roleFilterAll: string;
     colName: string;
+    fieldNameHint: string;
     colRole: string;
+    fieldRoleHint: string;
     colStatus: string;
     colActions: string;
     statusActive: string;
@@ -77,8 +83,10 @@ export interface EcosystemMessages {
     statusFilterLabel: string;
     statusAll: string;
     personPickLabel: string;
+    personPickHint: string;
     personPickPlaceholder: string;
     minProgressLabel: string;
+    minProgressHint: string;
     remoteOnlyLabel: string;
     colEmail: string;
     colJoined: string;
@@ -89,10 +97,16 @@ export interface EcosystemMessages {
     exportCsv: string;
     exportJson: string;
     fieldEmail: string;
+    fieldEmailHint: string;
+    fieldStatusHint: string;
     fieldRequired: string;
     fieldJoined: string;
+    fieldJoinedHint: string;
     fieldSkills: string;
+    fieldSkillsHint: string;
     fieldNotes: string;
+    fieldNotesHint: string;
+    fieldProgressHint: string;
     skillsPlaceholder: string;
     drawerTitle: string;
     drawerClose: string;

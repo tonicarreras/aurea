@@ -11,6 +11,7 @@ import {
   type Signal,
 } from '@angular/core';
 import type { ValidationError } from '@angular/forms/signals';
+import { injectAuFieldId } from './au-field-id-generator';
 
 /** Validation state reported by a projected field control. */
 export interface AuFormFieldControlState {
@@ -19,6 +20,21 @@ export interface AuFormFieldControlState {
   required: boolean;
   /** When true, the group renders its own `<legend>`; suppress the wrapper label. */
   usesLegend?: boolean;
+}
+
+function formFieldControlStateEquals(
+  prev: AuFormFieldControlState | null,
+  next: AuFormFieldControlState,
+): boolean {
+  if (prev == null) {
+    return false;
+  }
+  return (
+    prev.displayError === next.displayError &&
+    prev.effectiveInvalid === next.effectiveInvalid &&
+    prev.required === next.required &&
+    (prev.usesLegend ?? false) === (next.usesLegend ?? false)
+  );
 }
 
 /** Context provided by {@link AuFormField} to projected controls. */
@@ -79,12 +95,13 @@ export function syncFormFieldControlState(
   state: FormFieldControlSyncState,
 ): () => void {
   return () => {
-    formField.updateControlState({
+    const next: AuFormFieldControlState = {
       displayError: state.displayError(),
       effectiveInvalid: state.effectiveInvalid(),
       required: state.required(),
       usesLegend: state.usesLegend?.(),
-    });
+    };
+    formField.updateControlState(next);
   };
 }
 
@@ -98,11 +115,9 @@ export function queryFieldNative<T extends HTMLElement>(host: ElementRef, select
   return el;
 }
 
-let nextStandaloneFieldId = 0;
-
 /** Minimal {@link AuFormFieldContext} when checkbox/switch are not wrapped in `au-form-field`. */
 export function createStandaloneAuFormFieldContext(): AuFormFieldContext {
-  const autoId = `au-field-${++nextStandaloneFieldId}`;
+  const autoId = injectAuFieldId();
   const controlState = signal<AuFormFieldControlState | null>(null);
 
   const label = signal('');
@@ -140,6 +155,9 @@ export function createStandaloneAuFormFieldContext(): AuFormFieldContext {
     required,
     isInvalid,
     updateControlState(state: AuFormFieldControlState): void {
+      if (formFieldControlStateEquals(controlState(), state)) {
+        return;
+      }
       controlState.set(state);
     },
   };
@@ -154,13 +172,11 @@ export function injectAuFormField(): AuFormFieldContext {
   return inject(AU_FORM_FIELD);
 }
 
-let nextFieldId = 0;
-
 /**
  * Design-system **form field**: label, hint, and error chrome around a projected control.
  *
  * @remarks
- * - **Required:** wrap `au-input-text`, `au-textarea`, `au-select`, etc. Controls read ids and ARIA
+ * - **Required:** wrap `input[auInputText]`, `textarea[auTextarea]`, `au-select`, etc. Controls read ids and ARIA
  *   from {@link AU_FORM_FIELD}; validation UI is driven by the child's `errors` / `invalid` (signal forms).
  * - **Checkbox / switch:** keep the inline `label` on the control; use `au-form-field` for hint and error only.
  * - **Radio group:** `label` here becomes the `<legend>` text (via the group's injected context).
@@ -168,7 +184,7 @@ let nextFieldId = 0;
  * @example
  * ```html
  * <au-form-field label="Email" hint="Work address" required>
- *   <au-input-text formField [field]="email" type="email" />
+ *   <input auInputText formField [field]="email" type="email" />
  * </au-form-field>
  * ```
  */
@@ -183,7 +199,7 @@ let nextFieldId = 0;
   providers: [{ provide: AU_FORM_FIELD, useExisting: forwardRef(auFormFieldSelfRef) }],
 })
 export class AuFormField implements AuFormFieldContext {
-  private readonly autoId = `au-field-${++nextFieldId}`;
+  private readonly autoId = injectAuFieldId();
 
   private readonly controlState = signal<AuFormFieldControlState | null>(null);
 
@@ -237,6 +253,9 @@ export class AuFormField implements AuFormFieldContext {
   );
 
   updateControlState(state: AuFormFieldControlState): void {
+    if (formFieldControlStateEquals(this.controlState(), state)) {
+      return;
+    }
     this.controlState.set(state);
   }
 }

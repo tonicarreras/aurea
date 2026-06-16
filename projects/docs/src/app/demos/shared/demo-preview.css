@@ -1,41 +1,49 @@
 /* Hosts de previews: ancho completo en carrusel y panel de docs */
 :where(
-  docs-preview-button,
-  docs-preview-form-field,
-  docs-preview-input-text,
-  docs-preview-textarea,
-  docs-preview-checkbox,
-  docs-preview-switch,
-  docs-preview-select,
-  docs-preview-autocomplete,
   docs-preview-accordion,
-  docs-preview-fieldset,
-  docs-preview-file-upload,
-  docs-preview-slider,
-  docs-preview-radio-group,
-  docs-preview-input-number,
-  docs-preview-input-date,
-  docs-preview-dialog,
-  docs-preview-card,
-  docs-preview-tabs,
-  docs-preview-chip,
-  docs-preview-chip-group,
-  docs-preview-list,
-  docs-preview-snackbar,
-  docs-preview-message,
-  docs-preview-icon,
-  docs-preview-skeleton,
-  docs-preview-steps,
-  docs-preview-divider,
-  docs-preview-tooltip,
+  docs-preview-autocomplete,
+  docs-preview-avatar,
   docs-preview-badge,
   docs-preview-breadcrumb,
+  docs-preview-button,
+  docs-preview-button-group,
+  docs-preview-card,
+  docs-preview-checkbox,
+  docs-preview-chip,
+  docs-preview-chip-group,
+  docs-preview-description-list,
+  docs-preview-dialog,
+  docs-preview-divider,
+  docs-preview-drawer,
+  docs-preview-empty-state,
+  docs-preview-fieldset,
+  docs-preview-file-upload,
+  docs-preview-form-field,
+  docs-preview-icon,
+  docs-preview-input-date,
+  docs-preview-input-number,
+  docs-preview-input-password,
+  docs-preview-input-text,
+  docs-preview-input-time,
   docs-preview-link,
+  docs-preview-list,
   docs-preview-menu,
+  docs-preview-message,
   docs-preview-pagination,
   docs-preview-popover,
   docs-preview-progress,
-  docs-preview-table
+  docs-preview-radio-group,
+  docs-preview-select,
+  docs-preview-skeleton,
+  docs-preview-slider,
+  docs-preview-snackbar,
+  docs-preview-steps,
+  docs-preview-switch,
+  docs-preview-table,
+  docs-preview-tabs,
+  docs-preview-tag-input,
+  docs-preview-textarea,
+  docs-preview-tooltip
 ) {
   display: flex;
   width: 100%;
@@ -48,31 +56,41 @@
   box-sizing: border-box;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: var(--au-space-3);
 }
 
 .docs-preview--field {
   width: 100%;
   max-width: var(--docs-demo-field-max);
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--au-space-3);
 }
 
 .docs-preview--field
   :where(
     au-form-field,
-    au-input-text,
-    au-textarea,
+    au-fieldset,
+    input.au-input-text,
+    textarea.au-textarea,
     au-select,
     au-autocomplete,
-    au-input-number,
-    au-input-date,
+    input.au-input-number,
+    input.au-input-date,
+    input.au-input-time,
+    input.au-input-password,
+    au-tag-input,
     au-slider,
     au-file-upload,
     au-radio-group,
-    au-switch,
+    button.au-switch,
     au-progress
   ) {
   width: 100%;
+  max-width: 100%;
 }
 
 /* Barras de progreso: ancho completo en el carrusel (la pista es baja, ~6px) */
@@ -104,12 +122,13 @@
   align-items: stretch;
 }
 
-.docs-preview--wide :where(au-tabs, au-steps) {
+.docs-preview--wide :where(au-tabs, au-steps, au-accordion) {
   width: 100%;
 }
 
 .docs-preview--row {
   width: 100%;
+  flex-direction: row;
 }
 
 .docs-preview--row .docs-demo-row {
@@ -120,7 +139,9 @@
 .docs-preview--stack {
   width: 100%;
   max-width: var(--docs-demo-field-max);
+  flex-direction: column;
   align-items: stretch;
+  gap: var(--au-space-3);
 }
 
 .docs-preview--stack .docs-demo-stack {
@@ -130,6 +151,8 @@
 .docs-preview--block {
   width: 100%;
   max-width: var(--docs-demo-field-max);
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .docs-preview--block :where(au-card) {
@@ -145,6 +168,40 @@
   flex-wrap: wrap;
   gap: var(--au-space-2);
   justify-content: flex-end;
+}
+
+.docs-example-field {
+  width: min(100%, var(--docs-demo-field-max));
+  max-width: var(--docs-demo-field-max);
+}
+
+.docs-example-field :where(au-form-field, au-fieldset) {
+  width: 100%;
+}
+
+.docs-preview-person {
+  display: flex;
+  align-items: center;
+  gap: var(--au-space-3);
+  min-width: 0;
+}
+
+.docs-preview-person__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-0-5);
+  min-width: 0;
+}
+
+.docs-preview-person__name {
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-semibold);
+  color: var(--au-color-text-primary);
+}
+
+.docs-preview-person__detail {
+  font-size: var(--au-text-xs);
+  color: var(--au-color-text-secondary);
 }
 
 .docs-demo-row {

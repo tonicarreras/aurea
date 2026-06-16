@@ -97,12 +97,12 @@
 
 .au-radio-group__shell:not(.au-radio-group__shell--from-tab):focus-within
   .au-radio-group__input:focus:not(:disabled) {
-  box-shadow: 0 0 0 2px var(--au-color-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 .au-radio-group__shell--from-tab:focus-within .au-radio-group__input:focus:not(:disabled) {
-  outline: 2px solid var(--au-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
 }
 
 .au-radio-group__shell--invalid .au-radio-group__input:not(:disabled) {
@@ -112,7 +112,7 @@
 
 .au-radio-group__shell--invalid:focus-within .au-radio-group__input:focus:not(:disabled) {
   outline: none;
-  box-shadow: 0 0 0 2px var(--au-color-form-error);
+  box-shadow: var(--au-focus-inset-error);
 }
 
 .au-radio-group__input:disabled {

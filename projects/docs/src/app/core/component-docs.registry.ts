@@ -108,7 +108,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     slug: 'button',
     title: 'Button',
     exportName: 'AuButton',
-    selector: 'au-button',
+    selector: 'button[auButton]',
     summary:
       'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
     demoComponent: ButtonDemo,
@@ -117,8 +117,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
 @Component({
   imports: [AuButton],
   template: \`
-    <au-button variant="primary">Guardar</au-button>
-    <au-button variant="outline">Cancelar</au-button>
+    <button type="button" auButton variant="primary">Guardar</button>
+    <button type="button" auButton variant="outline">Cancelar</button>
   \`,
 })
 export class Example {}`,
@@ -128,13 +128,13 @@ export class Example {}`,
     title: 'Button group',
     exportName: 'AuButtonGroup',
     selector: 'au-button-group',
-    summary: 'Agrupa acciones `au-button` relacionadas.',
+    summary: 'Agrupa acciones `button[auButton]` relacionadas.',
     demoComponent: ButtonGroupDemo,
     snippet: `import { AuButton, AuButtonGroup } from '@aurea-design-system/components';
 
 <au-button-group ariaLabel="Document actions">
-  <au-button variant="outline">Cancel</au-button>
-  <au-button>Save</au-button>
+  <button auButton variant="outline">Cancel</button>
+  <button auButton>Save</button>
 </au-button-group>`,
   },
   {
@@ -148,7 +148,7 @@ export class Example {}`,
     snippet: `import { AuFormField, AuInputText } from '@aurea-design-system/components';
 
 <au-form-field label="Email" hint="Work address" [required]="true">
-  <au-input-text type="email" placeholder="you@company.com" />
+  <input auInputText type="email" placeholder="you@company.com" />
 </au-form-field>`,
   },
   {
@@ -162,7 +162,7 @@ export class Example {}`,
 
 <au-fieldset legend="Shipping address" description="Where we deliver your order.">
   <au-form-field label="Street">
-    <au-input-text />
+    <input auInputText />
   </au-form-field>
 </au-fieldset>`,
   },
@@ -170,51 +170,51 @@ export class Example {}`,
     slug: 'input-text',
     title: 'Input text',
     exportName: 'AuInputText',
-    selector: 'au-input-text',
+    selector: 'input[auInputText]',
     summary:
       'Control de una línea; envuelve en `au-form-field` para label, hint y error. Signal forms con `formField`.',
     demoComponent: InputTextDemo,
     snippet: `import { AuFormField, AuInputText } from '@aurea-design-system/components';
 
 <au-form-field label="Email">
-  <au-input-text type="email" placeholder="you@company.com" />
+  <input auInputText type="email" placeholder="you@company.com" />
 </au-form-field>`,
   },
   {
     slug: 'textarea',
     title: 'Textarea',
     exportName: 'AuTextarea',
-    selector: 'au-textarea',
+    selector: 'textarea[auTextarea]',
     summary: 'Texto multilínea con la misma gramática visual que el resto de campos.',
     demoComponent: TextareaDemo,
     snippet: `import { AuFormField, AuTextarea } from '@aurea-design-system/components';
 
 <au-form-field label="Notes">
-  <au-textarea [rows]="4" />
+  <textarea auTextarea [rows]="4"></textarea>
 </au-form-field>`,
   },
   {
     slug: 'checkbox',
     title: 'Checkbox',
     exportName: 'AuCheckbox',
-    selector: 'au-checkbox',
+    selector: 'input[type=checkbox][auCheckbox]',
     summary: 'Selección booleana con estado indeterminado y descripción opcional.',
     demoComponent: CheckboxDemo,
     snippet: `import { AuCheckbox } from '@aurea-design-system/components';
 
-<au-checkbox label="Recordarme" />`,
+<input type="checkbox" auCheckbox label="Recordarme" />`,
   },
   {
     slug: 'switch',
     title: 'Switch',
     exportName: 'AuSwitch',
-    selector: 'au-switch',
+    selector: 'button[auSwitch]',
     summary: 'Alternar configuraciones on/off con rol de switch y etiqueta asociada.',
     demoComponent: SwitchDemo,
     snippet: `import { AuFormField, AuSwitch } from '@aurea-design-system/components';
 
 <au-form-field hint="You can change this in system settings.">
-  <au-switch label="Notifications" />
+  <button type="button" auSwitch label="Notifications"></button>
 </au-form-field>`,
   },
   {
@@ -288,13 +288,13 @@ options: AuSelectOption[] = [
     slug: 'input-number',
     title: 'Input number',
     exportName: 'AuInputNumber',
-    selector: 'au-input-number',
+    selector: 'input[auInputNumber]',
     summary: 'Valor numérico con incremento/decremento y límites opcionales.',
     demoComponent: InputNumberDemo,
     snippet: `import { AuFormField, AuInputNumber } from '@aurea-design-system/components';
 
 <au-form-field label="Quantity">
-  <au-input-number [min]="0" [max]="99" />
+  <input auInputNumber [min]="0" [max]="99" />
 </au-form-field>`,
   },
   {
@@ -314,39 +314,39 @@ options: AuSelectOption[] = [
     slug: 'input-date',
     title: 'Input date',
     exportName: 'AuInputDate',
-    selector: 'au-input-date',
+    selector: 'input[auInputDate]',
     summary: 'Selector de fecha nativo estilizado con tokens Aurea.',
     demoComponent: InputDateDemo,
     snippet: `import { AuFormField, AuInputDate } from '@aurea-design-system/components';
 
 <au-form-field label="Date">
-  <au-input-date />
+  <input auInputDate />
 </au-form-field>`,
   },
   {
     slug: 'input-time',
     title: 'Input time',
     exportName: 'AuInputTime',
-    selector: 'au-input-time',
+    selector: 'input[auInputTime]',
     summary: 'Selector de hora nativo estilizado con tokens Aurea.',
     demoComponent: InputTimeDemo,
     snippet: `import { AuFormField, AuInputTime } from '@aurea-design-system/components';
 
 <au-form-field label="Time">
-  <au-input-time />
+  <input auInputTime />
 </au-form-field>`,
   },
   {
     slug: 'input-password',
     title: 'Input password',
     exportName: 'AuInputPassword',
-    selector: 'au-input-password',
+    selector: 'input[auInputPassword]',
     summary: 'Campo de contraseña con toggle de revelar y tokens Aurea.',
     demoComponent: InputPasswordDemo,
     snippet: `import { AuFormField, AuInputPassword } from '@aurea-design-system/components';
 
 <au-form-field label="Password">
-  <au-input-password autocomplete="current-password" />
+  <input auInputPassword autocomplete="current-password" />
 </au-form-field>`,
   },
   {
@@ -374,7 +374,7 @@ options: AuSelectOption[] = [
 <au-dialog [(open)]="open" title="Confirmar">
   <p>¿Continuar?</p>
   <div auDialogFooter>
-    <au-button (click)="open = false">Cerrar</au-button>
+    <button auButton (click)="open = false">Cerrar</button>
   </div>
 </au-dialog>`,
   },
@@ -390,7 +390,7 @@ options: AuSelectOption[] = [
 <au-drawer [(open)]="open" title="Filters">
   <p>Content</p>
   <div auDrawerFooter>
-    <au-button (click)="open = false">Close</au-button>
+    <button auButton (click)="open = false">Close</button>
   </div>
 </au-drawer>`,
   },
@@ -629,7 +629,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuMenu, AuMenuItem, AuMenuTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-menu>
-  <au-button auMenuTrigger>Actions</au-button>
+  <button auButton auMenuTrigger>Actions</button>
   <au-menu-item>Edit</au-menu-item>
 </au-menu>`,
   },
@@ -654,7 +654,7 @@ options: AuSelectOption[] = [
     snippet: `import { AuPopover, AuPopoverTrigger, AuButton } from '@aurea-design-system/components';
 
 <au-popover>
-  <au-button auPopoverTrigger>Filters</au-button>
+  <button auButton auPopoverTrigger>Filters</button>
   <!-- panel content -->
 </au-popover>`,
   },
@@ -703,7 +703,7 @@ options: AuSelectOption[] = [
     demoComponent: TooltipDemo,
     snippet: `import { AuTooltip, AuButton } from '@aurea-design-system/components';
 
-<au-button auTooltip="Más información">?</au-button>`,
+<button auButton auTooltip="Más información">?</button>`,
   },
 ];
 

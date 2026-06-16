@@ -1,20 +1,34 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   DestroyRef,
-  ElementRef,
+  Renderer2,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
+  contentChild,
   inject,
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
-import { lockPageScroll, unlockPageScroll } from '../overlay/page-scroll-lock';
+import {
+  ensureModalDialogPortaledToBody,
+  restoreModalDialogPortal,
+  type ModalDialogPortalState,
+} from '../overlay/modal-dialog-portal';
+import {
+  createModalDialogInteractionAllowPredicate,
+  isModalPanelOrFloatingOverlayClick,
+} from '../overlay/modal-backdrop-click';
+import { installOutsideInteractionBlock } from '../overlay/floating-panel-interaction-guard';
+import {
+  createModalScrollAllowPredicate,
+  installPageScrollPrevention,
+} from '../overlay/prevent-page-scroll';
 import { AuDialogFooter } from './dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
 
@@ -27,6 +41,9 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
  * - **Accessibility:** `aria-labelledby` when `title` is set; `aria-label` when only `ariaLabel` is set.
  * - **Dismiss:** backdrop click (outside panel), Escape (`closeOnEscape`), close button.
  * - **Focus:** Tab cycles within the panel; focus returns to the trigger on close (WCAG modal pattern).
+ * - **Scroll:** background wheel/touch scroll is blocked while open; scroll inside `.au-dialog__body` still works.
+ * - **Pointer:** background clicks are blocked while open so portaled dialogs do not leak interaction to the page.
+ * - **Portal:** native `<dialog>` moves to `document.body` while open so it is not clipped by ancestor overflow.
  * - **Footer:** import `AuDialogFooter` in the host that projects `[auDialogFooter]`.
  *
  * @example
@@ -34,8 +51,8 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
  * <au-dialog [(open)]="showDialog" title="Confirm">
  *   <p>Are you sure?</p>
  *   <div auDialogFooter>
- *     <au-button variant="secondary" (click)="showDialog = false">Cancel</au-button>
- *     <au-button (click)="confirm()">Confirm</au-button>
+ *     <button auButton variant="secondary" (click)="showDialog = false">Cancel</button>
+ *     <button auButton (click)="confirm()">Confirm</button>
  *   </div>
  * </au-dialog>
  * ```
@@ -55,9 +72,12 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
 export class AuDialog {
   private static nextTitleId = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
+  private readonly document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
-  private scrollLocked = false;
+  private readonly dialogPortal: ModalDialogPortalState = { anchor: null, unbindHostContext: null };
+  private nativeDialogEl: HTMLDialogElement | null = null;
 
   /** Controls visibility; two-way binding with `[(open)]`. */
   readonly open = model<boolean>(false);
@@ -76,15 +96,12 @@ export class AuDialog {
   readonly closeOnEscape = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg' | 'full'>('md');
 
-  private readonly footerPresent = signal(false);
-
-  @ContentChild(AuDialogFooter)
-  set footerSlot(slot: AuDialogFooter | undefined) {
-    this.footerPresent.set(slot != null);
-  }
+  /* v8 ignore start */
+  readonly footerSlot = contentChild(AuDialogFooter);
+  /* v8 ignore stop */
 
   /** True when `[auDialogFooter]` content is projected. */
-  readonly hasFooter = this.footerPresent.asReadonly();
+  readonly hasFooter = computed(() => this.footerSlot() !== undefined);
 
   private readonly titleDomId = `au-dialog-title-${++AuDialog.nextTitleId}`;
 
@@ -96,18 +113,52 @@ export class AuDialog {
     return custom ? `${custom}-title` : this.titleDomId;
   });
 
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      if (this.nativeDialogEl) {
+        restoreModalDialogPortal(this.document, this.nativeDialogEl, this.dialogPortal);
+      }
+    });
+  }
+
   /** Syncs `open` to the native `<dialog>` once the view is in the DOM. */
   private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
     this.applyOpenStateToNativeDialog();
   });
 
-  constructor() {
-    this.destroyRef.onDestroy(() => this.releaseScrollLock());
-  }
+  private readonly preventPageScrollWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installPageScrollPrevention(
+        this.document,
+        createModalScrollAllowPredicate(() => this.nativeDialog(), '.au-dialog__body'),
+      ),
+    );
+  });
+
+  private readonly blockOutsideInteractionWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installOutsideInteractionBlock(
+        this.document,
+        createModalDialogInteractionAllowPredicate(() => this.nativeDialogEl),
+      ),
+    );
+  });
 
   private nativeDialog(): HTMLDialogElement | null {
-    const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
-    return el instanceof HTMLDialogElement ? el : null;
+    if (this.nativeDialogEl?.isConnected) {
+      return this.nativeDialogEl;
+    }
+    const el = this.host.nativeElement.querySelector('dialog');
+    this.nativeDialogEl = el instanceof HTMLDialogElement ? el : null;
+    return this.nativeDialogEl;
   }
 
   private applyOpenStateToNativeDialog(): void {
@@ -131,6 +182,13 @@ export class AuDialog {
           ? document.activeElement
           : null;
     }
+    ensureModalDialogPortaledToBody(
+      this.document,
+      this.renderer,
+      dialog,
+      this.dialogPortal,
+      this.host.nativeElement,
+    );
     const show = dialog.showModal?.bind(dialog);
     if (show) {
       show();
@@ -138,7 +196,6 @@ export class AuDialog {
       dialog.setAttribute('open', '');
     }
     if (!wasDisplayed) {
-      this.acquireScrollLock();
       queueMicrotask(() => {
         if (!this.open()) {
           return;
@@ -152,32 +209,15 @@ export class AuDialog {
   }
 
   private closeDialogElement(dialog: HTMLDialogElement): void {
-    const wasDisplayed = this.isDialogDisplayed(dialog);
     if (typeof dialog.close === 'function') {
       dialog.close();
-    } else if (dialog.hasAttribute('open')) {
-      dialog.removeAttribute('open');
-      dialog.dispatchEvent(new Event('close'));
-    }
-    if (wasDisplayed) {
-      this.releaseScrollLock();
-    }
-  }
-
-  private acquireScrollLock(): void {
-    if (this.scrollLocked) {
       return;
     }
-    lockPageScroll();
-    this.scrollLocked = true;
-  }
-
-  private releaseScrollLock(): void {
-    if (!this.scrollLocked) {
+    if (!dialog.hasAttribute('open')) {
       return;
     }
-    unlockPageScroll();
-    this.scrollLocked = false;
+    dialog.removeAttribute('open');
+    dialog.dispatchEvent(new Event('close'));
   }
 
   private isDialogDisplayed(dialog: HTMLDialogElement): boolean {
@@ -188,10 +228,7 @@ export class AuDialog {
   }
 
   onCloseButtonClick(): void {
-    const dialog = this.nativeDialog();
-    if (dialog) {
-      this.closeDialogElement(dialog);
-    }
+    this.open.set(false);
   }
 
   onDialogClick(event: MouseEvent): void {
@@ -199,7 +236,7 @@ export class AuDialog {
       return;
     }
     const target = event.target;
-    if (target instanceof Element && target.closest('.au-dialog__panel')) {
+    if (isModalPanelOrFloatingOverlayClick(target, '.au-dialog__panel')) {
       return;
     }
     const dialog = this.nativeDialog();
@@ -223,12 +260,6 @@ export class AuDialog {
   onDialogCancel(event: Event): void {
     if (!this.closeOnEscape()) {
       event.preventDefault();
-      return;
-    }
-    event.preventDefault();
-    const dialog = this.nativeDialog();
-    if (dialog && this.isDialogDisplayed(dialog)) {
-      this.closeDialogElement(dialog);
     }
   }
 

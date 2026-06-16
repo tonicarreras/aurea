@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuCard } from '@aurea-design-system/components';
+import { AuButton, AuCard } from '@aurea-design-system/components';
 
 import { getDocsComponentMaturity } from '../core/docs-component-maturity';
 
@@ -13,12 +13,40 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DocPage, RouterLink, AuCard, DocsInlineText, DocsMaturityBadge],
+  imports: [DocPage, RouterLink, AuButton, AuCard, DocsInlineText, DocsMaturityBadge],
   template: `
     <docs-page
       [title]="i18n.messages().componentsIndex.title"
       [lead]="i18n.messages().componentsIndex.lead"
     >
+      <section
+        class="docs-components-spotlight"
+        aria-labelledby="docs-components-spotlight-title"
+      >
+        <div class="docs-components-spotlight__content">
+          <p class="docs-components-spotlight__eyebrow">
+            {{ i18n.messages().componentsIndex.crudSpotlightEyebrow }}
+          </p>
+          <h2
+            id="docs-components-spotlight-title"
+            class="docs-components-spotlight__title"
+          >
+            {{ i18n.messages().componentsIndex.crudSpotlightTitle }}
+          </h2>
+          <p class="docs-components-spotlight__lead">
+            {{ i18n.messages().componentsIndex.crudSpotlightLead }}
+          </p>
+        </div>
+        <a [routerLink]="crudDemoLink()">
+          <button
+            auButton
+            variant="primary"
+          >
+            {{ i18n.messages().componentsIndex.crudSpotlightCta }}
+          </button>
+        </a>
+      </section>
+
       <p class="docs-components-index__legend">
         {{ i18n.messages().componentsIndex.maturityLegend }}
       </p>
@@ -66,6 +94,56 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
     </docs-page>
   `,
   styles: `
+    .docs-components-spotlight {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--au-space-5);
+      margin-bottom: var(--au-space-7);
+      padding: var(--au-space-6);
+      border-radius: var(--au-radius-lg);
+      border: 1px solid color-mix(in srgb, var(--au-color-action-primary) 28%, transparent);
+      background: color-mix(
+        in srgb,
+        var(--au-color-action-primary) 6%,
+        var(--au-color-surface-raised)
+      );
+    }
+
+    .docs-components-spotlight__content {
+      flex: 1 1 16rem;
+      min-width: 0;
+    }
+
+    .docs-components-spotlight__eyebrow {
+      margin: 0 0 var(--au-space-2);
+      font-size: var(--au-text-xs);
+      font-weight: var(--au-weight-semibold);
+      letter-spacing: var(--au-tracking-caps);
+      text-transform: uppercase;
+      color: var(--au-color-action-primary);
+    }
+
+    .docs-components-spotlight__title {
+      margin: 0 0 var(--au-space-2);
+      font-size: var(--au-text-lg);
+      font-weight: var(--au-weight-semibold);
+    }
+
+    .docs-components-spotlight__lead {
+      margin: 0;
+      max-width: 40rem;
+      font-size: var(--au-text-sm);
+      line-height: var(--au-leading-relaxed);
+      color: var(--au-color-text-secondary);
+    }
+
+    .docs-components-spotlight a {
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
     .docs-components-index {
       margin: 0;
       padding: 0;
@@ -211,5 +289,9 @@ export class ComponentsIndexPage {
 
   docLink(slug: string): string[] {
     return this.i18n.link(DOCS_ROUTES.components, slug);
+  }
+
+  crudDemoLink(): string[] {
+    return this.i18n.link(DOCS_ROUTES.guidesCrudDemo);
   }
 }

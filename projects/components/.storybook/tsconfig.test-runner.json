@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.lib.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+  "include": ["./test-runner.ts", "./stable-story-ids.ts"]
+}

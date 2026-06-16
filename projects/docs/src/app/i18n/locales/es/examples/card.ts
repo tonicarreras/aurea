@@ -29,7 +29,7 @@ export const examples: ComponentDocExample[] = [
   <h3 auCardHeader>Título</h3>
   <p>Contenido</p>
   <div auCardFooter>
-    <au-button size="sm">Acción</au-button>
+    <button auButton size="sm">Acción</button>
   </div>
 </au-card>`,
   },

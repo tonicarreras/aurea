@@ -1,5 +1,6 @@
-import { Directive, ElementRef, inject } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 
+import { injectHostRef } from '../au-host-element';
 import { AU_POPOVER } from './au-popover.token';
 
 @Directive({
@@ -12,10 +13,10 @@ import { AU_POPOVER } from './au-popover.token';
 })
 export class AuPopoverTrigger {
   protected readonly popover = inject(AU_POPOVER);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   constructor() {
-    this.popover.registerTrigger(this.host.nativeElement as HTMLElement);
+    this.popover.registerTrigger(this.host.nativeElement);
   }
 
   protected onClick(event: MouseEvent): void {

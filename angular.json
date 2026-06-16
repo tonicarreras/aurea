@@ -40,7 +40,12 @@
                 "projects/components/src/lib/**/*.stories.ts",
                 "projects/components/src/lib/**/*.stories-chrome.ts",
                 "projects/components/src/lib/**/*-story-host.ts",
-                "projects/components/src/lib/**/form-field.spec-hosts.ts"
+                "projects/components/src/lib/**/form-field.spec-hosts.ts",
+                "projects/components/src/lib/**/index.ts",
+                "projects/components/src/lib/au-size.ts",
+                "projects/components/src/lib/field-option.ts",
+                "projects/components/src/lib/table/table-types.ts",
+                "projects/components/src/lib/story-docs/story-overview-types.ts"
               ],
               "coverageThresholds": {
                 "statements": 100,

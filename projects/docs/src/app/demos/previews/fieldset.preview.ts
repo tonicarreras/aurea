@@ -13,7 +13,10 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
         [description]="t().description"
       >
         <au-form-field [label]="t().streetLabel">
-          <au-input-text [placeholder]="t().streetPlaceholder" />
+          <input
+            auInputText
+            [placeholder]="t().streetPlaceholder"
+          />
         </au-form-field>
       </au-fieldset>
     </div>

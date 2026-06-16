@@ -117,6 +117,12 @@ docs-demo-panel {
   align-self: stretch;
 }
 
+.docs-demo:not(.docs-demo--compact) .docs-demo__canvas > *:has(.docs-preview--field) {
+  width: min(100%, var(--docs-demo-field-max));
+  max-width: var(--docs-demo-field-max);
+  align-self: center;
+}
+
 docs-code-block {
   display: block;
 }

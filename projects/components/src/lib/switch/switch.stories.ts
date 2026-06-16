@@ -4,7 +4,7 @@ import { fn } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
 import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
-import { AuSwitch } from './switch';
+import { AuSwitch } from './au-switch.directive';
 
 interface SwitchStoryArgs {
   checkedChange: ReturnType<typeof fn>;
@@ -63,7 +63,7 @@ const meta: Meta<SwitchStoryArgs> = {
     formFieldHintOnlyRender(
       [AuFormField, AuSwitch],
       args,
-      `<au-switch
+      `<button type="button" auSwitch
   [(checked)]="checked"
   [label]="label"
   [disabled]="disabled"
@@ -72,8 +72,7 @@ const meta: Meta<SwitchStoryArgs> = {
   [size]="size"
   [name]="name"
   [invalid]="invalid"
-  [errors]="$any(errors)"
-/>`,
+  [errors]="$any(errors)"></button>`,
     ),
 };
 

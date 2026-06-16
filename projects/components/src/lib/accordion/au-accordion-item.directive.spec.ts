@@ -28,10 +28,10 @@ class ItemHost {
 }
 
 describe('AuAccordionItem', () => {
-  it('focuses the host button', () => {
+  it('focuses the host button', async () => {
     TestBed.configureTestingModule({ imports: [ItemHost] });
     const fixture = TestBed.createComponent(ItemHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const item = fixture.debugElement
       .query(By.directive(AuAccordionItem))
       .injector.get(AuAccordionItem);
@@ -43,7 +43,7 @@ describe('AuAccordionItem', () => {
     expect(focusSpy).toHaveBeenCalled();
   });
 
-  it('prevents click when disabled', () => {
+  it('prevents click when disabled', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
       template: `
@@ -64,7 +64,7 @@ describe('AuAccordionItem', () => {
     }
 
     const fixture = TestBed.createComponent(DisabledItemHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const item = fixture.debugElement
       .query(By.directive(AuAccordionItem))
       .injector.get(AuAccordionItem);
