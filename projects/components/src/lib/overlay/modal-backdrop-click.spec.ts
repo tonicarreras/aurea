@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import { isModalPanelOrFloatingOverlayClick, createModalDialogInteractionAllowPredicate } from './modal-backdrop-click';
+import {
+  isModalPanelOrFloatingOverlayClick,
+  createModalDialogInteractionAllowPredicate,
+} from './modal-backdrop-click';
 
 describe('isModalPanelOrFloatingOverlayClick', () => {
   it('returns true for clicks inside the modal panel', () => {
@@ -26,9 +29,9 @@ describe('isModalPanelOrFloatingOverlayClick', () => {
 
   it('returns false for non-element targets', () => {
     expect(isModalPanelOrFloatingOverlayClick(null, '.au-dialog__panel')).toBe(false);
-    expect(isModalPanelOrFloatingOverlayClick(document.createTextNode('x'), '.au-dialog__panel')).toBe(
-      false,
-    );
+    expect(
+      isModalPanelOrFloatingOverlayClick(document.createTextNode('x'), '.au-dialog__panel'),
+    ).toBe(false);
   });
 
   it('createModalDialogInteractionAllowPredicate allows nodes inside the dialog', () => {

@@ -223,13 +223,22 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-border', description: 'Borde del campo de fecha.' },
     { token: '--au-color-form-text', description: 'Texto de la fecha seleccionada.' },
     { token: '--au-color-surface-raised', description: 'Fondo del campo.' },
-    { token: '--au-color-date-picker-icon', description: 'Icono de calendario en la fila del control.' },
+    {
+      token: '--au-color-date-picker-icon',
+      description: 'Icono de calendario en la fila del control.',
+    },
     { token: '--au-color-date-picker-icon-hover', description: 'Icono en hover / focus-within.' },
     { token: '--au-radius-field', description: 'Esquinas del control.' },
     { token: '--au-size-field-h-md', description: 'Altura alineada con otros campos.' },
     { token: '--au-color-focus-ring', description: 'Foco en el input y celdas del calendario.' },
-    { token: '--au-color-action-primary', description: 'Día seleccionado en `.au-date-calendar__day--selected`.' },
-    { token: '--au-color-text-on-solid', description: 'Número del día seleccionado (blanco en claro, oscuro en dark).' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Día seleccionado en `.au-date-calendar__day--selected`.',
+    },
+    {
+      token: '--au-color-text-on-solid',
+      description: 'Número del día seleccionado (blanco en claro, oscuro en dark).',
+    },
     { token: '--au-color-form-error', description: 'Borde y mensaje de error.' },
   ],
   'input-time': [
@@ -238,10 +247,19 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-surface-raised', description: 'Fondo del campo.' },
     { token: '--au-color-date-picker-icon', description: 'Icono de reloj en la fila del control.' },
     { token: '--au-color-date-picker-icon-hover', description: 'Icono en hover / focus-within.' },
-    { token: '--au-color-surface-sunken', description: 'Fondo de columnas `.au-time-picker__column`.' },
+    {
+      token: '--au-color-surface-sunken',
+      description: 'Fondo de columnas `.au-time-picker__column`.',
+    },
     { token: '--au-color-border-subtle', description: 'Borde de columnas del panel.' },
-    { token: '--au-color-action-primary', description: 'Opción seleccionada en `.au-time-picker__option--selected`.' },
-    { token: '--au-color-text-on-solid', description: 'Dígito de la opción seleccionada (blanco en claro, oscuro en dark).' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Opción seleccionada en `.au-time-picker__option--selected`.',
+    },
+    {
+      token: '--au-color-text-on-solid',
+      description: 'Dígito de la opción seleccionada (blanco en claro, oscuro en dark).',
+    },
     { token: '--au-color-focus-ring', description: 'Foco en input y opciones del panel.' },
     { token: '--au-color-form-error', description: 'Borde y mensaje de error.' },
   ],

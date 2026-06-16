@@ -65,7 +65,9 @@ describe('AuInternalTemporalPickerPanel', () => {
     return fix;
   }
 
-  function panelInstance(fix: ReturnType<typeof TestBed.createComponent<Host>>): AuInternalTemporalPickerPanel {
+  function panelInstance(
+    fix: ReturnType<typeof TestBed.createComponent<Host>>,
+  ): AuInternalTemporalPickerPanel {
     return fix.debugElement.query(By.directive(AuInternalTemporalPickerPanel))
       .componentInstance as AuInternalTemporalPickerPanel;
   }

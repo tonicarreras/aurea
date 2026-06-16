@@ -219,8 +219,14 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-radius-field', description: 'Control corners.' },
     { token: '--au-size-field-h-md', description: 'Height aligned with other fields.' },
     { token: '--au-color-focus-ring', description: 'Focus on input and calendar day cells.' },
-    { token: '--au-color-action-primary', description: 'Selected day in `.au-date-calendar__day--selected`.' },
-    { token: '--au-color-text-on-solid', description: 'Day number on the selected cell (white in light, dark in dark).' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Selected day in `.au-date-calendar__day--selected`.',
+    },
+    {
+      token: '--au-color-text-on-solid',
+      description: 'Day number on the selected cell (white in light, dark in dark).',
+    },
     { token: '--au-color-form-error', description: 'Error border and message.' },
   ],
   'input-time': [
@@ -231,8 +237,14 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-date-picker-icon-hover', description: 'Icon on hover / focus-within.' },
     { token: '--au-color-surface-sunken', description: '`.au-time-picker__column` background.' },
     { token: '--au-color-border-subtle', description: 'Panel column border.' },
-    { token: '--au-color-action-primary', description: 'Selected option in `.au-time-picker__option--selected`.' },
-    { token: '--au-color-text-on-solid', description: 'Digit on the selected option (white in light, dark in dark).' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Selected option in `.au-time-picker__option--selected`.',
+    },
+    {
+      token: '--au-color-text-on-solid',
+      description: 'Digit on the selected option (white in light, dark in dark).',
+    },
     { token: '--au-color-focus-ring', description: 'Focus on input and panel options.' },
     { token: '--au-color-form-error', description: 'Error border and message.' },
   ],

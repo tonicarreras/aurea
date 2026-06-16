@@ -11,12 +11,7 @@ export function parseTime(value: string): { hour: number; minute: number } {
   return { hour, minute };
 }
 
-export function isTimeDisabled(
-  hour: number,
-  minute: number,
-  min?: string,
-  max?: string,
-): boolean {
+export function isTimeDisabled(hour: number, minute: number, min?: string, max?: string): boolean {
   return !isWithinTimeBounds(formatTime(hour, minute), min, max);
 }
 

@@ -83,9 +83,7 @@ type TimeColumn = 'hour' | 'minute';
                 [attr.aria-selected]="pendingHour() === hour"
                 [attr.aria-label]="hourOptionLabel(hour)"
                 [attr.data-value]="hour"
-                [attr.tabindex]="
-                  activeColumn() === 'hour' && focusedHour() === hour ? 0 : -1
-                "
+                [attr.tabindex]="activeColumn() === 'hour' && focusedHour() === hour ? 0 : -1"
                 (click)="onPickHour(hour)"
               >
                 {{ pad2(hour) }}
@@ -114,9 +112,7 @@ type TimeColumn = 'hour' | 'minute';
                 [attr.aria-selected]="pendingMinute() === minute"
                 [attr.aria-label]="minuteOptionLabel(minute)"
                 [attr.data-value]="minute"
-                [attr.tabindex]="
-                  activeColumn() === 'minute' && focusedMinute() === minute ? 0 : -1
-                "
+                [attr.tabindex]="activeColumn() === 'minute' && focusedMinute() === minute ? 0 : -1"
                 (click)="onPickMinute(minute)"
               >
                 {{ pad2(minute) }}
@@ -231,8 +227,10 @@ export class AuInternalTimePickerPanel {
     }
 
     onCleanup(
-      installOutsideInteractionBlock(this.document, (target) => this.isInteractionAllowed(target), () =>
-        this.dismiss.emit(),
+      installOutsideInteractionBlock(
+        this.document,
+        (target) => this.isInteractionAllowed(target),
+        () => this.dismiss.emit(),
       ),
     );
   });
@@ -402,11 +400,7 @@ export class AuInternalTimePickerPanel {
   }
 
   private syncPendingFromSelection(): void {
-    const { hour, minute } = resolvePendingTime(
-      this.selected(),
-      this.minTime(),
-      this.maxTime(),
-    );
+    const { hour, minute } = resolvePendingTime(this.selected(), this.minTime(), this.maxTime());
     this.pendingHour.set(hour);
     this.pendingMinute.set(minute);
     this.focusedHour.set(hour);

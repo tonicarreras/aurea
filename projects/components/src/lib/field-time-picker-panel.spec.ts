@@ -95,9 +95,9 @@ describe('AuInternalTimePickerPanel', () => {
     hour.click();
     await fix.whenStable();
     expect(fix.componentInstance.dismissCount).toBe(0);
-    expect(
-      (panelInstance(fix) as unknown as { activeColumn: () => string }).activeColumn(),
-    ).toBe('minute');
+    expect((panelInstance(fix) as unknown as { activeColumn: () => string }).activeColumn()).toBe(
+      'minute',
+    );
   });
 
   it('dismisses on Escape', () => {
@@ -136,9 +136,7 @@ describe('AuInternalTimePickerPanel', () => {
     panel.onPanelKeydown(
       new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }),
     );
-    expect(
-      (panel as unknown as { activeColumn: () => string }).activeColumn(),
-    ).toBe('hour');
+    expect((panel as unknown as { activeColumn: () => string }).activeColumn()).toBe('hour');
     panel.onPanelKeydown(
       new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true, cancelable: true }),
     );
@@ -226,15 +224,11 @@ describe('AuInternalTimePickerPanel', () => {
     panelEl.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'PageDown', bubbles: true, cancelable: true }),
     );
-    expect(
-      (panel as unknown as { activeColumn: () => string }).activeColumn(),
-    ).toBe('minute');
+    expect((panel as unknown as { activeColumn: () => string }).activeColumn()).toBe('minute');
     panelEl.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'PageUp', bubbles: true, cancelable: true }),
     );
-    expect(
-      (panel as unknown as { activeColumn: () => string }).activeColumn(),
-    ).toBe('hour');
+    expect((panel as unknown as { activeColumn: () => string }).activeColumn()).toBe('hour');
   });
 
   it('moves hour focus with vertical keys', async () => {
@@ -245,9 +239,7 @@ describe('AuInternalTimePickerPanel', () => {
     panel.onPanelKeydown(
       new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }),
     );
-    expect(
-      (panel as unknown as { focusedHour: () => number }).focusedHour(),
-    ).not.toBe(14);
+    expect((panel as unknown as { focusedHour: () => number }).focusedHour()).not.toBe(14);
   });
 
   it('moves minute focus with vertical keys', async () => {
@@ -255,16 +247,12 @@ describe('AuInternalTimePickerPanel', () => {
     await fix.whenStable();
     await fix.whenStable();
     const panel = panelInstance(fix);
-    (panel as unknown as { activeColumn: { set(v: string): void } }).activeColumn.set(
-      'minute',
-    );
+    (panel as unknown as { activeColumn: { set(v: string): void } }).activeColumn.set('minute');
     const before = (panel as unknown as { focusedMinute: () => number }).focusedMinute();
     panel.onPanelKeydown(
       new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }),
     );
-    expect(
-      (panel as unknown as { focusedMinute: () => number }).focusedMinute(),
-    ).toBe(before + 1);
+    expect((panel as unknown as { focusedMinute: () => number }).focusedMinute()).toBe(before + 1);
   });
 
   it('skips minute navigation when already at edge', async () => {
@@ -276,9 +264,7 @@ describe('AuInternalTimePickerPanel', () => {
     await fix.whenStable();
     await fix.whenStable();
     const panel = panelInstance(fix);
-    (panel as unknown as { activeColumn: { set(v: string): void } }).activeColumn.set(
-      'minute',
-    );
+    (panel as unknown as { activeColumn: { set(v: string): void } }).activeColumn.set('minute');
     panel.onPanelKeydown(
       new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true, cancelable: true }),
     );
@@ -304,10 +290,10 @@ describe('AuInternalTimePickerPanel', () => {
     await fix.whenStable();
     await fix.whenStable();
     const panel = panelInstance(fix);
-    (panel as unknown as { activeColumn: { set(v: string): void } }).activeColumn.set(
-      'minute',
+    (panel as unknown as { activeColumn: { set(v: string): void } }).activeColumn.set('minute');
+    panel.onPanelKeydown(
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }),
     );
-    panel.onPanelKeydown(new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }));
     expect(fix.componentInstance.picked).toBeTruthy();
   });
 

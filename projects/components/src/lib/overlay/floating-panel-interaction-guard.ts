@@ -3,10 +3,7 @@
  * Complements {@link installPageScrollPrevention} (wheel/touch) for date/time pickers and similar overlays.
  */
 
-import {
-  canConsumeWheelDelta,
-  type ScrollAllowPredicate,
-} from './prevent-page-scroll';
+import { canConsumeWheelDelta, type ScrollAllowPredicate } from './prevent-page-scroll';
 
 export type InteractionAllowPredicate = (target: EventTarget | null) => boolean;
 
@@ -24,9 +21,7 @@ export function createFloatingPanelAllowPredicate(
     }
     const panel = getPanel();
     const anchor = getAnchor();
-    return (
-      host.contains(target) || !!panel?.contains(target) || !!anchor?.contains(target)
-    );
+    return host.contains(target) || !!panel?.contains(target) || !!anchor?.contains(target);
   };
 }
 

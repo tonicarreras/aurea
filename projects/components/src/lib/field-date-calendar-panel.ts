@@ -230,8 +230,10 @@ export class AuInternalDateCalendarPanel {
     }
 
     onCleanup(
-      installOutsideInteractionBlock(this.document, (target) => this.isInteractionAllowed(target), () =>
-        this.dismiss.emit(),
+      installOutsideInteractionBlock(
+        this.document,
+        (target) => this.isInteractionAllowed(target),
+        () => this.dismiss.emit(),
       ),
     );
   });

@@ -4,8 +4,6 @@ export function shouldSkipRepositionOnScroll(
   container: HTMLElement | null,
 ): boolean {
   return (
-    event?.type === 'scroll' &&
-    event.target instanceof Node &&
-    !!container?.contains(event.target)
+    event?.type === 'scroll' && event.target instanceof Node && !!container?.contains(event.target)
   );
 }

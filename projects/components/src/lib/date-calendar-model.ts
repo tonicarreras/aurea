@@ -34,7 +34,11 @@ export function isDateDisabled(iso: string, min?: string, max?: string): boolean
   return false;
 }
 
-export function addMonths(year: number, month: number, delta: number): { year: number; month: number } {
+export function addMonths(
+  year: number,
+  month: number,
+  delta: number,
+): { year: number; month: number } {
   const date = new Date(year, month + delta, 1);
   return { year: date.getFullYear(), month: date.getMonth() };
 }

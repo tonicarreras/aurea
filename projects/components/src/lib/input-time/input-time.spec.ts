@@ -496,6 +496,23 @@ describe('AuInputTime', () => {
     expect(() => dir.syncPickerPanel()).not.toThrow();
   });
 
+  it('syncPickerPanel falls back to the input host when anchorHost is unset', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const input = queryInput(fix);
+    const dir = CONTROL(fix) as unknown as {
+      syncPickerPanel(): void;
+      anchorHost: HTMLElement | null;
+      pickerPanelRef: { setInput: (name: string, value: unknown) => void };
+    };
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    dir.anchorHost = null;
+    const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
+    dir.syncPickerPanel();
+    expect(setInput).toHaveBeenCalledWith('anchor', input);
+  });
+
   it('ensurePickerChrome returns when parent is not an HTMLElement', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();

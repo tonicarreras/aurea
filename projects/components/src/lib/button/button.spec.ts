@@ -244,6 +244,15 @@ describe('AuButton', () => {
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-button__spinner')).toBeFalsy();
   });
+
+  it('syncLoadingChrome no-ops when the content wrapper is missing', () => {
+    const dir = directive as unknown as {
+      syncLoadingChrome(): void;
+      contentWrapper: HTMLSpanElement | null;
+    };
+    dir.contentWrapper = null;
+    expect(() => dir.syncLoadingChrome()).not.toThrow();
+  });
 });
 
 describe('AuButton loading with projected text', () => {

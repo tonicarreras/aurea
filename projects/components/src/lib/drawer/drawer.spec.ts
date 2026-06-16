@@ -119,6 +119,19 @@ describe('AuDrawer', () => {
     expect(blocked.defaultPrevented).toBe(true);
   });
 
+  it('blocks pointer interaction outside the drawer while open', async () => {
+    const fix = TestBed.createComponent(AuDrawer);
+    fix.componentRef.setInput('open', true);
+    await fix.whenStable();
+    const outside = document.createElement('button');
+    document.body.append(outside);
+    const blocked = new PointerEvent('pointerdown', { bubbles: true, cancelable: true });
+    Object.defineProperty(blocked, 'target', { value: outside, configurable: true });
+    document.body.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+    outside.remove();
+  });
+
   it('applies position and size on host', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
@@ -344,10 +357,14 @@ describe('AuDrawer', () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
-    vi.spyOn(fix.nativeElement, 'querySelector').mockReturnValue(null);
+    const inst = fix.componentInstance as unknown as {
+      nativeDialog: () => HTMLDialogElement | null;
+      onDialogClick: (e: MouseEvent) => void;
+    };
+    vi.spyOn(inst, 'nativeDialog').mockReturnValue(null);
     const ev = new MouseEvent('click', { bubbles: true });
     Object.defineProperty(ev, 'target', { value: document.body, configurable: true });
-    expect(() => fix.componentInstance.onDialogClick(ev)).not.toThrow();
+    expect(() => inst.onDialogClick(ev)).not.toThrow();
   });
 
   it('no-ops cancel when the dialog is not displayed', async () => {

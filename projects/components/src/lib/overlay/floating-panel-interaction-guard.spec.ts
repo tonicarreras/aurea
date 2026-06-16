@@ -137,7 +137,11 @@ describe('installOutsideInteractionBlock', () => {
     document.body.append(allowed);
 
     const onBlocked = vi.fn();
-    const cleanup = installOutsideInteractionBlock(document, (target) => target === allowed, onBlocked);
+    const cleanup = installOutsideInteractionBlock(
+      document,
+      (target) => target === allowed,
+      onBlocked,
+    );
 
     const event = new PointerEvent('pointerdown', { bubbles: true, cancelable: true });
     allowed.dispatchEvent(event);

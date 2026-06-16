@@ -515,6 +515,23 @@ describe('AuInputDate', () => {
     expect(() => dir.syncPickerPanel()).not.toThrow();
   });
 
+  it('syncPickerPanel falls back to the input host when anchorHost is unset', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    const input = queryInput(fix);
+    const dir = CONTROL(fix) as unknown as {
+      syncPickerPanel(): void;
+      anchorHost: HTMLElement | null;
+      pickerPanelRef: { setInput: (name: string, value: unknown) => void };
+    };
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    dir.anchorHost = null;
+    const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
+    dir.syncPickerPanel();
+    expect(setInput).toHaveBeenCalledWith('anchor', input);
+  });
+
   it('returns focus to the input when the calendar dismisses', async () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
     await fix.whenStable();
@@ -541,7 +558,9 @@ describe('AuInputDate', () => {
   });
 
   it('portals calendar into modal dialog when opened inside au-dialog', async () => {
-    await TestBed.configureTestingModule({ imports: [AuInputDateDialogTestHost] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [AuInputDateDialogTestHost],
+    }).compileComponents();
     const fix = TestBed.createComponent(AuInputDateDialogTestHost);
     fix.detectChanges();
     await fix.whenStable();
@@ -561,7 +580,9 @@ describe('AuInputDate', () => {
   });
 
   it('keeps au-dialog open when picking a date from the calendar', async () => {
-    await TestBed.configureTestingModule({ imports: [AuInputDateDialogTestHost] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [AuInputDateDialogTestHost],
+    }).compileComponents();
     const fix = TestBed.createComponent(AuInputDateDialogTestHost);
     fix.detectChanges();
     await fix.whenStable();

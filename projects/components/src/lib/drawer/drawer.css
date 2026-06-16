@@ -83,7 +83,8 @@ au-drawer,
   max-width: 100%;
 }
 
-:is(au-drawer[data-au-position='start'], .au-drawer__native[data-au-position='start']) .au-drawer__panel {
+:is(au-drawer[data-au-position='start'], .au-drawer__native[data-au-position='start'])
+  .au-drawer__panel {
   left: 0;
   right: auto;
   border-right: var(--au-drawer-border);
@@ -92,7 +93,8 @@ au-drawer,
   animation-name: au-drawer-panel-in-start;
 }
 
-:is(au-drawer[data-au-position='end'], .au-drawer__native[data-au-position='end']) .au-drawer__panel {
+:is(au-drawer[data-au-position='end'], .au-drawer__native[data-au-position='end'])
+  .au-drawer__panel {
   right: 0;
   left: auto;
   border-left: var(--au-drawer-border);

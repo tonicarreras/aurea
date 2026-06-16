@@ -132,9 +132,9 @@ describe('AuInternalDateCalendarPanel', () => {
     panelEl.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }),
     );
-    expect(
-      (panelInstance(fix) as unknown as { focusedIso: () => string }).focusedIso(),
-    ).not.toBe(before);
+    expect((panelInstance(fix) as unknown as { focusedIso: () => string }).focusedIso()).not.toBe(
+      before,
+    );
   });
 
   it('moves focus with arrow keys and picks with Enter', async () => {
@@ -142,7 +142,11 @@ describe('AuInternalDateCalendarPanel', () => {
     await fix.whenStable();
     await fix.whenStable();
     const panel = panelInstance(fix);
-    const right = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const right = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     panel.onPanelKeydown(right);
     expect(right.defaultPrevented).toBe(true);
 
@@ -150,7 +154,11 @@ describe('AuInternalDateCalendarPanel', () => {
     panel.onPanelKeydown(up);
     expect(up.defaultPrevented).toBe(true);
 
-    const down = new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true });
+    const down = new KeyboardEvent('keydown', {
+      key: 'ArrowDown',
+      bubbles: true,
+      cancelable: true,
+    });
     panel.onPanelKeydown(down);
     expect(down.defaultPrevented).toBe(true);
 
@@ -190,7 +198,11 @@ describe('AuInternalDateCalendarPanel', () => {
     await fix.whenStable();
     await fix.whenStable();
     const panel = panelInstance(fix);
-    const left = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true });
+    const left = new KeyboardEvent('keydown', {
+      key: 'ArrowLeft',
+      bubbles: true,
+      cancelable: true,
+    });
     panel.onPanelKeydown(left);
     expect(left.defaultPrevented).toBe(true);
     expect(fix.componentInstance.picked).toBeNull();
@@ -361,9 +373,7 @@ describe('AuInternalDateCalendarPanel', () => {
     panel.goNextMonth();
     fix.detectChanges();
     await fix.whenStable();
-    expect((panel as unknown as { viewMonth: () => number }).viewMonth()).toBe(
-      initialMonth + 1,
-    );
+    expect((panel as unknown as { viewMonth: () => number }).viewMonth()).toBe(initialMonth + 1);
   });
 
   it('keeps navigated month when no date is selected', async () => {
@@ -379,9 +389,7 @@ describe('AuInternalDateCalendarPanel', () => {
     panel.goNextMonth();
     fix.detectChanges();
     await fix.whenStable();
-    expect((panel as unknown as { viewMonth: () => number }).viewMonth()).toBe(
-      initialMonth + 1,
-    );
+    expect((panel as unknown as { viewMonth: () => number }).viewMonth()).toBe(initialMonth + 1);
   });
 
   it('focusActiveDay focuses the active day button', async () => {
@@ -468,9 +476,7 @@ describe('AuInternalDateCalendarPanel', () => {
     fix.componentInstance.open = false;
     fix.detectChanges();
     const panel = panelInstance(fix);
-    expect(() =>
-      (panel as unknown as { focusActiveDay(): void }).focusActiveDay(),
-    ).not.toThrow();
+    expect(() => (panel as unknown as { focusActiveDay(): void }).focusActiveDay()).not.toThrow();
   });
 
   it('skips document click on server platform', async () => {
