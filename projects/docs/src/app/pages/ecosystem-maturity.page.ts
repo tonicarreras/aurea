@@ -24,6 +24,7 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
               <th scope="col">{{ eco().maturity.columns.component }}</th>
               <th scope="col">{{ eco().maturity.columns.level }}</th>
               <th scope="col">{{ eco().maturity.columns.since }}</th>
+              <th scope="col">{{ eco().maturity.columns.note }}</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +37,7 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
                   <docs-maturity-badge [level]="row.level" />
                 </td>
                 <td>{{ row.since }}</td>
+                <td class="docs-maturity-page__note">{{ row.note ?? '—' }}</td>
               </tr>
             }
           </tbody>
@@ -57,9 +59,15 @@ import { DocsMaturityBadge } from '../shared/docs-maturity-badge';
 
     .docs-maturity-page__table {
       width: 100%;
-      min-width: 20rem;
+      min-width: 28rem;
       border-collapse: collapse;
       font-size: var(--au-text-sm);
+    }
+
+    .docs-maturity-page__note {
+      max-width: 22rem;
+      line-height: var(--au-leading-relaxed);
+      color: var(--au-color-text-secondary);
     }
 
     .docs-maturity-page__table th,
@@ -89,11 +97,13 @@ export class EcosystemMaturityPage {
 
   readonly rows = computed(() => {
     const titleBySlug = new Map(COMPONENT_DOCS.map((d) => [d.slug, d.title]));
+    const notes = this.eco().maturity.notes;
     return listDocsMaturityEntries().map(({ slug, meta }) => ({
       slug,
       title: titleBySlug.get(slug) ?? slug,
       level: meta.level,
       since: meta.since,
+      note: notes[slug],
     }));
   });
 

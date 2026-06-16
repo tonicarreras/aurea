@@ -94,6 +94,7 @@ export interface ExampleLiveMessages {
   };
   formField: {
     emailLabel: string;
+    emailHint: string;
     emailPlaceholder: string;
     userLabel: string;
     userHint: string;
@@ -108,6 +109,8 @@ export interface ExampleLiveMessages {
     errorMessage: string;
     hintLabel: string;
     hint: string;
+    rangeLabel: string;
+    rangeHint: string;
   };
   inputTime: {
     basicLabel: string;
@@ -148,6 +151,7 @@ export interface ExampleLiveMessages {
   };
   inputText: {
     emailLabel: string;
+    emailHint: string;
     emailPlaceholder: string;
     userLabel: string;
     userHint: string;
@@ -155,6 +159,9 @@ export interface ExampleLiveMessages {
     emailErrorLabel: string;
     emailError: string;
     emailErrorPlaceholder: string;
+    sizeSmLabel: string;
+    sizeMdLabel: string;
+    sizeLgLabel: string;
   };
   list: {
     chipsAria: string;
@@ -264,5 +271,45 @@ export interface ExampleLiveMessages {
       stateDescription: string;
       action: string;
     };
+  };
+  menu: {
+    trigger: string;
+    edit: string;
+    share: string;
+    duplicate: string;
+    delete: string;
+    archiveDisabled: string;
+    placementBottom: string;
+    placementTop: string;
+    openProgrammatically: string;
+  };
+  breadcrumb: {
+    home: string;
+    components: string;
+    table: string;
+    settings: string;
+    workspace: string;
+    people: string;
+    personDetail: string;
+    docs: string;
+    breadcrumb: string;
+  };
+  pagination: {
+    manyPagesHint: string;
+  };
+  popover: {
+    trigger: string;
+    content: string;
+    placementStart: string;
+    placementEnd: string;
+    filtersTrigger: string;
+    statusLabel: string;
+    roleLabel: string;
+    activeOnly: string;
+    engineersOnly: string;
+    clear: string;
+    apply: string;
+    openProgrammatically: string;
+    helpContent: string;
   };
 }

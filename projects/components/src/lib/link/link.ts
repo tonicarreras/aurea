@@ -1,15 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Directive, computed, input } from '@angular/core';
 
 export type AuLinkVariant = 'default' | 'subtle';
 
 /**
  * Styled inline link aligned with Aurea tokens.
  */
-@Component({
-  selector: 'a[auLink], au-link',
-  templateUrl: './link.html',
-  styleUrl: './link.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+@Directive({
+  selector: 'a[auLink]',
   host: {
     class: 'au-link',
     '[attr.href]': 'href()',

@@ -9,7 +9,7 @@ import {
   formFieldControlRender,
   type FieldChromeStoryArgs,
 } from '../form-field';
-import { AuInputNumber } from './input-number';
+import { AuInputNumber } from './au-input-number.directive';
 
 interface InputNumberStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -65,7 +65,7 @@ const meta: Meta<InputNumberStoryArgs> = {
     formFieldControlRender(
       [AuFormField, AuInputNumber],
       args,
-      `<au-input-number
+      `<input auInputNumber
   [(value)]="value"
   [placeholder]="placeholder"
   [min]="min"

@@ -24,9 +24,3 @@
 :host(:not(.au-accordion__panel--expanded)) .au-accordion__panel-inner {
   padding-block: 0;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  :host {
-    transition: none;
-  }
-}

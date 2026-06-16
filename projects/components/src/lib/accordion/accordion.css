@@ -29,6 +29,6 @@
   background: var(--au-color-surface-raised);
   border: var(--au-chrome-border);
   border-radius: var(--au-radius-surface);
-  box-shadow: var(--au-chrome-shadow);
+  box-shadow: var(--au-elevation-flat);
   overflow: hidden;
 }

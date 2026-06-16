@@ -47,17 +47,17 @@ export const THEME_HOST_OVERRIDES_ES: ThemeHostOverride[] = [
     description: 'Acento del icono y color del título en el host.',
   },
   {
-    host: 'au-textarea',
+    host: 'textarea.au-textarea',
     token: '--au-textarea-min-h-md',
     description: 'Altura mínima; `size` en el host ajusta presets sm/md/lg.',
   },
   {
-    host: 'au-textarea',
+    host: 'textarea.au-textarea',
     token: '--au-textarea-pad-block',
     description: 'Padding vertical del textarea nativo.',
   },
   {
-    host: 'au-textarea',
+    host: 'textarea.au-textarea',
     token: '--au-textarea-pad-inline',
     description: 'Padding horizontal; alinea con presets de `size`.',
   },

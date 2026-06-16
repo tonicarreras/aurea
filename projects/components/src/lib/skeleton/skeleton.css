@@ -98,18 +98,3 @@
 /* -------------------------------------------------------------------------- */
 /* Reduced motion */
 /* -------------------------------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  :host([data-au-animation='pulse']),
-  :host([data-au-animation='wave'])::after {
-    animation: none;
-  }
-
-  :host([data-au-animation='wave'])::after {
-    opacity: 0;
-  }
-
-  :host([data-au-animation='pulse']) {
-    background-color: color-mix(in srgb, var(--au-skeleton-base) 65%, var(--au-skeleton-highlight));
-  }
-}

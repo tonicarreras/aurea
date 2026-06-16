@@ -4,7 +4,7 @@ import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { AuFormField } from '../form-field/form-field';
 import { fieldChromeHintOnlyArgTypes, formFieldHintOnlyRender } from '../form-field';
-import { AuCheckbox } from './checkbox';
+import { AuCheckbox } from './au-checkbox.directive';
 
 interface CheckboxStoryArgs {
   checkedChange: ReturnType<typeof fn>;
@@ -98,7 +98,7 @@ const meta: Meta<CheckboxStoryArgs> = {
     formFieldHintOnlyRender(
       [AuFormField, AuCheckbox],
       args,
-      `<au-checkbox
+      `<input type="checkbox" auCheckbox
   [(checked)]="checked"
   [label]="label"
   [description]="description"

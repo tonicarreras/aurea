@@ -14,11 +14,13 @@ import { DEMO_STACK } from '../shared/demo-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuDialog, AuDialogFooter],
   template: `
-    <au-button
+    <button
+      auButton
       type="button"
       (click)="open.set(true)"
-      >{{ t().confirmOpen }}</au-button
     >
+      {{ t().confirmOpen }}
+    </button>
     <au-dialog
       [(open)]="open"
       [title]="t().confirmTitle"
@@ -26,18 +28,22 @@ import { DEMO_STACK } from '../shared/demo-layout';
     >
       <p>{{ t().confirmBody }}</p>
       <div auDialogFooter>
-        <au-button
+        <button
+          auButton
           style="margin-right: var(--au-space-2);"
           variant="secondary"
           type="button"
           (click)="open.set(false)"
-          >{{ t().cancel }}</au-button
         >
-        <au-button
+          {{ t().cancel }}
+        </button>
+        <button
+          auButton
           type="button"
           (click)="open.set(false)"
-          >{{ t().delete }}</au-button
         >
+          {{ t().delete }}
+        </button>
       </div>
     </au-dialog>
   `,
@@ -52,11 +58,13 @@ export class ExampleDialogConfirmDemo {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuButton, AuDialog, AuDialogFooter, AuFormField, AuInputText],
   template: `
-    <au-button
+    <button
+      auButton
       type="button"
       (click)="open.set(true)"
-      >{{ t().formOpen }}</au-button
     >
+      {{ t().formOpen }}
+    </button>
     <au-dialog
       [(open)]="open"
       [title]="t().formTitle"
@@ -68,7 +76,8 @@ export class ExampleDialogConfirmDemo {
           [errorMessage]="t().nameError"
           [invalid]="true"
         >
-          <au-input-text
+          <input
+            auInputText
             [placeholder]="t().namePlaceholder"
             style="max-width: 100%"
           />
@@ -78,7 +87,8 @@ export class ExampleDialogConfirmDemo {
           [errorMessage]="t().emailError"
           [invalid]="true"
         >
-          <au-input-text
+          <input
+            auInputText
             type="email"
             [placeholder]="t().emailPlaceholder"
             style="max-width: 100%"
@@ -86,17 +96,21 @@ export class ExampleDialogConfirmDemo {
         </au-form-field>
       </div>
       <div auDialogFooter>
-        <au-button
+        <button
+          auButton
           variant="secondary"
           type="button"
           (click)="open.set(false)"
-          >{{ t().cancel }}</au-button
         >
-        <au-button
+          {{ t().cancel }}
+        </button>
+        <button
+          auButton
           type="button"
           (click)="open.set(false)"
-          >{{ t().save }}</au-button
         >
+          {{ t().save }}
+        </button>
       </div>
     </au-dialog>
   `,

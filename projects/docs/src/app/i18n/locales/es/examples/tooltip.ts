@@ -8,15 +8,15 @@ export const examples: ComponentDocExample[] = [
   {
     title: 'Arriba',
     demoComponent: ExampleTooltipTopDemo,
-    code: `<au-button auTooltip="Ayuda contextual" auTooltipPlacement="top">
+    code: `<button auButton auTooltip="Ayuda contextual" auTooltipPlacement="top">
   Pasar el cursor
-</au-button>`,
+</button>`,
   },
   {
     title: 'Final (end)',
     demoComponent: ExampleTooltipRightDemo,
-    code: `<au-button auTooltip="Aparece al final" auTooltipPlacement="end">
+    code: `<button auButton auTooltip="Aparece al final" auTooltipPlacement="end">
   End
-</au-button>`,
+</button>`,
   },
 ];

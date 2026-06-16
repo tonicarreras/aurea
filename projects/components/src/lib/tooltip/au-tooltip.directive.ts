@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import {
   DestroyRef,
   Directive,
-  ElementRef,
   PLATFORM_ID,
   Renderer2,
   afterRenderEffect,
@@ -11,6 +10,7 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 
@@ -21,11 +21,12 @@ import type { AuTooltipPlacement } from '../overlay/tooltip-position';
  * - Apply to the **focusable trigger** (button, link, icon control).
  * - **Accessibility:** `role="tooltip"` + `aria-describedby` on the host while open.
  * - **Pointer:** show delay / hide delay avoid flicker when crossing the trigger.
+ * - **Focus:** shows on keyboard focus (`:focus-visible`), not on programmatic `.focus()` (e.g. after a modal closes).
  * - **Portal:** bubble is fixed on `document.body` so it is not clipped by overflow.
  *
  * @example
  * ```html
- * <au-button auTooltip="Save changes">Save</au-button>
+ * <button auButton auTooltip="Save changes">Save</button>
  * ```
  */
 @Directive({
@@ -59,11 +60,12 @@ export class AuTooltip {
 
   private static idCounter = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly renderer = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly visible = signal(false);
+  private pointerInside = false;
   private showTimer: ReturnType<typeof setTimeout> | undefined;
   private hideTimer: ReturnType<typeof setTimeout> | undefined;
   private bubble: HTMLElement | null = null;
@@ -89,25 +91,34 @@ export class AuTooltip {
     }
     const bubble = this.ensureBubble();
     this.renderer.setProperty(bubble, 'textContent', this.auTooltip().trim());
-    this.overlay.sync(bubble, this.host.nativeElement as HTMLElement, this.auTooltipPlacement());
+    this.overlay.sync(bubble, this.host.nativeElement, this.auTooltipPlacement());
   });
 
   protected onPointerEnter(): void {
+    this.pointerInside = true;
     this.scheduleShow();
   }
 
   protected onPointerLeave(): void {
+    this.pointerInside = false;
     this.scheduleHide();
   }
 
   protected onFocusIn(): void {
+    if (!this.shouldShowFromFocus()) {
+      return;
+    }
     this.scheduleShow();
   }
 
   protected onFocusOut(event: FocusEvent): void {
     const next = event.relatedTarget;
-    const anchor = this.host.nativeElement as HTMLElement;
+    const anchor = this.host.nativeElement;
     if (next instanceof Node && anchor.contains(next)) {
+      return;
+    }
+    if (next instanceof Element && next.closest('dialog[open]')) {
+      this.dismissImmediately();
       return;
     }
     this.scheduleHide();
@@ -121,6 +132,14 @@ export class AuTooltip {
     this.visible.set(false);
   }
 
+  private shouldShowFromFocus(): boolean {
+    return this.host.nativeElement.matches(':focus-visible');
+  }
+
+  private shouldShow(): boolean {
+    return this.pointerInside || this.shouldShowFromFocus();
+  }
+
   private scheduleShow(): void {
     if (this.auTooltipDisabled() || !this.hasText()) {
       return;
@@ -129,10 +148,27 @@ export class AuTooltip {
     this.clearShowTimer();
     const delay = this.auTooltipShowDelay();
     if (delay <= 0) {
+      /* v8 ignore start -- pointer/focus state can only reach scheduleShow when visible */
+      if (!this.shouldShow()) {
+        return;
+      }
+      /* v8 ignore stop */
       this.visible.set(true);
       return;
     }
-    this.showTimer = setTimeout(() => this.visible.set(true), delay);
+    this.showTimer = setTimeout(() => {
+      /* v8 ignore start -- stale timer after pointer/focus left */
+      if (!this.shouldShow()) {
+        return;
+      }
+      /* v8 ignore stop */
+      this.visible.set(true);
+    }, delay);
+  }
+
+  private dismissImmediately(): void {
+    this.clearTimers();
+    this.visible.set(false);
   }
 
   private scheduleHide(): void {

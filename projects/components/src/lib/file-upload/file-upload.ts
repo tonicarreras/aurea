@@ -1,19 +1,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 
 import type { AuSize } from '../au-size';
-import { AuButton } from '../button/button';
+import { AuButton } from '../button/au-button.directive';
 import { AuIcon } from '../icon/icon';
 import {
   AU_FORM_FIELD,
@@ -58,7 +57,7 @@ export class AuFileUpload implements FormValueControl<File[]> {
   readonly blur = output<void>();
 
   protected readonly formField = injectAuFormField();
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
 
   protected readonly dragOver = signal(false);
 

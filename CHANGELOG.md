@@ -9,6 +9,91 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-06-13
+
+### Changed (breaking)
+
+- **Native host directives** — primitive controls no longer use custom element selectors. Migrate templates as follows:
+  - `<au-button>` → `<button auButton>`
+  - `<au-input-text>` → `<input auInputText>`
+  - `<au-textarea>` → `<textarea auTextarea>`
+  - `<au-input-number>` → `<input auInputNumber>`
+  - `<au-input-date>` → `<input auInputDate>`
+  - `<au-input-time>` → `<input auInputTime>`
+  - `<au-input-password>` → `<input auInputPassword>`
+  - `<au-checkbox>` → `<input type="checkbox" auCheckbox>`
+  - `<au-switch>` → `<button type="button" auSwitch>`
+  - `<au-link>` → `<a auLink>` (custom element removed; attribute-only)
+- **`AuButton`** — no `@Output() click`; use native `(click)` on the `<button>` host. Loading/disabled states block activation via capture-phase handler.
+- **`AuButtonGroup`** — groups projected **`button[auButton]`** actions (not `<au-button>`).
+- **Styles** — control CSS for migrated primitives is bundled via `aurea-global.css` (directives use `@Directive` without `styleUrl`).
+- **Peer dependency** — `@angular/*` **^22.0.0** (Angular 22).
+
+### Added
+
+- **`AuFormField`** — optional `hint` in the header; wired to control `aria-describedby`.
+- **`AuInputDate`** / **`AuInputTime`** — bounded calendar/time picker panels with `minDate`/`maxDate` and `minTime`/`maxTime`.
+- **Overlay scrim** — shared backdrop styling for **`AuDialog`** and **`AuDrawer`**.
+- **`AuMenu`** — page scroll prevention while the menu is open.
+- **Form field ids** — scoped auto-ids (`au-field-{appId}-{n}`) to avoid duplicate `id` collisions across fields.
+
+### Changed
+
+- **`AuDialog`** / **`AuDrawer`** — scroll lock delegated to native `<dialog>`; backdrop uses overlay scrim CSS.
+- **`AuInputPassword`** — reveal toggle integrated in the control shell (single border, visible toggle button).
+- **Focus styles** — elevation/focus tokens replace ad-hoc box-shadows on button, checkbox, card, and related controls.
+- **Overlay** — modal backdrop clicks no longer propagate to underlying interactive content; floating panels ignore scroll inside allowed regions; tooltip reposition skips internal scroll jitter.
+
+### Fixed
+
+- Time picker column scroll no longer dismisses the panel.
+- Tooltip overlay micro-movement when scrolling inside anchored content.
+
+### Migration from 1.6.0
+
+Replace custom-element hosts with native elements + attribute directives. Update button groups and password fields if you still use legacy selectors.
+
+```html
+<!-- Before -->
+<au-button
+  variant="primary"
+  (click)="save()"
+  >Save</au-button
+>
+<au-form-field label="Email">
+  <au-input-text
+    [formField]="form.email"
+    type="email"
+  />
+</au-form-field>
+<au-input-password [formField]="form.password" />
+
+<!-- After -->
+<button
+  auButton
+  variant="primary"
+  type="button"
+  (click)="save()"
+>
+  Save
+</button>
+<au-form-field label="Email">
+  <input
+    auInputText
+    type="email"
+    [formField]="form.email"
+  />
+</au-form-field>
+<input
+  auInputPassword
+  [formField]="form.password"
+/>
+```
+
+```bash
+bun add @aurea-design-system/components@2.0.0
+```
+
 ## [1.6.0] - 2026-06-01
 
 ### Added
@@ -228,7 +313,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.0.0...HEAD
+[2.0.0]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...components-v2.0.0
 [1.6.0]: https://github.com/tonicarreras/aurea/compare/components-v1.5.0...components-v1.6.0
 [1.5.0]: https://github.com/tonicarreras/aurea/compare/components-v1.4.0...components-v1.5.0
 [1.4.0]: https://github.com/tonicarreras/aurea/compare/components-v1.3.0...components-v1.4.0

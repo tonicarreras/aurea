@@ -8,7 +8,7 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuFormField, AuInputDate],
   template: `
     <au-form-field [label]="t().basicLabel">
-      <au-input-date />
+      <input auInputDate />
     </au-form-field>
   `,
 })
@@ -26,7 +26,7 @@ export class ExampleInputDateBasicDemo {
       [errorMessage]="t().errorMessage"
       [invalid]="true"
     >
-      <au-input-date />
+      <input auInputDate />
     </au-form-field>
   `,
 })
@@ -43,7 +43,7 @@ export class ExampleInputDateErrorDemo {
       [label]="t().hintLabel"
       [hint]="t().hint"
     >
-      <au-input-date />
+      <input auInputDate />
     </au-form-field>
   `,
 })

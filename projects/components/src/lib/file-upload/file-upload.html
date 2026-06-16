@@ -24,7 +24,8 @@
     (blur)="blur.emit()"
   />
   <p class="au-file-upload__prompt">{{ dropLabel() }}</p>
-  <au-button
+  <button
+    auButton
     type="button"
     variant="outline"
     size="sm"
@@ -32,7 +33,7 @@
     (click)="onBrowseClick()"
   >
     {{ browseLabel() }}
-  </au-button>
+  </button>
 </div>
 
 @if (hasFiles()) {

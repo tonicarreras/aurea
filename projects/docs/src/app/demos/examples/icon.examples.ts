@@ -5,10 +5,14 @@ import { AuIcon } from '@aurea-design-system/components';
   selector: 'docs-example-icon-basic',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuIcon],
-  template: `<au-icon
-    name="info"
-    size="md"
-  />`,
+  template: `
+    <div class="docs-demo-row">
+      <au-icon
+        name="info"
+        size="md"
+      />
+    </div>
+  `,
 })
 export class ExampleIconBasicDemo {}
 
@@ -17,7 +21,7 @@ export class ExampleIconBasicDemo {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AuIcon],
   template: `
-    <div style="display: flex; gap: 1rem; align-items: center; color: var(--au-color-text-primary)">
+    <div class="docs-demo-row">
       <au-icon
         name="check-circle"
         size="sm"
@@ -34,3 +38,38 @@ export class ExampleIconBasicDemo {}
   `,
 })
 export class ExampleIconSizesDemo {}
+
+@Component({
+  selector: 'docs-example-icon-set',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AuIcon],
+  template: `
+    <div class="docs-demo-row">
+      <au-icon
+        name="check-circle"
+        size="md"
+      />
+      <au-icon
+        name="warning"
+        size="md"
+      />
+      <au-icon
+        name="error"
+        size="md"
+      />
+      <au-icon
+        name="info"
+        size="md"
+      />
+      <au-icon
+        name="close"
+        size="md"
+      />
+      <au-icon
+        name="spinner"
+        size="md"
+      />
+    </div>
+  `,
+})
+export class ExampleIconSetDemo {}

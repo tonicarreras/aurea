@@ -2,13 +2,13 @@ import {
   afterNextRender,
   DestroyRef,
   Directive,
-  ElementRef,
   computed,
   inject,
   input,
   signal,
 } from '@angular/core';
 import { tabFocusState } from '../au-tab-focus-state';
+import { injectHostRef } from '../au-host-element';
 import { AuSteps } from './steps';
 
 /**
@@ -35,7 +35,7 @@ import { AuSteps } from './steps';
 })
 export class AuStep {
   protected readonly steps = inject(AuSteps);
-  private readonly host = inject(ElementRef<HTMLButtonElement>);
+  private readonly host = injectHostRef<HTMLButtonElement>();
   private readonly destroyRef = inject(DestroyRef);
 
   readonly auStep = input.required<string>();
@@ -57,7 +57,7 @@ export class AuStep {
   });
 
   focus(): void {
-    (this.host.nativeElement as HTMLElement).focus();
+    this.host.nativeElement.focus();
   }
 
   protected onClick(event: MouseEvent): void {

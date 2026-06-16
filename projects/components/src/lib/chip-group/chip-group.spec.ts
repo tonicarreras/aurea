@@ -12,7 +12,7 @@ describe('AuChipGroup', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(AuChipGroup);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -25,27 +25,27 @@ describe('AuChipGroup', () => {
     expect(host.classList.contains('au-chip-group')).toBe(true);
   });
 
-  it('sets aria-label when provided', () => {
+  it('sets aria-label when provided', async () => {
     fixture.componentRef.setInput('ariaLabel', 'Filters');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Filters');
   });
 
-  it('treats null ariaLabel as empty', () => {
+  it('treats null ariaLabel as empty', async () => {
     fixture.componentRef.setInput('ariaLabel', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-label')).toBeNull();
   });
 
-  it('sets aria-labelledby when provided', () => {
+  it('sets aria-labelledby when provided', async () => {
     fixture.componentRef.setInput('ariaLabelledBy', 'filters-label');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBe('filters-label');
   });
 
-  it('treats null ariaLabelledBy as empty', () => {
+  it('treats null ariaLabelledBy as empty', async () => {
     fixture.componentRef.setInput('ariaLabelledBy', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('aria-labelledby')).toBeNull();
   });
 
@@ -83,9 +83,9 @@ describe('AuChipGroup', () => {
 class ChipGroupHost {}
 
 describe('AuChipGroup integration', () => {
-  it('wraps selectable chips', () => {
+  it('wraps selectable chips', async () => {
     const fix = TestBed.createComponent(ChipGroupHost);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.nativeElement.querySelector('au-chip-group')?.getAttribute('role')).toBe('group');
     expect(fix.nativeElement.querySelector('au-chip')?.getAttribute('role')).toBeNull();
   });

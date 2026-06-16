@@ -13,7 +13,7 @@ describe('AuMessage', () => {
 
     fixture = TestBed.createComponent(AuMessage);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
@@ -27,24 +27,24 @@ describe('AuMessage', () => {
     expect(host.getAttribute('role')).toBeNull();
   });
 
-  it('uses alert role on surface for error and warning', () => {
+  it('uses alert role on surface for error and warning', async () => {
     fixture.componentRef.setInput('variant', 'error');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-message__surface')?.getAttribute('role')).toBe(
       'alert',
     );
 
     fixture.componentRef.setInput('variant', 'warning');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-message__surface')?.getAttribute('role')).toBe(
       'alert',
     );
   });
 
-  it('renders title and message', () => {
+  it('renders title and message', async () => {
     fixture.componentRef.setInput('title', 'Heads up');
     fixture.componentRef.setInput('message', 'Details here.');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-message__title')?.textContent?.trim()).toBe(
       'Heads up',
     );
@@ -53,29 +53,29 @@ describe('AuMessage', () => {
     );
   });
 
-  it('does not render an icon for the default variant', () => {
+  it('does not render an icon for the default variant', async () => {
     fixture.componentRef.setInput('variant', 'default');
     fixture.componentRef.setInput('showIcon', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-message__icon')).toBeNull();
   });
 
-  it('renders a semantic icon when variant is not default', () => {
+  it('renders a semantic icon when variant is not default', async () => {
     fixture.componentRef.setInput('variant', 'success');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-message__icon')).not.toBeNull();
   });
 
-  it('hides icon when showIcon is false', () => {
+  it('hides icon when showIcon is false', async () => {
     fixture.componentRef.setInput('variant', 'info');
     fixture.componentRef.setInput('showIcon', false);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-message__icon')).toBeNull();
   });
 
-  it('shows dismiss control and emits dismiss', () => {
+  it('shows dismiss control and emits dismiss', async () => {
     fixture.componentRef.setInput('dismissible', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     let n = 0;
     component.dismiss.subscribe(() => n++);
     const close = fixture.nativeElement.querySelector('.au-message__close') as HTMLButtonElement;
@@ -84,47 +84,47 @@ describe('AuMessage', () => {
     expect(n).toBe(1);
   });
 
-  it('applies custom close aria label', () => {
+  it('applies custom close aria label', async () => {
     fixture.componentRef.setInput('dismissible', true);
     fixture.componentRef.setInput('closeAriaLabel', 'Cerrar aviso');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const close = fixture.nativeElement.querySelector('.au-message__close') as HTMLButtonElement;
     expect(close.getAttribute('aria-label')).toBe('Cerrar aviso');
   });
 
-  it('treats null closeAriaLabel as empty', () => {
+  it('treats null closeAriaLabel as empty', async () => {
     fixture.componentRef.setInput('dismissible', true);
     fixture.componentRef.setInput('closeAriaLabel', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const close = fixture.nativeElement.querySelector('.au-message__close') as HTMLButtonElement;
     expect(close.getAttribute('aria-label')).toBe('');
   });
 
-  it('sets semantic variant on host', () => {
+  it('sets semantic variant on host', async () => {
     fixture.componentRef.setInput('variant', 'success');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');
   });
 
-  it('variantIcon is null for default variant', () => {
+  it('variantIcon is null for default variant', async () => {
     fixture.componentRef.setInput('variant', 'default');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.variantIcon()).toBeNull();
   });
 
-  it('maps variant to icon names', () => {
+  it('maps variant to icon names', async () => {
     fixture.componentRef.setInput('variant', 'info');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.variantIcon()).toBe('info');
     fixture.componentRef.setInput('variant', 'warning');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.variantIcon()).toBe('warning');
   });
 
-  it('treats null title and message as empty', () => {
+  it('treats null title and message as empty', async () => {
     fixture.componentRef.setInput('title', null as unknown as string);
     fixture.componentRef.setInput('message', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.hasTitle()).toBe(false);
     expect(component.showInputMessage()).toBe(false);
   });
@@ -133,15 +133,15 @@ describe('AuMessage', () => {
     expect(fixture.nativeElement.getAttribute('data-au-layout')).toBe('inline');
   });
 
-  it('sets banner layout on host', () => {
+  it('sets banner layout on host', async () => {
     fixture.componentRef.setInput('layout', 'banner');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-layout')).toBe('banner');
   });
 
-  it('renders action button and emits action', () => {
+  it('renders action button and emits action', async () => {
     fixture.componentRef.setInput('actionLabel', 'Learn more');
-    fixture.detectChanges();
+    await fixture.whenStable();
     let n = 0;
     component.action.subscribe(() => n++);
     const action = fixture.nativeElement.querySelector('.au-message__action') as HTMLButtonElement;
@@ -149,21 +149,21 @@ describe('AuMessage', () => {
     expect(n).toBe(1);
   });
 
-  it('treats null actionLabel as empty', () => {
+  it('treats null actionLabel as empty', async () => {
     fixture.componentRef.setInput('actionLabel', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.showAction()).toBe(false);
   });
 
-  it('maps success variant to check-circle icon', () => {
+  it('maps success variant to check-circle icon', async () => {
     fixture.componentRef.setInput('variant', 'success');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.variantIcon()).toBe('check-circle');
   });
 
-  it('maps error variant to icon', () => {
+  it('maps error variant to icon', async () => {
     fixture.componentRef.setInput('variant', 'error');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.variantIcon()).toBe('error');
   });
 });
@@ -176,9 +176,9 @@ describe('AuMessage', () => {
 class MessageProjectionHost {}
 
 describe('AuMessage projection', () => {
-  it('renders projected content when message input is empty', () => {
+  it('renders projected content when message input is empty', async () => {
     const fix = TestBed.createComponent(MessageProjectionHost);
-    fix.detectChanges();
+    await fix.whenStable();
     const text = fix.nativeElement.querySelector('.au-message__text');
     expect(text?.textContent?.trim()).toBe('Projected body');
   });

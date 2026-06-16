@@ -39,6 +39,7 @@ export const MESSAGES_ES: DocsMessages = {
     lead: 'Librería npm open source (MIT): tokens CSS semánticos, componentes standalone y signal forms de Angular. Guía de instalación, referencia de componentes y Storybook.',
     ctaDocs: 'Documentación',
     ctaStorybook: 'Storybook',
+    ctaCrudDemo: 'Demo CRUD',
     overviewTitle: 'Principios',
     overviewAria: 'Principios de diseño',
     principles: [
@@ -104,9 +105,15 @@ export const MESSAGES_ES: DocsMessages = {
       },
       nextGuides: {
         title: 'Siguiente paso',
-        intro: 'Consulta la guía de adopción: signal forms — o abre la',
-        adoptionLink: 'Guía de adopción →',
-        crudDemoLink: 'Demo CRUD de referencia →',
+        crudCardEyebrow: 'Escaparate',
+        crudCardTitle: 'Demo CRUD de referencia',
+        crudCardLead:
+          'La forma más rápida de ver Aurea en acción: listado, edición, confirmaciones y patrones de producto en una sola pantalla.',
+        crudCardCta: 'Abrir demo CRUD',
+        adoptionCardTitle: 'Guía de adopción',
+        adoptionCardLead:
+          'Signal forms, accesibilidad y convenciones para integrar el sistema en tu app.',
+        adoptionCardCta: 'Leer la guía',
       },
     },
   },
@@ -121,7 +128,7 @@ export const MESSAGES_ES: DocsMessages = {
     attrExpand: 'Ver HTML',
     globalStylesHeading: 'aurea-global.css',
     globalStylesBody:
-      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. Solo incluye CSS transversal: cromado y errores de <code>au-form-field</code>, listbox en portal, layout de <code>au-description-list</code> entre hosts, y triggers/ítems proyectados del acordeón. Controles como <code>au-textarea</code>, <code>au-button-group</code> y <code>au-snackbar</code> traen sus estilos en el bundle del componente — no se duplican aquí. Criterio: <code>projects/components/src/lib/styles/README.md</code> en el repo.',
+      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. CSS transversal: cromado y errores de <code>au-form-field</code>, listbox en portal, layout de <code>au-description-list</code> entre hosts, triggers/ítems del acordeón en plantillas padre, y primitivos nativos (<code>button.au-button</code>, <code>input.au-input-text</code>, <code>textarea.au-textarea</code>, …) empaquetados desde estilos de directivas. Hosts compuestos o en portal como <code>au-button-group</code> y <code>au-snackbar</code> siguen enviando CSS en el bundle del componente. Criterio: <code>projects/components/src/lib/styles/README.md</code> en el repo.',
     globalStylesExpand: 'Ver imports CSS globales',
     directiveHeading: 'Directiva AuTheme',
     directiveBody:
@@ -152,6 +159,18 @@ export const MESSAGES_ES: DocsMessages = {
     brandBody:
       'Crea una hoja de estilos pequeña cargada <strong>después</strong> de <code>au-tokens.css</code>. Sobrescribe tokens semánticos en <code>:root</code> y por tema — sin fork de la librería.',
     brandExpand: 'Ver CSS de marca',
+    brandExampleHeading: 'Ejemplo de marca personalizada',
+    brandExampleBody:
+      'Por defecto se muestra la <strong>marca personalizada</strong> (naranja coral). Usa el conmutador para comparar con Aurea por defecto — el mismo patrón que un <code>theme-brand.css</code> global cargado después de <code>au-tokens.css</code>. Cambia claro/oscuro en la vista previa de arriba para ver ambas paletas.',
+    brandExampleToggleLabel: 'Preset de marca',
+    brandExampleDefault: 'Aurea por defecto',
+    brandExampleCustom: 'Marca personalizada',
+    brandExamplePrimary: 'Acción principal',
+    brandExampleOutline: 'Secundario',
+    brandExampleLink: 'Saber más',
+    brandExampleFieldLabel: 'Correo',
+    brandExampleFieldPlaceholder: 'tu@empresa.com',
+    brandExampleCssExpand: 'Ver CSS de este ejemplo',
     overrideLevelsHeading: 'Tres niveles de override',
     overrideLevelsBody:
       'Elige el nivel más acotado que resuelva tu caso. Prefiere tokens antes que clases internas.',
@@ -160,10 +179,10 @@ export const MESSAGES_ES: DocsMessages = {
       'Define <code>--au-color-*</code>, <code>--au-font-sans</code>, <code>--au-shadow-*</code> en <code>:root</code> o <code>[data-au-theme]</code>. Todos los componentes los heredan.',
     overrideHostTitle: '2. Por componente (host)',
     overrideHostBody:
-      'Define <code>--au-card-padding</code>, <code>--au-table-row-hover</code>, etc. en el custom element (<code>au-card</code>, <code>au-table</code>…). Mejor en componentes con <code>ViewEncapsulation.None</code>.',
+      'Define <code>--au-card-padding</code>, <code>--au-table-row-hover</code>, <code>--au-textarea-min-h-md</code>, etc. en el host (<code>au-card</code>, <code>textarea.au-textarea</code>, …). Funciona en componentes con <code>ViewEncapsulation.None</code> y primitivos nativos estilizados vía CSS global.',
     overrideAvoidTitle: '3. Evitar en apps de producto',
     overrideAvoidBody:
-      'No dependas de clases BEM internas (<code>.au-button__element</code>) ni <code>::ng-deep</code>. No forman parte de la API pública y pueden cambiar en minor releases.',
+      'No dependas de clases BEM internas (<code>.au-button__content</code>, <code>.au-switch__track</code>, …) ni <code>::ng-deep</code>. No forman parte de la API pública y pueden cambiar en minor releases.',
     hostOverrideHeading: 'Overrides en host (referencia)',
     hostOverrideBody:
       'Variables habituales por host. La pestaña <strong>Styling</strong> de cada componente lista todos los tokens que consume.',
@@ -181,6 +200,11 @@ export const MESSAGES_ES: DocsMessages = {
   componentsIndex: {
     title: 'Componentes',
     lead: 'Catálogo de primitivos. Cada página incluye vista previa, badge de madurez y ejemplo de importación.',
+    crudSpotlightEyebrow: 'Escaparate',
+    crudSpotlightTitle: '¿Cómo se ven juntos?',
+    crudSpotlightLead:
+      'Abre la demo CRUD: tabla, formularios, overlays y feedback en un flujo de producto completo antes de ir componente a componente.',
+    crudSpotlightCta: 'Ver demo CRUD',
     maturityLegend:
       'Madurez: stable = listo para producción; beta = usable con casos límite documentados; experimental = puede cambiar.',
     maturityStable: 'Estable',

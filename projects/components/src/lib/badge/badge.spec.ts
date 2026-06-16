@@ -14,49 +14,49 @@ describe('AuBadge', () => {
 
     fixture = TestBed.createComponent(AuBadge);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
     expect(component).toBeTruthy();
   });
 
-  it('renders label text', () => {
+  it('renders label text', async () => {
     fixture.componentRef.setInput('label', '3');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.textContent).toContain('3');
     expect(component.hasLabel()).toBe(true);
   });
 
-  it('supports dot mode without label', () => {
+  it('supports dot mode without label', async () => {
     fixture.componentRef.setInput('label', '');
     fixture.componentRef.setInput('dot', true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-dot')).toBe('');
     expect(component.hasLabel()).toBe(false);
   });
 
-  it('trims whitespace from label', () => {
+  it('trims whitespace from label', async () => {
     fixture.componentRef.setInput('label', '  hi  ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.resolvedLabel()).toBe('hi');
   });
 
-  it('transforms null label to empty string', () => {
+  it('transforms null label to empty string', async () => {
     fixture.componentRef.setInput('label', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.resolvedLabel()).toBe('');
     expect(component.hasLabel()).toBe(false);
   });
 
-  it('sets variant on host', () => {
+  it('sets variant on host', async () => {
     fixture.componentRef.setInput('variant', 'success');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');
   });
 
-  it('renders projected content when label is empty', () => {
+  it('renders projected content when label is empty', async () => {
     @Component({
       imports: [AuBadge],
       template: `<au-badge variant="success">Active</au-badge>`,
@@ -64,7 +64,7 @@ describe('AuBadge', () => {
     class ProjectedHost {}
 
     const projected = TestBed.createComponent(ProjectedHost);
-    projected.detectChanges();
+    await projected.whenStable();
     expect(projected.nativeElement.textContent).toContain('Active');
     expect(projected.nativeElement.querySelector('au-badge')?.getAttribute('data-au-variant')).toBe(
       'success',

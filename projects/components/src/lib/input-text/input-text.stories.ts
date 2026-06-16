@@ -10,7 +10,7 @@ import {
   formFieldControlRender,
   type FieldChromeStoryArgs,
 } from '../form-field';
-import { AuInputText } from './input-text';
+import { AuInputText } from './au-input-text.directive';
 
 type InputTextType = 'text' | 'email' | 'number' | 'tel' | 'search' | 'url';
 
@@ -72,7 +72,7 @@ const meta: Meta<InputTextStoryArgs> = {
     type: {
       control: 'select',
       options: ['text', 'email', 'number', 'tel', 'search', 'url'],
-      description: 'Native HTML input type. For passwords use `au-input-password`.',
+      description: 'Native HTML input type. For passwords use `input[auInputPassword]`.',
       table: { category: 'Field' },
     },
     disabled: {
@@ -122,7 +122,7 @@ const meta: Meta<InputTextStoryArgs> = {
     formFieldControlRender(
       [AuFormField, AuInputText],
       args,
-      `<au-input-text
+      `<input auInputText
   [(value)]="value"
   [placeholder]="placeholder"
   [type]="type"

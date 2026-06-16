@@ -7,8 +7,8 @@ export interface PreviewMessages {
     billing: string;
     billingPanel: string;
   };
-  badge: { accent: string; count: string };
-  avatar: { name: string; alt: string; src: string };
+  badge: { draft: string; accent: string; success: string; warning: string; error: string };
+  avatar: { name: string; name2: string; role: string; alt: string; src: string };
   breadcrumb: { home: string; components: string; table: string };
   button: { primary: string; secondary: string; outline: string; ghost: string };
   buttonGroup: { ariaLabel: string; cancel: string; save: string };
@@ -37,8 +37,8 @@ export interface PreviewMessages {
   inputPassword: { label: string; hint: string };
   inputTime: { label: string };
   inputNumber: { label: string };
-  inputText: { label: string; placeholder: string };
-  link: { label: string };
+  inputText: { label: string; hint: string; placeholder: string };
+  link: { label: string; external: string; inlineBefore: string; inlineAfter: string };
   list: { ariaLabel: string };
   menu: { trigger: string; edit: string; share: string };
   message: { successTitle: string; successBody: string; infoBody: string };

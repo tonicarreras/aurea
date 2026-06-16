@@ -31,12 +31,12 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
   'input-date': {
     level: 'stable',
     since: '1.5.0',
-    note: 'Native date picker styling varies by browser.',
+    note: 'Aurea month-grid calendar panel; min/max disable out-of-range days.',
   },
   'input-time': {
     level: 'stable',
     since: '1.5.0',
-    note: 'Native time picker styling varies by browser.',
+    note: 'Aurea dual-column time picker; min/max disable out-of-range slots.',
   },
   'input-password': {
     level: 'stable',

@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   afterRenderEffect,
   computed,
   inject,
@@ -10,6 +9,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AU_FORM_FIELD } from '../form-field/form-field';
@@ -48,7 +48,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   readonly blur = output<void>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -133,7 +133,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   }
 
   focus(): void {
-    const first = (this.host.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+    const first = this.host.nativeElement.querySelector<HTMLInputElement>(
       'input[type="radio"]:not(:disabled)',
     );
     first?.focus();

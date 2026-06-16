@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 
-import { AuInputText } from '../input-text/input-text';
+import { AuInputText } from '../input-text';
 import { AuFormField } from './form-field';
 
 /** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */
@@ -30,7 +30,7 @@ const meta: Meta<FormFieldStoryArgs> = {
   },
   args: {
     label: 'Email',
-    hint: '',
+    hint: 'We only use your email for notifications.',
     errorMessage: '',
     invalid: false,
     required: true,
@@ -55,15 +55,24 @@ export const WithInput: Story = {
           [required]="required"
           [controlIdInput]="controlIdInput"
         >
-          <au-input-text placeholder="you@example.com" />
+          <input auInputText placeholder="you@example.com" />
         </au-form-field>
       </div>
     `,
   }),
 };
 
+export const WithHint: Story = {
+  args: {
+    hint: 'Shown below the label, above the control.',
+    required: false,
+  },
+  render: WithInput.render,
+};
+
 export const WithError: Story = {
   args: {
+    hint: '',
     invalid: true,
     errorMessage: 'Enter a valid email address.',
   },

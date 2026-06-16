@@ -40,6 +40,9 @@
     },
     {
       "path": "./projects/docs/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/components/.storybook/tsconfig.test-runner.json"
     }
   ]
 }

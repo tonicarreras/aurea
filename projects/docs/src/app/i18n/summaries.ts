@@ -7,8 +7,8 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Acciones principales y secundarias con variantes, estados de carga y anillo de foco accesible.',
   ),
   'button-group': L(
-    'Groups related `au-button` actions; attached or spaced layout (stable 1.6.0).',
-    'Agrupa acciones `au-button`; layout attached o con separación (stable 1.6.0).',
+    'Groups related `button[auButton]` actions; attached or spaced layout (stable 1.6.0).',
+    'Agrupa acciones `button[auButton]`; layout attached o con separación (stable 1.6.0).',
   ),
   'form-field': L(
     'Shared label, hint, and error chrome around projected inputs; wires ids and ARIA via `AU_FORM_FIELD`.',

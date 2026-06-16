@@ -1,1 +1,1 @@
-export * from './checkbox';
+export { AuCheckbox } from './au-checkbox.directive';

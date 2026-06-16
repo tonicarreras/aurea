@@ -1,1 +1,1 @@
-export * from './input-number';
+export { AuInputNumber } from './au-input-number.directive';

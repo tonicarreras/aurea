@@ -1,5 +1,5 @@
 {
-  "raw": 715450,
-  "gzip": 94006,
-  "note": "Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
+  "raw": 747917,
+  "gzip": 107523,
+  "note": "2.0.0 baseline (native directive CSS in global bundle, bounded pickers, overlay guards). Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
 }

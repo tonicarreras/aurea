@@ -65,7 +65,7 @@
   border: 1px solid var(--au-color-border-default);
   border-radius: var(--au-radius-surface);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-raised);
+  box-shadow: var(--au-elevation-raised);
   color: var(--au-color-text-primary);
   pointer-events: auto;
   animation: au-snackbar-in var(--au-motion-toast) both;
@@ -221,11 +221,5 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-snackbar__surface {
-    animation: none;
   }
 }

@@ -14,6 +14,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
@@ -34,7 +35,7 @@ export function auPopoverSelfRef(): typeof AuPopover {
  * @example
  * ```html
  * <au-popover [(open)]="filtersOpen">
- *   <au-button auPopoverTrigger>Filters</au-button>
+ *   <button auButton auPopoverTrigger>Filters</button>
  *   <p>Filter content</p>
  * </au-popover>
  * ```
@@ -56,7 +57,7 @@ export class AuPopover {
   readonly placement = input<AuTooltipPlacement>('bottom');
   readonly disabled = input(false);
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
@@ -133,7 +134,7 @@ export class AuPopover {
     if (!(target instanceof Node)) {
       return;
     }
-    const host = this.host.nativeElement as HTMLElement;
+    const host = this.host.nativeElement;
     const panel = this.panelRef()?.nativeElement;
     if (host.contains(target) || panel?.contains(target)) {
       return;

@@ -18,7 +18,7 @@ describe('AuBreadcrumb', () => {
 
     fixture = TestBed.createComponent(AuBreadcrumb);
     fixture.componentRef.setInput('items', items);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates with navigation semantics', () => {

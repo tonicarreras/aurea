@@ -8,7 +8,7 @@ import {
   formFieldControlRender,
   type FieldChromeStoryArgs,
 } from '../form-field';
-import { AuInputPassword } from './input-password';
+import { AuInputPassword } from './au-input-password.directive';
 
 interface InputPasswordStoryArgs extends FieldChromeStoryArgs {
   valueChange: ReturnType<typeof fn>;
@@ -59,7 +59,7 @@ const meta: Meta<InputPasswordStoryArgs> = {
     formFieldControlRender(
       [AuFormField, AuInputPassword],
       args,
-      `<au-input-password
+      `<input auInputPassword
   [(value)]="value"
   [placeholder]="placeholder"
   [autocomplete]="autocomplete"

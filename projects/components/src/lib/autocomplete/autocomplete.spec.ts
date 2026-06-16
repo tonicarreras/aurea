@@ -36,7 +36,7 @@ describe('AuAutocomplete', () => {
     }).compileComponents();
   });
 
-  it('listboxNative returns undefined when the listbox node is not in the document', () => {
+  it('listboxNative returns undefined when the listbox node is not in the document', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -44,13 +44,13 @@ describe('AuAutocomplete', () => {
     input.focus();
     input.value = 'bar';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const spy = vi.spyOn(document, 'getElementById').mockReturnValue(null);
     expect(CONTROL(fix)['listboxNative']()).toBeUndefined();
     spy.mockRestore();
   });
 
-  it('syncListboxOverlay no-ops when the input is outside the control row', () => {
+  it('syncListboxOverlay no-ops when the input is outside the control row', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -60,14 +60,14 @@ describe('AuAutocomplete', () => {
     input.focus();
     input.value = 'm';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!
       .nativeElement as HTMLElement;
     expect(listbox.parentElement).not.toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
   });
 
-  it('filters options and selects on mousedown', () => {
+  it('filters options and selects on mousedown', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -75,16 +75,16 @@ describe('AuAutocomplete', () => {
     input.focus();
     input.value = 'bar';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
     const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('bcn');
     expect(input.value).toBe('Barcelona');
   });
 
-  it('sets null when cleared', () => {
+  it('sets null when cleared', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -92,7 +92,7 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = '';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -102,7 +102,7 @@ describe('AuAutocomplete', () => {
     });
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
-    fix.detectChanges();
+    await fix.whenStable();
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
@@ -129,22 +129,22 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('opens list on focus', () => {
+  it('opens list on focus', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
   });
 
-  it('onInputFocus seeds query from selection when panel was closed', () => {
+  it('onInputFocus seeds query from selection when panel was closed', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix)['query']()).toBe('Madrid');
   });
 
@@ -159,19 +159,19 @@ describe('AuAutocomplete', () => {
     expect(comp['query']()).toBe('bar');
   });
 
-  it('keyboard ArrowDown and Enter selects option', () => {
+  it('keyboard ArrowDown and Enter selects option', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('mad');
   });
 
-  it('Escape clears query when there is no selected value', () => {
+  it('Escape clears query when there is no selected value', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -179,13 +179,13 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new FocusEvent('focus'));
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.value).toBe('');
   });
 
-  it('Escape closes panel and restores query', () => {
+  it('Escape closes panel and restores query', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -193,31 +193,31 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
     expect(input.value).toBe('Madrid');
   });
 
-  it('strictSelection clears invalid query on blur', () => {
+  it('strictSelection clears invalid query on blur', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.value = 'Not a city';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
     expect(input.value).toBe('');
   });
 
-  it('treats whitespace-only query as below minFilterLength', () => {
+  it('treats whitespace-only query as below minFilterLength', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 1;
@@ -226,34 +226,34 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new FocusEvent('focus'));
     input.value = '   ';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('respects minFilterLength', () => {
+  it('respects minFilterLength', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 2;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
     expect(input.getAttribute('aria-expanded')).toBe('false');
     input.value = 'm';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
     input.value = 'ma';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
     expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBeGreaterThan(
       0,
     );
   });
 
-  it('shows no-results row when filter matches nothing', () => {
+  it('shows no-results row when filter matches nothing', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -261,7 +261,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new FocusEvent('focus'));
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const empty = fix.debugElement.query(By.css('.au-field-listbox__item--empty'));
     expect(empty?.nativeElement.textContent?.trim()).toBe('No results');
   });
@@ -275,13 +275,13 @@ describe('AuAutocomplete', () => {
     expect(input.getAttribute('aria-describedby')).toContain('-hint');
   });
 
-  it('emits blur', () => {
+  it('emits blur', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     queryInput(fix).dispatchEvent(new FocusEvent('blur'));
     expect(n).toBe(1);
   });
@@ -293,13 +293,13 @@ describe('AuAutocomplete', () => {
     (CONTROL(fix) as unknown as { onControlRowFocusin(): void }).onControlRowFocusin();
   });
 
-  it('emits blur from onBlurHost', () => {
+  it('emits blur from onBlurHost', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     let n = 0;
     CONTROL(fix).blur.subscribe(() => n++);
-    fix.detectChanges();
+    await fix.whenStable();
     (CONTROL(fix) as unknown as { onBlurHost(): void }).onBlurHost();
     expect(n).toBe(1);
   });
@@ -315,7 +315,7 @@ describe('AuAutocomplete', () => {
     spy.mockRestore();
   });
 
-  it('skips disabled options on ArrowDown', () => {
+  it('skips disabled options on ArrowDown', async () => {
     const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'Alpha', disabled: true },
       { value: 'b', label: 'Beta' },
@@ -325,9 +325,9 @@ describe('AuAutocomplete', () => {
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -335,22 +335,22 @@ describe('AuAutocomplete', () => {
     ).toBe('Beta');
   });
 
-  it('Home and End move highlight', () => {
+  it('Home and End move highlight', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .queryAll(By.css('.au-field-listbox__option--active'))[0]
         ?.nativeElement.textContent?.trim(),
     ).toBe('Valencia');
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -358,7 +358,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('onInput is a no-op when readOnly', () => {
+  it('onInput is a no-op when readOnly', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
@@ -366,12 +366,12 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'mad';
     CONTROL(fix).onInput({ target: input } as unknown as Event);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('does not emit when disabled on input', () => {
+  it('does not emit when disabled on input', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
@@ -382,7 +382,7 @@ describe('AuAutocomplete', () => {
     const sub = runInInjectionContext(inj, () =>
       outputToObservable(comp.value).subscribe(() => n++),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     const input = queryInput(fix);
     input.value = 'mad';
     input.dispatchEvent(new Event('input'));
@@ -471,7 +471,7 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).listboxId()).toBe('city-ac-listbox');
   });
 
-  it('filters case-sensitively when caseSensitive is true', () => {
+  it('filters case-sensitively when caseSensitive is true', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.caseSensitive = true;
@@ -480,15 +480,15 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new FocusEvent('focus'));
     input.value = 'Mad';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(1);
     input.value = 'mad';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(0);
   });
 
-  it('does not run handlers when readOnly', () => {
+  it('does not run handlers when readOnly', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
@@ -497,7 +497,7 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new FocusEvent('focus'));
     input.dispatchEvent(new Event('input'));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
     CONTROL(fix).onOptionPointerEnter(0, testOptions[0]!);
     CONTROL(fix).onOptionPointerDown(new Event('mousedown'), testOptions[0]!);
@@ -505,15 +505,15 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('highlights option on pointer enter', () => {
+  it('highlights option on pointer enter', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -521,16 +521,16 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('ignores pointer enter on disabled option', () => {
+  it('ignores pointer enter on disabled option', async () => {
     const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
     option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
   });
 
@@ -543,13 +543,13 @@ describe('AuAutocomplete', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('ArrowUp opens panel and highlights last option', () => {
+  it('ArrowUp opens panel and highlights last option', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
     expect(
       fix.debugElement
@@ -558,7 +558,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Valencia');
   });
 
-  it('keyboard no-ops when panel closed for Home, End, Enter, Escape', () => {
+  it('keyboard no-ops when panel closed for Home, End, Enter, Escape', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -566,24 +566,24 @@ describe('AuAutocomplete', () => {
     for (const key of ['Home', 'End', 'Enter', 'Escape']) {
       input.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
     }
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('Enter does not select when no highlightable option', () => {
+  it('Enter does not select when no highlightable option', async () => {
     const opts: AuAutocompleteOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('clears aria-activedescendant when highlight is past filtered length', () => {
+  it('clears aria-activedescendant when highlight is past filtered length', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [{ value: 'mad', label: 'Madrid' }];
     });
@@ -593,20 +593,20 @@ describe('AuAutocomplete', () => {
     };
     comp.panelOpen.set(true);
     comp.highlightedIndex.set(5);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
-  it('omits aria-activedescendant when no option is active', () => {
+  it('omits aria-activedescendant when no option is active', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [];
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(queryInput(fix).getAttribute('aria-activedescendant')).toBeNull();
   });
 
-  it('keeps no active option when list is all disabled', () => {
+  it('keeps no active option when list is all disabled', async () => {
     const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
@@ -616,23 +616,23 @@ describe('AuAutocomplete', () => {
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
     expect(input.getAttribute('aria-activedescendant')).toBeNull();
   });
 
-  it('ArrowDown wraps from last to first highlightable', () => {
+  it('ArrowDown wraps from last to first highlightable', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -640,7 +640,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('strictSelection false does not commit invalid text on blur', () => {
+  it('strictSelection false does not commit invalid text on blur', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.strictSelection = false;
@@ -649,16 +649,16 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'free text';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('mad');
   });
 
-  it('findOptionByLabel is case-sensitive when caseSensitive is true', () => {
+  it('findOptionByLabel is case-sensitive when caseSensitive is true', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.caseSensitive = true;
@@ -666,39 +666,39 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'Madrid';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('mad');
     input.value = 'madrid';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('commitQueryOnClose matches option by value string', () => {
+  it('commitQueryOnClose matches option by value string', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.value = 'bcn';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('bcn');
     expect(input.value).toBe('Barcelona');
   });
 
-  it('setValue does not emit when value unchanged', () => {
+  it('setValue does not emit when value unchanged', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -709,7 +709,7 @@ describe('AuAutocomplete', () => {
     const sub = runInInjectionContext(inj, () =>
       outputToObservable(comp.value).subscribe(() => n++),
     );
-    fix.detectChanges();
+    await fix.whenStable();
     comp.selectOption(testOptions[0]!);
     sub.unsubscribe();
     expect(n).toBe(0);
@@ -770,7 +770,7 @@ describe('AuAutocomplete', () => {
     ).not.toContain('*');
   });
 
-  it('applies and clears from-tab on control row', () => {
+  it('applies and clears from-tab on control row', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -779,22 +779,22 @@ describe('AuAutocomplete', () => {
     fix.debugElement
       .query(By.css('.au-autocomplete__control-row'))!
       .triggerEventHandler('focusin', new FocusEvent('focusin'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(row.classList.contains('au-autocomplete__control-row--from-tab')).toBe(true);
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(row.classList.contains('au-autocomplete__control-row--from-tab')).toBe(false);
   });
 
-  it('does not open panel when disabled on focus', () => {
+  it('does not open panel when disabled on focus', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
     });
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
@@ -814,16 +814,16 @@ describe('AuAutocomplete', () => {
     expect(fixReadOnly.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('ArrowUp wraps from first to last highlightable option', () => {
+  it('ArrowUp wraps from first to last highlightable option', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -831,7 +831,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Valencia');
   });
 
-  it('lastHighlightableIndex is -1 when every option is disabled', () => {
+  it('lastHighlightableIndex is -1 when every option is disabled', async () => {
     const opts: AuAutocompleteOption[] = [
       { value: 'a', label: 'A', disabled: true },
       { value: 'b', label: 'B', disabled: true },
@@ -841,7 +841,7 @@ describe('AuAutocomplete', () => {
     });
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
   });
 
@@ -858,14 +858,14 @@ describe('AuAutocomplete', () => {
     expect(queryInput(fix2).value).toBe('Barcelona');
   });
 
-  it('ignores unhandled keys in onKeydown', () => {
+  it('ignores unhandled keys in onKeydown', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -887,7 +887,7 @@ describe('AuAutocomplete', () => {
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('shows query while panel is open and selected label when closed', () => {
+  it('shows query while panel is open and selected label when closed', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -895,11 +895,11 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'typing';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.value).toBe('typing');
     const comp = CONTROL(fix) as unknown as { panelOpen: { set(v: boolean): void } };
     comp.panelOpen.set(false);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.value).toBe('typing');
     const fix2 = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
@@ -908,7 +908,7 @@ describe('AuAutocomplete', () => {
     expect(queryInput(fix2).value).toBe('Barcelona');
   });
 
-  it('keeps partial query when deleting below minFilterLength after a selection', () => {
+  it('keeps partial query when deleting below minFilterLength after a selection', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 2;
@@ -916,33 +916,33 @@ describe('AuAutocomplete', () => {
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.value = 'M';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.value).toBe('M');
     expect(CONTROL(fix).value()).toBe('mad');
     expect(fix.debugElement.query(By.css('.au-field-listbox'))).toBeFalsy();
   });
 
-  it('ArrowDown does not open empty panel below minFilterLength', () => {
+  it('ArrowDown does not open empty panel below minFilterLength', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.minFilterLength = 2;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeFalsy();
   });
 
-  it('ArrowDown opens panel when closed', () => {
+  it('ArrowDown opens panel when closed', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-autocomplete__listbox'))).toBeTruthy();
     expect(
       fix.debugElement
@@ -951,15 +951,15 @@ describe('AuAutocomplete', () => {
     ).toBe('Madrid');
   });
 
-  it('ArrowDown moves highlight when panel is already open', () => {
+  it('ArrowDown moves highlight when panel is already open', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -967,7 +967,7 @@ describe('AuAutocomplete', () => {
     ).toBe('Barcelona');
   });
 
-  it('ArrowUp from unset highlight uses nextHighlightableIndex', () => {
+  it('ArrowUp from unset highlight uses nextHighlightableIndex', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -978,9 +978,9 @@ describe('AuAutocomplete', () => {
     };
     comp.panelOpen.set(true);
     comp.highlightedIndex.set(-1);
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(
       fix.debugElement
         .query(By.css('.au-field-listbox__option--active'))
@@ -988,15 +988,15 @@ describe('AuAutocomplete', () => {
     ).toBe('Valencia');
   });
 
-  it('ArrowDown on empty list keeps highlight unset', () => {
+  it('ArrowDown on empty list keeps highlight unset', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [];
     });
     const input = queryInput(fix);
     input.dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.getAttribute('aria-activedescendant')).toBeNull();
   });
 
@@ -1027,7 +1027,7 @@ describe('AuAutocomplete', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('onInputFocus keeps highlight when already set', () => {
+  it('onInputFocus keeps highlight when already set', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
@@ -1036,16 +1036,16 @@ describe('AuAutocomplete', () => {
       highlightedIndex: { set(v: number): void; (): number };
     };
     queryInput(fix).dispatchEvent(new FocusEvent('focus'));
-    fix.detectChanges();
+    await fix.whenStable();
     comp.panelOpen.set(false);
     comp.highlightedIndex.set(1);
-    fix.detectChanges();
+    await fix.whenStable();
     CONTROL(fix).onInputFocus();
-    fix.detectChanges();
+    await fix.whenStable();
     expect(comp.highlightedIndex()).toBe(1);
   });
 
-  it('commitQueryOnClose leaves query when strictSelection is false', () => {
+  it('commitQueryOnClose leaves query when strictSelection is false', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.strictSelection = false;
@@ -1053,14 +1053,14 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'free text';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const comp = CONTROL(fix) as unknown as { commitQueryOnClose(): void; query(): string };
     comp.commitQueryOnClose();
     expect(CONTROL(fix).value()).toBeNull();
     expect(comp.query()).toBe('free text');
   });
 
-  it('commitQueryOnClose matches label with caseSensitive', () => {
+  it('commitQueryOnClose matches label with caseSensitive', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.caseSensitive = true;
@@ -1068,25 +1068,25 @@ describe('AuAutocomplete', () => {
     const input = queryInput(fix);
     input.value = 'Madrid';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     const row = fix.debugElement.query(By.css('.au-autocomplete__control-row'))!.nativeElement;
     const out = new FocusEvent('focusout', { relatedTarget: document.body });
     Object.defineProperty(out, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(out);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBe('mad');
   });
 
-  it('Enter on closed panel is a no-op', () => {
+  it('Enter on closed panel is a no-op', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
     queryInput(fix).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('Escape restores selected label in the query', () => {
+  it('Escape restores selected label in the query', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'mad';
@@ -1095,20 +1095,20 @@ describe('AuAutocomplete', () => {
     input.dispatchEvent(new FocusEvent('focus'));
     input.value = 'zzz';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(input.value).toBe('Madrid');
   });
 
-  it('inputValue keeps typed query when selected option label is null', () => {
+  it('inputValue keeps typed query when selected option label is null', async () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = [{ value: 'x', label: null as unknown as string }];
       f.componentInstance.value = 'x';
     });
     const comp = CONTROL(fix) as AuAutocomplete & { query: { set(v: string): void } };
     comp.query.set('typed');
-    fix.detectChanges();
+    await fix.whenStable();
     expect(comp.inputValue()).toBe('typed');
   });
 
@@ -1147,7 +1147,7 @@ describe('AuAutocomplete', () => {
     input.focus();
     input.value = 'm';
     input.dispatchEvent(new Event('input'));
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.debugElement.query(By.css('.au-field-listbox__item--loading'))).toBeTruthy();
   });
 });

@@ -13,17 +13,17 @@ describe('AuProgress', () => {
 
     fixture = TestBed.createComponent(AuProgress);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('creates', () => {
     expect(component).toBeTruthy();
   });
 
-  it('exposes progressbar semantics in determinate mode', () => {
+  it('exposes progressbar semantics in determinate mode', async () => {
     fixture.componentRef.setInput('value', 50);
     fixture.componentRef.setInput('max', 100);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.getAttribute('role')).toBe('progressbar');
     expect(el.getAttribute('aria-valuenow')).toBe('50');
@@ -33,31 +33,31 @@ describe('AuProgress', () => {
     expect(el.getAttribute('aria-label')).toBe('Progress, 50%');
   });
 
-  it('uses custom aria-valuetext from label', () => {
+  it('uses custom aria-valuetext from label', async () => {
     fixture.componentRef.setInput('label', ' Uploading ');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.ariaValueText()).toBe('Uploading');
   });
 
-  it('uses Loading text in indeterminate mode', () => {
+  it('uses Loading text in indeterminate mode', async () => {
     fixture.componentRef.setInput('mode', 'indeterminate');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.getAttribute('aria-valuenow')).toBeNull();
     expect(component.ariaValueText()).toBe('Loading');
     expect((fixture.nativeElement as HTMLElement).getAttribute('aria-label')).toBe('Loading');
   });
 
-  it('clamps value to max for percent', () => {
+  it('clamps value to max for percent', async () => {
     fixture.componentRef.setInput('value', 200);
     fixture.componentRef.setInput('max', 100);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.percent()).toBe(100);
   });
 
-  it('transforms null label to empty string', () => {
+  it('transforms null label to empty string', async () => {
     fixture.componentRef.setInput('label', null as unknown as string);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.ariaValueText()).toBe('0%');
   });
 });

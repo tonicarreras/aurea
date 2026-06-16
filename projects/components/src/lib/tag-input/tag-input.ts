@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   afterRenderEffect,
   computed,
   inject,
@@ -10,6 +9,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
 import { AuIcon } from '../icon/icon';
@@ -51,7 +51,7 @@ export class AuTagInput implements FormValueControl<string[]> {
   readonly blur = output<void>();
 
   protected readonly formField = inject(AU_FORM_FIELD);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   protected readonly draft = signal('');
   protected readonly fieldFocusByTab = signal(false);
 

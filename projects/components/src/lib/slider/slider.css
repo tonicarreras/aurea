@@ -41,7 +41,7 @@
 
 .au-slider__input:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 .au-slider__input:disabled {
@@ -64,7 +64,7 @@
   border: 2px solid var(--au-color-action-primary);
   border-radius: var(--au-radius-full);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  box-shadow: none;
 }
 
 .au-slider__input::-moz-range-thumb {
@@ -73,7 +73,7 @@
   border: 2px solid var(--au-color-action-primary);
   border-radius: var(--au-radius-full);
   background: var(--au-color-surface-raised);
-  box-shadow: var(--au-shadow-control);
+  box-shadow: none;
 }
 
 .au-slider__value {

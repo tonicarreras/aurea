@@ -98,13 +98,3 @@
     transform: rotate(360deg);
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .au-spinner__svg {
-    animation: none;
-  }
-
-  .au-spinner__arc {
-    opacity: 0.75;
-  }
-}

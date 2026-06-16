@@ -10,14 +10,14 @@ export const examples: ComponentDocExample[] = [
     title: 'Basic textarea',
     demoComponent: ExampleTextareaBasicDemo,
     code: `<au-form-field label="Comment">
-  <au-textarea [rows]="3" placeholder="Write here…" />
+  <textarea auTextarea [rows]="3" placeholder="Write here…"></textarea>
 </au-form-field>`,
   },
   {
     title: 'With hint',
     demoComponent: ExampleTextareaHintDemo,
     code: `<au-form-field label="Bio" hint="Maximum 280 characters.">
-  <au-textarea [rows]="4" />
+  <textarea auTextarea [rows]="4"></textarea>
 </au-form-field>`,
   },
   {
@@ -29,7 +29,7 @@ export const examples: ComponentDocExample[] = [
   errorMessage="Add at least one sentence."
   [invalid]="true"
 >
-  <au-textarea [rows]="3" />
+  <textarea auTextarea [rows]="3"></textarea>
 </au-form-field>`,
   },
 ];

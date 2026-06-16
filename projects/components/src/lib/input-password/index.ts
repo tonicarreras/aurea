@@ -1,1 +1,1 @@
-export * from './input-password';
+export { AuInputPassword } from './au-input-password.directive';

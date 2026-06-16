@@ -2,7 +2,18 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn, expect } from 'storybook/test';
 
-import { AuButton } from './button';
+import { AuButton } from './au-button.directive';
+
+interface ButtonStoryArgs {
+  variant: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size: 'sm' | 'md' | 'lg';
+  disabled: boolean;
+  loading: boolean;
+  type: 'button' | 'submit' | 'reset';
+  name: string;
+  label: string;
+  onClick: ReturnType<typeof fn>;
+}
 
 const storyImports = { imports: [AuButton] };
 
@@ -10,7 +21,7 @@ function buttonRender(args: Record<string, unknown>, template: string) {
   return { props: args, moduleMetadata: storyImports, template };
 }
 
-const meta: Meta<AuButton> = {
+const meta: Meta<ButtonStoryArgs> = {
   title: 'Aurea/Button',
   component: AuButton,
   tags: ['autodocs', 'au', 'stable'],
@@ -55,18 +66,25 @@ const meta: Meta<AuButton> = {
       description: 'Visible label (for icons only; use ng-content for text).',
       table: { category: 'Accessibility' },
     },
-    click: {
-      description: 'Emits on native click when not disabled or loading.',
+    onClick: {
+      description: 'Native `(click)` handler on the host button (Storybook demo).',
       table: { category: 'Events' },
     },
   },
   args: {
-    click: fn(),
+    variant: 'primary',
+    size: 'md',
+    disabled: false,
+    loading: false,
+    type: 'button',
+    name: '',
+    label: '',
+    onClick: fn(),
   },
 };
 
 export default meta;
-type Story = StoryObj<AuButton>;
+type Story = StoryObj<ButtonStoryArgs>;
 
 export const Primary: Story = {
   parameters: {
@@ -83,7 +101,7 @@ export const Primary: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Primary</au-button>`,
+      `<button type="button" auButton [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="onClick($event)">Primary</button>`,
     ),
 };
 
@@ -103,7 +121,7 @@ export const Secondary: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Secondary</au-button>`,
+      `<button type="button" auButton [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="onClick($event)">Secondary</button>`,
     ),
 };
 
@@ -123,7 +141,7 @@ export const Outline: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Outline</au-button>`,
+      `<button type="button" auButton [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="onClick($event)">Outline</button>`,
     ),
 };
 
@@ -142,7 +160,7 @@ export const Ghost: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="click">Ghost</au-button>`,
+      `<button type="button" auButton [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" (click)="onClick($event)">Ghost</button>`,
     ),
 };
 
@@ -162,7 +180,7 @@ export const Disabled: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [disabled]="disabled" (click)="click">Disabled</au-button>`,
+      `<button type="button" auButton [variant]="variant" [disabled]="disabled" (click)="onClick($event)">Disabled</button>`,
     ),
 };
 
@@ -183,7 +201,7 @@ export const Loading: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [loading]="loading" [label]="label" (click)="click">Processing...</au-button>`,
+      `<button type="button" auButton [variant]="variant" [loading]="loading" [label]="label" (click)="onClick($event)">Processing...</button>`,
     ),
 };
 
@@ -202,7 +220,7 @@ export const Small: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [size]="size" (click)="click">Small</au-button>`,
+      `<button type="button" auButton [variant]="variant" [size]="size" (click)="onClick($event)">Small</button>`,
     ),
 };
 
@@ -222,7 +240,7 @@ export const Large: Story = {
   render: (args) =>
     buttonRender(
       args,
-      `<au-button [variant]="variant" [size]="size" (click)="click">Large (Touch)</au-button>`,
+      `<button type="button" auButton [variant]="variant" [size]="size" (click)="onClick($event)">Large (Touch)</button>`,
     ),
 };
 
@@ -243,14 +261,13 @@ export const FocusRing: Story = {
       args,
       `
       <div style="display: flex; gap: 16px; align-items: center;">
-        <au-button [variant]="variant" (click)="click">Tab to me</au-button>
-        <au-button [variant]="'secondary'">Next element</au-button>
+        <button type="button" auButton [variant]="variant" (click)="onClick($event)">Tab to me</button>
+        <button type="button" auButton [variant]="'secondary'">Next element</button>
       </div>
     `,
     ),
   play: async ({ canvasElement }) => {
-    const button = canvasElement.querySelector('au-button') as HTMLElement;
-    const firstButton = button?.querySelector('button') as HTMLButtonElement;
+    const firstButton = canvasElement.querySelector('button.au-button') as HTMLButtonElement;
     if (firstButton) {
       firstButton.focus();
       await expect(firstButton).toHaveFocus();
@@ -271,10 +288,10 @@ export const AllVariants: Story = {
       {},
       `
       <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-        <au-button variant="primary">Primary</au-button>
-        <au-button variant="secondary">Secondary</au-button>
-        <au-button variant="outline">Outline</au-button>
-        <au-button variant="ghost">Ghost</au-button>
+        <button type="button" auButton variant="primary">Primary</button>
+        <button type="button" auButton variant="secondary">Secondary</button>
+        <button type="button" auButton variant="outline">Outline</button>
+        <button type="button" auButton variant="ghost">Ghost</button>
       </div>
     `,
     ),

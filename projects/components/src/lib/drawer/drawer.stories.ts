@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { fn } from 'storybook/test';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { AuDrawer } from './drawer';
 
@@ -55,7 +55,7 @@ function drawerStory(config: { body: string; footer?: string }): Story {
       moduleMetadata: { imports: [AuDrawer, AuButton, AuDialogFooter] },
       template: `
         <div class="au-story-stage">
-          <au-button type="button" (click)="open.set(true)">Open drawer</au-button>
+          <button auButton type="button" (click)="open.set(true)">Open drawer</button>
           <au-drawer
             [(open)]="open"
             [title]="title"
@@ -81,8 +81,8 @@ export const Default: Story = {
     body: '<p>Navigation links, filters, or detail content.</p>',
     footer: `
       <div auDrawerFooter>
-        <au-button variant="secondary" type="button" (click)="open.set(false)">Cancel</au-button>
-        <au-button type="button" (click)="open.set(false)">Apply</au-button>
+        <button auButton variant="secondary" type="button" (click)="open.set(false)">Cancel</button>
+        <button auButton type="button" (click)="open.set(false)">Apply</button>
       </div>`,
   }),
 };

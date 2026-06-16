@@ -90,9 +90,3 @@
 :host([data-au-size='lg']) .au-autocomplete__icon {
   inset-inline-end: var(--au-space-4);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .au-autocomplete__icon {
-    transition: none;
-  }
-}

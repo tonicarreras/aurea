@@ -9,7 +9,13 @@ import { docsPreviewCopy } from '../../core/docs-preview-copy';
   template: `
     <div class="docs-preview docs-preview--field">
       <au-form-field [hint]="t().hint">
-        <au-switch [label]="t().label" />
+        <button
+          type="button"
+          auSwitch
+          [label]="t().label"
+        >
+          <span class="au-sr-only">{{ t().label }}</span>
+        </button>
       </au-form-field>
     </div>
   `,

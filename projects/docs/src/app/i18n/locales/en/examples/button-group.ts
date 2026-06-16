@@ -8,9 +8,9 @@ export const examples: ComponentDocExample[] = [
     code: `import { AuButton, AuButtonGroup } from '@aurea-design-system/components';
 
 <au-button-group ariaLabel="Document actions">
-  <au-button variant="outline">Cancel</au-button>
-  <au-button variant="secondary">Draft</au-button>
-  <au-button>Publish</au-button>
+  <button auButton variant="outline">Cancel</button>
+  <button auButton variant="secondary">Draft</button>
+  <button auButton>Publish</button>
 </au-button-group>`,
   },
 ];

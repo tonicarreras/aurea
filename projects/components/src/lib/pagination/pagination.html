@@ -1,5 +1,6 @@
 <div class="au-pagination__inner">
-  <au-button
+  <button
+    auButton
     variant="outline"
     size="sm"
     type="button"
@@ -8,7 +9,7 @@
     [label]="'Previous page'"
   >
     Prev
-  </au-button>
+  </button>
 
   <ul class="au-pagination__pages">
     @for (p of pageItems(); track p; let i = $index) {
@@ -21,7 +22,8 @@
         </li>
       }
       <li>
-        <au-button
+        <button
+          auButton
           [variant]="p === safePage() ? 'primary' : 'outline'"
           size="sm"
           type="button"
@@ -31,12 +33,13 @@
           [label]="'Page ' + p"
         >
           {{ p }}
-        </au-button>
+        </button>
       </li>
     }
   </ul>
 
-  <au-button
+  <button
+    auButton
     variant="outline"
     size="sm"
     type="button"
@@ -45,5 +48,5 @@
     [label]="'Next page'"
   >
     Next
-  </au-button>
+  </button>
 </div>

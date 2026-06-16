@@ -114,13 +114,13 @@ function sortButtons(root: HTMLElement): HTMLButtonElement[] {
 }
 
 function tableCheckboxes(root: HTMLElement): HTMLInputElement[] {
-  return [...root.querySelectorAll('au-checkbox .au-checkbox__element')] as HTMLInputElement[];
+  return [...root.querySelectorAll('input.au-checkbox__element')] as HTMLInputElement[];
 }
 
 async function createTableHost(): Promise<ComponentFixture<TableHost>> {
   await TestBed.configureTestingModule({ imports: [TableHost] }).compileComponents();
   const fixture = TestBed.createComponent(TableHost);
-  fixture.detectChanges();
+  await fixture.whenStable();
   return fixture;
 }
 
@@ -146,11 +146,11 @@ describe('AuTable', () => {
     const root = fixture.nativeElement as HTMLElement;
     const [nameBtn, scoreBtn] = sortButtons(root);
     nameBtn.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(root.querySelector('tbody tr td')?.textContent?.trim()).toBe('Ada');
 
     scoreBtn.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     const scores = [...root.querySelectorAll('tbody tr td:nth-child(3)')].map((td) =>
       td.textContent?.trim(),
     );
@@ -172,7 +172,7 @@ describe('AuTable', () => {
     nameBtn.click();
     nameBtn.click();
     nameBtn.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.sortChanges.map((s) => s?.direction ?? null)).toEqual([
       'asc',
       'desc',
@@ -202,7 +202,7 @@ describe('AuTable', () => {
     await TestBed.configureTestingModule({ imports: [TableHost] }).compileComponents();
     const fixture = TestBed.createComponent(TableHost);
     fixture.componentInstance.rows = [];
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('No data');
     expect(fixture.nativeElement.querySelector('.au-table__empty-message')).not.toBeNull();
   });
@@ -229,7 +229,7 @@ describe('AuTable', () => {
 
     await TestBed.configureTestingModule({ imports: [EmptyStateHost] }).compileComponents();
     const fixture = TestBed.createComponent(EmptyStateHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelector('au-empty-state')).not.toBeNull();
     expect(root.querySelector('.au-table__empty-message')).toBeNull();
@@ -258,7 +258,7 @@ describe('AuTable', () => {
 
     await TestBed.configureTestingModule({ imports: [FlagsHost] }).compileComponents();
     const fixture = TestBed.createComponent(FlagsHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.debugElement.query(By.directive(AuTable)).nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-striped')).toBe('');
     expect(host.getAttribute('data-au-compact')).toBe('');
@@ -298,7 +298,7 @@ describe('AuTable', () => {
 
     await TestBed.configureTestingModule({ imports: [NoClientSortHost] }).compileComponents();
     const fixture = TestBed.createComponent(NoClientSortHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     expect(table.viewRows().map((r) => (r as { name: string }).name)).toEqual(['Grace', 'Ada']);
   });
@@ -359,7 +359,7 @@ describe('AuTable', () => {
 
     await TestBed.configureTestingModule({ imports: [TrackHost] }).compileComponents();
     const fixture = TestBed.createComponent(TrackHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect((fixture.nativeElement as HTMLElement).querySelectorAll('tbody tr').length).toBe(2);
   });
 });
@@ -368,14 +368,14 @@ describe('AuTable custom cell', () => {
   it('projects auTableCell template', async () => {
     await TestBed.configureTestingModule({ imports: [CustomCellHost] }).compileComponents();
     const f = TestBed.createComponent(CustomCellHost);
-    f.detectChanges();
+    await f.whenStable();
     expect(f.nativeElement.querySelector('.custom')?.textContent).toBe('X');
   });
 
   it('queries auTableCell content child on the column', async () => {
     await TestBed.configureTestingModule({ imports: [CustomCellHost] }).compileComponents();
     const f = TestBed.createComponent(CustomCellHost);
-    f.detectChanges();
+    await f.whenStable();
     const column = f.debugElement.query(By.directive(AuTableColumn))
       .componentInstance as AuTableColumn;
     expect(column.cellDef()).toBeTruthy();
@@ -408,7 +408,7 @@ describe('AuTableColumn', () => {
 
     await TestBed.configureTestingModule({ imports: [SortableAttrHost] }).compileComponents();
     const fixture = TestBed.createComponent(SortableAttrHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     expect(table.columns()[0].sortable()).toBe(true);
     expect(
@@ -437,7 +437,7 @@ describe('AuTable extra branches', () => {
 
     await TestBed.configureTestingModule({ imports: [LoadingHost] }).compileComponents();
     const fixture = TestBed.createComponent(LoadingHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.au-table__loading-row')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.au-spinner__label')?.textContent).toContain(
       'Loading',
@@ -449,9 +449,9 @@ describe('AuTable extra branches', () => {
     const root = fixture.nativeElement as HTMLElement;
     const nameBtn = sortButtons(root)[0];
     nameBtn.click(); // → asc
-    fixture.detectChanges();
+    await fixture.whenStable();
     nameBtn.click(); // → desc
-    fixture.detectChanges();
+    await fixture.whenStable();
     const icon = root.querySelector('.au-table__sort-icon au-icon') as HTMLElement;
     expect(icon?.getAttribute('data-au-icon')).toBe('sort-desc');
   });
@@ -475,7 +475,7 @@ describe('AuTable extra branches', () => {
 
     await TestBed.configureTestingModule({ imports: [NoDescHost] }).compileComponents();
     const fix = TestBed.createComponent(NoDescHost);
-    fix.detectChanges();
+    await fix.whenStable();
     expect(fix.nativeElement.querySelector('.au-table__title')?.textContent?.trim()).toBe('People');
     expect(fix.nativeElement.querySelector('.au-table__description')).toBeFalsy();
   });
@@ -485,12 +485,12 @@ describe('AuTable accessor column', () => {
   it('uses accessor for numeric sort compare', async () => {
     await TestBed.configureTestingModule({ imports: [AccessorHost] }).compileComponents();
     const f = TestBed.createComponent(AccessorHost);
-    f.detectChanges();
+    await f.whenStable();
     const btn = (f.nativeElement as HTMLElement).querySelector(
       '.au-table__sort-btn',
     ) as HTMLButtonElement;
     btn.click();
-    f.detectChanges();
+    await f.whenStable();
     const first = (f.nativeElement as HTMLElement).querySelector('tbody tr td');
     expect(first?.textContent?.trim()).toBe('1');
   });
@@ -553,50 +553,50 @@ describe('AuTable selection', () => {
   it('toggles multiple selection via row checkbox', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
     const checkboxes = tableCheckboxes(root);
     expect(checkboxes.length).toBe(3);
 
     checkboxes[1].click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(1);
     expect((fixture.componentInstance.selection[0] as { name: string }).name).toBe('Ada');
 
     checkboxes[2].click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(2);
   });
 
   it('select-all toggles every visible row', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
     const selectAll = root.querySelector(
-      '.au-table__header-cell--select .au-checkbox__element',
+      '.au-table__header-cell--select input.au-checkbox__element',
     ) as HTMLInputElement;
     selectAll.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(2);
 
     selectAll.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(0);
   });
 
   it('single selection keeps at most one row', async () => {
     await TestBed.configureTestingModule({ imports: [SingleSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(SingleSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
     const rowChecks = tableCheckboxes(root);
     rowChecks[0].click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(1);
 
     rowChecks[1].click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(1);
     expect((fixture.componentInstance.selection[0] as { name: string }).name).toBe('Grace');
   });
@@ -604,22 +604,22 @@ describe('AuTable selection', () => {
   it('row click selects when selectionMode is enabled', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const row = (fixture.nativeElement as HTMLElement).querySelector(
       'tbody tr.au-table__row--selectable',
     ) as HTMLTableRowElement;
     row.querySelector('td:nth-child(2)')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(1);
   });
 
   it('marks selected rows with aria-selected and selected class', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     table.selection.set([fixture.componentInstance.rows[0]]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const row = (fixture.nativeElement as HTMLElement).querySelector(
       'tbody tr.au-table__row--selected',
     ) as HTMLTableRowElement;
@@ -629,10 +629,10 @@ describe('AuTable selection', () => {
   it('reports indeterminate select-all when partially selected', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     table.selection.set([fixture.componentInstance.rows[0]]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(table['selectAllIndeterminate']()).toBe(true);
     expect(table['selectAllChecked']()).toBe(false);
   });
@@ -662,7 +662,7 @@ describe('AuTable selection', () => {
 
     await TestBed.configureTestingModule({ imports: [CompareHost] }).compileComponents();
     const fixture = TestBed.createComponent(CompareHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     expect(table['isRowSelected'](fixture.componentInstance.rows[0])).toBe(true);
   });
@@ -670,10 +670,10 @@ describe('AuTable selection', () => {
   it('ignores row click on interactive controls', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     const checkbox = (fixture.nativeElement as HTMLElement).querySelector(
-      'tbody au-checkbox .au-checkbox__element',
+      'tbody input.au-checkbox__element',
     ) as HTMLInputElement;
     table['onRowClick'](fixture.componentInstance.rows[0], {
       target: checkbox,
@@ -681,10 +681,23 @@ describe('AuTable selection', () => {
     expect(fixture.componentInstance.selection.length).toBe(0);
   });
 
+  it('ignores row click on combobox controls', async () => {
+    await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
+    const fixture = TestBed.createComponent(MultiSelectHost);
+    await fixture.whenStable();
+    const table = tableInstance(fixture);
+    const combobox = document.createElement('button');
+    combobox.setAttribute('role', 'combobox');
+    table['onRowClick'](fixture.componentInstance.rows[0], {
+      target: combobox,
+    } as unknown as MouseEvent);
+    expect(fixture.componentInstance.selection.length).toBe(0);
+  });
+
   it('deselects row in single mode when toggled again', async () => {
     await TestBed.configureTestingModule({ imports: [SingleSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(SingleSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     const row = fixture.componentInstance.rows[0];
     table['toggleRowSelection'](row);
@@ -696,7 +709,7 @@ describe('AuTable selection', () => {
   it('sets data-au-selection on host when enabled', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const host = fixture.debugElement.query(By.directive(AuTable)).nativeElement as HTMLElement;
     expect(host.getAttribute('data-au-selection')).toBe('multiple');
   });
@@ -704,15 +717,13 @@ describe('AuTable selection', () => {
   it('deselects a row in multiple mode', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
-    const rowCheckbox = root.querySelector(
-      'tbody au-checkbox .au-checkbox__element',
-    ) as HTMLInputElement;
+    const rowCheckbox = root.querySelector('tbody input.au-checkbox__element') as HTMLInputElement;
     rowCheckbox.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     rowCheckbox.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(0);
   });
 
@@ -732,7 +743,7 @@ describe('AuTable selection', () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
     fixture.componentInstance.rows = [];
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     expect(table['selectAllChecked']()).toBe(false);
     expect(table['selectAllIndeterminate']()).toBe(false);
@@ -741,7 +752,7 @@ describe('AuTable selection', () => {
   it('rowAriaSelected returns false for unselected rows', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     expect(table['rowAriaSelected'](fixture.componentInstance.rows[0])).toBe('false');
   });
@@ -749,7 +760,7 @@ describe('AuTable selection', () => {
   it('setSelectAll no-ops outside multiple mode', async () => {
     await TestBed.configureTestingModule({ imports: [SingleSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(SingleSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     table['setSelectAll'](true);
     expect(table.selection()).toEqual([]);
@@ -758,17 +769,17 @@ describe('AuTable selection', () => {
   it('sets header select-all indeterminate via au-checkbox', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     table.selection.set([fixture.componentInstance.rows[0]]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(table['selectAllIndeterminate']()).toBe(true);
   });
 
   it('setRowSelected no-ops when state already matches', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const table = tableInstance(fixture);
     const row = fixture.componentInstance.rows[0];
     table['setRowSelected'](row, true);

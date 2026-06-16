@@ -29,9 +29,12 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
   'form-field': [
     { token: '--au-color-text-label', description: 'Visible label above the projected control.' },
     { token: '--au-color-form-error', description: 'Error message and required asterisk.' },
-    { token: '--au-color-text-tertiary', description: 'Hint text below the control.' },
+    { token: '--au-color-text-tertiary', description: 'Hint text below the label.' },
     { token: '--au-text-sm', description: 'Label, hint, and error typography.' },
-    { token: '--au-space-2', description: 'Vertical gap between label, control, and messages.' },
+    {
+      token: '--au-space-1 / --au-space-2',
+      description: 'Gap in the header (label + hint) and before the error region.',
+    },
   ],
   fieldset: [
     { token: '--au-fieldset-legend-size', description: 'Legend typography per size.' },
@@ -150,7 +153,7 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-space-2', description: 'Gap between buttons when `[attached]="false"`.' },
     {
       token: '--au-color-border-default',
-      description: 'Shared borders in attached mode (via `au-button`).',
+      description: 'Shared borders in attached mode (via `button[auButton]`).',
     },
   ],
   'input-password': [
@@ -208,12 +211,41 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-text-sm', description: 'Optional live value typography.' },
   ],
   'input-date': [
-    { token: '--au-color-form-border', description: 'Native date picker border.' },
+    { token: '--au-color-form-border', description: 'Date field border.' },
     { token: '--au-color-form-text', description: 'Selected date text.' },
     { token: '--au-color-surface-raised', description: 'Field background.' },
+    { token: '--au-color-date-picker-icon', description: 'Calendar icon in the control row.' },
+    { token: '--au-color-date-picker-icon-hover', description: 'Icon on hover / focus-within.' },
     { token: '--au-radius-field', description: 'Control corners.' },
     { token: '--au-size-field-h-md', description: 'Height aligned with other fields.' },
-    { token: '--au-color-focus-ring', description: 'Focus on the `type="date"` input.' },
+    { token: '--au-color-focus-ring', description: 'Focus on input and calendar day cells.' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Selected day in `.au-date-calendar__day--selected`.',
+    },
+    {
+      token: '--au-color-text-on-solid',
+      description: 'Day number on the selected cell (white in light, dark in dark).',
+    },
+    { token: '--au-color-form-error', description: 'Error border and message.' },
+  ],
+  'input-time': [
+    { token: '--au-color-form-border', description: 'Time field border.' },
+    { token: '--au-color-form-text', description: 'Selected time text.' },
+    { token: '--au-color-surface-raised', description: 'Field background.' },
+    { token: '--au-color-date-picker-icon', description: 'Clock icon in the control row.' },
+    { token: '--au-color-date-picker-icon-hover', description: 'Icon on hover / focus-within.' },
+    { token: '--au-color-surface-sunken', description: '`.au-time-picker__column` background.' },
+    { token: '--au-color-border-subtle', description: 'Panel column border.' },
+    {
+      token: '--au-color-action-primary',
+      description: 'Selected option in `.au-time-picker__option--selected`.',
+    },
+    {
+      token: '--au-color-text-on-solid',
+      description: 'Digit on the selected option (white in light, dark in dark).',
+    },
+    { token: '--au-color-focus-ring', description: 'Focus on input and panel options.' },
     { token: '--au-color-form-error', description: 'Error border and message.' },
   ],
   'file-upload': [

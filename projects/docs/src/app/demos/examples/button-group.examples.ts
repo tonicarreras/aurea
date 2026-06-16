@@ -8,9 +8,19 @@ import { docsExampleLive } from '../../core/docs-example-live-copy';
   imports: [AuButtonGroup, AuButton],
   template: `
     <au-button-group [ariaLabel]="t().ariaLabel">
-      <au-button variant="outline">{{ t().cancel }}</au-button>
-      <au-button variant="secondary">{{ t().draft }}</au-button>
-      <au-button>{{ t().publish }}</au-button>
+      <button
+        auButton
+        variant="outline"
+      >
+        {{ t().cancel }}
+      </button>
+      <button
+        auButton
+        variant="secondary"
+      >
+        {{ t().draft }}
+      </button>
+      <button auButton>{{ t().publish }}</button>
     </au-button-group>
   `,
 })

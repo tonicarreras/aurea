@@ -1,22 +1,36 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   DestroyRef,
-  ElementRef,
+  Renderer2,
   ViewEncapsulation,
   afterRenderEffect,
   computed,
+  contentChild,
   inject,
   input,
   model,
   output,
-  signal,
 } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { AuIcon } from '../icon/icon';
-import { lockPageScroll, unlockPageScroll } from '../overlay/page-scroll-lock';
 import { AuDialogFooter } from '../dialog/dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
+import {
+  ensureModalDialogPortaledToBody,
+  restoreModalDialogPortal,
+  type ModalDialogPortalState,
+} from '../overlay/modal-dialog-portal';
+import {
+  createModalDialogInteractionAllowPredicate,
+  isModalPanelOrFloatingOverlayClick,
+} from '../overlay/modal-backdrop-click';
+import { installOutsideInteractionBlock } from '../overlay/floating-panel-interaction-guard';
+import {
+  createModalScrollAllowPredicate,
+  installPageScrollPrevention,
+} from '../overlay/prevent-page-scroll';
 
 export type AuDrawerPosition = 'start' | 'end';
 export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
@@ -27,7 +41,8 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * @remarks
  * - **Visibility:** `[(open)]` syncs with native `<dialog>` via `showModal()`.
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
- * - **Accessibility:** same focus trap and scroll lock as `au-dialog`.
+ * - **Accessibility:** same focus trap as `au-dialog`; background wheel/touch scroll is blocked while open.
+ * - **Portal:** native `<dialog>` moves to `document.body` while open so it is not clipped by ancestor overflow.
  * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
  */
 @Component({
@@ -46,9 +61,13 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
 export class AuDrawer {
   private static nextTitleId = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
+  private readonly document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
-  private scrollLocked = false;
+  private readonly dialogPortal: ModalDialogPortalState = { anchor: null, unbindHostContext: null };
+  private nativeDialogEl: HTMLDialogElement | null = null;
+  private savedFocus: HTMLElement | null = null;
 
   readonly open = model<boolean>(false);
   readonly close = output<void>();
@@ -61,34 +80,64 @@ export class AuDrawer {
   readonly position = input<AuDrawerPosition>('end');
   readonly size = input<AuDrawerSize>('md');
 
-  private readonly footerPresent = signal(false);
+  /* v8 ignore start */
+  readonly footerSlot = contentChild(AuDialogFooter);
+  /* v8 ignore stop */
 
-  @ContentChild(AuDialogFooter)
-  set footerSlot(slot: AuDialogFooter | undefined) {
-    this.footerPresent.set(slot != null);
-  }
-
-  readonly hasFooter = this.footerPresent.asReadonly();
+  readonly hasFooter = computed(() => this.footerSlot() !== undefined);
 
   private readonly titleDomId = `au-drawer-title-${++AuDrawer.nextTitleId}`;
-  private savedFocus: HTMLElement | null = null;
 
   readonly titleHeadingId = computed(() => {
     const custom = this.id();
     return custom ? `${custom}-title` : this.titleDomId;
   });
 
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      if (this.nativeDialogEl) {
+        restoreModalDialogPortal(this.document, this.nativeDialogEl, this.dialogPortal);
+      }
+    });
+  }
+
   private readonly syncOpenToNativeDialog = afterRenderEffect(() => {
     this.applyOpenStateToNativeDialog();
   });
 
-  constructor() {
-    this.destroyRef.onDestroy(() => this.releaseScrollLock());
-  }
+  private readonly preventPageScrollWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installPageScrollPrevention(
+        this.document,
+        createModalScrollAllowPredicate(() => this.nativeDialog(), '.au-drawer__body'),
+      ),
+    );
+  });
+
+  private readonly blockOutsideInteractionWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installOutsideInteractionBlock(
+        this.document,
+        createModalDialogInteractionAllowPredicate(() => this.nativeDialogEl),
+      ),
+    );
+  });
 
   private nativeDialog(): HTMLDialogElement | null {
-    const el = (this.host.nativeElement as HTMLElement).querySelector('dialog');
-    return el instanceof HTMLDialogElement ? el : null;
+    if (this.nativeDialogEl?.isConnected) {
+      return this.nativeDialogEl;
+    }
+    const el = this.host.nativeElement.querySelector('dialog');
+    this.nativeDialogEl = el instanceof HTMLDialogElement ? el : null;
+    return this.nativeDialogEl;
   }
 
   private applyOpenStateToNativeDialog(): void {
@@ -112,10 +161,14 @@ export class AuDrawer {
           ? document.activeElement
           : null;
     }
+    ensureModalDialogPortaledToBody(
+      this.document,
+      this.renderer,
+      dialog,
+      this.dialogPortal,
+      this.host.nativeElement,
+    );
     const show = dialog.showModal?.bind(dialog);
-    if (!wasDisplayed) {
-      this.acquireScrollLock();
-    }
     if (show) {
       show();
     } else {
@@ -135,32 +188,12 @@ export class AuDrawer {
   }
 
   private closeDialogElement(dialog: HTMLDialogElement): void {
-    const wasDisplayed = this.isDialogDisplayed(dialog);
     if (typeof dialog.close === 'function') {
       dialog.close();
     } else if (dialog.hasAttribute('open')) {
       dialog.removeAttribute('open');
       dialog.dispatchEvent(new Event('close'));
     }
-    if (wasDisplayed) {
-      this.releaseScrollLock();
-    }
-  }
-
-  private acquireScrollLock(): void {
-    if (this.scrollLocked) {
-      return;
-    }
-    lockPageScroll();
-    this.scrollLocked = true;
-  }
-
-  private releaseScrollLock(): void {
-    if (!this.scrollLocked) {
-      return;
-    }
-    unlockPageScroll();
-    this.scrollLocked = false;
   }
 
   private isDialogDisplayed(dialog: HTMLDialogElement): boolean {
@@ -171,10 +204,7 @@ export class AuDrawer {
   }
 
   onCloseButtonClick(): void {
-    const dialog = this.nativeDialog();
-    if (dialog) {
-      this.closeDialogElement(dialog);
-    }
+    this.open.set(false);
   }
 
   onDialogClick(event: MouseEvent): void {
@@ -182,7 +212,7 @@ export class AuDrawer {
       return;
     }
     const target = event.target;
-    if (target instanceof Element && target.closest('.au-drawer__panel')) {
+    if (isModalPanelOrFloatingOverlayClick(target, '.au-drawer__panel')) {
       return;
     }
     const dialog = this.nativeDialog();
@@ -206,12 +236,6 @@ export class AuDrawer {
   onDialogCancel(event: Event): void {
     if (!this.closeOnEscape()) {
       event.preventDefault();
-      return;
-    }
-    event.preventDefault();
-    const dialog = this.nativeDialog();
-    if (dialog && this.isDialogDisplayed(dialog)) {
-      this.closeDialogElement(dialog);
     }
   }
 

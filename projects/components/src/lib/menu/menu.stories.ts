@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { storyMetaParameters } from '../story-docs/story-meta-parameters';
 import { signal } from '@angular/core';
 
-import { AuButton } from '../button/button';
+import { AuButton } from '../button';
 import { AuMenu, AuMenuItem, AuMenuTrigger } from './index';
 
 const storyImports = { imports: [AuMenu, AuMenuTrigger, AuMenuItem, AuButton] };
@@ -47,7 +47,7 @@ export const Default: Story = {
       moduleMetadata: storyImports,
       template: `
         <au-menu [(open)]="open">
-          <au-button auMenuTrigger variant="outline">Actions</au-button>
+          <button type="button" auButton auMenuTrigger variant="outline">Actions</button>
           <au-menu-item>Edit</au-menu-item>
           <au-menu-item>Duplicate</au-menu-item>
           <au-menu-item>Archive</au-menu-item>

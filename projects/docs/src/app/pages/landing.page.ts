@@ -23,15 +23,33 @@ import { DocsInlineText } from '../shared/docs-inline-text';
         </h1>
         <p class="landing-hero__lead">{{ m().lead }}</p>
         <div class="landing-hero__cta">
+          <a [routerLink]="i18n.link(DOCS_ROUTES.guidesCrudDemo)">
+            <button
+              auButton
+              variant="primary"
+            >
+              {{ m().ctaCrudDemo }}
+            </button>
+          </a>
           <a [routerLink]="i18n.link(DOCS_ROUTES.components)">
-            <au-button variant="primary">{{ m().ctaDocs }}</au-button>
+            <button
+              auButton
+              variant="outline"
+            >
+              {{ m().ctaDocs }}
+            </button>
           </a>
           <a
             [href]="storybookUrl"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <au-button variant="outline">{{ m().ctaStorybook }}</au-button>
+            <button
+              auButton
+              variant="ghost"
+            >
+              {{ m().ctaStorybook }}
+            </button>
           </a>
         </div>
       </section>
@@ -116,7 +134,12 @@ import { DocsInlineText } from '../shared/docs-inline-text';
       <footer class="landing-footer">
         <docs-inline-text [text]="m().footer" />
         <a [routerLink]="i18n.link(DOCS_ROUTES.components)">
-          <au-button variant="primary">{{ m().ctaDocs }}</au-button>
+          <button
+            auButton
+            variant="primary"
+          >
+            {{ m().ctaDocs }}
+          </button>
         </a>
       </footer>
     </div>

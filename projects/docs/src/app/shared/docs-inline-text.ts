@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 export interface InlineTextPart {
   /** Stable key for `@for` tracking (index + kind + value). */
   key: string;
-  type: 'text' | 'code';
+  type: 'text' | 'code' | 'strong';
   value: string;
 }
 
-/** Divide texto con `backticks` o etiquetas <code> en partes texto/código. */
+/** Divide texto con `backticks` o etiquetas inline <code> / <strong>. */
 export function splitInlineCode(text: string): InlineTextPart[] {
   const parts: InlineTextPart[] = [];
-  const re = /`([^`]+)`|<code>([\s\S]*?)<\/code>/gi;
+  const re = /`([^`]+)`|<code>([\s\S]*?)<\/code>|<strong>([\s\S]*?)<\/strong>/gi;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let partIndex = 0;
@@ -23,7 +23,13 @@ export function splitInlineCode(text: string): InlineTextPart[] {
     if (match.index > lastIndex) {
       push('text', text.slice(lastIndex, match.index));
     }
-    push('code', match[1] ?? match[2]);
+    if (match[1] !== undefined) {
+      push('code', match[1]);
+    } else if (match[2] !== undefined) {
+      push('code', match[2]);
+    } else {
+      push('strong', match[3]);
+    }
     lastIndex = match.index + match[0].length;
   }
 
@@ -45,6 +51,8 @@ function pushSingle(text: string): InlineTextPart {
     @for (part of parts(); track part.key) {
       @if (part.type === 'code') {
         <code class="docs-inline-code">{{ part.value }}</code>
+      } @else if (part.type === 'strong') {
+        <strong>{{ part.value }}</strong>
       } @else {
         <span>{{ part.value }}</span>
       }

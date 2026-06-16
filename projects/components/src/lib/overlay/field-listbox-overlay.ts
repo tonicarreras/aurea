@@ -7,6 +7,7 @@ import {
   clearPortaledThemeContext,
   syncPortaledThemeContext,
 } from './portaled-theme-context';
+import { shouldSkipRepositionOnScroll } from './overlay-reposition';
 
 /**
  * Portals a field listbox with `position: fixed`, matching the trigger width.
@@ -22,10 +23,14 @@ export class FieldListboxOverlay {
   private activePortalRoot: HTMLElement | null = null;
   private unbindThemeContext: (() => void) | null = null;
 
-  private readonly onWindowChange = (): void => {
-    if (this.activeListbox && this.activeAnchor) {
-      this.position(this.activeListbox, this.activeAnchor);
+  private readonly onWindowChange = (event?: Event): void => {
+    if (!this.activeListbox || !this.activeAnchor) {
+      return;
     }
+    if (shouldSkipRepositionOnScroll(event, this.activeListbox)) {
+      return;
+    }
+    this.position(this.activeListbox, this.activeAnchor);
   };
 
   constructor(

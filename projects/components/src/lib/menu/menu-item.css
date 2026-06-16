@@ -28,16 +28,10 @@
 
 .au-menu-item__btn:focus-visible {
   outline: none;
-  box-shadow: var(--au-shadow-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }
 
 .au-menu-item__btn:disabled {
   color: var(--au-color-text-disabled);
   cursor: not-allowed;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .au-menu-item__btn {
-    transition: var(--au-transition-background), var(--au-transition-color);
-  }
 }
