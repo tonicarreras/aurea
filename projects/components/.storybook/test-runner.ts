@@ -1,4 +1,5 @@
 import type { TestRunnerConfig } from '@storybook/test-runner';
+import type { Page } from 'playwright';
 import { injectAxe, checkA11y } from 'axe-playwright';
 
 import { isStableStoryId } from './stable-story-ids';
@@ -22,8 +23,11 @@ const config: TestRunnerConfig = {
       return;
     }
 
-    await injectAxe(page);
-    await checkA11y(page, '#storybook-root', {
+    // @storybook/test-runner pins playwright-core@1.60; axe-playwright types use root playwright@1.61.
+    const axePage = page as unknown as Page;
+
+    await injectAxe(axePage);
+    await checkA11y(axePage, '#storybook-root', {
       detailedReport: true,
       detailedReportOptions: { html: true },
     });
