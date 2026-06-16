@@ -41,8 +41,6 @@ import { AuIcon } from '../icon/icon';
     '[class.au-input-date--from-tab]': 'fieldFocusByTab()',
     '[attr.data-au-size]': 'size()',
     '[attr.data-au-calendar-picker]': '""',
-    '[attr.aria-haspopup]': '"dialog"',
-    '[attr.aria-expanded]': 'pickerOpen() ? "true" : "false"',
     '[attr.type]': '"date"',
     '[id]': 'controlId()',
     '[attr.name]': 'name() || null',
@@ -80,6 +78,7 @@ export class AuInputDate {
   readonly minDate = input<string | undefined>(undefined);
   readonly maxDate = input<string | undefined>(undefined);
   readonly size = input<AuSize>('md');
+  readonly pickerTriggerLabel = input('Choose a date');
 
   readonly blur = output<void>();
 
@@ -98,6 +97,8 @@ export class AuInputDate {
   private anchorHost: HTMLElement | null = null;
 
   readonly controlId = computed(() => this.formField.controlId());
+  readonly pickerPanelId = computed(() => `${this.controlId()}-picker`);
+  readonly pickerTriggerId = computed(() => `${this.controlId()}-picker-trigger`);
   readonly displayError = displayErrorFromErrors(this.errors);
   readonly isInvalid = computed(() => this.displayError().length > 0);
   readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
@@ -261,7 +262,6 @@ export class AuInputDate {
       const btn = this.renderer.createElement('button') as HTMLButtonElement;
       this.renderer.setAttribute(btn, 'type', 'button');
       this.renderer.addClass(btn, 'au-input-date__icon');
-      this.renderer.setAttribute(btn, 'aria-hidden', 'true');
       this.renderer.setAttribute(btn, 'tabindex', '-1');
 
       const iconHost = this.renderer.createElement('span') as HTMLSpanElement;
@@ -294,11 +294,30 @@ export class AuInputDate {
     if (!this.pickerPanelRef) {
       return;
     }
+    this.syncPickerTriggerA11y();
     this.pickerPanelRef.setInput('open', this.pickerOpen());
+    this.pickerPanelRef.setInput('panelId', this.pickerPanelId());
     this.pickerPanelRef.setInput('selected', this.value());
     this.pickerPanelRef.setInput('minDate', this.minDate());
     this.pickerPanelRef.setInput('maxDate', this.maxDate());
     this.pickerPanelRef.setInput('anchor', this.anchorHost ?? this.host.nativeElement);
     this.pickerPanelRef.changeDetectorRef.detectChanges();
+  }
+
+  private syncPickerTriggerA11y(): void {
+    const btn = this.pickerIconEl;
+    if (!btn) {
+      return;
+    }
+    this.renderer.setAttribute(btn, 'id', this.pickerTriggerId());
+    this.renderer.setAttribute(btn, 'aria-label', this.pickerTriggerLabel());
+    this.renderer.setAttribute(btn, 'aria-haspopup', 'dialog');
+    this.renderer.setAttribute(btn, 'aria-expanded', this.pickerOpen() ? 'true' : 'false');
+    this.renderer.setAttribute(btn, 'aria-controls', this.pickerPanelId());
+    if (this.disabled() || this.readOnly()) {
+      this.renderer.setAttribute(btn, 'aria-disabled', 'true');
+    } else {
+      this.renderer.removeAttribute(btn, 'aria-disabled');
+    }
   }
 }

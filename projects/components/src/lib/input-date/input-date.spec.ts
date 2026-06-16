@@ -371,8 +371,12 @@ describe('AuInputDate', () => {
     CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
     await fix.whenStable();
     expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
-    expect(queryInput(fix).getAttribute('aria-haspopup')).toBe('dialog');
-    expect(queryInput(fix).getAttribute('aria-expanded')).toBe('true');
+    const trigger = fix.debugElement.query(By.css('.au-input-date__icon'))!
+      .nativeElement as HTMLButtonElement;
+    expect(queryInput(fix).getAttribute('role')).toBeNull();
+    expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(trigger.getAttribute('aria-controls')).toBe(`${queryInput(fix).id}-picker`);
   });
 
   it('onPickerIconClick opens calendar instead of native picker when min/max set', async () => {

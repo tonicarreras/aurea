@@ -126,6 +126,7 @@ import { TooltipOverlay } from './overlay/tooltip-overlay';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-internal-date-calendar-panel',
+    '[id]': 'panelId() || null',
     '(document:click)': 'onDocumentClick($event)',
     '(document:keydown)': 'onDocumentKeydown($event)',
   },
@@ -134,6 +135,7 @@ export class AuInternalDateCalendarPanel {
   private static nextTitleId = 0;
 
   readonly open = input(false);
+  readonly panelId = input('');
   readonly selected = input<string | null>(null);
   readonly minDate = input<string | undefined>(undefined);
   readonly maxDate = input<string | undefined>(undefined);

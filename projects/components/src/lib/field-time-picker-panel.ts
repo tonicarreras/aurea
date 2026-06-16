@@ -127,6 +127,7 @@ type TimeColumn = 'hour' | 'minute';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-internal-time-picker-panel',
+    '[id]': 'panelId() || null',
     '(document:click)': 'onDocumentClick($event)',
     '(document:keydown)': 'onDocumentKeydown($event)',
   },
@@ -135,6 +136,7 @@ export class AuInternalTimePickerPanel {
   private static nextLabelId = 0;
 
   readonly open = input(false);
+  readonly panelId = input('');
   readonly selected = input<string | null>(null);
   readonly minTime = input<string | undefined>(undefined);
   readonly maxTime = input<string | undefined>(undefined);

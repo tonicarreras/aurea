@@ -387,8 +387,12 @@ describe('AuInputTime', () => {
     expect(stopPropagation).toHaveBeenCalled();
     expect(showPicker).not.toHaveBeenCalled();
     expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
-    expect(queryInput(fix).getAttribute('aria-haspopup')).toBe('dialog');
-    expect(queryInput(fix).getAttribute('aria-expanded')).toBe('true');
+    const trigger = fix.debugElement.query(By.css('.au-input-time__icon'))!
+      .nativeElement as HTMLButtonElement;
+    expect(queryInput(fix).getAttribute('role')).toBeNull();
+    expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(trigger.getAttribute('aria-controls')).toBe(`${queryInput(fix).id}-picker`);
   });
 
   it('onPickerIconClick is no-op when disabled or readOnly', async () => {
