@@ -517,6 +517,25 @@ describe('AuInputTime', () => {
     expect(setInput).toHaveBeenCalledWith('anchor', input);
   });
 
+  it('syncPickerPanel skips trigger a11y when icon button is missing', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const dir = CONTROL(fix) as unknown as {
+      syncPickerPanel(): void;
+      pickerIconEl: HTMLButtonElement | null;
+      pickerPanelRef: {
+        setInput: (name: string, value: unknown) => void;
+        changeDetectorRef: { detectChanges: () => void };
+      };
+    };
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    dir.pickerIconEl = null;
+    const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
+    expect(() => dir.syncPickerPanel()).not.toThrow();
+    expect(setInput).toHaveBeenCalledWith('open', true);
+  });
+
   it('ensurePickerChrome returns when parent is not an HTMLElement', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
