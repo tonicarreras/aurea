@@ -11,18 +11,6 @@
   text-rendering: optimizeLegibility;
 }
 
-.au-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 .au-radio-group__field {
   display: flex;
   flex-direction: column;
@@ -33,7 +21,7 @@
 
 .au-radio-group__shell {
   position: relative;
-  z-index: 0;
+  z-index: var(--au-z-base);
   box-sizing: border-box;
   width: 100%;
 }

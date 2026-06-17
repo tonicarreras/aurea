@@ -18,5 +18,5 @@
 
 .au-popover__panel:focus-visible {
   outline: none;
-  box-shadow: var(--au-focus-ring);
+  box-shadow: var(--au-focus-inset);
 }

@@ -1,0 +1,185 @@
+/**
+ * Tooltip bubbles and portaled floating panels (menu, popover, listbox, pickers).
+ * Requires au-tokens.css (spacing, motion, z-index).
+ */
+
+.au-tooltip__bubble {
+  box-sizing: border-box;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: var(--au-space-2) var(--au-space-3);
+  border-radius: var(--au-radius-control);
+  background: var(--au-color-surface-inverted);
+  color: var(--au-color-text-on-solid);
+  font-family: var(--au-font-sans);
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-regular);
+  line-height: var(--au-leading-normal);
+  letter-spacing: var(--au-tracking-ui);
+  box-shadow: var(--au-elevation-overlay);
+  pointer-events: none;
+  z-index: var(--au-z-popover);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.au-tooltip__bubble--overlay {
+  position: fixed;
+  overflow: visible;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay {
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay[data-au-placement='top'] {
+  animation-name: au-floating-enter-top;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay[data-au-placement='start'] {
+  animation-name: au-floating-enter-start;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay[data-au-placement='end'] {
+  animation-name: au-floating-enter-end;
+}
+
+.au-floating-panel {
+  position: relative;
+  box-sizing: border-box;
+  overflow: visible;
+  border-radius: var(--au-radius-surface);
+  background: var(--au-floating-panel-bg);
+  color: var(--au-color-text-primary);
+  border: 1px solid var(--au-floating-panel-border);
+  box-shadow: var(--au-elevation-floating);
+  font-family: var(--au-font-sans);
+  z-index: var(--au-z-dropdown);
+  pointer-events: auto;
+  -webkit-backdrop-filter: blur(var(--au-floating-blur)) saturate(1.15);
+  backdrop-filter: blur(var(--au-floating-blur)) saturate(1.15);
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay {
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='top'] {
+  animation-name: au-floating-enter-top;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='start'] {
+  animation-name: au-floating-enter-start;
+}
+
+.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='end'] {
+  animation-name: au-floating-enter-end;
+}
+
+:is(.au-floating-panel, .au-tooltip__bubble).au-tooltip__bubble--overlay::before {
+  content: '';
+  position: absolute;
+  z-index: var(--au-z-raised);
+  width: var(--au-floating-arrow-size);
+  height: var(--au-floating-arrow-size);
+  box-sizing: border-box;
+  background: var(--au-floating-panel-bg);
+  border: 1px solid var(--au-floating-panel-border);
+  pointer-events: none;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay::before {
+  background: var(--au-color-surface-inverted);
+  border: none;
+}
+
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='bottom']::before {
+  left: var(--au-floating-arrow-x, 50%);
+  top: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='top']::before {
+  left: var(--au-floating-arrow-x, 50%);
+  bottom: 0;
+  transform: translate(-50%, 50%) rotate(45deg);
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='start']::before {
+  top: var(--au-floating-arrow-y, 50%);
+  right: 0;
+  transform: translate(50%, -50%) rotate(45deg);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='end']::before {
+  top: var(--au-floating-arrow-y, 50%);
+  left: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+
+.au-floating-panel--overlay {
+  position: fixed;
+}
+
+@keyframes au-floating-enter-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes au-floating-enter-top {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes au-floating-enter-start {
+  from {
+    opacity: 0;
+    transform: translateX(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes au-floating-enter-end {
+  from {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}

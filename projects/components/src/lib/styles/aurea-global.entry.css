@@ -3,6 +3,11 @@
  * Regenerate bundle: node projects/components/scripts/bundle-aurea-global.mjs
  */
 
+@import './au-utilities.css';
+@import './au-floating-panel.css';
+@import './au-native-text-field.css';
+@import './au-field-temporal-input.css';
+
 @import '../input-text/input-text.css';
 @import '../textarea/textarea.css';
 @import '../input-number/input-number.css';

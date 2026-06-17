@@ -81,15 +81,14 @@ export function ensureModalDialogPortaledToBody(
   portalState: ModalDialogPortalState,
   host: HTMLElement,
 ): void {
-  if (dialog.parentElement === document.body) {
-    return;
+  if (dialog.parentElement !== document.body) {
+    const parent = dialog.parentNode;
+    if (parent) {
+      portalState.anchor = document.createComment('au-modal-dialog-anchor');
+      parent.insertBefore(portalState.anchor, dialog);
+    }
+    renderer.appendChild(document.body, dialog);
   }
-  const parent = dialog.parentNode;
-  if (parent) {
-    portalState.anchor = document.createComment('au-modal-dialog-anchor');
-    parent.insertBefore(portalState.anchor, dialog);
-  }
-  renderer.appendChild(document.body, dialog);
   syncPortaledModalHostContext(dialog, host);
   portalState.unbindHostContext?.();
   portalState.unbindHostContext = bindPortaledModalHostContextObserver(dialog, host);

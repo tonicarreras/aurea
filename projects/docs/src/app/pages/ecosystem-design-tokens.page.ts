@@ -52,7 +52,7 @@ import { DocsGuideSections } from '../shared/docs-guide-sections';
 export class EcosystemDesignTokensPage {
   readonly i18n = inject(DocsLocaleService);
   readonly eco = computed(() => this.i18n.messages().ecosystem);
-  readonly lightJson = `${DOCS_EXTERNAL_LINKS.github}/blob/develop/projects/design-tokens/au-tokens.light.json`;
-  readonly darkJson = `${DOCS_EXTERNAL_LINKS.github}/blob/develop/projects/design-tokens/au-tokens.dark.json`;
+  readonly lightJson = `${DOCS_EXTERNAL_LINKS.github}/blob/develop/projects/design-tokens/au-tokens.light.tokens.json`;
+  readonly darkJson = `${DOCS_EXTERNAL_LINKS.github}/blob/develop/projects/design-tokens/au-tokens.dark.tokens.json`;
   readonly readme = `${DOCS_EXTERNAL_LINKS.github}/blob/develop/projects/design-tokens/README.md`;
 }
