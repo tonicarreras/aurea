@@ -58,6 +58,7 @@ import { AuIcon } from '../icon/icon';
     '(change)': 'onChange($event)',
     '(focusin)': 'onControlRowFocusin()',
     '(focusout)': 'onControlRowFocusout($event)',
+    '(keydown)': 'onNativeInputKeydown($event)',
   },
 })
 /* v8 ignore start */
@@ -199,6 +200,19 @@ export class AuInputDate {
     this.syncPickerPanel();
   }
 
+  onNativeInputKeydown(event: KeyboardEvent): void {
+    if (this.disabled() || this.readOnly()) {
+      return;
+    }
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+    event.preventDefault();
+    this.ensurePickerChrome();
+    this.togglePicker();
+    this.syncPickerPanel();
+  }
+
   protected togglePicker(): void {
     this.pickerOpen.update((open) => !open);
   }
@@ -262,7 +276,6 @@ export class AuInputDate {
       const btn = this.renderer.createElement('button') as HTMLButtonElement;
       this.renderer.setAttribute(btn, 'type', 'button');
       this.renderer.addClass(btn, 'au-input-date__icon');
-      this.renderer.setAttribute(btn, 'tabindex', '-1');
 
       const iconHost = this.renderer.createElement('span') as HTMLSpanElement;
       this.iconRef = createComponent(AuIcon, {
@@ -315,9 +328,9 @@ export class AuInputDate {
     this.renderer.setAttribute(btn, 'aria-expanded', this.pickerOpen() ? 'true' : 'false');
     this.renderer.setAttribute(btn, 'aria-controls', this.pickerPanelId());
     if (this.disabled() || this.readOnly()) {
-      this.renderer.setAttribute(btn, 'aria-disabled', 'true');
+      this.renderer.setAttribute(btn, 'disabled', 'true');
     } else {
-      this.renderer.removeAttribute(btn, 'aria-disabled');
+      this.renderer.removeAttribute(btn, 'disabled');
     }
   }
 }

@@ -3,7 +3,10 @@ import { afterEach, describe, expect, it } from 'vitest';
 import {
   canConsumeWheelDelta,
   createModalScrollAllowPredicate,
+  installModalPageScrollPrevention,
   installPageScrollPrevention,
+  installRootScrollLock,
+  resetRootScrollLockForTests,
 } from './prevent-page-scroll';
 
 function defineScrollMetrics(
@@ -215,5 +218,41 @@ describe('installPageScrollPrevention', () => {
     expect(permitted.defaultPrevented).toBe(false);
 
     allowed.remove();
+  });
+});
+
+describe('installRootScrollLock', () => {
+  afterEach(() => {
+    resetRootScrollLockForTests();
+  });
+
+  it('locks and unlocks documentElement overflow with ref counting', () => {
+    const unlockA = installRootScrollLock(document);
+    expect(document.documentElement.style.overflow).toBe('hidden');
+
+    const unlockB = installRootScrollLock(document);
+    unlockA();
+    expect(document.documentElement.style.overflow).toBe('hidden');
+
+    unlockB();
+    expect(document.documentElement.style.overflow).toBe('');
+  });
+});
+
+describe('installModalPageScrollPrevention', () => {
+  afterEach(() => {
+    resetRootScrollLockForTests();
+  });
+
+  it('combines wheel blocking and root scroll lock', () => {
+    const cleanup = installModalPageScrollPrevention(document, () => false);
+    expect(document.documentElement.style.overflow).toBe('hidden');
+
+    const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+
+    cleanup();
+    expect(document.documentElement.style.overflow).toBe('');
   });
 });

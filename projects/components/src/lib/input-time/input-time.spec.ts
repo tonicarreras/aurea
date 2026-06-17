@@ -439,6 +439,41 @@ describe('AuInputTime', () => {
     expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
   });
 
+  it('opens picker when pressing Enter on the input', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const input = queryInput(fix);
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+  });
+
+  it('ignores unrelated keys on the input', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    CONTROL(fix).onNativeInputKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
+  });
+
+  it('ignores Enter when readOnly', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.readOnly = true;
+    });
+    await fix.whenStable();
+    CONTROL(fix).onNativeInputKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
+    expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
+  });
+
+  it('keeps the picker trigger in the tab order', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const trigger = fix.debugElement.query(By.css('.au-input-time__icon'))!.nativeElement as HTMLButtonElement;
+    expect(trigger.getAttribute('tabindex')).toBeNull();
+    expect(trigger.disabled).toBe(false);
+  });
+
   it('opens picker when clicking the native input', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();

@@ -29,9 +29,9 @@ au-drawer,
   display: block;
   box-sizing: border-box;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   max-width: 100vw;
-  max-height: 100vh;
+  max-height: 100dvh;
   margin: 0;
   padding: 0;
   border: none;
@@ -39,7 +39,8 @@ au-drawer,
   color: inherit;
   overflow: clip;
   overscroll-behavior: none;
-  z-index: var(--au-z-drawer);
+  touch-action: none;
+  z-index: var(--au-z-modal);
 }
 
 .au-drawer__native:not([open]) {
@@ -49,6 +50,11 @@ au-drawer,
 .au-drawer__native::backdrop {
   background: var(--au-color-overlay-scrim);
   animation: au-drawer-backdrop-in var(--au-motion-modal);
+}
+
+/* Polyfill when `showModal()` is unavailable (`open` attribute only). */
+.au-drawer__native[open]:not(:modal) {
+  background: var(--au-color-overlay-scrim);
 }
 
 .au-drawer__native .au-drawer__panel {
@@ -158,6 +164,7 @@ au-drawer,
   padding: var(--au-space-4);
   overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
   font-size: var(--au-text-sm);
   line-height: var(--au-leading-normal);
   color: var(--au-color-text-secondary);

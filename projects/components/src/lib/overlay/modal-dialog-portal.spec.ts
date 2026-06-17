@@ -68,7 +68,7 @@ describe('modal-dialog-portal', () => {
     wrap.remove();
   });
 
-  it('is a no-op when no ancestor clips overflow', () => {
+  it('portals dialog to document.body even without a clipping ancestor', () => {
     const wrap = document.createElement('div');
     const dialog = document.createElement('dialog');
     wrap.append(dialog);
@@ -76,8 +76,11 @@ describe('modal-dialog-portal', () => {
     const portalState = emptyPortalState();
 
     ensureModalDialogPortaledToBody(document, renderer, dialog, portalState, host);
+    expect(dialog.parentElement).toBe(document.body);
+    expect(portalState.anchor).not.toBeNull();
+
+    restoreModalDialogPortal(document, dialog, portalState);
     expect(dialog.parentElement).toBe(wrap);
-    expect(portalState.anchor).toBeNull();
 
     wrap.remove();
   });

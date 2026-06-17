@@ -97,13 +97,27 @@ input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 0;
   pointer-events: auto;
   cursor: pointer;
   border: 0;
-  padding: 0;
+  border-radius: var(--au-radius-control);
   background: transparent;
   color: var(--au-color-date-picker-icon);
   transition: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+@media (pointer: coarse) {
+  .au-input-time__icon {
+    min-width: var(--au-touch-target-min);
+    min-height: var(--au-touch-target-min);
+  }
+}
+
+.au-input-time__icon:focus-visible {
+  outline: none;
+  box-shadow: var(--au-focus-ring);
 }
 
 .au-input-time__anchor:has(input.au-input-time[data-au-size='sm']) .au-input-time__icon {

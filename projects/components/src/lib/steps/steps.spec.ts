@@ -557,6 +557,13 @@ describe('AuSteps', () => {
     panel.remove();
   });
 
+  it('scrollToPanel is noop when the panel element is missing', async () => {
+    const fix = TestBed.createComponent(AuSteps);
+    fix.componentRef.setInput('id', 'doc');
+    await fix.whenStable();
+    expect(() => fix.componentInstance.scrollToPanel('missing')).not.toThrow();
+  });
+
   it('scrollToPanel is noop when document is undefined', async () => {
     const fix = TestBed.createComponent(AuSteps);
     await fix.whenStable();

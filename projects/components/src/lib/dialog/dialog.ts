@@ -27,7 +27,7 @@ import {
 import { installOutsideInteractionBlock } from '../overlay/floating-panel-interaction-guard';
 import {
   createModalScrollAllowPredicate,
-  installPageScrollPrevention,
+  installModalPageScrollPrevention,
 } from '../overlay/prevent-page-scroll';
 import { AuDialogFooter } from './dialog-footer.directive';
 import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focus-trap';
@@ -132,7 +132,7 @@ export class AuDialog {
     }
 
     onCleanup(
-      installPageScrollPrevention(
+      installModalPageScrollPrevention(
         this.document,
         createModalScrollAllowPredicate(() => this.nativeDialog(), '.au-dialog__body'),
       ),

@@ -59,6 +59,52 @@ export function createModalScrollAllowPredicate(
   };
 }
 
+let rootScrollLockCount = 0;
+let restoreRootScrollLock: (() => void) | null = null;
+
+/** Ref-counted `overflow: hidden` on the root element; keeps body layout unchanged. */
+export function installRootScrollLock(document: Document): () => void {
+  if (rootScrollLockCount === 0) {
+    const html = document.documentElement;
+    const previousOverflow = html.style.overflow;
+    const previousOverscroll = html.style.overscrollBehavior;
+    html.style.overflow = 'hidden';
+    html.style.overscrollBehavior = 'none';
+    restoreRootScrollLock = () => {
+      html.style.overflow = previousOverflow;
+      html.style.overscrollBehavior = previousOverscroll;
+    };
+  }
+  rootScrollLockCount++;
+  return () => {
+    rootScrollLockCount = Math.max(0, rootScrollLockCount - 1);
+    if (rootScrollLockCount === 0) {
+      restoreRootScrollLock?.();
+      restoreRootScrollLock = null;
+    }
+  };
+}
+
+/** @internal test helper */
+export function resetRootScrollLockForTests(): void {
+  restoreRootScrollLock?.();
+  restoreRootScrollLock = null;
+  rootScrollLockCount = 0;
+}
+
+/** Wheel/touch guard plus root scroll lock for modal overlays (`au-dialog`, `au-drawer`). */
+export function installModalPageScrollPrevention(
+  document: Document,
+  isScrollAllowed: ScrollAllowPredicate,
+): () => void {
+  const uninstallWheel = installPageScrollPrevention(document, isScrollAllowed);
+  const uninstallRoot = installRootScrollLock(document);
+  return () => {
+    uninstallWheel();
+    uninstallRoot();
+  };
+}
+
 export function installPageScrollPrevention(
   document: Document,
   isScrollAllowed: ScrollAllowPredicate,

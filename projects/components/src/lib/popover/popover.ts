@@ -16,6 +16,11 @@ import {
 } from '@angular/core';
 import { injectHostRef } from '../au-host-element';
 
+import {
+  focusInitialInDialogPanel,
+  handleDialogTabKeydown,
+} from '../dialog/dialog-focus-trap';
+import { installPageScrollPrevention } from '../overlay/prevent-page-scroll';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AU_POPOVER } from './au-popover.token';
@@ -71,17 +76,47 @@ export class AuPopover {
 
   protected readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   protected readonly triggerHost = signal<HTMLElement | null>(null);
+  private savedTrigger: HTMLElement | null = null;
 
   private readonly syncPanelOverlay = afterRenderEffect(() => {
     const panel = this.panelRef()?.nativeElement;
     const trigger = this.triggerHost();
-    if (!this.open() || !panel || !trigger) {
+    const isOpen = this.open();
+
+    if (!isOpen || !panel || !trigger) {
+      if (!isOpen && this.savedTrigger?.isConnected) {
+        this.savedTrigger.focus();
+        this.savedTrigger = null;
+      }
       this.overlay.detach();
       return;
     }
+
     this.renderer.addClass(panel, 'au-floating-panel');
     this.renderer.addClass(panel, 'au-popover__panel');
     this.overlay.sync(panel, trigger, this.placement());
+
+    if (!panel.contains(this.document.activeElement)) {
+      this.savedTrigger = trigger;
+      focusInitialInDialogPanel(panel);
+    }
+  });
+
+  private readonly preventPageScrollWhileOpen = afterRenderEffect((onCleanup) => {
+    if (!this.open()) {
+      return;
+    }
+
+    onCleanup(
+      installPageScrollPrevention(this.document, (target) => {
+        if (!(target instanceof Node)) {
+          return false;
+        }
+        const panel = this.panelRef()?.nativeElement;
+        const host = this.host.nativeElement;
+        return host.contains(target) || !!panel?.contains(target);
+      }),
+    );
   });
 
   private readonly dismissOnScroll = afterRenderEffect((onCleanup) => {
@@ -148,5 +183,16 @@ export class AuPopover {
     }
     event.preventDefault();
     this.close();
+  }
+
+  protected onPanelKeydown(event: KeyboardEvent): void {
+    if (!this.open()) {
+      return;
+    }
+    const panel = this.panelRef()?.nativeElement;
+    if (!panel) {
+      return;
+    }
+    handleDialogTabKeydown(event, panel);
   }
 }

@@ -62,10 +62,10 @@ describe('AuDialog', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('portals native dialog to document.body when opened inside overflow containers', async () => {
+  it('portals native dialog to document.body when opened', async () => {
     @Component({
       template: `
-        <div style="overflow: hidden">
+        <div>
           <au-dialog [(open)]="open" />
         </div>
       `,
@@ -79,9 +79,8 @@ describe('AuDialog', () => {
     const fix = TestBed.createComponent(Host);
     fix.detectChanges();
     await fix.whenStable();
-    const dialog = fix.debugElement.query(By.css('.au-dialog__native'))!
-      .nativeElement as HTMLDialogElement;
-    expect(dialog.parentElement).toBe(document.body);
+    const dialog = document.body.querySelector('.au-dialog__native');
+    expect(dialog?.parentElement).toBe(document.body);
     fix.destroy();
   });
 
@@ -91,6 +90,7 @@ describe('AuDialog', () => {
     await fix.whenStable();
     expect(document.body.style.position).not.toBe('fixed');
     expect(document.body.style.overflow).not.toBe('hidden');
+    expect(document.documentElement.style.overflow).toBe('hidden');
 
     const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
     document.body.dispatchEvent(blocked);
@@ -98,6 +98,7 @@ describe('AuDialog', () => {
 
     fix.componentRef.setInput('open', false);
     await fix.whenStable();
+    expect(document.documentElement.style.overflow).not.toBe('hidden');
 
     const allowed = new WheelEvent('wheel', { bubbles: true, cancelable: true });
     document.body.dispatchEvent(allowed);
@@ -893,6 +894,14 @@ describe('dialog-focus-trap', () => {
       '<button type="button" id="a">A</button>',
       '<button type="button" hidden id="h">H</button>',
       '<button type="button" aria-hidden="true" id="ah">AH</button>',
+    );
+    expect(getDialogFocusableElements(panel).map((el) => el.id)).toEqual(['a']);
+  });
+
+  it('excludes aria-disabled buttons', () => {
+    const panel = panelWith(
+      '<button type="button" id="a">A</button>',
+      '<button type="button" aria-disabled="true" id="loading">Loading</button>',
     );
     expect(getDialogFocusableElements(panel).map((el) => el.id)).toEqual(['a']);
   });

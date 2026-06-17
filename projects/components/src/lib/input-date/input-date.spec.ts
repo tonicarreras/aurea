@@ -379,6 +379,43 @@ describe('AuInputDate', () => {
     expect(trigger.getAttribute('aria-controls')).toBe(`${queryInput(fix).id}-picker`);
   });
 
+  it('opens calendar on Enter in the input', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
+  });
+
+  it('ignores unrelated keys on the input', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    CONTROL(fix).onNativeInputKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    expect(document.body.querySelector('.au-date-calendar')).toBeFalsy();
+  });
+
+  it('ignores Enter when readOnly', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.readOnly = true;
+    });
+    await fix.whenStable();
+    CONTROL(fix).onNativeInputKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
+    expect(document.body.querySelector('.au-date-calendar')).toBeFalsy();
+  });
+
+  it('keeps the picker trigger in the tab order', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const trigger = fix.debugElement.query(By.css('.au-input-date__icon'))!
+      .nativeElement as HTMLButtonElement;
+    expect(trigger.getAttribute('tabindex')).toBeNull();
+    expect(trigger.disabled).toBe(false);
+  });
+
   it('onPickerIconClick opens calendar instead of native picker when min/max set', async () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minDate = '2026-01-01';

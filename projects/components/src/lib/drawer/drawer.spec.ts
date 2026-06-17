@@ -44,10 +44,10 @@ describe('AuDrawer', () => {
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
   });
 
-  it('portals native dialog to document.body when opened inside overflow containers', async () => {
+  it('portals native dialog to document.body when opened', async () => {
     @Component({
       template: `
-        <div style="overflow: hidden">
+        <div>
           <au-drawer [(open)]="open" />
         </div>
       `,
@@ -61,9 +61,8 @@ describe('AuDrawer', () => {
     const fix = TestBed.createComponent(Host);
     fix.detectChanges();
     await fix.whenStable();
-    const dialog = fix.debugElement.query(By.css('.au-drawer__native'))!
-      .nativeElement as HTMLDialogElement;
-    expect(dialog.parentElement).toBe(document.body);
+    const dialog = document.body.querySelector('.au-drawer__native');
+    expect(dialog?.parentElement).toBe(document.body);
     fix.destroy();
   });
 
@@ -73,6 +72,7 @@ describe('AuDrawer', () => {
     await fix.whenStable();
     expect(document.body.style.position).not.toBe('fixed');
     expect(document.body.style.overflow).not.toBe('hidden');
+    expect(document.documentElement.style.overflow).toBe('hidden');
 
     const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
     document.body.dispatchEvent(blocked);
@@ -80,6 +80,7 @@ describe('AuDrawer', () => {
 
     fix.componentRef.setInput('open', false);
     await fix.whenStable();
+    expect(document.documentElement.style.overflow).not.toBe('hidden');
 
     const allowed = new WheelEvent('wheel', { bubbles: true, cancelable: true });
     document.body.dispatchEvent(allowed);
@@ -195,7 +196,7 @@ describe('AuDrawer', () => {
     fix.componentRef.setInput('open', true);
     fix.componentRef.setInput('title', 'Settings');
     await fix.whenStable();
-    const btn = fix.nativeElement.querySelector('.au-drawer__close') as HTMLButtonElement;
+    const btn = queryNativeDialog(fix).querySelector('.au-drawer__close') as HTMLButtonElement;
     btn.click();
     await fix.whenStable();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(false);
@@ -205,7 +206,7 @@ describe('AuDrawer', () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
-    const panel = fix.nativeElement.querySelector('.au-drawer__panel') as HTMLElement;
+    const panel = queryNativeDialog(fix).querySelector('.au-drawer__panel') as HTMLElement;
     panel.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await fix.whenStable();
     expect(isDialogOpen(queryNativeDialog(fix))).toBe(true);
@@ -279,7 +280,7 @@ describe('AuDrawer', () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
-    const panel = fix.nativeElement.querySelector('.au-drawer__panel') as HTMLElement;
+    const panel = queryNativeDialog(fix).querySelector('.au-drawer__panel') as HTMLElement;
     const ev = new MouseEvent('click', { bubbles: true });
     Object.defineProperty(ev, 'target', { value: panel, configurable: true });
     fix.componentInstance.onDialogClick(ev);
@@ -433,7 +434,7 @@ describe('AuDrawer', () => {
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
     expect(fix.componentInstance.titleHeadingId()).toBe('settings-title');
-    const heading = fix.nativeElement.querySelector('.au-drawer__title') as HTMLElement;
+    const heading = queryNativeDialog(fix).querySelector('.au-drawer__title') as HTMLElement;
     expect(heading.id).toBe('settings-title');
   });
 
