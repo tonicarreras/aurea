@@ -32,7 +32,7 @@ export const GUIDES_ES: GuidesMessages = {
       },
       {
         title: 'Tokens Figma',
-        description: 'JSON sincronizado con au-tokens.css.',
+        description: 'JSON DTCG 2025.10 sincronizado con au-tokens.css (`export:tokens` / `validate:tokens`).',
         path: 'design-tokens',
       },
     ],

@@ -29,7 +29,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Native button', detail: 'Content projection; `aria-busy` when `loading`.' },
     ],
     accessibility: [
-      'Visible focus ring when tabbing (`--au-color-focus-ring`).',
+      'Visible focus when tabbing (`--au-focus-tab`); pointer focus uses `--au-focus-tactile`.',
       '`loading` sets `aria-busy`, shows a decorative `au-spinner`, and blocks click.',
       'Size `lg` respects `--au-touch-target-min` (44px).',
     ],
@@ -1139,7 +1139,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       { region: 'Link text', detail: 'Native anchor content between opening and closing tags.' },
     ],
     accessibility: [
-      'Visible focus ring (`--au-shadow-focus-ring`) on keyboard focus.',
+      'Visible focus (`--au-focus-inset`) on keyboard focus.',
       'External links open in a new browsing context with `noopener`.',
     ],
     keyboard: ['Enter activates the native link; Tab follows document order.'],

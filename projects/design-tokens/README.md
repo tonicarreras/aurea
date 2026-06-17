@@ -10,6 +10,8 @@ Machine-readable exports aligned with [DTCG Format Module 2025.10](https://www.d
 | `au-tokens.dark.tokens.json`      | Dark theme color overrides (same structure as light)               |
 | `dtcg-format-2025.10.schema.json` | Vendored official JSON Schema for CI validation                    |
 
+Role tokens (`--au-elevation-*`, `--au-focus-*`) live in CSS (`au-tokens-roles.css`) and are not exported to JSON.
+
 **Source of truth for production apps:** `au-tokens.css` (npm package). After changing semantic/domain colors:
 
 ```bash

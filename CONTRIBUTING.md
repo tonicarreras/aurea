@@ -59,7 +59,7 @@ Install step uses [`.github/actions/bun-install`](.github/actions/bun-install) (
 
 5. Update [CHANGELOG.md](./CHANGELOG.md) under `[Unreleased]` for user-visible library changes.
 
-New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Governance index: [docs/README.md](./docs/README.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
+New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Design principles: [docs/DESIGN.md](./docs/DESIGN.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
 
 ## Component Definition of Done
 
@@ -119,7 +119,7 @@ Required before marking **stable** in `component-maturity.ts`:
 
 - Standalone components, **signals** for inputs/outputs.
 - File layout: `projects/components/src/lib/<name>/`.
-- Shared CSS: `styles/aurea-global.css` (field chrome, listbox, snackbar).
+- Shared CSS: `styles/aurea-global.css` (field chrome, listbox overlay, description list, accordion shells). Portaled hosts (`au-snackbar`, `au-dialog`, …) ship component `styleUrl`.
 
 ## Commits
 
