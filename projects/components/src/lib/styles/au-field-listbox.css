@@ -31,7 +31,7 @@
   position: absolute;
   z-index: var(--au-z-dropdown);
   inset-inline: 0;
-  top: calc(100% + var(--au-space-1));
+  top: calc(100% + var(--au-floating-gap));
   margin: 0;
   padding: var(--au-space-1);
   list-style: none;
@@ -53,15 +53,12 @@
   z-index: var(--au-z-dropdown);
   inset-inline: auto;
   top: auto;
-  border-start-start-radius: 0;
-  border-start-end-radius: 0;
   animation: au-floating-enter-bottom var(--au-motion-floating) both;
 }
 
-:is(au-select, au-autocomplete)[data-au-listbox-open]
-  :is(.au-select__control-row, .au-autocomplete__control-row) {
-  border-end-start-radius: 0;
-  border-end-end-radius: 0;
+.au-field-listbox.au-floating-panel {
+  padding: var(--au-space-1);
+  color: var(--au-color-text-primary);
 }
 
 :is(au-select, au-autocomplete)[data-au-size='sm'] .au-field-listbox__option {

@@ -7,6 +7,7 @@ import {
   model,
   signal,
 } from '@angular/core';
+import { scrollIntoViewRespectingMotion } from '../au-scroll-into-view';
 import { AuStep } from './au-step.directive';
 
 export type AuStepsLayout = 'tabs' | 'sections';
@@ -91,10 +92,10 @@ export class AuSteps {
     if (typeof document === 'undefined') {
       return;
     }
-    document.getElementById(this.panelIdFor(stepKey))?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
+    const panel = document.getElementById(this.panelIdFor(stepKey));
+    if (panel) {
+      scrollIntoViewRespectingMotion(panel, { block: 'start' });
+    }
   }
 
   stepIdFor(value: string): string {

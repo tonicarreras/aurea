@@ -71,7 +71,8 @@ export function bindPortaledModalHostContextObserver(
 }
 
 /**
- * Moves a modal `<dialog>` to `document.body` when an ancestor would clip it.
+ * Moves a modal `<dialog>` to `document.body` while open so it covers the viewport
+ * and is not clipped or trapped in ancestor stacking/overflow contexts.
  */
 export function ensureModalDialogPortaledToBody(
   document: Document,
@@ -80,7 +81,7 @@ export function ensureModalDialogPortaledToBody(
   portalState: ModalDialogPortalState,
   host: HTMLElement,
 ): void {
-  if (dialog.parentElement === document.body || !needsModalDialogPortal(dialog, document)) {
+  if (dialog.parentElement === document.body) {
     return;
   }
   const parent = dialog.parentNode;

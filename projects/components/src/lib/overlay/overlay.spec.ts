@@ -159,6 +159,23 @@ describe('TooltipOverlay', () => {
     shell.remove();
   });
 
+  it('sets arrow coordinates on portaled tooltip bubbles', () => {
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(20, 30, 40, 20);
+    const bubble = document.createElement('div');
+    bubble.classList.add('au-tooltip__bubble');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 50, 24);
+    wrap.append(anchor, bubble);
+    document.body.append(wrap);
+
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'top');
+    expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
+    overlay.detach();
+    wrap.remove();
+  });
+
   it('portals bubble to body and sets fixed coordinates', () => {
     const wrap = document.createElement('div');
     const anchor = document.createElement('span');
@@ -177,6 +194,24 @@ describe('TooltipOverlay', () => {
     expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
     overlay.detach();
     expect(bubble.style.getPropertyValue('--au-floating-arrow-x')).toBe('');
+    wrap.remove();
+  });
+
+  it('matchAnchorWidth aligns panel width and horizontal origin to the anchor', () => {
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('span');
+    anchor.getBoundingClientRect = () => new DOMRect(12, 16, 200, 24);
+    const bubble = document.createElement('div');
+    bubble.classList.add('au-floating-panel');
+    bubble.getBoundingClientRect = () => new DOMRect(0, 0, 180, 120);
+    wrap.append(anchor, bubble);
+    document.body.append(wrap);
+
+    const overlay = createOverlay();
+    overlay.sync(bubble, anchor, 'bottom', { matchAnchorWidth: true });
+    expect(bubble.style.width).toBe('200px');
+    expect(bubble.style.left).toBe('12px');
+    overlay.detach();
     wrap.remove();
   });
 
@@ -428,6 +463,10 @@ describe('FieldListboxOverlay', () => {
     );
   }
 
+  function listboxTooltipOverlay(overlay: FieldListboxOverlay): TooltipOverlay {
+    return (overlay as unknown as { tooltipOverlay: TooltipOverlay }).tooltipOverlay;
+  }
+
   it('sync is noop outside the browser platform', () => {
     const wrap = document.createElement('div');
     const anchor = document.createElement('div');
@@ -502,7 +541,7 @@ describe('FieldListboxOverlay', () => {
     const overlay = createOverlay();
     overlay.sync(listbox, anchor, true);
     expect(listbox.parentElement).toBe(dialog);
-    (overlay as unknown as { anchor: Comment | null }).anchor = null;
+    (listboxTooltipOverlay(overlay) as unknown as { anchor: Comment | null }).anchor = null;
     overlay.detach();
     expect(dialog.contains(listbox)).toBe(false);
     dialog.remove();
@@ -530,7 +569,10 @@ describe('FieldListboxOverlay', () => {
     overlay.sync(listbox, anchor, true);
     expect(listbox.parentElement).toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(true);
-    expect(listbox.style.top).toBe('44px');
+    expect(listbox.classList.contains('au-floating-panel')).toBe(true);
+    expect(listbox.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
+    const gap = readCssLengthPx(document, '--au-floating-gap', 10);
+    expect(listbox.style.top).toBe(`${40 + gap}px`);
     expect(listbox.style.width).toBe('200px');
     overlay.detach();
     expect(listbox.parentElement).toBe(wrap);
@@ -572,8 +614,9 @@ describe('FieldListboxOverlay', () => {
     };
     const overlay = createOverlay();
     overlay.sync(listbox, anchor, true);
+    const gap = readCssLengthPx(document, '--au-floating-gap', 10);
     window.dispatchEvent(new Event('scroll'));
-    expect(listbox.style.top).toBe('54px');
+    expect(listbox.style.top).toBe(`${50 + gap}px`);
     window.dispatchEvent(new Event('resize'));
     expect(listbox.style.width).toBe('120px');
     overlay.detach();
@@ -620,7 +663,7 @@ describe('FieldListboxOverlay', () => {
     anchor.remove();
   });
 
-  it('uses default gap when --au-space-1 is not numeric', () => {
+  it('uses default floating gap when the token is not numeric', () => {
     const anchor = document.createElement('div');
     const listbox = document.createElement('ul');
     document.body.append(anchor, listbox);
@@ -641,20 +684,11 @@ describe('FieldListboxOverlay', () => {
       }) as DOMRect;
     const overlay = createOverlay();
     overlay.sync(listbox, anchor, true);
-    expect(listbox.style.top).toBe('14px');
+    expect(listbox.style.top).toBe('20px');
     overlay.detach();
     listbox.remove();
     anchor.remove();
     vi.restoreAllMocks();
-  });
-
-  it('detach removes orphan listbox from body when anchor is missing', () => {
-    const listbox = document.createElement('ul');
-    document.body.append(listbox);
-    const overlay = createOverlay();
-    (overlay as unknown as { activeListbox: HTMLElement }).activeListbox = listbox;
-    overlay.detach();
-    expect(document.body.contains(listbox)).toBe(false);
   });
 
   it('sync(false) detaches an active overlay', () => {
@@ -667,6 +701,120 @@ describe('FieldListboxOverlay', () => {
     overlay.sync(listbox, anchor, true);
     overlay.sync(listbox, anchor, false);
     expect(listbox.parentElement).toBe(wrap);
+    wrap.remove();
+  });
+
+  it('prevents page wheel scroll while the listbox is open', () => {
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    wrap.append(anchor, listbox);
+    document.body.append(wrap);
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+
+    expect(document.body.style.overflow).not.toBe('hidden');
+
+    const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+
+    const onAnchor = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    anchor.dispatchEvent(onAnchor);
+    expect(onAnchor.defaultPrevented).toBe(false);
+
+    const nonNodeTarget = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    Object.defineProperty(nonNodeTarget, 'target', { value: {}, configurable: true });
+    document.body.dispatchEvent(nonNodeTarget);
+    expect(nonNodeTarget.defaultPrevented).toBe(true);
+
+    overlay.detach();
+    const allowed = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(allowed);
+    expect(allowed.defaultPrevented).toBe(false);
+
+    wrap.remove();
+  });
+
+  it('allows wheel and touch inside a scrollable listbox', () => {
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    const item = document.createElement('li');
+    listbox.append(item);
+    wrap.append(anchor, listbox);
+    document.body.append(wrap);
+    Object.defineProperty(listbox, 'scrollTop', { value: 50, configurable: true });
+    Object.defineProperty(listbox, 'scrollHeight', { value: 400, configurable: true });
+    Object.defineProperty(listbox, 'clientHeight', { value: 200, configurable: true });
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 10 });
+    item.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(false);
+
+    const touch = new TouchEvent('touchmove', { bubbles: true, cancelable: true });
+    item.dispatchEvent(touch);
+    expect(touch.defaultPrevented).toBe(false);
+
+    overlay.detach();
+    wrap.remove();
+  });
+
+  it('blocks wheel at the listbox scroll edge', () => {
+    const wrap = document.createElement('div');
+    const anchor = document.createElement('div');
+    anchor.getBoundingClientRect = () =>
+      ({
+        bottom: 40,
+        left: 12,
+        width: 200,
+        top: 16,
+        right: 212,
+        height: 24,
+        x: 12,
+        y: 16,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    const listbox = document.createElement('ul');
+    wrap.append(anchor, listbox);
+    document.body.append(wrap);
+    Object.defineProperty(listbox, 'scrollTop', { value: 200, configurable: true });
+    Object.defineProperty(listbox, 'scrollHeight', { value: 400, configurable: true });
+    Object.defineProperty(listbox, 'clientHeight', { value: 200, configurable: true });
+    const overlay = createOverlay();
+    overlay.sync(listbox, anchor, true);
+
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 10 });
+    listbox.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+
+    overlay.detach();
     wrap.remove();
   });
 
@@ -692,16 +840,5 @@ describe('FieldListboxOverlay', () => {
     document.body.append(dialog);
     expect(resolveFieldListboxPortalRoot(anchor, document)).toBe(document.body);
     dialog.remove();
-  });
-
-  it('onWindowChange is a no-op without an active anchor', () => {
-    const overlay = createOverlay() as unknown as {
-      activeListbox: HTMLElement | null;
-      activeAnchor: HTMLElement | null;
-      onWindowChange: () => void;
-    };
-    overlay.activeListbox = document.createElement('ul');
-    overlay.activeAnchor = null;
-    expect(() => overlay.onWindowChange()).not.toThrow();
   });
 });

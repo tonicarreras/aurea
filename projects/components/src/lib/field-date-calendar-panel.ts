@@ -36,7 +36,7 @@ import {
 } from './overlay/floating-panel-interaction-guard';
 import { handleDialogTabKeydown } from './dialog/dialog-focus-trap';
 import { installPageScrollPrevention } from './overlay/prevent-page-scroll';
-import { TooltipOverlay } from './overlay/tooltip-overlay';
+import { FloatingPickerOverlay } from './overlay/floating-picker-overlay';
 
 /** Internal month-grid calendar for `input[auInputDate]`. */
 @Component({
@@ -140,6 +140,8 @@ export class AuInternalDateCalendarPanel {
   readonly minDate = input<string | undefined>(undefined);
   readonly maxDate = input<string | undefined>(undefined);
   readonly anchor = input<HTMLElement | null>(null);
+  /** Field row treated as inside the control for outside-click and scroll guards. */
+  readonly controlRoot = input<HTMLElement | null>(null);
   readonly ariaLabel = input('Choose a date');
   readonly locale = input<string | undefined>(undefined);
 
@@ -152,7 +154,7 @@ export class AuInternalDateCalendarPanel {
   private readonly destroyRef = inject(DestroyRef);
   private readonly host = injectHostRef<HTMLElement>();
 
-  private readonly overlay = new TooltipOverlay(
+  private readonly overlay = new FloatingPickerOverlay(
     this.document,
     this.renderer,
     this.platformId,
@@ -208,11 +210,15 @@ export class AuInternalDateCalendarPanel {
     return dayAriaLabel(iso, this.locale());
   }
 
+  private interactionRoot(): HTMLElement | null {
+    return this.controlRoot() ?? this.anchor();
+  }
+
   private isInteractionAllowed(target: EventTarget | null): boolean {
     return createFloatingPanelAllowPredicate(
       this.host.nativeElement,
       () => this.panelRef()?.nativeElement,
-      () => this.anchor(),
+      () => this.interactionRoot(),
     )(target);
   }
 
@@ -382,9 +388,9 @@ export class AuInternalDateCalendarPanel {
       return;
     }
     const panel = this.panelRef()?.nativeElement;
-    const anchor = this.anchor();
+    const root = this.interactionRoot();
     const hostEl = this.host.nativeElement;
-    if (panel?.contains(target) || anchor?.contains(target) || hostEl.contains(target)) {
+    if (panel?.contains(target) || root?.contains(target) || hostEl.contains(target)) {
       return;
     }
     this.dismiss.emit();

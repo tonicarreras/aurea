@@ -15,6 +15,7 @@
 @import '../link/link.css';
 
 @import './au-field-chrome.css';
+@import '../overlay/au-floating-panel-responsive-modal.css';
 @import './au-field-error.css';
 @import './au-field-listbox.css';
 @import './au-description-list.css';

@@ -379,6 +379,43 @@ describe('AuInputDate', () => {
     expect(trigger.getAttribute('aria-controls')).toBe(`${queryInput(fix).id}-picker`);
   });
 
+  it('opens calendar on Enter in the input', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
+  });
+
+  it('ignores unrelated keys on the input', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    CONTROL(fix).onNativeInputKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    expect(document.body.querySelector('.au-date-calendar')).toBeFalsy();
+  });
+
+  it('ignores Enter when readOnly', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+      f.componentInstance.readOnly = true;
+    });
+    await fix.whenStable();
+    CONTROL(fix).onNativeInputKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
+    expect(document.body.querySelector('.au-date-calendar')).toBeFalsy();
+  });
+
+  it('keeps the picker trigger in the tab order', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const trigger = fix.debugElement.query(By.css('.au-input-date__icon'))!
+      .nativeElement as HTMLButtonElement;
+    expect(trigger.getAttribute('tabindex')).toBeNull();
+    expect(trigger.disabled).toBe(false);
+  });
+
   it('onPickerIconClick opens calendar instead of native picker when min/max set', async () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.minDate = '2026-01-01';
@@ -519,21 +556,40 @@ describe('AuInputDate', () => {
     expect(() => dir.syncPickerPanel()).not.toThrow();
   });
 
-  it('syncPickerPanel falls back to the input host when anchorHost is unset', async () => {
+  it('anchors the calendar panel to the picker icon button', async () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
     await fix.whenStable();
-    const input = queryInput(fix);
+    const inputEl = queryInput(fix);
+    const dir = CONTROL(fix) as unknown as {
+      syncPickerPanel(): void;
+      pickerPanelRef: { setInput: (name: string, value: unknown) => void };
+      pickerIconEl: HTMLButtonElement | null;
+    };
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
+    dir.syncPickerPanel();
+    expect(setInput).toHaveBeenCalledWith('anchor', dir.pickerIconEl);
+    expect(setInput).toHaveBeenCalledWith('controlRoot', inputEl.parentElement);
+  });
+
+  it('syncPickerPanel falls back to the input host when the picker icon is unset', async () => {
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    const inputEl = queryInput(fix);
     const dir = CONTROL(fix) as unknown as {
       syncPickerPanel(): void;
       anchorHost: HTMLElement | null;
+      pickerIconEl: HTMLButtonElement | null;
       pickerPanelRef: { setInput: (name: string, value: unknown) => void };
     };
     CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
     await fix.whenStable();
     dir.anchorHost = null;
+    dir.pickerIconEl = null;
     const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
     dir.syncPickerPanel();
-    expect(setInput).toHaveBeenCalledWith('anchor', input);
+    expect(setInput).toHaveBeenCalledWith('anchor', inputEl);
   });
 
   it('syncPickerPanel skips trigger a11y when icon button is missing', async () => {

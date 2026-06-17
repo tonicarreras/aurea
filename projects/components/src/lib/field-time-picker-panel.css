@@ -95,6 +95,12 @@
   color: var(--au-color-text-on-solid);
 }
 
+@media (pointer: coarse) {
+  .au-time-picker__option {
+    min-height: var(--au-touch-target-min);
+  }
+}
+
 .au-time-picker__option:disabled {
   color: var(--au-color-text-disabled);
   cursor: not-allowed;

@@ -23,7 +23,7 @@ import {
   installOutsideInteractionBlock,
 } from './overlay/floating-panel-interaction-guard';
 import { installPageScrollPrevention } from './overlay/prevent-page-scroll';
-import { TooltipOverlay } from './overlay/tooltip-overlay';
+import { FloatingPickerOverlay } from './overlay/floating-picker-overlay';
 import {
   HOURS,
   MINUTES,
@@ -141,6 +141,7 @@ export class AuInternalTimePickerPanel {
   readonly minTime = input<string | undefined>(undefined);
   readonly maxTime = input<string | undefined>(undefined);
   readonly anchor = input<HTMLElement | null>(null);
+  readonly controlRoot = input<HTMLElement | null>(null);
   readonly ariaLabel = input('Choose a time');
   readonly locale = input<string | undefined>(undefined);
 
@@ -157,7 +158,7 @@ export class AuInternalTimePickerPanel {
   private readonly destroyRef = inject(DestroyRef);
   private readonly host = injectHostRef<HTMLElement>();
 
-  private readonly overlay = new TooltipOverlay(
+  private readonly overlay = new FloatingPickerOverlay(
     this.document,
     this.renderer,
     this.platformId,
@@ -194,11 +195,15 @@ export class AuInternalTimePickerPanel {
     ),
   );
 
+  private interactionRoot(): HTMLElement | null {
+    return this.controlRoot() ?? this.anchor();
+  }
+
   private isInteractionAllowed(target: EventTarget | null): boolean {
     return createFloatingPanelAllowPredicate(
       this.host.nativeElement,
       () => this.panelRef()?.nativeElement,
-      () => this.anchor(),
+      () => this.interactionRoot(),
     )(target);
   }
 
@@ -206,7 +211,7 @@ export class AuInternalTimePickerPanel {
     return createFloatingPanelScrollAllowPredicate(
       this.host.nativeElement,
       () => this.panelRef()?.nativeElement,
-      () => this.anchor(),
+      () => this.interactionRoot(),
       '.au-time-picker__column',
     )(target, event);
   }
@@ -393,9 +398,9 @@ export class AuInternalTimePickerPanel {
       return;
     }
     const panel = this.panelRef()?.nativeElement;
-    const anchor = this.anchor();
+    const root = this.interactionRoot();
     const hostEl = this.host.nativeElement;
-    if (panel?.contains(target) || anchor?.contains(target) || hostEl.contains(target)) {
+    if (panel?.contains(target) || root?.contains(target) || hostEl.contains(target)) {
       return;
     }
     this.dismiss.emit();

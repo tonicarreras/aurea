@@ -8,6 +8,7 @@
     role="dialog"
     [attr.aria-modal]="'false'"
     tabindex="-1"
+    (keydown)="onPanelKeydown($event)"
   >
     <ng-content />
   </div>

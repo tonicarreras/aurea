@@ -107,8 +107,6 @@
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #ffffff;
   --au-color-select-option-disabled-text: #333333;
-  --au-color-date-picker-edit-highlight: #e8e8ff;
-  --au-color-date-picker-accent: #e8e8ff;
   --au-color-date-picker-icon: #333333;
   --au-color-date-picker-icon-hover: #000000;
   --au-color-date-picker-icon-active: #0000ee;
@@ -268,8 +266,6 @@
   --au-color-select-option-selected-text: #000000;
   --au-color-select-option-selected-marker: #000000;
   --au-color-select-option-disabled-text: #e0e0e0;
-  --au-color-date-picker-edit-highlight: #003333;
-  --au-color-date-picker-accent: #003333;
   --au-color-date-picker-icon: #e0e0e0;
   --au-color-date-picker-icon-hover: #ffffff;
   --au-color-date-picker-icon-active: #00ffff;

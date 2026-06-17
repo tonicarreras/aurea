@@ -7,8 +7,16 @@
 }
 
 .au-popover__panel {
-  min-width: 12rem;
+  min-width: min(12rem, calc(100vw - 2rem));
   max-width: min(24rem, calc(100vw - 2rem));
+  max-height: min(24rem, calc(100dvh - 2rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--au-space-4) var(--au-space-5);
   box-sizing: border-box;
+}
+
+.au-popover__panel:focus-visible {
+  outline: none;
+  box-shadow: var(--au-focus-ring);
 }

@@ -9,6 +9,37 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-06-17
+
+### Added
+
+- **`FloatingPickerOverlay`** — calendar and time picker panels open as a bottom-sheet modal (backdrop + slide-up) below **`42rem`**; popover positioning on wider viewports. Exported: `FloatingPickerOverlay`, `AU_RESPONSIVE_FLOATING_MODAL_MQ`, `prefersResponsiveFloatingModal`.
+- **`FieldListboxOverlay`** — blocks page wheel/touch scroll while **`AuSelect`** / **`AuAutocomplete`** listboxes are open; scrolling inside the listbox still works.
+- **`installRootScrollLock`** and **`installModalPageScrollPrevention`** — ref-counted root scroll lock plus wheel/touch guards for modal surfaces.
+- **`scrollIntoViewRespectingMotion`** — steps and similar flows honor `prefers-reduced-motion`.
+
+### Changed
+
+- **`AuInputDate`** / **`AuInputTime`** — picker panels use **`FloatingPickerOverlay`**; keyboard activation on the native trigger; transparent WebKit datetime segment backgrounds (no Chromium edit highlight).
+- **`AuPopover`** — page scroll prevention and outside-interaction block while open; focus returns to the trigger on close.
+- **`AuDialog`** / **`AuDrawer`** — modal scroll lock allows scrolling only inside `.au-dialog__body` / `.au-drawer__body`.
+- **`AuDrawer`** — header title and dialog chrome use theme tokens when portaled (`data-au-theme` on the native `<dialog>`).
+- **Overlay** — modal backdrop clicks ignore portaled pickers/listboxes inside dialogs; tooltip reposition skips scroll inside anchored content.
+
+### Fixed
+
+- **`AuDrawer`** title low contrast when the portaled theme differs from the page shell (e.g. CRUD demo light preview).
+- Date/time picker dismiss on outside scroll; time column scroll no longer closes the panel incorrectly.
+- Popover and picker focus/keyboard handling on open and close.
+
+### Migration from 2.0.0
+
+No template changes required. Rebuild global styles if you vendor CSS:
+
+```bash
+bun add @aurea-design-system/components@2.1.0
+```
+
 ## [2.0.0] - 2026-06-13
 
 ### Changed (breaking)
@@ -313,7 +344,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.0.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.1.0...HEAD
+[2.1.0]: https://github.com/tonicarreras/aurea/compare/components-v2.0.0...components-v2.1.0
 [2.0.0]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...components-v2.0.0
 [1.6.0]: https://github.com/tonicarreras/aurea/compare/components-v1.5.0...components-v1.6.0
 [1.5.0]: https://github.com/tonicarreras/aurea/compare/components-v1.4.0...components-v1.5.0

@@ -28,13 +28,6 @@
   text-rendering: optimizeLegibility;
 }
 
-input.au-input-date,
-input.au-input-time,
-input.au-input-password,
-au-tag-input {
-  color-scheme: inherit;
-}
-
 au-select,
 au-autocomplete {
   overflow: visible;

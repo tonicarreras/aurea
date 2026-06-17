@@ -57,6 +57,18 @@ describe('AuSelect', () => {
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(true);
   });
 
+  it('prevents page wheel scroll while the listbox is open', async () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+    });
+    await openListbox(fix);
+
+    const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(blocked);
+    expect(blocked.defaultPrevented).toBe(true);
+    expect(document.body.style.overflow).not.toBe('hidden');
+  });
+
   it('listboxNative returns undefined when the listbox node is not in the document', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;

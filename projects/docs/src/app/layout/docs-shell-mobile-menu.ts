@@ -1,22 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  HostListener,
-  computed,
-  effect,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import {
   AuButton,
   AuDivider,
+  AuDrawer,
   AuFormField,
-  AuIcon,
   AuSelect,
-  lockPageScroll,
-  unlockPageScroll,
   type AuSelectOption,
 } from '@aurea-design-system/components';
 
@@ -29,104 +17,78 @@ import type { DocsThemeMode } from './docs-shell-toolbar';
 @Component({
   selector: 'docs-shell-mobile-menu',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuFormField, AuSelect, AuButton, AuIcon, AuDivider],
+  imports: [AuDrawer, AuFormField, AuSelect, AuButton, AuDivider],
   template: `
-    @if (menu.open()) {
-      <button
-        type="button"
-        class="docs-mobile-menu__backdrop"
-        [attr.aria-label]="locale.messages().shell.menuCloseAria"
-        (click)="menu.close()"
-      ></button>
-      <div
-        id="docs-toolbar-menu"
-        class="docs-mobile-menu__panel"
-        role="dialog"
-        aria-modal="true"
-        [attr.aria-label]="locale.messages().shell.settingsMenuAria"
-      >
-        <header class="docs-mobile-menu__header">
-          <h2 class="docs-mobile-menu__title">{{ locale.messages().shell.settingsMenuAria }}</h2>
+    <au-drawer
+      id="docs-toolbar-menu"
+      position="end"
+      size="sm"
+      [open]="menu.open()"
+      [title]="locale.messages().shell.settingsMenuAria"
+      (openChange)="onOpenChange($event)"
+    >
+      <div class="docs-mobile-menu__content">
+        <au-form-field
+          [label]="locale.messages().shell.lang"
+          class="docs-mobile-menu__field"
+        >
+          <au-select
+            size="sm"
+            [options]="localeOptions()"
+            [value]="locale.locale()"
+            (valueChange)="onLocaleChange($event)"
+          />
+        </au-form-field>
+
+        <au-form-field
+          [label]="locale.messages().shell.theme"
+          class="docs-mobile-menu__field"
+        >
+          <au-select
+            size="sm"
+            [options]="themeOptions()"
+            [value]="theme()"
+            (valueChange)="onThemeChange($event)"
+          />
+        </au-form-field>
+
+        <au-divider />
+
+        <div class="docs-mobile-menu__links">
           <button
             auButton
-            variant="ghost"
+            variant="outline"
             size="sm"
             type="button"
-            [attr.aria-label]="locale.messages().shell.menuCloseAria"
-            (click)="menu.close()"
+            (click)="openExternal(links.github)"
           >
-            <au-icon
-              name="close"
-              size="sm"
-            />
+            {{ locale.messages().shell.githubLabel }}
           </button>
-        </header>
-
-        <div class="docs-mobile-menu__body">
-          <au-form-field
-            [label]="locale.messages().shell.lang"
-            class="docs-mobile-menu__field"
+          <button
+            auButton
+            variant="outline"
+            size="sm"
+            type="button"
+            (click)="openExternal(links.npm)"
           >
-            <au-select
-              size="sm"
-              [options]="localeOptions()"
-              [value]="locale.locale()"
-              (valueChange)="onLocaleChange($event)"
-            />
-          </au-form-field>
-
-          <au-form-field
-            [label]="locale.messages().shell.theme"
-            class="docs-mobile-menu__field"
+            {{ locale.messages().shell.npmLabel }}
+          </button>
+          <button
+            auButton
+            variant="outline"
+            size="sm"
+            type="button"
+            (click)="openExternal(links.storybook)"
           >
-            <au-select
-              size="sm"
-              [options]="themeOptions()"
-              [value]="theme()"
-              (valueChange)="onThemeChange($event)"
-            />
-          </au-form-field>
-
-          <au-divider />
-
-          <div class="docs-mobile-menu__links">
-            <button
-              auButton
-              variant="outline"
-              size="sm"
-              type="button"
-              (click)="openExternal(links.github)"
-            >
-              {{ locale.messages().shell.githubLabel }}
-            </button>
-            <button
-              auButton
-              variant="outline"
-              size="sm"
-              type="button"
-              (click)="openExternal(links.npm)"
-            >
-              {{ locale.messages().shell.npmLabel }}
-            </button>
-            <button
-              auButton
-              variant="outline"
-              size="sm"
-              type="button"
-              (click)="openExternal(links.storybook)"
-            >
-              {{ locale.messages().shell.storybookLabel }}
-            </button>
-          </div>
+            {{ locale.messages().shell.storybookLabel }}
+          </button>
         </div>
       </div>
-    }
+    </au-drawer>
   `,
   styleUrl: './docs-shell-mobile-menu.css',
 })
 export class DocsShellMobileMenu {
-  private readonly destroyRef = inject(DestroyRef);
-
   readonly menu = inject(DocsMobileMenuStore);
   readonly locale = inject(DocsLocaleService);
   readonly links = DOCS_EXTERNAL_LINKS;
@@ -151,47 +113,8 @@ export class DocsShellMobileMenu {
     ];
   });
 
-  constructor() {
-    effect((onCleanup) => {
-      if (typeof document === 'undefined') {
-        return;
-      }
-      if (this.menu.open()) {
-        lockPageScroll();
-        onCleanup(() => unlockPageScroll());
-      }
-    });
-
-    effect((onCleanup) => {
-      if (typeof document === 'undefined' || !this.menu.open()) {
-        return;
-      }
-
-      const onScroll = (event: Event): void => {
-        const panel = document.getElementById('docs-toolbar-menu');
-        const target = event.target;
-        if (panel && target instanceof Node && panel.contains(target)) {
-          return;
-        }
-        this.menu.close();
-      };
-
-      document.addEventListener('scroll', onScroll, { capture: true, passive: true });
-      onCleanup(() => document.removeEventListener('scroll', onScroll, { capture: true }));
-    });
-
-    this.destroyRef.onDestroy(() => {
-      if (typeof document !== 'undefined' && this.menu.open()) {
-        unlockPageScroll();
-      }
-    });
-  }
-
-  @HostListener('document:keydown.escape')
-  onEscape(): void {
-    if (this.menu.open()) {
-      this.menu.close();
-    }
+  onOpenChange(open: boolean): void {
+    this.menu.open.set(open);
   }
 
   onLocaleChange(value: string | null): void {
