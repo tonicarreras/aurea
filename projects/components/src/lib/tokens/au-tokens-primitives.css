@@ -169,6 +169,8 @@
 
   /* Floating overlay spacing */
   --au-floating-gap: 0.625rem;
+  /** Select/autocomplete listbox — flush to field (overlap shared border). */
+  --au-field-listbox-gap: -1px;
   --au-floating-arrow-size: 0.625rem;
   --au-floating-arrow-inset: calc(var(--au-floating-arrow-size) + var(--au-space-3));
   --au-tooltip-gap: var(--au-floating-gap);

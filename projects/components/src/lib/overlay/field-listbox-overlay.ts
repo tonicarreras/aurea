@@ -37,7 +37,11 @@ export class FieldListboxOverlay {
     this.renderer.addClass(listbox, 'au-floating-panel');
     this.activeListbox = listbox;
     this.installScrollPrevention(listbox, anchor);
-    this.tooltipOverlay.sync(listbox, anchor, 'bottom', { matchAnchorWidth: true });
+    this.tooltipOverlay.sync(listbox, anchor, 'bottom', {
+      matchAnchorWidth: true,
+      gapCssVar: '--au-field-listbox-gap',
+      showArrow: false,
+    });
   }
 
   detach(): void {
