@@ -24,8 +24,6 @@ input.au-input-date {
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
   outline: none;
-  color-scheme: inherit;
-  accent-color: var(--au-color-date-picker-accent);
 }
 
 input.au-input-date[data-au-size='sm'] {
@@ -73,18 +71,14 @@ input.au-input-date::-webkit-datetime-edit-text {
 
 input.au-input-date::-webkit-datetime-edit-day-field,
 input.au-input-date::-webkit-datetime-edit-month-field,
-input.au-input-date::-webkit-datetime-edit-year-field {
-  padding: 0 0.15em;
-  border-radius: var(--au-radius-field);
-  color: var(--au-color-form-text);
-}
-
+input.au-input-date::-webkit-datetime-edit-year-field,
 input.au-input-date::-webkit-datetime-edit-day-field:focus,
 input.au-input-date::-webkit-datetime-edit-month-field:focus,
 input.au-input-date::-webkit-datetime-edit-year-field:focus {
-  background-color: var(--au-color-date-picker-edit-highlight);
+  padding: 0 0.15em;
+  border-radius: var(--au-radius-field);
   color: var(--au-color-form-text);
-  outline: none;
+  background-color: transparent !important;
 }
 
 .au-input-date__icon {

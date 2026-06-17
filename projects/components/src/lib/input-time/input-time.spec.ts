@@ -443,7 +443,9 @@ describe('AuInputTime', () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
     const input = queryInput(fix);
-    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    input.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
     await fix.whenStable();
     expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
   });
@@ -469,7 +471,8 @@ describe('AuInputTime', () => {
     await fix.whenStable();
     CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
     await fix.whenStable();
-    const trigger = fix.debugElement.query(By.css('.au-input-time__icon'))!.nativeElement as HTMLButtonElement;
+    const trigger = fix.debugElement.query(By.css('.au-input-time__icon'))!
+      .nativeElement as HTMLButtonElement;
     expect(trigger.getAttribute('tabindex')).toBeNull();
     expect(trigger.disabled).toBe(false);
   });
@@ -535,21 +538,40 @@ describe('AuInputTime', () => {
     expect(() => dir.syncPickerPanel()).not.toThrow();
   });
 
-  it('syncPickerPanel falls back to the input host when anchorHost is unset', async () => {
+  it('anchors the time picker panel to the picker icon button', async () => {
     const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
     await fix.whenStable();
-    const input = queryInput(fix);
+    const inputEl = queryInput(fix);
+    const dir = CONTROL(fix) as unknown as {
+      syncPickerPanel(): void;
+      pickerPanelRef: { setInput: (name: string, value: unknown) => void };
+      pickerIconEl: HTMLButtonElement | null;
+    };
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
+    dir.syncPickerPanel();
+    expect(setInput).toHaveBeenCalledWith('anchor', dir.pickerIconEl);
+    expect(setInput).toHaveBeenCalledWith('controlRoot', inputEl.parentElement);
+  });
+
+  it('syncPickerPanel falls back to the input host when the picker icon is unset', async () => {
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    const inputEl = queryInput(fix);
     const dir = CONTROL(fix) as unknown as {
       syncPickerPanel(): void;
       anchorHost: HTMLElement | null;
+      pickerIconEl: HTMLButtonElement | null;
       pickerPanelRef: { setInput: (name: string, value: unknown) => void };
     };
     CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
     await fix.whenStable();
     dir.anchorHost = null;
+    dir.pickerIconEl = null;
     const setInput = vi.spyOn(dir.pickerPanelRef, 'setInput');
     dir.syncPickerPanel();
-    expect(setInput).toHaveBeenCalledWith('anchor', input);
+    expect(setInput).toHaveBeenCalledWith('anchor', inputEl);
   });
 
   it('syncPickerPanel skips trigger a11y when icon button is missing', async () => {

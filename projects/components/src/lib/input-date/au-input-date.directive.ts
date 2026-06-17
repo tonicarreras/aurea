@@ -313,8 +313,13 @@ export class AuInputDate {
     this.pickerPanelRef.setInput('selected', this.value());
     this.pickerPanelRef.setInput('minDate', this.minDate());
     this.pickerPanelRef.setInput('maxDate', this.maxDate());
-    this.pickerPanelRef.setInput('anchor', this.anchorHost ?? this.host.nativeElement);
+    this.pickerPanelRef.setInput('anchor', this.pickerAnchor());
+    this.pickerPanelRef.setInput('controlRoot', this.anchorHost ?? this.host.nativeElement);
     this.pickerPanelRef.changeDetectorRef.detectChanges();
+  }
+
+  private pickerAnchor(): HTMLElement {
+    return this.pickerIconEl ?? this.anchorHost ?? this.host.nativeElement;
   }
 
   private syncPickerTriggerA11y(): void {

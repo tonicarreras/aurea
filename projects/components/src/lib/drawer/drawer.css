@@ -36,7 +36,6 @@ au-drawer,
   padding: 0;
   border: none;
   background: transparent;
-  color: inherit;
   overflow: clip;
   overscroll-behavior: none;
   touch-action: none;
@@ -125,6 +124,7 @@ au-drawer,
   font-weight: var(--au-weight-semibold);
   line-height: var(--au-leading-tight);
   letter-spacing: var(--au-tracking-ui);
+  color: var(--au-color-text-primary);
 }
 
 .au-drawer__native .au-drawer__close {

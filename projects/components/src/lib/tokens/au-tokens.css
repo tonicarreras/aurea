@@ -133,9 +133,12 @@
   --au-z-max: 10000;
 }
 
-/* Tooltip — portaled bubble (must set font on the bubble; not inherited from host) */
+/* Floating overlay spacing — menu, popover, pickers, select, tooltip */
 :root {
-  --au-tooltip-gap: 0.6rem;
+  --au-floating-gap: 0.625rem;
+  --au-floating-arrow-size: 0.625rem;
+  --au-floating-arrow-inset: calc(var(--au-floating-arrow-size) + var(--au-space-3));
+  --au-tooltip-gap: var(--au-floating-gap);
 }
 
 .au-tooltip__bubble {
@@ -159,6 +162,23 @@
 
 .au-tooltip__bubble--overlay {
   position: fixed;
+  overflow: visible;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay {
+  animation: au-floating-enter-bottom var(--au-motion-floating) both;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay[data-au-placement='top'] {
+  animation-name: au-floating-enter-top;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay[data-au-placement='start'] {
+  animation-name: au-floating-enter-start;
+}
+
+.au-tooltip__bubble.au-tooltip__bubble--overlay[data-au-placement='end'] {
+  animation-name: au-floating-enter-end;
 }
 
 /* Floating panels — menu, popover (portaled, position: fixed via overlay helper) */
@@ -198,7 +218,7 @@
 }
 
 /* Caret — points at trigger; position from overlay JS (--au-floating-arrow-x/y) */
-.au-floating-panel.au-tooltip__bubble--overlay::before {
+:is(.au-floating-panel, .au-tooltip__bubble).au-tooltip__bubble--overlay::before {
   content: '';
   position: absolute;
   z-index: 1;
@@ -210,7 +230,15 @@
   pointer-events: none;
 }
 
-.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='bottom']::before {
+.au-tooltip__bubble.au-tooltip__bubble--overlay::before {
+  background: var(--au-color-surface-inverted);
+  border: none;
+}
+
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='bottom']::before {
   left: var(--au-floating-arrow-x, 50%);
   top: 0;
   transform: translate(-50%, -50%) rotate(45deg);
@@ -218,7 +246,10 @@
   border-right-color: transparent;
 }
 
-.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='top']::before {
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='top']::before {
   left: var(--au-floating-arrow-x, 50%);
   bottom: 0;
   transform: translate(-50%, 50%) rotate(45deg);
@@ -226,7 +257,10 @@
   border-left-color: transparent;
 }
 
-.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='start']::before {
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='start']::before {
   top: var(--au-floating-arrow-y, 50%);
   right: 0;
   transform: translate(50%, -50%) rotate(45deg);
@@ -234,7 +268,10 @@
   border-left-color: transparent;
 }
 
-.au-floating-panel.au-tooltip__bubble--overlay[data-au-placement='end']::before {
+:is(
+    .au-floating-panel,
+    .au-tooltip__bubble
+  ).au-tooltip__bubble--overlay[data-au-placement='end']::before {
   top: var(--au-floating-arrow-y, 50%);
   left: 0;
   transform: translate(-50%, -50%) rotate(45deg);
@@ -317,8 +354,6 @@
   --au-motion-modal: var(--au-duration-default) var(--au-ease-standard);
   --au-motion-toast: var(--au-duration-slow) var(--au-ease-out);
   --au-motion-floating: 240ms var(--au-ease-emph);
-  --au-floating-gap: 0.625rem;
-  --au-floating-arrow-size: 0.625rem;
   --au-floating-blur: 14px;
   --au-shadow-floating:
     0 0 0 1px color-mix(in srgb, var(--au-color-border-subtle) 72%, transparent),
@@ -510,13 +545,6 @@
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #7eb8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
-  /* Native date/time — inline segment highlight (legible with form-text) */
-  --au-color-date-picker-edit-highlight: color-mix(
-    in srgb,
-    var(--au-color-action-primary) 24%,
-    var(--au-color-surface-raised)
-  );
-  --au-color-date-picker-accent: var(--au-color-date-picker-edit-highlight);
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);
@@ -777,12 +805,6 @@
   --au-color-select-option-selected-text: #ffffff;
   --au-color-select-option-selected-marker: #cfe8ff;
   --au-color-select-option-disabled-text: var(--au-color-form-disabled-foreground);
-  --au-color-date-picker-edit-highlight: color-mix(
-    in srgb,
-    var(--au-color-action-primary) 32%,
-    var(--au-color-surface-raised)
-  );
-  --au-color-date-picker-accent: var(--au-color-date-picker-edit-highlight);
   --au-color-date-picker-icon: var(--au-color-text-tertiary);
   --au-color-date-picker-icon-hover: var(--au-color-text-secondary);
   --au-color-date-picker-icon-active: var(--au-color-action-primary);

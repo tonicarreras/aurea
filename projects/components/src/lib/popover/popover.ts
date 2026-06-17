@@ -16,10 +16,7 @@ import {
 } from '@angular/core';
 import { injectHostRef } from '../au-host-element';
 
-import {
-  focusInitialInDialogPanel,
-  handleDialogTabKeydown,
-} from '../dialog/dialog-focus-trap';
+import { focusInitialInDialogPanel, handleDialogTabKeydown } from '../dialog/dialog-focus-trap';
 import { installPageScrollPrevention } from '../overlay/prevent-page-scroll';
 import { TooltipOverlay } from '../overlay/tooltip-overlay';
 import type { AuTooltipPlacement } from '../overlay/tooltip-position';

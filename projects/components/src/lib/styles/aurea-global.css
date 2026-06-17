@@ -239,8 +239,6 @@ input.au-input-date {
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
   outline: none;
-  color-scheme: inherit;
-  accent-color: var(--au-color-date-picker-accent);
 }
 
 input.au-input-date[data-au-size='sm'] {
@@ -288,18 +286,14 @@ input.au-input-date::-webkit-datetime-edit-text {
 
 input.au-input-date::-webkit-datetime-edit-day-field,
 input.au-input-date::-webkit-datetime-edit-month-field,
-input.au-input-date::-webkit-datetime-edit-year-field {
-  padding: 0 0.15em;
-  border-radius: var(--au-radius-field);
-  color: var(--au-color-form-text);
-}
-
+input.au-input-date::-webkit-datetime-edit-year-field,
 input.au-input-date::-webkit-datetime-edit-day-field:focus,
 input.au-input-date::-webkit-datetime-edit-month-field:focus,
 input.au-input-date::-webkit-datetime-edit-year-field:focus {
-  background-color: var(--au-color-date-picker-edit-highlight);
+  padding: 0 0.15em;
+  border-radius: var(--au-radius-field);
   color: var(--au-color-form-text);
-  outline: none;
+  background-color: transparent !important;
 }
 
 .au-input-date__icon {
@@ -433,8 +427,6 @@ input.au-input-time {
   color: var(--au-color-form-text);
   caret-color: var(--au-color-form-caret);
   outline: none;
-  color-scheme: inherit;
-  accent-color: var(--au-color-date-picker-accent);
 }
 
 input.au-input-time[data-au-size='sm'] {
@@ -483,19 +475,15 @@ input.au-input-time::-webkit-datetime-edit-text {
 input.au-input-time::-webkit-datetime-edit-hour-field,
 input.au-input-time::-webkit-datetime-edit-minute-field,
 input.au-input-time::-webkit-datetime-edit-second-field,
-input.au-input-time::-webkit-datetime-edit-ampm-field {
-  padding: 0 0.15em;
-  border-radius: var(--au-radius-field);
-  color: var(--au-color-form-text);
-}
-
+input.au-input-time::-webkit-datetime-edit-ampm-field,
 input.au-input-time::-webkit-datetime-edit-hour-field:focus,
 input.au-input-time::-webkit-datetime-edit-minute-field:focus,
 input.au-input-time::-webkit-datetime-edit-second-field:focus,
 input.au-input-time::-webkit-datetime-edit-ampm-field:focus {
-  background-color: var(--au-color-date-picker-edit-highlight);
+  padding: 0 0.15em;
+  border-radius: var(--au-radius-field);
   color: var(--au-color-form-text);
-  outline: none;
+  background-color: transparent !important;
 }
 
 .au-input-time__icon {
@@ -1537,13 +1525,6 @@ a.au-link[data-au-variant='subtle']:hover {
   text-rendering: optimizeLegibility;
 }
 
-input.au-input-date,
-input.au-input-time,
-input.au-input-password,
-au-tag-input {
-  color-scheme: inherit;
-}
-
 au-select,
 au-autocomplete {
   overflow: visible;
@@ -1915,6 +1896,84 @@ input.au-input-password:disabled {
   border-color: var(--au-chrome-border-color-hover);
 }
 
+/* --- ../overlay/au-floating-panel-responsive-modal.css --- */
+/**
+ * Bottom-sheet modal layout for date/time pickers on narrow viewports.
+ * Class is toggled in JS via FloatingPickerOverlay (see AU_RESPONSIVE_FLOATING_MODAL_MQ).
+ */
+
+.au-floating-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--au-z-modal) - 1);
+  background: var(--au-color-overlay-scrim);
+  pointer-events: auto;
+  animation: au-floating-modal-backdrop-in var(--au-motion-modal);
+}
+
+.au-floating-panel--responsive-modal {
+  position: fixed !important;
+  inset: auto 0 0 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0;
+  box-sizing: border-box;
+  border-radius: var(--au-radius-modal) var(--au-radius-modal) 0 0;
+  border-bottom: none;
+  z-index: var(--au-z-modal);
+  max-height: min(88dvh, 100dvh - env(safe-area-inset-top, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: max(var(--au-space-3), env(safe-area-inset-bottom, 0px));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  animation: au-floating-modal-panel-in var(--au-motion-modal);
+  animation-fill-mode: both;
+}
+
+.au-floating-panel--responsive-modal::before {
+  display: none;
+}
+
+.au-floating-panel--responsive-modal.au-date-calendar {
+  min-width: 0;
+}
+
+.au-floating-panel--responsive-modal.au-time-picker {
+  min-width: 0;
+}
+
+.au-floating-panel--responsive-modal.au-time-picker .au-time-picker__column {
+  max-height: min(42dvh, calc(100dvh - 10rem));
+}
+
+@keyframes au-floating-modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes au-floating-modal-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-floating-panel-backdrop,
+  .au-floating-panel--responsive-modal {
+    animation: none;
+  }
+}
+
 /* --- ./au-field-error.css --- */
 /**
  * Shared validation error message (glyph + text).
@@ -1982,7 +2041,7 @@ input.au-input-password:disabled {
   position: absolute;
   z-index: var(--au-z-dropdown);
   inset-inline: 0;
-  top: calc(100% + var(--au-space-1));
+  top: calc(100% + var(--au-floating-gap));
   margin: 0;
   padding: var(--au-space-1);
   list-style: none;
@@ -2004,15 +2063,12 @@ input.au-input-password:disabled {
   z-index: var(--au-z-dropdown);
   inset-inline: auto;
   top: auto;
-  border-start-start-radius: 0;
-  border-start-end-radius: 0;
   animation: au-floating-enter-bottom var(--au-motion-floating) both;
 }
 
-:is(au-select, au-autocomplete)[data-au-listbox-open]
-  :is(.au-select__control-row, .au-autocomplete__control-row) {
-  border-end-start-radius: 0;
-  border-end-end-radius: 0;
+.au-field-listbox.au-floating-panel {
+  padding: var(--au-space-1);
+  color: var(--au-color-text-primary);
 }
 
 :is(au-select, au-autocomplete)[data-au-size='sm'] .au-field-listbox__option {
