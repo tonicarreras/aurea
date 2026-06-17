@@ -30,7 +30,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: [
-        'Visible focus ring when tabbing (`--au-color-focus-ring`).',
+        'Visible focus when tabbing (`--au-focus-tab`); pointer focus uses `--au-focus-tactile`.',
         '`loading` sets `aria-busy`, shows a decorative `au-spinner`, and blocks click.',
         'Size `lg` respects `--au-touch-target-min` (44px).',
       ],
@@ -462,41 +462,59 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     'input-date': {
       intro: [
-        'Native date picker (`<input type="date">`) with Aurea tokens on icon and OS popup.',
+        'Date picker with Aurea calendar (`<input type="date">` + custom month grid).',
         'Value as ISO `YYYY-MM-DD` or `null`.',
       ],
       whenToUse: [
-        'Calendar dates with the OS picker.',
+        'Calendar dates with an accessible, cross-browser month grid.',
         'Range filters with `minDate` / `maxDate`.',
       ],
-      whenNotToUse: ['Custom inline calendar → composite component or external library.'],
+      whenNotToUse: [
+        'Date range selection (start/end) → two fields or a composite component.',
+        'Always-visible inline calendar → custom layout on top of this control.',
+      ],
       anatomy: [
         {
           region: 'Native input',
-          detail: 'Tokens `--au-color-date-picker-*` for icon and accent.',
+          detail: 'Manual ISO entry; calendar icon opens the panel.',
+        },
+        {
+          region: '`.au-date-calendar` panel',
+          detail: 'Monday-first month grid with month navigation and keyboard support.',
         },
       ],
-      accessibility: ['Linked label and errors; native OS picker behavior.'],
+      accessibility: [
+        'Linked label and errors; panel uses `role="dialog"` and a `role="grid"` day matrix.',
+        'Input exposes `aria-haspopup="dialog"` and `aria-expanded`; focus returns to the field on close.',
+        'Keyboard: arrows, Home/End, PageUp/PageDown, Enter/Space, and Escape.',
+        'While open, wheel/touch on the page is blocked (`installPageScrollPrevention`); outside scroll dismisses.',
+      ],
     },
     'input-time': {
       intro: [
-        'Native time picker (`<input type="time">`) with Aurea tokens on icon and OS popup.',
+        'Time picker with Aurea panel (`<input type="time">` + hour/minute columns).',
         'Value as 24h `HH:mm` or `null`.',
       ],
       whenToUse: [
-        'Clock times with the OS picker.',
+        'Clock times with accessible, cross-browser hour/minute columns.',
         'Business-hour filters with `minTime` / `maxTime`.',
       ],
       whenNotToUse: ['Custom duration steppers → composite component or external library.'],
       anatomy: [
         {
           region: 'Native input',
-          detail: 'Tokens `--au-color-date-picker-*` for icon and accent.',
+          detail: 'Manual `HH:mm` entry; clock icon opens the panel.',
+        },
+        {
+          region: '`.au-time-picker` panel',
+          detail: 'Scrollable hour (0–23) and minute (0–59) columns.',
         },
       ],
       accessibility: [
-        'Linked label, hint, and errors via `au-form-field` (`aria-invalid`, `aria-describedby`).',
-        'Decorative clock icon (`aria-hidden`); picker opens via native control.',
+        'Linked label, hint, and errors; panel uses `role="dialog"` and `role="listbox"` columns.',
+        'Input exposes `aria-haspopup="dialog"` and `aria-expanded`; focus returns to the field on close.',
+        'Keyboard: arrows, Home/End, PageUp/PageDown (columns), Enter/Space, and Escape.',
+        'While open, wheel/touch on the page is blocked; outside scroll dismisses.',
       ],
     },
     'input-password': {
@@ -1122,7 +1140,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: [
-        'Visible focus ring (`--au-shadow-focus-ring`) on keyboard focus.',
+        'Visible focus (`--au-focus-inset`) on keyboard focus.',
         'External links open in a new browsing context with `noopener`.',
       ],
       keyboard: ['Enter activates the native link; Tab follows document order.'],
@@ -1364,7 +1382,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: [
-        'Anillo de foco visible al tabular (`--au-color-focus-ring`).',
+        'Foco visible al tabular (`--au-focus-tab`); el foco puntero usa `--au-focus-tactile`.',
         '`loading` activa `aria-busy`, muestra un `au-spinner` decorativo y bloquea el click.',
         'Tamaño `lg` respeta `--au-touch-target-min` (44px).',
       ],
@@ -1804,31 +1822,41 @@ export const STORY_OVERVIEW_SOURCE = {
     },
     'input-date': {
       intro: [
-        'Selector de fecha nativo (`<input type="date">`) con tokens Aurea en icono y popup del SO.',
+        'Selector de fecha con calendario Aurea (`<input type="date">` + panel mensual propio).',
         'Valor en formato ISO `YYYY-MM-DD` o `null`.',
       ],
       whenToUse: [
-        'Fechas de calendario con picker del sistema operativo.',
+        'Fechas de calendario con rejilla mensual accesible y coherente entre navegadores.',
         'Filtros de rango con `minDate` / `maxDate`.',
       ],
-      whenNotToUse: ['Calendario inline personalizado → componente compuesto o librería externa.'],
+      whenNotToUse: [
+        'Selección de rango de fechas (inicio/fin) → dos campos o componente compuesto.',
+        'Calendario inline siempre visible → layout personalizado encima de este control.',
+      ],
       anatomy: [
         {
           region: 'Input nativo',
-          detail: 'Tokens `--au-color-date-picker-*` para icono y acento.',
+          detail: 'Entrada manual ISO; icono de calendario abre el panel.',
+        },
+        {
+          region: 'Panel `.au-date-calendar`',
+          detail: 'Rejilla mensual (lunes primero), navegación por mes y teclado.',
         },
       ],
       accessibility: [
-        'Label y mensajes de error enlazados; comportamiento nativo del SO para el picker.',
+        'Label y mensajes de error enlazados; panel con `role="dialog"` y rejilla `role="grid"`.',
+        'Input con `aria-haspopup="dialog"` y `aria-expanded`; al cerrar, el foco vuelve al campo.',
+        'Teclado: flechas, Home/End, PageUp/PageDown, Enter/Espacio y Escape.',
+        'Abierto, rueda/touch en la página se bloquea (`installPageScrollPrevention`); scroll fuera cierra el panel.',
       ],
     },
     'input-time': {
       intro: [
-        'Selector de hora nativo (`<input type="time">`) con tokens Aurea en icono y popup del SO.',
+        'Selector de hora con panel Aurea (`<input type="time">` + columnas hora/minuto).',
         'Valor en formato 24h `HH:mm` o `null`.',
       ],
       whenToUse: [
-        'Horas del reloj con picker del sistema operativo.',
+        'Horas del reloj con columnas accesibles y coherentes entre navegadores.',
         'Filtros de horario laboral con `minTime` / `maxTime`.',
       ],
       whenNotToUse: [
@@ -1837,12 +1865,18 @@ export const STORY_OVERVIEW_SOURCE = {
       anatomy: [
         {
           region: 'Input nativo',
-          detail: 'Tokens `--au-color-date-picker-*` para icono y acento.',
+          detail: 'Entrada manual `HH:mm`; icono de reloj abre el panel.',
+        },
+        {
+          region: 'Panel `.au-time-picker`',
+          detail: 'Columnas desplazables de horas (0–23) y minutos (0–59).',
         },
       ],
       accessibility: [
-        'Label, hint y errores enlazados vía `au-form-field` (`aria-invalid`, `aria-describedby`).',
-        'Icono reloj decorativo (`aria-hidden`); el picker se abre con el control nativo.',
+        'Label, hint y errores enlazados; panel con `role="dialog"` y listas `role="listbox"`.',
+        'Input con `aria-haspopup="dialog"` y `aria-expanded`; al cerrar, el foco vuelve al campo.',
+        'Teclado: flechas, Home/End, PageUp/PageDown (columnas), Enter/Espacio y Escape.',
+        'Abierto, rueda/touch en la página se bloquea; scroll fuera cierra el panel.',
       ],
     },
     'input-password': {
@@ -2470,7 +2504,7 @@ export const STORY_OVERVIEW_SOURCE = {
         },
       ],
       accessibility: [
-        'Anillo de foco visible (`--au-shadow-focus-ring`) con teclado.',
+        'Anillo de foco visible (`--au-focus-inset`) con teclado.',
         'Enlaces externos abren contexto nuevo con `noopener`.',
       ],
       keyboard: ['Enter activa el enlace nativo; Tab sigue el orden del documento.'],

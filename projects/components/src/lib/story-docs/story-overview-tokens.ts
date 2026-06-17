@@ -116,8 +116,8 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
       examples: '`--au-z-toast`, `--au-elevation-raised`, semantic feedback tokens',
     },
   ],
-  'chip-group': [{ concern: 'Layout', examples: '`--au-space-2`, `--au-color-focus-ring`' }],
-  list: [{ concern: 'Layout', examples: '`--au-space-2`, `--au-color-focus-ring`' }],
+  'chip-group': [{ concern: 'Layout', examples: '`--au-space-2`, `--au-focus-inset`' }],
+  list: [{ concern: 'Layout', examples: '`--au-space-2`, `--au-focus-inset`' }],
   message: [
     { concern: 'Variants', examples: '`--au-message-bg`, `--au-message-border`, feedback tokens' },
     { concern: 'Focus', examples: '`--au-focus-inset`' },

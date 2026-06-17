@@ -38,6 +38,8 @@ npm install @aurea-design-system/components
 
 ### 1. Design tokens (global styles)
 
+Token layers: **primitives → semantic → roles → domain → high-contrast** — see [`src/lib/tokens/README.md`](src/lib/tokens/README.md).
+
 In `angular.json` → `styles`, or in `src/styles.scss`:
 
 ```scss

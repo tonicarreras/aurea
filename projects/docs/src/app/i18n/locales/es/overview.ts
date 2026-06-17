@@ -29,7 +29,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       { region: 'Botón nativo', detail: 'Proyección de contenido; `aria-busy` cuando `loading`.' },
     ],
     accessibility: [
-      'Anillo de foco visible al tabular (`--au-color-focus-ring`).',
+      'Foco visible al tabular (`--au-focus-tab`); el foco puntero usa `--au-focus-tactile`.',
       '`loading` activa `aria-busy`, muestra un `au-spinner` decorativo y bloquea el click.',
       'Tamaño `lg` respeta `--au-touch-target-min` (44px).',
     ],
@@ -1150,7 +1150,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       { region: 'Texto del enlace', detail: 'Contenido nativo del ancla entre las etiquetas.' },
     ],
     accessibility: [
-      'Anillo de foco visible (`--au-shadow-focus-ring`) con teclado.',
+      'Anillo de foco visible (`--au-focus-inset`) con teclado.',
       'Enlaces externos abren contexto nuevo con `noopener`.',
     ],
     keyboard: ['Enter activa el enlace nativo; Tab sigue el orden del documento.'],

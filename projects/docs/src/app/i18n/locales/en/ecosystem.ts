@@ -30,11 +30,11 @@ export const ECOSYSTEM_EN: EcosystemMessages = {
     sections: [
       {
         heading: 'Files',
-        body: 'Repository path: <code>projects/design-tokens/</code>. Run <code>node scripts/validate-design-tokens.mjs</code> after CSS changes.',
+        body: 'Repository path: <code>projects/design-tokens/</code>. After CSS changes run <code>bun run export:tokens</code> and <code>bun run validate:tokens</code> (DTCG 2025.10 schema + CSS drift).',
       },
       {
         heading: 'Figma',
-        body: 'Import JSON via Tokens Studio (or similar). Map <code>color.surface.raised</code> to frame fills and bind text styles to <code>color.text.primary</code>.',
+        body: 'Import <code>au-tokens.*.tokens.json</code> via Tokens Studio (or similar). Map <code>color.surface.raised.default</code> to frame fills; variant groups use a <code>default</code> leaf (e.g. <code>color.action.primary.default</code>).',
       },
       {
         heading: 'Hand-off to code',

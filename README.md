@@ -6,7 +6,7 @@
 
 <!-- Badges must use HTML: Markdown images inside block HTML are not rendered on GitHub. -->
 <p align="center">
-  <a href="https://angular.dev"><img src="https://img.shields.io/badge/Angular-21-DD0031?logo=angular" alt="Angular" /></a>
+  <a href="https://angular.dev"><img src="https://img.shields.io/badge/Angular-22-DD0031?logo=angular" alt="Angular" /></a>
   <a href="https://www.w3.org/WAI/WCAG21/quickref/"><img src="https://img.shields.io/badge/WCAG-2.2_AA-2ecc71" alt="WCAG" /></a>
   <a href="https://github.com/tonicarreras/aurea/actions/workflows/test.yml?query=branch%3Adevelop"><img src="https://github.com/tonicarreras/aurea/actions/workflows/test.yml/badge.svg?branch=develop&amp;event=push" alt="Tests" /></a>
   <a href="https://www.npmjs.com/package/@aurea-design-system/components"><img src="https://img.shields.io/npm/v/@aurea-design-system/components?label=npm" alt="npm" /></a>
@@ -43,7 +43,7 @@ Aurea targets **WCAG 2.2 AA** on primary flows and ships as **`@aurea-design-sys
 - **Design Tokens** — Semantic CSS custom properties (`--au-*`) for theming, including dark mode
 - **Signal Forms** — Modern reactive forms with Angular 22's `model()` and signal-based controls
 - **Accessible by Default** — Focus rings, keyboard navigation, ARIA attributes wired to controls
-- **Component Composition** — Primitives → Semantic → Component layers for maintainability
+- **Component Composition** — Primitives → semantic → roles → domain → high-contrast → component CSS
 - **Interactive Documentation** — Storybook with interaction tests and accessibility audits
 
 ---
@@ -164,17 +164,30 @@ After `test:coverage`, open the HTML report at `coverage/components/index.html`.
 
 ---
 
-## 🎨 Design Tokens
+## Design Tokens
 
-Aurea uses semantic tokens organized by category:
+Aurea organizes tokens in five CSS layers (see `projects/components/src/lib/tokens/README.md`):
 
-| Category       | Examples                                               |
-| -------------- | ------------------------------------------------------ |
-| **Typography** | `--au-font-sans`, `--au-text-sm`, `--au-weight-medium` |
-| **Spacing**    | `--au-space-1` … `--au-space-12`                       |
-| **Colors**     | `--au-color-surface-canvas`, `--au-color-text-primary` |
-| **Focus**      | `--au-shadow-focus-ring`, `--au-focus-ring-width`      |
-| **Form**       | `--au-color-form-border`, `--au-color-form-error`      |
+| Layer         | File                          | Role                                               |
+| ------------- | ----------------------------- | -------------------------------------------------- |
+| Primitives    | `au-tokens-primitives.css`    | Spacing, radii, motion, z-index (internal)         |
+| Semantic      | `au-tokens-semantic.css`      | Surfaces, text, actions, form colors               |
+| Roles         | `au-tokens-roles.css`         | `--au-elevation-*`, `--au-focus-inset/tactile/tab` |
+| Domain        | `au-tokens-domain.css`        | Listbox, dialog, drawer chrome                     |
+| High contrast | `au-tokens-high-contrast.css` | Accessibility palettes                             |
+
+Consumer-facing examples:
+
+| Category       | Examples                                                                         |
+| -------------- | -------------------------------------------------------------------------------- |
+| **Typography** | `--au-font-sans`, `--au-text-sm`, `--au-weight-medium`                           |
+| **Spacing**    | `--au-space-1` … `--au-space-12`                                                 |
+| **Colors**     | `--au-color-surface-raised`, `--au-color-text-primary`                           |
+| **Elevation**  | `--au-elevation-flat`, `--au-elevation-overlay`                                  |
+| **Focus**      | `--au-focus-inset`, `--au-focus-tactile`, `--au-focus-tab` (+ `-error` variants) |
+| **Form**       | `--au-chrome-border`, `--au-color-form-error`                                    |
+
+Design-tool export: `au-tokens.{light,dark}.tokens.json` (DTCG 2025.10). Run `bun run export:tokens` and `bun run validate:tokens` after CSS changes.
 
 ### Dark Mode
 
