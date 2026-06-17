@@ -20,7 +20,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
       token: '--au-size-field-h-sm / md',
       description: 'Height per `size`; lg uses `--au-touch-target-min`.',
     },
-    { token: '--au-focus-tactile / --au-focus-tab', description: 'Pointer focus (`--au-focus-tactile`) and Tab focus (`--au-focus-tab`).' },
+    {
+      token: '--au-focus-tactile / --au-focus-tab',
+      description: 'Pointer focus (`--au-focus-tactile`) and Tab focus (`--au-focus-tab`).',
+    },
     {
       token: '--au-transition-background, --au-transition-border',
       description: 'Background, border, and shadow transitions between states.',
@@ -60,7 +63,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
       token: '--au-size-field-h-md',
       description: 'Control height; sm/lg use the matching size tokens.',
     },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Inset focus on the field shell (`:focus-within`).' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Inset focus on the field shell (`:focus-within`).',
+    },
   ],
   textarea: [
     { token: '--au-color-form-border', description: 'Text area border.' },
@@ -124,14 +130,20 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
       token: '--au-color-listbox-option-selected-bg',
       description: 'Selected option (`--au-color-select-option-selected-*` aliases).',
     },
-    { token: '--au-elevation-overlay', description: 'Listbox panel elevation (`.au-floating-panel`).' },
+    {
+      token: '--au-elevation-overlay',
+      description: 'Listbox panel elevation (`.au-floating-panel`).',
+    },
     {
       token: '--au-field-listbox-gap',
       description: 'Gap between trigger and portaled listbox (flush attach, typically -1px).',
     },
     { token: '--au-z-dropdown', description: 'Listbox stacking above the rest of the UI.' },
     { token: '--au-size-field-h-md', description: 'Trigger height; scales with `size`.' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Focus on the combobox trigger row.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Focus on the combobox trigger row.',
+    },
   ],
   autocomplete: [
     { token: '--au-chrome-border', description: 'Search field border (shared field chrome).' },
@@ -233,7 +245,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-date-picker-icon-hover', description: 'Icon on hover / focus-within.' },
     { token: '--au-radius-field', description: 'Control corners.' },
     { token: '--au-size-field-h-md', description: 'Height aligned with other fields.' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Focus on field and calendar cells.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Focus on field and calendar cells.',
+    },
     {
       token: '--au-color-action-primary',
       description: 'Selected day in `.au-date-calendar__day--selected`.',
@@ -322,7 +337,10 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-select-option-highlight-text', description: 'Accent variant text.' },
     { token: '--au-radius-sm', description: 'Chip corners.' },
     { token: '--au-text-xs / --au-text-sm', description: 'Typography per `size`.' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Focus on selectable/removable chips.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Focus on selectable/removable chips.',
+    },
   ],
   message: [
     { token: '--au-message-bg', description: 'Surface background per variant.' },

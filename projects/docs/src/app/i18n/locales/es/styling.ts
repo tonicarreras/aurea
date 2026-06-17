@@ -20,7 +20,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       token: '--au-size-field-h-sm / md',
       description: 'Altura por tamaño (`size`); lg usa `--au-touch-target-min`.',
     },
-    { token: '--au-focus-tactile / --au-focus-tab', description: 'Foco puntero (`--au-focus-tactile`) y Tab (`--au-focus-tab`).' },
+    {
+      token: '--au-focus-tactile / --au-focus-tab',
+      description: 'Foco puntero (`--au-focus-tactile`) y Tab (`--au-focus-tab`).',
+    },
     {
       token: '--au-transition-background, --au-transition-border',
       description: 'Transiciones de fondo, borde y sombra entre estados.',
@@ -69,7 +72,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       token: '--au-size-field-h-md',
       description: 'Altura del control; sm/lg usan las variantes homónimas.',
     },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco inset en el shell del campo (`:focus-within`).' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco inset en el shell del campo (`:focus-within`).',
+    },
   ],
   textarea: [
     { token: '--au-color-form-border', description: 'Borde del área de texto.' },
@@ -86,7 +92,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-size-field-px-md', description: 'Padding horizontal; escala con `size`.' },
     { token: '--au-radius-field', description: 'Esquinas del shell del campo.' },
     { token: '--au-color-form-error', description: 'Estado de error (borde y mensaje).' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco inset en el shell del campo.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco inset en el shell del campo.',
+    },
   ],
   checkbox: [
     {
@@ -116,7 +125,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-form-error', description: 'Anillo de error en la pista del switch.' },
   ],
   select: [
-    { token: '--au-chrome-border', description: 'Borde del trigger combobox (cromado compartido).' },
+    {
+      token: '--au-chrome-border',
+      description: 'Borde del trigger combobox (cromado compartido).',
+    },
     {
       token: '--au-color-listbox-field-hover-bg',
       description: 'Fondo hover del trigger (alias `--au-color-select-field-hover-bg`).',
@@ -143,7 +155,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-focus-inset / --au-focus-tab', description: 'Foco en la fila del combobox.' },
   ],
   autocomplete: [
-    { token: '--au-chrome-border', description: 'Borde del campo de búsqueda (cromado compartido).' },
+    {
+      token: '--au-chrome-border',
+      description: 'Borde del campo de búsqueda (cromado compartido).',
+    },
     { token: '--au-color-listbox-field-hover-bg', description: 'Fondo del campo al hover.' },
     { token: '--au-color-listbox-menu-bg', description: 'Fondo de la lista de sugerencias.' },
     {
@@ -189,7 +204,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
   'tag-input': [
     { token: '--au-color-form-border', description: 'Borde del shell del campo.' },
     { token: '--au-chip-*', description: 'Chips removibles dentro del campo (vía `au-chip`).' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco en la fila del campo de tags.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco en la fila del campo de tags.',
+    },
   ],
   'description-list': [
     { token: '--au-color-text-label', description: 'Tipografía del término (`dt`).' },
@@ -245,7 +263,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-date-picker-icon-hover', description: 'Icono en hover / focus-within.' },
     { token: '--au-radius-field', description: 'Esquinas del control.' },
     { token: '--au-size-field-h-md', description: 'Altura alineada con otros campos.' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco en el campo y celdas del calendario.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco en el campo y celdas del calendario.',
+    },
     {
       token: '--au-color-action-primary',
       description: 'Día seleccionado en `.au-date-calendar__day--selected`.',
@@ -275,7 +296,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       token: '--au-color-text-on-solid',
       description: 'Dígito de la opción seleccionada (blanco en claro, oscuro en dark).',
     },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco en el campo y opciones del panel.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco en el campo y opciones del panel.',
+    },
     { token: '--au-color-form-error', description: 'Borde y mensaje de error.' },
   ],
   'file-upload': [
@@ -318,7 +342,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
   ],
   'chip-group': [
     { token: '--au-space-2', description: 'Separación entre chips en la fila.' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco en chips seleccionables (vía `au-chip`).' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco en chips seleccionables (vía `au-chip`).',
+    },
   ],
   list: [
     { token: '--au-space-2', description: 'Separación entre ítems de la lista.' },
@@ -331,7 +358,10 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
     { token: '--au-color-select-option-highlight-text', description: 'Texto en variante accent.' },
     { token: '--au-radius-sm', description: 'Esquinas del chip.' },
     { token: '--au-text-xs / --au-text-sm', description: 'Tipografía según `size`.' },
-    { token: '--au-focus-inset / --au-focus-tab', description: 'Foco en chips seleccionables/removibles.' },
+    {
+      token: '--au-focus-inset / --au-focus-tab',
+      description: 'Foco en chips seleccionables/removibles.',
+    },
   ],
   message: [
     { token: '--au-message-bg', description: 'Fondo según variante.' },

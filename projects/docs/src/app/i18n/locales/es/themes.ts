@@ -55,7 +55,10 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
         token: '--au-size-field-h-sm / md / lg',
         description: 'Alturas de controles de formulario.',
       },
-      { token: '--au-chrome-border', description: 'Borde compartido de shells (inputs, combobox).' },
+      {
+        token: '--au-chrome-border',
+        description: 'Borde compartido de shells (inputs, combobox).',
+      },
       { token: '--au-elevation-flat', description: 'Elevación en reposo de shells de campo.' },
       {
         token: '--au-focus-inset / --au-focus-tab',
@@ -97,10 +100,19 @@ export const THEME_TOKEN_GROUPS_ES: ThemeTokenGroup[] = [
       { token: '--au-elevation-raised', description: 'Snackbars.' },
       { token: '--au-elevation-floating', description: 'Paneles de menú y popover.' },
       { token: '--au-elevation-overlay', description: 'Diálogo, drawer, tooltip, listbox.' },
-      { token: '--au-focus-inset / --au-focus-inset-error', description: 'Foco puntero en controles planos.' },
-      { token: '--au-focus-tactile / --au-focus-tactile-error', description: 'Foco puntero en botones.' },
+      {
+        token: '--au-focus-inset / --au-focus-inset-error',
+        description: 'Foco puntero en controles planos.',
+      },
+      {
+        token: '--au-focus-tactile / --au-focus-tactile-error',
+        description: 'Foco puntero en botones.',
+      },
       { token: '--au-focus-tab / --au-focus-tab-error', description: 'Foco Tab (`--from-tab`).' },
-      { token: '--au-color-focus-ring', description: 'Solo color de foco (con `--au-focus-ring-width`).' },
+      {
+        token: '--au-color-focus-ring',
+        description: 'Solo color de foco (con `--au-focus-ring-width`).',
+      },
       { token: '--au-z-raised', description: 'Cabeceras sticky, caret flotante.' },
       { token: '--au-z-dropdown', description: 'Listboxes, menús, tooltips.' },
       { token: '--au-z-drawer', description: 'Shell del drawer.' },

@@ -34,20 +34,20 @@ Token architecture: see `tokens/README.md` (primitives → semantic → roles �
 
 ## Global bundle modules (`aurea-global.entry.css`)
 
-| File | Role |
-| ---- | ---- |
-| `au-utilities.css` | Shared utilities (`.au-sr-only`) |
-| `au-floating-panel.css` | Tooltip + floating panel chrome |
-| `au-native-text-field.css` | Shared rules for `input.au-input-text` / `input.au-input-number` |
-| `au-field-temporal-input.css` | Date/time anchor, icon, picker chrome |
-| `input-text.css` … `link.css` | Native directive styles re-exported from `src/lib/*` |
-| `au-field-chrome.css` | Field shells for native hosts + select/autocomplete/tag-input |
-| `au-floating-panel-responsive-modal.css` | Responsive sheet behavior for portaled pickers |
-| `au-field-error.css` | Shared error glyph layout |
-| `au-field-listbox.css` | Listbox overlay (select, autocomplete); `--au-field-listbox-gap` flush attach; `FieldListboxOverlay` portals to body/dialog |
-| `au-description-list.css` | Cross-host `dl` layout |
-| `au-accordion.css` | Projected accordion item/trigger shells |
-| `au-high-contrast-aaa.css` | HC theme overrides |
+| File                                     | Role                                                                                                                        |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `au-utilities.css`                       | Shared utilities (`.au-sr-only`)                                                                                            |
+| `au-floating-panel.css`                  | Tooltip + floating panel chrome                                                                                             |
+| `au-native-text-field.css`               | Shared rules for `input.au-input-text` / `input.au-input-number`                                                            |
+| `au-field-temporal-input.css`            | Date/time anchor, icon, picker chrome                                                                                       |
+| `input-text.css` … `link.css`            | Native directive styles re-exported from `src/lib/*`                                                                        |
+| `au-field-chrome.css`                    | Field shells for native hosts + select/autocomplete/tag-input                                                               |
+| `au-floating-panel-responsive-modal.css` | Responsive sheet behavior for portaled pickers                                                                              |
+| `au-field-error.css`                     | Shared error glyph layout                                                                                                   |
+| `au-field-listbox.css`                   | Listbox overlay (select, autocomplete); `--au-field-listbox-gap` flush attach; `FieldListboxOverlay` portals to body/dialog |
+| `au-description-list.css`                | Cross-host `dl` layout                                                                                                      |
+| `au-accordion.css`                       | Projected accordion item/trigger shells                                                                                     |
+| `au-high-contrast-aaa.css`               | HC theme overrides                                                                                                          |
 
 ## Z-index scale
 

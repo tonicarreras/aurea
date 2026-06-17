@@ -168,24 +168,24 @@ After `test:coverage`, open the HTML report at `coverage/components/index.html`.
 
 Aurea organizes tokens in five CSS layers (see `projects/components/src/lib/tokens/README.md`):
 
-| Layer | File | Role |
-| ----- | ---- | ---- |
-| Primitives | `au-tokens-primitives.css` | Spacing, radii, motion, z-index (internal) |
-| Semantic | `au-tokens-semantic.css` | Surfaces, text, actions, form colors |
-| Roles | `au-tokens-roles.css` | `--au-elevation-*`, `--au-focus-inset/tactile/tab` |
-| Domain | `au-tokens-domain.css` | Listbox, dialog, drawer chrome |
-| High contrast | `au-tokens-high-contrast.css` | Accessibility palettes |
+| Layer         | File                          | Role                                               |
+| ------------- | ----------------------------- | -------------------------------------------------- |
+| Primitives    | `au-tokens-primitives.css`    | Spacing, radii, motion, z-index (internal)         |
+| Semantic      | `au-tokens-semantic.css`      | Surfaces, text, actions, form colors               |
+| Roles         | `au-tokens-roles.css`         | `--au-elevation-*`, `--au-focus-inset/tactile/tab` |
+| Domain        | `au-tokens-domain.css`        | Listbox, dialog, drawer chrome                     |
+| High contrast | `au-tokens-high-contrast.css` | Accessibility palettes                             |
 
 Consumer-facing examples:
 
-| Category | Examples |
-| -------- | -------- |
-| **Typography** | `--au-font-sans`, `--au-text-sm`, `--au-weight-medium` |
-| **Spacing** | `--au-space-1` … `--au-space-12` |
-| **Colors** | `--au-color-surface-raised`, `--au-color-text-primary` |
-| **Elevation** | `--au-elevation-flat`, `--au-elevation-overlay` |
-| **Focus** | `--au-focus-inset`, `--au-focus-tactile`, `--au-focus-tab` (+ `-error` variants) |
-| **Form** | `--au-chrome-border`, `--au-color-form-error` |
+| Category       | Examples                                                                         |
+| -------------- | -------------------------------------------------------------------------------- |
+| **Typography** | `--au-font-sans`, `--au-text-sm`, `--au-weight-medium`                           |
+| **Spacing**    | `--au-space-1` … `--au-space-12`                                                 |
+| **Colors**     | `--au-color-surface-raised`, `--au-color-text-primary`                           |
+| **Elevation**  | `--au-elevation-flat`, `--au-elevation-overlay`                                  |
+| **Focus**      | `--au-focus-inset`, `--au-focus-tactile`, `--au-focus-tab` (+ `-error` variants) |
+| **Form**       | `--au-chrome-border`, `--au-color-form-error`                                    |
 
 Design-tool export: `au-tokens.{light,dark}.tokens.json` (DTCG 2025.10). Run `bun run export:tokens` and `bun run validate:tokens` after CSS changes.
 

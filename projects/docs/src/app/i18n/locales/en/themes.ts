@@ -52,7 +52,10 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       { token: '--au-color-form-disabled-surface', description: 'Disabled background.' },
       { token: '--au-radius-field', description: 'Field corner radius (4px default).' },
       { token: '--au-size-field-h-sm / md / lg', description: 'Form control heights.' },
-      { token: '--au-chrome-border', description: 'Shared field shell border (comboboxes, inputs).' },
+      {
+        token: '--au-chrome-border',
+        description: 'Shared field shell border (comboboxes, inputs).',
+      },
       { token: '--au-elevation-flat', description: 'Resting elevation on field shells.' },
       {
         token: '--au-focus-inset / --au-focus-tab',
@@ -90,14 +93,29 @@ export const THEME_TOKEN_GROUPS_EN: ThemeTokenGroup[] = [
       'Use role tokens in components — not raw `--au-shadow-*` primitives. Primitives exist for internal token composition only.',
     tokens: [
       { token: '--au-elevation-flat', description: 'Inputs, cards, tables, chips, badges.' },
-      { token: '--au-elevation-tactile', description: 'Buttons (secondary/outline resting state).' },
+      {
+        token: '--au-elevation-tactile',
+        description: 'Buttons (secondary/outline resting state).',
+      },
       { token: '--au-elevation-raised', description: 'Snackbars.' },
       { token: '--au-elevation-floating', description: 'Menu and popover panels.' },
       { token: '--au-elevation-overlay', description: 'Dialog, drawer, tooltip, listbox.' },
-      { token: '--au-focus-inset / --au-focus-inset-error', description: 'Pointer focus on flat controls.' },
-      { token: '--au-focus-tactile / --au-focus-tactile-error', description: 'Pointer focus on buttons.' },
-      { token: '--au-focus-tab / --au-focus-tab-error', description: 'Keyboard Tab focus (`--from-tab`).' },
-      { token: '--au-color-focus-ring', description: 'Focus color only (with `--au-focus-ring-width`).' },
+      {
+        token: '--au-focus-inset / --au-focus-inset-error',
+        description: 'Pointer focus on flat controls.',
+      },
+      {
+        token: '--au-focus-tactile / --au-focus-tactile-error',
+        description: 'Pointer focus on buttons.',
+      },
+      {
+        token: '--au-focus-tab / --au-focus-tab-error',
+        description: 'Keyboard Tab focus (`--from-tab`).',
+      },
+      {
+        token: '--au-color-focus-ring',
+        description: 'Focus color only (with `--au-focus-ring-width`).',
+      },
       { token: '--au-z-raised', description: 'Sticky headers, floating caret.' },
       { token: '--au-z-dropdown', description: 'Listboxes, menus, tooltips.' },
       { token: '--au-z-drawer', description: 'Drawer shell.' },

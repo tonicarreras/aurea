@@ -32,7 +32,8 @@ export const GUIDES_EN: GuidesMessages = {
       },
       {
         title: 'Figma design tokens',
-        description: 'JSON DTCG 2025.10 sincronizado con au-tokens.css (`export:tokens` / `validate:tokens`).',
+        description:
+          'JSON DTCG 2025.10 sincronizado con au-tokens.css (`export:tokens` / `validate:tokens`).',
         path: 'design-tokens',
       },
     ],
