@@ -29,11 +29,11 @@ export const ECOSYSTEM_ES: EcosystemMessages = {
     sections: [
       {
         heading: 'Archivos',
-        body: 'Ruta: <code>projects/design-tokens/</code>. Tras cambiar CSS ejecuta <code>node scripts/validate-design-tokens.mjs</code>.',
+        body: 'Ruta: <code>projects/design-tokens/</code>. Tras cambiar CSS: <code>bun run export:tokens</code> y <code>bun run validate:tokens</code> (schema DTCG 2025.10 + drift CSS).',
       },
       {
         heading: 'Figma',
-        body: 'Importa JSON con Tokens Studio. Enlaza <code>color.surface.raised</code> a fondos y textos a <code>color.text.primary</code>.',
+        body: 'Importa <code>au-tokens.*.tokens.json</code> con Tokens Studio. Mapea <code>color.surface.raised</code> a fondos; variantes usan hoja <code>default</code> (p. ej. <code>color.action.primary.default</code>).',
       },
       {
         heading: 'Hand-off',

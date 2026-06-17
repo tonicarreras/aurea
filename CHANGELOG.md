@@ -9,6 +9,14 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-06-13
+
+### Changed
+
+- **Documentation** — README, `DESIGN.md`, CONTRIBUTING, and library READMEs now describe the five-layer token model (primitives → semantic → roles → domain → high-contrast) and role tokens (`--au-elevation-*`, `--au-focus-*`) instead of legacy shadow primitives.
+- **Docs site (EN/ES)** — Themes catalog, per-component Styling tables, ecosystem/design-token guides, and SEO copy aligned with DTCG 2025.10 `*.tokens.json`, `export:tokens` / `validate:tokens`, listbox `--au-field-listbox-gap`, and domain tokens on portaled overlays.
+- **Storybook** — Regenerated overview source from updated i18n (`sync:story-overviews`).
+
 ## [2.1.0] - 2026-06-17
 
 ### Added
@@ -344,7 +352,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.1.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.1.1...HEAD
+[2.1.1]: https://github.com/tonicarreras/aurea/compare/components-v2.1.0...components-v2.1.1
 [2.1.0]: https://github.com/tonicarreras/aurea/compare/components-v2.0.0...components-v2.1.0
 [2.0.0]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...components-v2.0.0
 [1.6.0]: https://github.com/tonicarreras/aurea/compare/components-v1.5.0...components-v1.6.0

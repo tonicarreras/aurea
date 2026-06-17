@@ -61,7 +61,7 @@ export const MESSAGES_ES: DocsMessages = {
     ],
     systemTitle: 'Arquitectura',
     systemLead:
-      'Primitivos (internos), tokens semánticos en <code>au-tokens.css</code> y CSS de componente que mapea tokens a la UI.',
+      'Cinco capas en <code>au-tokens.css</code>: primitivos (internos) → semánticos → roles → dominio → alto contraste; el CSS de componente mapea roles a la UI.',
     systemPoints: [
       'Notas de accesibilidad y teclado en la documentación de cada componente',
       'Signal forms con <code>formField</code> de Angular 22',
@@ -124,11 +124,11 @@ export const MESSAGES_ES: DocsMessages = {
     lead: 'Variables globales --au-* definidas en au-tokens.css. Cada componente documenta solo los tokens que consume en su pestaña Styling.',
     attrHeading: 'Atributo de tema',
     attrBody:
-      'Coloca <code>data-au-theme</code> en un ancestro (por ejemplo <code>&lt;html&gt;</code> o el shell de la app). Valores: <code>light</code>, <code>dark</code>.',
+      'Coloca <code>data-au-theme</code> en un ancestro (por ejemplo <code>&lt;html&gt;</code> o el shell de la app). Valores: <code>light</code>, <code>dark</code>, <code>high-contrast</code>, <code>high-contrast-dark</code>.',
     attrExpand: 'Ver HTML',
     globalStylesHeading: 'aurea-global.css',
     globalStylesBody:
-      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. CSS transversal: cromado y errores de <code>au-form-field</code>, listbox en portal, layout de <code>au-description-list</code> entre hosts, triggers/ítems del acordeón en plantillas padre, y primitivos nativos (<code>button.au-button</code>, <code>input.au-input-text</code>, <code>textarea.au-textarea</code>, …) empaquetados desde estilos de directivas. Hosts compuestos o en portal como <code>au-button-group</code> y <code>au-snackbar</code> siguen enviando CSS en el bundle del componente. Criterio: <code>projects/components/src/lib/styles/README.md</code> en el repo.',
+      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. CSS transversal: utilidades, chrome de paneles flotantes, primitivos de campo nativos, cromado/errores de campos, listbox en portal (acople flush con <code>--au-field-listbox-gap</code>), description list y acordeón proyectado. Los tokens de dominio en <code>[data-au-theme]</code> hacen que overlays portaled hereden el tema del ancla. Hosts en portal como <code>au-snackbar</code> siguen enviando CSS en el bundle del componente. Criterio: <code>projects/components/src/lib/styles/README.md</code>.',
     globalStylesExpand: 'Ver imports CSS globales',
     directiveHeading: 'Directiva AuTheme',
     directiveBody:
@@ -176,7 +176,7 @@ export const MESSAGES_ES: DocsMessages = {
       'Elige el nivel más acotado que resuelva tu caso. Prefiere tokens antes que clases internas.',
     overrideGlobalTitle: '1. Global (recomendado para marca)',
     overrideGlobalBody:
-      'Define <code>--au-color-*</code>, <code>--au-font-sans</code>, <code>--au-shadow-*</code> en <code>:root</code> o <code>[data-au-theme]</code>. Todos los componentes los heredan.',
+      'Define <code>--au-color-*</code>, <code>--au-elevation-*</code>, <code>--au-focus-*</code> y <code>--au-font-sans</code> en <code>:root</code> o <code>[data-au-theme]</code>. Reserva las primitivas <code>--au-shadow-*</code> para theming interno — en apps usa tokens de rol.',
     overrideHostTitle: '2. Por componente (host)',
     overrideHostBody:
       'Define <code>--au-card-padding</code>, <code>--au-table-row-hover</code>, <code>--au-textarea-min-h-md</code>, etc. en el host (<code>au-card</code>, <code>textarea.au-textarea</code>, …). Funciona en componentes con <code>ViewEncapsulation.None</code> y primitivos nativos estilizados vía CSS global.',

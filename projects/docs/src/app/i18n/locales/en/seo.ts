@@ -38,7 +38,8 @@ export const SEO_EN: DocsSeoMessages = {
   },
   designTokens: {
     title: 'Design tokens for Figma — Aurea',
-    description: 'JSON token files aligned with au-tokens.css for design-tool import.',
+    description:
+      'JSON token files aligned with au-tokens.css (DTCG 2025.10) for design-tool import.',
   },
   themes: {
     title: 'Themes & design tokens — Aurea Design System',
