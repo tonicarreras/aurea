@@ -27,6 +27,11 @@ export function readCssLengthPx(
   return Number.isFinite(px) && px > 0 ? px : fallbackPx;
 }
 
+export interface TooltipOverlaySyncOptions {
+  /** Aligns panel width and horizontal origin to the anchor (select/autocomplete). */
+  matchAnchorWidth?: boolean;
+}
+
 /**
  * Portals a tooltip bubble with `position: fixed`.
  * Default target is `document.body`; when the anchor sits inside an open modal
@@ -38,6 +43,7 @@ export class TooltipOverlay {
   private activeAnchor: HTMLElement | null = null;
   private activePortalRoot: HTMLElement | null = null;
   private resolvedPlacement: AuTooltipPlacement = 'top';
+  private syncOptions: TooltipOverlaySyncOptions | null = null;
   private unbindThemeContext: (() => void) | null = null;
 
   private readonly onWindowChange = (event?: Event): void => {
@@ -63,6 +69,7 @@ export class TooltipOverlay {
     bubble: HTMLElement | undefined,
     anchor: HTMLElement,
     placement: AuTooltipPlacement,
+    options?: TooltipOverlaySyncOptions,
   ): AuTooltipPlacement {
     if (!isPlatformBrowser(this.platformId)) {
       return placement;
@@ -71,6 +78,7 @@ export class TooltipOverlay {
       this.detach();
       return placement;
     }
+    this.syncOptions = options ?? null;
     const portalRoot = resolveFieldListboxPortalRoot(anchor, this.document);
     this.ensurePortaled(bubble, portalRoot);
     this.activePortalRoot = portalRoot;
@@ -88,13 +96,21 @@ export class TooltipOverlay {
     this.unbindReposition();
     this.unbindThemeContext?.();
     this.unbindThemeContext = null;
+    this.syncOptions = null;
     const bubble = this.activeBubble;
     if (!bubble) {
       return;
     }
     this.renderer.removeClass(bubble, 'au-tooltip__bubble--overlay');
     clearPortaledThemeContext(bubble);
-    for (const prop of ['position', 'top', 'left', 'inset-inline-start', 'inset-inline-end']) {
+    for (const prop of [
+      'position',
+      'top',
+      'left',
+      'width',
+      'inset-inline-start',
+      'inset-inline-end',
+    ]) {
       bubble.style.removeProperty(prop);
     }
     bubble.style.removeProperty('--au-floating-arrow-x');
@@ -137,11 +153,13 @@ export class TooltipOverlay {
   ): AuTooltipPlacement {
     this.activeAnchor = anchor;
     this.resolvedPlacement = placement;
-    const isFloatingPanel = bubble.classList.contains('au-floating-panel');
-    const gap = isFloatingPanel
-      ? readCssLengthPx(this.document, '--au-floating-gap', 10)
-      : readCssLengthPx(this.document, '--au-tooltip-gap', 12);
+    const gap = readCssLengthPx(this.document, '--au-floating-gap', 10);
     const anchorRect = anchor.getBoundingClientRect();
+    if (this.syncOptions?.matchAnchorWidth) {
+      bubble.style.width = `${anchorRect.width}px`;
+    } else {
+      bubble.style.removeProperty('width');
+    }
     const bubbleRect = this.readBubbleRect(bubble);
     const view = this.document.defaultView;
     const viewport = {
@@ -153,14 +171,21 @@ export class TooltipOverlay {
     bubble.style.visibility = '';
     bubble.style.position = 'fixed';
     bubble.style.top = `${result.top}px`;
-    bubble.style.left = `${result.left}px`;
+    bubble.style.left = `${this.syncOptions?.matchAnchorWidth ? anchorRect.left : result.left}px`;
     bubble.style.insetInlineStart = '';
     bubble.style.insetInlineEnd = '';
     bubble.setAttribute('data-au-placement', result.placement);
-    if (isFloatingPanel) {
+    if (this.shouldSyncArrow(bubble)) {
       this.syncFloatingArrow(bubble, anchorRect, result, bubbleRect);
     }
     return result.placement;
+  }
+
+  private shouldSyncArrow(bubble: HTMLElement): boolean {
+    return (
+      bubble.classList.contains('au-floating-panel') ||
+      bubble.classList.contains('au-tooltip__bubble')
+    );
   }
 
   private syncFloatingArrow(
@@ -169,11 +194,11 @@ export class TooltipOverlay {
     coords: { top: number; left: number },
     bubbleRect: DOMRect,
   ): void {
-    const arrowSize = readCssLengthPx(this.document, '--au-floating-arrow-size', 10);
-    const inset = arrowSize + 12;
+    const inset = readCssLengthPx(this.document, '--au-floating-arrow-inset', 22);
     const anchorCenterX = anchorRect.left + anchorRect.width / 2;
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
-    const x = clampValue(anchorCenterX - coords.left, inset, bubbleRect.width - inset);
+    const panelLeft = this.syncOptions?.matchAnchorWidth ? anchorRect.left : coords.left;
+    const x = clampValue(anchorCenterX - panelLeft, inset, bubbleRect.width - inset);
     const y = clampValue(anchorCenterY - coords.top, inset, bubbleRect.height - inset);
     bubble.style.setProperty('--au-floating-arrow-x', `${x}px`);
     bubble.style.setProperty('--au-floating-arrow-y', `${y}px`);

@@ -1,0 +1,76 @@
+/**
+ * Bottom-sheet modal layout for date/time pickers on narrow viewports.
+ * Class is toggled in JS via FloatingPickerOverlay (see AU_RESPONSIVE_FLOATING_MODAL_MQ).
+ */
+
+.au-floating-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--au-z-modal) - 1);
+  background: var(--au-color-overlay-scrim);
+  pointer-events: auto;
+  animation: au-floating-modal-backdrop-in var(--au-motion-modal);
+}
+
+.au-floating-panel--responsive-modal {
+  position: fixed !important;
+  inset: auto 0 0 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0;
+  box-sizing: border-box;
+  border-radius: var(--au-radius-modal) var(--au-radius-modal) 0 0;
+  border-bottom: none;
+  z-index: var(--au-z-modal);
+  max-height: min(88dvh, 100dvh - env(safe-area-inset-top, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: max(var(--au-space-3), env(safe-area-inset-bottom, 0px));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  animation: au-floating-modal-panel-in var(--au-motion-modal);
+  animation-fill-mode: both;
+}
+
+.au-floating-panel--responsive-modal::before {
+  display: none;
+}
+
+.au-floating-panel--responsive-modal.au-date-calendar {
+  min-width: 0;
+}
+
+.au-floating-panel--responsive-modal.au-time-picker {
+  min-width: 0;
+}
+
+.au-floating-panel--responsive-modal.au-time-picker .au-time-picker__column {
+  max-height: min(42dvh, calc(100dvh - 10rem));
+}
+
+@keyframes au-floating-modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes au-floating-modal-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-floating-panel-backdrop,
+  .au-floating-panel--responsive-modal {
+    animation: none;
+  }
+}

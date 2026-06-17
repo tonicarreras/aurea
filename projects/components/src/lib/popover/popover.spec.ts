@@ -1,9 +1,11 @@
-import { forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import { forwardRef, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { vi } from 'vitest';
 
 import { AuButton } from '../button/au-button.directive';
+import type { AuTooltipPlacement } from '../overlay/tooltip-position';
 import { AuPopoverTrigger } from './au-popover-trigger.directive';
 import { AuPopover, auPopoverSelfRef } from './popover';
 
@@ -14,6 +16,7 @@ import { AuPopover, auPopoverSelfRef } from './popover';
     <au-popover
       [(open)]="open"
       [disabled]="disabled"
+      [placement]="placement()"
     >
       <button
         auButton
@@ -28,6 +31,7 @@ import { AuPopover, auPopoverSelfRef } from './popover';
 class Host {
   open = false;
   disabled = false;
+  readonly placement = signal<AuTooltipPlacement>('bottom');
 }
 
 function popoverInstance(fixture: ReturnType<typeof TestBed.createComponent<Host>>): AuPopover {
@@ -163,6 +167,17 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
+  it('closes when scroll event target is not a Node', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const ev = new Event('scroll', { bubbles: true });
+    Object.defineProperty(ev, 'target', { value: null, configurable: true });
+    document.dispatchEvent(ev);
+    await fixture.whenStable();
+    expect(fixture.componentInstance.open).toBe(false);
+  });
+
   it('stays open when scrolling inside the panel', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
@@ -171,5 +186,118 @@ describe('AuPopover', () => {
     panel.dispatchEvent(new Event('scroll', { bubbles: true }));
     await fixture.whenStable();
     expect(fixture.componentInstance.open).toBe(true);
+  });
+
+  it('moves focus into the panel when opened', async () => {
+    const fixture = TestBed.createComponent(Host);
+    const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    trigger.focus();
+    trigger.click();
+    await fixture.whenStable();
+    const panel = document.body.querySelector('.au-popover__panel') as HTMLElement;
+    expect(panel).toBeTruthy();
+    expect(panel.contains(document.activeElement)).toBe(true);
+  });
+
+  it('does not refocus when the panel already contains focus', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const panel = document.body.querySelector('.au-popover__panel') as HTMLElement;
+    panel.focus();
+    expect(panel.contains(document.activeElement)).toBe(true);
+    const focused = document.activeElement;
+    fixture.componentInstance.placement.set('top');
+    await fixture.whenStable();
+    TestBed.flushEffects();
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(focused);
+    expect(panel.contains(document.activeElement)).toBe(true);
+  });
+
+  it('returns focus to the trigger when closed', async () => {
+    const fixture = TestBed.createComponent(Host);
+    const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    trigger.focus();
+    trigger.click();
+    await fixture.whenStable();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.open).toBe(false);
+    expect(document.activeElement).toBe(trigger);
+  });
+
+  it('does not restore focus when the trigger was removed from the DOM', async () => {
+    const fixture = TestBed.createComponent(Host);
+    const trigger = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    trigger.click();
+    await fixture.whenStable();
+    trigger.remove();
+    fixture.componentInstance.open = false;
+    await fixture.whenStable();
+    expect(fixture.componentInstance.open).toBe(false);
+  });
+
+  it('traps Tab inside the panel', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const panel = document.body.querySelector('.au-popover__panel') as HTMLElement;
+    const first = document.createElement('button');
+    first.type = 'button';
+    first.textContent = 'First';
+    const last = document.createElement('button');
+    last.type = 'button';
+    last.textContent = 'Last';
+    panel.append(first, last);
+    last.focus();
+    const trap = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    panel.dispatchEvent(trap);
+    expect(trap.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(first);
+  });
+
+  it('prevents wheel scroll on the page while open', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+  });
+
+  it('prevents wheel when the event target is not a Node', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true });
+    Object.defineProperty(wheel, 'target', { value: {}, configurable: true });
+    document.body.dispatchEvent(wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+  });
+
+  it('no-ops panel keydown when closed', async () => {
+    const fixture = TestBed.createComponent(Host);
+    await fixture.whenStable();
+    const popover = popoverInstance(fixture) as unknown as {
+      onPanelKeydown: (e: KeyboardEvent) => void;
+    };
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    popover.onPanelKeydown(ev);
+    expect(ev.defaultPrevented).toBe(false);
+  });
+
+  it('no-ops panel keydown when panel ref is empty', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const popover = popoverInstance(fixture) as unknown as {
+      panelRef: () => unknown;
+      onPanelKeydown: (e: KeyboardEvent) => void;
+    };
+    vi.spyOn(popover, 'panelRef').mockReturnValue(undefined);
+    const ev = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    popover.onPanelKeydown(ev);
+    expect(ev.defaultPrevented).toBe(false);
   });
 });

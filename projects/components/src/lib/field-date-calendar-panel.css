@@ -59,6 +59,13 @@
   opacity: 0.5;
 }
 
+@media (pointer: coarse) {
+  .au-date-calendar__nav {
+    width: var(--au-touch-target-min);
+    height: var(--au-touch-target-min);
+  }
+}
+
 .au-date-calendar__nav au-icon {
   width: 1rem;
   height: 1rem;

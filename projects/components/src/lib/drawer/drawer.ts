@@ -29,7 +29,7 @@ import {
 import { installOutsideInteractionBlock } from '../overlay/floating-panel-interaction-guard';
 import {
   createModalScrollAllowPredicate,
-  installPageScrollPrevention,
+  installModalPageScrollPrevention,
 } from '../overlay/prevent-page-scroll';
 
 export type AuDrawerPosition = 'start' | 'end';
@@ -42,7 +42,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * - **Visibility:** `[(open)]` syncs with native `<dialog>` via `showModal()`.
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
  * - **Accessibility:** same focus trap as `au-dialog`; background wheel/touch scroll is blocked while open.
- * - **Portal:** native `<dialog>` moves to `document.body` while open so it is not clipped by ancestor overflow.
+ * - **Portal:** native `<dialog>` moves to `document.body` while open so it covers the viewport.
  * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
  */
 @Component({
@@ -111,7 +111,7 @@ export class AuDrawer {
     }
 
     onCleanup(
-      installPageScrollPrevention(
+      installModalPageScrollPrevention(
         this.document,
         createModalScrollAllowPredicate(() => this.nativeDialog(), '.au-drawer__body'),
       ),

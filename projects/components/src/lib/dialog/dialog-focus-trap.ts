@@ -1,6 +1,6 @@
 /** Focusable elements inside the dialog panel (WCAG modal pattern). */
 export const DIALOG_FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  'a[href], button:not([disabled]):not([aria-disabled="true"]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /** Returns visible, tabbable elements within the dialog panel in document order. */
 export function getDialogFocusableElements(panel: HTMLElement): HTMLElement[] {

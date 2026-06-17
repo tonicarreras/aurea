@@ -52,7 +52,7 @@
   flex-direction: column;
   gap: var(--au-space-0-5);
   min-width: 10rem;
-  max-width: 18rem;
+  max-width: min(18rem, calc(100vw - 2rem));
   padding: var(--au-space-1);
   box-sizing: border-box;
   overflow: hidden;

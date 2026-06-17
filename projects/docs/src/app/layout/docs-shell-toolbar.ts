@@ -42,7 +42,7 @@ const MOBILE_TOOLBAR_MQ = '(max-width: 56rem)';
         class="docs-toolbar__menu-trigger"
         [attr.aria-expanded]="menu.open()"
         aria-haspopup="dialog"
-        aria-controls="docs-toolbar-menu"
+        aria-controls="docs-toolbar-menu-title"
         (click)="menu.toggle()"
       >
         {{ locale.messages().shell.menuLabel }}

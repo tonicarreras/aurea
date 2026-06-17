@@ -2,36 +2,18 @@ import { isPlatformBrowser } from '@angular/common';
 import type { DestroyRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
-import {
-  bindPortaledThemeContextObserver,
-  clearPortaledThemeContext,
-  syncPortaledThemeContext,
-} from './portaled-theme-context';
-import { shouldSkipRepositionOnScroll } from './overlay-reposition';
+import { canConsumeWheelDelta, installPageScrollPrevention } from './prevent-page-scroll';
+import { TooltipOverlay } from './tooltip-overlay';
 
 /**
  * Portals a field listbox with `position: fixed`, matching the trigger width.
  *
- * Default target is `document.body`. When the anchor sits inside an open modal
- * `<dialog>`, the listbox is appended to that dialog so it stays in the browser
- * top layer (native `showModal()` renders above normal DOM regardless of z-index).
+ * Uses {@link TooltipOverlay} so gap, arrow, and placement match menu/popover/date pickers.
  */
 export class FieldListboxOverlay {
-  private anchor: Comment | null = null;
+  private readonly tooltipOverlay: TooltipOverlay;
   private activeListbox: HTMLElement | null = null;
-  private activeAnchor: HTMLElement | null = null;
-  private activePortalRoot: HTMLElement | null = null;
-  private unbindThemeContext: (() => void) | null = null;
-
-  private readonly onWindowChange = (event?: Event): void => {
-    if (!this.activeListbox || !this.activeAnchor) {
-      return;
-    }
-    if (shouldSkipRepositionOnScroll(event, this.activeListbox)) {
-      return;
-    }
-    this.position(this.activeListbox, this.activeAnchor);
-  };
+  private uninstallScrollPrevention: (() => void) | null = null;
 
   constructor(
     private readonly document: Document,
@@ -39,6 +21,7 @@ export class FieldListboxOverlay {
     private readonly platformId: object,
     destroyRef: DestroyRef,
   ) {
+    this.tooltipOverlay = new TooltipOverlay(document, renderer, platformId, destroyRef);
     destroyRef.onDestroy(() => this.detach());
   }
 
@@ -50,92 +33,55 @@ export class FieldListboxOverlay {
       this.detach();
       return;
     }
-    const portalRoot = resolveFieldListboxPortalRoot(anchor, this.document);
-    this.ensurePortaled(listbox, portalRoot);
     this.renderer.addClass(listbox, 'au-field-listbox--overlay');
+    this.renderer.addClass(listbox, 'au-floating-panel');
     this.activeListbox = listbox;
-    this.activePortalRoot = portalRoot;
-    syncPortaledThemeContext(listbox, anchor);
-    this.unbindThemeContext?.();
-    this.unbindThemeContext = bindPortaledThemeContextObserver(listbox, anchor);
-    this.position(listbox, anchor);
-    this.bindReposition();
+    this.installScrollPrevention(listbox, anchor);
+    this.tooltipOverlay.sync(listbox, anchor, 'bottom', { matchAnchorWidth: true });
   }
 
   detach(): void {
-    this.unbindReposition();
-    this.unbindThemeContext?.();
-    this.unbindThemeContext = null;
+    this.teardownScrollPrevention();
     const listbox = this.activeListbox;
-    if (!listbox) {
-      return;
+    if (listbox) {
+      this.renderer.removeClass(listbox, 'au-field-listbox--overlay');
+      this.renderer.removeClass(listbox, 'au-floating-panel');
     }
-    this.renderer.removeClass(listbox, 'au-field-listbox--overlay');
-    clearPortaledThemeContext(listbox);
-    for (const prop of [
-      'position',
-      'top',
-      'left',
-      'width',
-      'inset-inline-start',
-      'inset-inline-end',
-    ]) {
-      listbox.style.removeProperty(prop);
-    }
-    if (this.anchor?.parentNode && listbox.isConnected) {
-      this.anchor.parentNode.insertBefore(listbox, this.anchor);
-      this.anchor.remove();
-      this.anchor = null;
-    } else if (
-      this.activePortalRoot &&
-      listbox.parentElement === this.activePortalRoot &&
-      this.activePortalRoot !== this.document.body
-    ) {
-      listbox.remove();
-    } else if (listbox.parentElement === this.document.body) {
-      listbox.remove();
-    }
+    this.tooltipOverlay.detach();
     this.activeListbox = null;
-    this.activeAnchor = null;
-    this.activePortalRoot = null;
   }
 
-  private ensurePortaled(listbox: HTMLElement, portalRoot: HTMLElement): void {
-    if (listbox.parentElement === portalRoot) {
-      return;
+  private installScrollPrevention(listbox: HTMLElement, anchor: HTMLElement): void {
+    this.teardownScrollPrevention();
+    this.uninstallScrollPrevention = installPageScrollPrevention(this.document, (target, event) =>
+      this.isListboxScrollAllowed(target, event, listbox, anchor),
+    );
+  }
+
+  private teardownScrollPrevention(): void {
+    this.uninstallScrollPrevention?.();
+    this.uninstallScrollPrevention = null;
+  }
+
+  private isListboxScrollAllowed(
+    target: EventTarget | null,
+    event: WheelEvent | TouchEvent | undefined,
+    listbox: HTMLElement,
+    anchor: HTMLElement,
+  ): boolean {
+    if (!(target instanceof Node)) {
+      return false;
     }
-    const parent = listbox.parentNode;
-    if (parent) {
-      this.anchor = this.document.createComment('au-field-listbox-anchor');
-      parent.insertBefore(this.anchor, listbox);
+    if (anchor.contains(target)) {
+      return true;
     }
-    this.renderer.appendChild(portalRoot, listbox);
-  }
-
-  private position(listbox: HTMLElement, anchor: HTMLElement): void {
-    this.activeAnchor = anchor;
-    const rect = anchor.getBoundingClientRect();
-    const gap =
-      Number.parseFloat(
-        getComputedStyle(this.document.documentElement).getPropertyValue('--au-space-1'),
-      ) || 4;
-    listbox.style.position = 'fixed';
-    listbox.style.top = `${rect.bottom + gap}px`;
-    listbox.style.left = `${rect.left}px`;
-    listbox.style.width = `${rect.width}px`;
-    listbox.style.insetInlineStart = '';
-    listbox.style.insetInlineEnd = '';
-  }
-
-  private bindReposition(): void {
-    this.unbindReposition();
-    this.document.defaultView?.addEventListener('scroll', this.onWindowChange, true);
-    this.document.defaultView?.addEventListener('resize', this.onWindowChange);
-  }
-
-  private unbindReposition(): void {
-    this.document.defaultView?.removeEventListener('scroll', this.onWindowChange, true);
-    this.document.defaultView?.removeEventListener('resize', this.onWindowChange);
+    if (!listbox.contains(target)) {
+      return false;
+    }
+    if (event instanceof WheelEvent) {
+      return canConsumeWheelDelta(listbox, event.deltaY, event.deltaX);
+    }
+    return true;
   }
 }
 

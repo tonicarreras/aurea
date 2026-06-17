@@ -10,7 +10,12 @@ export {
   PORTALED_THEME_ATTR,
   syncPortaledThemeContext,
 } from './portaled-theme-context';
-export { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
+export { readCssLengthPx, TooltipOverlay, type TooltipOverlaySyncOptions } from './tooltip-overlay';
+export {
+  AU_RESPONSIVE_FLOATING_MODAL_MQ,
+  FloatingPickerOverlay,
+  prefersResponsiveFloatingModal,
+} from './floating-picker-overlay';
 export {
   FieldListboxOverlay,
   focusLeftFieldControl,
