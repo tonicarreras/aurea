@@ -24,6 +24,7 @@ import {
   unregisterSnackbarStackEntry,
 } from './snackbar-stack';
 import {
+  bindPortaledThemeContextObserver,
   clearPortaledThemeContext,
   syncPortaledThemeContext,
 } from '../overlay/portaled-theme-context';
@@ -82,6 +83,7 @@ export class AuSnackbar {
 
   private dismissTimer: ReturnType<typeof setTimeout> | undefined;
   private bodyAnchor: Comment | null = null;
+  private unbindThemeContext: (() => void) | null = null;
   private stackId: number | null = null;
   private stackResizeObserver: ResizeObserver | null = null;
   /** Only the newest toast in a position group uses polite/assertive live regions. */
@@ -206,16 +208,17 @@ export class AuSnackbar {
       return;
     }
     const host = this.host.nativeElement;
-    if (host.parentElement === this.document.body) {
-      return;
-    }
-    const parent = host.parentNode;
-    if (parent) {
-      this.bodyAnchor = this.document.createComment('au-snackbar-anchor');
-      parent.insertBefore(this.bodyAnchor, host);
+    if (host.parentElement !== this.document.body) {
+      const parent = host.parentNode;
+      if (parent) {
+        this.bodyAnchor = this.document.createComment('au-snackbar-anchor');
+        parent.insertBefore(this.bodyAnchor, host);
+      }
+      this.renderer.appendChild(this.document.body, host);
     }
     syncPortaledThemeContext(host, host);
-    this.renderer.appendChild(this.document.body, host);
+    this.unbindThemeContext?.();
+    this.unbindThemeContext = bindPortaledThemeContextObserver(host, host);
   }
 
   private syncStack(): void {
@@ -271,6 +274,8 @@ export class AuSnackbar {
       return;
     }
     const host = this.host.nativeElement;
+    this.unbindThemeContext?.();
+    this.unbindThemeContext = null;
     if (host.parentElement === this.document.body) {
       clearPortaledThemeContext(host);
       this.bodyAnchor.parentNode?.insertBefore(host, this.bodyAnchor);

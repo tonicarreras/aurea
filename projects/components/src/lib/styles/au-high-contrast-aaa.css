@@ -8,15 +8,15 @@
 /* Controls — 2px borders, no opacity-based disabled states */
 /* -------------------------------------------------------------------------- */
 
-[data-au-theme='high-contrast'] button.au-button__element,
-[data-au-theme='high-contrast-dark'] button.au-button__element {
+[data-au-theme='high-contrast'] button.au-button,
+[data-au-theme='high-contrast-dark'] button.au-button {
   border-width: 2px;
 }
 
-[data-au-theme='high-contrast'] button.au-button__element:disabled,
-[data-au-theme='high-contrast'] button.au-button__element[aria-disabled='true'],
-[data-au-theme='high-contrast-dark'] button.au-button__element:disabled,
-[data-au-theme='high-contrast-dark'] button.au-button__element[aria-disabled='true'] {
+[data-au-theme='high-contrast'] button.au-button:disabled,
+[data-au-theme='high-contrast'] button.au-button[aria-disabled='true'],
+[data-au-theme='high-contrast-dark'] button.au-button:disabled,
+[data-au-theme='high-contrast-dark'] button.au-button[aria-disabled='true'] {
   opacity: 1;
   color: var(--au-color-text-disabled);
   border-color: var(--au-color-text-disabled);
@@ -24,8 +24,8 @@
   box-shadow: none;
 }
 
-[data-au-theme='high-contrast'] button.au-button__element--from-tab:focus-visible,
-[data-au-theme='high-contrast-dark'] button.au-button__element--from-tab:focus-visible {
+[data-au-theme='high-contrast'] button.au-button--from-tab:focus-visible,
+[data-au-theme='high-contrast-dark'] button.au-button--from-tab:focus-visible {
   outline-width: 3px;
   outline-offset: 2px;
 }
@@ -95,28 +95,38 @@
 
 [data-au-theme='high-contrast']
   :is(
-    .au-input-text__control-row--from-tab,
-    .au-input-number__control-row--from-tab,
-    .au-textarea__control-row--from-tab,
-    .au-input-date__control-row--from-tab,
-    .au-input-time__control-row--from-tab,
-    .au-input-password__control-row--from-tab,
     .au-tag-input__control-row--from-tab,
     .au-select__control-row--from-tab,
     .au-autocomplete__control-row--from-tab
   ):focus-within,
 [data-au-theme='high-contrast-dark']
   :is(
-    .au-input-text__control-row--from-tab,
-    .au-input-number__control-row--from-tab,
-    .au-textarea__control-row--from-tab,
-    .au-input-date__control-row--from-tab,
-    .au-input-time__control-row--from-tab,
-    .au-input-password__control-row--from-tab,
     .au-tag-input__control-row--from-tab,
     .au-select__control-row--from-tab,
     .au-autocomplete__control-row--from-tab
   ):focus-within {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+[data-au-theme='high-contrast']
+  :is(
+    input.au-input-text.au-input-text--from-tab:focus,
+    textarea.au-textarea.au-textarea--from-tab:focus,
+    input.au-input-number.au-input-number--from-tab:focus,
+    input.au-input-date.au-input-date--from-tab:focus,
+    input.au-input-time.au-input-time--from-tab:focus,
+    input.au-input-password.au-input-password--from-tab:focus
+  ),
+[data-au-theme='high-contrast-dark']
+  :is(
+    input.au-input-text.au-input-text--from-tab:focus,
+    textarea.au-textarea.au-textarea--from-tab:focus,
+    input.au-input-number.au-input-number--from-tab:focus,
+    input.au-input-date.au-input-date--from-tab:focus,
+    input.au-input-time.au-input-time--from-tab:focus,
+    input.au-input-password.au-input-password--from-tab:focus
+  ) {
   outline-width: 3px;
   outline-offset: 2px;
 }

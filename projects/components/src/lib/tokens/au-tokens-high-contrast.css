@@ -137,13 +137,19 @@
   --au-focus-tactile-error: var(--au-shadow-focus-control-error);
   --au-focus-tab: var(--au-focus-tab-width) solid var(--au-color-focus-ring);
   --au-focus-tab-error: var(--au-focus-tab-width) solid var(--au-color-form-error);
-  /* Legacy aliases */
-  --au-chrome-shadow: var(--au-elevation-tactile);
-  --au-chrome-shadow-focus: var(--au-focus-tactile);
-  --au-chrome-shadow-focus-error: var(--au-focus-tactile-error);
-  --au-field-shadow: var(--au-elevation-flat);
-  --au-field-shadow-focus: var(--au-focus-inset);
-  --au-field-shadow-focus-error: var(--au-focus-inset-error);
+  --au-color-listbox-menu-bg: var(--au-color-select-menu-bg);
+  --au-color-listbox-menu-text: var(--au-color-select-menu-text);
+  --au-color-listbox-field-hover-bg: var(--au-color-select-field-hover-bg);
+  --au-color-listbox-option-highlight-bg: var(--au-color-select-option-highlight-bg);
+  --au-color-listbox-option-highlight-text: var(--au-color-select-option-highlight-text);
+  --au-color-listbox-option-highlight-marker: var(--au-color-select-option-highlight-marker);
+  --au-color-listbox-option-selected-bg: var(--au-color-select-option-selected-bg);
+  --au-color-listbox-option-selected-text: var(--au-color-select-option-selected-text);
+  --au-color-listbox-option-selected-marker: var(--au-color-select-option-selected-marker);
+  --au-color-listbox-option-disabled-text: var(--au-color-select-option-disabled-text);
+  --au-color-temporal-icon: var(--au-color-date-picker-icon);
+  --au-color-temporal-icon-hover: var(--au-color-date-picker-icon-hover);
+  --au-color-temporal-icon-active: var(--au-color-date-picker-icon-active);
 }
 
 [data-au-theme='high-contrast'] .au-floating-panel {
@@ -296,13 +302,19 @@
   --au-focus-tactile-error: var(--au-shadow-focus-control-error);
   --au-focus-tab: var(--au-focus-tab-width) solid var(--au-color-focus-ring);
   --au-focus-tab-error: var(--au-focus-tab-width) solid var(--au-color-form-error);
-  /* Legacy aliases */
-  --au-chrome-shadow: var(--au-elevation-tactile);
-  --au-chrome-shadow-focus: var(--au-focus-tactile);
-  --au-chrome-shadow-focus-error: var(--au-focus-tactile-error);
-  --au-field-shadow: var(--au-elevation-flat);
-  --au-field-shadow-focus: var(--au-focus-inset);
-  --au-field-shadow-focus-error: var(--au-focus-inset-error);
+  --au-color-listbox-menu-bg: var(--au-color-select-menu-bg);
+  --au-color-listbox-menu-text: var(--au-color-select-menu-text);
+  --au-color-listbox-field-hover-bg: var(--au-color-select-field-hover-bg);
+  --au-color-listbox-option-highlight-bg: var(--au-color-select-option-highlight-bg);
+  --au-color-listbox-option-highlight-text: var(--au-color-select-option-highlight-text);
+  --au-color-listbox-option-highlight-marker: var(--au-color-select-option-highlight-marker);
+  --au-color-listbox-option-selected-bg: var(--au-color-select-option-selected-bg);
+  --au-color-listbox-option-selected-text: var(--au-color-select-option-selected-text);
+  --au-color-listbox-option-selected-marker: var(--au-color-select-option-selected-marker);
+  --au-color-listbox-option-disabled-text: var(--au-color-select-option-disabled-text);
+  --au-color-temporal-icon: var(--au-color-date-picker-icon);
+  --au-color-temporal-icon-hover: var(--au-color-date-picker-icon-hover);
+  --au-color-temporal-icon-active: var(--au-color-date-picker-icon-active);
 }
 
 [data-au-theme='high-contrast-dark'] .au-floating-panel {

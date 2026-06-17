@@ -5,35 +5,6 @@
  */
 
 textarea.au-textarea {
-  --au-textarea-min-h-sm: 4.5rem;
-  --au-textarea-min-h-md: 5.5rem;
-  --au-textarea-min-h-lg: 6.5rem;
-  --au-textarea-pad-block: var(--au-space-3);
-  --au-textarea-pad-inline: var(--au-size-field-px-md);
-}
-
-textarea.au-textarea[data-au-size='sm'] {
-  --au-textarea-pad-block: var(--au-space-2-5);
-  --au-textarea-pad-inline: var(--au-size-field-px-sm);
-}
-
-textarea.au-textarea[data-au-size='md'],
-textarea.au-textarea:not([data-au-size]) {
-  --au-textarea-pad-block: var(--au-space-3);
-  --au-textarea-pad-inline: var(--au-size-field-px-md);
-}
-
-textarea.au-textarea[data-au-size='lg'] {
-  --au-textarea-pad-block: var(--au-space-3-5);
-  --au-textarea-pad-inline: var(--au-size-field-px-lg);
-}
-
-textarea.au-textarea:focus,
-textarea.au-textarea:focus-visible {
-  outline: none;
-}
-
-textarea.au-textarea {
   display: block;
   width: 100%;
   min-width: 0;
@@ -50,6 +21,27 @@ textarea.au-textarea {
   padding-inline: var(--au-textarea-pad-inline, var(--au-size-field-px-md));
   font-size: var(--au-size-field-text-md);
   overflow: auto;
+}
+
+textarea.au-textarea:focus,
+textarea.au-textarea:focus-visible {
+  outline: none;
+}
+
+textarea.au-textarea[data-au-size='sm'] {
+  --au-textarea-pad-block: var(--au-space-2-5);
+  --au-textarea-pad-inline: var(--au-size-field-px-sm);
+}
+
+textarea.au-textarea[data-au-size='md'],
+textarea.au-textarea:not([data-au-size]) {
+  --au-textarea-pad-block: var(--au-space-3);
+  --au-textarea-pad-inline: var(--au-size-field-px-md);
+}
+
+textarea.au-textarea[data-au-size='lg'] {
+  --au-textarea-pad-block: var(--au-space-3-5);
+  --au-textarea-pad-inline: var(--au-size-field-px-lg);
 }
 
 textarea.au-textarea[data-au-size='sm'] {

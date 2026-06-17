@@ -1,0 +1,196 @@
+/**
+ * Shared date/time native field chrome (anchor, icon, picker hit target).
+ */
+
+:is(.au-input-date__anchor, .au-input-time__anchor) {
+  position: relative;
+  display: block;
+}
+
+:is(input.au-input-date, input.au-input-time) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 calc(var(--au-size-field-px-md) + var(--au-field-temporal-icon-gutter-md)) 0
+    var(--au-size-field-px-md);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  outline: none;
+}
+
+:is(input.au-input-date, input.au-input-time)[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 calc(var(--au-size-field-px-sm) + var(--au-field-temporal-icon-gutter-sm)) 0
+    var(--au-size-field-px-sm);
+}
+
+:is(input.au-input-date, input.au-input-time)[data-au-size='md'],
+:is(input.au-input-date, input.au-input-time):not([data-au-size]) {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 calc(var(--au-size-field-px-md) + var(--au-field-temporal-icon-gutter-md)) 0
+    var(--au-size-field-px-md);
+}
+
+:is(input.au-input-date, input.au-input-time)[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 calc(var(--au-size-field-px-lg) + var(--au-field-temporal-icon-gutter-lg)) 0
+    var(--au-size-field-px-lg);
+}
+
+:is(input.au-input-date, input.au-input-time):disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+  background: transparent;
+}
+
+:is(input.au-input-date, input.au-input-time)::-webkit-datetime-edit {
+  padding: 0;
+  color: var(--au-color-form-text);
+}
+
+:is(input.au-input-date, input.au-input-time)::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+:is(input.au-input-date, input.au-input-time)::-webkit-datetime-edit-text {
+  color: var(--au-color-text-tertiary);
+  padding: 0 0.1em;
+}
+
+:is(.au-input-date__icon, .au-input-time__icon) {
+  position: absolute;
+  inset-inline-end: var(--au-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--au-radius-control);
+  background: transparent;
+  color: var(--au-color-temporal-icon);
+  transition: color var(--au-duration-short) var(--au-ease-in-out);
+}
+
+@media (pointer: coarse) {
+  :is(.au-input-date__icon, .au-input-time__icon) {
+    min-width: var(--au-touch-target-min);
+    min-height: var(--au-touch-target-min);
+  }
+}
+
+:is(.au-input-date__icon, .au-input-time__icon):focus-visible {
+  outline: none;
+  box-shadow: var(--au-focus-inset);
+}
+
+:is(.au-input-date__anchor, .au-input-time__anchor):has(
+    :is(input.au-input-date, input.au-input-time)[data-au-size='sm']
+  )
+  :is(.au-input-date__icon, .au-input-time__icon) {
+  inset-inline-end: var(--au-space-2-5);
+}
+
+:is(.au-input-date__anchor, .au-input-time__anchor):has(
+    :is(input.au-input-date, input.au-input-time)[data-au-size='lg']
+  )
+  :is(.au-input-date__icon, .au-input-time__icon) {
+  inset-inline-end: var(--au-space-4);
+}
+
+.au-input-date__anchor:has(input.au-input-date[data-au-size='sm']) .au-input-date__icon au-icon,
+.au-input-time__anchor:has(input.au-input-time[data-au-size='sm']) .au-input-time__icon au-icon {
+  width: var(--au-field-temporal-icon-size-sm);
+  height: var(--au-field-temporal-icon-size-sm);
+}
+
+.au-input-date__anchor:has(input.au-input-date[data-au-size='lg']) .au-input-date__icon au-icon,
+.au-input-time__anchor:has(input.au-input-time[data-au-size='lg']) .au-input-time__icon au-icon {
+  width: var(--au-field-temporal-icon-size-lg);
+  height: var(--au-field-temporal-icon-size-lg);
+}
+
+:is(.au-input-date__icon, .au-input-time__icon) au-icon {
+  width: var(--au-field-temporal-icon-size-md);
+  height: var(--au-field-temporal-icon-size-md);
+}
+
+:is(.au-input-date__anchor, .au-input-time__anchor):has(
+    :is(input.au-input-date, input.au-input-time):not(:disabled):hover
+  )
+  :is(.au-input-date__icon, .au-input-time__icon),
+:is(.au-input-date__anchor, .au-input-time__anchor):focus-within
+  :is(.au-input-date__icon, .au-input-time__icon) {
+  color: var(--au-color-temporal-icon-hover);
+}
+
+:is(.au-input-date__anchor, .au-input-time__anchor):focus-within
+  :is(.au-input-date__icon, .au-input-time__icon) {
+  color: var(--au-color-temporal-icon-active);
+}
+
+:is(.au-input-date__anchor, .au-input-time__anchor):has(
+    :is(input.au-input-date, input.au-input-time):disabled
+  )
+  :is(.au-input-date__icon, .au-input-time__icon) {
+  color: var(--au-color-form-disabled-foreground);
+  opacity: 0.9;
+}
+
+:is(input.au-input-date, input.au-input-time)::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--au-field-temporal-picker-hit-md);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input.au-input-date[data-au-size='sm']::-webkit-calendar-picker-indicator,
+input.au-input-time[data-au-size='sm']::-webkit-calendar-picker-indicator {
+  width: var(--au-field-temporal-picker-hit-sm);
+}
+
+input.au-input-date[data-au-size='lg']::-webkit-calendar-picker-indicator,
+input.au-input-time[data-au-size='lg']::-webkit-calendar-picker-indicator {
+  width: var(--au-field-temporal-picker-hit-lg);
+}
+
+:is(input.au-input-date, input.au-input-time)::-moz-focus-inner {
+  border: 0;
+}
+
+input.au-input-date[data-au-calendar-picker] + .au-input-date__icon,
+input.au-input-time[data-au-time-picker] + .au-input-time__icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+input.au-input-date[data-au-calendar-picker]::-webkit-calendar-picker-indicator,
+input.au-input-time[data-au-time-picker]::-webkit-calendar-picker-indicator {
+  pointer-events: none;
+}

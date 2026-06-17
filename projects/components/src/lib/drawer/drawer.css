@@ -9,14 +9,6 @@ au-drawer {
 
 au-drawer,
 .au-drawer__native {
-  --au-drawer-width-sm: 16rem;
-  --au-drawer-width-md: 24rem;
-  --au-drawer-width-lg: 32rem;
-  --au-drawer-bg: var(--au-color-surface-raised);
-  --au-drawer-border: 1px solid var(--au-color-border-subtle);
-  --au-drawer-shadow-end: -12px 0 40px rgba(15, 20, 26, 0.14);
-  --au-drawer-shadow-start: 12px 0 40px rgba(15, 20, 26, 0.14);
-
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -39,7 +31,7 @@ au-drawer,
   overflow: clip;
   overscroll-behavior: none;
   touch-action: none;
-  z-index: var(--au-z-modal);
+  z-index: var(--au-z-drawer);
 }
 
 .au-drawer__native:not([open]) {

@@ -53,13 +53,13 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
   select: [
     {
       concern: 'Trigger / menu',
-      examples: '`--au-color-select-menu-bg`, `--au-elevation-overlay`, `--au-z-dropdown`',
+      examples: '`--au-color-listbox-menu-bg`, `--au-elevation-overlay`, `--au-z-dropdown`',
     },
   ],
   autocomplete: [
     {
       concern: 'Combobox',
-      examples: '`--au-color-select-menu-bg`, `--au-elevation-overlay`, `--au-z-dropdown`',
+      examples: '`--au-color-listbox-menu-bg`, `--au-elevation-overlay`, `--au-z-dropdown`',
     },
   ],
   accordion: [

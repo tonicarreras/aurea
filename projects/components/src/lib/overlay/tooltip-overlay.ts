@@ -27,9 +27,25 @@ export function readCssLengthPx(
   return Number.isFinite(px) && px > 0 ? px : fallbackPx;
 }
 
+/** Like {@link readCssLengthPx} but allows zero and negative gaps (field listboxes). */
+export function readCssGapPx(document: Document, customProp: string, fallbackPx: number): number {
+  const probe = document.createElement('div');
+  probe.style.cssText =
+    'position:absolute;visibility:hidden;pointer-events:none;margin:0;padding:0;border:0;height:0;width:0;';
+  probe.style.marginTop = `var(${customProp}, ${fallbackPx}px)`;
+  document.body.appendChild(probe);
+  const px = Number.parseFloat(getComputedStyle(probe).marginTop);
+  probe.remove();
+  return Number.isFinite(px) ? px : fallbackPx;
+}
+
 export interface TooltipOverlaySyncOptions {
   /** Aligns panel width and horizontal origin to the anchor (select/autocomplete). */
   matchAnchorWidth?: boolean;
+  /** CSS custom property for anchor↔panel gap (default `--au-floating-gap`). */
+  gapCssVar?: string;
+  /** When false, skips floating-arrow CSS variables (field listboxes). */
+  showArrow?: boolean;
 }
 
 /**
@@ -153,7 +169,11 @@ export class TooltipOverlay {
   ): AuTooltipPlacement {
     this.activeAnchor = anchor;
     this.resolvedPlacement = placement;
-    const gap = readCssLengthPx(this.document, '--au-floating-gap', 10);
+    const gapVar = this.syncOptions?.gapCssVar ?? '--au-floating-gap';
+    const gap =
+      gapVar === '--au-floating-gap'
+        ? readCssLengthPx(this.document, gapVar, 10)
+        : readCssGapPx(this.document, gapVar, 0);
     const anchorRect = anchor.getBoundingClientRect();
     if (this.syncOptions?.matchAnchorWidth) {
       bubble.style.width = `${anchorRect.width}px`;
@@ -182,6 +202,9 @@ export class TooltipOverlay {
   }
 
   private shouldSyncArrow(bubble: HTMLElement): boolean {
+    if (this.syncOptions?.showArrow === false) {
+      return false;
+    }
     return (
       bubble.classList.contains('au-floating-panel') ||
       bubble.classList.contains('au-tooltip__bubble')
