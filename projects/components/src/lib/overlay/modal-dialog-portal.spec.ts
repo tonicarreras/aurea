@@ -85,13 +85,18 @@ describe('modal-dialog-portal', () => {
     wrap.remove();
   });
 
-  it('is a no-op when the dialog is already on document.body', () => {
+  it('syncs host context when the dialog is already on document.body', () => {
     const dialog = document.createElement('dialog');
     document.body.append(dialog);
     const portalState = emptyPortalState();
 
     ensureModalDialogPortaledToBody(document, renderer, dialog, portalState, host);
     expect(portalState.anchor).toBeNull();
+    expect(dialog.getAttribute('data-au-theme')).toBe('dark');
+
+    host.setAttribute('data-au-theme', 'light');
+    syncPortaledModalHostContext(dialog, host);
+    expect(dialog.getAttribute('data-au-theme')).toBe('light');
 
     dialog.remove();
   });

@@ -1,0 +1,136 @@
+/**
+ * Layer 3 — domain tokens (component-specific colors + implementation variables).
+ * Semantic palette lives in au-tokens-semantic.css.
+ *
+ * Chrome tokens that reference `--au-color-*` or `--au-elevation-*` must be defined
+ * on themed selectors (not bare :root) so portaled overlays resolve vars in their own
+ * `data-au-theme` context instead of inheriting pre-resolved values from <html>.
+ */
+
+:root {
+  /* Button — layout only */
+  --au-button-radius: var(--au-radius-control);
+  --au-button-height-sm: var(--au-size-field-h-sm);
+  --au-button-height-md: var(--au-size-field-h-md);
+  --au-button-height-lg: var(--au-size-field-h-lg);
+  --au-button-font-size-sm: var(--au-text-xs);
+  --au-button-font-size-md: var(--au-text-sm);
+  --au-button-font-size-lg: var(--au-text-sm);
+  --au-button-gap: var(--au-gap-field);
+
+  /* Drawer / dialog — layout only */
+  --au-drawer-width-sm: 16rem;
+  --au-drawer-width-md: 24rem;
+  --au-drawer-width-lg: 32rem;
+  --au-dialog-radius: var(--au-radius-modal);
+  --au-dialog-padding: var(--au-pad-dialog);
+  --au-dialog-gap: var(--au-space-5);
+  --au-dialog-max-width-sm: 24rem;
+  --au-dialog-max-width-md: 35rem;
+  --au-dialog-max-width-lg: 45rem;
+
+  /* Spinner */
+  --au-spinner-arc: currentColor;
+  --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
+}
+
+/* Themed chrome — resolves semantic/role aliases in the active theme context */
+:is(
+  :root,
+  [data-au-theme='light'],
+  [data-au-theme='dark'],
+  [data-au-theme='high-contrast'],
+  [data-au-theme='high-contrast-dark']
+) {
+  --au-drawer-bg: var(--au-color-surface-raised);
+  --au-drawer-border: 1px solid var(--au-color-border-subtle);
+  --au-dialog-bg: var(--au-color-surface-raised);
+  --au-dialog-border: var(--au-chrome-border);
+  --au-dialog-shadow: var(--au-elevation-overlay);
+  --au-floating-panel-bg: color-mix(in srgb, var(--au-color-surface-raised) 90%, transparent);
+  --au-floating-panel-border: color-mix(in srgb, var(--au-color-border-subtle) 88%, transparent);
+}
+
+:root,
+[data-au-theme='light'] {
+  --au-drawer-shadow-end: -12px 0 40px
+    color-mix(in srgb, var(--au-color-surface-inverted) 14%, transparent);
+  --au-drawer-shadow-start: 12px 0 40px
+    color-mix(in srgb, var(--au-color-surface-inverted) 14%, transparent);
+
+  /* Switch */
+  --au-color-switch-track-off: #8d98a6;
+  --au-color-switch-track-off-hover: #6b7785;
+  --au-color-switch-track-off-border: #5c6b7d;
+  --au-color-switch-thumb-off: #ffffff;
+
+  /* Listbox / select / autocomplete */
+  --au-color-listbox-menu-bg: var(--au-color-surface-raised);
+  --au-color-listbox-menu-text: var(--au-color-form-text);
+  --au-color-listbox-field-hover-bg: #f4f7fb;
+  --au-color-listbox-option-highlight-bg: #e3ecf8;
+  --au-color-listbox-option-highlight-text: #0a3a85;
+  --au-color-listbox-option-highlight-marker: #1059c8;
+  --au-color-listbox-option-selected-bg: #0d4aa3;
+  --au-color-listbox-option-selected-text: #ffffff;
+  --au-color-listbox-option-selected-marker: #7eb8ff;
+  --au-color-listbox-option-disabled-text: var(--au-color-form-disabled-foreground);
+
+  /* Temporal field icons */
+  --au-color-temporal-icon: var(--au-color-text-tertiary);
+  --au-color-temporal-icon-hover: var(--au-color-text-secondary);
+  --au-color-temporal-icon-active: var(--au-color-action-primary);
+
+  /* Stable aliases — prefer listbox/temporal names in new code */
+  --au-color-select-menu-bg: var(--au-color-listbox-menu-bg);
+  --au-color-select-menu-text: var(--au-color-listbox-menu-text);
+  --au-color-select-field-hover-bg: var(--au-color-listbox-field-hover-bg);
+  --au-color-select-option-highlight-bg: var(--au-color-listbox-option-highlight-bg);
+  --au-color-select-option-highlight-text: var(--au-color-listbox-option-highlight-text);
+  --au-color-select-option-highlight-marker: var(--au-color-listbox-option-highlight-marker);
+  --au-color-select-option-selected-bg: var(--au-color-listbox-option-selected-bg);
+  --au-color-select-option-selected-text: var(--au-color-listbox-option-selected-text);
+  --au-color-select-option-selected-marker: var(--au-color-listbox-option-selected-marker);
+  --au-color-select-option-disabled-text: var(--au-color-listbox-option-disabled-text);
+  --au-color-date-picker-icon: var(--au-color-temporal-icon);
+  --au-color-date-picker-icon-hover: var(--au-color-temporal-icon-hover);
+  --au-color-date-picker-icon-active: var(--au-color-temporal-icon-active);
+}
+
+[data-au-theme='dark'] {
+  --au-drawer-shadow-end: -10px 0 28px rgba(0, 0, 0, 0.28);
+  --au-drawer-shadow-start: 10px 0 28px rgba(0, 0, 0, 0.28);
+  --au-floating-panel-bg: color-mix(in srgb, var(--au-color-surface-elevated) 96%, transparent);
+  --au-floating-panel-border: var(--au-color-border-default);
+
+  --au-color-switch-track-off: #4d5666;
+  --au-color-switch-track-off-hover: #5c6b7d;
+  --au-color-switch-track-off-border: #6b7785;
+  --au-color-switch-thumb-off: #f0f2f4;
+  --au-color-listbox-menu-bg: var(--au-color-surface-elevated);
+  --au-color-listbox-menu-text: var(--au-color-form-text);
+  --au-color-listbox-field-hover-bg: #283140;
+  --au-color-listbox-option-highlight-bg: #343f4f;
+  --au-color-listbox-option-highlight-text: #eef1f4;
+  --au-color-listbox-option-highlight-marker: #8ec5ff;
+  --au-color-listbox-option-selected-bg: #3d8fd4;
+  --au-color-listbox-option-selected-text: #ffffff;
+  --au-color-listbox-option-selected-marker: #cfe8ff;
+  --au-color-listbox-option-disabled-text: var(--au-color-form-disabled-foreground);
+  --au-color-temporal-icon: var(--au-color-text-tertiary);
+  --au-color-temporal-icon-hover: var(--au-color-text-secondary);
+  --au-color-temporal-icon-active: var(--au-color-action-primary);
+  --au-color-select-menu-bg: var(--au-color-listbox-menu-bg);
+  --au-color-select-menu-text: var(--au-color-listbox-menu-text);
+  --au-color-select-field-hover-bg: var(--au-color-listbox-field-hover-bg);
+  --au-color-select-option-highlight-bg: var(--au-color-listbox-option-highlight-bg);
+  --au-color-select-option-highlight-text: var(--au-color-listbox-option-highlight-text);
+  --au-color-select-option-highlight-marker: var(--au-color-listbox-option-highlight-marker);
+  --au-color-select-option-selected-bg: var(--au-color-listbox-option-selected-bg);
+  --au-color-select-option-selected-text: var(--au-color-listbox-option-selected-text);
+  --au-color-select-option-selected-marker: var(--au-color-listbox-option-selected-marker);
+  --au-color-select-option-disabled-text: var(--au-color-listbox-option-disabled-text);
+  --au-color-date-picker-icon: var(--au-color-temporal-icon);
+  --au-color-date-picker-icon-hover: var(--au-color-temporal-icon-hover);
+  --au-color-date-picker-icon-active: var(--au-color-temporal-icon-active);
+}

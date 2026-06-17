@@ -1,0 +1,298 @@
+/**
+ * Layer 2 — semantic colors (theme palettes only).
+ * Domain/component colors live in au-tokens-domain.css.
+ */
+
+:root,
+[data-au-theme='light'] {
+  color-scheme: light;
+  --au-color-surface-canvas: #f1f2f4;
+  --au-color-surface-raised: #ffffff;
+  --au-color-surface-elevated: #f8f9fa;
+  --au-color-surface-sunken: #e9ebef;
+  --au-color-surface-inverted: #101418;
+  --au-color-skeleton-base: color-mix(
+    in srgb,
+    var(--au-color-text-primary) 11%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-skeleton-shimmer: color-mix(
+    in srgb,
+    var(--au-color-text-primary) 5%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-text-primary: #101418;
+  --au-color-text-secondary: #3d4a5c;
+  --au-color-text-tertiary: #5c6b7d;
+  --au-color-text-placeholder: #8a98a8;
+  --au-color-text-disabled: #a8b0bc;
+  --au-color-text-label: #1e2935;
+  --au-color-text-on-solid: #ffffff;
+  --au-color-border-subtle: #e0e4ea;
+  --au-color-border-default: #c8ced7;
+  --au-color-border-strong: #8d98a6;
+  --au-chrome-border: 1px solid var(--au-color-border-default);
+  --au-chrome-border-color: var(--au-color-border-default);
+  --au-chrome-border-color-hover: var(--au-color-border-strong);
+  --au-color-form-border: var(--au-color-border-default);
+  --au-color-form-border-hover: var(--au-color-border-strong);
+  --au-color-action-primary: #1059c8;
+  --au-color-action-primary-hover: #0d4aa3;
+  --au-color-action-primary-pressed: #0a3a85;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
+  --au-color-focus-ring: #1059c8;
+  --au-color-focus-inner: #0a3a85;
+  --au-color-semantic-error: #b42318;
+  --au-color-semantic-error-contrast: #5c0f0a;
+  --au-color-semantic-error-surface: #fff4f2;
+  --au-color-semantic-success: #047857;
+  --au-color-semantic-success-surface: #ecfdf5;
+  --au-color-semantic-warning: #b45309;
+  --au-color-semantic-warning-surface: #fffbeb;
+  --au-color-semantic-info: #0369a1;
+  --au-color-semantic-info-surface: #f0f9ff;
+  --au-color-feedback-success-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 28%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 44%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-warning-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 30%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 46%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-error-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 26%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 44%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-info-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 28%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-feedback-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 44%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-success-title: #065f46;
+  --au-color-feedback-warning-title: #92400e;
+  --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
+  --au-color-feedback-info-title: #075985;
+  --au-color-accent-surface: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 16%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-accent-border: color-mix(in srgb, var(--au-color-action-primary) 35%, transparent);
+  --au-color-accent-foreground: var(--au-color-action-primary);
+  --au-color-semantic-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 40%,
+    transparent
+  );
+  --au-color-semantic-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 40%,
+    transparent
+  );
+  --au-color-semantic-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 40%,
+    transparent
+  );
+  --au-color-semantic-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 40%,
+    transparent
+  );
+  --au-color-state-selected: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 10%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 14%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-accent: var(--au-color-action-primary);
+  --au-color-state-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 8%,
+    var(--au-color-surface-sunken)
+  );
+  --au-color-selection: rgba(16, 89, 200, 0.2);
+  --au-color-selection-text: inherit;
+  --au-color-form-text: var(--au-color-text-primary);
+  --au-color-form-placeholder: var(--au-color-text-tertiary);
+  --au-color-form-caret: var(--au-color-text-primary);
+  --au-color-form-error: var(--au-color-semantic-error);
+  --au-color-form-error-bg: var(--au-color-semantic-error-surface);
+  --au-color-form-disabled-foreground: #8d98a6;
+  --au-color-form-disabled-surface: #ebedf0;
+  --au-color-overlay-scrim: color-mix(in srgb, var(--au-color-surface-inverted) 52%, transparent);
+}
+
+[data-au-theme='dark'] {
+  color-scheme: dark;
+  --au-color-surface-canvas: #12161e;
+  --au-color-surface-sunken: #171d27;
+  --au-color-surface-raised: #1f2632;
+  --au-color-surface-elevated: #283140;
+  --au-color-surface-inverted: #f0f2f4;
+  --au-color-skeleton-base: color-mix(
+    in srgb,
+    var(--au-color-text-primary) 10%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-skeleton-shimmer: color-mix(
+    in srgb,
+    var(--au-color-text-primary) 20%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-text-primary: #eef1f4;
+  --au-color-text-secondary: #a8b2bd;
+  --au-color-text-tertiary: #8b97a6;
+  --au-color-text-placeholder: #6d7a8a;
+  --au-color-text-disabled: #6d7a8a;
+  --au-color-text-label: #dce0e5;
+  --au-color-text-on-solid: #0c0e12;
+  --au-color-border-subtle: #2f3845;
+  --au-color-border-default: #3d4756;
+  --au-color-border-strong: #566274;
+  --au-chrome-border: 1px solid var(--au-color-border-default);
+  --au-chrome-border-color: var(--au-color-border-default);
+  --au-chrome-border-color-hover: var(--au-color-border-strong);
+  --au-color-form-border: var(--au-color-border-default);
+  --au-color-form-border-hover: var(--au-color-border-strong);
+  --au-color-action-primary: #6eb4ff;
+  --au-color-action-primary-hover: #8ec5ff;
+  --au-color-action-primary-pressed: #b0d8ff;
+  --au-color-link: var(--au-color-action-primary);
+  --au-color-link-hover: var(--au-color-action-primary-hover);
+  --au-color-focus-ring: #6eb4ff;
+  --au-color-focus-inner: #b0d8ff;
+  --au-color-semantic-error: #f97066;
+  --au-color-semantic-error-contrast: #fec5c0;
+  --au-color-semantic-error-surface: rgba(150, 40, 32, 0.22);
+  --au-color-semantic-success: #4ade80;
+  --au-color-semantic-success-surface: rgba(34, 100, 55, 0.22);
+  --au-color-semantic-warning: #fbbf24;
+  --au-color-semantic-warning-surface: rgba(120, 80, 10, 0.2);
+  --au-color-semantic-info: #38bdf8;
+  --au-color-semantic-info-surface: rgba(15, 80, 120, 0.22);
+  --au-color-feedback-success-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 24%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 50%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-warning-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 26%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 52%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-error-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 24%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 50%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-info-bg: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 24%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-feedback-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 50%,
+    var(--au-color-border-default)
+  );
+  --au-color-feedback-success-title: #86efac;
+  --au-color-feedback-warning-title: #fde68a;
+  --au-color-feedback-error-title: var(--au-color-semantic-error-contrast);
+  --au-color-feedback-info-title: #bae6fd;
+  --au-color-accent-surface: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 22%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-accent-border: color-mix(in srgb, var(--au-color-action-primary) 45%, transparent);
+  --au-color-accent-foreground: var(--au-color-action-primary);
+  --au-color-semantic-success-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-success) 45%,
+    transparent
+  );
+  --au-color-semantic-warning-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-warning) 45%,
+    transparent
+  );
+  --au-color-semantic-error-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-error) 45%,
+    transparent
+  );
+  --au-color-semantic-info-border: color-mix(
+    in srgb,
+    var(--au-color-semantic-info) 45%,
+    transparent
+  );
+  --au-color-state-selected: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 14%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 20%,
+    var(--au-color-surface-raised)
+  );
+  --au-color-state-selected-accent: var(--au-color-action-primary);
+  --au-color-state-hover: color-mix(
+    in srgb,
+    var(--au-color-action-primary) 10%,
+    var(--au-color-surface-elevated)
+  );
+  --au-color-selection: rgba(110, 180, 255, 0.28);
+  --au-color-form-text: var(--au-color-text-primary);
+  --au-color-form-placeholder: var(--au-color-text-tertiary);
+  --au-color-form-caret: var(--au-color-text-primary);
+  --au-color-form-error: var(--au-color-semantic-error);
+  --au-color-form-error-bg: var(--au-color-semantic-error-surface);
+  --au-color-form-disabled-foreground: #6d7a8a;
+  --au-color-form-disabled-surface: #232a36;
+  --au-color-overlay-scrim: color-mix(in srgb, #000000 62%, transparent);
+}

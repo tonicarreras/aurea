@@ -30,7 +30,31 @@ Components use **role tokens**, not raw `--au-shadow-*` primitives:
 
 Shared borders: `--au-chrome-border`, `--au-chrome-border-color-hover`.
 
-Legacy aliases `--au-field-shadow*` and `--au-chrome-shadow*` remain for external consumers; prefer role tokens in new code.
+Token architecture: see `tokens/README.md` (primitives → semantic → roles → domain).
+
+## Global bundle modules (`aurea-global.entry.css`)
+
+| File                          | Role                                                               |
+| ----------------------------- | ------------------------------------------------------------------ |
+| `au-utilities.css`            | Shared utilities (`.au-sr-only`)                                   |
+| `au-floating-panel.css`       | Tooltip + floating panel chrome (extracted from tokens)            |
+| `au-native-text-field.css`    | Shared rules for `input.au-input-text` and `input.au-input-number` |
+| `au-field-temporal-input.css` | Shared date/time anchor, icon, picker chrome                       |
+| `au-field-chrome.css`         | Field shells for native hosts + select/autocomplete/tag-input      |
+| `au-field-listbox.css`        | Listbox overlay (select, autocomplete)                             |
+| `au-high-contrast-aaa.css`    | HC theme overrides                                                 |
+
+## Z-index scale
+
+| Token             | Value | Use                                        |
+| ----------------- | ----- | ------------------------------------------ |
+| `--au-z-raised`   | 1     | Sticky table headers, floating panel caret |
+| `--au-z-dropdown` | 40    | Listboxes, tooltips, menus                 |
+| `--au-z-drawer`   | 50    | Drawer shell                               |
+| `--au-z-modal`    | 50    | Dialog, responsive picker sheet            |
+| `--au-z-toast`    | 60    | Snackbar                                   |
+
+Dropdowns intentionally sit **below** modals/drawers so overlays stack correctly when a select opens inside a dialog.
 
 ## When CSS goes in `aurea-global.css`
 

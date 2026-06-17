@@ -1,0 +1,67 @@
+/**
+ * Shared native text-like inputs (au-input-text, au-input-number).
+ */
+
+:is(input.au-input-text, input.au-input-number):focus,
+:is(input.au-input-text, input.au-input-number):focus-visible {
+  outline: none;
+}
+
+:is(input.au-input-text, input.au-input-number) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--au-size-field-h-md);
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--au-color-form-text);
+  caret-color: var(--au-color-form-caret);
+  font: inherit;
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  font-synthesis: none;
+  padding: 0 var(--au-size-field-px-md);
+}
+
+:is(input.au-input-text, input.au-input-number)[data-au-size='sm'] {
+  height: var(--au-size-field-h-sm);
+  line-height: var(--au-size-field-h-sm);
+  font-size: var(--au-size-field-text-sm);
+  padding: 0 var(--au-size-field-px-sm);
+}
+
+:is(input.au-input-text, input.au-input-number)[data-au-size='md'],
+:is(input.au-input-text, input.au-input-number):not([data-au-size]) {
+  height: var(--au-size-field-h-md);
+  line-height: var(--au-size-field-h-md);
+  font-size: var(--au-size-field-text-md);
+  padding: 0 var(--au-size-field-px-md);
+}
+
+:is(input.au-input-text, input.au-input-number)[data-au-size='lg'] {
+  height: var(--au-size-field-h-lg);
+  line-height: var(--au-size-field-h-lg);
+  font-size: var(--au-size-field-text-lg);
+  padding: 0 var(--au-size-field-px-lg);
+}
+
+input.au-input-text::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+  line-height: inherit;
+}
+
+:is(input.au-input-text, input.au-input-number)::placeholder {
+  color: var(--au-color-form-placeholder);
+  opacity: 1;
+}
+
+:is(input.au-input-text, input.au-input-number):disabled {
+  color: var(--au-color-form-disabled-foreground);
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+input.au-input-number:disabled {
+  background: transparent;
+}

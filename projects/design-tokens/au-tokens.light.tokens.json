@@ -1,0 +1,574 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "color": {
+    "action": {
+      "primary": {
+        "default": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.062745, 0.34902, 0.784314],
+            "hex": "#1059c8"
+          },
+          "$type": "color"
+        },
+        "hover": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.05098, 0.290196, 0.639216],
+            "hex": "#0d4aa3"
+          },
+          "$type": "color"
+        },
+        "pressed": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.039216, 0.227451, 0.521569],
+            "hex": "#0a3a85"
+          },
+          "$type": "color"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.784314, 0.807843, 0.843137],
+          "hex": "#c8ced7"
+        },
+        "$type": "color"
+      },
+      "strong": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.552941, 0.596078, 0.65098],
+          "hex": "#8d98a6"
+        },
+        "$type": "color"
+      },
+      "subtle": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.878431, 0.894118, 0.917647],
+          "hex": "#e0e4ea"
+        },
+        "$type": "color"
+      }
+    },
+    "feedback": {
+      "info": {
+        "title": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.027451, 0.34902, 0.521569],
+            "hex": "#075985"
+          },
+          "$type": "color"
+        }
+      },
+      "success": {
+        "title": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.023529, 0.372549, 0.27451],
+            "hex": "#065f46"
+          },
+          "$type": "color"
+        }
+      },
+      "warning": {
+        "title": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.572549, 0.25098, 0.054902],
+            "hex": "#92400e"
+          },
+          "$type": "color"
+        }
+      }
+    },
+    "focus": {
+      "inner": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.039216, 0.227451, 0.521569],
+          "hex": "#0a3a85"
+        },
+        "$type": "color"
+      },
+      "ring": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.062745, 0.34902, 0.784314],
+          "hex": "#1059c8"
+        },
+        "$type": "color"
+      }
+    },
+    "form": {
+      "disabled": {
+        "foreground": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.552941, 0.596078, 0.65098],
+            "hex": "#8d98a6"
+          },
+          "$type": "color"
+        },
+        "surface": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.921569, 0.929412, 0.941176],
+            "hex": "#ebedf0"
+          },
+          "$type": "color"
+        }
+      }
+    },
+    "listbox": {
+      "field": {
+        "hover": {
+          "bg": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.956863, 0.968627, 0.984314],
+              "hex": "#f4f7fb"
+            },
+            "$type": "color"
+          }
+        }
+      },
+      "option": {
+        "highlight": {
+          "bg": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.890196, 0.92549, 0.972549],
+              "hex": "#e3ecf8"
+            },
+            "$type": "color"
+          },
+          "marker": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.062745, 0.34902, 0.784314],
+              "hex": "#1059c8"
+            },
+            "$type": "color"
+          },
+          "text": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.039216, 0.227451, 0.521569],
+              "hex": "#0a3a85"
+            },
+            "$type": "color"
+          }
+        },
+        "selected": {
+          "bg": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.05098, 0.290196, 0.639216],
+              "hex": "#0d4aa3"
+            },
+            "$type": "color"
+          },
+          "marker": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.494118, 0.721569, 1],
+              "hex": "#7eb8ff"
+            },
+            "$type": "color"
+          },
+          "text": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [1, 1, 1],
+              "hex": "#ffffff"
+            },
+            "$type": "color"
+          }
+        }
+      }
+    },
+    "semantic": {
+      "error": {
+        "default": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.705882, 0.137255, 0.094118],
+            "hex": "#b42318"
+          },
+          "$type": "color"
+        },
+        "contrast": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.360784, 0.058824, 0.039216],
+            "hex": "#5c0f0a"
+          },
+          "$type": "color"
+        },
+        "surface": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 0.956863, 0.94902],
+            "hex": "#fff4f2"
+          },
+          "$type": "color"
+        }
+      },
+      "info": {
+        "default": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.011765, 0.411765, 0.631373],
+            "hex": "#0369a1"
+          },
+          "$type": "color"
+        },
+        "surface": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.941176, 0.976471, 1],
+            "hex": "#f0f9ff"
+          },
+          "$type": "color"
+        }
+      },
+      "success": {
+        "default": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.015686, 0.470588, 0.341176],
+            "hex": "#047857"
+          },
+          "$type": "color"
+        },
+        "surface": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.92549, 0.992157, 0.960784],
+            "hex": "#ecfdf5"
+          },
+          "$type": "color"
+        }
+      },
+      "warning": {
+        "default": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.705882, 0.32549, 0.035294],
+            "hex": "#b45309"
+          },
+          "$type": "color"
+        },
+        "surface": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 0.984314, 0.921569],
+            "hex": "#fffbeb"
+          },
+          "$type": "color"
+        }
+      }
+    },
+    "surface": {
+      "canvas": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.945098, 0.94902, 0.956863],
+          "hex": "#f1f2f4"
+        },
+        "$type": "color"
+      },
+      "elevated": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.972549, 0.976471, 0.980392],
+          "hex": "#f8f9fa"
+        },
+        "$type": "color"
+      },
+      "inverted": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.062745, 0.078431, 0.094118],
+          "hex": "#101418"
+        },
+        "$type": "color"
+      },
+      "raised": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 1, 1],
+          "hex": "#ffffff"
+        },
+        "$type": "color"
+      },
+      "sunken": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.913725, 0.921569, 0.937255],
+          "hex": "#e9ebef"
+        },
+        "$type": "color"
+      }
+    },
+    "switch": {
+      "thumb": {
+        "off": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "hex": "#ffffff"
+          },
+          "$type": "color"
+        }
+      },
+      "track": {
+        "off": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.552941, 0.596078, 0.65098],
+              "hex": "#8d98a6"
+            },
+            "$type": "color"
+          },
+          "border": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.360784, 0.419608, 0.490196],
+              "hex": "#5c6b7d"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [0.419608, 0.466667, 0.521569],
+              "hex": "#6b7785"
+            },
+            "$type": "color"
+          }
+        }
+      }
+    },
+    "text": {
+      "disabled": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.658824, 0.690196, 0.737255],
+          "hex": "#a8b0bc"
+        },
+        "$type": "color"
+      },
+      "label": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.117647, 0.160784, 0.207843],
+          "hex": "#1e2935"
+        },
+        "$type": "color"
+      },
+      "on": {
+        "solid": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "hex": "#ffffff"
+          },
+          "$type": "color"
+        }
+      },
+      "placeholder": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.541176, 0.596078, 0.658824],
+          "hex": "#8a98a8"
+        },
+        "$type": "color"
+      },
+      "primary": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.062745, 0.078431, 0.094118],
+          "hex": "#101418"
+        },
+        "$type": "color"
+      },
+      "secondary": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.239216, 0.290196, 0.360784],
+          "hex": "#3d4a5c"
+        },
+        "$type": "color"
+      },
+      "tertiary": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.360784, 0.419608, 0.490196],
+          "hex": "#5c6b7d"
+        },
+        "$type": "color"
+      }
+    }
+  },
+  "fontFamily": {
+    "sans": {
+      "$value": ["Onest", "ui-sans-serif", "system-ui", "sans-serif"],
+      "$type": "fontFamily"
+    },
+    "mono": {
+      "$value": ["JetBrains Mono", "ui-monospace", "monospace"],
+      "$type": "fontFamily"
+    }
+  },
+  "fontSize": {
+    "xs": {
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "sm": {
+      "$value": {
+        "value": 0.875,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "base": {
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "lg": {
+      "$value": {
+        "value": 1.125,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "xl": {
+      "$value": {
+        "value": 1.25,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    }
+  },
+  "spacing": {
+    "1": {
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "2": {
+      "$value": {
+        "value": 0.5,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "3": {
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "4": {
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "6": {
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "8": {
+      "$value": {
+        "value": 2,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    }
+  },
+  "borderRadius": {
+    "field": {
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "control": {
+      "$value": {
+        "value": 0.375,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "surface": {
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "modal": {
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      },
+      "$type": "dimension"
+    },
+    "pill": {
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      },
+      "$type": "dimension"
+    }
+  },
+  "zIndex": {
+    "dropdown": {
+      "$value": 40,
+      "$type": "number"
+    },
+    "drawer": {
+      "$value": 50,
+      "$type": "number"
+    },
+    "modal": {
+      "$value": 50,
+      "$type": "number"
+    },
+    "toast": {
+      "$value": 60,
+      "$type": "number"
+    }
+  }
+}

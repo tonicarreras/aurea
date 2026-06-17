@@ -9,7 +9,7 @@ import {
   resolveFieldListboxPortalRoot,
 } from './field-listbox-overlay';
 import { computeTooltipPosition } from './tooltip-position';
-import { readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
+import { readCssGapPx, readCssLengthPx, TooltipOverlay } from './tooltip-overlay';
 
 @Component({ changeDetection: ChangeDetectionStrategy.OnPush, template: '' })
 class OverlayHost {
@@ -108,6 +108,16 @@ describe('readCssLengthPx', () => {
       marginTop: '0px',
     } as CSSStyleDeclaration);
     expect(readCssLengthPx(document, '--au-tooltip-gap', 14)).toBe(14);
+    spy.mockRestore();
+  });
+});
+
+describe('readCssGapPx', () => {
+  it('allows zero and negative resolved gaps', () => {
+    const spy = vi.spyOn(window, 'getComputedStyle').mockReturnValue({
+      marginTop: '-1px',
+    } as CSSStyleDeclaration);
+    expect(readCssGapPx(document, '--au-field-listbox-gap', 0)).toBe(-1);
     spy.mockRestore();
   });
 });
@@ -570,8 +580,8 @@ describe('FieldListboxOverlay', () => {
     expect(listbox.parentElement).toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(true);
     expect(listbox.classList.contains('au-floating-panel')).toBe(true);
-    expect(listbox.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
-    const gap = readCssLengthPx(document, '--au-floating-gap', 10);
+    expect(listbox.style.getPropertyValue('--au-floating-arrow-x')).toBe('');
+    const gap = readCssGapPx(document, '--au-field-listbox-gap', 0);
     expect(listbox.style.top).toBe(`${40 + gap}px`);
     expect(listbox.style.width).toBe('200px');
     overlay.detach();
@@ -614,7 +624,7 @@ describe('FieldListboxOverlay', () => {
     };
     const overlay = createOverlay();
     overlay.sync(listbox, anchor, true);
-    const gap = readCssLengthPx(document, '--au-floating-gap', 10);
+    const gap = readCssGapPx(document, '--au-field-listbox-gap', 0);
     window.dispatchEvent(new Event('scroll'));
     expect(listbox.style.top).toBe(`${50 + gap}px`);
     window.dispatchEvent(new Event('resize'));
@@ -663,7 +673,7 @@ describe('FieldListboxOverlay', () => {
     anchor.remove();
   });
 
-  it('uses default floating gap when the token is not numeric', () => {
+  it('uses default listbox gap when the token is not numeric', () => {
     const anchor = document.createElement('div');
     const listbox = document.createElement('ul');
     document.body.append(anchor, listbox);
@@ -684,7 +694,7 @@ describe('FieldListboxOverlay', () => {
       }) as DOMRect;
     const overlay = createOverlay();
     overlay.sync(listbox, anchor, true);
-    expect(listbox.style.top).toBe('20px');
+    expect(listbox.style.top).toBe('10px');
     overlay.detach();
     listbox.remove();
     anchor.remove();

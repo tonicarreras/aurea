@@ -4,15 +4,6 @@
  */
 
 button.au-button {
-  --au-button-radius: var(--au-radius-control);
-  --au-button-height-sm: var(--au-size-field-h-sm);
-  --au-button-height-md: var(--au-size-field-h-md);
-  --au-button-height-lg: var(--au-size-field-h-lg);
-  --au-button-font-size-sm: var(--au-text-xs);
-  --au-button-font-size-md: var(--au-text-sm);
-  --au-button-font-size-lg: var(--au-text-sm);
-  --au-button-gap: var(--au-space-2);
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -226,5 +217,5 @@ au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-butt
 
 au-button-group[data-au-attached] button.au-button:hover:not(:disabled),
 au-button-group[data-au-attached] button.au-button:active:not(:disabled) {
-  z-index: 1;
+  z-index: var(--au-z-raised);
 }
