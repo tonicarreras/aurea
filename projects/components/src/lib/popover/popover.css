@@ -9,9 +9,19 @@
 .au-popover__panel {
   min-width: min(12rem, calc(100vw - 2rem));
   max-width: min(24rem, calc(100vw - 2rem));
-  max-height: min(24rem, calc(100dvh - 2rem));
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/** Portaled chrome — keep overflow visible so the shared floating arrow is not clipped. */
+.au-popover__panel.au-floating-panel {
+  overflow: visible;
+}
+
+.au-popover__body {
   overflow-y: auto;
   overscroll-behavior: contain;
+  max-height: min(24rem, calc(100dvh - 2rem));
   padding: var(--au-space-4) var(--au-space-5);
   box-sizing: border-box;
 }

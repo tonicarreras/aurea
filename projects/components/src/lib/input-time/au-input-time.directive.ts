@@ -4,6 +4,7 @@ import {
   ComponentRef,
   EnvironmentInjector,
   Renderer2,
+  afterNextRender,
   afterRenderEffect,
   computed,
   createComponent,
@@ -27,6 +28,10 @@ import {
 import { AuInternalTimePickerPanel } from '../field-time-picker-panel';
 import { bindHostDomEvent } from '../au-host-dom-event';
 import { injectHostRef } from '../au-host-element';
+import {
+  bindCoarsePointerPreference,
+  restoreTemporalPickerFocus,
+} from '../field-temporal-native-guard';
 import { tabFocusState } from '../au-tab-focus-state';
 import { AuIcon } from '../icon/icon';
 
@@ -51,7 +56,7 @@ import { AuIcon } from '../icon/icon';
     '[attr.aria-describedby]': 'ariaDescribedBy() ?? null',
     '[attr.aria-required]': 'required() ? "true" : null',
     '[disabled]': 'disabled()',
-    '[readOnly]': 'readOnly()',
+    '[readOnly]': 'nativeInputReadOnly()',
     '[attr.required]': 'required() ? true : null',
     '(click)': 'onNativeInputClick($event)',
     '(input)': 'onInput($event)',
@@ -91,6 +96,10 @@ export class AuInputTime {
   private readonly appRef = inject(ApplicationRef);
   protected readonly fieldFocusByTab = signal(false);
   protected readonly pickerOpen = signal(false);
+  protected readonly coarsePointer = signal(false);
+  protected readonly nativeInputReadOnly = computed(
+    () => this.readOnly() || (this.coarsePointer() && !this.disabled()),
+  );
 
   private pickerIconEl: HTMLButtonElement | null = null;
   private iconRef: ComponentRef<AuIcon> | null = null;
@@ -128,6 +137,20 @@ export class AuInputTime {
 
   constructor() {
     bindHostDomEvent(this.host, this.destroyRef, 'blur', () => this.onBlurHost());
+    bindHostDomEvent(
+      this.host,
+      this.destroyRef,
+      'touchstart',
+      (event) => this.onNativeTouchStart(event),
+      { passive: false },
+    );
+    afterNextRender(() => {
+      bindCoarsePointerPreference(
+        this.host.nativeElement.ownerDocument.defaultView,
+        (coarse) => this.coarsePointer.set(coarse),
+        this.destroyRef,
+      );
+    });
     afterRenderEffect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
@@ -195,9 +218,15 @@ export class AuInputTime {
       return;
     }
     event.preventDefault();
-    this.ensurePickerChrome();
-    this.togglePicker();
-    this.syncPickerPanel();
+    this.openPickerFromField(true);
+  }
+
+  onNativeTouchStart(event: Event): void {
+    if (this.disabled() || this.readOnly() || !this.coarsePointer()) {
+      return;
+    }
+    event.preventDefault();
+    this.openPickerFromField(false);
   }
 
   onNativeInputKeydown(event: KeyboardEvent): void {
@@ -208,8 +237,16 @@ export class AuInputTime {
       return;
     }
     event.preventDefault();
+    this.openPickerFromField(true);
+  }
+
+  private openPickerFromField(toggleIfOpen: boolean): void {
     this.ensurePickerChrome();
-    this.togglePicker();
+    if (toggleIfOpen && !this.coarsePointer()) {
+      this.togglePicker();
+    } else {
+      this.pickerOpen.set(true);
+    }
     this.syncPickerPanel();
   }
 
@@ -220,9 +257,7 @@ export class AuInputTime {
   protected closePicker(): void {
     this.pickerOpen.set(false);
     queueMicrotask(() => {
-      if (this.host.nativeElement.isConnected) {
-        this.host.nativeElement.focus();
-      }
+      restoreTemporalPickerFocus(this.host.nativeElement, this.pickerIconEl);
     });
   }
 
@@ -244,6 +279,10 @@ export class AuInputTime {
   }
 
   focus(): void {
+    if (this.coarsePointer() && this.pickerIconEl?.isConnected) {
+      this.pickerIconEl.focus();
+      return;
+    }
     this.host.nativeElement.focus();
   }
 

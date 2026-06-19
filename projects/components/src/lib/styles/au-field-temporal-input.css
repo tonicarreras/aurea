@@ -95,6 +95,10 @@
     min-width: var(--au-touch-target-min);
     min-height: var(--au-touch-target-min);
   }
+
+  :is(input.au-input-date, input.au-input-time):read-only:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 :is(.au-input-date__icon, .au-input-time__icon):focus-visible {
