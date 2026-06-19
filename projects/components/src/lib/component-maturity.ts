@@ -10,7 +10,9 @@ export interface ComponentMaturityMeta {
 }
 
 /**
- * Catálogo v1.x — actualizar al cambiar APIs o promover componentes.
+ * Catalog v1.x — update when changing APIs or promoting components.
+ * Layout directives (`layout` slug) are stable utilities exported from `./layout`;
+ * they are documented in guides/composition, not listed here.
  * @see CONTRIBUTING.md — Component Definition of Done
  */
 export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {

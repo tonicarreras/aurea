@@ -66,4 +66,24 @@ export const THEME_HOST_OVERRIDES_EN: ThemeHostOverride[] = [
     token: 'data-au-variant',
     description: '`plain` (default) or `contained` for a raised surface shell.',
   },
+  {
+    host: '[auStack]',
+    token: '--au-stack-gap',
+    description: 'Column gap between children; `gap` input sets the default.',
+  },
+  {
+    host: '[auCluster]',
+    token: '--au-cluster-gap',
+    description: 'Inline row gap between wrapped items.',
+  },
+  {
+    host: '[auSplit]',
+    token: '--au-split-ratio',
+    description: 'Grid template columns; `ratio` input sets presets like `1:2`.',
+  },
+  {
+    host: '[auSection]',
+    token: '--au-section-padding',
+    description: 'Block padding; `padding` input uses the shared spacing scale.',
+  },
 ];

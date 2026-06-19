@@ -2029,6 +2029,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Abre el calendario Aurea (rejilla mensual accesible) y cambia **Tema** en la barra. Los días fuera de `minDate`/`maxDate` aparecen deshabilitados; el segmento inline del input sigue usando tokens nativos del navegador.',\n      },\n    },\n  },\n  args: {\n    label: 'Event date',\n    value: '2026-05-18',\n    hint: 'Toggle light / dark in the Storybook toolbar.',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
             },
             {
+                "name": "CardComposition",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <au-card variant=\"elevated\" style=\"max-width: 28rem\">\n        <div auSection padding=\"lg\">\n          <div auStack gap=\"sm\">\n            <span auCardHeader>Revenue</span>\n            <span auCardBody style=\"font-size:var(--au-text-xl)\">$24,500</span>\n          </div>\n        </div>\n        <div auCardFooter>\n          <div auCluster gap=\"sm\" justify=\"end\">\n            <button auButton variant=\"ghost\" type=\"button\">Details</button>\n            <button auButton type=\"button\">Export</button>\n          </div>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "CardPlaceholder",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2087,6 +2097,16 @@
                 "deprecationMessage": "",
                 "type": "AuAutocompleteOption[]",
                 "defaultValue": "[\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n]"
+            },
+            {
+                "name": "Cluster",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <div auCluster gap=\"sm\" justify=\"end\" style=\"max-width: 24rem\">\n        <button auButton variant=\"ghost\" type=\"button\">Cancel</button>\n        <button auButton type=\"button\">Save</button>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Compact",
@@ -3314,6 +3334,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta",
+                "defaultValue": "{\n  title: 'Aurea/Layout',\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('layout'),\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/link/link.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3629,8 +3659,8 @@
                 "deprecationMessage": "",
                 "type": "Preview",
                 "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
-                "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
-                "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
+                "rawdescription": "a11y (addon 10): use `parameters.a11y` only.\nZoneless: `experimentalZoneless: true` in angular.json — Storybook adds\n`provideZonelessChangeDetection()` at bootstrap (no zone.js).",
+                "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.\nZoneless: <code>experimentalZoneless: true</code> in angular.json — Storybook adds\n<code>provideZonelessChangeDetection()</code> at bootstrap (no zone.js).</p>\n"
             },
             {
                 "name": "Primary",
@@ -3993,6 +4023,16 @@
                 "defaultValue": "{\n  args: { attached: false, ariaLabel: 'Editor toolbar' },\n  render: renderButtons,\n}"
             },
             {
+                "name": "Split",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <div auSplit ratio=\"1:2\" gap=\"lg\" style=\"max-width: 36rem\">\n        <div>\n          <strong>Notifications</strong>\n          <p style=\"margin:0.25rem 0 0;color:var(--au-color-text-secondary)\">Email alerts for billing.</p>\n        </div>\n        <div auCluster gap=\"sm\" justify=\"end\">\n          <button auButton variant=\"outline\" type=\"button\">Configure</button>\n        </div>\n      </div>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "Square",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -4001,6 +4041,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    shape: 'square',\n    name: 'Aurea DS',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Square avatar with control-radius corners (not a circle).',\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Stack",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <div auStack gap=\"md\" separator=\"solid\" style=\"max-width: 24rem\">\n        <p style=\"margin:0\">First block</p>\n        <p style=\"margin:0\">Second block</p>\n        <p style=\"margin:0\">Third block</p>\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "Stacked",
@@ -4051,6 +4101,16 @@
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{ imports: [AuCard] }"
+            },
+            {
+                "name": "storyImports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  imports: [AuStack, AuCluster, AuSplit, AuSection, AuCard, AuCardFooter, AuButton],\n}"
             },
             {
                 "name": "storyImports",
@@ -5346,6 +5406,17 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "StoryObj",
+                "file": "projects/components/src/lib/layout/layout.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj",
                 "file": "projects/components/src/lib/link/link.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -6033,6 +6104,68 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n    label: 'Booking',\n    value: '2026-06-01',\n    minDate: '2026-01-01',\n    maxDate: '2026-12-31',\n  },\n}"
+                }
+            ],
+            "projects/components/src/lib/layout/layout.stories.ts": [
+                {
+                    "name": "CardComposition",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <au-card variant=\"elevated\" style=\"max-width: 28rem\">\n        <div auSection padding=\"lg\">\n          <div auStack gap=\"sm\">\n            <span auCardHeader>Revenue</span>\n            <span auCardBody style=\"font-size:var(--au-text-xl)\">$24,500</span>\n          </div>\n        </div>\n        <div auCardFooter>\n          <div auCluster gap=\"sm\" justify=\"end\">\n            <button auButton variant=\"ghost\" type=\"button\">Details</button>\n            <button auButton type=\"button\">Export</button>\n          </div>\n        </div>\n      </au-card>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Cluster",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <div auCluster gap=\"sm\" justify=\"end\" style=\"max-width: 24rem\">\n        <button auButton variant=\"ghost\" type=\"button\">Cancel</button>\n        <button auButton type=\"button\">Save</button>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta",
+                    "defaultValue": "{\n  title: 'Aurea/Layout',\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('layout'),\n}"
+                },
+                {
+                    "name": "Split",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <div auSplit ratio=\"1:2\" gap=\"lg\" style=\"max-width: 36rem\">\n        <div>\n          <strong>Notifications</strong>\n          <p style=\"margin:0.25rem 0 0;color:var(--au-color-text-secondary)\">Email alerts for billing.</p>\n        </div>\n        <div auCluster gap=\"sm\" justify=\"end\">\n          <button auButton variant=\"outline\" type=\"button\">Configure</button>\n        </div>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Stack",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    ...storyImports,\n    template: `\n      <div auStack gap=\"md\" separator=\"solid\" style=\"max-width: 24rem\">\n        <p style=\"margin:0\">First block</p>\n        <p style=\"margin:0\">Second block</p>\n        <p style=\"margin:0\">Third block</p>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  imports: [AuStack, AuCluster, AuSplit, AuSection, AuCard, AuCardFooter, AuButton],\n}"
                 }
             ],
             "projects/components/src/lib/checkbox/checkbox.stories.ts": [
@@ -8321,8 +8454,8 @@
                     "deprecationMessage": "",
                     "type": "Preview",
                     "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
-                    "rawdescription": "a11y (addon 10): use `parameters.a11y` only.",
-                    "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.</p>\n"
+                    "rawdescription": "a11y (addon 10): use `parameters.a11y` only.\nZoneless: `experimentalZoneless: true` in angular.json — Storybook adds\n`provideZonelessChangeDetection()` at bootstrap (no zone.js).",
+                    "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.\nZoneless: <code>experimentalZoneless: true</code> in angular.json — Storybook adds\n<code>provideZonelessChangeDetection()</code> at bootstrap (no zone.js).</p>\n"
                 }
             ]
         },
@@ -9158,6 +9291,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<InputTimeStoryArgs>",
                     "file": "projects/components/src/lib/input-time/input-time.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/layout/layout.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj",
+                    "file": "projects/components/src/lib/layout/layout.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -11396,6 +11542,76 @@
             },
             {
                 "filePath": "projects/components/src/lib/input-time/input-time.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CardComposition",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Cluster",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Split",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Stack",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "storyImports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/layout/layout.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

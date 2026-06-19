@@ -8,10 +8,6 @@
   min-width: 0;
 }
 
-[data-au-theme='light'] .docs-page__body {
-  opacity: 0.92;
-}
-
 .docs-page__body h1:not([class^='au-']),
 .docs-page__body h2:not([class^='au-']),
 .docs-page__body h3:not([class^='au-']),

@@ -1,5 +1,6 @@
 import {
   Directive,
+  effect,
   afterRenderEffect,
   computed,
   inject,
@@ -104,7 +105,7 @@ export class AuInputNumber {
 
   constructor() {
     bindHostDomEvent(this.host, this.destroyRef, 'blur', () => this.onBlurHost());
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),

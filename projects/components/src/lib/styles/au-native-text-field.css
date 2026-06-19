@@ -2,12 +2,12 @@
  * Shared native text-like inputs (au-input-text, au-input-number).
  */
 
-:is(input.au-input-text, input.au-input-number):focus,
-:is(input.au-input-text, input.au-input-number):focus-visible {
+:where(input.au-input-text, input.au-input-number):focus,
+:where(input.au-input-text, input.au-input-number):focus-visible {
   outline: none;
 }
 
-:is(input.au-input-text, input.au-input-number) {
+:where(input.au-input-text, input.au-input-number) {
   display: block;
   width: 100%;
   min-width: 0;
@@ -23,22 +23,22 @@
   padding: 0 var(--au-size-field-px-md);
 }
 
-:is(input.au-input-text, input.au-input-number)[data-au-size='sm'] {
+:where(input.au-input-text, input.au-input-number)[data-au-size='sm'] {
   height: var(--au-size-field-h-sm);
   line-height: var(--au-size-field-h-sm);
   font-size: var(--au-size-field-text-sm);
   padding: 0 var(--au-size-field-px-sm);
 }
 
-:is(input.au-input-text, input.au-input-number)[data-au-size='md'],
-:is(input.au-input-text, input.au-input-number):not([data-au-size]) {
+:where(input.au-input-text, input.au-input-number)[data-au-size='md'],
+:where(input.au-input-text, input.au-input-number):not([data-au-size]) {
   height: var(--au-size-field-h-md);
   line-height: var(--au-size-field-h-md);
   font-size: var(--au-size-field-text-md);
   padding: 0 var(--au-size-field-px-md);
 }
 
-:is(input.au-input-text, input.au-input-number)[data-au-size='lg'] {
+:where(input.au-input-text, input.au-input-number)[data-au-size='lg'] {
   height: var(--au-size-field-h-lg);
   line-height: var(--au-size-field-h-lg);
   font-size: var(--au-size-field-text-lg);
@@ -51,12 +51,12 @@ input.au-input-text::placeholder {
   line-height: inherit;
 }
 
-:is(input.au-input-text, input.au-input-number)::placeholder {
+:where(input.au-input-text, input.au-input-number)::placeholder {
   color: var(--au-color-form-placeholder);
   opacity: 1;
 }
 
-:is(input.au-input-text, input.au-input-number):disabled {
+:where(input.au-input-text, input.au-input-number):disabled {
   color: var(--au-color-form-disabled-foreground);
   cursor: not-allowed;
   opacity: 0.9;

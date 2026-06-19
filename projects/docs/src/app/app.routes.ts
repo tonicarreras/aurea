@@ -32,6 +32,29 @@ export const routes: Routes = [
         data: { docsLayout: 'reading' },
       },
       {
+        path: 'guides/api-conventions',
+        loadComponent: () =>
+          import('./pages/guide-api-conventions.page').then((m) => m.GuideApiConventionsPage),
+        data: { docsLayout: 'reading' },
+      },
+      {
+        path: 'guides/floating-ui',
+        loadComponent: () =>
+          import('./pages/guide-floating-ui.page').then((m) => m.GuideFloatingUiPage),
+        data: { docsLayout: 'reading' },
+      },
+      {
+        path: 'guides/composition',
+        loadComponent: () =>
+          import('./pages/guide-composition.page').then((m) => m.GuideCompositionPage),
+        data: { docsLayout: 'reading' },
+      },
+      {
+        path: 'guides/recipes',
+        loadComponent: () => import('./pages/guide-recipes.page').then((m) => m.GuideRecipesPage),
+        data: { docsLayout: 'reading' },
+      },
+      {
         path: 'guides/crud-demo',
         loadComponent: () =>
           import('./pages/guide-crud-demo.page').then((m) => m.GuideCrudDemoPage),

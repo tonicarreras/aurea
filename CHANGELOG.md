@@ -9,6 +9,26 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+### Added
+
+- **Architecture docs** — [API_CONVENTIONS.md](./docs/API_CONVENTIONS.md) (native directives vs `au-*` widgets) and [FLOATING_UI.md](./docs/FLOATING_UI.md) (overlay platform + a11y checklist).
+- **Vocabulary & composition** — [API_VOCABULARY.md](./docs/API_VOCABULARY.md), [COMPOSITION.md](./docs/COMPOSITION.md), [COMPONENT_CSS_VARS.md](./docs/COMPONENT_CSS_VARS.md), [STYLE_CAPABILITIES.md](./docs/STYLE_CAPABILITIES.md).
+- **`au-table-data`** — headless sort/selection helpers exported from the table module; `AuTable` delegates to them.
+- **Layout directives** — `[auStack]`, `[auCluster]`, `[auSplit]`, `[auSection]` with internal gap/padding capabilities; styles in `aurea-global.css`.
+- **`provideAurea()`** — optional bootstrap override for semantic theme tokens (`actionPrimary`, radii, fonts).
+- **`auSpacingValue()`** — shared spacing resolver for layout inputs.
+- **Token contract tests** — `*.tokens.spec.ts` for button, card, and input-text.
+- **Docs site** — guides `/guides/api-conventions`, `/guides/floating-ui`, `/guides/composition`, `/guides/recipes`; expanded signal-forms guide (nested fields).
+
+### Changed
+
+- **Shell components** — `au-card`, `au-table`, `au-tabs`, `au-steps`, `au-dialog`, and `au-drawer` use default emulated encapsulation; styles ship only via `aurea-global.css` (projected/portaled DOM).
+- **Form controls** — `syncFormFieldControlState` runs in `effect()` instead of `afterRenderEffect` (signal-only sync); checkbox `indeterminate` uses `effect()`.
+- **Zoneless** — docs app, unit tests, and Storybook use zoneless change detection (`provideZonelessChangeDetection()` / `experimentalZoneless`); FESM bundle baseline lowered (~736 KB raw / ~109 KB gzip).
+- **README** / **CONTRIBUTING** / **DESIGN.md** — document hybrid API conventions and link to floating UI guide.
+- **Docs & Storybook** — aligned navigation, get-started, themes, overviews, and package README with layout directives, `provideAurea()`, and architecture docs.
+- **Button / native inputs** — base selectors use `:where()` for easier consumer overrides.
+
 ## [2.1.2] - 2026-06-19
 
 ### Fixed
@@ -16,6 +36,7 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 - **`AuInputDate`** / **`AuInputTime`** — on touch devices (`pointer: coarse`), the native OS date/time picker no longer opens alongside the Aurea panel; coarse-pointer inputs use a read-only guard, `touchstart` interception, and focus returns to the calendar/clock trigger on dismiss (`field-temporal-native-guard`).
 - **`AuPopover`** — floating arrow now renders like menu and tooltip; panel scroll moved to an inner `.au-popover__body` so `overflow` no longer clips the shared arrow chrome.
 - **Date/time picker (mobile sheet)** — bottom-sheet layout below `42rem` uses opaque dialog surface tokens instead of translucent floating-panel glass, so calendar and time columns are readable over the scrim.
+- **`AuInputDate`** / **`AuInputTime`** — anchor and field row stay within the parent in flex/grid layouts; touch icon no longer exceeds field height; picker panel hosts use `display: contents` so they do not widen the control row.
 
 ## [2.1.1] - 2026-06-13
 

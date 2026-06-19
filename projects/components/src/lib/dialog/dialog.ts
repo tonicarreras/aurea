@@ -4,7 +4,6 @@ import {
   Component,
   DestroyRef,
   Renderer2,
-  ViewEncapsulation,
   afterRenderEffect,
   computed,
   contentChild,
@@ -61,9 +60,7 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
   selector: 'au-dialog',
   imports: [AuIcon],
   templateUrl: './dialog.html',
-  styleUrl: './dialog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   host: {
     class: 'au-dialog',
     '[attr.data-au-size]': 'size()',

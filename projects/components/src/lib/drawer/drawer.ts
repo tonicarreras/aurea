@@ -4,7 +4,6 @@ import {
   Component,
   DestroyRef,
   Renderer2,
-  ViewEncapsulation,
   afterRenderEffect,
   computed,
   contentChild,
@@ -49,9 +48,7 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
   selector: 'au-drawer',
   imports: [AuIcon],
   templateUrl: './drawer.html',
-  styleUrl: './drawer.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   host: {
     class: 'au-drawer',
     '[attr.data-au-size]': 'size()',

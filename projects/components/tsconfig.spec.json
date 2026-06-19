@@ -6,7 +6,7 @@
     "outDir": "../../out-tsc/spec",
     "types": ["vitest/globals"]
   },
-  "include": ["src/**/*.d.ts", "src/**/*.spec.ts", "e2e-visual/**/*.ts"],
+  "include": ["src/**/*.d.ts", "src/**/*.spec.ts", "src/test-providers.ts", "e2e-visual/**/*.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {

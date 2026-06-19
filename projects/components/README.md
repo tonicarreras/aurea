@@ -2,7 +2,7 @@
 
 **Aurea** — design system for **Angular 22**: accessible components, semantic tokens, and signal-friendly forms.
 
-[![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev)
+[![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular)](https://angular.dev)
 [![WCAG](https://img.shields.io/badge/WCAG-2.2_AA-2ecc71)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![npm](https://img.shields.io/npm/v/@aurea-design-system/components?label=npm)](https://www.npmjs.com/package/@aurea-design-system/components)
 [![License](https://img.shields.io/github/license/tonicarreras/aurea?color=blue)](https://github.com/tonicarreras/aurea/blob/main/LICENSE)
@@ -63,6 +63,22 @@ Adds global styles to `angular.json` and prints next steps.
 
 Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark`).
 
+Optional **runtime brand** via `provideAurea()` (writes semantic tokens on `:root`):
+
+```ts
+import { provideAurea } from '@aurea-design-system/components';
+
+bootstrapApplication(App, {
+  providers: [
+    provideAurea({
+      theme: { actionPrimary: '#1059c8', radiusField: '0.5rem' },
+    }),
+  ],
+});
+```
+
+See docs `/guides/composition` and [docs/COMPONENT_CSS_VARS.md](../../docs/COMPONENT_CSS_VARS.md).
+
 ### 4. Density (optional)
 
 ```html
@@ -103,6 +119,21 @@ import { AuButton, AuCheckbox, AuDivider, AuTooltip } from '@aurea-design-system
 })
 export class Example {}
 ```
+
+---
+
+## API conventions
+
+Aurea uses a **hybrid** public API:
+
+| Pattern                  | Use when                                     | Examples                                                |
+| ------------------------ | -------------------------------------------- | ------------------------------------------------------- |
+| Directive on native host | Single HTML element, forms semantics         | `button[auButton]`, `input[auInputText]`, `[auTooltip]` |
+| `au-*` custom element    | Composite widget, projection, internal state | `au-form-field`, `au-dialog`, `au-table`, `au-menu`     |
+
+`au-table` is a **high-level data table** (`[data]` + `au-table-column`), not a `<table>` directive like Angular Material CDK. Headless helpers (`sortTableRows`, `toggleTableSortState`, …) live in `au-table-data.ts` for custom UIs.
+
+Monorepo guides: [docs/API_CONVENTIONS.md](../../docs/API_CONVENTIONS.md) · [docs/API_VOCABULARY.md](../../docs/API_VOCABULARY.md) · [docs/COMPOSITION.md](../../docs/COMPOSITION.md) · [docs/COMPONENT_CSS_VARS.md](../../docs/COMPONENT_CSS_VARS.md) · [docs/FLOATING_UI.md](../../docs/FLOATING_UI.md) · [docs/STYLE_CAPABILITIES.md](../../docs/STYLE_CAPABILITIES.md) · docs site `/guides/*`.
 
 ---
 
@@ -163,6 +194,29 @@ export class ProfileEmailComponent {
 
 Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → _With error_ and **Aurea/FormField**.
 
+### Nested model
+
+```ts
+readonly profile = signal({ name: '', address: { city: '' as string } });
+readonly profileForm = form(this.profile, (p) => {
+  required(p.name, { message: 'Name is required' });
+  required(p.address.city, { message: 'City is required' });
+});
+```
+
+```html
+<au-form-field label="City">
+  <input
+    auInputText
+    [formField]="profileForm.address.city"
+  />
+</au-form-field>
+```
+
+### Disabled submit
+
+Gate actions with `profileForm().valid()` and call `profileForm().markAllAsTouched()` before submit so errors surface.
+
 ---
 
 ## Components
@@ -203,7 +257,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuPagination`       | `<au-pagination>`                    | Page controls (1-based)                                               |
 | `AuMenu`             | `<au-menu>`                          | Dropdown + `auMenuTrigger` / `au-menu-item`                           |
 | `AuPopover`          | `<au-popover>`                       | Anchored panel + `auPopoverTrigger`                                   |
-| `AuTable`            | `<au-table>`                         | Table shell + `auTableSortHeader`                                     |
+| `AuTable`            | `<au-table>`                         | `au-table-column`; headless helpers in `au-table-data`                |
 | `AuProgress`         | `<au-progress>`                      | Progressbar                                                           |
 | `AuLink`             | `a[auLink]`                          | Semantic inline link                                                  |
 | `AuEmptyState`       | `<au-empty-state>`                   | Empty lists/tables/search (stable **1.2.0**)                          |
@@ -216,6 +270,11 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuSpinner`          | `<au-spinner>`                       | Loading indicator                                                     |
 | `AuTheme`            | `[auTheme]`                          | `light` / `dark` / `system` / `high-contrast` / `high-contrast-dark`  |
 | `AuDensityDirective` | `[auDensity]`                        | `compact` / `comfortable` / `spacious`                                |
+| `AuStack`            | `[auStack]`                          | Vertical flex stack; `gap`, `align`, `separator`                      |
+| `AuCluster`          | `[auCluster]`                        | Inline wrap row; toolbars, filter bars                                |
+| `AuSplit`            | `[auSplit]`                          | Two-column grid; `ratio`, responsive `collapse`                       |
+| `AuSection`          | `[auSection]`                        | Padded block; optional `divider`                                      |
+| `provideAurea`       | `provideAurea({ theme })`            | Optional bootstrap override for semantic CSS variables                |
 
 ---
 
@@ -227,7 +286,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 ## Bundle & performance
 
 - Import per symbol (`import { AuButton } from '…'`), not `import *`.
-- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, errors, listbox, description list, accordion item shells). See `src/lib/styles/README.md`.
+- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, layout directives, listbox, description list, accordion item shells). See `src/lib/styles/README.md`.
 - All components use `ChangeDetectionStrategy.OnPush`; overlays attach to `document.body` only while open.
 - Lazy-load feature routes; paginate large tables server-side.
 - CI: `bun run check:bundle` (+5% vs baseline). Update baseline with `bun run update:bundle-baseline` after intentional size changes.

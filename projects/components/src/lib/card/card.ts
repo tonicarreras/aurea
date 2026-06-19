@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewEncapsulation,
-  computed,
-  contentChild,
-  input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, contentChild, input } from '@angular/core';
 import type { AuSize } from '../au-size';
 import { AuCardFooter } from './card-footer.directive';
 
@@ -36,8 +29,6 @@ export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
 @Component({
   selector: 'au-card',
   templateUrl: './card.html',
-  styleUrl: './card.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-card',

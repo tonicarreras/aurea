@@ -5,6 +5,7 @@ import {
   EnvironmentInjector,
   Renderer2,
   afterNextRender,
+  effect,
   afterRenderEffect,
   computed,
   createComponent,
@@ -151,7 +152,7 @@ export class AuInputDate {
         this.destroyRef,
       );
     });
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),

@@ -40,10 +40,10 @@ Aurea targets **WCAG 2.2 AA** on primary flows and ships as **`@aurea-design-sys
 
 ## ✨ Features
 
-- **Design Tokens** — Semantic CSS custom properties (`--au-*`) for theming, including dark mode
+- **Design Tokens** — Five CSS layers (`--au-*`); optional `provideAurea()` for runtime brand overrides
 - **Signal Forms** — Modern reactive forms with Angular 22's `model()` and signal-based controls
 - **Accessible by Default** — Focus rings, keyboard navigation, ARIA attributes wired to controls
-- **Component Composition** — Primitives → semantic → roles → domain → high-contrast → component CSS
+- **Layout & composition** — `[auStack]`, `[auCluster]`, `[auSplit]`, `[auSection]`; see [COMPOSITION.md](./docs/COMPOSITION.md)
 - **Interactive Documentation** — Storybook with interaction tests and accessibility audits
 
 ---
@@ -215,6 +215,7 @@ Set `data-au-theme="dark"` on an ancestor to activate dark theme:
 
 - [CHANGELOG](./CHANGELOG.md) · [CONTRIBUTING](./CONTRIBUTING.md) · [SECURITY](./SECURITY.md)
 - [Versioning & releases](./docs/VERSIONING.md) · [Roadmap](./docs/ROADMAP.md) · [Design principles](./docs/DESIGN.md)
+- [API conventions](./docs/API_CONVENTIONS.md) · [API vocabulary](./docs/API_VOCABULARY.md) · [Composition](./docs/COMPOSITION.md) · [CSS var contract](./docs/COMPONENT_CSS_VARS.md) · [Floating UI](./docs/FLOATING_UI.md)
 - [Library README](./projects/components/README.md) · [A11y audit](./projects/components/A11Y_AUDIT.md) · [Design tokens (Figma)](./projects/design-tokens/README.md)
 - Live: [docs](https://aurea-ds.netlify.app/) · [Storybook](https://aurea-ds-storybook.netlify.app/)
 

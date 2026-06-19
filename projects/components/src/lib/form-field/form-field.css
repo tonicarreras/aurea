@@ -5,6 +5,8 @@
 
 :host {
   display: block;
+  min-width: 0;
+  max-width: 100%;
   font-family: var(--au-font-sans);
   color: var(--au-color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -49,6 +51,8 @@
 
 .au-form-field__control {
   display: block;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .au-form-field__control.au-input-password__anchor:has(.au-input-password--with-reveal) {

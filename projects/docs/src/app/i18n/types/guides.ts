@@ -19,6 +19,26 @@ export interface GuidesMessages {
     lead: string;
     cards: GuideLinkCard[];
   };
+  apiConventions: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
+  floatingUi: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
+  composition: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
+  recipes: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
   signalForms: {
     title: string;
     lead: string;

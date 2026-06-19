@@ -79,6 +79,10 @@ export class DocsSeoService {
     if (first === 'guides') {
       if (second === 'adoption') return seo.guidesAdoption;
       if (second === 'signal-forms') return seo.guidesSignalForms;
+      if (second === 'api-conventions') return seo.guidesApiConventions;
+      if (second === 'floating-ui') return seo.guidesFloatingUi;
+      if (second === 'composition') return seo.guidesComposition;
+      if (second === 'recipes') return seo.guidesRecipes;
       if (second === 'crud-demo') return seo.guidesCrudDemo;
     }
     if (first === DOCS_ROUTES.maturity) {

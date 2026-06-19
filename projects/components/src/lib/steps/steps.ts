@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewEncapsulation,
-  computed,
-  input,
-  model,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
 import { scrollIntoViewRespectingMotion } from '../au-scroll-into-view';
 import { AuStep } from './au-step.directive';
 
@@ -33,8 +25,6 @@ export type AuStepsLayout = 'tabs' | 'sections';
 @Component({
   selector: 'au-steps',
   templateUrl: './steps.html',
-  styleUrl: './steps.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-steps',

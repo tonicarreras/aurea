@@ -1,5 +1,6 @@
 /**
  * Card — grouped content with shared surface language as au-dialog.
+ * Bundled via `aurea-global.entry.css` (projected slots + host chrome).
  */
 
 au-card {
