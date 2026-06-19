@@ -9,6 +9,14 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.1.2] - 2026-06-19
+
+### Fixed
+
+- **`AuInputDate`** / **`AuInputTime`** — on touch devices (`pointer: coarse`), the native OS date/time picker no longer opens alongside the Aurea panel; coarse-pointer inputs use a read-only guard, `touchstart` interception, and focus returns to the calendar/clock trigger on dismiss (`field-temporal-native-guard`).
+- **`AuPopover`** — floating arrow now renders like menu and tooltip; panel scroll moved to an inner `.au-popover__body` so `overflow` no longer clips the shared arrow chrome.
+- **Date/time picker (mobile sheet)** — bottom-sheet layout below `42rem` uses opaque dialog surface tokens instead of translucent floating-panel glass, so calendar and time columns are readable over the scrim.
+
 ## [2.1.1] - 2026-06-13
 
 ### Changed
@@ -352,7 +360,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.1.1...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.1.2...HEAD
+[2.1.2]: https://github.com/tonicarreras/aurea/compare/components-v2.1.1...components-v2.1.2
 [2.1.1]: https://github.com/tonicarreras/aurea/compare/components-v2.1.0...components-v2.1.1
 [2.1.0]: https://github.com/tonicarreras/aurea/compare/components-v2.0.0...components-v2.1.0
 [2.0.0]: https://github.com/tonicarreras/aurea/compare/components-v1.6.0...components-v2.0.0
