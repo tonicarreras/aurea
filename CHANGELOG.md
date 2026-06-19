@@ -9,6 +9,16 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+### Added
+
+- **Architecture docs** — [API_CONVENTIONS.md](./docs/API_CONVENTIONS.md) (native directives vs `au-*` widgets) and [FLOATING_UI.md](./docs/FLOATING_UI.md) (overlay platform + a11y checklist).
+- **`au-table-data`** — headless sort/selection helpers exported from the table module; `AuTable` delegates to them.
+- **Docs site** — guides `/guides/api-conventions` and `/guides/floating-ui`; expanded signal-forms guide (nested fields).
+
+### Changed
+
+- **README** / **CONTRIBUTING** / **DESIGN.md** — document hybrid API conventions and link to floating UI guide.
+
 ## [2.1.2] - 2026-06-19
 
 ### Fixed
@@ -16,6 +26,7 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 - **`AuInputDate`** / **`AuInputTime`** — on touch devices (`pointer: coarse`), the native OS date/time picker no longer opens alongside the Aurea panel; coarse-pointer inputs use a read-only guard, `touchstart` interception, and focus returns to the calendar/clock trigger on dismiss (`field-temporal-native-guard`).
 - **`AuPopover`** — floating arrow now renders like menu and tooltip; panel scroll moved to an inner `.au-popover__body` so `overflow` no longer clips the shared arrow chrome.
 - **Date/time picker (mobile sheet)** — bottom-sheet layout below `42rem` uses opaque dialog surface tokens instead of translucent floating-panel glass, so calendar and time columns are readable over the scrim.
+- **`AuInputDate`** / **`AuInputTime`** — anchor and field row stay within the parent in flex/grid layouts; touch icon no longer exceeds field height; picker panel hosts use `display: contents` so they do not widen the control row.
 
 ## [2.1.1] - 2026-06-13
 

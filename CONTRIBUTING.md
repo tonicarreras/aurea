@@ -59,7 +59,15 @@ Install step uses [`.github/actions/bun-install`](.github/actions/bun-install) (
 
 5. Update [CHANGELOG.md](./CHANGELOG.md) under `[Unreleased]` for user-visible library changes.
 
-New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Design principles: [docs/DESIGN.md](./docs/DESIGN.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
+New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Design principles: [docs/DESIGN.md](./docs/DESIGN.md). **API conventions:** [docs/API_CONVENTIONS.md](./docs/API_CONVENTIONS.md). **Floating UI:** [docs/FLOATING_UI.md](./docs/FLOATING_UI.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
+
+## API conventions
+
+- **Native primitive** → attribute directive on the host (`button[auButton]`, `input[auInputDate]`).
+- **Composite widget** → custom element (`au-table`, `au-menu`, `au-form-field`).
+- Do **not** ship duplicate selectors for the same widget (e.g. `<au-table>` and `<table auTable>`).
+- Table sort/selection logic belongs in `au-table-data.ts`; overlays use `TooltipOverlay` / `FloatingPickerOverlay`.
+- Full guide: [docs/API_CONVENTIONS.md](./docs/API_CONVENTIONS.md). Overlay a11y checklist: [docs/FLOATING_UI.md](./docs/FLOATING_UI.md).
 
 ## Component Definition of Done
 

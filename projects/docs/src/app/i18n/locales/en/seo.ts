@@ -27,6 +27,16 @@ export const SEO_EN: DocsSeoMessages = {
     description:
       'Bind au-form-field and controls with FormField, form(), validators, and submit guards.',
   },
+  guidesApiConventions: {
+    title: 'API conventions — Aurea Design System',
+    description:
+      'Native host directives vs au-* composite widgets; au-table headless helpers and when to use each pattern.',
+  },
+  guidesFloatingUi: {
+    title: 'Floating UI — Aurea overlays',
+    description:
+      'Shared overlay stack for menu, popover, tooltip, listbox, and date/time pickers with a11y checklist.',
+  },
   guidesCrudDemo: {
     title: 'CRUD reference demo — Aurea',
     description:

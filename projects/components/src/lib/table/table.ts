@@ -12,6 +12,22 @@ import {
 import { AuCheckbox } from '../checkbox/au-checkbox.directive';
 import { AuIcon } from '../icon/icon';
 import { AuSpinner } from '../spinner/spinner';
+import {
+  formatTableCellText,
+  isTableRowSelected,
+  nextTableRowSelection,
+  nextTableSelectAllSelection,
+  readTableCell,
+  resolveTableViewRows,
+  shouldIgnoreTableRowClick,
+  tableColumnSortDirection,
+  tableColumnSpan,
+  tableHeaderAriaSort,
+  tableSelectAllChecked,
+  tableSelectAllIndeterminate,
+  toggleTableSortState,
+  type AuTableColumnReader,
+} from './au-table-data';
 import { AuTableColumn } from './au-table-column';
 import type { AuTableSelectionMode, AuTableSortDirection, AuTableSortState } from './table-types';
 
@@ -23,8 +39,28 @@ export type {
   AuTableSortState,
 } from './table-types';
 
+export type { AuTableColumnReader } from './au-table-data';
+export {
+  compareTableRows,
+  formatTableCellText,
+  isTableRowSelected,
+  nextTableRowSelection,
+  nextTableSelectAllSelection,
+  readTableCell,
+  resolveTableViewRows,
+  shouldIgnoreTableRowClick,
+  sortTableRows,
+  tableColumnSortDirection,
+  tableColumnSpan,
+  tableHeaderAriaSort,
+  tableSelectAllChecked,
+  tableSelectAllIndeterminate,
+  toggleTableSortState,
+} from './au-table-data';
+
 /**
- * Data table with column definitions (`au-table-column`), Material-style.
+ * Data table with column definitions (`au-table-column`).
+ * Sort/selection logic lives in {@link ./au-table-data} (headless helpers).
  */
 @Component({
   selector: 'au-table',
@@ -72,24 +108,21 @@ export class AuTable {
 
   readonly columns = computed(() => this.columnRegistry());
 
-  readonly viewRows = computed(() => {
-    const rows = this.data();
-    const state = this.sort();
-    if (!this.clientSort() || !state?.direction) {
-      return rows;
-    }
-    const col = this.columns().find((c) => c.name() === state.column);
-    if (!col) {
-      return rows;
-    }
-    const dir = state.direction === 'asc' ? 1 : -1;
-    return [...rows].sort((a, b) => dir * this.compareRows(col, a, b));
-  });
+  private readonly columnReaders = computed((): readonly AuTableColumnReader[] =>
+    this.columns().map((col) => ({
+      name: col.name(),
+      accessor: col.accessor(),
+      sortable: col.sortable(),
+    })),
+  );
 
-  readonly columnSpan = computed(() => {
-    const count = this.columns().length;
-    return this.selectionMode() === 'none' ? count : count + 1;
-  });
+  readonly viewRows = computed(() =>
+    resolveTableViewRows(this.data(), this.columnReaders(), this.sort(), this.clientSort()),
+  );
+
+  readonly columnSpan = computed(() =>
+    tableColumnSpan(this.columns().length, this.selectionMode()),
+  );
 
   registerColumn(column: AuTableColumn): void {
     this.columnRegistry.update((list) => (list.includes(column) ? list : [...list, column]));
@@ -141,94 +174,48 @@ export class AuTable {
   }
 
   protected headerAriaSort(col: AuTableColumn): string | null {
-    if (!col.sortable()) {
-      return null;
-    }
-    const dir = this.columnSortDirection(col.name());
-    if (dir === 'asc') {
-      return 'ascending';
-    }
-    if (dir === 'desc') {
-      return 'descending';
-    }
-    return 'none';
+    return tableHeaderAriaSort(
+      { name: col.name(), sortable: col.sortable() },
+      this.sort(),
+    );
   }
 
   protected columnSortDirection(column: string): AuTableSortDirection {
-    const state = this.sort();
-    if (!state || state.column !== column) {
-      return null;
-    }
-    return state.direction;
+    return tableColumnSortDirection(this.sort(), column);
   }
 
   protected toggleSort(column: string): void {
-    const current = this.sort();
-    let next: AuTableSortState | null;
-    if (!current || current.column !== column) {
-      next = { column, direction: 'asc' };
-    } else if (current.direction === 'asc') {
-      next = { column, direction: 'desc' };
-    } else if (current.direction === 'desc') {
-      next = null;
-    } else {
-      next = { column, direction: 'asc' };
-    }
-    this.sort.set(next);
+    this.sort.set(toggleTableSortState(this.sort(), column));
   }
 
   protected isRowSelected(row: unknown): boolean {
-    const compare = this.compareSelection();
-    return this.selection().some((selected) => compare(selected, row));
+    return isTableRowSelected(row, this.selection(), this.compareSelection());
   }
 
   protected selectAllChecked(): boolean {
-    const rows = this.viewRows();
-    if (rows.length === 0) {
-      return false;
-    }
-    return rows.every((row) => this.isRowSelected(row));
+    return tableSelectAllChecked(this.viewRows(), this.selection(), this.compareSelection());
   }
 
   protected selectAllIndeterminate(): boolean {
-    const rows = this.viewRows();
-    const selectedCount = rows.filter((row) => this.isRowSelected(row)).length;
-    return selectedCount > 0 && selectedCount < rows.length;
+    return tableSelectAllIndeterminate(this.viewRows(), this.selection(), this.compareSelection());
   }
 
   protected setSelectAll(checked: boolean): void {
-    if (this.selectionMode() !== 'multiple') {
-      return;
-    }
-    const rows = this.viewRows();
-    this.setSelection(checked ? [...rows] : []);
+    this.selection.set(
+      nextTableSelectAllSelection(this.selectionMode(), checked, this.viewRows()),
+    );
   }
 
   protected setRowSelected(row: unknown, checked: boolean): void {
-    const mode = this.selectionMode();
-    if (mode === 'none') {
-      return;
-    }
-
-    const current = this.selection();
-    const compare = this.compareSelection();
-    const isSelected = current.some((selected) => compare(selected, row));
-
-    if (checked) {
-      if (isSelected) {
-        return;
-      }
-      if (mode === 'single') {
-        this.setSelection([row]);
-      } else {
-        this.setSelection([...current, row]);
-      }
-      return;
-    }
-
-    if (isSelected) {
-      this.setSelection(current.filter((selected) => !compare(selected, row)));
-    }
+    this.selection.set(
+      nextTableRowSelection(
+        this.selectionMode(),
+        row,
+        checked,
+        this.selection(),
+        this.compareSelection(),
+      ),
+    );
   }
 
   protected toggleRowSelection(row: unknown): void {
@@ -236,15 +223,7 @@ export class AuTable {
   }
 
   protected onRowClick(row: unknown, event: MouseEvent): void {
-    if (this.selectionMode() === 'none') {
-      return;
-    }
-    const target = event.target as HTMLElement;
-    if (
-      target.closest(
-        'button, a, input, select, textarea, label, dialog, [role="button"], [role="combobox"], [role="listbox"], [role="option"], input[auCheckbox], .au-field-listbox, au-select, au-menu, au-dialog, au-drawer',
-      )
-    ) {
+    if (this.selectionMode() === 'none' || shouldIgnoreTableRowClick(event.target)) {
       return;
     }
     this.toggleRowSelection(row);
@@ -259,47 +238,6 @@ export class AuTable {
   }
 
   protected formatCell(col: AuTableColumn, row: unknown): string {
-    return this.cellText(this.readCell(col, row));
-  }
-
-  private setSelection(next: readonly unknown[]): void {
-    this.selection.set(next);
-  }
-
-  private cellText(value: unknown): string {
-    if (value == null) {
-      return '';
-    }
-    if (
-      typeof value === 'string' ||
-      typeof value === 'number' ||
-      typeof value === 'boolean' ||
-      typeof value === 'bigint'
-    ) {
-      return String(value);
-    }
-    return JSON.stringify(value);
-  }
-
-  private readCell(col: AuTableColumn, row: unknown): unknown {
-    const accessor = col.accessor();
-    if (accessor) {
-      return accessor(row);
-    }
-    if (row && typeof row === 'object') {
-      return (row as Record<string, unknown>)[col.name()];
-    }
-    return undefined;
-  }
-
-  private compareRows(col: AuTableColumn, a: unknown, b: unknown): number {
-    const left = this.readCell(col, a);
-    const right = this.readCell(col, b);
-    if (typeof left === 'number' && typeof right === 'number') {
-      return left - right;
-    }
-    return this.cellText(left).localeCompare(this.cellText(right), undefined, {
-      numeric: true,
-    });
+    return formatTableCellText(readTableCell({ name: col.name(), accessor: col.accessor() }, row));
   }
 }

@@ -289,15 +289,21 @@ input.au-input-number:disabled {
 :is(.au-input-date__anchor, .au-input-time__anchor) {
   position: relative;
   display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 :is(input.au-input-date, input.au-input-time) {
   display: block;
   width: 100%;
+  max-width: 100%;
   min-width: 0;
   height: var(--au-size-field-h-md);
   margin: 0;
   box-sizing: border-box;
+  overflow: hidden;
   padding: 0 calc(var(--au-size-field-px-md) + var(--au-field-temporal-icon-gutter-md)) 0
     var(--au-size-field-px-md);
   font: inherit;
@@ -348,6 +354,8 @@ input.au-input-number:disabled {
 
 :is(input.au-input-date, input.au-input-time)::-webkit-datetime-edit-fields-wrapper {
   padding: 0;
+  min-width: 0;
+  max-width: 100%;
 }
 
 :is(input.au-input-date, input.au-input-time)::-webkit-datetime-edit-text {
@@ -376,8 +384,12 @@ input.au-input-number:disabled {
 
 @media (pointer: coarse) {
   :is(.au-input-date__icon, .au-input-time__icon) {
+    top: 0;
+    bottom: 0;
+    transform: none;
+    height: auto;
+    min-height: 0;
     min-width: var(--au-touch-target-min);
-    min-height: var(--au-touch-target-min);
   }
 
   :is(input.au-input-date, input.au-input-time):read-only:not(:disabled) {

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AuEmptyState } from '../empty-state/empty-state';
+import { compareTableRows, formatTableCellText, readTableCell } from './au-table-data';
 import { AuTableCellDef } from './au-table-cell-def.directive';
 import { AuTableColumn } from './au-table-column';
 import { AuTable } from './table';
@@ -322,19 +323,21 @@ describe('AuTable', () => {
     const fixture = await createTableHost();
     const table = tableInstance(fixture);
     const col = table.columns()[0];
-    expect(table['formatCell'](col, { name: null })).toBe('');
+    const reader = { name: col.name(), accessor: col.accessor() };
+    expect(formatTableCellText(readTableCell(reader, { name: null }))).toBe('');
     expect(table['formatCell'](col, { name: 'Ada' })).toBe('Ada');
     expect(table['formatCell'](col, { name: { nested: true } })).toBe('{"nested":true}');
-    expect(table['readCell'](col, null)).toBeUndefined();
+    expect(readTableCell(reader, null)).toBeUndefined();
   });
 
   it('compares numeric and mixed cell types', async () => {
     const fixture = await createTableHost();
     const table = tableInstance(fixture);
     const scoreCol = table.columns().find((c) => c.name() === 'score')!;
-    expect(table['compareRows'](scoreCol, { score: 1 }, { score: 5 })).toBeLessThan(0);
-    expect(table['compareRows'](scoreCol, { score: '10' }, { score: 2 })).not.toBe(0);
-    expect(table['compareRows'](scoreCol, { score: null }, { score: undefined })).toBe(0);
+    const reader = { name: scoreCol.name(), accessor: scoreCol.accessor() };
+    expect(compareTableRows(reader, { score: 1 }, { score: 5 })).toBeLessThan(0);
+    expect(compareTableRows(reader, { score: '10' }, { score: 2 })).not.toBe(0);
+    expect(compareTableRows(reader, { score: null }, { score: undefined })).toBe(0);
   });
 
   it('uses trackByFn when provided', async () => {

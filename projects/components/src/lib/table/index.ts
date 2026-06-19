@@ -8,3 +8,21 @@ export type {
   AuTableSortDirection,
   AuTableSortState,
 } from './table-types';
+export type { AuTableColumnReader } from './au-table-data';
+export {
+  compareTableRows,
+  formatTableCellText,
+  isTableRowSelected,
+  nextTableRowSelection,
+  nextTableSelectAllSelection,
+  readTableCell,
+  resolveTableViewRows,
+  shouldIgnoreTableRowClick,
+  sortTableRows,
+  tableColumnSortDirection,
+  tableColumnSpan,
+  tableHeaderAriaSort,
+  tableSelectAllChecked,
+  tableSelectAllIndeterminate,
+  toggleTableSortState,
+} from './au-table-data';

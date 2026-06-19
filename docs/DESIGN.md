@@ -23,6 +23,13 @@ Semantic UI for **WCAG 2.2 AA** on primary flows, **Angular 22** (signals, `form
 
 - Prefer `[formField]` + `form()` for validation; use `au-form-field` for label, hint, and error chrome.
 - Manual mode: `[(value)]` + `errorMessage` / `invalid` on `au-form-field` (see Storybook _With error_ stories).
+- Patterns: [Signal forms guide](https://aurea-ds.netlify.app/en/guides/signal-forms).
+
+## API shape
+
+- **Native primitives** → attribute directives (`button[auButton]`, `input[auInputText]`).
+- **Composite widgets** → `au-*` elements (`au-table`, `au-dialog`, `au-form-field`).
+- Details: [API_CONVENTIONS.md](./API_CONVENTIONS.md) · floating UI: [FLOATING_UI.md](./FLOATING_UI.md).
 
 ## Storybook overview text
 

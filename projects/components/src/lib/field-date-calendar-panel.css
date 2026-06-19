@@ -1,3 +1,7 @@
+:host {
+  display: contents;
+}
+
 .au-date-calendar {
   display: flex;
   flex-direction: column;

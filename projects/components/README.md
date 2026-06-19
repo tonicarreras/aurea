@@ -106,6 +106,21 @@ export class Example {}
 
 ---
 
+## API conventions
+
+Aurea uses a **hybrid** public API:
+
+| Pattern | Use when | Examples |
+| ------- | -------- | -------- |
+| Directive on native host | Single HTML element, forms semantics | `button[auButton]`, `input[auInputText]`, `[auTooltip]` |
+| `au-*` custom element | Composite widget, projection, internal state | `au-form-field`, `au-dialog`, `au-table`, `au-menu` |
+
+`au-table` is a **high-level data table** (`[data]` + `au-table-column`), not a `<table>` directive like Angular Material CDK. Headless helpers (`sortTableRows`, `toggleTableSortState`, …) live in `au-table-data.ts` for custom UIs.
+
+Monorepo guides: [docs/API_CONVENTIONS.md](../../docs/API_CONVENTIONS.md) · [docs/FLOATING_UI.md](../../docs/FLOATING_UI.md) · docs site `/guides/api-conventions` and `/guides/floating-ui`.
+
+---
+
 ## Signal forms (Angular 22+)
 
 Field controls implement `FormValueControl` and bind with **`[formField]`** from `@angular/forms/signals`. Put **`form()`** and the model **`signal()`** in your **page or feature component** (injection context). Wrap the control in **`au-form-field`** for label, hint, and error chrome — do not duplicate `label` on the inner control.
@@ -163,6 +178,26 @@ export class ProfileEmailComponent {
 
 Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `au-form-field`. Storybook demos use this pattern — see **Aurea/InputText** → _With error_ and **Aurea/FormField**.
 
+### Nested model
+
+```ts
+readonly profile = signal({ name: '', address: { city: '' as string } });
+readonly profileForm = form(this.profile, (p) => {
+  required(p.name, { message: 'Name is required' });
+  required(p.address.city, { message: 'City is required' });
+});
+```
+
+```html
+<au-form-field label="City">
+  <input auInputText [formField]="profileForm.address.city" />
+</au-form-field>
+```
+
+### Disabled submit
+
+Gate actions with `profileForm().valid()` and call `profileForm().markAllAsTouched()` before submit so errors surface.
+
 ---
 
 ## Components
@@ -203,7 +238,7 @@ Use `[(value)]` / `[(checked)]` and set **`errorMessage`** + **`invalid`** on `a
 | `AuPagination`       | `<au-pagination>`                    | Page controls (1-based)                                               |
 | `AuMenu`             | `<au-menu>`                          | Dropdown + `auMenuTrigger` / `au-menu-item`                           |
 | `AuPopover`          | `<au-popover>`                       | Anchored panel + `auPopoverTrigger`                                   |
-| `AuTable`            | `<au-table>`                         | Table shell + `auTableSortHeader`                                     |
+| `AuTable`            | `<au-table>`                         | `au-table-column`; headless helpers in `au-table-data`               |
 | `AuProgress`         | `<au-progress>`                      | Progressbar                                                           |
 | `AuLink`             | `a[auLink]`                          | Semantic inline link                                                  |
 | `AuEmptyState`       | `<au-empty-state>`                   | Empty lists/tables/search (stable **1.2.0**)                          |

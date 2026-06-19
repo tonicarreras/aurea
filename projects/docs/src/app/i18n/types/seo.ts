@@ -14,6 +14,8 @@ export interface DocsSeoMessages {
   getStarted: DocsPageSeo;
   guidesAdoption: DocsPageSeo;
   guidesSignalForms: DocsPageSeo;
+  guidesApiConventions: DocsPageSeo;
+  guidesFloatingUi: DocsPageSeo;
   guidesCrudDemo: DocsPageSeo;
   maturity: DocsPageSeo;
   designTokens: DocsPageSeo;
