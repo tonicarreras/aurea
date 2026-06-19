@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
-  afterRenderEffect,
   computed,
   input,
   model,

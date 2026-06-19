@@ -24,7 +24,7 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 - **Shell components** — `au-card`, `au-table`, `au-tabs`, `au-steps`, `au-dialog`, and `au-drawer` use default emulated encapsulation; styles ship only via `aurea-global.css` (projected/portaled DOM).
 - **Form controls** — `syncFormFieldControlState` runs in `effect()` instead of `afterRenderEffect` (signal-only sync); checkbox `indeterminate` uses `effect()`.
-- **Zoneless** — docs app and unit tests use `provideZonelessChangeDetection()`; FESM bundle baseline lowered (~736 KB raw / ~109 KB gzip).
+- **Zoneless** — docs app, unit tests, and Storybook use zoneless change detection (`provideZonelessChangeDetection()` / `experimentalZoneless`); FESM bundle baseline lowered (~736 KB raw / ~109 KB gzip).
 - **README** / **CONTRIBUTING** / **DESIGN.md** — document hybrid API conventions and link to floating UI guide.
 - **Docs & Storybook** — aligned navigation, get-started, themes, overviews, and package README with layout directives, `provideAurea()`, and architecture docs.
 - **Button / native inputs** — base selectors use `:where()` for easier consumer overrides.

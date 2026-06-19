@@ -86,6 +86,7 @@ Required before marking **stable** in `component-maturity.ts`:
 
 ## Storybook development
 
+- **Zoneless:** `experimentalZoneless: true` in `angular.json` (`storybook` / `build-storybook`); Storybook injects `provideZonelessChangeDetection()` — no `zone.js` polyfill.
 - Interaction tests: `play` with `storybook/test`; CI via `bun run test-storybook:ci`.
 - axe-core runs on **stable** stories only (`stable-story-ids.ts`).
 - Theme toolbar sets `data-au-theme` on `document.documentElement`.
@@ -119,6 +120,7 @@ Required before marking **stable** in `component-maturity.ts`:
 
 ## Storybook development
 
+- **Zoneless:** `experimentalZoneless: true` in `angular.json` (`storybook` / `build-storybook`); Storybook injects `provideZonelessChangeDetection()` — no `zone.js` polyfill.
 - Interaction tests: `play` with `storybook/test`; CI via `bun run test-storybook:ci`.
 - axe-core runs on **stable** stories only (`stable-story-ids.ts`).
 - Theme toolbar sets `data-au-theme` on `document.documentElement`.

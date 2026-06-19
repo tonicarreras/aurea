@@ -64,7 +64,8 @@
             "browserTarget": "components:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "projects/components"],
-            "port": 6006
+            "port": 6006,
+            "experimentalZoneless": true
           }
         },
         "build-storybook": {
@@ -74,7 +75,8 @@
             "browserTarget": "components:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "projects/components"],
-            "outputDir": "storybook-static"
+            "outputDir": "storybook-static",
+            "experimentalZoneless": true
           }
         },
         "lint": {

@@ -3,7 +3,6 @@ import {
   Component,
   DestroyRef,
   effect,
-  afterRenderEffect,
   computed,
   inject,
   input,
