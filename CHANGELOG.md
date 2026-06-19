@@ -23,6 +23,7 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 ### Changed
 
 - **README** / **CONTRIBUTING** / **DESIGN.md** — document hybrid API conventions and link to floating UI guide.
+- **Docs & Storybook** — aligned navigation, get-started, themes, overviews, and package README with layout directives, `provideAurea()`, and architecture docs.
 - **Button / native inputs** — base selectors use `:where()` for easier consumer overrides.
 
 ## [2.1.2] - 2026-06-19

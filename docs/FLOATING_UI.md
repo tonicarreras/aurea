@@ -13,26 +13,26 @@ Component (AuMenu, AuPopover, …)
 
 ## Tokens (domain layer)
 
-| Token | Use |
-| ----- | --- |
-| `--au-floating-panel-bg` / `-border` | Glass popovers, menus (desktop) |
-| `--au-floating-blur` | Backdrop blur on floating panels |
-| `--au-floating-gap` | Anchor ↔ panel distance |
-| `--au-floating-arrow-size` / `-inset` | Tooltip & menu/popover arrow |
+| Token                                    | Use                                                  |
+| ---------------------------------------- | ---------------------------------------------------- |
+| `--au-floating-panel-bg` / `-border`     | Glass popovers, menus (desktop)                      |
+| `--au-floating-blur`                     | Backdrop blur on floating panels                     |
+| `--au-floating-gap`                      | Anchor ↔ panel distance                              |
+| `--au-floating-arrow-size` / `-inset`    | Tooltip & menu/popover arrow                         |
 | `--au-dialog-bg` / `-border` / `-shadow` | Modal surfaces (dialog, drawer, mobile picker sheet) |
-| `--au-color-overlay-scrim` | Backdrop behind modals and picker sheets |
+| `--au-color-overlay-scrim`               | Backdrop behind modals and picker sheets             |
 
 Mobile pickers (`max-width: 42rem`) use **opaque dialog tokens**, not translucent glass.
 
 ## Components
 
-| Component | Overlay | Arrow | Scroll lock | Dismiss |
-| --------- | ------- | ----- | ----------- | ------- |
-| `AuTooltip` | `TooltipOverlay` | Yes | No | Hover/focus leave |
-| `AuMenu` | `TooltipOverlay` | Yes | Page wheel/touch | Outside click, Escape, scroll outside |
-| `AuPopover` | `TooltipOverlay` | Yes (inner scroll body) | Page while open | Outside click, Escape, scroll outside |
-| `AuSelect` / `AuAutocomplete` | `FieldListboxOverlay` | No | Page while open | Outside click, Escape, select |
-| `AuInputDate` / `AuInputTime` | `FloatingPickerOverlay` | Popover / bottom sheet | Page while open | Outside click, Escape, pick |
+| Component                     | Overlay                 | Arrow                   | Scroll lock      | Dismiss                               |
+| ----------------------------- | ----------------------- | ----------------------- | ---------------- | ------------------------------------- |
+| `AuTooltip`                   | `TooltipOverlay`        | Yes                     | No               | Hover/focus leave                     |
+| `AuMenu`                      | `TooltipOverlay`        | Yes                     | Page wheel/touch | Outside click, Escape, scroll outside |
+| `AuPopover`                   | `TooltipOverlay`        | Yes (inner scroll body) | Page while open  | Outside click, Escape, scroll outside |
+| `AuSelect` / `AuAutocomplete` | `FieldListboxOverlay`   | No                      | Page while open  | Outside click, Escape, select         |
+| `AuInputDate` / `AuInputTime` | `FloatingPickerOverlay` | Popover / bottom sheet  | Page while open  | Outside click, Escape, pick           |
 
 ## Portaling rules
 

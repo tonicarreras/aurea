@@ -44,8 +44,7 @@ export const SEO_ES: DocsSeoMessages = {
   },
   guidesRecipes: {
     title: 'Recetas de composición — Aurea',
-    description:
-      'Barra de filtros, fila de ajustes y tarjeta de dashboard con primitivas Aurea.',
+    description: 'Barra de filtros, fila de ajustes y tarjeta de dashboard con primitivas Aurea.',
   },
   guidesCrudDemo: {
     title: 'Demo CRUD de referencia — Aurea',

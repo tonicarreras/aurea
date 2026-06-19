@@ -2,10 +2,10 @@
 
 ## What consumers import
 
-| File               | Required                                  | Role                                                                                                   |
-| ------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `au-tokens.css`    | Yes                                       | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css`                                        |
-| `aurea-global.css` | Yes for form controls & description lists | Shared CSS + primitive directives (bundled from `aurea-global.entry.css`) + `au-high-contrast-aaa.css` |
+| File               | Required                                          | Role                                                                                                   |
+| ------------------ | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `au-tokens.css`    | Yes                                               | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css`                                        |
+| `aurea-global.css` | Yes for form controls, layout & description lists | Shared CSS + primitive directives (bundled from `aurea-global.entry.css`) + `au-high-contrast-aaa.css` |
 
 After editing `aurea-global.entry.css` or primitive `*.css` under `src/lib/`, run:
 
@@ -30,12 +30,13 @@ Components use **role tokens**, not raw `--au-shadow-*` primitives:
 
 Shared borders: `--au-chrome-border`, `--au-chrome-border-color-hover`.
 
-Token architecture: see `tokens/README.md` (primitives → semantic → roles → domain).
+Token architecture: see `tokens/README.md` (primitives → semantic → roles → domain → high-contrast).
 
 ## Global bundle modules (`aurea-global.entry.css`)
 
 | File                                     | Role                                                                                                                        |
 | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `au-layout.css`                          | Layout directives (`[auStack]`, `[auCluster]`, `[auSplit]`, `[auSection]`) via `au-layout-primitives.css`                   |
 | `au-utilities.css`                       | Shared utilities (`.au-sr-only`)                                                                                            |
 | `au-floating-panel.css`                  | Tooltip + floating panel chrome                                                                                             |
 | `au-native-text-field.css`               | Shared rules for `input.au-input-text` / `input.au-input-number`                                                            |

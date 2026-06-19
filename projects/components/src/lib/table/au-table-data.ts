@@ -1,8 +1,4 @@
-import type {
-  AuTableSelectionMode,
-  AuTableSortDirection,
-  AuTableSortState,
-} from './table-types';
+import type { AuTableSelectionMode, AuTableSortDirection, AuTableSortState } from './table-types';
 
 /** Column slice used by headless table helpers (no Angular component coupling). */
 export interface AuTableColumnReader {
@@ -115,10 +111,7 @@ export function tableHeaderAriaSort(
   return 'none';
 }
 
-export function tableColumnSpan(
-  columnCount: number,
-  selectionMode: AuTableSelectionMode,
-): number {
+export function tableColumnSpan(columnCount: number, selectionMode: AuTableSelectionMode): number {
   return selectionMode === 'none' ? columnCount : columnCount + 1;
 }
 

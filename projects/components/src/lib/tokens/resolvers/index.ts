@@ -1,6 +1,1 @@
-export {
-  auSpacingValue,
-  type AuLayoutGap,
-  type AuLayoutPadding,
-  type AuSpacing,
-} from './spacing';
+export { auSpacingValue, type AuLayoutGap, type AuLayoutPadding, type AuSpacing } from './spacing';

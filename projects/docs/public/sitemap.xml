@@ -38,6 +38,42 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/signal-forms"/>
   </url>
   <url>
+    <loc>https://aurea-ds.netlify.app/en/guides/api-conventions</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/api-conventions"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/api-conventions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/api-conventions"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/en/guides/floating-ui</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/floating-ui"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/floating-ui"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/floating-ui"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/en/guides/composition</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/composition"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/composition"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/composition"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/en/guides/recipes</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/recipes"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/recipes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/recipes"/>
+  </url>
+  <url>
     <loc>https://aurea-ds.netlify.app/en/guides/crud-demo</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -522,6 +558,42 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/signal-forms"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/signal-forms"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/signal-forms"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/es/guides/api-conventions</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/api-conventions"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/api-conventions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/api-conventions"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/es/guides/floating-ui</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/floating-ui"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/floating-ui"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/floating-ui"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/es/guides/composition</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/composition"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/composition"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/composition"/>
+  </url>
+  <url>
+    <loc>https://aurea-ds.netlify.app/es/guides/recipes</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aurea-ds.netlify.app/en/guides/recipes"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aurea-ds.netlify.app/es/guides/recipes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://aurea-ds.netlify.app/es/guides/recipes"/>
   </url>
   <url>
     <loc>https://aurea-ds.netlify.app/es/guides/crud-demo</loc>

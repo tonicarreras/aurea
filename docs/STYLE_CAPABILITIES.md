@@ -24,12 +24,12 @@ Inside each capability:
 
 ## Namespaces
 
-| Primitive | Namespace | Capability | CSS variable |
-| --------- | --------- | ---------- | ------------- |
-| `[auStack]` | `stack` | gap | `--au-stack-gap` |
-| `[auCluster]` | `cluster` | gap | `--au-cluster-gap` |
-| `[auSplit]` | `split` | gap | `--au-split-gap` |
-| `[auSection]` | `section` | padding | `--au-section-padding` |
+| Primitive     | Namespace | Capability | CSS variable           |
+| ------------- | --------- | ---------- | ---------------------- |
+| `[auStack]`   | `stack`   | gap        | `--au-stack-gap`       |
+| `[auCluster]` | `cluster` | gap        | `--au-cluster-gap`     |
+| `[auSplit]`   | `split`   | gap        | `--au-split-gap`       |
+| `[auSection]` | `section` | padding    | `--au-section-padding` |
 
 ## Why not capabilities on every component?
 

@@ -4,11 +4,11 @@ How Aurea primitives, tokens, and application CSS divide responsibility. Inspire
 
 ## Three layers
 
-| Layer | Owns | Examples |
-| ----- | ---- | -------- |
-| **Aurea primitives** | Visual grammar, anatomy, a11y, interaction | `variant`, `size`, `[auStack] gap`, `au-form-field`, overlays |
-| **Design tokens** | Theme, density, semantic color, elevation roles | `--au-color-*`, `--au-elevation-*`, `--au-gap-stack` |
-| **Application CSS** | Page layout, max-width, breakpoints, one-off art direction | `max-width`, `grid-template-columns`, marketing geometry |
+| Layer                | Owns                                                       | Examples                                                      |
+| -------------------- | ---------------------------------------------------------- | ------------------------------------------------------------- |
+| **Aurea primitives** | Visual grammar, anatomy, a11y, interaction                 | `variant`, `size`, `[auStack] gap`, `au-form-field`, overlays |
+| **Design tokens**    | Theme, density, semantic color, elevation roles            | `--au-color-*`, `--au-elevation-*`, `--au-gap-stack`          |
+| **Application CSS**  | Page layout, max-width, breakpoints, one-off art direction | `max-width`, `grid-template-columns`, marketing geometry      |
 
 > Use Aurea inputs for **common design decisions**.  
 > Use `--au-{component}-*` variables for **local art direction**.  
@@ -20,15 +20,31 @@ Prefer layout directives over ad-hoc flex in examples:
 
 ```html
 <au-card>
-  <div auSection padding="lg" divider="bottom">
-    <div auStack gap="md">
+  <div
+    auSection
+    padding="lg"
+    divider="bottom"
+  >
+    <div
+      auStack
+      gap="md"
+    >
       <h3 auCardHeader>Settings</h3>
       <p auCardBody>Manage your account.</p>
     </div>
   </div>
   <div auCardFooter>
-    <div auCluster gap="sm" justify="end">
-      <button auButton variant="ghost">Cancel</button>
+    <div
+      auCluster
+      gap="sm"
+      justify="end"
+    >
+      <button
+        auButton
+        variant="ghost"
+      >
+        Cancel
+      </button>
       <button auButton>Save</button>
     </div>
   </div>
@@ -44,7 +60,10 @@ The button owns density, variant, focus, and loading. Label typography comes fro
 <button auButton>Subscribe</button>
 
 <!-- Expressive label: wrap in styled span in the app layer -->
-<button auButton variant="outline">
+<button
+  auButton
+  variant="outline"
+>
   <span class="marketing-cta">Listen now</span>
 </button>
 ```

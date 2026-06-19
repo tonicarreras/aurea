@@ -63,6 +63,22 @@ Adds global styles to `angular.json` and prints next steps.
 
 Or use the `auTheme` directive from the same package (`light`, `dark`, `system`, `high-contrast`, `high-contrast-dark`).
 
+Optional **runtime brand** via `provideAurea()` (writes semantic tokens on `:root`):
+
+```ts
+import { provideAurea } from '@aurea-design-system/components';
+
+bootstrapApplication(App, {
+  providers: [
+    provideAurea({
+      theme: { actionPrimary: '#1059c8', radiusField: '0.5rem' },
+    }),
+  ],
+});
+```
+
+See docs `/guides/composition` and [docs/COMPONENT_CSS_VARS.md](../../docs/COMPONENT_CSS_VARS.md).
+
 ### 4. Density (optional)
 
 ```html
@@ -110,14 +126,14 @@ export class Example {}
 
 Aurea uses a **hybrid** public API:
 
-| Pattern | Use when | Examples |
-| ------- | -------- | -------- |
-| Directive on native host | Single HTML element, forms semantics | `button[auButton]`, `input[auInputText]`, `[auTooltip]` |
-| `au-*` custom element | Composite widget, projection, internal state | `au-form-field`, `au-dialog`, `au-table`, `au-menu` |
+| Pattern                  | Use when                                     | Examples                                                |
+| ------------------------ | -------------------------------------------- | ------------------------------------------------------- |
+| Directive on native host | Single HTML element, forms semantics         | `button[auButton]`, `input[auInputText]`, `[auTooltip]` |
+| `au-*` custom element    | Composite widget, projection, internal state | `au-form-field`, `au-dialog`, `au-table`, `au-menu`     |
 
 `au-table` is a **high-level data table** (`[data]` + `au-table-column`), not a `<table>` directive like Angular Material CDK. Headless helpers (`sortTableRows`, `toggleTableSortState`, …) live in `au-table-data.ts` for custom UIs.
 
-Monorepo guides: [docs/API_CONVENTIONS.md](../../docs/API_CONVENTIONS.md) · [docs/FLOATING_UI.md](../../docs/FLOATING_UI.md) · docs site `/guides/api-conventions` and `/guides/floating-ui`.
+Monorepo guides: [docs/API_CONVENTIONS.md](../../docs/API_CONVENTIONS.md) · [docs/API_VOCABULARY.md](../../docs/API_VOCABULARY.md) · [docs/COMPOSITION.md](../../docs/COMPOSITION.md) · [docs/COMPONENT_CSS_VARS.md](../../docs/COMPONENT_CSS_VARS.md) · [docs/FLOATING_UI.md](../../docs/FLOATING_UI.md) · [docs/STYLE_CAPABILITIES.md](../../docs/STYLE_CAPABILITIES.md) · docs site `/guides/*`.
 
 ---
 
@@ -190,7 +206,10 @@ readonly profileForm = form(this.profile, (p) => {
 
 ```html
 <au-form-field label="City">
-  <input auInputText [formField]="profileForm.address.city" />
+  <input
+    auInputText
+    [formField]="profileForm.address.city"
+  />
 </au-form-field>
 ```
 
@@ -238,7 +257,7 @@ Gate actions with `profileForm().valid()` and call `profileForm().markAllAsTouch
 | `AuPagination`       | `<au-pagination>`                    | Page controls (1-based)                                               |
 | `AuMenu`             | `<au-menu>`                          | Dropdown + `auMenuTrigger` / `au-menu-item`                           |
 | `AuPopover`          | `<au-popover>`                       | Anchored panel + `auPopoverTrigger`                                   |
-| `AuTable`            | `<au-table>`                         | `au-table-column`; headless helpers in `au-table-data`               |
+| `AuTable`            | `<au-table>`                         | `au-table-column`; headless helpers in `au-table-data`                |
 | `AuProgress`         | `<au-progress>`                      | Progressbar                                                           |
 | `AuLink`             | `a[auLink]`                          | Semantic inline link                                                  |
 | `AuEmptyState`       | `<au-empty-state>`                   | Empty lists/tables/search (stable **1.2.0**)                          |
@@ -251,6 +270,11 @@ Gate actions with `profileForm().valid()` and call `profileForm().markAllAsTouch
 | `AuSpinner`          | `<au-spinner>`                       | Loading indicator                                                     |
 | `AuTheme`            | `[auTheme]`                          | `light` / `dark` / `system` / `high-contrast` / `high-contrast-dark`  |
 | `AuDensityDirective` | `[auDensity]`                        | `compact` / `comfortable` / `spacious`                                |
+| `AuStack`            | `[auStack]`                          | Vertical flex stack; `gap`, `align`, `separator`                      |
+| `AuCluster`          | `[auCluster]`                        | Inline wrap row; toolbars, filter bars                                |
+| `AuSplit`            | `[auSplit]`                          | Two-column grid; `ratio`, responsive `collapse`                       |
+| `AuSection`          | `[auSection]`                        | Padded block; optional `divider`                                      |
+| `provideAurea`       | `provideAurea({ theme })`            | Optional bootstrap override for semantic CSS variables                |
 
 ---
 
@@ -262,7 +286,7 @@ Gate actions with `profileForm().valid()` and call `profileForm().markAllAsTouch
 ## Bundle & performance
 
 - Import per symbol (`import { AuButton } from '…'`), not `import *`.
-- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, errors, listbox, description list, accordion item shells). See `src/lib/styles/README.md`.
+- Global CSS: `au-tokens.css` (required) + `aurea-global.css` (field chrome, layout directives, listbox, description list, accordion item shells). See `src/lib/styles/README.md`.
 - All components use `ChangeDetectionStrategy.OnPush`; overlays attach to `document.body` only while open.
 - Lazy-load feature routes; paginate large tables server-side.
 - CI: `bun run check:bundle` (+5% vs baseline). Update baseline with `bun run update:bundle-baseline` after intentional size changes.

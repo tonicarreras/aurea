@@ -59,7 +59,7 @@ Install step uses [`.github/actions/bun-install`](.github/actions/bun-install) (
 
 5. Update [CHANGELOG.md](./CHANGELOG.md) under `[Unreleased]` for user-visible library changes.
 
-New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Design principles: [docs/DESIGN.md](./docs/DESIGN.md). **API conventions:** [docs/API_CONVENTIONS.md](./docs/API_CONVENTIONS.md). **Floating UI:** [docs/FLOATING_UI.md](./docs/FLOATING_UI.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
+New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). Design principles: [docs/DESIGN.md](./docs/DESIGN.md). **API:** [API_CONVENTIONS.md](./docs/API_CONVENTIONS.md), [API_VOCABULARY.md](./docs/API_VOCABULARY.md), [COMPOSITION.md](./docs/COMPOSITION.md), [COMPONENT_CSS_VARS.md](./docs/COMPONENT_CSS_VARS.md), [STYLE_CAPABILITIES.md](./docs/STYLE_CAPABILITIES.md). **Floating UI:** [FLOATING_UI.md](./docs/FLOATING_UI.md). Design hand-off: [projects/design-tokens/README.md](./projects/design-tokens/README.md).
 
 ## API conventions
 
@@ -67,6 +67,8 @@ New contributors: see [docs/GOOD_FIRST_ISSUES.md](./docs/GOOD_FIRST_ISSUES.md). 
 - **Composite widget** → custom element (`au-table`, `au-menu`, `au-form-field`).
 - Do **not** ship duplicate selectors for the same widget (e.g. `<au-table>` and `<table auTable>`).
 - Table sort/selection logic belongs in `au-table-data.ts`; overlays use `TooltipOverlay` / `FloatingPickerOverlay`.
+- Layout utilities live in `src/lib/layout/` (`[auStack]`, …); documented in [COMPOSITION.md](./docs/COMPOSITION.md), not in `component-maturity.ts`.
+- Optional runtime theming: `provideAurea({ theme })` — see [COMPONENT_CSS_VARS.md](./docs/COMPONENT_CSS_VARS.md).
 - Full guide: [docs/API_CONVENTIONS.md](./docs/API_CONVENTIONS.md). Overlay a11y checklist: [docs/FLOATING_UI.md](./docs/FLOATING_UI.md).
 
 ## Component Definition of Done
@@ -93,7 +95,7 @@ Required before marking **stable** in `component-maturity.ts`:
 - Angular **standalone** components, **signals** for inputs/outputs.
 - Styles: component CSS using `--au-*` tokens only (no hard-coded hex in components).
 - Match existing file layout under `projects/components/src/lib/<name>/`.
-- Shared CSS: `styles/aurea-global.css` where cross-host children need global rules.
+- Shared CSS: `styles/aurea-global.css` where cross-host children need global rules (field chrome, layout directives, listbox, description list, accordion shells).
 
 **A11y:** visible focus; labels via `au-form-field`; notes in overview; no open items in [A11Y_AUDIT.md](./projects/components/A11Y_AUDIT.md).
 
@@ -127,7 +129,7 @@ Required before marking **stable** in `component-maturity.ts`:
 
 - Standalone components, **signals** for inputs/outputs.
 - File layout: `projects/components/src/lib/<name>/`.
-- Shared CSS: `styles/aurea-global.css` (field chrome, listbox overlay, description list, accordion shells). Portaled hosts (`au-snackbar`, `au-dialog`, …) ship component `styleUrl`.
+- Shared CSS: `styles/aurea-global.css` (field chrome, layout directives, listbox overlay, description list, accordion shells). Portaled hosts (`au-snackbar`, `au-dialog`, …) ship component `styleUrl`.
 
 ## Commits
 

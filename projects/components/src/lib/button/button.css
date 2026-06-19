@@ -189,12 +189,14 @@ au-button-group[data-au-attached][data-au-orientation='horizontal']
   margin-inline-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal'] :where(button.au-button):first-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal']
+  :where(button.au-button):first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-end-start-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal'] :where(button.au-button):last-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal']
+  :where(button.au-button):last-of-type {
   border-start-end-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }
@@ -205,12 +207,14 @@ au-button-group[data-au-attached][data-au-orientation='vertical']
   margin-block-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical'] :where(button.au-button):first-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical']
+  :where(button.au-button):first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-start-end-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical'] :where(button.au-button):last-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical']
+  :where(button.au-button):last-of-type {
   border-end-start-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }

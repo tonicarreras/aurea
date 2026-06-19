@@ -66,4 +66,24 @@ export const THEME_HOST_OVERRIDES_ES: ThemeHostOverride[] = [
     token: 'data-au-variant',
     description: '`plain` (por defecto) o `contained` para superficie elevada.',
   },
+  {
+    host: '[auStack]',
+    token: '--au-stack-gap',
+    description: 'Gap entre hijos en columna; el input `gap` fija el valor por defecto.',
+  },
+  {
+    host: '[auCluster]',
+    token: '--au-cluster-gap',
+    description: 'Gap en fila inline con wrap.',
+  },
+  {
+    host: '[auSplit]',
+    token: '--au-split-ratio',
+    description: 'Columnas del grid; el input `ratio` usa presets como `1:2`.',
+  },
+  {
+    host: '[auSection]',
+    token: '--au-section-padding',
+    description: 'Padding del bloque; input `padding` con la escala compartida.',
+  },
 ];

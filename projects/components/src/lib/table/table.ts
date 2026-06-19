@@ -174,10 +174,7 @@ export class AuTable {
   }
 
   protected headerAriaSort(col: AuTableColumn): string | null {
-    return tableHeaderAriaSort(
-      { name: col.name(), sortable: col.sortable() },
-      this.sort(),
-    );
+    return tableHeaderAriaSort({ name: col.name(), sortable: col.sortable() }, this.sort());
   }
 
   protected columnSortDirection(column: string): AuTableSortDirection {
@@ -201,9 +198,7 @@ export class AuTable {
   }
 
   protected setSelectAll(checked: boolean): void {
-    this.selection.set(
-      nextTableSelectAllSelection(this.selectionMode(), checked, this.viewRows()),
-    );
+    this.selection.set(nextTableSelectAllSelection(this.selectionMode(), checked, this.viewRows()));
   }
 
   protected setRowSelected(row: unknown, checked: boolean): void {

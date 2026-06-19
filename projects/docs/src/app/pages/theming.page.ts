@@ -200,6 +200,16 @@ import { DocsTokenList } from '../shared/docs-token-list';
         [expandLabel]="i18n.messages().themes.brandExpand"
       />
 
+      <h3>{{ i18n.messages().themes.provideAureaHeading }}</h3>
+      <p>
+        <docs-inline-text [text]="i18n.messages().themes.provideAureaBody" />
+      </p>
+      <docs-code-block
+        [code]="provideAureaSnippet"
+        language="typescript"
+        [expandLabel]="i18n.messages().themes.provideAureaExpand"
+      />
+
       <h2>{{ i18n.messages().themes.brandExampleHeading }}</h2>
       <p>
         <docs-inline-text [text]="i18n.messages().themes.brandExampleBody" />
@@ -567,10 +577,25 @@ export class ThemingPage {
 @import '@aurea-design-system/components/styles/aurea-global.css';
 
 /* aurea-global.css (requires tokens):
+ * - Layout directives (auStack, auCluster, auSplit, auSection)
  * - Field chrome, errors, listbox overlays
  * - Description list (dt/dd across hosts)
  * - Accordion projected item shells + triggers
  * Per-component CSS ships with each Angular import. */`;
+
+  readonly provideAureaSnippet = `import { provideAurea } from '@aurea-design-system/components';
+
+bootstrapApplication(App, {
+  providers: [
+    provideAurea({
+      theme: {
+        actionPrimary: '#1059c8',
+        radiusField: '0.5rem',
+        fontSans: 'Inter, sans-serif',
+      },
+    }),
+  ],
+});`;
 
   readonly directiveSnippet = `<div class="app-shell" [auTheme]="'system'">
   ...

@@ -4,21 +4,35 @@ How Aurea names and structures public APIs. Goal: predictable DX without duplica
 
 ## Hybrid model
 
-| Kind | Pattern | When | Examples |
-| ---- | ------- | ---- | -------- |
+| Kind                 | Pattern                                 | When                                                                  | Examples                                                |
+| -------------------- | --------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------- |
 | **Native primitive** | Attribute directive on the host element | The control **is** a single HTML element (semantics, forms, keyboard) | `button[auButton]`, `input[auInputText]`, `[auTooltip]` |
-| **Composite widget** | Custom element `au-*` | Shell with projection, internal state, or multiple roots | `au-form-field`, `au-dialog`, `au-table`, `au-menu` |
+| **Composite widget** | Custom element `au-*`                   | Shell with projection, internal state, or multiple roots              | `au-form-field`, `au-dialog`, `au-table`, `au-menu`     |
 
 ### Do
 
 ```html
-<button auButton variant="primary">Save</button>
-<input auInputText [(value)]="name" />
+<button
+  auButton
+  variant="primary"
+>
+  Save
+</button>
+<input
+  auInputText
+  [(value)]="name"
+/>
 <au-form-field label="Email">
-  <input auInputText [formField]="form.email" />
+  <input
+    auInputText
+    [formField]="form.email"
+  />
 </au-form-field>
 <au-table [data]="rows">
-  <au-table-column name="name" header="Name" />
+  <au-table-column
+    name="name"
+    header="Name"
+  />
 </au-table>
 ```
 
@@ -29,10 +43,17 @@ How Aurea names and structures public APIs. Goal: predictable DX without duplica
 <au-button>Save</au-button>
 
 <!-- Don't mimic Material CDK table unless you need that granularity -->
-<table auTable>...</table>
+<table auTable>
+  ...
+</table>
 
 <!-- Don't duplicate the same widget with two public selectors -->
-<au-table> + <table auTable>  <!-- pick one -->
+<au-table>
+  +
+  <table auTable>
+    <!-- pick one -->
+  </table></au-table
+>
 ```
 
 ## Why not `<table mat-table>` everywhere?
@@ -43,11 +64,11 @@ For custom layouts or virtual scroll, use headless helpers (`au-table-data`) or 
 
 ## Headless logic
 
-| Area | Module | UI component |
-| ---- | ------ | ------------- |
-| Table sort/selection | `au-table-data.ts` | `AuTable` |
-| Floating position | `TooltipOverlay`, `FloatingPickerOverlay` | Menu, popover, tooltip, pickers |
-| Listbox portal | `FieldListboxOverlay` | Select, autocomplete |
+| Area                 | Module                                    | UI component                    |
+| -------------------- | ----------------------------------------- | ------------------------------- |
+| Table sort/selection | `au-table-data.ts`                        | `AuTable`                       |
+| Floating position    | `TooltipOverlay`, `FloatingPickerOverlay` | Menu, popover, tooltip, pickers |
+| Listbox portal       | `FieldListboxOverlay`                     | Select, autocomplete            |
 
 Import headless helpers when composing new surfaces; keep components thin.
 
@@ -66,9 +87,9 @@ New components: pick native vs composite **before** naming. Document in Storyboo
 
 ## Further reading
 
-| Doc | Topic |
-| --- | ----- |
-| [API_VOCABULARY.md](./API_VOCABULARY.md) | Shared input names and primitive responsibilities |
-| [COMPOSITION.md](./COMPOSITION.md) | Three-layer composition (primitives / tokens / app CSS) |
-| [COMPONENT_CSS_VARS.md](./COMPONENT_CSS_VARS.md) | Public `--au-*` override contract |
-| [STYLE_CAPABILITIES.md](./STYLE_CAPABILITIES.md) | Internal layout capability architecture |
+| Doc                                              | Topic                                                   |
+| ------------------------------------------------ | ------------------------------------------------------- |
+| [API_VOCABULARY.md](./API_VOCABULARY.md)         | Shared input names and primitive responsibilities       |
+| [COMPOSITION.md](./COMPOSITION.md)               | Three-layer composition (primitives / tokens / app CSS) |
+| [COMPONENT_CSS_VARS.md](./COMPONENT_CSS_VARS.md) | Public `--au-*` override contract                       |
+| [STYLE_CAPABILITIES.md](./STYLE_CAPABILITIES.md) | Internal layout capability architecture                 |

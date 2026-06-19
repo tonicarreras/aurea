@@ -4,6 +4,10 @@ export interface DocsNavMessages {
     home: string;
     getStarted: string;
     adoption: string;
+    apiConventions: string;
+    floatingUi: string;
+    composition: string;
+    recipes: string;
     signalForms: string;
     crudDemo: string;
     themes: string;

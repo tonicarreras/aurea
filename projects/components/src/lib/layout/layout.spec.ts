@@ -11,7 +11,14 @@ describe('layout primitives', () => {
   it('auStack sets data attributes and gap capability', async () => {
     @Component({
       imports: [AuStack],
-      template: `<div auStack gap="lg" align="center" separator="solid">a</div>`,
+      template: `<div
+        auStack
+        gap="lg"
+        align="center"
+        separator="solid"
+      >
+        a
+      </div>`,
     })
     class Host {}
 
@@ -42,7 +49,12 @@ describe('layout primitives', () => {
   it('auSplit sets ratio custom property', async () => {
     @Component({
       imports: [AuSplit],
-      template: `<div auSplit ratio="2:1">c</div>`,
+      template: `<div
+        auSplit
+        ratio="2:1"
+      >
+        c
+      </div>`,
     })
     class Host {}
 
@@ -57,7 +69,13 @@ describe('layout primitives', () => {
   it('auSection sets divider and padding capability', async () => {
     @Component({
       imports: [AuSection],
-      template: `<div auSection padding="md" divider="top">d</div>`,
+      template: `<div
+        auSection
+        padding="md"
+        divider="top"
+      >
+        d
+      </div>`,
     })
     class Host {}
 
@@ -73,7 +91,12 @@ describe('layout primitives', () => {
   it('auSection accepts explicit padding none', async () => {
     @Component({
       imports: [AuSection],
-      template: `<div auSection padding="none">d</div>`,
+      template: `<div
+        auSection
+        padding="none"
+      >
+        d
+      </div>`,
     })
     class Host {}
 

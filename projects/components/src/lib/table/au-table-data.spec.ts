@@ -30,9 +30,9 @@ describe('au-table-data', () => {
   });
 
   it('reads cells by accessor or property name', () => {
-    expect(readTableCell({ name: 'id', accessor: (r) => (r as { id: number }).id }, { id: 2 })).toBe(
-      2,
-    );
+    expect(
+      readTableCell({ name: 'id', accessor: (r) => (r as { id: number }).id }, { id: 2 }),
+    ).toBe(2);
     expect(readTableCell(nameCol, { name: 'Ada' })).toBe('Ada');
   });
 
@@ -47,7 +47,12 @@ describe('au-table-data', () => {
       { name: 'b', score: 1 },
       { name: 'a', score: 2 },
     ];
-    const sorted = resolveTableViewRows(rows, [nameCol], { column: 'name', direction: 'asc' }, true);
+    const sorted = resolveTableViewRows(
+      rows,
+      [nameCol],
+      { column: 'name', direction: 'asc' },
+      true,
+    );
     expect(sorted.map((r) => r.name)).toEqual(['a', 'b']);
     expect(resolveTableViewRows(rows, [nameCol], { column: 'name', direction: 'asc' }, false)).toBe(
       rows,
@@ -65,9 +70,9 @@ describe('au-table-data', () => {
 
   it('exposes column sort direction and aria-sort', () => {
     expect(tableColumnSortDirection({ column: 'name', direction: 'asc' }, 'name')).toBe('asc');
-    expect(tableHeaderAriaSort({ name: 'name', sortable: true }, { column: 'name', direction: 'desc' })).toBe(
-      'descending',
-    );
+    expect(
+      tableHeaderAriaSort({ name: 'name', sortable: true }, { column: 'name', direction: 'desc' }),
+    ).toBe('descending');
     expect(tableHeaderAriaSort({ name: 'name' }, null)).toBeNull();
   });
 
@@ -79,7 +84,8 @@ describe('au-table-data', () => {
   it('tracks row selection', () => {
     const row = { id: 1 };
     const other = { id: 2 };
-    const compare = (a: unknown, b: unknown) => (a as { id: number }).id === (b as { id: number }).id;
+    const compare = (a: unknown, b: unknown) =>
+      (a as { id: number }).id === (b as { id: number }).id;
     expect(isTableRowSelected(row, [row], compare)).toBe(true);
     expect(tableSelectAllChecked([row, other], [row, other], compare)).toBe(true);
     expect(tableSelectAllIndeterminate([row, other], [row], compare)).toBe(true);

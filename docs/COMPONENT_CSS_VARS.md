@@ -6,58 +6,62 @@ Internal implementation may use additional variables; only listed keys are stabi
 
 ## Global semantic (via `provideAurea()`)
 
-| Config key | CSS variable |
-| ---------- | ------------- |
-| `actionPrimary` | `--au-color-action-primary` |
-| `actionPrimaryHover` | `--au-color-action-primary-hover` |
+| Config key             | CSS variable                        |
+| ---------------------- | ----------------------------------- |
+| `actionPrimary`        | `--au-color-action-primary`         |
+| `actionPrimaryHover`   | `--au-color-action-primary-hover`   |
 | `actionPrimaryPressed` | `--au-color-action-primary-pressed` |
-| `radiusSurface` | `--au-radius-surface` |
-| `radiusField` | `--au-radius-field` |
-| `fontSans` | `--au-font-sans` |
-| `fontMono` | `--au-font-mono` |
+| `radiusSurface`        | `--au-radius-surface`               |
+| `radiusField`          | `--au-radius-field`                 |
+| `fontSans`             | `--au-font-sans`                    |
+| `fontMono`             | `--au-font-mono`                    |
 
 ## Native button (`button[auButton]`)
 
 Domain tokens in `au-tokens-domain.css`. Override on the button or a parent:
 
-| Variable | Role |
-| -------- | ---- |
-| `--au-button-radius` | Corner radius |
-| `--au-button-gap` | Icon + label gap |
+| Variable                      | Role                       |
+| ----------------------------- | -------------------------- |
+| `--au-button-radius`          | Corner radius              |
+| `--au-button-gap`             | Icon + label gap           |
 | `--au-button-height-sm/md/lg` | Heights per `data-au-size` |
 
 ## Card (`au-card`)
 
-| Variable | Role |
-| -------- | ---- |
-| `--au-card-padding` | Inner padding (also driven by `size`) |
-| `--au-card-main-gap` | Gap between header/body |
-| `--au-card-footer-gap` | Footer spacing |
+| Variable               | Role                                  |
+| ---------------------- | ------------------------------------- |
+| `--au-card-padding`    | Inner padding (also driven by `size`) |
+| `--au-card-main-gap`   | Gap between header/body               |
+| `--au-card-footer-gap` | Footer spacing                        |
 
 ## Layout directives
 
-| Host | Variable | Role |
-| ---- | -------- | ---- |
-| `[auStack]` | `--au-stack-gap` | Column gap (default from `gap` input) |
-| `[auCluster]` | `--au-cluster-gap` | Row gap |
-| `[auSplit]` | `--au-split-ratio` | Grid template (set by `ratio` input) |
-| `[auSection]` | `--au-section-padding` | Block padding |
+| Host          | Variable               | Role                                  |
+| ------------- | ---------------------- | ------------------------------------- |
+| `[auStack]`   | `--au-stack-gap`       | Column gap (default from `gap` input) |
+| `[auCluster]` | `--au-cluster-gap`     | Row gap                               |
+| `[auSplit]`   | `--au-split-ratio`     | Grid template (set by `ratio` input)  |
+| `[auSection]` | `--au-section-padding` | Block padding                         |
 
 Example local override:
 
 ```html
-<div auStack gap="md" style="--au-stack-gap: var(--au-space-8)">
+<div
+  auStack
+  gap="md"
+  style="--au-stack-gap: var(--au-space-8)"
+>
   ...
 </div>
 ```
 
 ## Overlays (see FLOATING_UI.md)
 
-| Surface | Key variables |
-| ------- | ------------- |
+| Surface         | Key variables                                 |
+| --------------- | --------------------------------------------- |
 | Desktop popover | `--au-floating-panel-bg`, `--au-floating-gap` |
-| Modal / sheet | `--au-dialog-bg` |
-| Listbox | `--au-field-listbox-gap` |
+| Modal / sheet   | `--au-dialog-bg`                              |
+| Listbox         | `--au-field-listbox-gap`                      |
 
 ## Rules
 

@@ -1297,6 +1297,7 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Selección de filas: `selectionMode` (`none` | `single` | `multiple`) con `[(selection)]`, select-all en cabecera (multiple) y clic en fila — checkboxes con `input[type=checkbox][auCheckbox]`.',
       'Celdas custom: `ng-template[auTableCell] let-row` en la columna para badges, menús o acciones.',
       'Datos vacíos: proyecta `au-empty-state` como hijo (`size="sm"`, `headingLevel="3"`); si no, se muestra `emptyMessage`.',
+      'Helpers headless en `au-table-data` (`sortTableRows`, `toggleTableSortState`, selección) para rejillas custom sin bifurcar `au-table`.',
     ],
     whenToUse: {
       title: 'Cuándo usarlo',
@@ -1345,7 +1346,57 @@ export const OVERVIEWS_ES: Record<string, ComponentDocOverview> = {
       'Tab a botones de orden; Enter/Espacio alternan el ciclo.',
       'Tab a checkboxes de fila; Espacio alterna selección. Clic en fila también alterna si hay selección.',
     ],
-    relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef', 'AuEmptyState'],
+    relatedExports: [
+      'AuTable',
+      'AuTableColumn',
+      'AuTableCellDef',
+      'AuEmptyState',
+      'resolveTableViewRows',
+      'toggleTableSortState',
+      'nextTableRowSelection',
+    ],
+  },
+  layout: {
+    intro: [
+      'Directivas de layout con tokens en `aurea-global.css`: columna (`auStack`), fila inline (`auCluster`), dos columnas (`auSplit`) y bloques con padding (`auSection`).',
+      'Inputs `gap` / `padding` con escala compartida (`none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`). Override con `--au-stack-gap`, `--au-cluster-gap`, `--au-split-ratio`, `--au-section-padding` en el host.',
+      'Compón con `au-card`, `au-form-field` y controles nativos — ver docs `/guides/recipes`.',
+    ],
+    whenToUse: {
+      title: 'Cuándo usarlo',
+      items: [
+        'Secciones de formulario, cuerpos de tarjeta y filas de ajustes sin flex ad hoc.',
+        'Barras de herramientas y filtros (`auCluster`).',
+        'Columnas etiqueta + control que colapsan en móvil (`auSplit`).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternativas',
+      items: [
+        'Max-width de página y geometría de marketing → CSS de la aplicación.',
+        'Datos tabulares → `au-table`, no directivas de layout.',
+      ],
+    },
+    anatomy: [
+      {
+        region: '[auStack]',
+        detail: 'Flex columna; `align`, `justify`, `separator` opcional entre hijos.',
+      },
+      { region: '[auCluster]', detail: 'Flex fila con wrap; toolbars y filas de chips.' },
+      {
+        region: '[auSplit]',
+        detail: 'Grid dos columnas; presets `ratio` y `collapse` responsive.',
+      },
+      {
+        region: '[auSection]',
+        detail: 'Región con padding; `divider` opcional arriba/abajo/ambos.',
+      },
+    ],
+    accessibility: [
+      'Las directivas de layout son presentacionales; conserva el orden de encabezados y etiquetas en controles interactivos.',
+      'No uses contenedores de layout como objetivo de clic — usa `button[auButton]` o enlaces dentro.',
+    ],
+    relatedExports: ['AuStack', 'AuCluster', 'AuSplit', 'AuSection', 'auSpacingValue'],
   },
   tooltip: {
     intro: [
