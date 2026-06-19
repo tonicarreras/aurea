@@ -3,7 +3,7 @@
  * Applied via `button[auButton]`.
  */
 
-button.au-button {
+:where(button.au-button) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -30,115 +30,115 @@ button.au-button {
   text-rendering: optimizeLegibility;
 }
 
-button.au-button[data-au-size='sm'] {
+:where(button.au-button)[data-au-size='sm'] {
   height: var(--au-button-height-sm);
   padding: 0 var(--au-size-field-px-sm);
   font-size: var(--au-button-font-size-sm);
 }
 
-button.au-button[data-au-size='md'],
-button.au-button:not([data-au-size]) {
+:where(button.au-button)[data-au-size='md'],
+:where(button.au-button):not([data-au-size]) {
   height: var(--au-button-height-md);
   padding: 0 var(--au-size-field-px-md);
   font-size: var(--au-button-font-size-md);
 }
 
-button.au-button[data-au-size='lg'] {
+:where(button.au-button)[data-au-size='lg'] {
   height: var(--au-button-height-lg);
   min-width: var(--au-touch-target-min);
   padding: 0 var(--au-space-5);
   font-size: var(--au-button-font-size-lg);
 }
 
-button.au-button[data-au-variant='primary'] {
+:where(button.au-button)[data-au-variant='primary'] {
   background: var(--au-color-action-primary);
   border-color: var(--au-color-action-primary);
   color: var(--au-color-text-on-solid);
   box-shadow: var(--au-elevation-tactile-primary);
 }
 
-button.au-button[data-au-variant='primary']:hover:not(:disabled) {
+:where(button.au-button)[data-au-variant='primary']:hover:not(:disabled) {
   background: var(--au-color-action-primary-hover);
   border-color: var(--au-color-action-primary-hover);
 }
 
-button.au-button[data-au-variant='primary']:active:not(:disabled) {
+:where(button.au-button)[data-au-variant='primary']:active:not(:disabled) {
   background: var(--au-color-action-primary-pressed);
   border-color: var(--au-color-action-primary-pressed);
   box-shadow: var(--au-elevation-tactile-primary);
 }
 
-button.au-button[data-au-variant='secondary'] {
+:where(button.au-button)[data-au-variant='secondary'] {
   background: var(--au-color-surface-raised);
   border-color: var(--au-color-border-default);
   color: var(--au-color-text-primary);
 }
 
-button.au-button[data-au-variant='secondary']:hover:not(:disabled) {
+:where(button.au-button)[data-au-variant='secondary']:hover:not(:disabled) {
   background: var(--au-color-surface-elevated);
   border-color: var(--au-color-border-strong);
 }
 
-button.au-button[data-au-variant='secondary']:active:not(:disabled) {
+:where(button.au-button)[data-au-variant='secondary']:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
   box-shadow: var(--au-elevation-tactile);
 }
 
-button.au-button[data-au-variant='outline'] {
+:where(button.au-button)[data-au-variant='outline'] {
   background: transparent;
   border-color: var(--au-color-action-primary);
   color: var(--au-color-action-primary);
 }
 
-button.au-button[data-au-variant='outline']:hover:not(:disabled) {
+:where(button.au-button)[data-au-variant='outline']:hover:not(:disabled) {
   background: var(--au-color-surface-elevated);
 }
 
-button.au-button[data-au-variant='outline']:active:not(:disabled) {
+:where(button.au-button)[data-au-variant='outline']:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
 }
 
-button.au-button[data-au-variant='ghost'] {
+:where(button.au-button)[data-au-variant='ghost'] {
   background: transparent;
   border-color: transparent;
   color: var(--au-color-action-primary);
   box-shadow: none;
 }
 
-button.au-button[data-au-variant='ghost']:hover:not(:disabled) {
+:where(button.au-button)[data-au-variant='ghost']:hover:not(:disabled) {
   background: var(--au-color-surface-elevated);
 }
 
-button.au-button[data-au-variant='ghost']:active:not(:disabled) {
+:where(button.au-button)[data-au-variant='ghost']:active:not(:disabled) {
   background: var(--au-color-surface-sunken);
 }
 
-button.au-button:disabled {
+:where(button.au-button):disabled {
   opacity: 0.45;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-button.au-button[aria-disabled='true'] {
+:where(button.au-button)[aria-disabled='true'] {
   opacity: 0.45;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-button.au-button.au-button--loading {
+:where(button.au-button).au-button--loading {
   cursor: wait;
 }
 
-button.au-button:focus {
+:where(button.au-button):focus {
   outline: none;
 }
 
-button.au-button:focus-visible {
+:where(button.au-button):focus-visible {
   outline: none;
   box-shadow: var(--au-focus-tactile);
 }
 
-button.au-button.au-button--from-tab:focus-visible {
+:where(button.au-button).au-button--from-tab:focus-visible {
   box-shadow: none;
   outline: var(--au-focus-tab);
   outline-offset: var(--au-focus-tab-offset);
@@ -154,7 +154,7 @@ button.au-button.au-button--from-tab:focus-visible {
   visibility: hidden;
 }
 
-button.au-button.au-button--loading .au-button__spinner {
+:where(button.au-button).au-button--loading .au-button__spinner {
   position: absolute;
   inset: 0;
   display: inline-flex;
@@ -170,52 +170,52 @@ button.au-button.au-button--loading .au-button__spinner {
   --au-spinner-track: color-mix(in srgb, currentColor 24%, transparent);
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] :where(button.au-button) {
   display: inline-flex;
 }
 
-au-button-group[data-au-orientation='vertical'] button.au-button {
+au-button-group[data-au-orientation='vertical'] :where(button.au-button) {
   display: flex;
   width: 100%;
 }
 
-au-button-group[data-au-attached] button.au-button {
+au-button-group[data-au-attached] :where(button.au-button) {
   border-radius: 0;
 }
 
 au-button-group[data-au-attached][data-au-orientation='horizontal']
-  button.au-button
-  + button.au-button {
+  :where(button.au-button)
+  + :where(button.au-button) {
   margin-inline-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button:first-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] :where(button.au-button):first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-end-start-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='horizontal'] button.au-button:last-of-type {
+au-button-group[data-au-attached][data-au-orientation='horizontal'] :where(button.au-button):last-of-type {
   border-start-end-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }
 
 au-button-group[data-au-attached][data-au-orientation='vertical']
-  button.au-button
-  + button.au-button {
+  :where(button.au-button)
+  + :where(button.au-button) {
   margin-block-start: -1px;
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-button:first-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical'] :where(button.au-button):first-of-type {
   border-start-start-radius: var(--au-button-radius);
   border-start-end-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached][data-au-orientation='vertical'] button.au-button:last-of-type {
+au-button-group[data-au-attached][data-au-orientation='vertical'] :where(button.au-button):last-of-type {
   border-end-start-radius: var(--au-button-radius);
   border-end-end-radius: var(--au-button-radius);
 }
 
-au-button-group[data-au-attached] button.au-button:hover:not(:disabled),
-au-button-group[data-au-attached] button.au-button:active:not(:disabled) {
+au-button-group[data-au-attached] :where(button.au-button):hover:not(:disabled),
+au-button-group[data-au-attached] :where(button.au-button):active:not(:disabled) {
   z-index: var(--au-z-raised);
 }

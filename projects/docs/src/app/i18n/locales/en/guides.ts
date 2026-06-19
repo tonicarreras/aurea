@@ -26,6 +26,16 @@ export const GUIDES_EN: GuidesMessages = {
         path: 'guides/floating-ui',
       },
       {
+        title: 'Composition',
+        description: 'Layout directives, three-layer model, and CSS variable overrides.',
+        path: 'guides/composition',
+      },
+      {
+        title: 'Recipes',
+        description: 'Filter bar, settings row, and dashboard card built from primitives.',
+        path: 'guides/recipes',
+      },
+      {
         title: 'Themes & tokens',
         description: 'Light/dark, density, and high-contrast palettes.',
         path: 'themes',
@@ -110,6 +120,112 @@ export const GUIDES_EN: GuidesMessages = {
       {
         heading: 'Responsive pickers',
         body: 'Below 42rem, AuInputDate and AuInputTime open a bottom sheet (FloatingPickerOverlay + scrim). Above that breakpoint they use popover positioning with the same panel component.',
+      },
+    ],
+  },
+  composition: {
+    title: 'Composition',
+    lead: 'How primitives, tokens, and app CSS divide responsibility — plus layout directives and provideAurea().',
+    sections: [
+      {
+        heading: 'Three layers',
+        body: 'Aurea inputs for common design decisions; --au-{component}-* variables for local art direction; application CSS for page layout (max-width, breakpoints, marketing geometry).',
+      },
+      {
+        heading: 'Layout directives',
+        body: 'auStack (column), auCluster (inline wrap), auSplit (two columns), auSection (padded block with optional divider). Styles ship in aurea-global.css.',
+        code: `<div auStack gap="md" separator="solid">
+  <au-form-field label="Search">
+    <input auInputText />
+  </au-form-field>
+  <div auCluster gap="sm">
+    <button auButton variant="ghost">Reset</button>
+    <button auButton>Apply</button>
+  </div>
+</div>`,
+        codeLanguage: 'html',
+        expandLabel: 'Show layout example',
+      },
+      {
+        heading: 'provideAurea() — runtime theming',
+        body: 'Optional bootstrap override for semantic tokens (primary color, radii, fonts). Complements [auTheme] for light/dark/HC.',
+        code: `import { provideAurea } from '@aurea-design-system/components';
+
+bootstrapApplication(App, {
+  providers: [
+    provideAurea({
+      theme: {
+        actionPrimary: '#1059c8',
+        radiusField: '0.5rem',
+      },
+    }),
+  ],
+});`,
+        codeLanguage: 'typescript',
+        expandLabel: 'Show provider',
+      },
+      {
+        heading: 'Public CSS overrides',
+        body: 'Documented per-component variables (--au-card-padding, --au-stack-gap, …). See repo docs/COMPONENT_CSS_VARS.md and API_VOCABULARY.md for input naming rules.',
+      },
+    ],
+  },
+  recipes: {
+    title: 'Composition recipes',
+    lead: 'End-to-end patterns assembled only from Aurea primitives — no domain-specific components.',
+    sections: [
+      {
+        heading: 'Filter bar',
+        body: 'Cluster for inline controls; form fields for labels; primary action aligned end.',
+        code: `<div auCluster gap="md" justify="between" class="filter-bar">
+  <div auCluster gap="sm">
+    <au-form-field label="Status">
+      <au-select [options]="statuses" [(value)]="status" />
+    </au-form-field>
+    <au-form-field label="Query">
+      <input auInputText [(value)]="query" />
+    </au-form-field>
+  </div>
+  <button auButton (click)="search()">Search</button>
+</div>`,
+        codeLanguage: 'html',
+        expandLabel: 'Show filter bar',
+      },
+      {
+        heading: 'Settings row',
+        body: 'Split for label + control columns; collapses on small viewports.',
+        code: `<div auSplit ratio="1:2" gap="lg">
+  <div auStack gap="xs">
+    <strong>Notifications</strong>
+    <span class="text-secondary">Email alerts for billing events.</span>
+  </div>
+  <div auCluster gap="sm" justify="end">
+    <button auSwitch [(checked)]="emailAlerts">Toggle</button>
+  </div>
+</div>`,
+        codeLanguage: 'html',
+        expandLabel: 'Show settings row',
+      },
+      {
+        heading: 'Dashboard card',
+        body: 'Card regions with stack + cluster footer actions.',
+        code: `<au-card variant="elevated" [interactive]="true">
+  <div auSection padding="lg">
+    <div auStack gap="sm">
+      <span auCardHeader>Revenue</span>
+      <span auCardBody>$24,500</span>
+      <au-badge variant="success">+12%</au-badge>
+    </div>
+  </div>
+  <div auCardFooter>
+    <div auCluster gap="sm" justify="end">
+      <button auButton variant="ghost">Details</button>
+      <button auButton>Export</button>
+    </div>
+  </div>
+</au-card>`,
+        codeLanguage: 'html',
+        expandLabel: 'Show dashboard card',
       },
     ],
   },

@@ -37,6 +37,16 @@ export const SEO_ES: DocsSeoMessages = {
     description:
       'Pila de overlays compartida para menú, popover, tooltip, listbox y pickers con checklist a11y.',
   },
+  guidesComposition: {
+    title: 'Composición — layout y theming Aurea',
+    description:
+      'Modelo en tres capas, directivas auStack/auCluster/auSplit/auSection, provideAurea() y contrato de overrides CSS.',
+  },
+  guidesRecipes: {
+    title: 'Recetas de composición — Aurea',
+    description:
+      'Barra de filtros, fila de ajustes y tarjeta de dashboard con primitivas Aurea.',
+  },
   guidesCrudDemo: {
     title: 'Demo CRUD de referencia — Aurea',
     description:

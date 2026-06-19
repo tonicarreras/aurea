@@ -55,5 +55,6 @@ export * from './lib/tabs';
 export * from './lib/tag-input';
 export * from './lib/textarea';
 export * from './lib/tooltip';
+export * from './lib/layout';
 export * from './lib/tokens';
 export { lockPageScroll, unlockPageScroll } from './lib/overlay/page-scroll-lock';

@@ -12,12 +12,18 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 ### Added
 
 - **Architecture docs** — [API_CONVENTIONS.md](./docs/API_CONVENTIONS.md) (native directives vs `au-*` widgets) and [FLOATING_UI.md](./docs/FLOATING_UI.md) (overlay platform + a11y checklist).
+- **Vocabulary & composition** — [API_VOCABULARY.md](./docs/API_VOCABULARY.md), [COMPOSITION.md](./docs/COMPOSITION.md), [COMPONENT_CSS_VARS.md](./docs/COMPONENT_CSS_VARS.md), [STYLE_CAPABILITIES.md](./docs/STYLE_CAPABILITIES.md).
 - **`au-table-data`** — headless sort/selection helpers exported from the table module; `AuTable` delegates to them.
-- **Docs site** — guides `/guides/api-conventions` and `/guides/floating-ui`; expanded signal-forms guide (nested fields).
+- **Layout directives** — `[auStack]`, `[auCluster]`, `[auSplit]`, `[auSection]` with internal gap/padding capabilities; styles in `aurea-global.css`.
+- **`provideAurea()`** — optional bootstrap override for semantic theme tokens (`actionPrimary`, radii, fonts).
+- **`auSpacingValue()`** — shared spacing resolver for layout inputs.
+- **Token contract tests** — `*.tokens.spec.ts` for button, card, and input-text.
+- **Docs site** — guides `/guides/api-conventions`, `/guides/floating-ui`, `/guides/composition`, `/guides/recipes`; expanded signal-forms guide (nested fields).
 
 ### Changed
 
 - **README** / **CONTRIBUTING** / **DESIGN.md** — document hybrid API conventions and link to floating UI guide.
+- **Button / native inputs** — base selectors use `:where()` for easier consumer overrides.
 
 ## [2.1.2] - 2026-06-19
 

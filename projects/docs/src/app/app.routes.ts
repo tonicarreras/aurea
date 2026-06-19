@@ -44,6 +44,17 @@ export const routes: Routes = [
         data: { docsLayout: 'reading' },
       },
       {
+        path: 'guides/composition',
+        loadComponent: () =>
+          import('./pages/guide-composition.page').then((m) => m.GuideCompositionPage),
+        data: { docsLayout: 'reading' },
+      },
+      {
+        path: 'guides/recipes',
+        loadComponent: () => import('./pages/guide-recipes.page').then((m) => m.GuideRecipesPage),
+        data: { docsLayout: 'reading' },
+      },
+      {
         path: 'guides/crud-demo',
         loadComponent: () =>
           import('./pages/guide-crud-demo.page').then((m) => m.GuideCrudDemoPage),

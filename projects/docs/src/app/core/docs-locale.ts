@@ -29,6 +29,8 @@ export const DOCS_ROUTES = {
   guidesSignalForms: 'guides/signal-forms',
   guidesApiConventions: 'guides/api-conventions',
   guidesFloatingUi: 'guides/floating-ui',
+  guidesComposition: 'guides/composition',
+  guidesRecipes: 'guides/recipes',
   guidesCrudDemo: 'guides/crud-demo',
   maturity: 'maturity',
   designTokens: 'design-tokens',

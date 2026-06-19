@@ -4,6 +4,7 @@
  */
 
 @import './au-utilities.css';
+@import './au-layout.css';
 @import './au-floating-panel.css';
 @import './au-native-text-field.css';
 @import './au-field-temporal-input.css';

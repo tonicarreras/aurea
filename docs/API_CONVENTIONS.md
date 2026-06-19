@@ -63,3 +63,12 @@ Menu, popover, tooltip, select listbox, and date/time pickers share overlay toke
 ## Contributors
 
 New components: pick native vs composite **before** naming. Document in Storybook overview + `component-maturity.ts`. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+## Further reading
+
+| Doc | Topic |
+| --- | ----- |
+| [API_VOCABULARY.md](./API_VOCABULARY.md) | Shared input names and primitive responsibilities |
+| [COMPOSITION.md](./COMPOSITION.md) | Three-layer composition (primitives / tokens / app CSS) |
+| [COMPONENT_CSS_VARS.md](./COMPONENT_CSS_VARS.md) | Public `--au-*` override contract |
+| [STYLE_CAPABILITIES.md](./STYLE_CAPABILITIES.md) | Internal layout capability architecture |
