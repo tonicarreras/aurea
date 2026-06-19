@@ -20,12 +20,16 @@
   margin: 0;
   box-sizing: border-box;
   border-radius: var(--au-radius-modal) var(--au-radius-modal) 0 0;
-  border-bottom: none;
   z-index: var(--au-z-modal);
   max-height: min(88dvh, 100dvh - env(safe-area-inset-top, 0px));
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-bottom: max(var(--au-space-3), env(safe-area-inset-bottom, 0px));
+  /* Opaque modal surface — floating-panel tokens are glassy for popovers/menus. */
+  background: var(--au-dialog-bg);
+  border: var(--au-dialog-border);
+  border-bottom: none;
+  box-shadow: var(--au-dialog-shadow);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   animation: au-floating-modal-panel-in var(--au-motion-modal);

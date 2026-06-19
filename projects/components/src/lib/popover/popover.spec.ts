@@ -182,10 +182,20 @@ describe('AuPopover', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;
     await fixture.whenStable();
-    const panel = document.body.querySelector('.au-popover__panel') as HTMLElement;
-    panel.dispatchEvent(new Event('scroll', { bubbles: true }));
+    const body = document.body.querySelector('.au-popover__body') as HTMLElement;
+    body.dispatchEvent(new Event('scroll', { bubbles: true }));
     await fixture.whenStable();
     expect(fixture.componentInstance.open).toBe(true);
+  });
+
+  it('sets floating arrow coordinates when portaled', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+    const panel = document.body.querySelector('.au-popover__panel') as HTMLElement;
+    expect(panel.classList.contains('au-floating-panel')).toBe(true);
+    expect(panel.classList.contains('au-tooltip__bubble--overlay')).toBe(true);
+    expect(panel.style.getPropertyValue('--au-floating-arrow-x')).not.toBe('');
   });
 
   it('moves focus into the panel when opened', async () => {

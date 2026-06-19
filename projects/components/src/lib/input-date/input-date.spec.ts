@@ -9,6 +9,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { AuDialog } from '../dialog/dialog';
 import { AuFormField } from '../form-field/form-field';
 import { AuInputDate } from './au-input-date.directive';
+import { AU_COARSE_POINTER_MQ } from '../field-temporal-native-guard';
 import {
   AuInputDateTestHost,
   applyFieldHarnessInputs,
@@ -40,6 +41,17 @@ class AuInputDateDialogTestHost {
 }
 
 describe('AuInputDate', () => {
+  function stubPointerPreference(coarse: boolean): void {
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) => ({
+        matches: query === AU_COARSE_POINTER_MQ ? coarse : false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })),
+    );
+  }
+
   function CONTROL(fixture: ComponentFixture<AuInputDateTestHost>) {
     return queryControl(fixture, AuInputDate);
   }
@@ -679,5 +691,90 @@ describe('AuInputDate', () => {
     expect(fix.componentInstance.open).toBe(true);
     fix.destroy();
     document.body.querySelectorAll('.au-date-calendar').forEach((el) => el.remove());
+  });
+
+  it('marks the native input read-only on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    expect(queryInput(fix).readOnly).toBe(true);
+  });
+
+  it('opens the calendar on touchstart without toggling closed on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    const dir = CONTROL(fix);
+    dir.onNativeTouchStart(new Event('touchstart', { cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
+    dir.onNativeTouchStart(new Event('touchstart', { cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
+  });
+
+  it('returns focus to the picker icon when the calendar dismisses on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const icon = fix.debugElement.query(By.css('.au-input-date__icon'))!
+      .nativeElement as HTMLButtonElement;
+    const focusSpy = vi.spyOn(icon, 'focus');
+    (CONTROL(fix) as unknown as { closePicker(): void }).closePicker();
+    await fix.whenStable();
+    expect(focusSpy).toHaveBeenCalled();
+    focusSpy.mockRestore();
+  });
+
+  it('opens calendar from the bound touchstart listener on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(new Event('touchstart', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
+  });
+
+  it('ignores bound touchstart on fine pointers', async () => {
+    stubPointerPreference(false);
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(new Event('touchstart', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-date-calendar')).toBeFalsy();
+  });
+
+  it('ignores bound touchstart when disabled or readOnly on coarse pointers', async () => {
+    stubPointerPreference(true);
+    for (const flag of ['disabled', 'readOnly'] as const) {
+      const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
+        f.componentInstance[flag] = true;
+      });
+      await fix.whenStable();
+      await fix.whenStable();
+      queryInput(fix).dispatchEvent(new Event('touchstart', { bubbles: true, cancelable: true }));
+      await fix.whenStable();
+      expect(document.body.querySelector('.au-date-calendar')).toBeFalsy();
+    }
+  });
+
+  it('focus() targets the picker icon on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    const icon = fix.debugElement.query(By.css('.au-input-date__icon'))!
+      .nativeElement as HTMLButtonElement;
+    const focusSpy = vi.spyOn(icon, 'focus');
+    CONTROL(fix).focus();
+    expect(focusSpy).toHaveBeenCalled();
+    focusSpy.mockRestore();
   });
 });

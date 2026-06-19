@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { describe, expect, it, vi } from 'vitest';
 import { AuInputTime } from './au-input-time.directive';
+import { AU_COARSE_POINTER_MQ } from '../field-temporal-native-guard';
 import {
   AuInputTimeTestHost,
   applyFieldHarnessInputs,
@@ -14,6 +15,17 @@ import {
 } from '../form-field/form-field.spec-hosts';
 
 describe('AuInputTime', () => {
+  function stubPointerPreference(coarse: boolean): void {
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) => ({
+        matches: query === AU_COARSE_POINTER_MQ ? coarse : false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })),
+    );
+  }
+
   function CONTROL(fixture: ComponentFixture<AuInputTimeTestHost>) {
     return queryControl(fixture, AuInputTime);
   }
@@ -600,5 +612,90 @@ describe('AuInputTime', () => {
     const input = queryInput(fix);
     document.createDocumentFragment().appendChild(input);
     expect(() => dir.ensurePickerChrome()).not.toThrow();
+  });
+
+  it('marks the native input read-only on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    expect(queryInput(fix).readOnly).toBe(true);
+  });
+
+  it('opens the time picker on touchstart without toggling closed on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    const dir = CONTROL(fix);
+    dir.onNativeTouchStart(new Event('touchstart', { cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+    dir.onNativeTouchStart(new Event('touchstart', { cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+  });
+
+  it('returns focus to the picker icon when the time picker dismisses on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    CONTROL(fix).onPickerIconClick(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    const icon = fix.debugElement.query(By.css('.au-input-time__icon'))!
+      .nativeElement as HTMLButtonElement;
+    const focusSpy = vi.spyOn(icon, 'focus');
+    (CONTROL(fix) as unknown as { closePicker(): void }).closePicker();
+    await fix.whenStable();
+    expect(focusSpy).toHaveBeenCalled();
+    focusSpy.mockRestore();
+  });
+
+  it('opens the time picker from the bound touchstart listener on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(new Event('touchstart', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeTruthy();
+  });
+
+  it('ignores bound touchstart on fine pointers', async () => {
+    stubPointerPreference(false);
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    queryInput(fix).dispatchEvent(new Event('touchstart', { bubbles: true, cancelable: true }));
+    await fix.whenStable();
+    expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
+  });
+
+  it('ignores bound touchstart when disabled or readOnly on coarse pointers', async () => {
+    stubPointerPreference(true);
+    for (const flag of ['disabled', 'readOnly'] as const) {
+      const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' }, (f) => {
+        f.componentInstance[flag] = true;
+      });
+      await fix.whenStable();
+      await fix.whenStable();
+      queryInput(fix).dispatchEvent(new Event('touchstart', { bubbles: true, cancelable: true }));
+      await fix.whenStable();
+      expect(document.body.querySelector('.au-time-picker')).toBeFalsy();
+    }
+  });
+
+  it('focus() targets the picker icon on coarse pointers', async () => {
+    stubPointerPreference(true);
+    const fix = createFieldFixture(AuInputTimeTestHost, { label: 'D' });
+    await fix.whenStable();
+    await fix.whenStable();
+    const icon = fix.debugElement.query(By.css('.au-input-time__icon'))!
+      .nativeElement as HTMLButtonElement;
+    const focusSpy = vi.spyOn(icon, 'focus');
+    CONTROL(fix).focus();
+    expect(focusSpy).toHaveBeenCalled();
+    focusSpy.mockRestore();
   });
 });
