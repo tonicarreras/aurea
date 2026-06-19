@@ -1,7 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  afterRenderEffect,
+  DestroyRef,
+  effect,
   computed,
   inject,
   input,
@@ -52,6 +53,7 @@ export class AuTagInput implements FormValueControl<string[]> {
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = injectHostRef<HTMLElement>();
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly draft = signal('');
   protected readonly fieldFocusByTab = signal(false);
 
@@ -80,7 +82,7 @@ export class AuTagInput implements FormValueControl<string[]> {
   });
 
   constructor() {
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),

@@ -90,6 +90,8 @@ describe('library barrel exports', () => {
     expect(table.AuTable).toBeDefined();
     expect(table.AuTableColumn).toBeDefined();
     expect(table.AuTableCellDef).toBeDefined();
+    expect(table.toggleTableSortState).toBeDefined();
+    expect(table.resolveTableViewRows).toBeDefined();
     expect(tabs.AuTabs).toBeDefined();
     expect(tabs.AuTab).toBeDefined();
     expect(tabs.AuTabPanel).toBeDefined();

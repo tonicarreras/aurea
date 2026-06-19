@@ -30,7 +30,9 @@ function applyDocsLocaleFromGlobals(globals: Record<string, unknown>): void {
 
 /**
  * a11y (addon 10): use `parameters.a11y` only.
- * @see https://storybook.js.org/docs/writing-tests/accessibility-testing
+ * Zoneless: `experimentalZoneless: true` in angular.json — Storybook adds
+ * `provideZonelessChangeDetection()` at bootstrap (no zone.js).
+ * @see https://storybook.js.org/docs/get-started/frameworks/angular
  */
 const preview: Preview = {
   globalTypes: {

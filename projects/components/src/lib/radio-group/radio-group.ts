@@ -1,7 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  afterRenderEffect,
+  DestroyRef,
+  effect,
   computed,
   inject,
   input,
@@ -49,6 +50,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = injectHostRef<HTMLElement>();
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -90,7 +92,7 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   });
 
   constructor() {
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),

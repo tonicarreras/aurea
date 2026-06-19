@@ -110,6 +110,9 @@ export interface DocsMessages {
     brandHeading: string;
     brandBody: string;
     brandExpand: string;
+    provideAureaHeading: string;
+    provideAureaBody: string;
+    provideAureaExpand: string;
     brandExampleHeading: string;
     brandExampleBody: string;
     brandExampleToggleLabel: string;

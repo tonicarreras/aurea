@@ -4,6 +4,7 @@
  */
 
 @import './au-utilities.css';
+@import './au-layout.css';
 @import './au-floating-panel.css';
 @import './au-native-text-field.css';
 @import './au-field-temporal-input.css';
@@ -18,6 +19,13 @@
 @import '../switch/switch.css';
 @import '../button/button.css';
 @import '../link/link.css';
+
+@import '../card/card.css';
+@import '../table/table.css';
+@import '../tabs/tabs.css';
+@import '../steps/steps.css';
+@import '../dialog/dialog.css';
+@import '../drawer/drawer.css';
 
 @import './au-field-chrome.css';
 @import '../overlay/au-floating-panel-responsive-modal.css';

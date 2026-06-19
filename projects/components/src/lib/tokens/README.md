@@ -31,6 +31,7 @@ Import order in `au-tokens.css`: primitives → semantic → roles → domain �
 
 - Themes: `data-au-theme="light" | "dark" | "high-contrast" | "high-contrast-dark"`
 - Density: `data-au-density="compact" | "comfortable" | "spacious"`
+- **Runtime brand (optional):** `provideAurea({ theme })` from the package — see [COMPONENT_CSS_VARS.md](../../../../docs/COMPONENT_CSS_VARS.md) and docs `/guides/composition`.
 
 ## Design tool sync
 

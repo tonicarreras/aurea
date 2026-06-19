@@ -61,7 +61,7 @@ export const MESSAGES_ES: DocsMessages = {
     ],
     systemTitle: 'Arquitectura',
     systemLead:
-      'Cinco capas en <code>au-tokens.css</code>: primitivos (internos) → semánticos → roles → dominio → alto contraste; el CSS de componente mapea roles a la UI.',
+      'Cinco capas en <code>au-tokens.css</code>: primitivos (internos) → semánticos → roles → dominio → alto contraste; el CSS de componente mapea roles a la UI. Directivas de layout y <code>provideAurea()</code> están en Composición.',
     systemPoints: [
       'Notas de accesibilidad y teclado en la documentación de cada componente',
       'Signal forms con <code>formField</code> de Angular 22',
@@ -94,7 +94,7 @@ export const MESSAGES_ES: DocsMessages = {
       tokens: {
         title: 'Estilos globales',
         intro:
-          'Importa <code>au-tokens.css</code> (variables) y <code>aurea-global.css</code> (cromado de campos, listbox, description list, shells proyectados del acordeón) en angular.json o tu hoja global. Cada componente aporta su <code>styleUrl</code> al importarlo — no dupliques CSS de componente en tu app.',
+          'Importa <code>au-tokens.css</code> (variables) y <code>aurea-global.css</code> (cromado de campos, directivas de layout <code>[auStack]</code> / <code>[auCluster]</code> / …, listbox, description list, shells proyectados del acordeón) en angular.json o tu hoja global. Cada componente aporta su <code>styleUrl</code> al importarlo — no dupliques CSS de componente en tu app.',
         expand: 'Ver imports CSS',
       },
       firstComponent: { title: 'Primer componente', expand: 'Ver ejemplo Angular' },
@@ -112,7 +112,7 @@ export const MESSAGES_ES: DocsMessages = {
         crudCardCta: 'Abrir demo CRUD',
         adoptionCardTitle: 'Guía de adopción',
         adoptionCardLead:
-          'Signal forms, accesibilidad y convenciones para integrar el sistema en tu app.',
+          'Índice de guías: convenciones de API, floating UI, composición, recetas, signal forms y temas.',
         adoptionCardCta: 'Leer la guía',
       },
     },
@@ -128,7 +128,7 @@ export const MESSAGES_ES: DocsMessages = {
     attrExpand: 'Ver HTML',
     globalStylesHeading: 'aurea-global.css',
     globalStylesBody:
-      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. CSS transversal: utilidades, chrome de paneles flotantes, primitivos de campo nativos, cromado/errores de campos, listbox en portal (acople flush con <code>--au-field-listbox-gap</code>), description list y acordeón proyectado. Los tokens de dominio en <code>[data-au-theme]</code> hacen que overlays portaled hereden el tema del ancla. Hosts en portal como <code>au-snackbar</code> siguen enviando CSS en el bundle del componente. Criterio: <code>projects/components/src/lib/styles/README.md</code>.',
+      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. CSS transversal: utilidades, directivas de layout (<code>auStack</code>, <code>auCluster</code>, <code>auSplit</code>, <code>auSection</code>), chrome de paneles flotantes, primitivos de campo nativos, cromado/errores de campos, listbox en portal (acople flush con <code>--au-field-listbox-gap</code>), description list y acordeón proyectado. Los tokens de dominio en <code>[data-au-theme]</code> hacen que overlays portaled hereden el tema del ancla. Hosts en portal como <code>au-snackbar</code> siguen enviando CSS en el bundle del componente. Criterio: <code>projects/components/src/lib/styles/README.md</code>.',
     globalStylesExpand: 'Ver imports CSS globales',
     directiveHeading: 'Directiva AuTheme',
     directiveBody:
@@ -157,8 +157,12 @@ export const MESSAGES_ES: DocsMessages = {
     highContrastExpand: 'Ver HTML alto contraste',
     brandHeading: 'Personalizar marca',
     brandBody:
-      'Crea una hoja de estilos pequeña cargada <strong>después</strong> de <code>au-tokens.css</code>. Sobrescribe tokens semánticos en <code>:root</code> y por tema — sin fork de la librería.',
+      'Crea una hoja de estilos pequeña cargada <strong>después</strong> de <code>au-tokens.css</code>. Sobrescribe tokens semánticos en <code>:root</code> y por tema — sin fork de la librería. Alternativa: <code>provideAurea({ theme })</code> en bootstrap (ver snippet).',
     brandExpand: 'Ver CSS de marca',
+    provideAureaHeading: 'provideAurea() (runtime)',
+    provideAureaBody:
+      'Escribe variables semánticas en <code>:root</code> en el navegador. Complementa <code>[auTheme]</code> para claro/oscuro/HC.',
+    provideAureaExpand: 'Ver provideAurea()',
     brandExampleHeading: 'Ejemplo de marca personalizada',
     brandExampleBody:
       'Por defecto se muestra la <strong>marca personalizada</strong> (naranja coral). Usa el conmutador para comparar con Aurea por defecto — el mismo patrón que un <code>theme-brand.css</code> global cargado después de <code>au-tokens.css</code>. Cambia claro/oscuro en la vista previa de arriba para ver ambas paletas.',

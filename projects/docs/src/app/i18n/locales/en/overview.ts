@@ -1280,6 +1280,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Row selection: `selectionMode` (`none` | `single` | `multiple`) with `[(selection)]`, header select-all (multiple), and row click — checkboxes use `input[type=checkbox][auCheckbox]`.',
       'Custom cells: `ng-template[auTableCell] let-row` inside a column for badges, menus, or actions.',
       'Empty data: project `au-empty-state` as a child (use `size="sm"` and `headingLevel="3"`); otherwise `emptyMessage` is shown.',
+      'Headless helpers in `au-table-data` (`sortTableRows`, `toggleTableSortState`, selection helpers) for custom grids without forking `au-table`.',
     ],
     whenToUse: {
       title: 'When to use',
@@ -1332,7 +1333,54 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Tab to sort buttons; Enter/Space toggles sort cycle.',
       'Tab to row checkboxes; Space toggles selection. Row click also toggles when selection is enabled.',
     ],
-    relatedExports: ['AuTable', 'AuTableColumn', 'AuTableCellDef', 'AuEmptyState'],
+    relatedExports: [
+      'AuTable',
+      'AuTableColumn',
+      'AuTableCellDef',
+      'AuEmptyState',
+      'resolveTableViewRows',
+      'toggleTableSortState',
+      'nextTableRowSelection',
+    ],
+  },
+  layout: {
+    intro: [
+      'Token-driven layout directives shipped in `aurea-global.css`: vertical stack, inline cluster, two-column split, and padded section blocks.',
+      'Use `gap` / `padding` inputs with the shared spacing scale (`none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`). Override with `--au-stack-gap`, `--au-cluster-gap`, `--au-split-ratio`, `--au-section-padding` on the host.',
+      'Compose with `au-card`, `au-form-field`, and native controls — see docs `/guides/recipes`.',
+    ],
+    whenToUse: {
+      title: 'When to use',
+      items: [
+        'Form sections, card bodies, and settings rows without ad-hoc flex CSS.',
+        'Toolbars and filter bars (`auCluster`).',
+        'Label + control columns that collapse on small viewports (`auSplit`).',
+      ],
+    },
+    whenNotToUse: {
+      title: 'Alternatives',
+      items: [
+        'Page-level max-width and marketing geometry → application CSS.',
+        'Data grids → `au-table`, not layout directives.',
+      ],
+    },
+    anatomy: [
+      {
+        region: '[auStack]',
+        detail: 'Flex column; `align`, `justify`, optional `separator` between children.',
+      },
+      { region: '[auCluster]', detail: 'Flex row wrap; inline toolbars and chip rows.' },
+      {
+        region: '[auSplit]',
+        detail: 'Two-column grid; `ratio` presets and `collapse` breakpoint.',
+      },
+      { region: '[auSection]', detail: 'Padded region; optional `divider` on top/bottom/both.' },
+    ],
+    accessibility: [
+      'Layout directives are presentational; preserve heading order and labels on interactive children.',
+      'Do not use layout wrappers as click targets — use `button[auButton]` or links inside.',
+    ],
+    relatedExports: ['AuStack', 'AuCluster', 'AuSplit', 'AuSection', 'auSpacingValue'],
   },
   tooltip: {
     intro: [

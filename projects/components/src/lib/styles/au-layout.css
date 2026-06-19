@@ -1,0 +1,6 @@
+/**
+ * Layout primitives — flex/grid grammar with token-driven gap and padding.
+ * Import CSS via aurea-global.css (au-layout.css).
+ */
+
+@import './au-layout-primitives.css';

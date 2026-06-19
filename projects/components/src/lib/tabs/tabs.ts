@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewEncapsulation,
-  computed,
-  input,
-  model,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
 import { AuTab } from './au-tab.directive';
 
 export type AuTabsVariant = 'line' | 'contained';
@@ -35,8 +27,6 @@ export type AuTabsSize = 'sm' | 'md' | 'lg';
 @Component({
   selector: 'au-tabs',
   templateUrl: './tabs.html',
-  styleUrl: './tabs.css',
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'au-tabs',

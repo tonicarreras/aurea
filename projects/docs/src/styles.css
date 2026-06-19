@@ -183,7 +183,26 @@ pre {
   font-size: var(--au-text-sm);
 }
 
-:focus-visible {
+/* Docs chrome only — Aurea controls define focus rings in aurea-global.css */
+:focus-visible:not(
+  :is(
+    input[class*='au-'],
+    textarea[class*='au-'],
+    button[class*='au-'],
+    .au-checkbox__element,
+    .au-select__trigger,
+    .au-autocomplete__input,
+    .au-tag-input__input,
+    .au-slider__input,
+    .au-radio-group__input,
+    .au-chip__surface,
+    .au-chip__remove,
+    .au-tabs__tab,
+    .au-steps__step,
+    .au-accordion__trigger,
+    a.au-link
+  )
+) {
   outline: 2px solid var(--au-color-focus-ring);
   outline-offset: 2px;
 }

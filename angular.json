@@ -29,7 +29,8 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/components/tsconfig.spec.json"
+            "tsConfig": "projects/components/tsconfig.spec.json",
+            "providersFile": "projects/components/src/test-providers.ts"
           },
           "configurations": {
             "coverage": {
@@ -63,7 +64,8 @@
             "browserTarget": "components:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "projects/components"],
-            "port": 6006
+            "port": 6006,
+            "experimentalZoneless": true
           }
         },
         "build-storybook": {
@@ -73,7 +75,8 @@
             "browserTarget": "components:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "projects/components"],
-            "outputDir": "storybook-static"
+            "outputDir": "storybook-static",
+            "experimentalZoneless": true
           }
         },
         "lint": {

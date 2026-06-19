@@ -1,6 +1,7 @@
 import {
   Directive,
   Renderer2,
+  effect,
   afterRenderEffect,
   computed,
   inject,
@@ -74,7 +75,7 @@ export class AuCheckbox {
   private focusInUnlisten: (() => void) | null = null;
   private focusOutUnlisten: (() => void) | null = null;
 
-  private readonly syncIndeterminate = afterRenderEffect(() => {
+  private readonly syncIndeterminate = effect(() => {
     this.host.nativeElement.indeterminate = this.indeterminate();
   });
 
@@ -111,7 +112,7 @@ export class AuCheckbox {
   });
 
   constructor() {
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),
