@@ -5,6 +5,7 @@ import {
   DestroyRef,
   PLATFORM_ID,
   Renderer2,
+  effect,
   afterRenderEffect,
   computed,
   inject,
@@ -88,6 +89,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   protected readonly formField = inject(AU_FORM_FIELD);
   private readonly host = injectHostRef<HTMLElement>();
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly fieldFocusByTab = signal(false);
   protected readonly panelOpen = signal(false);
   protected readonly query = signal('');
@@ -99,7 +101,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     this.document,
     inject(Renderer2),
     inject(PLATFORM_ID),
-    inject(DestroyRef),
+    this.destroyRef,
   );
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -124,7 +126,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   });
 
   constructor() {
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),

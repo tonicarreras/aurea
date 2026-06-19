@@ -1,5 +1,5 @@
 {
-  "raw": 784106,
-  "gzip": 113619,
-  "note": "2.1.2 baseline (layout directives auStack/Cluster/Split/Section, gap/padding capabilities, provideAurea, auSpacingValue). Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
+  "raw": 736169,
+  "gzip": 108546,
+  "note": "2.1.2 baseline after emulated encapsulation (shell CSS in aurea-global only). Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
 }

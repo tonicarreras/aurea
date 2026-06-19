@@ -1,7 +1,6 @@
 /**
  * Dialog — modal panel aligned with au-card surface and spacing.
- * ViewEncapsulation.None: host tokens and ::backdrop on native <dialog>.
- * Styles target `.au-dialog__native` so portaling the dialog to `document.body` keeps chrome.
+ * Bundled via `aurea-global.entry.css`: host tokens, ::backdrop, portaled `.au-dialog__native`.
  */
 
 au-dialog {

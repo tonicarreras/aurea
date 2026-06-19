@@ -89,7 +89,7 @@ export interface FormFieldControlSyncState {
   usesLegend?: () => boolean;
 }
 
-/** Callback for `afterRenderEffect` in the control constructor (must run in injection context). */
+/** Callback for `effect()` in the control constructor (must run in injection context). */
 export function syncFormFieldControlState(
   formField: AuFormFieldContext,
   state: FormFieldControlSyncState,

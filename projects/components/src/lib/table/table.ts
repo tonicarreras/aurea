@@ -1,13 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewEncapsulation,
-  computed,
-  input,
-  model,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
 
 import { AuCheckbox } from '../checkbox/au-checkbox.directive';
 import { AuIcon } from '../icon/icon';
@@ -65,9 +57,7 @@ export {
 @Component({
   selector: 'au-table',
   templateUrl: './table.html',
-  styleUrl: './table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   imports: [AuCheckbox, AuIcon, AuSpinner, NgTemplateOutlet],
   host: {
     class: 'au-table',

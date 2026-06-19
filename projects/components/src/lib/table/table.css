@@ -1,6 +1,6 @@
 /**
  * Table — data grid with column definitions and optional client sort.
- * ViewEncapsulation.None: host token overrides on au-table.
+ * Bundled via `aurea-global.entry.css` (host token overrides on `au-table`).
  */
 
 au-table {

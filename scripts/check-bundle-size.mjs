@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * Fails when the library FESM bundle exceeds baseline by more than maxIncreaseRatio (default 5%).
+ * CI: `.github/workflows/test.yml` runs `bun run check:bundle` after `build:components`.
  * Usage: bun run build:components && node scripts/check-bundle-size.mjs
  */
 import { readFileSync, statSync } from 'node:fs';

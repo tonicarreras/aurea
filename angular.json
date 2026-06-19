@@ -29,7 +29,8 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/components/tsconfig.spec.json"
+            "tsConfig": "projects/components/tsconfig.spec.json",
+            "providersFile": "projects/components/src/test-providers.ts"
           },
           "configurations": {
             "coverage": {

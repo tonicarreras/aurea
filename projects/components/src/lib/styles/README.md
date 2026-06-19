@@ -42,6 +42,7 @@ Token architecture: see `tokens/README.md` (primitives → semantic → roles �
 | `au-native-text-field.css`               | Shared rules for `input.au-input-text` / `input.au-input-number`                                                            |
 | `au-field-temporal-input.css`            | Date/time anchor, icon, picker chrome                                                                                       |
 | `input-text.css` … `link.css`            | Native directive styles re-exported from `src/lib/*`                                                                        |
+| `card.css` … `drawer.css`                | Shell components with projected/portaled DOM (`au-card`, `au-table`, `au-tabs`, `au-steps`, `au-dialog`, `au-drawer`)       |
 | `au-field-chrome.css`                    | Field shells for native hosts + select/autocomplete/tag-input                                                               |
 | `au-floating-panel-responsive-modal.css` | Responsive sheet behavior for portaled pickers                                                                              |
 | `au-field-error.css`                     | Shared error glyph layout                                                                                                   |
@@ -79,7 +80,7 @@ Do **not** add a global file for a single control whose template and host are fu
 - Field **chrome** (border, label row, focus on `.au-*__control-row`) lives in `au-field-chrome.css`; the component CSS only styles the inner native control.
 - Flat surfaces: `--au-chrome-border` + `--au-elevation-flat`; focus `--au-focus-inset` (pointer) or `--au-focus-tab` (Tab).
 - Buttons: `--au-elevation-tactile`; focus `--au-focus-tactile` (pointer) or `--au-focus-tab` (Tab).
-- **`ViewEncapsulation.None`** only when documented and unavoidable (e.g. `au-table` token surface). Prefer splitting child components/directives instead.
+- Shell components with projected or portaled DOM (`au-card`, `au-table`, `au-tabs`, `au-steps`, `au-dialog`, `au-drawer`) ship CSS via `aurea-global.entry.css` and use default emulated encapsulation (no component `styleUrl`).
 
 ## Portals and overlays
 

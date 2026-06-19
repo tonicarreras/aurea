@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   afterRenderEffect,
   computed,
   input,
@@ -84,7 +85,7 @@ export class AuFileUpload implements FormValueControl<File[]> {
   readonly resolvedAccept = computed(() => this.accept().trim() || null);
 
   constructor() {
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),

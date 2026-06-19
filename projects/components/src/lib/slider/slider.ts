@@ -1,8 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  effect,
   afterRenderEffect,
   computed,
+  inject,
   input,
   model,
   output,
@@ -58,6 +61,7 @@ export class AuSlider implements FormValueControl<number> {
 
   protected readonly formField = injectAuFormField();
   private readonly host = injectHostRef<HTMLElement>();
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly fieldFocusByTab = signal(false);
 
   readonly controlId = computed(() => this.formField.controlId());
@@ -89,7 +93,7 @@ export class AuSlider implements FormValueControl<number> {
   });
 
   constructor() {
-    afterRenderEffect(
+    effect(
       syncFormFieldControlState(this.formField, {
         displayError: () => this.displayError(),
         effectiveInvalid: () => this.effectiveInvalid(),
