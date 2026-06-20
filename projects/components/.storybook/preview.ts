@@ -9,10 +9,26 @@ import {
 
 setCompodocJson(docJson);
 
+type AuAppearanceTheme = 'light' | 'dark';
+type AuResolvedTheme = AuAppearanceTheme | 'high-contrast' | 'high-contrast-dark';
+
+function resolveAuPreviewTheme(
+  appearance: AuAppearanceTheme,
+  highContrast: boolean,
+): AuResolvedTheme {
+  if (!highContrast) {
+    return appearance;
+  }
+  return appearance === 'dark' ? 'high-contrast-dark' : 'high-contrast';
+}
+
 function applyAuThemeFromGlobals(globals: Record<string, unknown>): void {
-  const raw = globals['auTheme'];
-  const theme = raw === 'dark' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-au-theme', theme);
+  const appearance: AuAppearanceTheme = globals['auTheme'] === 'dark' ? 'dark' : 'light';
+  const highContrast = globals['auHighContrast'] === 'on';
+  document.documentElement.setAttribute(
+    'data-au-theme',
+    resolveAuPreviewTheme(appearance, highContrast),
+  );
 }
 
 function applyAuDensityFromGlobals(globals: Record<string, unknown>): void {
@@ -63,6 +79,20 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    auHighContrast: {
+      description:
+        'WCAG AAA (`high-contrast` / `high-contrast-dark` según apariencia clara u oscura)',
+      defaultValue: 'off',
+      toolbar: {
+        title: 'Alto contraste',
+        icon: 'accessibility',
+        items: [
+          { value: 'off', title: 'Normal', icon: 'circlehollow' },
+          { value: 'on', title: 'WCAG AAA', icon: 'accessibility' },
+        ],
+        dynamicTitle: true,
+      },
+    },
     docsLocale: {
       description: 'Idioma de Autodocs (overview desde la documentación)',
       defaultValue: 'en',
@@ -80,6 +110,7 @@ const preview: Preview = {
   initialGlobals: {
     auTheme: 'light',
     auDensity: 'comfortable',
+    auHighContrast: 'off',
     docsLocale: 'en',
   },
   decorators: [

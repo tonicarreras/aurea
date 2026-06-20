@@ -3658,7 +3658,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auHighContrast: {\n      description:\n        'WCAG AAA (`high-contrast` / `high-contrast-dark` según apariencia clara u oscura)',\n      defaultValue: 'off',\n      toolbar: {\n        title: 'Alto contraste',\n        icon: 'accessibility',\n        items: [\n          { value: 'off', title: 'Normal', icon: 'circlehollow' },\n          { value: 'on', title: 'WCAG AAA', icon: 'accessibility' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    auHighContrast: 'off',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                 "rawdescription": "a11y (addon 10): use `parameters.a11y` only.\nZoneless: `experimentalZoneless: true` in angular.json — Storybook adds\n`provideZonelessChangeDetection()` at bootstrap (no zone.js).",
                 "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.\nZoneless: <code>experimentalZoneless: true</code> in angular.json — Storybook adds\n<code>provideZonelessChangeDetection()</code> at bootstrap (no zone.js).</p>\n"
             },
@@ -5027,6 +5027,50 @@
                 ]
             },
             {
+                "name": "resolveAuPreviewTheme",
+                "file": "projects/components/.storybook/preview.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "appearance",
+                        "type": "AuAppearanceTheme",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "highContrast",
+                        "type": "boolean",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "AuResolvedTheme",
+                "jsdoctags": [
+                    {
+                        "name": "appearance",
+                        "type": "AuAppearanceTheme",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "highContrast",
+                        "type": "boolean",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "snackbarStory",
                 "file": "projects/components/src/lib/snackbar/snackbar.stories.ts",
                 "ctype": "miscellaneous",
@@ -5104,6 +5148,28 @@
             }
         ],
         "typealiases": [
+            {
+                "name": "AuAppearanceTheme",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"light\" | \"dark\"",
+                "file": "projects/components/.storybook/preview.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "AuResolvedTheme",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "AuAppearanceTheme | \"high-contrast\" | \"high-contrast-dark\"",
+                "file": "projects/components/.storybook/preview.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
             {
                 "name": "InputTextType",
                 "ctype": "miscellaneous",
@@ -8453,7 +8519,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
+                    "defaultValue": "{\n  globalTypes: {\n    auTheme: {\n      description: 'Tema semántico Aurea (`data-au-theme` en el documento)',\n      defaultValue: 'light',\n      toolbar: {\n        title: 'Tema',\n        icon: 'contrast',\n        items: [\n          { value: 'light', title: 'Claro', icon: 'sun' },\n          { value: 'dark', title: 'Oscuro', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auDensity: {\n      description: 'Densidad visual (`data-au-density` en el documento)',\n      defaultValue: 'comfortable',\n      toolbar: {\n        title: 'Densidad',\n        icon: 'grow',\n        items: [\n          { value: 'compact', title: 'Compacta', icon: 'circlehollow' },\n          { value: 'comfortable', title: 'Cómoda', icon: 'circle' },\n          { value: 'spacious', title: 'Espaciosa', icon: 'grid' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    auHighContrast: {\n      description:\n        'WCAG AAA (`high-contrast` / `high-contrast-dark` según apariencia clara u oscura)',\n      defaultValue: 'off',\n      toolbar: {\n        title: 'Alto contraste',\n        icon: 'accessibility',\n        items: [\n          { value: 'off', title: 'Normal', icon: 'circlehollow' },\n          { value: 'on', title: 'WCAG AAA', icon: 'accessibility' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    docsLocale: {\n      description: 'Idioma de Autodocs (overview desde la documentación)',\n      defaultValue: 'en',\n      toolbar: {\n        title: 'Docs',\n        icon: 'globe',\n        items: [\n          { value: 'en', title: 'English' },\n          { value: 'es', title: 'Español' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n  },\n  initialGlobals: {\n    auTheme: 'light',\n    auDensity: 'comfortable',\n    auHighContrast: 'off',\n    docsLocale: 'en',\n  },\n  decorators: [\n    (storyFn, context) => {\n      const globals = context.globals as Record<string, unknown>;\n      applyAuThemeFromGlobals(globals);\n      applyAuDensityFromGlobals(globals);\n      applyDocsLocaleFromGlobals(globals);\n      return storyFn();\n    },\n  ],\n  parameters: {\n    /* Canvas: top-left + padding. Do not override with `centered` in stories. */\n    layout: 'padded',\n    docs: {\n      toc: true,\n      /* Static/Netlify build minifies class names — Compodoc lookup via component.name breaks. */\n      extractArgTypes: () => ({}),\n      extractComponentDescription: () => null,\n    },\n    a11y: {\n      /* Fail test-runner / CI when axe finds violations (full report in logs). */\n      test: 'error',\n      /* Avoid re-running axe on every keystroke/arg: the a11y panel runs when you click Run. */\n      manual: true,\n      config: {\n        rules: [],\n      },\n    },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}",
                     "rawdescription": "a11y (addon 10): use `parameters.a11y` only.\nZoneless: `experimentalZoneless: true` in angular.json — Storybook adds\n`provideZonelessChangeDetection()` at bootstrap (no zone.js).",
                     "description": "<p>a11y (addon 10): use <code>parameters.a11y</code> only.\nZoneless: <code>experimentalZoneless: true</code> in angular.json — Storybook adds\n<code>provideZonelessChangeDetection()</code> at bootstrap (no zone.js).</p>\n"
                 }
@@ -8540,6 +8606,50 @@
                         {
                             "name": "globals",
                             "type": "Record",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "resolveAuPreviewTheme",
+                    "file": "projects/components/.storybook/preview.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "appearance",
+                            "type": "AuAppearanceTheme",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "highContrast",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "AuResolvedTheme",
+                    "jsdoctags": [
+                        {
+                            "name": "appearance",
+                            "type": "AuAppearanceTheme",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "highContrast",
+                            "type": "boolean",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -8937,6 +9047,30 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "projects/components/.storybook/preview.ts": [
+                {
+                    "name": "AuAppearanceTheme",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"light\" | \"dark\"",
+                    "file": "projects/components/.storybook/preview.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "AuResolvedTheme",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "AuAppearanceTheme | \"high-contrast\" | \"high-contrast-dark\"",
+                    "file": "projects/components/.storybook/preview.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                }
+            ],
             "projects/components/src/lib/input-text/input-text.stories.ts": [
                 {
                     "name": "InputTextType",
@@ -9621,6 +9755,16 @@
             },
             {
                 "filePath": "projects/components/.storybook/preview.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "resolveAuPreviewTheme",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/.storybook/preview.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -9628,6 +9772,26 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "projects/components/.storybook/preview.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "AuAppearanceTheme",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/.storybook/preview.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "AuResolvedTheme",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "projects/components/src/lib/accordion/accordion.stories.ts",

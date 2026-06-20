@@ -7,7 +7,6 @@
 @import './au-layout.css';
 @import './au-floating-panel.css';
 @import './au-native-text-field.css';
-@import './au-field-temporal-input.css';
 
 @import '../input-text/input-text.css';
 @import '../textarea/textarea.css';
@@ -28,6 +27,7 @@
 @import '../drawer/drawer.css';
 
 @import './au-field-chrome.css';
+@import './au-field-temporal-input.css';
 @import '../overlay/au-floating-panel-responsive-modal.css';
 @import './au-field-error.css';
 @import './au-field-listbox.css';

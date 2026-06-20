@@ -114,18 +114,18 @@
     input.au-input-text.au-input-text--from-tab:focus,
     textarea.au-textarea.au-textarea--from-tab:focus,
     input.au-input-number.au-input-number--from-tab:focus,
-    input.au-input-date.au-input-date--from-tab:focus,
-    input.au-input-time.au-input-time--from-tab:focus,
-    input.au-input-password.au-input-password--from-tab:focus
+    input.au-input-password.au-input-password--from-tab:focus,
+    .au-input-date__anchor:has(input.au-input-date.au-input-date--from-tab:focus),
+    .au-input-time__anchor:has(input.au-input-time.au-input-time--from-tab:focus)
   ),
 [data-au-theme='high-contrast-dark']
   :is(
     input.au-input-text.au-input-text--from-tab:focus,
     textarea.au-textarea.au-textarea--from-tab:focus,
     input.au-input-number.au-input-number--from-tab:focus,
-    input.au-input-date.au-input-date--from-tab:focus,
-    input.au-input-time.au-input-time--from-tab:focus,
-    input.au-input-password.au-input-password--from-tab:focus
+    input.au-input-password.au-input-password--from-tab:focus,
+    .au-input-date__anchor:has(input.au-input-date.au-input-date--from-tab:focus),
+    .au-input-time__anchor:has(input.au-input-time.au-input-time--from-tab:focus)
   ) {
   outline-width: 3px;
   outline-offset: 2px;
