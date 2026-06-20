@@ -89,7 +89,7 @@ Required before marking **stable** in `component-maturity.ts`:
 - **Zoneless:** `experimentalZoneless: true` in `angular.json` (`storybook` / `build-storybook`); Storybook injects `provideZonelessChangeDetection()` — no `zone.js` polyfill.
 - Interaction tests: `play` with `storybook/test`; CI via `bun run test-storybook:ci`.
 - axe-core runs on **stable** stories only (`stable-story-ids.ts`).
-- Theme toolbar sets `data-au-theme` on `document.documentElement`.
+- Theme toolbar sets `data-au-theme` on `document.documentElement` (claro/oscuro + toggle alto contraste → `high-contrast` / `high-contrast-dark`).
 
 ## Code style
 
@@ -123,7 +123,7 @@ Required before marking **stable** in `component-maturity.ts`:
 - **Zoneless:** `experimentalZoneless: true` in `angular.json` (`storybook` / `build-storybook`); Storybook injects `provideZonelessChangeDetection()` — no `zone.js` polyfill.
 - Interaction tests: `play` with `storybook/test`; CI via `bun run test-storybook:ci`.
 - axe-core runs on **stable** stories only (`stable-story-ids.ts`).
-- Theme toolbar sets `data-au-theme` on `document.documentElement`.
+- Theme toolbar sets `data-au-theme` on `document.documentElement` (claro/oscuro + toggle alto contraste → `high-contrast` / `high-contrast-dark`).
 - Signal forms: document in [components README](./projects/components/README.md#signal-forms-angular-21); no separate “Signal form” story files (`form()` needs injection context).
 - Custom `render` stories: Compodoc extraction disabled in `preview.ts` — add `parameters.docs.description.component` manually when needed.
 
