@@ -1,5 +1,5 @@
 {
-  "raw": 736169,
-  "gzip": 108546,
-  "note": "2.1.2 baseline after emulated encapsulation (shell CSS in aurea-global only). Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
+  "raw": 773336,
+  "gzip": 113957,
+  "note": "2.1.2+ baseline after layout primitives, form[auForm], app-shell, capabilities, and table headless utils. Measured from dist/components/fesm2022/aurea-design-system-components.mjs. Update via: bun run build:components && node scripts/update-bundle-baseline.mjs"
 }
