@@ -1,13 +1,25 @@
-<article class="au-card__container">
+<article
+  class="au-card__container"
+  part="container"
+>
   <ng-content select="[auCardMedia]"></ng-content>
-  <div class="au-card__inner">
-    <div class="au-card__main">
+  <div
+    class="au-card__inner"
+    part="inner"
+  >
+    <div
+      class="au-card__main"
+      part="main"
+    >
       <ng-content select="[auCardHeader]"></ng-content>
       <ng-content select="[auCardBody]"></ng-content>
       <ng-content></ng-content>
     </div>
     @if (hasFooter()) {
-      <footer class="au-card__footer">
+      <footer
+        class="au-card__footer"
+        part="footer"
+      >
         <ng-content select="[auCardFooter]"></ng-content>
       </footer>
     }

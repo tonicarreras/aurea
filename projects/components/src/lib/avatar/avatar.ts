@@ -34,6 +34,9 @@ export class AuAvatar {
   /** Hide from the accessibility tree when a parent provides the name (e.g. list row). */
   readonly decorative = input(false);
 
+  /** CSS `object-position` for the avatar image (e.g. `center 20%`, `top`). */
+  readonly objectPosition = input<string>('center');
+
   private readonly imageFailed = signal(false);
 
   readonly showImage = computed(() => {

@@ -148,8 +148,8 @@ export const GUIDES_ES: GuidesMessages = {
       },
       {
         heading: 'provideAurea() — theming en runtime',
-        body: 'Override opcional en bootstrap de tokens semánticos (color primario, radios, fuentes). Complementa [auTheme] para claro/oscuro/HC.',
-        code: `import { provideAurea } from '@aurea-design-system/components';
+        body: 'Override opcional en bootstrap de tokens semánticos (color primario, radios, fuentes). Complementa [auTheme] para claro/oscuro/HC. SSR: usa aurea-theme-bridge.css estático o applyAureaThemeVars(document, config) en el render del servidor.',
+        code: `import { applyAureaThemeVars, provideAurea } from '@aurea-design-system/components';
 
 bootstrapApplication(App, {
   providers: [
@@ -160,7 +160,10 @@ bootstrapApplication(App, {
       },
     }),
   ],
-});`,
+});
+
+// SSR / prerender (opcional):
+// applyAureaThemeVars(document, { actionPrimary: '#1059c8' });`,
         codeLanguage: 'typescript',
         expandLabel: 'Ver provider',
       },
@@ -268,14 +271,32 @@ export class ProfileEmail {
       },
       {
         heading: 'Enviar y marcar touched',
-        body: 'Llama a profileForm().markAllAsTouched() antes de enviar; persiste solo si profileForm().valid() es true.',
-        code: `protected guardar(): void {
-  this.profileForm().markAllAsTouched();
+        body: 'Por defecto, el cromo de validación aparece cuando el campo está touched (`showErrorsWhen="touched"`). Para validar solo al enviar, usa `[showValidation]="submitAttempted()"` en `form[auForm]` una vez (cada campo puede hacer override).',
+        code: `readonly submitAttempted = signal(false);
+
+protected guardar(): void {
+  this.submitAttempted.set(true);
   if (!this.profileForm().valid()) return;
   // guardar this.profile()
 }`,
         codeLanguage: 'typescript',
         expandLabel: 'Ver guard de envío',
+      },
+      {
+        heading: 'Formularios en modal',
+        body: 'Usa `form[auForm]` con `[showValidation]="submitAttempted()"` una vez, `FormRoot` en el formulario y asocia el botón del footer con `[attr.form]` + `type="submit"`. Prefiere `au-message` y snackbars dentro del dialog.',
+        code: `<au-dialog [(open)]="open">
+  <form auForm [formRoot]="form" id="dialog-form" [showValidation]="submitAttempted()">
+    <au-form-field label="Role">
+      <au-select [formField]="form.role" … />
+    </au-form-field>
+  </form>
+  <div auDialogFooter>
+    <button auButton type="submit" [attr.form]="'dialog-form'">Save</button>
+  </div>
+</au-dialog>`,
+        codeLanguage: 'html',
+        expandLabel: 'Ver formulario en modal',
       },
       {
         heading: 'Campos anidados',

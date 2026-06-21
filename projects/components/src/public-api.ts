@@ -56,6 +56,7 @@ export * from './lib/tag-input';
 export * from './lib/textarea';
 export * from './lib/tooltip';
 export * from './lib/layout';
+export * from './lib/app-shell';
 export {
   AuGapCapability,
   AuPaddingCapability,
@@ -65,3 +66,4 @@ export {
 } from './lib/core/capabilities';
 export * from './lib/tokens';
 export { lockPageScroll, unlockPageScroll } from './lib/overlay/page-scroll-lock';
+export { openOverlayLazy } from './lib/overlay/open-overlay-lazy';

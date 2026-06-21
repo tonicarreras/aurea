@@ -6,6 +6,21 @@
 | ------------------ | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `au-tokens.css`    | Yes                                               | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css`                                        |
 | `aurea-global.css` | Yes for form controls, layout & description lists | Shared CSS + primitive directives (bundled from `aurea-global.entry.css`) + `au-high-contrast-aaa.css` |
+| `aurea-chrome.css` | Optional slimmer bundle                           | Field chrome only (inputs, select, listbox) — bundled from `aurea-chrome.entry.css`                    |
+
+## Choosing `aurea-global.css` vs `aurea-chrome.css`
+
+Both require `au-tokens.css` first. Never import both global bundles — they overlap on field chrome.
+
+| You need…                                                                               | Import                                                                                                       |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Forms, inputs, selects, autocomplete                                                    | `au-tokens.css` + **`aurea-chrome.css`**                                                                     |
+| Above + `[auStack]` / `[auCluster]` / `[auSplit]` / `[auSection]`                       | **`aurea-global.css`**                                                                                       |
+| Above + `au-card`, `au-table`, `au-dialog`, `au-app-shell`, accordion, description list | **`aurea-global.css`**                                                                                       |
+| White-label brand colors on SSR                                                         | Static `aurea-theme-bridge.css` after tokens, or `applyAureaThemeVars()` during SSR (see `provide-aurea.ts`) |
+
+Field-only embeds (settings panel, auth form in a host app) → **`aurea-chrome.css`**.  
+Full Aurea pages and layout recipes → **`aurea-global.css`**.
 
 After editing `aurea-global.entry.css` or primitive `*.css` under `src/lib/`, run:
 

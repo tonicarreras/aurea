@@ -67,6 +67,41 @@
   border-color: var(--au-color-semantic-info-border);
 }
 
+:host([data-au-appearance='glass']) {
+  --au-badge-bg: color-mix(in srgb, var(--au-color-surface-raised) 72%, transparent);
+  --au-badge-border: 1px solid color-mix(in srgb, var(--au-color-border-default) 55%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--au-elevation-flat);
+}
+
+:host([data-au-corner='top-start']) {
+  position: absolute;
+  inset-block-start: var(--au-space-3);
+  inset-inline-start: var(--au-space-3);
+  z-index: var(--au-z-raised);
+}
+
+:host([data-au-corner='top-end']) {
+  position: absolute;
+  inset-block-start: var(--au-space-3);
+  inset-inline-end: var(--au-space-3);
+  z-index: var(--au-z-raised);
+}
+
+:host([data-au-corner='bottom-start']) {
+  position: absolute;
+  inset-block-end: var(--au-space-3);
+  inset-inline-start: var(--au-space-3);
+  z-index: var(--au-z-raised);
+}
+
+:host([data-au-corner='bottom-end']) {
+  position: absolute;
+  inset-block-end: var(--au-space-3);
+  inset-inline-end: var(--au-space-3);
+  z-index: var(--au-z-raised);
+}
+
 .au-badge__label {
   display: inline-block;
 }

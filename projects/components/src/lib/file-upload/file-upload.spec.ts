@@ -215,6 +215,7 @@ describe('AuFileUpload standalone', () => {
 
   it('links aria-describedby to field errors when invalid', async () => {
     fixture.componentRef.setInput('invalid', true);
+    fixture.componentRef.setInput('touched', true);
     await fixture.whenStable();
     const describedBy = fixture.nativeElement
       .querySelector('.au-file-upload__input')
@@ -266,6 +267,7 @@ describe('AuFileUpload standalone', () => {
 
   it('syncs invalid state from signal-form errors', async () => {
     fixture.componentRef.setInput('errors', [{ kind: 'required', message: 'Pick a file.' }]);
+    fixture.componentRef.setInput('touched', true);
     await fixture.whenStable();
     expect(
       (

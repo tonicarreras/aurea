@@ -65,6 +65,10 @@ export class AuInputText {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
+  readonly touched = input(false);
+  readonly dirty = input(false);
+  readonly submitting = input(false);
+
   readonly type = input<InputTextType>('text');
   readonly disabled = input(false);
   readonly readOnly = input(false);
@@ -92,6 +96,8 @@ export class AuInputText {
   readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
+    touched: () => this.touched(),
+    dirty: () => this.dirty(),
   });
 
   readonly ariaDescribedBy = computed((): string | null => {

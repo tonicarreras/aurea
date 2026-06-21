@@ -11,6 +11,14 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ### Added
 
+- **`au-form-field` `showValidation`** — authorizes validation chrome; overrides `showErrorsWhen` when set. Inherits from `form[auForm]` when unset on the field.
+- **`applyAureaThemeVars()`** — public helper for SSR/prerender or tests; `provideAurea()` uses it in the browser only.
+- **`AuFormDirective` (`form[auForm]`)** — lives in `lib/form/`; form-level `[showValidation]` inherited by descendant `au-form-field`s (not a replacement for Angular `[formRoot]`).
+- **`au-form-field` `showErrorsWhen`** — default interaction gate (`touched`, `dirty`, `always`) when `showValidation` is unset.
+- **Breaking:** removed `showErrorsWhen="submitted"` — use `[showValidation]="submitAttempted()"` on `form[auForm]` or `au-form-field`.
+- **`au-app-shell`** — page frame with header, banner, flex main, and footer slots.
+- **`aurea-chrome.css`** — slimmer npm export for field chrome only.
+- **`ng add --theme=custom`** — generates `aurea-theme-bridge.css` white-label token scaffold.
 - **Architecture docs** — [API_CONVENTIONS.md](./docs/API_CONVENTIONS.md) (native directives vs `au-*` widgets) and [FLOATING_UI.md](./docs/FLOATING_UI.md) (overlay platform + a11y checklist).
 - **Vocabulary & composition** — [API_VOCABULARY.md](./docs/API_VOCABULARY.md), [COMPOSITION.md](./docs/COMPOSITION.md), [COMPONENT_CSS_VARS.md](./docs/COMPONENT_CSS_VARS.md), [STYLE_CAPABILITIES.md](./docs/STYLE_CAPABILITIES.md).
 - **`au-table-data`** — headless sort/selection helpers exported from the table module; `AuTable` delegates to them.
@@ -22,6 +30,13 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ### Changed
 
+- **`auButton`** — respects static host `type="submit"` / `type="reset"` when the `type` input is unset.
+- **`au-snackbar`** — portaled to an open modal `<dialog>` when declared inside it (visible above the top layer).
+- **`au-card`** — `equalHeight`, `mediaBleed`; CSS `part` on container regions.
+- **`au-badge`** — `appearance="glass"`, `corner` overlay positioning.
+- **`au-empty-state`** — `size="editorial"` for photo-led empty pages.
+- **`au-avatar`** — `objectPosition` input for image cropping.
+- **`openOverlayLazy()`** — helper for deferred `@if` overlay mount.
 - **Shell components** — `au-card`, `au-table`, `au-tabs`, `au-steps`, `au-dialog`, and `au-drawer` use default emulated encapsulation; styles ship only via `aurea-global.css` (projected/portaled DOM).
 - **Form controls** — `syncFormFieldControlState` runs in `effect()` instead of `afterRenderEffect` (signal-only sync); checkbox `indeterminate` uses `effect()`.
 - **Zoneless** — docs app, unit tests, and Storybook use zoneless change detection (`provideZonelessChangeDetection()` / `experimentalZoneless`); FESM bundle baseline lowered (~736 KB raw / ~109 KB gzip).

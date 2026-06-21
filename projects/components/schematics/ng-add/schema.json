@@ -7,6 +7,12 @@
     "project": {
       "type": "string",
       "description": "Angular project name (defaults to defaultProject or first app)"
+    },
+    "theme": {
+      "type": "string",
+      "description": "Theme setup: default tokens only, or generate a white-label bridge file",
+      "enum": ["default", "custom"],
+      "default": "default"
     }
   }
 }

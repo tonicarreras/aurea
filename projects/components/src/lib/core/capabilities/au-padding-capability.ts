@@ -5,6 +5,10 @@ import { AU_STYLE_DEFAULTS, AU_STYLE_NAMESPACE } from './au-style-tokens';
 
 /**
  * INTERNAL — writes namespaced `--au-{namespace}-padding` for section-like primitives.
+ * Requires {@link AU_STYLE_NAMESPACE} and {@link AU_STYLE_DEFAULTS} on the host injector.
+ * Do not import in applications; use `[auSection]` instead.
+ *
+ * @see ../../../../docs/STYLE_CAPABILITIES.md
  */
 @Directive({
   selector: '[auPaddingCapability]',

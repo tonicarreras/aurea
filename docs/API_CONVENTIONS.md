@@ -75,7 +75,15 @@ Import headless helpers when composing new surfaces; keep components thin.
 ## Forms
 
 - **Preferred:** `form()` + `[formField]` + `au-form-field` — see [Signal forms guide](https://aurea-ds.netlify.app/en/guides/signal-forms).
-- **Manual:** `[(value)]` + `invalid` / `errorMessage` on `au-form-field` for demos or legacy paths.
+- **Validate on submit:** `form[auForm]` with `[showValidation]="flag"` once; fields inherit via `AU_FORM`. Override per `au-form-field` when needed. Does **not** replace Angular `[formRoot]`.
+- **Interaction default:** `showErrorsWhen="touched"` on `au-form-field` when `showValidation` is unset.
+- **Manual:** `[(value)]` + `invalid` / `errorMessage` on `au-form-field` for demos or legacy paths — do not mix with `[formField]` on the child.
+
+Form-level API lives in `lib/form/` (`AuFormDirective`, `AU_FORM`); field chrome in `lib/form-field/`.
+
+## Style capabilities (internal)
+
+Layout gap/padding uses **host capability directives** (`AuGapCapability`, `AuPaddingCapability`) — **not** a public import surface. Consumers use `[auStack]`, `[auCluster]`, etc. Do not add capabilities to arbitrary components; see [STYLE_CAPABILITIES.md](./STYLE_CAPABILITIES.md).
 
 ## Floating UI
 

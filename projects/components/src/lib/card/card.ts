@@ -35,6 +35,8 @@ export type AuCardVariant = 'elevated' | 'outlined' | 'filled';
     '[attr.data-au-variant]': 'variant()',
     '[attr.data-au-size]': 'size()',
     '[attr.data-au-interactive]': 'interactive() ? "" : null',
+    '[attr.data-au-equal-height]': 'equalHeight() ? "" : null',
+    '[attr.data-au-media-bleed]': 'mediaBleed() ? "" : null',
   },
 })
 export class AuCard {
@@ -48,6 +50,12 @@ export class AuCard {
    * Static content should leave this false.
    */
   readonly interactive = input(false);
+
+  /** Stretch to fill grid/flex parent height (use on each card in equal-height grids). */
+  readonly equalHeight = input(false);
+
+  /** Media slot bleeds to card edges (no inner padding around `[auCardMedia]`). */
+  readonly mediaBleed = input(false);
 
   /* v8 ignore start */
   readonly footerSlot = contentChild(AuCardFooter);

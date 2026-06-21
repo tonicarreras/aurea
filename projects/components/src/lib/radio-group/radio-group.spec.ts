@@ -228,6 +228,7 @@ describe('AuRadioGroup', () => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
       f.componentInstance.errors = [{ kind: 'required' }] as any;
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('required');
@@ -298,6 +299,7 @@ describe('AuRadioGroup', () => {
       f.componentInstance.options = opts;
       applyFieldHarnessInputs(f, { label: 'Pick' });
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(queryRadios(fix)[0]!.getAttribute('aria-invalid')).toBe('true');
   });

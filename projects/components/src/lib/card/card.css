@@ -130,3 +130,39 @@ au-card .au-card__footer {
   padding: var(--au-card-footer-gap, var(--au-space-4)) 0 0;
   border-top: 1px solid var(--au-color-border-subtle);
 }
+
+au-card[data-au-equal-height] {
+  height: 100%;
+}
+
+au-card[data-au-equal-height] .au-card__container,
+au-card[data-au-equal-height] .au-card__inner,
+au-card[data-au-equal-height] .au-card__main {
+  height: 100%;
+}
+
+au-card[data-au-equal-height] .au-card__container {
+  display: flex;
+  flex-direction: column;
+}
+
+au-card[data-au-equal-height] .au-card__main {
+  flex: 1;
+}
+
+au-card[data-au-media-bleed] .au-card__container [auCardMedia] {
+  border-radius: var(--au-card-radius, var(--au-radius-surface))
+    var(--au-card-radius, var(--au-radius-surface)) 0 0;
+  overflow: hidden;
+}
+
+au-card[data-au-media-bleed] .au-card__inner {
+  padding-block-start: 0;
+}
+
+au-card[data-au-media-bleed] .au-card__container [auCardMedia] img,
+au-card[data-au-media-bleed] .au-card__container [auCardMedia] video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
