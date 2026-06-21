@@ -12,12 +12,12 @@
 
 Both require `au-tokens.css` first. Never import both global bundles — they overlap on field chrome.
 
-| You need… | Import |
-| --------- | ------ |
-| Forms, inputs, selects, autocomplete | `au-tokens.css` + **`aurea-chrome.css`** |
-| Above + `[auStack]` / `[auCluster]` / `[auSplit]` / `[auSection]` | **`aurea-global.css`** |
-| Above + `au-card`, `au-table`, `au-dialog`, `au-app-shell`, accordion, description list | **`aurea-global.css`** |
-| White-label brand colors on SSR | Static `aurea-theme-bridge.css` after tokens, or `applyAureaThemeVars()` during SSR (see `provide-aurea.ts`) |
+| You need…                                                                               | Import                                                                                                       |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Forms, inputs, selects, autocomplete                                                    | `au-tokens.css` + **`aurea-chrome.css`**                                                                     |
+| Above + `[auStack]` / `[auCluster]` / `[auSplit]` / `[auSection]`                       | **`aurea-global.css`**                                                                                       |
+| Above + `au-card`, `au-table`, `au-dialog`, `au-app-shell`, accordion, description list | **`aurea-global.css`**                                                                                       |
+| White-label brand colors on SSR                                                         | Static `aurea-theme-bridge.css` after tokens, or `applyAureaThemeVars()` during SSR (see `provide-aurea.ts`) |
 
 Field-only embeds (settings panel, auth form in a host app) → **`aurea-chrome.css`**.  
 Full Aurea pages and layout recipes → **`aurea-global.css`**.
