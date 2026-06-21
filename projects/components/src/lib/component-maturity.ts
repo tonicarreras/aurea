@@ -97,6 +97,7 @@ export const COMPONENT_MATURITY: Record<string, ComponentMaturityMeta> = {
     since: '0.9.0',
     note: 'Shell + sort header; no built-in data source — bring your own rows.',
   },
+  'app-shell': { level: 'stable', since: '2.2.0' },
 };
 
 export const COMPONENT_MATURITY_LEVELS: readonly ComponentMaturityLevel[] = [

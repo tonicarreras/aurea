@@ -191,6 +191,7 @@ describe('AuInputText', () => {
   it('shows error from errors when no manual message', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'minLength', message: 'Too short' }];
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too short');
@@ -199,6 +200,7 @@ describe('AuInputText', () => {
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'pattern' }];
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
@@ -207,6 +209,7 @@ describe('AuInputText', () => {
   it('marks aria-invalid when invalid without message', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });

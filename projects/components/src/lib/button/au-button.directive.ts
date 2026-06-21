@@ -22,6 +22,14 @@ export type AuButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 export type AuButtonSize = AuSize;
 export type AuButtonType = 'button' | 'submit' | 'reset';
 
+function readHostButtonType(host: { nativeElement: HTMLButtonElement }): AuButtonType | null {
+  const raw = host.nativeElement.getAttribute('type');
+  if (raw === 'submit' || raw === 'reset' || raw === 'button') {
+    return raw;
+  }
+  return null;
+}
+
 /**
  * Aurea button styles and behavior on a native `<button>`.
  */
@@ -33,7 +41,7 @@ export type AuButtonType = 'button' | 'submit' | 'reset';
     '[class.au-button--from-tab]': 'focusByTab()',
     '[attr.data-au-variant]': 'variant()',
     '[attr.data-au-size]': 'size()',
-    '[attr.type]': 'type()',
+    '[attr.type]': 'effectiveType()',
     '[attr.name]': 'name() || null',
     '[attr.disabled]': 'disabled() ? true : null',
     '[attr.aria-busy]': 'loading() ? "true" : null',
@@ -48,11 +56,21 @@ export class AuButton {
   readonly size = input<AuButtonSize>('md');
   readonly disabled = input(false);
   readonly loading = input(false);
-  readonly type = input<AuButtonType>('button');
+  /** Native button type; falls back to the host `type` attribute, then `'button'`. */
+  readonly type = input<AuButtonType | undefined>(undefined);
   readonly name = input<string>('');
   readonly label = input<string>('');
 
   private readonly host = injectHostRef<HTMLButtonElement>();
+  private readonly hostNativeType = readHostButtonType(this.host);
+
+  protected readonly effectiveType = computed((): AuButtonType => {
+    const bound = this.type();
+    if (bound !== undefined) {
+      return bound;
+    }
+    return this.hostNativeType ?? 'button';
+  });
   private readonly destroyRef = inject(DestroyRef);
   private readonly renderer = inject(Renderer2);
   private readonly environmentInjector = inject(EnvironmentInjector);

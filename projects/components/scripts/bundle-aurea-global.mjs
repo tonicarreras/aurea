@@ -10,8 +10,10 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const libRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../src/lib');
-const entry = resolve(libRoot, 'styles/aurea-global.entry.css');
-const out = resolve(libRoot, 'styles/aurea-global.css');
+const bundles = [
+  { entry: 'styles/aurea-global.entry.css', out: 'styles/aurea-global.css' },
+  { entry: 'styles/aurea-chrome.entry.css', out: 'styles/aurea-chrome.css' },
+];
 
 function bundle(file, seen = new Set()) {
   const abs = resolve(file);
@@ -28,22 +30,26 @@ function bundle(file, seen = new Set()) {
   });
 }
 
-const header = `/**
+const header = (source) => `/**
  * GENERATED — do not edit directly.
- * Source: styles/aurea-global.entry.css
+ * Source: styles/${source}
  * Run: node projects/components/scripts/bundle-aurea-global.mjs
  */
 `;
 
-writeFileSync(out, header + bundle(entry));
+for (const { entry, out } of bundles) {
+  const entryPath = resolve(libRoot, entry);
+  const outPath = resolve(libRoot, out);
+  writeFileSync(outPath, header(entry) + bundle(entryPath));
 
-const format = spawnSync('bunx', ['prettier', '--write', out], {
-  cwd: repoRoot,
-  encoding: 'utf8',
-});
-if (format.status !== 0) {
-  console.error(format.stderr || format.stdout);
-  process.exit(format.status ?? 1);
+  const format = spawnSync('bunx', ['prettier', '--write', outPath], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+  });
+  if (format.status !== 0) {
+    console.error(format.stderr || format.stdout);
+    process.exit(format.status ?? 1);
+  }
+
+  console.log(`Wrote ${outPath}`);
 }
-
-console.log(`Wrote ${out}`);

@@ -6,6 +6,7 @@
 | ------------------ | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `au-tokens.css`    | Yes                                               | Design tokens (`--au-*`); imports `au-tokens-high-contrast.css`                                        |
 | `aurea-global.css` | Yes for form controls, layout & description lists | Shared CSS + primitive directives (bundled from `aurea-global.entry.css`) + `au-high-contrast-aaa.css` |
+| `aurea-chrome.css` | Optional slimmer bundle                           | Field chrome only (inputs, select, listbox) — bundled from `aurea-chrome.entry.css`                    |
 
 After editing `aurea-global.entry.css` or primitive `*.css` under `src/lib/`, run:
 

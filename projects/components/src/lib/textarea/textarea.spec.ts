@@ -189,6 +189,7 @@ describe('AuTextarea', () => {
   it('shows error from errors when no manual message', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'maxLength', message: 'Too long' }] as any;
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Too long');
@@ -197,6 +198,7 @@ describe('AuTextarea', () => {
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'required' }] as any;
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('required');
@@ -205,6 +207,7 @@ describe('AuTextarea', () => {
   it('marks aria-invalid when invalid without message', () => {
     const fix = createFieldFixture(AuTextareaTestHost, undefined, (f) => {
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(queryTextarea(fix).getAttribute('aria-invalid')).toBe('true');
   });

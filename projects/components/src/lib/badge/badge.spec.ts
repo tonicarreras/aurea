@@ -56,6 +56,21 @@ describe('AuBadge', () => {
     expect(fixture.nativeElement.getAttribute('data-au-variant')).toBe('success');
   });
 
+  it('sets appearance and corner on host', async () => {
+    fixture.componentRef.setInput('appearance', 'glass');
+    fixture.componentRef.setInput('corner', 'top-end');
+    await fixture.whenStable();
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.getAttribute('data-au-appearance')).toBe('glass');
+    expect(host.getAttribute('data-au-corner')).toBe('top-end');
+  });
+
+  it('omits corner attribute when inline', async () => {
+    fixture.componentRef.setInput('corner', 'inline');
+    await fixture.whenStable();
+    expect(fixture.nativeElement.hasAttribute('data-au-corner')).toBe(false);
+  });
+
   it('renders projected content when label is empty', async () => {
     @Component({
       imports: [AuBadge],

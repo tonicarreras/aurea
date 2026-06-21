@@ -76,6 +76,7 @@ const fieldHarnessBindings = `
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [type]="type"
         [disabled]="disabled"
         [readOnly]="readOnly"
@@ -101,6 +102,7 @@ export class AuInputTextTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   type: 'text' | 'email' | 'number' | 'tel' | 'search' | 'url' = 'text';
   disabled = false;
   readOnly = false;
@@ -124,6 +126,7 @@ export class AuInputTextTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [readOnly]="readOnly"
         [required]="required"
@@ -150,6 +153,7 @@ export class AuTextareaTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   readOnly = false;
   required = false;
@@ -174,6 +178,7 @@ export class AuTextareaTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [readOnly]="readOnly"
         [required]="required"
@@ -198,6 +203,7 @@ export class AuInputNumberTestHost {
   value: number | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   readOnly = false;
   required = false;
@@ -220,6 +226,7 @@ export class AuInputNumberTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [readOnly]="readOnly"
         [required]="required"
@@ -244,6 +251,7 @@ export class AuInputDateTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   readOnly = false;
   required = false;
@@ -266,6 +274,7 @@ export class AuInputDateTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [readOnly]="readOnly"
         [required]="required"
@@ -290,6 +299,7 @@ export class AuInputTimeTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   readOnly = false;
   required = false;
@@ -312,6 +322,7 @@ export class AuInputTimeTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [readOnly]="readOnly"
         [required]="required"
@@ -337,6 +348,7 @@ export class AuInputPasswordTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   readOnly = false;
   required = false;
@@ -359,6 +371,7 @@ export class AuInputPasswordTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [readOnly]="readOnly"
         [required]="required"
@@ -382,6 +395,7 @@ export class AuTagInputTestHost {
   value: string[] = [];
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   readOnly = false;
   required = false;
@@ -405,6 +419,7 @@ export class AuTagInputTestHost {
         [label]="label"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [required]="required"
         [showRequired]="showRequired"
@@ -428,6 +443,7 @@ export class AuSwitchTestHost {
   checked = false;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   required = false;
   showRequired = true;
@@ -449,6 +465,7 @@ export class AuSwitchTestHost {
         [description]="description"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [disabled]="disabled"
         [required]="required"
         [showRequired]="showRequired"
@@ -473,6 +490,7 @@ export class AuCheckboxTestHost {
   checked = false;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   disabled = false;
   required = false;
   showRequired = true;
@@ -492,6 +510,7 @@ export class AuCheckboxTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [options]="options"
         [disabled]="disabled"
         [readOnly]="readOnly"
@@ -515,6 +534,7 @@ export class AuSelectTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   options: { value: string; label: string }[] = [];
   disabled = false;
   readOnly = false;
@@ -535,6 +555,7 @@ export class AuSelectTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [options]="options"
         [disabled]="disabled"
         [readOnly]="readOnly"
@@ -562,6 +583,7 @@ export class AuAutocompleteTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   options: { value: string; label: string }[] = [];
   disabled = false;
   readOnly = false;
@@ -586,6 +608,7 @@ export class AuAutocompleteTestHost {
         [(value)]="value"
         [errors]="$any(errors)"
         [invalid]="invalid"
+        [touched]="touched"
         [options]="options"
         [disabled]="disabled"
         [readOnly]="readOnly"
@@ -607,6 +630,7 @@ export class AuRadioGroupTestHost {
   value: string | null = null;
   errors: unknown[] = [];
   invalid = false;
+  touched = false;
   options: { value: string; label: string }[] = [];
   disabled = false;
   readOnly = false;

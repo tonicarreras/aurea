@@ -410,12 +410,12 @@
         },
         {
             "name": "FormFieldStoryArgs",
-            "id": "interface-FormFieldStoryArgs-ff7cdb15ccd0710cba1e83cef77d9a0c6111ded7d0065ad4ae4aa5dd6581a07d7c207734c49e5777f9f4747bf4577fe3c7b06954c2b1243288d3f94f8e75c2df",
+            "id": "interface-FormFieldStoryArgs-650bac4f5159c07cd68f69cbb6975835d705d611a72aad79503dba8c36c194b9a1abf96d2a05968d55c8cc774da9f57823adf31339daf29bc4c72f4136f3d796",
             "file": "projects/components/src/lib/form-field/form-field.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuInputText } from '../input-text';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        [formRoot]=\"profileForm\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [showErrorsWhen]=\"'submitted'\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              [submitting]=\"submitAttempted()\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [showErrorsWhen]=\"'submitted'\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [submitting]=\"submitAttempted()\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuInputText, AuSelect, AuButton, AuMessage, AuStack, FormField, FormRoot],\n  template: \\`\n    <form [formRoot]=\"profileForm\">\n      <au-form-field label=\"Name\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <input\n          auInputText\n          [formField]=\"profileForm.name\"\n          [submitting]=\"submitAttempted()\"\n        />\n      </au-form-field>\n      <au-form-field label=\"Role\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <au-select\n          [formField]=\"profileForm.role\"\n          [submitting]=\"submitAttempted()\"\n          [options]=\"roleOptions\"\n        />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit**:\n\n1. \\`[showErrorsWhen]=\"'submitted'\"\\` on each \\`au-form-field\\` — errors appear after submit, not on blur.\n2. \\`[formRoot]\\` on the \\`<form>\\`; \\`submission.onInvalid\\` sets a local \\`submitAttempted\\` flag.\n3. \\`[submitting]=\"submitAttempted()\"\\` on each control — Signal Forms does not bind \\`submitting\\` to custom controls.\n4. Optional \\`au-message\\` when \\`invalid() && submitAttempted()\\`.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
             "properties": [
                 {
                     "name": "controlIdInput",
@@ -425,7 +425,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 15
+                    "line": 21
                 },
                 {
                     "name": "errorMessage",
@@ -435,7 +435,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 18
                 },
                 {
                     "name": "hint",
@@ -445,7 +445,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 17
                 },
                 {
                     "name": "invalid",
@@ -455,7 +455,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 13
+                    "line": 19
                 },
                 {
                     "name": "label",
@@ -465,7 +465,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 10
+                    "line": 16
                 },
                 {
                     "name": "required",
@@ -475,7 +475,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 20
                 }
             ],
             "indexSignatures": [],
@@ -1924,7 +1924,140 @@
     "interceptors": [],
     "classes": [],
     "directives": [],
-    "components": [],
+    "components": [
+        {
+            "name": "ValidateOnSubmitDemo",
+            "id": "component-ValidateOnSubmitDemo-650bac4f5159c07cd68f69cbb6975835d705d611a72aad79503dba8c36c194b9a1abf96d2a05968d55c8cc774da9f57823adf31339daf29bc4c72f4136f3d796",
+            "file": "projects/components/src/lib/form-field/form-field.stories.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "validate-on-submit-demo",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div class=\"au-story-field\">\n  @if (profileForm().invalid() && submitAttempted()) {\n    <au-message\n      variant=\"warning\"\n      message=\"Please fix the errors below.\"\n    />\n  }\n  @if (saved()) {\n    <au-message\n      variant=\"success\"\n      message=\"Saved.\"\n    />\n  }\n\n  <form\n    [formRoot]=\"profileForm\"\n    style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n  >\n    <div\n      auStack\n      gap=\"md\"\n    >\n      <au-form-field\n        label=\"Name\"\n        [showErrorsWhen]=\"'submitted'\"\n        [required]=\"true\"\n      >\n        <input\n          auInputText\n          [formField]=\"profileForm.name\"\n          [submitting]=\"submitAttempted()\"\n          placeholder=\"Your name\"\n        />\n      </au-form-field>\n\n      <au-form-field\n        label=\"Role\"\n        [showErrorsWhen]=\"'submitted'\"\n        [required]=\"true\"\n      >\n        <au-select\n          [formField]=\"profileForm.role\"\n          [submitting]=\"submitAttempted()\"\n          [options]=\"roleOptions\"\n          placeholder=\"Select a role\"\n        />\n      </au-form-field>\n    </div>\n\n    <button\n      auButton\n      type=\"submit\"\n    >\n      Submit\n    </button>\n  </form>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "profile",
+                    "defaultValue": "signal({ name: '' as string, role: null as string | null })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 165,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "profileForm",
+                    "defaultValue": "form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 167,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "roleOptions",
+                    "defaultValue": "[\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 187,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "saved",
+                    "defaultValue": "signal(false)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 163,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "submitAttempted",
+                    "defaultValue": "signal(false)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 162,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [
+                {
+                    "name": "AuButton"
+                },
+                {
+                    "name": "AuFormField"
+                },
+                {
+                    "name": "AuInputText"
+                },
+                {
+                    "name": "AuMessage"
+                },
+                {
+                    "name": "AuSelect"
+                },
+                {
+                    "name": "AuStack"
+                },
+                {
+                    "name": "FormField"
+                },
+                {
+                    "name": "FormRoot"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        [formRoot]=\"profileForm\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [showErrorsWhen]=\"'submitted'\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              [submitting]=\"submitAttempted()\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [showErrorsWhen]=\"'submitted'\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [submitting]=\"submitAttempted()\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuInputText, AuSelect, AuButton, AuMessage, AuStack, FormField, FormRoot],\n  template: \\`\n    <form [formRoot]=\"profileForm\">\n      <au-form-field label=\"Name\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <input\n          auInputText\n          [formField]=\"profileForm.name\"\n          [submitting]=\"submitAttempted()\"\n        />\n      </au-form-field>\n      <au-form-field label=\"Role\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <au-select\n          [formField]=\"profileForm.role\"\n          [submitting]=\"submitAttempted()\"\n          [options]=\"roleOptions\"\n        />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit**:\n\n1. \\`[showErrorsWhen]=\"'submitted'\"\\` on each \\`au-form-field\\` — errors appear after submit, not on blur.\n2. \\`[formRoot]\\` on the \\`<form>\\`; \\`submission.onInvalid\\` sets a local \\`submitAttempted\\` flag.\n3. \\`[submitting]=\"submitAttempted()\"\\` on each control — Signal Forms does not bind \\`submitting\\` to custom controls.\n4. Optional \\`au-message\\` when \\`invalid() && submitAttempted()\\`.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": []
+        }
+    ],
     "modules": [],
     "miscellaneous": {
         "variables": [
@@ -2239,6 +2372,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, expanded: ['profile'] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-accordion\n        [(value)]=\"expanded\"\n        [multiple]=\"multiple\"\n        [variant]=\"variant\"\n        [size]=\"size\"\n        [ariaLabel]=\"ariaLabel\"\n      >\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"profile\">Profile</button>\n          <au-accordion-panel panel=\"profile\">Update your name, email, and avatar.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"billing\">Billing</button>\n          <au-accordion-panel panel=\"billing\">Manage payment methods and invoices.</au-accordion-panel>\n        </div>\n        <div class=\"au-accordion__item\">\n          <button type=\"button\" auAccordionItem=\"security\">Security</button>\n          <au-accordion-panel panel=\"security\">Change password and enable 2FA.</au-accordion-panel>\n        </div>\n      </au-accordion>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: {\n      imports: [\n        AuAppShell,\n        AuAppShellHeader,\n        AuAppShellBanner,\n        AuAppShellFooter,\n        AuButton,\n        AuMessage,\n      ],\n    },\n    template: `\n      <au-app-shell>\n        <header auAppShellHeader style=\"padding:var(--au-space-3) var(--au-space-4);border-bottom:1px solid var(--au-color-border-subtle);background:var(--au-color-surface-raised);\">\n          Il Forno di Maria\n        </header>\n        <div auAppShellBanner>\n          <au-message layout=\"banner\" variant=\"info\" title=\"Promo\" message=\"2×1 los martes\" [dismissible]=\"true\" />\n        </div>\n        <div style=\"padding:var(--au-space-6) var(--au-space-4);\">\n          <p style=\"margin:0;\">Contenido principal con <code>flex: 1</code> — el footer queda abajo en páginas cortas.</p>\n        </div>\n        <footer auAppShellFooter style=\"padding:var(--au-space-4);border-top:1px solid var(--au-color-border-subtle);\">\n          <button auButton variant=\"ghost\" type=\"button\">Contacto</button>\n        </footer>\n      </au-app-shell>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -2721,6 +2864,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Open the list and toggle **Tema** (toolbar). **Highlight** (hover / teclado) y **selected** comparten el mismo listbox que `au-autocomplete`.',\n      },\n    },\n  },\n  args: {\n    label: 'Region',\n    placeholder: 'Select a region…',\n    options: [\n      { value: 'eu', label: 'Europe' },\n      { value: 'na', label: 'North America' },\n      { value: 'sa', label: 'South America' },\n      { value: 'ap', label: 'Asia Pacific' },\n      { value: 'af', label: 'Africa' },\n      { value: 'oc', label: 'Oceania' },\n    ],\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "Editorial",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    size: 'editorial',\n    icon: undefined,\n    imageSrc: 'https://placehold.co/640x480/e2e8f0/64748b?text=Forno',\n    imageAlt: '',\n    title: 'Sin platos hoy',\n    description: 'Vuelve más tarde o explora la carta completa.',\n  },\n}"
+            },
+            {
                 "name": "Empty",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2729,6 +2882,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, data: [] as Row[] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        title=\"Users\"\n        description=\"Manage team members.\"\n        caption=\"Users\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        <au-empty-state\n          title=\"No users yet\"\n          description=\"Create your first user to populate this table.\"\n          size=\"sm\"\n          [headingLevel]=\"3\"\n        >\n          <button auButton type=\"button\">Add user</button>\n        </au-empty-state>\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(\n      await canvas.findByRole('heading', { name: 'No users yet', level: 3 }),\n    ).toBeVisible();\n    await expect(await canvas.findByRole('button', { name: 'Add user' })).toBeVisible();\n  },\n}"
+            },
+            {
+                "name": "EqualHeightGrid",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuCard, AuButton, AuCardFooter] },\n    template: `\n      <div style=\"display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--au-space-4);max-width:40rem;align-items:stretch;\">\n        <au-card equalHeight variant=\"elevated\">\n          <h3 auCardHeader part=\"card-title\">Margherita</h3>\n          <p auCardBody>Tomate, mozzarella, albahaca.</p>\n          <div auCardFooter><button auButton type=\"button\">Pedir</button></div>\n        </au-card>\n        <au-card equalHeight variant=\"elevated\">\n          <h3 auCardHeader part=\"card-title\">Quattro formaggi</h3>\n          <p auCardBody>Cuatro quesos, miel y romero. Descripción más larga para demostrar altura igual en grid.</p>\n          <div auCardFooter><button auButton type=\"button\">Pedir</button></div>\n        </au-card>\n      </div>\n    `,\n  }),\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Usa `[equalHeight]=\"true\"` en cada card del grid. Personaliza títulos con `part=\"card-title\"` + `::part(card-title)`.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Error",
@@ -2829,6 +2992,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: '**Ghost** variant with text-only appearance. Use for tertiary actions or toolbars.',\n      },\n    },\n  },\n  args: {\n    variant: 'ghost',\n    size: 'md',\n  },\n  render: (args) =>\n    buttonRender(\n      args,\n      `<button type=\"button\" auButton [variant]=\"variant\" [size]=\"size\" [disabled]=\"disabled\" [loading]=\"loading\" (click)=\"onClick($event)\">Ghost</button>`,\n    ),\n}"
+            },
+            {
+                "name": "GlassOverlay",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuBadge] },\n    template: `\n      <div style=\"position:relative;max-width:18rem;border-radius:var(--au-radius-surface);overflow:hidden;\">\n        <img src=\"https://placehold.co/640x360/e2e8f0/64748b?text=Pizza\" alt=\"\" style=\"display:block;width:100%;height:auto;\" />\n        <au-badge appearance=\"glass\" corner=\"top-start\" variant=\"success\" label=\"Nuevo\" />\n      </div>\n    `,\n  }),\n}"
             },
             {
                 "name": "groupedOptions",
@@ -3081,6 +3254,16 @@
                 "defaultValue": "{\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n}"
             },
             {
+                "name": "MediaBleed",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/card/card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { mediaBleed: true, variant: 'elevated' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card\n        [variant]=\"variant\"\n        [mediaBleed]=\"mediaBleed\"\n        style=\"max-width: 22rem; overflow: hidden;\"\n      >\n        <img\n          auCardMedia\n          src=\"https://placehold.co/640x360/e2e8f0/64748b?text=Pizza\"\n          alt=\"\"\n        />\n        <h3 auCardHeader>Diavola</h3>\n        <p auCardBody>Media a sangre en el borde superior de la card.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3089,6 +3272,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuAccordion>",
                 "defaultValue": "{\n  title: 'Aurea/Accordion',\n  component: AuAccordion,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('accordion'),\n  argTypes: {\n    multiple: { control: 'boolean', table: { category: 'Behavior' } },\n    variant: {\n      control: 'select',\n      options: ['plain', 'contained'],\n      description: 'Plain dividers or raised surface shell.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      table: { category: 'Appearance' },\n    },\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    multiple: true,\n    variant: 'plain',\n    size: 'md',\n    ariaLabel: 'Account settings',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAppShell>",
+                "defaultValue": "{\n  title: 'Aurea/AppShell',\n  component: AuAppShell,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('layout'),\n}"
             },
             {
                 "name": "meta",
@@ -3118,7 +3311,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuBadge>",
-                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n    appearance: {\n      control: 'select',\n      options: ['solid', 'glass'],\n      table: { category: 'Appearance' },\n    },\n    corner: {\n      control: 'select',\n      options: ['inline', 'top-start', 'top-end', 'bottom-start', 'bottom-end'],\n      description: 'Absolute corner placement (parent needs `position: relative`).',\n      table: { category: 'Layout' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12', appearance: 'solid', corner: 'inline' },\n}"
             },
             {
                 "name": "meta",
@@ -3158,7 +3351,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuCard>",
-                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n    equalHeight: {\n      control: 'boolean',\n      description: 'Fill parent height in grid/flex layouts.',\n      table: { category: 'Layout' },\n    },\n    mediaBleed: {\n      control: 'boolean',\n      description: 'Media slot flush to card top edges.',\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3238,7 +3431,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuEmptyState>",
-                "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
+                "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'editorial'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -4265,6 +4458,16 @@
                 "defaultValue": "AU_ICON_NAMES.filter((n) => !semanticNames.includes(n))"
             },
             {
+                "name": "ValidateOnSubmit",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuInputText, AuSelect, AuButton, AuMessage, AuStack, FormField, FormRoot],\n  template: \\`\n    <form [formRoot]=\"profileForm\">\n      <au-form-field label=\"Name\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <input\n          auInputText\n          [formField]=\"profileForm.name\"\n          [submitting]=\"submitAttempted()\"\n        />\n      </au-form-field>\n      <au-form-field label=\"Role\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <au-select\n          [formField]=\"profileForm.role\"\n          [submitting]=\"submitAttempted()\"\n          [options]=\"roleOptions\"\n        />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit**:\n\n1. \\`[showErrorsWhen]=\"'submitted'\"\\` on each \\`au-form-field\\` — errors appear after submit, not on blur.\n2. \\`[formRoot]\\` on the \\`<form>\\`; \\`submission.onInvalid\\` sets a local \\`submitAttempted\\` flag.\n3. \\`[submitting]=\"submitAttempted()\"\\` on each control — Signal Forms does not bind \\`submitting\\` to custom controls.\n4. Optional \\`au-message\\` when \\`invalid() && submitAttempted()\\`.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n}"
+            },
+            {
                 "name": "variants",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -5198,6 +5401,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuAccordion>",
                 "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuAppShell>",
+                "file": "projects/components/src/lib/app-shell/app-shell.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6676,6 +6890,16 @@
                     "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuEmptyState, AuButton] },\n    template: `\n      <au-empty-state\n        [title]=\"title\"\n        [description]=\"description\"\n        [icon]=\"icon\"\n        [size]=\"size\"\n        [headingLevel]=\"headingLevel\"\n      >\n        <button auButton variant=\"outline\" type=\"button\">Clear filters</button>\n      </au-empty-state>\n    `,\n  }),\n}"
                 },
                 {
+                    "name": "Editorial",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    size: 'editorial',\n    icon: undefined,\n    imageSrc: 'https://placehold.co/640x480/e2e8f0/64748b?text=Forno',\n    imageAlt: '',\n    title: 'Sin platos hoy',\n    description: 'Vuelve más tarde o explora la carta completa.',\n  },\n}"
+                },
+                {
                     "name": "Large",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -6693,7 +6917,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuEmptyState>",
-                    "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/EmptyState',\n  component: AuEmptyState,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('empty-state'),\n  argTypes: {\n    title: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    description: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    icon: {\n      control: 'select',\n      options: [undefined, 'search', 'info', 'plus', 'menu'],\n      table: { category: 'Content' },\n    },\n    imageSrc: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    imageAlt: {\n      control: 'text',\n      table: { category: 'Content' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'editorial'],\n      table: { category: 'Appearance' },\n    },\n    headingLevel: {\n      control: 'select',\n      options: [2, 3, 4],\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: {\n    title: 'No results found',\n    description: 'Try adjusting your filters or search term.',\n    icon: 'search',\n    size: 'md',\n    headingLevel: 2,\n  },\n}"
                 },
                 {
                     "name": "TitleOnly",
@@ -7152,6 +7376,28 @@
                     "defaultValue": "{ args: { size: 'sm' } }"
                 }
             ],
+            "projects/components/src/lib/app-shell/app-shell.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: {\n      imports: [\n        AuAppShell,\n        AuAppShellHeader,\n        AuAppShellBanner,\n        AuAppShellFooter,\n        AuButton,\n        AuMessage,\n      ],\n    },\n    template: `\n      <au-app-shell>\n        <header auAppShellHeader style=\"padding:var(--au-space-3) var(--au-space-4);border-bottom:1px solid var(--au-color-border-subtle);background:var(--au-color-surface-raised);\">\n          Il Forno di Maria\n        </header>\n        <div auAppShellBanner>\n          <au-message layout=\"banner\" variant=\"info\" title=\"Promo\" message=\"2×1 los martes\" [dismissible]=\"true\" />\n        </div>\n        <div style=\"padding:var(--au-space-6) var(--au-space-4);\">\n          <p style=\"margin:0;\">Contenido principal con <code>flex: 1</code> — el footer queda abajo en páginas cortas.</p>\n        </div>\n        <footer auAppShellFooter style=\"padding:var(--au-space-4);border-top:1px solid var(--au-color-border-subtle);\">\n          <button auButton variant=\"ghost\" type=\"button\">Contacto</button>\n        </footer>\n      </au-app-shell>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuAppShell>",
+                    "defaultValue": "{\n  title: 'Aurea/AppShell',\n  component: AuAppShell,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('layout'),\n}"
+                }
+            ],
             "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Default",
@@ -7174,6 +7420,16 @@
                     "defaultValue": "{ args: { dot: true, label: '' } }"
                 },
                 {
+                    "name": "GlassOverlay",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuBadge] },\n    template: `\n      <div style=\"position:relative;max-width:18rem;border-radius:var(--au-radius-surface);overflow:hidden;\">\n        <img src=\"https://placehold.co/640x360/e2e8f0/64748b?text=Pizza\" alt=\"\" style=\"display:block;width:100%;height:auto;\" />\n        <au-badge appearance=\"glass\" corner=\"top-start\" variant=\"success\" label=\"Nuevo\" />\n      </div>\n    `,\n  }),\n}"
+                },
+                {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -7181,7 +7437,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuBadge>",
-                    "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12' },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n    appearance: {\n      control: 'select',\n      options: ['solid', 'glass'],\n      table: { category: 'Appearance' },\n    },\n    corner: {\n      control: 'select',\n      options: ['inline', 'top-start', 'top-end', 'bottom-start', 'bottom-end'],\n      description: 'Absolute corner placement (parent needs `position: relative`).',\n      table: { category: 'Layout' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12', appearance: 'solid', corner: 'inline' },\n}"
                 },
                 {
                     "name": "Variants",
@@ -7228,6 +7484,16 @@
                     "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Card title</h3>\n        <p auCardBody>Body copy uses the same surface and spacing rhythm as the dialog.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
+                    "name": "EqualHeightGrid",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    moduleMetadata: { imports: [AuCard, AuButton, AuCardFooter] },\n    template: `\n      <div style=\"display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--au-space-4);max-width:40rem;align-items:stretch;\">\n        <au-card equalHeight variant=\"elevated\">\n          <h3 auCardHeader part=\"card-title\">Margherita</h3>\n          <p auCardBody>Tomate, mozzarella, albahaca.</p>\n          <div auCardFooter><button auButton type=\"button\">Pedir</button></div>\n        </au-card>\n        <au-card equalHeight variant=\"elevated\">\n          <h3 auCardHeader part=\"card-title\">Quattro formaggi</h3>\n          <p auCardBody>Cuatro quesos, miel y romero. Descripción más larga para demostrar altura igual en grid.</p>\n          <div auCardFooter><button auButton type=\"button\">Pedir</button></div>\n        </au-card>\n      </div>\n    `,\n  }),\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Usa `[equalHeight]=\"true\"` en cada card del grid. Personaliza títulos con `part=\"card-title\"` + `::part(card-title)`.',\n      },\n    },\n  },\n}"
+                },
+                {
                     "name": "Filled",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -7258,6 +7524,16 @@
                     "defaultValue": "{\n  args: { size: 'lg' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Spacious</h3>\n        <p auCardBody>More padding for emphasis or hero cards.</p>\n      </au-card>\n    `,\n    ),\n}"
                 },
                 {
+                    "name": "MediaBleed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/card/card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { mediaBleed: true, variant: 'elevated' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card\n        [variant]=\"variant\"\n        [mediaBleed]=\"mediaBleed\"\n        style=\"max-width: 22rem; overflow: hidden;\"\n      >\n        <img\n          auCardMedia\n          src=\"https://placehold.co/640x360/e2e8f0/64748b?text=Pizza\"\n          alt=\"\"\n        />\n        <h3 auCardHeader>Diavola</h3>\n        <p auCardBody>Media a sangre en el borde superior de la card.</p>\n      </au-card>\n    `,\n    ),\n}"
+                },
+                {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -7265,7 +7541,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<AuCard>",
-                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
+                    "defaultValue": "{\n  title: 'Aurea/Card',\n  component: AuCard,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('card'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['elevated', 'outlined', 'filled'],\n      description: 'Visual style of the card.',\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n      description: 'Density / padding of the card.',\n      table: { category: 'Appearance' },\n    },\n    interactive: {\n      control: 'boolean',\n      description: 'Hover lift on elevated variant (clickable tiles / links).',\n      table: { category: 'Behavior' },\n    },\n    equalHeight: {\n      control: 'boolean',\n      description: 'Fill parent height in grid/flex layouts.',\n      table: { category: 'Layout' },\n    },\n    mediaBleed: {\n      control: 'boolean',\n      description: 'Media slot flush to card top edges.',\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    variant: 'elevated',\n    size: 'md',\n    interactive: false,\n  },\n}"
                 },
                 {
                     "name": "Outlined",
@@ -8480,6 +8756,16 @@
                     "defaultValue": "{\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
                 },
                 {
+                    "name": "ValidateOnSubmit",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/form-field/form-field.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuInputText, AuSelect, AuButton, AuMessage, AuStack, FormField, FormRoot],\n  template: \\`\n    <form [formRoot]=\"profileForm\">\n      <au-form-field label=\"Name\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <input\n          auInputText\n          [formField]=\"profileForm.name\"\n          [submitting]=\"submitAttempted()\"\n        />\n      </au-form-field>\n      <au-form-field label=\"Role\" [showErrorsWhen]=\"'submitted'\" [required]=\"true\">\n        <au-select\n          [formField]=\"profileForm.role\"\n          [submitting]=\"submitAttempted()\"\n          [options]=\"roleOptions\"\n        />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit**:\n\n1. \\`[showErrorsWhen]=\"'submitted'\"\\` on each \\`au-form-field\\` — errors appear after submit, not on blur.\n2. \\`[formRoot]\\` on the \\`<form>\\`; \\`submission.onInvalid\\` sets a local \\`submitAttempted\\` flag.\n3. \\`[submitting]=\"submitAttempted()\"\\` on each control — Signal Forms does not bind \\`submitting\\` to custom controls.\n4. Optional \\`au-message\\` when \\`invalid() && submitAttempted()\\`.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n}"
+                },
+                {
                     "name": "WithError",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -9126,6 +9412,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuAccordion>",
                     "file": "projects/components/src/lib/accordion/accordion.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/app-shell/app-shell.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAppShell>",
+                    "file": "projects/components/src/lib/app-shell/app-shell.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -9864,6 +10163,36 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/app-shell/app-shell.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
                 "type": "interface",
                 "linktype": "interface",
@@ -10098,6 +10427,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Dot",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GlassOverlay",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -10406,6 +10745,16 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "EqualHeightGrid",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Filled",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -10427,6 +10776,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "LargeSize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/card/card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MediaBleed",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -11115,6 +11474,16 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "Editorial",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/empty-state/empty-state.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Large",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -11252,6 +11621,15 @@
             },
             {
                 "filePath": "projects/components/src/lib/form-field/form-field.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ValidateOnSubmitDemo",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/form-field/form-field.stories.ts",
                 "type": "interface",
                 "linktype": "interface",
                 "name": "FormFieldStoryArgs",
@@ -11265,6 +11643,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/form-field/form-field.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ValidateOnSubmit",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

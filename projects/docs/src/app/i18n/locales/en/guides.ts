@@ -268,14 +268,32 @@ export class ProfileEmail {
       },
       {
         heading: 'Submit and touch',
-        body: 'Call profileForm().markAllAsTouched() before submit, then read profile() only when profileForm().valid() is true.',
-        code: `protected save(): void {
-  this.profileForm().markAllAsTouched();
+        body: 'By default, validation chrome appears when a field is touched (`showErrorsWhen="touched"`). For validate-on-submit, set `[showValidation]="submitAttempted()"` on `form[auForm]` once (individual fields can still override).',
+        code: `readonly submitAttempted = signal(false);
+
+protected save(): void {
+  this.submitAttempted.set(true);
   if (!this.profileForm().valid()) return;
   // persist this.profile()
 }`,
         codeLanguage: 'typescript',
         expandLabel: 'Show submit guard',
+      },
+      {
+        heading: 'Modal forms',
+        body: 'Use `form[auForm]` with `[showValidation]="submitAttempted()"` once, `FormRoot` on the form, and associate footer buttons with `[attr.form]` + `type="submit"`. Prefer `au-message` and in-dialog snackbars over body toasts.',
+        code: `<au-dialog [(open)]="open">
+  <form auForm [formRoot]="form" id="dialog-form" [showValidation]="submitAttempted()">
+    <au-form-field label="Role">
+      <au-select [formField]="form.role" … />
+    </au-form-field>
+  </form>
+  <div auDialogFooter>
+    <button auButton type="submit" [attr.form]="'dialog-form'">Save</button>
+  </div>
+</au-dialog>`,
+        codeLanguage: 'html',
+        expandLabel: 'Ver formulario en modal',
       },
       {
         heading: 'Nested fields',

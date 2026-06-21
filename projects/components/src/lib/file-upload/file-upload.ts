@@ -44,6 +44,10 @@ export class AuFileUpload implements FormValueControl<File[]> {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
+  readonly touched = input(false);
+  readonly dirty = input(false);
+  readonly submitting = input(false);
+
   readonly accept = input<string>('');
   readonly multiple = input(true);
   readonly disabled = input(false);
@@ -67,6 +71,8 @@ export class AuFileUpload implements FormValueControl<File[]> {
   readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
+    touched: () => this.touched(),
+    dirty: () => this.dirty(),
   });
 
   readonly ariaDescribedBy = computed((): string | null => {

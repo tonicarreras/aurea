@@ -5,6 +5,7 @@ import { AuIcon, type AuIconName } from '../icon/icon';
 import { AuEmptyStateMedia } from './au-empty-state-media.directive';
 
 export type AuEmptyStateHeadingLevel = 2 | 3 | 4;
+export type AuEmptyStateSize = AuSize | 'editorial';
 
 let nextEmptyStateTitleId = 0;
 
@@ -70,7 +71,7 @@ export class AuEmptyState {
     transform: (v) => (v == null ? '' : String(v)),
   });
 
-  readonly size = input<AuSize>('md');
+  readonly size = input<AuEmptyStateSize>('md');
 
   /** Heading level for the title (choose to fit surrounding outline). */
   readonly headingLevel = input<AuEmptyStateHeadingLevel>(2);

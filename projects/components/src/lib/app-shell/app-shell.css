@@ -1,0 +1,38 @@
+/**
+ * App shell — full-height page frame with sticky header/banner and footer at bottom.
+ */
+
+:host {
+  display: block;
+  min-height: 100dvh;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  background: var(--au-color-surface-base);
+}
+
+.au-app-shell__layout {
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
+}
+
+.au-app-shell__header-slot {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--au-z-raised);
+}
+
+.au-app-shell__banner-slot {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: calc(var(--au-z-raised) + 1);
+}
+
+.au-app-shell__main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.au-app-shell__footer-slot {
+  margin-block-start: auto;
+}

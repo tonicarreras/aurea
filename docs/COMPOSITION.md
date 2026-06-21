@@ -76,6 +76,24 @@ The button owns density, variant, focus, and loading. Label typography comes fro
 
 Do not duplicate `label` on the inner control when `au-form-field` already provides one.
 
+### Validate on submit / modal forms
+
+- Default: `showErrorsWhen="touched"` on `au-form-field`.
+- Modal + footer submit: `form[auForm]` with `[showValidation]="submitAttempted()"` once + `FormRoot` + `type="submit"` with `[attr.form]="formId"`.
+- Inline feedback in modals: `au-message`; snackbars must live **inside** the dialog (top layer).
+
+## Page shell
+
+Use `au-app-shell` for header / main / footer sticky layout and optional `auAppShellBanner` promos. Compose with `[auStack]` inside regions.
+
+## White-label tokens
+
+Run `ng add @aurea-design-system/components --theme=custom` to generate `src/styles/aurea-theme-bridge.css`. Override semantic roles on `:root` and `[data-au-theme]`. For field-only apps, import `aurea-chrome.css` instead of the full global bundle.
+
+## Card customization
+
+Internal regions expose `part="container|inner|main|footer"`. Add `part="card-title"` on projected headings and style with `au-card::part(...)` or `::part(card-title)` from app CSS.
+
 ## Recipes, not domain components
 
 Ship **recipes** in docs (filter bar, settings row, dashboard card) composed from primitives. Avoid `au-job-card`-style domain widgets in the core library.

@@ -39,6 +39,7 @@
   ],
   "exports": {
     "./styles/au-tokens.css": "./styles/au-tokens.css",
-    "./styles/aurea-global.css": "./styles/aurea-global.css"
+    "./styles/aurea-global.css": "./styles/aurea-global.css",
+    "./styles/aurea-chrome.css": "./styles/aurea-chrome.css"
   }
 }

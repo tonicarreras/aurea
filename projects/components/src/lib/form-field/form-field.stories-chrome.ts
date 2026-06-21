@@ -7,6 +7,7 @@ export interface FieldChromeStoryArgs {
   errorMessage: string;
   invalid: boolean;
   required: boolean;
+  showErrorsWhen: 'touched' | 'dirty' | 'always';
   /** Story arg only — maps to `au-form-field` `[controlIdInput]` (not the control's `controlId()` signal). */
   controlIdInput: string;
   showRequired?: boolean;
@@ -46,6 +47,13 @@ export const fieldChromeArgTypes = {
     control: 'boolean' as const,
     table: { category: 'Chrome' },
   },
+  showErrorsWhen: {
+    control: 'select' as const,
+    options: ['touched', 'dirty', 'always'],
+    description:
+      'When validation chrome appears if `[showValidation]` is unset (default `touched`).',
+    table: { category: 'Validation' },
+  },
 };
 
 export const defaultFieldChromeArgs: FieldChromeStoryArgs = {
@@ -54,6 +62,7 @@ export const defaultFieldChromeArgs: FieldChromeStoryArgs = {
   errorMessage: '',
   invalid: false,
   required: false,
+  showErrorsWhen: 'touched',
   controlIdInput: '',
   showRequired: true,
 };
@@ -63,6 +72,7 @@ export const fieldChromeHintOnlyArgTypes = {
   errorMessage: fieldChromeArgTypes.errorMessage,
   invalid: fieldChromeArgTypes.invalid,
   required: fieldChromeArgTypes.required,
+  showErrorsWhen: fieldChromeArgTypes.showErrorsWhen,
   controlIdInput: fieldChromeArgTypes.controlIdInput,
   showRequired: fieldChromeArgTypes.showRequired,
 };
@@ -83,6 +93,7 @@ export function formFieldControlRender(
   [invalid]="invalid"
   [required]="required"
   [showRequired]="showRequired"
+  [showErrorsWhen]="showErrorsWhen"
   [controlIdInput]="controlIdInput"
 >
 ${controlTemplate}
@@ -105,6 +116,7 @@ export function formFieldHintOnlyRender(
   [invalid]="invalid"
   [required]="required"
   [showRequired]="showRequired"
+  [showErrorsWhen]="showErrorsWhen"
   [controlIdInput]="controlIdInput"
 >
 ${controlTemplate}

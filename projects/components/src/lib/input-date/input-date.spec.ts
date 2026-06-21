@@ -373,6 +373,7 @@ describe('AuInputDate', () => {
   it('effectiveInvalid from invalid input without message', () => {
     const fix = createFieldFixture(AuInputDateTestHost, { label: 'D' }, (f) => {
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });

@@ -206,6 +206,26 @@ describe('AuButton', () => {
     expect(btn.getAttribute('aria-label')).toBe('Send form');
   });
 
+  it('preserves static type="submit" on the host when type input is unset', async () => {
+    @Component({
+      imports: [AuButton],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      template: `<button
+        auButton
+        type="submit"
+      >
+        Reservar
+      </button>`,
+    })
+    class SubmitHost {}
+
+    const submitFixture = TestBed.createComponent(SubmitHost);
+    await submitFixture.whenStable();
+    expect(submitFixture.nativeElement.querySelector('button')!.getAttribute('type')).toBe(
+      'submit',
+    );
+  });
+
   it('applies from-tab class after Tab then focusin', async () => {
     const btnDe = fixture.debugElement.query(By.css('button'))!;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));

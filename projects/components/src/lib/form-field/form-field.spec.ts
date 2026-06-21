@@ -1,7 +1,9 @@
 import {
   Component,
   ElementRef,
+  computed,
   inject,
+  signal,
   type WritableSignal,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -15,10 +17,16 @@ import {
   AuFormField,
   auFormFieldSelfRef,
   createStandaloneAuFormFieldContext,
+  effectiveInvalidWithField,
   injectAuFormField,
   queryFieldNative,
+  shouldShowValidation,
+  shouldShowFieldValidation,
   syncFormFieldControlState,
+  type AuShowErrorsWhen,
 } from './form-field';
+import type { AuFormFieldContext, AuFormFieldControlState } from './form-field';
+import { AuFormDirective } from './au-form';
 import { AU_FIELD_AUTO_ID_PATTERN } from './au-field-id-generator';
 import { AuInputTextTestHost, createFieldFixture } from './form-field.spec-hosts';
 import {
@@ -75,6 +83,39 @@ class ProbeHost {
   readonly host = inject(ElementRef<HTMLElement>);
 }
 
+function testFormFieldGateContext(
+  showErrorsWhen: AuShowErrorsWhen = 'touched',
+  showValidationValue: boolean | undefined = undefined,
+) {
+  return {
+    showValidation: signal(showValidationValue),
+    showErrorsWhen: signal(showErrorsWhen),
+  };
+}
+
+function createTestFormFieldContext(
+  showValidation: boolean | undefined = undefined,
+): AuFormFieldContext {
+  const controlState = signal<AuFormFieldControlState | null>(null);
+  return {
+    label: signal(''),
+    controlId: signal('test-id'),
+    hintId: signal('test-id-hint'),
+    errorId: signal('test-id-error'),
+    hint: signal(''),
+    errorMessage: signal(''),
+    invalid: signal(false),
+    showRequired: signal(true),
+    required: signal(false),
+    isInvalid: computed(() => false),
+    showValidation: signal(showValidation),
+    showErrorsWhen: signal<AuShowErrorsWhen>('touched'),
+    updateControlState(state) {
+      controlState.set(state);
+    },
+  };
+}
+
 type WritableFormFieldContext = ReturnType<typeof createStandaloneAuFormFieldContext> & {
   label: WritableSignal<string>;
   hint: WritableSignal<string>;
@@ -82,6 +123,7 @@ type WritableFormFieldContext = ReturnType<typeof createStandaloneAuFormFieldCon
   invalid: WritableSignal<boolean>;
   required: WritableSignal<boolean>;
   showRequired: WritableSignal<boolean>;
+  showErrorsWhen: WritableSignal<AuShowErrorsWhen>;
 };
 
 describe('AuFormField', () => {
@@ -213,6 +255,7 @@ describe('AuFormField with projected control', () => {
   it('shows linked control validation message when errorMessage is empty', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'required', message: 'From control' }];
+      f.componentInstance.touched = true;
     });
     const err = fix.nativeElement.querySelector('.au-field-error__text') as HTMLElement;
     expect(err.textContent?.trim()).toBe('From control');
@@ -229,12 +272,12 @@ describe('AuFormField with projected control', () => {
     expect(fix.nativeElement.textContent).toContain('*');
   });
 
-  it('is invalid when linked control is invalid without error text', () => {
+  it('does not show invalid chrome until the control interaction matches showErrorsWhen', () => {
     const fix = createFieldFixture(AuInputTextTestHost, undefined, (f) => {
       f.componentInstance.invalid = true;
     });
     const ff = fix.debugElement.query(By.directive(AuFormField))!.componentInstance as AuFormField;
-    expect(ff.isInvalid()).toBe(true);
+    expect(ff.isInvalid()).toBe(false);
     expect(ff.displayError()).toBe('');
   });
 });
@@ -317,12 +360,14 @@ describe('createStandaloneAuFormFieldContext', () => {
   it('reports invalid from the manual errorMessage signal', () => {
     const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
     ctx.errorMessage.set('  Required field  ');
+    ctx.invalid.set(true);
     expect(ctx.isInvalid()).toBe(true);
   });
 
   it('prefers manual errorMessage over control displayError', () => {
     const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
     ctx.errorMessage.set('Wrapper error');
+    ctx.invalid.set(true);
     ctx.updateControlState({
       displayError: 'Control error',
       effectiveInvalid: true,
@@ -333,14 +378,18 @@ describe('createStandaloneAuFormFieldContext', () => {
     expect(ctx.isInvalid()).toBe(true);
   });
 
-  it('uses control displayError when manual errorMessage is empty', () => {
-    const ctx = standaloneFormFieldContext();
-    ctx.updateControlState({
+  it('keeps control error text hidden until effectiveInvalid is true', async () => {
+    await TestBed.configureTestingModule({ imports: [AuFormField] }).compileComponents();
+    const fixture = TestBed.createComponent(AuFormField);
+    await fixture.whenStable();
+    fixture.componentInstance.updateControlState({
       displayError: 'Control error',
       effectiveInvalid: false,
       required: true,
     });
-    expect(ctx.isInvalid()).toBe(true);
+    expect(fixture.componentInstance.displayError()).toBe('Control error');
+    expect(fixture.componentInstance.isInvalid()).toBe(false);
+    expect(fixture.nativeElement.querySelector('.au-field-error')).toBeNull();
   });
 
   it('reports invalid from the invalid flag alone', () => {
@@ -454,5 +503,140 @@ describe('formFieldHintOnlyRender', () => {
     expect(result.template).not.toContain('[label]="label"');
     expect(result.template).toContain('[hint]="hint"');
     expect(result.template).toContain('<button type="button" auSwitch></button>');
+  });
+});
+
+describe('shouldShowFieldValidation', () => {
+  it('gates on touched by default mode', () => {
+    expect(shouldShowFieldValidation('touched', { touched: false, dirty: true })).toBe(false);
+    expect(shouldShowFieldValidation('touched', { touched: true, dirty: false })).toBe(true);
+  });
+
+  it('supports dirty and always modes', () => {
+    expect(shouldShowFieldValidation('dirty', { touched: false, dirty: true })).toBe(true);
+    expect(shouldShowFieldValidation('always', { touched: false, dirty: false })).toBe(true);
+  });
+});
+
+describe('shouldShowValidation', () => {
+  it('prefers explicit showValidation over showErrorsWhen', () => {
+    const ctx = testFormFieldGateContext('touched', false);
+
+    expect(shouldShowValidation(ctx, { touched: true, dirty: true })).toBe(false);
+
+    ctx.showValidation.set(true);
+    expect(shouldShowValidation(ctx, { touched: false, dirty: false })).toBe(true);
+  });
+
+  it('falls back to showErrorsWhen when showValidation is unset', () => {
+    const ctx = testFormFieldGateContext();
+    expect(shouldShowValidation(ctx, { touched: false, dirty: false })).toBe(false);
+    expect(shouldShowValidation(ctx, { touched: true, dirty: false })).toBe(true);
+  });
+});
+
+describe('effectiveInvalidWithField', () => {
+  it('hides signal-form invalid state until the field is touched', () => {
+    const ctx = standaloneFormFieldContext();
+    const touched = signal(false);
+    const effectiveInvalid = TestBed.runInInjectionContext(() =>
+      effectiveInvalidWithField(ctx, {
+        invalid: () => true,
+        isInvalid: () => false,
+        touched: () => touched(),
+        dirty: () => false,
+      }),
+    );
+
+    expect(effectiveInvalid()).toBe(false);
+    touched.set(true);
+    expect(effectiveInvalid()).toBe(true);
+  });
+
+  it('always surfaces manual wrapper errors', () => {
+    const ctx = standaloneFormFieldContext() as WritableFormFieldContext;
+    ctx.errorMessage.set('Required');
+
+    const effectiveInvalid = TestBed.runInInjectionContext(() =>
+      effectiveInvalidWithField(ctx, {
+        invalid: () => false,
+        isInvalid: () => false,
+        touched: () => false,
+      }),
+    );
+
+    expect(effectiveInvalid()).toBe(true);
+  });
+
+  it('respects showValidation override from the wrapper', () => {
+    const ctx = createTestFormFieldContext(true);
+
+    const effectiveInvalid = TestBed.runInInjectionContext(() =>
+      effectiveInvalidWithField(ctx, {
+        invalid: () => true,
+        isInvalid: () => false,
+        touched: () => false,
+      }),
+    );
+
+    expect(effectiveInvalid()).toBe(true);
+  });
+
+  it('treats missing touched/dirty as false for interaction gating', () => {
+    const ctx = standaloneFormFieldContext();
+    const effectiveInvalid = TestBed.runInInjectionContext(() =>
+      effectiveInvalidWithField(ctx, {
+        invalid: () => true,
+        isInvalid: () => false,
+      }),
+    );
+
+    expect(effectiveInvalid()).toBe(false);
+  });
+});
+
+describe('AuFormField showValidation inheritance', () => {
+  @Component({
+    imports: [AuFormDirective, AuFormField, AuInputText],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
+      <form
+        auForm
+        [showValidation]="formShowValidation()"
+      >
+        <au-form-field
+          label="Email"
+          [showValidation]="fieldShowValidation()"
+        >
+          <input auInputText />
+        </au-form-field>
+      </form>
+    `,
+  })
+  class ShowValidationInheritanceHost {
+    readonly formShowValidation = signal<boolean | undefined>(true);
+    readonly fieldShowValidation = signal<boolean | undefined>(undefined);
+  }
+
+  it('inherits form-level showValidation when the field does not override', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ShowValidationInheritanceHost],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ShowValidationInheritanceHost);
+    await fixture.whenStable();
+    const field = fixture.debugElement.query(By.directive(AuFormField)).componentInstance;
+    expect(field.showValidation()).toBe(true);
+  });
+
+  it('prefers field-level showValidation over the form', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ShowValidationInheritanceHost],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ShowValidationInheritanceHost);
+    fixture.componentInstance.fieldShowValidation.set(false);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const field = fixture.debugElement.query(By.directive(AuFormField)).componentInstance;
+    expect(field.showValidation()).toBe(false);
   });
 });

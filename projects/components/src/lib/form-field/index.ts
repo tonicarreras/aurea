@@ -1,4 +1,5 @@
 export * from './form-field';
+export * from './au-form';
 export {
   AuFieldIdGenerator,
   AU_FIELD_AUTO_ID_PATTERN,
