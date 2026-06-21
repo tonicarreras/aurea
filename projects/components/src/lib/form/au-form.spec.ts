@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuFormField } from '../form-field/form-field';
-import { AuInputText } from '../input-text/au-input-text.directive';
 import { AuFormDirective, resolveFormFieldShowValidation } from './au-form';
+import { AU_FORM_FIELD, AuFormField, effectiveInvalidWithField } from '../form-field/form-field';
 
 describe('resolveFormFieldShowValidation', () => {
   it('prefers the field value when set', () => {
@@ -24,7 +23,20 @@ describe('resolveFormFieldShowValidation', () => {
 
 describe('AuFormDirective', () => {
   @Component({
-    imports: [AuFormDirective, AuFormField, AuInputText],
+    selector: 'validation-probe',
+    template: '',
+  })
+  class ValidationProbe {
+    readonly formField = inject(AU_FORM_FIELD);
+    readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+      invalid: () => true,
+      isInvalid: () => false,
+      touched: () => false,
+    });
+  }
+
+  @Component({
+    imports: [AuFormDirective, AuFormField, ValidationProbe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
       <form
@@ -32,7 +44,7 @@ describe('AuFormDirective', () => {
         [showValidation]="showValidation()"
       >
         <au-form-field label="Email">
-          <input auInputText />
+          <validation-probe />
         </au-form-field>
       </form>
     `,
@@ -51,12 +63,15 @@ describe('AuFormDirective', () => {
     fixture.detectChanges();
   });
 
-  it('inherits showValidation on descendant au-form-field', () => {
+  it('inherits showValidation on descendant controls via effectiveInvalidWithField', () => {
     const field = fixture.debugElement.query(By.directive(AuFormField)).componentInstance;
+    const probe = fixture.debugElement.query(By.directive(ValidationProbe)).componentInstance;
+
     expect(field.showValidation()).toBeUndefined();
+    expect(probe.effectiveInvalid()).toBe(false);
 
     fixture.componentInstance.showValidation.set(true);
     fixture.detectChanges();
-    expect(field.showValidation()).toBe(true);
+    expect(probe.effectiveInvalid()).toBe(true);
   });
 });

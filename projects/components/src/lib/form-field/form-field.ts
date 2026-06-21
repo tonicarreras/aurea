@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import type { ValidationError } from '@angular/forms/signals';
 import { injectAuFieldId } from './au-field-id-generator';
-import { AU_FORM, resolveFormFieldShowValidation } from '../form/au-form';
+import { AU_FORM, type AuFormContext, resolveFormFieldShowValidation } from '../form/au-form';
 
 /** Validation state reported by a projected field control. */
 export interface AuFormFieldControlState {
@@ -80,8 +80,12 @@ export function shouldShowFieldValidation(
 export function shouldShowValidation(
   formField: Pick<AuFormFieldContext, 'showValidation' | 'showErrorsWhen'>,
   interaction: { touched: boolean; dirty: boolean },
+  parentForm?: Pick<AuFormContext, 'showValidation'> | null,
 ): boolean {
-  const explicit = formField.showValidation();
+  const explicit = resolveFormFieldShowValidation(
+    formField.showValidation(),
+    parentForm?.showValidation(),
+  );
   if (explicit !== undefined) {
     return explicit;
   }
@@ -117,6 +121,7 @@ export function effectiveInvalidWithField(
     dirty?: () => boolean;
   },
 ): Signal<boolean> {
+  const parentForm = inject(AU_FORM, { optional: true, skipSelf: true });
   return computed(() => {
     if (formField.invalid() || formField.errorMessage().trim().length > 0) {
       return true;
@@ -127,10 +132,14 @@ export function effectiveInvalidWithField(
       return false;
     }
 
-    return shouldShowValidation(formField, {
-      touched: state.touched?.() ?? false,
-      dirty: state.dirty?.() ?? false,
-    });
+    return shouldShowValidation(
+      formField,
+      {
+        touched: state.touched?.() ?? false,
+        dirty: state.dirty?.() ?? false,
+      },
+      parentForm,
+    );
   });
 }
 
@@ -253,7 +262,6 @@ export function injectAuFormField(): AuFormFieldContext {
 })
 export class AuFormField implements AuFormFieldContext {
   private readonly autoId = injectAuFieldId();
-  private readonly parentForm = inject(AU_FORM, { optional: true, skipSelf: true });
 
   private readonly controlState = signal<AuFormFieldControlState | null>(null);
 
@@ -274,17 +282,9 @@ export class AuFormField implements AuFormFieldContext {
 
   /**
    * Authorizes validation chrome on this field. Overrides inherited form-level `showValidation`.
-   * When unset, inherits from ancestor `form[auForm]` if present.
+   * When unset, ancestor `form[auForm]` is merged in {@link effectiveInvalidWithField}.
    */
-  readonly showValidationOverride = input<boolean | undefined>(undefined, {
-    alias: 'showValidation',
-  });
-  readonly showValidation = computed(() =>
-    resolveFormFieldShowValidation(
-      this.showValidationOverride(),
-      this.parentForm?.showValidation(),
-    ),
-  );
+  readonly showValidation = input<boolean | undefined>(undefined);
 
   /** Optional stable id; auto-generated when empty. Projected control uses the same value via context. */
   readonly controlIdInput = input<string, string>('', {

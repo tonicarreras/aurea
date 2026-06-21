@@ -10,7 +10,6 @@ import { AuSelect } from '../select/select';
 import { AuStack } from '../layout/au-stack.directive';
 import { AuFormDirective } from '../form/au-form';
 import { AuFormField } from './form-field';
-import { JsonPipe } from '@angular/common';
 
 /** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */
 

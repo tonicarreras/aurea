@@ -528,6 +528,13 @@ describe('shouldShowValidation', () => {
     expect(shouldShowValidation(ctx, { touched: false, dirty: false })).toBe(true);
   });
 
+  it('inherits form-level showValidation when the field value is unset', () => {
+    const ctx = testFormFieldGateContext();
+    const parent = { showValidation: signal(true) };
+
+    expect(shouldShowValidation(ctx, { touched: false, dirty: false }, parent)).toBe(true);
+  });
+
   it('falls back to showErrorsWhen when showValidation is unset', () => {
     const ctx = testFormFieldGateContext();
     expect(shouldShowValidation(ctx, { touched: false, dirty: false })).toBe(false);
@@ -597,7 +604,20 @@ describe('effectiveInvalidWithField', () => {
 
 describe('AuFormField showValidation inheritance', () => {
   @Component({
-    imports: [AuFormDirective, AuFormField, AuInputText],
+    selector: 'validation-probe',
+    template: '',
+  })
+  class ValidationProbe {
+    readonly formField = inject(AU_FORM_FIELD);
+    readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
+      invalid: () => true,
+      isInvalid: () => false,
+      touched: () => false,
+    });
+  }
+
+  @Component({
+    imports: [AuFormDirective, AuFormField, ValidationProbe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
       <form
@@ -608,7 +628,7 @@ describe('AuFormField showValidation inheritance', () => {
           label="Email"
           [showValidation]="fieldShowValidation()"
         >
-          <input auInputText />
+          <validation-probe />
         </au-form-field>
       </form>
     `,
@@ -625,7 +645,10 @@ describe('AuFormField showValidation inheritance', () => {
     const fixture = TestBed.createComponent(ShowValidationInheritanceHost);
     await fixture.whenStable();
     const field = fixture.debugElement.query(By.directive(AuFormField)).componentInstance;
-    expect(field.showValidation()).toBe(true);
+    const probe = fixture.debugElement.query(By.directive(ValidationProbe)).componentInstance;
+
+    expect(field.showValidation()).toBeUndefined();
+    expect(probe.effectiveInvalid()).toBe(true);
   });
 
   it('prefers field-level showValidation over the form', async () => {
@@ -637,6 +660,9 @@ describe('AuFormField showValidation inheritance', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     const field = fixture.debugElement.query(By.directive(AuFormField)).componentInstance;
+    const probe = fixture.debugElement.query(By.directive(ValidationProbe)).componentInstance;
+
     expect(field.showValidation()).toBe(false);
+    expect(probe.effectiveInvalid()).toBe(false);
   });
 });
