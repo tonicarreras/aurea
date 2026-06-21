@@ -171,6 +171,7 @@ input.au-input-password:disabled {
   background: var(--au-color-select-field-hover-bg);
 }
 
+/* Invalid chrome on composite fields follows `aria-invalid` (gated by `au-form-field` showErrorsWhen). */
 :is(
   .au-tag-input__control-row:has(.au-tag-input__input[aria-invalid='true']),
   .au-select__control-row:has(.au-select__trigger[aria-invalid='true']),

@@ -62,6 +62,10 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
+  readonly touched = input(false);
+  readonly dirty = input(false);
+  readonly submitting = input(false);
+
   readonly options = input<AuAutocompleteOption[]>([]);
   readonly loading = input(false);
   readonly disabled = input(false);
@@ -112,6 +116,8 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
+    touched: () => this.touched(),
+    dirty: () => this.dirty(),
   });
 
   readonly ariaDescribedBy = computed((): string | null => {

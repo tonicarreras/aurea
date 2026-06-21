@@ -34,7 +34,7 @@ const meta: Meta<AuEmptyState> = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['sm', 'md', 'lg', 'editorial'],
       table: { category: 'Appearance' },
     },
     headingLevel: {
@@ -96,6 +96,17 @@ export const WithImage: Story = {
     imageAlt: '',
     title: 'Inbox zero',
     description: 'You are all caught up.',
+  },
+};
+
+export const Editorial: Story = {
+  args: {
+    size: 'editorial',
+    icon: undefined,
+    imageSrc: 'https://placehold.co/640x480/e2e8f0/64748b?text=Forno',
+    imageAlt: '',
+    title: 'Sin platos hoy',
+    description: 'Vuelve más tarde o explora la carta completa.',
   },
 };
 

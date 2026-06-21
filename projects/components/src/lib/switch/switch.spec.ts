@@ -87,6 +87,7 @@ describe('AuSwitch', () => {
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'pattern' }];
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
@@ -163,6 +164,7 @@ describe('AuSwitch', () => {
   it('sets aria-invalid from invalid without visible error', () => {
     const fix = createFieldFixture(AuSwitchTestHost, undefined, (f) => {
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(querySwitch(fix).getAttribute('aria-invalid')).toBe('true');
   });

@@ -40,6 +40,16 @@ const meta: Meta<AuCard> = {
       description: 'Hover lift on elevated variant (clickable tiles / links).',
       table: { category: 'Behavior' },
     },
+    equalHeight: {
+      control: 'boolean',
+      description: 'Fill parent height in grid/flex layouts.',
+      table: { category: 'Layout' },
+    },
+    mediaBleed: {
+      control: 'boolean',
+      description: 'Media slot flush to card top edges.',
+      table: { category: 'Layout' },
+    },
   },
   args: {
     variant: 'elevated',
@@ -172,6 +182,57 @@ export const LargeSize: Story = {
       <au-card [variant]="variant" [size]="size" [interactive]="interactive">
         <h3 auCardHeader>Spacious</h3>
         <p auCardBody>More padding for emphasis or hero cards.</p>
+      </au-card>
+    `,
+    ),
+};
+
+export const EqualHeightGrid: Story = {
+  render: () => ({
+    moduleMetadata: { imports: [AuCard, AuButton, AuCardFooter] },
+    template: `
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--au-space-4);max-width:40rem;align-items:stretch;">
+        <au-card equalHeight variant="elevated">
+          <h3 auCardHeader part="card-title">Margherita</h3>
+          <p auCardBody>Tomate, mozzarella, albahaca.</p>
+          <div auCardFooter><button auButton type="button">Pedir</button></div>
+        </au-card>
+        <au-card equalHeight variant="elevated">
+          <h3 auCardHeader part="card-title">Quattro formaggi</h3>
+          <p auCardBody>Cuatro quesos, miel y romero. Descripción más larga para demostrar altura igual en grid.</p>
+          <div auCardFooter><button auButton type="button">Pedir</button></div>
+        </au-card>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Usa `[equalHeight]="true"` en cada card del grid. Personaliza títulos con `part="card-title"` + `::part(card-title)`.',
+      },
+    },
+  },
+};
+
+export const MediaBleed: Story = {
+  args: { mediaBleed: true, variant: 'elevated' },
+  render: (args) =>
+    cardRender(
+      args,
+      `
+      <au-card
+        [variant]="variant"
+        [mediaBleed]="mediaBleed"
+        style="max-width: 22rem; overflow: hidden;"
+      >
+        <img
+          auCardMedia
+          src="https://placehold.co/640x360/e2e8f0/64748b?text=Pizza"
+          alt=""
+        />
+        <h3 auCardHeader>Diavola</h3>
+        <p auCardBody>Media a sangre en el borde superior de la card.</p>
       </au-card>
     `,
     ),

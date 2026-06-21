@@ -727,6 +727,7 @@ describe('AuAutocomplete', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.errors = [{ kind: 'required' }] as any;
+      f.componentInstance.touched = true;
     });
     expect(
       fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
@@ -737,6 +738,7 @@ describe('AuAutocomplete', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.errors = [{ kind: 'required', message: 'Pick one' }] as any;
+      f.componentInstance.touched = true;
     });
     expect(
       fix.debugElement.query(By.css('.au-field-error__text'))?.nativeElement.textContent?.trim(),
@@ -747,6 +749,7 @@ describe('AuAutocomplete', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(queryInput(fix).getAttribute('aria-invalid')).toBe('true');
   });

@@ -49,6 +49,29 @@
   --au-empty-state-gap: var(--au-space-5);
 }
 
+:host([data-au-size='editorial']) {
+  --au-empty-state-padding-y: var(--au-space-12);
+  --au-empty-state-padding-x: var(--au-space-8);
+  --au-empty-state-media-size: auto;
+  --au-empty-state-custom-max-width: 20rem;
+  --au-empty-state-title-size: var(--au-text-xl);
+  --au-empty-state-description-size: var(--au-text-base);
+  --au-empty-state-gap: var(--au-space-5);
+}
+
+:host([data-au-size='editorial']) .au-empty-state__media[data-au-media-kind='image'] {
+  width: min(100%, 18rem);
+  aspect-ratio: 4 / 3;
+  height: auto;
+  border-radius: var(--au-radius-surface);
+  overflow: hidden;
+  box-shadow: var(--au-elevation-flat);
+}
+
+:host([data-au-size='editorial']) .au-empty-state__media[data-au-media-kind='image'] img {
+  object-fit: cover;
+}
+
 .au-empty-state__media {
   display: flex;
   flex-shrink: 0;

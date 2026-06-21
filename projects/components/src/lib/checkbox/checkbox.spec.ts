@@ -181,6 +181,7 @@ describe('AuCheckbox', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'Agree';
       f.componentInstance.errors = [{ kind: 'required', message: 'Required field' }];
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error'));
     expect(err?.nativeElement.textContent?.replace(/\s+/g, ' ').trim()).toContain('Required field');
@@ -202,6 +203,7 @@ describe('AuCheckbox', () => {
   it('uses kind when message missing in errors', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.errors = [{ kind: 'pattern' }] as any;
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('pattern');
@@ -219,6 +221,7 @@ describe('AuCheckbox', () => {
     const fix = createFieldFixture(AuCheckboxTestHost, undefined, (f) => {
       f.componentInstance.label = 'Agree';
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     const input = queryInput(fix);
     expect(input.getAttribute('aria-invalid')).toBe('true');

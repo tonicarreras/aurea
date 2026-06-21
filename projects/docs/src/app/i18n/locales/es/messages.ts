@@ -128,7 +128,7 @@ export const MESSAGES_ES: DocsMessages = {
     attrExpand: 'Ver HTML',
     globalStylesHeading: 'aurea-global.css',
     globalStylesBody:
-      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. CSS transversal: utilidades, directivas de layout (<code>auStack</code>, <code>auCluster</code>, <code>auSplit</code>, <code>auSection</code>), chrome de paneles flotantes, primitivos de campo nativos, cromado/errores de campos, listbox en portal (acople flush con <code>--au-field-listbox-gap</code>), description list y acordeón proyectado. Los tokens de dominio en <code>[data-au-theme]</code> hacen que overlays portaled hereden el tema del ancla. Hosts en portal como <code>au-snackbar</code> siguen enviando CSS en el bundle del componente. Criterio: <code>projects/components/src/lib/styles/README.md</code>.',
+      'Cárgalo <strong>después</strong> de <code>au-tokens.css</code>. Bundle completo: directivas de layout, shells (card, table, dialog, app-shell), cromo de campos, overlays, description list, acordeón. Para embeds solo de campos (sin layout/shells), usa <code>aurea-chrome.css</code> — nunca ambos bundles globales. Tabla de decisión: <code>projects/components/src/lib/styles/README.md</code>.',
     globalStylesExpand: 'Ver imports CSS globales',
     directiveHeading: 'Directiva AuTheme',
     directiveBody:
@@ -161,7 +161,7 @@ export const MESSAGES_ES: DocsMessages = {
     brandExpand: 'Ver CSS de marca',
     provideAureaHeading: 'provideAurea() (runtime)',
     provideAureaBody:
-      'Escribe variables semánticas en <code>:root</code> en el navegador. Complementa <code>[auTheme]</code> para claro/oscuro/HC.',
+      'Escribe variables semánticas en <code>:root</code> en el navegador. Complementa <code>[auTheme]</code> para claro/oscuro/HC. En SSR, usa <code>aurea-theme-bridge.css</code> estático o <code>applyAureaThemeVars(document, config)</code> durante el render del servidor.',
     provideAureaExpand: 'Ver provideAurea()',
     brandExampleHeading: 'Ejemplo de marca personalizada',
     brandExampleBody:

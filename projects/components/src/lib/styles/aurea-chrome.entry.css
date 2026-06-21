@@ -1,0 +1,31 @@
+/**
+ * Field chrome subset — import after au-tokens.css when you only need inputs/selects.
+ *
+ * Includes: native field directives, field chrome, listbox, temporal pickers, buttons for field UIs.
+ * Excludes: layout directives ([auStack], …), au-app-shell, card/table/dialog shells, accordion,
+ * description list, snackbar/dialog chrome. Use aurea-global.css when those surfaces appear.
+ *
+ * Regenerate: node projects/components/scripts/bundle-aurea-global.mjs
+ */
+
+@import './au-utilities.css';
+@import './au-native-text-field.css';
+
+@import '../input-text/input-text.css';
+@import '../textarea/textarea.css';
+@import '../input-number/input-number.css';
+@import '../input-date/input-date.css';
+@import '../input-time/input-time.css';
+@import '../input-password/input-password.css';
+@import '../checkbox/checkbox.css';
+@import '../switch/switch.css';
+@import '../button/button.css';
+
+@import './au-field-chrome.css';
+@import './au-field-temporal-input.css';
+@import './au-field-error.css';
+@import '../overlay/au-floating-panel-responsive-modal.css';
+@import './au-field-listbox.css';
+@import '../select/select.css';
+@import '../autocomplete/autocomplete.css';
+@import '../tag-input/tag-input.css';

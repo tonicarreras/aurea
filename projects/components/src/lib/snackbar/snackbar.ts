@@ -28,6 +28,7 @@ import {
   clearPortaledThemeContext,
   syncPortaledThemeContext,
 } from '../overlay/portaled-theme-context';
+import { resolveFieldListboxPortalRoot } from '../overlay/field-listbox-overlay';
 
 export type AuSnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 export type AuSnackbarPosition =
@@ -47,6 +48,8 @@ export type AuSnackbarPosition =
  * - **Icons:** {@link AuIcon} per semantic variant; `default` has none; disable with `showIcon`.
  * - **Stacking:** multiple open instances with the same `position` stack; newest sits on the edge,
  *   older toasts shift upward (bottom) or downward (top). Escape dismisses only the topmost toast.
+ * - **Portaling:** appended to `document.body`, or to an open modal `<dialog>` when the snackbar lives
+ *   inside it (same top-layer stacking as field listboxes).
  * - **Accessibility:** `role="status"` (default/success/info) or `role="alert"` (warning/error);
  *   matching `aria-live`; only the **topmost** toast in a stack announces (`aria-live="off"` on others).
  *
@@ -82,7 +85,8 @@ export class AuSnackbar {
   private readonly platformId = inject(PLATFORM_ID);
 
   private dismissTimer: ReturnType<typeof setTimeout> | undefined;
-  private bodyAnchor: Comment | null = null;
+  private portalAnchor: Comment | null = null;
+  private activePortalRoot: HTMLElement | null = null;
   private unbindThemeContext: (() => void) | null = null;
   private stackId: number | null = null;
   private stackResizeObserver: ResizeObserver | null = null;
@@ -148,7 +152,7 @@ export class AuSnackbar {
       this.dismissTimer = setTimeout(() => this.close(), duration);
     }
     if (isOpen) {
-      this.attachToBody();
+      this.attachToPortal();
       this.syncStack();
     } else {
       this.teardownStack();
@@ -161,7 +165,7 @@ export class AuSnackbar {
       unsubscribeLayout();
       this.clearDismissTimer();
       this.teardownStack();
-      this.restoreFromBody();
+      this.restoreFromPortal();
     });
   }
 
@@ -202,19 +206,21 @@ export class AuSnackbar {
     }
   }
 
-  /** Keeps the toast above Storybook canvases and transformed ancestors. */
-  private attachToBody(): void {
+  /** Portals the toast to `body` or the enclosing open modal `<dialog>`. */
+  private attachToPortal(): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
     const host = this.host.nativeElement;
-    if (host.parentElement !== this.document.body) {
+    const portalRoot = resolveFieldListboxPortalRoot(host, this.document);
+    this.activePortalRoot = portalRoot;
+    if (host.parentElement !== portalRoot) {
       const parent = host.parentNode;
       if (parent) {
-        this.bodyAnchor = this.document.createComment('au-snackbar-anchor');
-        parent.insertBefore(this.bodyAnchor, host);
+        this.portalAnchor = this.document.createComment('au-snackbar-anchor');
+        parent.insertBefore(this.portalAnchor, host);
       }
-      this.renderer.appendChild(this.document.body, host);
+      this.renderer.appendChild(portalRoot, host);
     }
     syncPortaledThemeContext(host, host);
     this.unbindThemeContext?.();
@@ -269,18 +275,20 @@ export class AuSnackbar {
     this.stackResizeObserver.observe(surface);
   }
 
-  private restoreFromBody(): void {
-    if (!isPlatformBrowser(this.platformId) || !this.bodyAnchor?.parentNode) {
+  private restoreFromPortal(): void {
+    if (!isPlatformBrowser(this.platformId) || !this.portalAnchor?.parentNode) {
       return;
     }
     const host = this.host.nativeElement;
     this.unbindThemeContext?.();
     this.unbindThemeContext = null;
-    if (host.parentElement === this.document.body) {
+    const portalRoot = this.activePortalRoot;
+    if (portalRoot && host.parentElement === portalRoot) {
       clearPortaledThemeContext(host);
-      this.bodyAnchor.parentNode?.insertBefore(host, this.bodyAnchor);
-      this.bodyAnchor.remove();
-      this.bodyAnchor = null;
+      this.portalAnchor.parentNode?.insertBefore(host, this.portalAnchor);
+      this.portalAnchor.remove();
+      this.portalAnchor = null;
+      this.activePortalRoot = null;
     }
   }
 }

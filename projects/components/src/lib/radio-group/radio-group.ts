@@ -38,6 +38,10 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
+  readonly touched = input(false);
+  readonly dirty = input(false);
+  readonly submitting = input(false);
+
   readonly options = input<AuRadioOption[]>([]);
   readonly disabled = input(false);
   readonly readOnly = input(false);
@@ -78,6 +82,8 @@ export class AuRadioGroup implements FormValueControl<string | null> {
   readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
+    touched: () => this.touched(),
+    dirty: () => this.dirty(),
   });
 
   readonly ariaDescribedBy = computed((): string | null => {

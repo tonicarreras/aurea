@@ -273,6 +273,7 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.errors = [{ kind: 'required', message: 'Field required' }] as any;
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('Field required');
@@ -282,6 +283,7 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.errors = [{ kind: 'broken' }] as any;
+      f.componentInstance.touched = true;
     });
     const err = fix.debugElement.query(By.css('.au-field-error__text'));
     expect(err?.nativeElement.textContent?.trim()).toBe('broken');
@@ -291,6 +293,7 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.invalid = true;
+      f.componentInstance.touched = true;
     });
     expect(queryTrigger(fix).getAttribute('aria-invalid')).toBe('true');
   });

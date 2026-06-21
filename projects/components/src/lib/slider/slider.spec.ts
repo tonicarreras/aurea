@@ -122,6 +122,15 @@ describe('AuSlider standalone', () => {
     expect(describedBy).toContain('-value');
   });
 
+  it('includes error id in aria-describedby when invalid and touched', async () => {
+    fixture.componentRef.setInput('invalid', true);
+    fixture.componentRef.setInput('touched', true);
+    await fixture.whenStable();
+    const input = fixture.nativeElement.querySelector('.au-slider__input') as HTMLInputElement;
+    const errorId = fixture.componentInstance['formField'].errorId();
+    expect(input.getAttribute('aria-describedby')).toContain(errorId);
+  });
+
   it('keeps tab focus styling when focus moves within the control row', async () => {
     fixture.componentRef.setInput('showValue', true);
     await fixture.whenStable();

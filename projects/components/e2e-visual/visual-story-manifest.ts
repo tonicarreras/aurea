@@ -5,6 +5,7 @@ export const VISUAL_STORIES: {
   readonly slug: string;
 }[] = [
   { name: 'accordion-default', id: 'aurea-accordion--default', slug: 'accordion' },
+  { name: 'app-shell-default', id: 'aurea-appshell--default', slug: 'app-shell' },
   { name: 'autocomplete-default', id: 'aurea-autocomplete--default', slug: 'autocomplete' },
   { name: 'avatar-initials', id: 'aurea-avatar--initials', slug: 'avatar' },
   { name: 'badge-variants', id: 'aurea-badge--variants', slug: 'badge' },

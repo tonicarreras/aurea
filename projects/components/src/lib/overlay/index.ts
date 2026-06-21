@@ -36,6 +36,7 @@ export {
   syncPortaledModalHostContext,
   type ModalDialogPortalState,
 } from './modal-dialog-portal';
+export { openOverlayLazy } from './open-overlay-lazy';
 export {
   createModalDialogInteractionAllowPredicate,
   isModalPanelOrFloatingOverlayClick,

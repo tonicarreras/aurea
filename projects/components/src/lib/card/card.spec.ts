@@ -134,6 +134,15 @@ describe('AuCard', () => {
     await fix.whenStable();
     expect(fix.nativeElement.getAttribute('data-au-interactive')).toBe('');
   });
+
+  it('sets equalHeight and mediaBleed attributes', async () => {
+    const fix = TestBed.createComponent(AuCard);
+    fix.componentRef.setInput('equalHeight', true);
+    fix.componentRef.setInput('mediaBleed', true);
+    await fix.whenStable();
+    expect(fix.nativeElement.getAttribute('data-au-equal-height')).toBe('');
+    expect(fix.nativeElement.getAttribute('data-au-media-bleed')).toBe('');
+  });
 });
 
 @Component({

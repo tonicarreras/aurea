@@ -37,6 +37,10 @@ export class AuTagInput implements FormValueControl<string[]> {
   readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   readonly invalid = input(false);
 
+  readonly touched = input(false);
+  readonly dirty = input(false);
+  readonly submitting = input(false);
+
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
@@ -63,6 +67,8 @@ export class AuTagInput implements FormValueControl<string[]> {
   readonly effectiveInvalid = effectiveInvalidWithField(this.formField, {
     invalid: () => this.invalid(),
     isInvalid: () => this.isInvalid(),
+    touched: () => this.touched(),
+    dirty: () => this.dirty(),
   });
 
   readonly ariaDescribedBy = computed((): string | null => {

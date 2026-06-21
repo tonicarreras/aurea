@@ -1,6 +1,6 @@
 /**
  * GENERATED — do not edit directly.
- * Source: styles/aurea-global.entry.css
+ * Source: styles/styles/aurea-global.entry.css
  * Run: node projects/components/scripts/bundle-aurea-global.mjs
  */
 /**
@@ -1535,6 +1535,42 @@ au-card .au-card__footer {
   border-top: 1px solid var(--au-color-border-subtle);
 }
 
+au-card[data-au-equal-height] {
+  height: 100%;
+}
+
+au-card[data-au-equal-height] .au-card__container,
+au-card[data-au-equal-height] .au-card__inner,
+au-card[data-au-equal-height] .au-card__main {
+  height: 100%;
+}
+
+au-card[data-au-equal-height] .au-card__container {
+  display: flex;
+  flex-direction: column;
+}
+
+au-card[data-au-equal-height] .au-card__main {
+  flex: 1;
+}
+
+au-card[data-au-media-bleed] .au-card__container [auCardMedia] {
+  border-radius: var(--au-card-radius, var(--au-radius-surface))
+    var(--au-card-radius, var(--au-radius-surface)) 0 0;
+  overflow: hidden;
+}
+
+au-card[data-au-media-bleed] .au-card__inner {
+  padding-block-start: 0;
+}
+
+au-card[data-au-media-bleed] .au-card__container [auCardMedia] img,
+au-card[data-au-media-bleed] .au-card__container [auCardMedia] video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* --- ../table/table.css --- */
 /**
  * Table — data grid with column definitions and optional client sort.
@@ -2784,6 +2820,7 @@ input.au-input-password:disabled {
   background: var(--au-color-select-field-hover-bg);
 }
 
+/* Invalid chrome on composite fields follows `aria-invalid` (gated by `au-form-field` showErrorsWhen). */
 :is(
   .au-tag-input__control-row:has(.au-tag-input__input[aria-invalid='true']),
   .au-select__control-row:has(.au-select__trigger[aria-invalid='true']),

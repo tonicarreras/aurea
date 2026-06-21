@@ -1,0 +1,30 @@
+/**
+ * Aurea white-label theme bridge — override semantic tokens for your brand.
+ * Import AFTER au-tokens.css and BEFORE aurea-global.css (or aurea-chrome.css).
+ *
+ * Portals (dialog, drawer, snackbar) copy data-au-theme from the app shell;
+ * define tokens on :root and on each theme selector you use.
+ */
+
+:root,
+[data-au-theme='light'] {
+  --au-color-surface-base: /* your canvas */;
+  --au-color-surface-raised: /* cards, inputs */;
+  --au-color-text-primary: /* body text */;
+  --au-color-text-secondary: /* hints, captions */;
+  --au-color-border-default: /* field borders */;
+  --au-color-action-primary: /* primary buttons, links */;
+  --au-color-action-primary-hover: /* primary hover */;
+  --au-radius-surface: 1rem;
+  --au-radius-field: 0.625rem;
+  --au-font-sans: /* brand UI font stack */;
+}
+
+[data-au-theme='dark'] {
+  /* Mirror the same roles for dark appearance */
+}
+
+[data-au-theme='high-contrast'],
+[data-au-theme='high-contrast-dark'] {
+  /* Optional: tune HC on top of your brand if needed */
+}

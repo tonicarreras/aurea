@@ -128,7 +128,7 @@ export const MESSAGES_EN: DocsMessages = {
     attrExpand: 'Show HTML',
     globalStylesHeading: 'aurea-global.css',
     globalStylesBody:
-      'Load <strong>after</strong> <code>au-tokens.css</code>. Cross-cutting CSS: utilities, layout directives (<code>auStack</code>, <code>auCluster</code>, <code>auSplit</code>, <code>auSection</code>), floating-panel chrome, native field primitives, field chrome/errors, portaled listbox (flush attach via <code>--au-field-listbox-gap</code>), description list, accordion projected shells. Domain overlay tokens resolve on <code>[data-au-theme]</code> so portaled UI matches the anchor theme. Portaled hosts such as <code>au-snackbar</code> still ship CSS via component bundles. Criteria: <code>projects/components/src/lib/styles/README.md</code>.',
+      'Load <strong>after</strong> <code>au-tokens.css</code>. Full bundle: layout directives, shells (card, table, dialog, app-shell), field chrome, overlays, description list, accordion. For field-only embeds (no layout/shells), use <code>aurea-chrome.css</code> instead — never both global bundles. Decision table: <code>projects/components/src/lib/styles/README.md</code>.',
     globalStylesExpand: 'Show global CSS imports',
     directiveHeading: 'AuTheme directive',
     directiveBody:
@@ -161,7 +161,7 @@ export const MESSAGES_EN: DocsMessages = {
     brandExpand: 'Show brand override CSS',
     provideAureaHeading: 'provideAurea() (runtime)',
     provideAureaBody:
-      'Writes semantic CSS variables on <code>:root</code> in the browser. Complements <code>[auTheme]</code> for light/dark/HC.',
+      'Writes semantic CSS variables on <code>:root</code> in the browser. Complements <code>[auTheme]</code> for light/dark/HC. On SSR, use static <code>aurea-theme-bridge.css</code> or call <code>applyAureaThemeVars(document, config)</code> during server render so the first HTML includes brand tokens.',
     provideAureaExpand: 'Show provideAurea()',
     brandExampleHeading: 'Custom brand example',
     brandExampleBody:

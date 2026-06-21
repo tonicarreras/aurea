@@ -3,6 +3,7 @@
     class="au-avatar__img"
     [src]="src()"
     [alt]="alt()"
+    [style.object-position]="objectPosition()"
     (error)="onImageError()"
   />
 } @else {

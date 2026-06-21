@@ -331,7 +331,22 @@ describe('AuSnackbar', () => {
     await TestBed.configureTestingModule({ imports: [AuSnackbar] }).compileComponents();
   });
 
-  it('attachToBody appends host when it has no parent node', async () => {
+  it('portals into an open modal dialog when declared inside it', async () => {
+    const dialog = document.createElement('dialog');
+    Object.defineProperty(dialog, 'open', { value: true, configurable: true });
+    document.body.append(dialog);
+
+    const fix = TestBed.createComponent(AuSnackbar);
+    dialog.append(fix.nativeElement);
+    fix.componentRef.setInput('open', true);
+    fix.componentRef.setInput('message', 'Saved');
+    await fix.whenStable();
+
+    expect(fix.nativeElement.parentElement).toBe(dialog);
+    dialog.remove();
+  });
+
+  it('attachToPortal appends host when it has no parent node', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     const host = fix.nativeElement;
     host.remove();
@@ -341,44 +356,44 @@ describe('AuSnackbar', () => {
     fix.destroy();
   });
 
-  it('restoreFromBody is noop when anchor is missing', () => {
+  it('restoreFromPortal is noop when anchor is missing', () => {
     const fix = TestBed.createComponent(AuSnackbar);
-    const inst = fix.componentInstance as unknown as { restoreFromBody: () => void };
-    expect(() => inst.restoreFromBody()).not.toThrow();
+    const inst = fix.componentInstance as unknown as { restoreFromPortal: () => void };
+    expect(() => inst.restoreFromPortal()).not.toThrow();
   });
 
-  it('restoreFromBody is noop when host was never portaled to body', async () => {
+  it('restoreFromPortal is noop when host was never portaled', async () => {
     const wrapper = document.createElement('div');
     document.body.appendChild(wrapper);
     const fix = TestBed.createComponent(AuSnackbar);
     wrapper.append(fix.nativeElement);
     await fix.whenStable();
     const inst = fix.componentInstance as unknown as {
-      restoreFromBody: () => void;
-      bodyAnchor: Comment | null;
+      restoreFromPortal: () => void;
+      portalAnchor: Comment | null;
     };
     const anchor = document.createComment('au-snackbar-anchor');
     wrapper.insertBefore(anchor, fix.nativeElement);
-    inst.bodyAnchor = anchor;
+    inst.portalAnchor = anchor;
     expect(fix.nativeElement.parentElement).toBe(wrapper);
-    inst.restoreFromBody();
+    inst.restoreFromPortal();
     expect(fix.nativeElement.parentElement).toBe(wrapper);
     expect(wrapper.contains(anchor)).toBe(true);
     wrapper.remove();
   });
 
-  it('attachToBody is noop when host is already on document.body', async () => {
+  it('attachToPortal is noop when host is already on document.body', async () => {
     const fix = TestBed.createComponent(AuSnackbar);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
     expect(fix.nativeElement.parentElement).toBe(document.body);
     const inst = fix.componentInstance as unknown as {
-      attachToBody: () => void;
-      bodyAnchor: Comment | null;
+      attachToPortal: () => void;
+      portalAnchor: Comment | null;
     };
-    const anchor = inst.bodyAnchor;
-    inst.attachToBody();
-    expect(inst.bodyAnchor).toBe(anchor);
+    const anchor = inst.portalAnchor;
+    inst.attachToPortal();
+    expect(inst.portalAnchor).toBe(anchor);
   });
 
   it('restores host to its anchor parent on destroy', async () => {
