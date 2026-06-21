@@ -9,13 +9,14 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-06-21
+
 ### Added
 
 - **`au-form-field` `showValidation`** — authorizes validation chrome; overrides `showErrorsWhen` when set. Inherits from `form[auForm]` when unset on the field.
 - **`applyAureaThemeVars()`** — public helper for SSR/prerender or tests; `provideAurea()` uses it in the browser only.
 - **`AuFormDirective` (`form[auForm]`)** — lives in `lib/form/`; form-level `[showValidation]` inherited by descendant `au-form-field`s (not a replacement for Angular `[formRoot]`).
 - **`au-form-field` `showErrorsWhen`** — default interaction gate (`touched`, `dirty`, `always`) when `showValidation` is unset.
-- **Breaking:** removed `showErrorsWhen="submitted"` — use `[showValidation]="submitAttempted()"` on `form[auForm]` or `au-form-field`.
 - **`au-app-shell`** — page frame with header, banner, flex main, and footer slots.
 - **`aurea-chrome.css`** — slimmer npm export for field chrome only.
 - **`ng add --theme=custom`** — generates `aurea-theme-bridge.css` white-label token scaffold.
@@ -43,6 +44,10 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 - **README** / **CONTRIBUTING** / **DESIGN.md** — document hybrid API conventions and link to floating UI guide.
 - **Docs & Storybook** — aligned navigation, get-started, themes, overviews, and package README with layout directives, `provideAurea()`, and architecture docs.
 - **Button / native inputs** — base selectors use `:where()` for easier consumer overrides.
+
+### Removed
+
+- **`showErrorsWhen="submitted"`** — use `[showValidation]="submitAttempted()"` on `form[auForm]` or `au-form-field` instead.
 
 ## [2.1.2] - 2026-06-19
 
@@ -396,7 +401,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.1.2...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.2.0...HEAD
+[2.2.0]: https://github.com/tonicarreras/aurea/compare/components-v2.1.2...components-v2.2.0
 [2.1.2]: https://github.com/tonicarreras/aurea/compare/components-v2.1.1...components-v2.1.2
 [2.1.1]: https://github.com/tonicarreras/aurea/compare/components-v2.1.0...components-v2.1.1
 [2.1.0]: https://github.com/tonicarreras/aurea/compare/components-v2.0.0...components-v2.1.0
