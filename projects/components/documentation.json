@@ -2738,6 +2738,16 @@
                 "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuProgress] },\n    template: `<div style=\"max-width:20rem\"><au-progress [mode]=\"mode\" [value]=\"value\" [max]=\"max\" [label]=\"label\" /></div>`,\n  }),\n}"
             },
             {
+                "name": "DialogForm",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: {\n      ...args,\n      open: signal(false),\n    },\n    moduleMetadata: { imports: [AuDialog, AuButton, AuDialogFooter, AuDialogSubmit] },\n    template: `\n      <div class=\"au-story-stage\">\n        <button auButton type=\"button\" (click)=\"open.set(true)\">Reservar mesa</button>\n        <au-dialog [(open)]=\"open\" [title]=\"title\" size=\"md\">\n          <form id=\"reservation-form\">\n            <label>\n              Nombre\n              <input name=\"name\" required />\n            </label>\n          </form>\n          <div auDialogFooter>\n            <button auButton variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</button>\n            <button auButton variant=\"primary\" auDialogSubmit=\"reservation-form\">Reservar mesa</button>\n          </div>\n        </au-dialog>\n      </div>\n    `,\n  }),\n  args: {\n    title: 'Reserva',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Footer fuera del `<form>`: usa `auDialogSubmit=\"form-id\"` en lugar de cablear `type=\"submit\"` + `[attr.form]` a mano.',\n      },\n    },\n  },\n}"
+            },
+            {
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3341,6 +3351,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuButtonGroup>",
+                "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3376,16 +3396,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuChipGroup>",
                 "defaultValue": "{\n  title: 'Aurea/ChipGroup',\n  component: AuChipGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('chip-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    ariaLabel: 'Status filters',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuButtonGroup>",
-                "defaultValue": "{\n  title: 'Aurea/ButtonGroup',\n  component: AuButtonGroup,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('button-group'),\n  argTypes: {\n    ariaLabel: { control: 'text', table: { category: 'Accessibility' } },\n    attached: { control: 'boolean', table: { category: 'Layout' } },\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Layout' },\n    },\n  },\n  args: {\n    ariaLabel: 'View actions',\n    attached: true,\n    orientation: 'horizontal',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -5480,6 +5490,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuButtonGroup>",
+                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuCard>",
                 "file": "projects/components/src/lib/card/card.stories.ts",
                 "deprecated": false,
@@ -5515,17 +5536,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuChipGroup>",
                 "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuButtonGroup>",
-                "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -7672,6 +7682,16 @@
                     "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <button auButton style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</button>\n            <button auButton type=\"button\" (click)=\"open.set(false)\">Eliminar</button>\n          </div>`,\n  }),\n  args: {\n    title: '¿Quieres aceptar?',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
                 },
                 {
+                    "name": "DialogForm",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: {\n      ...args,\n      open: signal(false),\n    },\n    moduleMetadata: { imports: [AuDialog, AuButton, AuDialogFooter, AuDialogSubmit] },\n    template: `\n      <div class=\"au-story-stage\">\n        <button auButton type=\"button\" (click)=\"open.set(true)\">Reservar mesa</button>\n        <au-dialog [(open)]=\"open\" [title]=\"title\" size=\"md\">\n          <form id=\"reservation-form\">\n            <label>\n              Nombre\n              <input name=\"name\" required />\n            </label>\n          </form>\n          <div auDialogFooter>\n            <button auButton variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</button>\n            <button auButton variant=\"primary\" auDialogSubmit=\"reservation-form\">Reservar mesa</button>\n          </div>\n        </au-dialog>\n      </div>\n    `,\n  }),\n  args: {\n    title: 'Reserva',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Footer fuera del `<form>`: usa `auDialogSubmit=\"form-id\"` en lugar de cablear `type=\"submit\"` + `[attr.form]` a mano.',\n      },\n    },\n  },\n}"
+                },
+                {
                     "name": "FullScreen",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -9500,6 +9520,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/button-group/button-group.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuButtonGroup>",
+                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/card/card.stories.ts": [
                 {
                     "name": "Story",
@@ -9546,19 +9579,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuChipGroup>",
                     "file": "projects/components/src/lib/chip-group/chip-group.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/button-group/button-group.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuButtonGroup>",
-                    "file": "projects/components/src/lib/button-group/button-group.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -11229,6 +11249,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DialogForm",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

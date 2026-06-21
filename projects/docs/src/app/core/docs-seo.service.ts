@@ -83,6 +83,7 @@ export class DocsSeoService {
       if (second === 'floating-ui') return seo.guidesFloatingUi;
       if (second === 'composition') return seo.guidesComposition;
       if (second === 'recipes') return seo.guidesRecipes;
+      if (second === 'bundle-size') return seo.guidesBundleSize;
       if (second === 'crud-demo') return seo.guidesCrudDemo;
     }
     if (first === DOCS_ROUTES.maturity) {

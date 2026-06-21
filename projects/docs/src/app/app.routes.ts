@@ -55,6 +55,12 @@ export const routes: Routes = [
         data: { docsLayout: 'reading' },
       },
       {
+        path: 'guides/bundle-size',
+        loadComponent: () =>
+          import('./pages/guide-bundle-size.page').then((m) => m.GuideBundleSizePage),
+        data: { docsLayout: 'reading' },
+      },
+      {
         path: 'guides/crud-demo',
         loadComponent: () =>
           import('./pages/guide-crud-demo.page').then((m) => m.GuideCrudDemoPage),

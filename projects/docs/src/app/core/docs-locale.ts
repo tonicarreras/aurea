@@ -32,6 +32,7 @@ export const DOCS_ROUTES = {
   guidesComposition: 'guides/composition',
   guidesRecipes: 'guides/recipes',
   guidesCrudDemo: 'guides/crud-demo',
+  guidesBundleSize: 'guides/bundle-size',
   maturity: 'maturity',
   designTokens: 'design-tokens',
 } as const;

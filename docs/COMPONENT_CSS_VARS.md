@@ -34,6 +34,16 @@ Domain tokens in `au-tokens-domain.css`. Override on the button or a parent:
 | `--au-card-main-gap`   | Gap between header/body               |
 | `--au-card-footer-gap` | Footer spacing                        |
 
+CSS parts: `container`, `inner`, `main`, `footer`; project `part="card-title"` on headers for brand typography.
+
+## Message (`au-message`)
+
+CSS parts: `surface`, `title`, `text` — e.g. `au-message.forno-promo::part(title) { font-family: var(--font-display); }`.
+
+## Empty state (`au-empty-state`)
+
+CSS parts: `media`, `title`, `description`.
+
 ## Layout directives
 
 | Host          | Variable               | Role                                  |
