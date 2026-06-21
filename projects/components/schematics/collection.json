@@ -3,7 +3,7 @@
   "schematics": {
     "ng-add": {
       "description": "Adds Aurea global styles and documents next setup steps",
-      "factory": "./ng-add/index.js",
+      "factory": "./ng-add/index.cjs",
       "schema": "./ng-add/schema.json"
     }
   }
