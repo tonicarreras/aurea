@@ -410,12 +410,12 @@
         },
         {
             "name": "FormFieldStoryArgs",
-            "id": "interface-FormFieldStoryArgs-b9f682b793d9ffec10abb78e4e8cd7fbf5f713b12303aa89e75ec718d46540b67a90c1e47b18f02b7d7cec068c46fa4f8c2a3df55886c77ea185c8c408a18e82",
+            "id": "interface-FormFieldStoryArgs-d783fdeba21e5e71b54d7b07650150293cc56a00627b8c4296aa975fd32405d8a57a3532bef8c813da3773effb39158c38070bb2f5b5f02a54d1021ff5672249",
             "file": "projects/components/src/lib/form-field/form-field.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\nimport { JsonPipe } from '@angular/common';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
             "properties": [
                 {
                     "name": "controlIdInput",
@@ -425,7 +425,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 23
+                    "line": 22
                 },
                 {
                     "name": "errorMessage",
@@ -435,7 +435,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 19
                 },
                 {
                     "name": "hint",
@@ -445,7 +445,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 18
                 },
                 {
                     "name": "invalid",
@@ -455,7 +455,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 20
                 },
                 {
                     "name": "label",
@@ -465,7 +465,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 17
                 },
                 {
                     "name": "required",
@@ -475,7 +475,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 21
                 }
             ],
             "indexSignatures": [],
@@ -1927,7 +1927,7 @@
     "components": [
         {
             "name": "ValidateOnSubmitDemo",
-            "id": "component-ValidateOnSubmitDemo-b9f682b793d9ffec10abb78e4e8cd7fbf5f713b12303aa89e75ec718d46540b67a90c1e47b18f02b7d7cec068c46fa4f8c2a3df55886c77ea185c8c408a18e82",
+            "id": "component-ValidateOnSubmitDemo-d783fdeba21e5e71b54d7b07650150293cc56a00627b8c4296aa975fd32405d8a57a3532bef8c813da3773effb39158c38070bb2f5b5f02a54d1021ff5672249",
             "file": "projects/components/src/lib/form-field/form-field.stories.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -1954,7 +1954,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 167,
+                    "line": 166,
                     "modifierKind": [
                         148
                     ]
@@ -1968,7 +1968,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 169,
+                    "line": 168,
                     "modifierKind": [
                         148
                     ]
@@ -1982,7 +1982,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 189,
+                    "line": 188,
                     "modifierKind": [
                         148
                     ]
@@ -1996,7 +1996,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 165,
+                    "line": 164,
                     "modifierKind": [
                         148
                     ]
@@ -2010,7 +2010,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 164,
+                    "line": 163,
                     "modifierKind": [
                         148
                     ]
@@ -2055,7 +2055,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\nimport { JsonPipe } from '@angular/common';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -3301,21 +3301,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuBadge>",
-                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n    appearance: {\n      control: 'select',\n      options: ['solid', 'glass'],\n      table: { category: 'Appearance' },\n    },\n    corner: {\n      control: 'select',\n      options: ['inline', 'top-start', 'top-end', 'bottom-start', 'bottom-end'],\n      description: 'Absolute corner placement (parent needs `position: relative`).',\n      table: { category: 'Layout' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12', appearance: 'solid', corner: 'inline' },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuAvatar>",
                 "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuBadge>",
+                "defaultValue": "{\n  title: 'Aurea/Badge',\n  component: AuBadge,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('badge'),\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'accent', 'success', 'warning', 'error', 'info'],\n      description: 'Semantic surface and border colors.',\n      table: { category: 'Appearance' },\n    },\n    dot: {\n      control: 'boolean',\n      description: 'Renders a dot without visible label text.',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Visible count or status text.',\n      table: { category: 'Content' },\n    },\n    appearance: {\n      control: 'select',\n      options: ['solid', 'glass'],\n      table: { category: 'Appearance' },\n    },\n    corner: {\n      control: 'select',\n      options: ['inline', 'top-start', 'top-end', 'bottom-start', 'bottom-end'],\n      description: 'Absolute corner placement (parent needs `position: relative`).',\n      table: { category: 'Layout' },\n    },\n  },\n  args: { variant: 'default', dot: false, label: '12', appearance: 'solid', corner: 'inline' },\n}"
             },
             {
                 "name": "meta",
@@ -5436,8 +5436,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuBadge>",
-                "file": "projects/components/src/lib/badge/badge.stories.ts",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5447,8 +5447,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "rawtype": "StoryObj<AuBadge>",
+                "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -9448,19 +9448,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/badge/badge.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuBadge>",
-                    "file": "projects/components/src/lib/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/avatar/avatar.stories.ts": [
                 {
                     "name": "Story",
@@ -9468,6 +9455,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuAvatar>",
                     "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/badge/badge.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuBadge>",
+                    "file": "projects/components/src/lib/badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
