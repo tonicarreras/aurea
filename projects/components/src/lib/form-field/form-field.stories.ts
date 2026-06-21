@@ -8,7 +8,7 @@ import { AuInputText } from '../input-text';
 import { AuMessage } from '../message/message';
 import { AuSelect } from '../select/select';
 import { AuStack } from '../layout/au-stack.directive';
-import { AuFormDirective } from './au-form';
+import { AuFormDirective } from '../form/au-form';
 import { AuFormField } from './form-field';
 import { JsonPipe } from '@angular/common';
 

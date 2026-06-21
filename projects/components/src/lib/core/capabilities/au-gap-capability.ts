@@ -5,6 +5,7 @@ import { AU_STYLE_DEFAULTS, AU_STYLE_NAMESPACE } from './au-style-tokens';
 
 /**
  * INTERNAL — writes namespaced `--au-{namespace}-gap` for layout primitives.
+ * Do not import in applications; use `[auStack]`, `[auCluster]`, `[auSplit]` instead.
  */
 @Directive({
   selector: '[auGapCapability]',

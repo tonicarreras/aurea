@@ -12,7 +12,8 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 ### Added
 
 - **`au-form-field` `showValidation`** — authorizes validation chrome; overrides `showErrorsWhen` when set. Inherits from `form[auForm]` when unset on the field.
-- **`AuFormDirective` (`form[auForm]`)** — form-level `[showValidation]` inherited by descendant `au-form-field`s.
+- **`applyAureaThemeVars()`** — public helper for SSR/prerender or tests; `provideAurea()` uses it in the browser only.
+- **`AuFormDirective` (`form[auForm]`)** — lives in `lib/form/`; form-level `[showValidation]` inherited by descendant `au-form-field`s (not a replacement for Angular `[formRoot]`).
 - **`au-form-field` `showErrorsWhen`** — default interaction gate (`touched`, `dirty`, `always`) when `showValidation` is unset.
 - **Breaking:** removed `showErrorsWhen="submitted"` — use `[showValidation]="submitAttempted()"` on `form[auForm]` or `au-form-field`.
 - **`au-app-shell`** — page frame with header, banner, flex main, and footer slots.

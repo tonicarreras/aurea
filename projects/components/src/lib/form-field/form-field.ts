@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import type { ValidationError } from '@angular/forms/signals';
 import { injectAuFieldId } from './au-field-id-generator';
-import { AU_FORM, resolveFormFieldShowValidation } from './au-form';
+import { AU_FORM, resolveFormFieldShowValidation } from '../form/au-form';
 
 /** Validation state reported by a projected field control. */
 export interface AuFormFieldControlState {

@@ -35,6 +35,8 @@ Inside each capability:
 
 Card, button, and chip use **domain tokens** and `data-au-*` selectors in bundled CSS — simpler for Encapsulation.None + global bundle. Capabilities are reserved for **layout** where the same gap scale must compose without new CSS files.
 
+**Contributor rule:** do not import `[auGapCapability]` / `[auPaddingCapability]` in app code or new composite components. If a component needs tokenized spacing, use public inputs + domain CSS vars, or propose a layout primitive. Adding a new capability requires a namespace, CSS in `au-layout-primitives.css`, and specs.
+
 Future: optional `AuElevationCapability` for chip/badge if variant drift appears — follow the same namespace pattern.
 
 ## Tests

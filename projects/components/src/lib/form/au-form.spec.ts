@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AuFormDirective, resolveFormFieldShowValidation } from './au-form';
-import { AuFormField } from './form-field';
+import { AuFormField } from '../form-field/form-field';
 import { AuInputText } from '../input-text/au-input-text.directive';
+import { AuFormDirective, resolveFormFieldShowValidation } from './au-form';
 
 describe('resolveFormFieldShowValidation', () => {
   it('prefers the field value when set', () => {

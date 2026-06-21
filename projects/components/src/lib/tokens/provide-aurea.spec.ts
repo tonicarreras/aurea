@@ -3,7 +3,7 @@ import { ApplicationRef, Component, PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { describe, expect, it } from 'vitest';
 
-import { AU_THEME_CONFIG, provideAurea } from './provide-aurea';
+import { AU_THEME_CONFIG, applyAureaThemeVars, provideAurea } from './provide-aurea';
 
 @Component({ template: '' })
 class BootstrapHost {}
@@ -70,5 +70,12 @@ describe('provideAurea', () => {
     TestBed.createComponent(BootstrapHost);
     await TestBed.inject(ApplicationRef).whenStable();
     expect(doc.documentElement.style.getPropertyValue('--au-color-action-primary')).toBe('');
+  });
+
+  it('applyAureaThemeVars writes vars on any document (SSR/prerender)', () => {
+    const doc = document.implementation.createHTMLDocument('ssr');
+    applyAureaThemeVars(doc, { actionPrimary: '#112233', radiusField: '0.25rem' });
+    expect(doc.documentElement.style.getPropertyValue('--au-color-action-primary')).toBe('#112233');
+    expect(doc.documentElement.style.getPropertyValue('--au-radius-field')).toBe('0.25rem');
   });
 });

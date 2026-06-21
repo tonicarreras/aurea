@@ -148,8 +148,8 @@ export const GUIDES_EN: GuidesMessages = {
       },
       {
         heading: 'provideAurea() — runtime theming',
-        body: 'Optional bootstrap override for semantic tokens (primary color, radii, fonts). Complements [auTheme] for light/dark/HC.',
-        code: `import { provideAurea } from '@aurea-design-system/components';
+        body: 'Optional bootstrap override for semantic tokens (primary color, radii, fonts). Complements [auTheme] for light/dark/HC. SSR: use static aurea-theme-bridge.css or applyAureaThemeVars(document, config) during server render.',
+        code: `import { applyAureaThemeVars, provideAurea } from '@aurea-design-system/components';
 
 bootstrapApplication(App, {
   providers: [
@@ -160,7 +160,10 @@ bootstrapApplication(App, {
       },
     }),
   ],
-});`,
+});
+
+// SSR / prerender (optional):
+// applyAureaThemeVars(document, { actionPrimary: '#1059c8' });`,
         codeLanguage: 'typescript',
         expandLabel: 'Show provider',
       },

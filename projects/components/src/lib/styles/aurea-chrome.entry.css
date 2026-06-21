@@ -1,5 +1,10 @@
 /**
  * Field chrome subset — import after au-tokens.css when you only need inputs/selects.
+ *
+ * Includes: native field directives, field chrome, listbox, temporal pickers, buttons for field UIs.
+ * Excludes: layout directives ([auStack], …), au-app-shell, card/table/dialog shells, accordion,
+ * description list, snackbar/dialog chrome. Use aurea-global.css when those surfaces appear.
+ *
  * Regenerate: node projects/components/scripts/bundle-aurea-global.mjs
  */
 

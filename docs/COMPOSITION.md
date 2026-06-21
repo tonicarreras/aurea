@@ -88,7 +88,11 @@ Use `au-app-shell` for header / main / footer sticky layout and optional `auAppS
 
 ## White-label tokens
 
-Run `ng add @aurea-design-system/components --theme=custom` to generate `src/styles/aurea-theme-bridge.css`. Override semantic roles on `:root` and `[data-au-theme]`. For field-only apps, import `aurea-chrome.css` instead of the full global bundle.
+Run `ng add @aurea-design-system/components --theme=custom` to generate `src/styles/aurea-theme-bridge.css`. Override semantic roles on `:root` and `[data-au-theme]`.
+
+**CSS bundle:** import **`aurea-global.css`** for layout directives, shells (card, table, dialog, app-shell), and full recipes. Import **`aurea-chrome.css`** only for field-only embeds (inputs, select, listbox) — it excludes layout and composite shells. See `projects/components/src/lib/styles/README.md` for the decision table.
+
+**Runtime brand:** `provideAurea({ theme })` writes vars in the browser. For SSR-first HTML, use static `aurea-theme-bridge.css` or call `applyAureaThemeVars(document, config)` during server render.
 
 ## Card customization
 

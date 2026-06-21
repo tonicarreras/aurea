@@ -26,7 +26,7 @@ import {
   type AuShowErrorsWhen,
 } from './form-field';
 import type { AuFormFieldContext, AuFormFieldControlState } from './form-field';
-import { AuFormDirective } from './au-form';
+import { AuFormDirective } from '../form/au-form';
 import { AU_FIELD_AUTO_ID_PATTERN } from './au-field-id-generator';
 import { AuInputTextTestHost, createFieldFixture } from './form-field.spec-hosts';
 import {

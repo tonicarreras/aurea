@@ -20,8 +20,10 @@ export function resolveFormFieldShowValidation(
 }
 
 /**
- * Opt-in form shell: set `[showValidation]` once for validate-on-submit or server validation.
- * Works alongside Angular `[formRoot]`; individual `au-form-field` can still override.
+ * Form-level DI context for validation visibility — not a replacement for Angular `[formRoot]`.
+ *
+ * Add `auForm` to opt in; set `[showValidation]` once for validate-on-submit or server validation.
+ * Works alongside `[formRoot]` on the same `<form>`; individual `au-form-field` can still override.
  *
  * @example
  * ```html

@@ -54,6 +54,8 @@ For apps that only need field chrome (inputs, select, listbox) without layout ut
 @import '@aurea-design-system/components/styles/aurea-chrome.css';
 ```
 
+Do **not** import `aurea-chrome.css` and `aurea-global.css` together. Use `aurea-global.css` when you need layout directives (`auStack`, …) or composite shells (card, table, dialog, app-shell). See `src/lib/styles/README.md`.
+
 ### 2. Schematic (optional)
 
 ```bash
