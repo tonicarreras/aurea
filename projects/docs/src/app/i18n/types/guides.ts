@@ -44,4 +44,9 @@ export interface GuidesMessages {
     lead: string;
     sections: GuideSection[];
   };
+  bundleSize: {
+    title: string;
+    lead: string;
+    sections: GuideSection[];
+  };
 }

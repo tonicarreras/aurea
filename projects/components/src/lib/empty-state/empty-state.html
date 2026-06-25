@@ -2,6 +2,7 @@
   <div
     class="au-empty-state__media"
     data-au-media-kind="custom"
+    part="media"
     aria-hidden="true"
   >
     <ng-content select="[auEmptyStateMedia]" />
@@ -10,6 +11,7 @@
   <div
     class="au-empty-state__media"
     data-au-media-kind="image"
+    part="media"
     [attr.aria-hidden]="imageIsDecorative() ? 'true' : null"
   >
     <img
@@ -21,6 +23,7 @@
   <div
     class="au-empty-state__media"
     data-au-media-kind="icon"
+    part="media"
     aria-hidden="true"
   >
     <au-icon
@@ -36,6 +39,7 @@
       <h2
         [id]="titleId"
         class="au-empty-state__title"
+        part="title"
         [textContent]="resolvedTitle()"
       ></h2>
     }
@@ -43,6 +47,7 @@
       <h3
         [id]="titleId"
         class="au-empty-state__title"
+        part="title"
         [textContent]="resolvedTitle()"
       ></h3>
     }
@@ -50,6 +55,7 @@
       <h4
         [id]="titleId"
         class="au-empty-state__title"
+        part="title"
         [textContent]="resolvedTitle()"
       ></h4>
     }
@@ -59,6 +65,7 @@
 @if (hasDescription()) {
   <p
     class="au-empty-state__description"
+    part="description"
     [textContent]="resolvedDescription()"
   ></p>
 }

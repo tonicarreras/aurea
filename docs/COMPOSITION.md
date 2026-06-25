@@ -79,7 +79,7 @@ Do not duplicate `label` on the inner control when `au-form-field` already provi
 ### Validate on submit / modal forms
 
 - Default: `showErrorsWhen="touched"` on `au-form-field`.
-- Modal + footer submit: `form[auForm]` with `[showValidation]="submitAttempted()"` once + `FormRoot` + `type="submit"` with `[attr.form]="formId"`.
+- Modal + footer submit: `form[auForm]` with `[showValidation]="submitAttempted()"` once + `FormRoot` + `button[auDialogSubmit]="formId"`.
 - Inline feedback in modals: `au-message`; snackbars must live **inside** the dialog (top layer).
 
 ## Page shell

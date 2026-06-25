@@ -18,6 +18,7 @@ export interface DocsSeoMessages {
   guidesFloatingUi: DocsPageSeo;
   guidesComposition: DocsPageSeo;
   guidesRecipes: DocsPageSeo;
+  guidesBundleSize: DocsPageSeo;
   guidesCrudDemo: DocsPageSeo;
   maturity: DocsPageSeo;
   designTokens: DocsPageSeo;

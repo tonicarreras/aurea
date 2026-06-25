@@ -22,6 +22,7 @@ const STATIC_SEGMENTS = [
   'guides/floating-ui',
   'guides/composition',
   'guides/recipes',
+  'guides/bundle-size',
   'guides/crud-demo',
   'maturity',
   'design-tokens',

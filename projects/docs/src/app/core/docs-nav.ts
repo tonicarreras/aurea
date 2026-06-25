@@ -36,6 +36,7 @@ function buildDocsNav(locale: DocsLocale): DocsNavSection[] {
         { path: DOCS_ROUTES.guidesFloatingUi, label: n.intro.floatingUi },
         { path: DOCS_ROUTES.guidesComposition, label: n.intro.composition },
         { path: DOCS_ROUTES.guidesRecipes, label: n.intro.recipes },
+        { path: DOCS_ROUTES.guidesBundleSize, label: n.intro.bundleSize },
         { path: DOCS_ROUTES.guidesSignalForms, label: n.intro.signalForms },
         { path: DOCS_ROUTES.guidesCrudDemo, label: n.intro.crudDemo },
         { path: DOCS_ROUTES.themes, label: n.intro.themes },

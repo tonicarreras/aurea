@@ -239,7 +239,7 @@ Signal form with **validate on submit** (app-owned visibility):
 3. Default without inherited \`showValidation\`: \`showErrorsWhen="touched"\` uses control interaction only.
 4. Do not mix manual \`[invalid]\` on the wrapper with \`[formField]\` on the child.
 
-For modal footers outside the form, use \`type="submit"\` + \`[attr.form]="formId"\` (see composition guide).
+For modal footers outside the form, use \`auDialogSubmit="form-id"\` or \`type="submit"\` + \`[attr.form]="formId"\` (see composition guide).
         `.trim(),
       },
     },
