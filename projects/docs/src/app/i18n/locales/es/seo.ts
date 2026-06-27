@@ -46,6 +46,11 @@ export const SEO_ES: DocsSeoMessages = {
     title: 'Recetas de composición — Aurea',
     description: 'Barra de filtros, fila de ajustes y tarjeta de dashboard con primitivas Aurea.',
   },
+  guidesBundleSize: {
+    title: 'Tamaño del bundle — Aurea',
+    description:
+      'Importa solo el CSS necesario, monta overlays en lazy y tree-shake de TypeScript en apps Angular.',
+  },
   guidesCrudDemo: {
     title: 'Demo CRUD de referencia — Aurea',
     description:

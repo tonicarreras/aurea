@@ -11,6 +11,7 @@ export const NAV_EN: DocsNavMessages = {
     floatingUi: 'Floating UI',
     composition: 'Composition',
     recipes: 'Recipes',
+    bundleSize: 'Bundle size',
     signalForms: 'Signal forms',
     crudDemo: 'CRUD demo',
     themes: 'Themes & tokens',

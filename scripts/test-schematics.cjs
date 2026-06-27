@@ -44,6 +44,17 @@ async function main() {
   const runner = new SchematicTestRunner('aurea-schematics', collectionPath);
   let failed = 0;
 
+  const pkgRoot = join(__dirname, '../dist/components');
+  const { createRequire } = require('module');
+  const req = createRequire(join(pkgRoot, 'package.json'));
+  try {
+    req('./schematics/ng-add/index.cjs');
+  } catch (err) {
+    console.error('FAIL: schematic factory must load under package "type": "module"');
+    console.error(err);
+    failed++;
+  }
+
   const host = createHostTree();
   let result = await runner.runSchematic('ng-add', {}, host);
   const styles = readStyles(result);
@@ -76,7 +87,7 @@ async function main() {
   if (failed > 0) {
     process.exit(1);
   }
-  console.log('Schematic tests OK (3 checks).');
+  console.log('Schematic tests OK (4 checks).');
 }
 
 main().catch((err) => {

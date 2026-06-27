@@ -1,5 +1,6 @@
 <div
   class="au-message__surface"
+  part="surface"
   [attr.role]="liveRole()"
 >
   @if (showVariantIcon() && variantIcon(); as iconName) {
@@ -13,10 +14,20 @@
 
   <div class="au-message__body">
     @if (hasTitle()) {
-      <p class="au-message__title">{{ resolvedTitle() }}</p>
+      <p
+        class="au-message__title"
+        part="title"
+      >
+        {{ resolvedTitle() }}
+      </p>
     }
     @if (showInputMessage()) {
-      <p class="au-message__text">{{ resolvedMessage() }}</p>
+      <p
+        class="au-message__text"
+        part="text"
+      >
+        {{ resolvedMessage() }}
+      </p>
     } @else {
       <div class="au-message__text">
         <ng-content></ng-content>

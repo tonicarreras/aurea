@@ -9,6 +9,23 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-06-21
+
+### Added
+
+- **`AuDialogSubmit` (`button[auDialogSubmit]`)** — wires `type="submit"` and `[attr.form]` for dialog/drawer footers outside the `<form>`.
+- **Docs** — `/guides/bundle-size` (global vs chrome CSS, lazy overlays, tree-shaking).
+- **CSS `part`s** — `au-message` (`surface`, `title`, `text`) and `au-empty-state` (`media`, `title`, `description`) for brand typography without `!important`.
+- **Signal forms guide** — mixed schema fields, switch in `au-form-field`, snackbar vs `au-message` in modals.
+
+### Fixed
+
+- **`ng add`** — schematic factory ships as `.cjs` so CommonJS schematics load under package `"type": "module"` (ng-packagr strips nested `package.json` from npm tarballs).
+
+### Changed
+
+- **Visual regression** — baseline snapshots for all stable Storybook smoke stories.
+
 ## [2.2.0] - 2026-06-21
 
 ### Added
@@ -401,7 +418,8 @@ Breaking changes require [DEPRECATION.md](./docs/DEPRECATION.md) and a **MAJOR**
 
 - Initial public release: button, form-field, input-text, checkbox, card, message, icon, divider, tooltip.
 
-[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.2.0...HEAD
+[Unreleased]: https://github.com/tonicarreras/aurea/compare/components-v2.2.1...HEAD
+[2.2.1]: https://github.com/tonicarreras/aurea/compare/components-v2.2.0...components-v2.2.1
 [2.2.0]: https://github.com/tonicarreras/aurea/compare/components-v2.1.2...components-v2.2.0
 [2.1.2]: https://github.com/tonicarreras/aurea/compare/components-v2.1.1...components-v2.1.2
 [2.1.1]: https://github.com/tonicarreras/aurea/compare/components-v2.1.0...components-v2.1.1

@@ -36,6 +36,11 @@ export const GUIDES_ES: GuidesMessages = {
         path: 'guides/recipes',
       },
       {
+        title: 'Tamaño del bundle',
+        description: 'CSS global vs chrome, overlays lazy y tree-shaking.',
+        path: 'guides/bundle-size',
+      },
+      {
         title: 'Temas y tokens',
         description: 'Claro/oscuro, densidad y alto contraste.',
         path: 'themes',
@@ -284,19 +289,42 @@ protected guardar(): void {
       },
       {
         heading: 'Formularios en modal',
-        body: 'Usa `form[auForm]` con `[showValidation]="submitAttempted()"` una vez, `FormRoot` en el formulario y asocia el botón del footer con `[attr.form]` + `type="submit"`. Prefiere `au-message` y snackbars dentro del dialog.',
+        body: 'Usa `form[auForm]` con `[showValidation]="submitAttempted()"` una vez, `FormRoot` en el formulario y `button[auDialogSubmit]="form-id"` en el footer (o `type="submit"` + `[attr.form]`). Prefiere `au-message` y snackbars dentro del dialog.',
         code: `<au-dialog [(open)]="open">
   <form auForm [formRoot]="form" id="dialog-form" [showValidation]="submitAttempted()">
-    <au-form-field label="Role">
-      <au-select [formField]="form.role" … />
+    <au-form-field label="Zona">
+      <au-select [formField]="form.zone" … />
     </au-form-field>
   </form>
   <div auDialogFooter>
-    <button auButton type="submit" [attr.form]="'dialog-form'">Save</button>
+    <button auButton variant="primary" auDialogSubmit="dialog-form">Reservar</button>
   </div>
 </au-dialog>`,
         codeLanguage: 'html',
         expandLabel: 'Ver formulario en modal',
+      },
+      {
+        heading: 'Schema mixto (campos opt-in)',
+        body: 'No todo tiene que vivir en `form()`. Consentimiento marketing, cantidad en carrito o toggles demo pueden usar signals sueltos mientras el flujo principal usa `[formField]`.',
+        code: `<form auForm [formRoot]="reservationForm" [showValidation]="submitAttempted()">
+  <au-form-field label="Nombre"><input auInputText [formField]="reservationForm.name" /></au-form-field>
+</form>
+<input type="checkbox" auCheckbox label="Novedades" [(checked)]="newsletter" />`,
+        codeLanguage: 'html',
+        expandLabel: 'Ver formulario mixto',
+      },
+      {
+        heading: 'Switch dentro de au-form-field',
+        body: 'Proyecta un `<button auSwitch>` vacío; label e hint van en `au-form-field`, no dentro del switch.',
+        code: `<au-form-field label="Entrega a domicilio" hint="Recogida gratis en el local">
+  <button type="button" auSwitch [(checked)]="deliveryMode"></button>
+</au-form-field>`,
+        codeLanguage: 'html',
+        expandLabel: 'Ver switch en campo',
+      },
+      {
+        heading: 'Feedback en modales',
+        body: 'Los snackbars en body quedan bajo la top layer del dialog. Usa `au-message` inline para resúmenes de validación, o declara `<au-snackbar>` dentro del dialog abierto.',
       },
       {
         heading: 'Campos anidados',
@@ -307,6 +335,42 @@ readonly profileForm = form(this.profile, (p) => {
 });`,
         codeLanguage: 'typescript',
         expandLabel: 'Ver modelo anidado',
+      },
+    ],
+  },
+  bundleSize: {
+    title: 'Tamaño del bundle',
+    lead: 'Mantén la app rápida: importa la superficie CSS mínima, monta overlays en lazy y confía en el tree-shaking de TypeScript.',
+    sections: [
+      {
+        heading: 'CSS: global vs chrome',
+        body: 'La mayoría de apps necesitan au-tokens.css y aurea-global.css (todos los componentes). Flujos solo de formulario pueden usar aurea-chrome.css si solo necesitas cromo de campos y tokens.',
+        code: `@import '@aurea-design-system/components/styles/au-tokens.css';
+@import '@aurea-design-system/components/styles/aurea-chrome.css';`,
+        codeLanguage: 'css',
+        expandLabel: 'Ver CSS mínimo',
+      },
+      {
+        heading: 'Imports TypeScript',
+        body: 'Importa componentes y directivas por feature. Evita re-exportar barrels en la app; Angular elimina imports standalone no usados de @aurea-design-system/components.',
+        code: `import { AuButton, AuFormField, AuInputText } from '@aurea-design-system/components';`,
+        codeLanguage: 'typescript',
+        expandLabel: 'Ver imports',
+      },
+      {
+        heading: 'Overlays lazy',
+        body: 'Diferir hosts `@if` de dialog/drawer hasta el primer open evita crear nodos portal y focus trap al arrancar. Usa openOverlayLazy(ready, open) del paquete.',
+        code: `import { openOverlayLazy } from '@aurea-design-system/components';
+
+openReservation(): void {
+  openOverlayLazy(this.reservationOverlayReady, this.reservationOpen);
+}`,
+        codeLanguage: 'typescript',
+        expandLabel: 'Ver apertura lazy',
+      },
+      {
+        heading: 'Medir en CI',
+        body: 'La librería incluye guard de bundle FESM (`check:bundle`). En tu app, vigila el chunk inicial tras añadir CSS global e imports del shell; divide rutas y lazy-load páginas pesadas.',
       },
     ],
   },

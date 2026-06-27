@@ -6,6 +6,7 @@ import { fn } from 'storybook/test';
 import { AuButton } from '../button';
 import { AuDialog } from './dialog';
 import { AuDialogFooter } from './dialog-footer.directive';
+import { AuDialogSubmit } from './au-dialog-submit.directive';
 
 const meta: Meta<AuDialog> = {
   title: 'Aurea/Dialog',
@@ -188,5 +189,43 @@ export const WithoutTitle: Story = {
   args: {
     title: '',
     ariaLabel: 'Información',
+  },
+};
+
+export const DialogForm: Story = {
+  render: (args) => ({
+    props: {
+      ...args,
+      open: signal(false),
+    },
+    moduleMetadata: { imports: [AuDialog, AuButton, AuDialogFooter, AuDialogSubmit] },
+    template: `
+      <div class="au-story-stage">
+        <button auButton type="button" (click)="open.set(true)">Reservar mesa</button>
+        <au-dialog [(open)]="open" [title]="title" size="md">
+          <form id="reservation-form">
+            <label>
+              Nombre
+              <input name="name" required />
+            </label>
+          </form>
+          <div auDialogFooter>
+            <button auButton variant="secondary" type="button" (click)="open.set(false)">Cancelar</button>
+            <button auButton variant="primary" auDialogSubmit="reservation-form">Reservar mesa</button>
+          </div>
+        </au-dialog>
+      </div>
+    `,
+  }),
+  args: {
+    title: 'Reserva',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Footer fuera del `<form>`: usa `auDialogSubmit="form-id"` en lugar de cablear `type="submit"` + `[attr.form]` a mano.',
+      },
+    },
   },
 };

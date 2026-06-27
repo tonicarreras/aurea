@@ -8,6 +8,7 @@ export interface DocsNavMessages {
     floatingUi: string;
     composition: string;
     recipes: string;
+    bundleSize: string;
     signalForms: string;
     crudDemo: string;
     themes: string;

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { copyFile, mkdir, readdir, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, rename, unlink } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
@@ -30,10 +30,29 @@ async function copyJsonFiles(dir, base = schematicsSrc) {
   }
 }
 
+/** ng-packagr `.npmignore` strips nested `package.json`; use `.cjs` so CJS schematics work under `"type": "module"`. */
+async function renameCompiledJsToCjs(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const src = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await renameCompiledJsToCjs(src);
+    } else if (entry.name.endsWith('.js')) {
+      const dest = join(dir, entry.name.replace(/\.js$/, '.cjs'));
+      await rename(src, dest);
+    }
+  }
+}
+
 await mkdir(schematicsDist, { recursive: true });
 await copyJsonFiles(schematicsSrc);
-await writeFile(
-  join(schematicsDist, 'package.json'),
-  JSON.stringify({ type: 'commonjs' }, null, 2) + '\n',
-);
+await renameCompiledJsToCjs(schematicsDist);
+
+const legacyPackageJson = join(schematicsDist, 'package.json');
+try {
+  await unlink(legacyPackageJson);
+} catch {
+  // not present
+}
+
 console.log('Schematics built to dist/components/schematics');

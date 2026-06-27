@@ -47,6 +47,11 @@ export const SEO_EN: DocsSeoMessages = {
     description:
       'Filter bar, settings row, and dashboard card patterns built only from Aurea primitives.',
   },
+  guidesBundleSize: {
+    title: 'Bundle size — Aurea',
+    description:
+      'Import only the CSS you need, lazy-mount overlays, and tree-shake TypeScript imports in Angular apps.',
+  },
   guidesCrudDemo: {
     title: 'CRUD reference demo — Aurea',
     description:

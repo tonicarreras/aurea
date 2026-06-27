@@ -248,7 +248,7 @@ Gate actions with `profileForm().valid()`. By default, `au-form-field` shows val
 </form>
 ```
 
-Dialog footers outside the `<form>`: associate submit buttons with `type="submit"` (or `[type]="'submit'"`) and `[attr.form]="formId"`. Place `<au-snackbar>` inside the modal when feedback must appear above the dialog top layer.
+Dialog footers outside the `<form>`: use `auDialogSubmit="form-id"` or `type="submit"` with `[attr.form]="formId"`. Place `<au-snackbar>` inside the modal when feedback must appear above the dialog top layer.
 
 ---
 
