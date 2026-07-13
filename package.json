@@ -73,8 +73,8 @@
     "@storybook/test-runner": "0.24.4",
     "@testing-library/angular": "^19.4.1",
     "@types/prismjs": "^1.26.6",
-    "@vitest/browser-playwright": "^4.1.9",
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/browser-playwright": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.10",
     "ajv": "^8.20.0",
     "angular-eslint": "^22.0.0",
     "axe-playwright": "^2.2.2",
@@ -90,6 +90,6 @@
     "storybook": "^10.4.6",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.61.1",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.10"
   }
 }
