@@ -9,20 +9,18 @@
     <button
       #triggerEl
       type="button"
+      ngCombobox
+      #combobox="ngCombobox"
+      [(expanded)]="panelOpen"
+      [softDisabled]="false"
       class="au-select__trigger"
-      role="combobox"
       [id]="controlId()"
-      [attr.aria-expanded]="listboxVisible()"
-      [attr.aria-controls]="listboxId()"
-      [attr.aria-activedescendant]="activeDescendantId()"
+      [disabled]="disabled() || readOnly()"
       [attr.aria-invalid]="effectiveInvalid() ? 'true' : 'false'"
       [attr.aria-errormessage]="effectiveInvalid() ? formField.errorId() : null"
       [attr.aria-describedby]="ariaDescribedBy() ?? null"
       [attr.aria-required]="required() ? 'true' : null"
       [attr.aria-busy]="loading() ? 'true' : null"
-      [disabled]="disabled() || readOnly()"
-      (click)="onTriggerClick()"
-      (keydown)="onKeydown($event)"
       (blur)="onBlurHost()"
     >
       <span
@@ -40,65 +38,73 @@
       <au-icon name="chevron-down" />
     </span>
   </div>
+</div>
 
-  @if (listboxVisible()) {
-    @if (loading()) {
-      <div class="au-field-listbox__item au-field-listbox__item--loading">
-        <au-spinner
-          size="sm"
-          label="Loading…"
-        />
-      </div>
-    } @else if (showEmpty()) {
-      <div
-        class="au-field-listbox__item au-field-listbox__item--empty"
-        role="status"
-      >
-        {{ emptyMessage() }}
-      </div>
-    } @else {
-      <ul
-        #listboxEl
-        [id]="listboxId()"
-        class="au-select__listbox au-field-listbox"
-        role="listbox"
-        [attr.aria-label]="formField.label() || 'Options'"
-      >
+<ng-template
+  ngComboboxPopup
+  [combobox]="combobox"
+>
+  @if (loading()) {
+    <div class="au-field-listbox__item au-field-listbox__item--loading">
+      <au-spinner
+        size="sm"
+        label="Loading…"
+      />
+    </div>
+  } @else if (showEmpty()) {
+    <div
+      class="au-field-listbox__item au-field-listbox__item--empty"
+      role="status"
+    >
+      {{ emptyMessage() }}
+    </div>
+  } @else {
+    <ul
+      ngComboboxWidget
+      ngListbox
+      #listbox="ngListbox"
+      [activeDescendant]="listbox.activeDescendant()"
+      [id]="listboxId()"
+      class="au-select__listbox au-field-listbox"
+      [(value)]="listboxValue"
+      focusMode="activedescendant"
+      selectionMode="explicit"
+      [softDisabled]="false"
+      [attr.aria-label]="formField.label() || 'Options'"
+    >
         @if (hasPlaceholder()) {
           <li
+            ngOption
+            #placeholderOpt="ngOption"
+            [value]="placeholderOptionValue"
+            [label]="placeholder()"
             [id]="placeholderOptionId()"
             class="au-field-listbox__option au-field-listbox__option--placeholder"
-            role="option"
-            [attr.aria-selected]="value() === null"
-            [class.au-field-listbox__option--active]="
-              highlightedIndex() === placeholderOptionIndex()
-            "
-            (mouseenter)="onOptionPointerEnter(placeholderOptionIndex())"
-            (mousedown)="onPlaceholderPointerDown($event)"
+            [class.au-field-listbox__option--active]="placeholderOpt.active()"
+            [class.au-field-listbox__option--selected]="value() === null"
           >
             {{ placeholder() }}
           </li>
         }
         @for (opt of options(); track opt.value; let i = $index) {
           <li
+            ngOption
+            #rowOpt="ngOption"
+            [value]="opt.value"
+            [label]="opt.label"
+            [disabled]="opt.disabled"
             [id]="optionId(i)"
             class="au-field-listbox__option"
-            role="option"
-            [attr.aria-selected]="value() === opt.value"
-            [attr.aria-disabled]="opt.disabled ? 'true' : null"
-            [class.au-field-listbox__option--active]="highlightedIndex() === optionListIndex(i)"
+            [class.au-field-listbox__option--active]="rowOpt.active()"
             [class.au-field-listbox__option--selected]="value() === opt.value"
             [class.au-field-listbox__option--disabled]="opt.disabled"
-            (mouseenter)="onOptionPointerEnter(optionListIndex(i), opt)"
-            (mousedown)="onOptionPointerDown($event, opt)"
           >
             {{ opt.label }}
           </li>
         }
       </ul>
     }
-  }
-</div>
+</ng-template>
 
 @if (name()) {
   <input

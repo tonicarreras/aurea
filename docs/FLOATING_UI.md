@@ -53,6 +53,48 @@ Use this when adding or changing an anchored panel:
 - [ ] **Motion:** respect `prefers-reduced-motion` for enter animations.
 - [ ] **Contrast:** portaled theme matches trigger context (especially drawer/dialog).
 
+## Angular Aria (`@angular/aria`)
+
+Behaviour for complex WAI-ARIA patterns is delegated to [`@angular/aria`](https://angular.dev/guide/aria/overview) where it fits the Aurea API. Consumers need `@angular/aria` and `@angular/cdk` as peer dependencies (see `projects/components/package.json`).
+
+### Projection bridge (tabs, accordion)
+
+Projected children cannot host `@angular/aria` directives directly — Angular DI for those directives lives in the parent view, not in projected content.
+
+**`au-tabs`** and **`au-accordion`** use the same **bridge**:
+
+1. Projected triggers/panels register with the parent via `inject(AuTabs)` / `inject(AuAccordion)` (valid for projected content).
+2. Projected nodes stay in the DOM for author markup but are `hidden` / `aria-hidden`.
+3. The parent renders internal Aria hosts (`ngTab`, `ngAccordionTrigger`, …) and copies panel content into `[data-au-panel-host]` nodes via `afterRenderEffect` ([`projection-bridge.ts`](../../projects/components/src/lib/overlay/projection-bridge.ts)).
+4. Registry order follows DOM order (`sortRegistryByDomOrder`).
+
+Public APIs (`auTab`, `auAccordionItem`, `[(value)]`, …) are unchanged.
+
+### Field combobox (select, autocomplete)
+
+`au-select` and `au-autocomplete` combine **Angular Aria** combobox/listbox behaviour with Aurea's **portaled** listbox chrome:
+
+```text
+ngCombobox + ngComboboxPopup (Aria popup lifecycle, keyboard, ARIA attrs)
+  → <ul ngListbox> inside popup template
+  → FieldListboxOverlay syncs the listbox to document.body / <dialog> (position, width, scroll lock)
+```
+
+Shared value sync lives in [`field-combobox-sync.ts`](../../projects/components/src/lib/overlay/field-combobox-sync.ts):
+
+- `value` ↔ `listboxValue` (effects with `untracked()` to avoid cycles)
+- Re-click on the selected option closes without clearing value
+- `listboxVisible` / `showNoResults` respect `disabled` and `readOnly`
+- Native forms: hidden `<input name>` submits option `value`, not display text
+
+`[softDisabled]="false"` on `ngCombobox` — Aurea owns `disabled`/`readOnly`; Aria must still handle programmatic focus in tests and overlay focus moves.
+
+### Not yet on Angular Aria
+
+| Component | Blocker |
+| --------- | ------- |
+| `au-menu` | Projected items + `TooltipOverlay` portaling |
+
 ## Extending
 
 1. Reuse `TooltipOverlay` or `FloatingPickerOverlay` — do not reimplement `position: fixed` math.
@@ -64,4 +106,6 @@ Use this when adding or changing an anchored panel:
 - [`projects/components/src/lib/overlay/tooltip-overlay.ts`](../../projects/components/src/lib/overlay/tooltip-overlay.ts)
 - [`projects/components/src/lib/overlay/floating-picker-overlay.ts`](../../projects/components/src/lib/overlay/floating-picker-overlay.ts)
 - [`projects/components/src/lib/overlay/field-listbox-overlay.ts`](../../projects/components/src/lib/overlay/field-listbox-overlay.ts)
+- [`projects/components/src/lib/overlay/field-combobox-sync.ts`](../../projects/components/src/lib/overlay/field-combobox-sync.ts)
+- [`projects/components/src/lib/overlay/projection-bridge.ts`](../../projects/components/src/lib/overlay/projection-bridge.ts)
 - [`projects/components/src/lib/styles/au-floating-panel.css`](../../projects/components/src/lib/styles/au-floating-panel.css)

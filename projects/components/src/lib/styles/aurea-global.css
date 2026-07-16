@@ -3644,7 +3644,7 @@ au-description-list[data-au-columns='3'][data-au-layout='vertical'] .au-descript
 /* --- ./au-accordion.css --- */
 /**
  * Accordion — projected consumer markup (ng-content).
- * Root host: accordion.css · Panels: au-accordion-panel.css
+ * Root host: accordion.css · Projected triggers: au-accordion.css
  */
 
 au-accordion .au-accordion__item {

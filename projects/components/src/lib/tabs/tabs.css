@@ -201,7 +201,8 @@ au-tabs[data-au-variant='contained'] .au-tabs__tab--selected::after {
   line-height: var(--au-leading-normal);
 }
 
-.au-tabs__panel[hidden] {
+.au-tabs__panel[hidden],
+.au-tabs__panel[inert] {
   display: none !important;
 }
 

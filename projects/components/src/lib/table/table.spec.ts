@@ -571,6 +571,49 @@ describe('AuTable selection', () => {
     expect(fixture.componentInstance.selection.length).toBe(2);
   });
 
+  it('select-all toggles only the current page when paginated', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table
+          [data]="rows"
+          selectionMode="multiple"
+          [(selection)]="selection"
+          [paginated]="true"
+          [pageSize]="2"
+          [page]="1"
+        >
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+        </au-table>
+      `,
+    })
+    class PaginatedSelectHost {
+      rows = [
+        { id: 1, name: 'Ada' },
+        { id: 2, name: 'Grace' },
+        { id: 3, name: 'Katherine' },
+      ];
+      selection: readonly unknown[] = [];
+    }
+
+    await TestBed.configureTestingModule({ imports: [PaginatedSelectHost] }).compileComponents();
+    const fixture = TestBed.createComponent(PaginatedSelectHost);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const selectAll = root.querySelector(
+      '.au-table__header-cell--select input.au-checkbox__element',
+    ) as HTMLInputElement;
+    selectAll.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.selection.length).toBe(2);
+    expect(
+      fixture.componentInstance.selection.map((r) => (r as { name: string }).name),
+    ).toEqual(['Ada', 'Grace']);
+  });
+
   it('select-all toggles every visible row', async () => {
     await TestBed.configureTestingModule({ imports: [MultiSelectHost] }).compileComponents();
     const fixture = TestBed.createComponent(MultiSelectHost);
@@ -793,3 +836,152 @@ describe('AuTable selection', () => {
     expect(table.selection()).toBe(before);
   });
 });
+
+describe('AuTable pagination and virtual scroll', () => {
+  it('slices rows for client pagination and renders footer', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table
+          [data]="rows"
+          [paginated]="true"
+          [pageSize]="2"
+          [(page)]="page"
+        >
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+        </au-table>
+      `,
+    })
+    class PaginatedHost {
+      rows = [{ name: 'a' }, { name: 'b' }, { name: 'c' }];
+      page = 1;
+    }
+
+    await TestBed.configureTestingModule({ imports: [PaginatedHost] }).compileComponents();
+    const fixture = TestBed.createComponent(PaginatedHost);
+    await fixture.whenStable();
+    const table = tableInstance(fixture);
+    const root = fixture.nativeElement as HTMLElement;
+    expect(table.paginatedRows().map((r) => (r as { name: string }).name)).toEqual(['a', 'b']);
+    expect(root.querySelector('.au-table__footer au-pagination')).toBeTruthy();
+    expect(root.querySelectorAll('tbody tr.au-table__row').length).toBe(2);
+    expect(hostAttr(fixture, 'data-au-paginated')).toBe('');
+  });
+
+  it('uses server totalRows without client slice', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table
+          [data]="rows"
+          [paginated]="true"
+          [totalRows]="100"
+          [clientSort]="false"
+          [pageSize]="25"
+          [page]="3"
+        >
+          <au-table-column
+            name="name"
+            header="Name"
+            [sortable]="true"
+          />
+        </au-table>
+      `,
+    })
+    class ServerPaginatedHost {
+      rows = [{ name: 'server-a' }, { name: 'server-b' }];
+    }
+
+    await TestBed.configureTestingModule({ imports: [ServerPaginatedHost] }).compileComponents();
+    const fixture = TestBed.createComponent(ServerPaginatedHost);
+    await fixture.whenStable();
+    const table = tableInstance(fixture);
+    expect(table.totalRowCount()).toBe(100);
+    expect(table.pageCount()).toBe(4);
+    expect(table.paginatedRows().map((r) => (r as { name: string }).name)).toEqual([
+      'server-a',
+      'server-b',
+    ]);
+    expect(table.viewRows().map((r) => (r as { name: string }).name)).toEqual([
+      'server-a',
+      'server-b',
+    ]);
+  });
+
+  it('virtual scroll renders only visible rows and spacers', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table
+          [data]="rows"
+          [virtualScroll]="true"
+          [rowHeight]="44"
+          [viewportHeight]="200"
+          [virtualOverscan]="1"
+        >
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+        </au-table>
+      `,
+    })
+    class VirtualHost {
+      rows = Array.from({ length: 30 }, (_, i) => ({ name: `row-${i + 1}` }));
+    }
+
+    await TestBed.configureTestingModule({ imports: [VirtualHost] }).compileComponents();
+    const fixture = TestBed.createComponent(VirtualHost);
+    await fixture.whenStable();
+    const table = tableInstance(fixture);
+    const root = fixture.nativeElement as HTMLElement;
+    expect(table.bodyRows().length).toBeLessThan(30);
+    expect(root.querySelectorAll('tbody tr.au-table__row').length).toBe(table.bodyRows().length);
+    expect(hostAttr(fixture, 'data-au-virtual')).toBe('');
+    expect(root.querySelector('.au-table__scroll--virtual')).toBeTruthy();
+
+    const scroll = root.querySelector('.au-table__scroll') as HTMLElement;
+    scroll.scrollTop = 44 * 10;
+    scroll.dispatchEvent(new Event('scroll'));
+    await fixture.whenStable();
+    expect(table.bodyRows().length).toBeLessThan(30);
+    expect(root.querySelector('.au-table__spacer-row')).toBeTruthy();
+  });
+
+  it('clamps page when pageCount shrinks', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table
+          [data]="rows"
+          [paginated]="true"
+          [pageSize]="2"
+          [(page)]="page"
+        >
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+        </au-table>
+      `,
+    })
+    class PageClampHost {
+      rows = [{ name: 'a' }, { name: 'b' }, { name: 'c' }];
+      page = 3;
+    }
+
+    await TestBed.configureTestingModule({ imports: [PageClampHost] }).compileComponents();
+    const fixture = TestBed.createComponent(PageClampHost);
+    await fixture.whenStable();
+    expect(fixture.componentInstance.page).toBe(2);
+  });
+});
+
+function hostAttr(fixture: ComponentFixture<unknown>, name: string): string | null {
+  return (fixture.debugElement.query(By.directive(AuTable)).nativeElement as HTMLElement).getAttribute(
+    name,
+  );
+}

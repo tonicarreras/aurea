@@ -1,6 +1,24 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  afterRenderEffect,
+  computed,
+  inject,
+  input,
+  model,
+  signal,
+} from '@angular/core';
+import {
+  AccordionContent,
+  AccordionGroup,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@angular/aria/accordion';
 
+import { sortRegistryByDomOrder } from '../overlay/projection-bridge';
 import { AuAccordionItem } from './au-accordion-item.directive';
+import { AuAccordionPanel } from './au-accordion-panel';
 
 export type AuAccordionVariant = 'plain' | 'contained';
 
@@ -11,13 +29,14 @@ export type AuAccordionVariant = 'plain' | 'contained';
  * - **Value:** `[(value)]` lists expanded section keys.
  * - **Structure:** `button[auAccordionItem]` + `au-accordion-panel` with matching keys.
  * - **Variant:** `plain` (dividers only) or `contained` (raised surface, like a card shell).
- * - **Keyboard:** Arrow Up/Down move focus; Home/End jump; Enter/Space toggle.
+ * - **Accessibility:** Behaviour delegated to `@angular/aria/accordion`.
  */
 @Component({
   selector: 'au-accordion',
   templateUrl: './accordion.html',
   styleUrl: './accordion.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AccordionGroup, AccordionTrigger, AccordionPanel, AccordionContent],
   host: {
     class: 'au-accordion',
     '[attr.data-au-variant]': 'variant()',
@@ -27,14 +46,15 @@ export type AuAccordionVariant = 'plain' | 'contained';
 export class AuAccordion {
   private static idCounter = 0;
 
+  private readonly host = inject(ElementRef<HTMLElement>);
   private readonly itemRegistry = signal<readonly AuAccordionItem[]>([]);
+  private readonly panelRegistry = signal<readonly AuAccordionPanel[]>([]);
 
   /** Expanded section keys. */
   readonly value = model<string[]>([]);
   /** When false, opening one section closes the others. */
   readonly multiple = input(true);
   readonly ariaLabel = input<string>('');
-  /** `plain` embeds in the page; `contained` adds raised surface and outer border. */
   readonly variant = input<AuAccordionVariant>('plain');
   readonly size = input<'sm' | 'md'>('md');
   readonly id = input<string>('');
@@ -44,6 +64,30 @@ export class AuAccordion {
     return custom || `au-accordion-${++AuAccordion.idCounter}`;
   });
 
+  readonly renderedItems = computed((): readonly AuAccordionItem[] =>
+    sortRegistryByDomOrder(this.itemRegistry(), this.host.nativeElement),
+  );
+
+  constructor() {
+    afterRenderEffect(() => {
+      this.renderedItems();
+      this.panelRegistry();
+      this.value();
+      for (const panel of this.panelRegistry()) {
+        const destination = this.host.nativeElement.querySelector(
+          `[data-au-panel-host="${panel.panel()}"]`,
+        ) as HTMLElement | null;
+        const source = panel.element.nativeElement;
+        if (!destination || destination === source || destination.contains(source)) {
+          continue;
+        }
+        while (source.firstChild) {
+          destination.appendChild(source.firstChild);
+        }
+      }
+    });
+  }
+
   registerItem(item: AuAccordionItem): void {
     this.itemRegistry.update((list) => (list.includes(item) ? list : [...list, item]));
   }
@@ -52,24 +96,30 @@ export class AuAccordion {
     this.itemRegistry.update((list) => list.filter((entry) => entry !== item));
   }
 
-  getEnabledItems(): readonly AuAccordionItem[] {
-    return this.itemRegistry().filter((item) => !item.auAccordionItemDisabled());
+  registerPanel(panel: AuAccordionPanel): void {
+    this.panelRegistry.update((list) => (list.includes(panel) ? list : [...list, panel]));
+  }
+
+  unregisterPanel(panel: AuAccordionPanel): void {
+    this.panelRegistry.update((list) => list.filter((entry) => entry !== panel));
   }
 
   isExpanded(key: string): boolean {
     return this.value().includes(key);
   }
 
-  toggleItem(key: string): void {
-    if (this.isExpanded(key)) {
-      this.setValue(this.value().filter((entry) => entry !== key));
+  onItemExpandedChange(key: string, expanded: boolean): void {
+    if (expanded) {
+      if (this.multiple()) {
+        if (!this.isExpanded(key)) {
+          this.value.update((current) => [...current, key]);
+        }
+        return;
+      }
+      this.value.set([key]);
       return;
     }
-    if (this.multiple()) {
-      this.setValue([...this.value(), key]);
-      return;
-    }
-    this.setValue([key]);
+    this.value.update((current) => current.filter((entry) => entry !== key));
   }
 
   triggerIdFor(key: string): string {
@@ -78,45 +128,5 @@ export class AuAccordion {
 
   panelIdFor(key: string): string {
     return `${this.resolvedId()}-panel-${key}`;
-  }
-
-  onRootKeydown(event: KeyboardEvent): void {
-    const enabled = this.getEnabledItems();
-    if (enabled.length === 0) {
-      return;
-    }
-
-    const relevant = new Set(['ArrowDown', 'ArrowUp', 'Home', 'End']);
-    if (!relevant.has(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const active = document.activeElement;
-    const currentIndex = enabled.findIndex((item) => item.hostElement() === active);
-    const start = currentIndex >= 0 ? currentIndex : 0;
-    let targetIndex = start;
-
-    switch (event.key) {
-      case 'ArrowDown':
-        targetIndex = (start + 1) % enabled.length;
-        break;
-      case 'ArrowUp':
-        targetIndex = (start - 1 + enabled.length) % enabled.length;
-        break;
-      case 'Home':
-        targetIndex = 0;
-        break;
-      case 'End':
-        targetIndex = enabled.length - 1;
-        break;
-    }
-
-    enabled[targetIndex]?.focus();
-  }
-
-  private setValue(next: string[]): void {
-    this.value.set(next);
   }
 }

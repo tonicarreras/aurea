@@ -1,8 +1,10 @@
-import { Directive, computed, inject, input } from '@angular/core';
+import { Directive, ElementRef, afterNextRender, inject, input, OnDestroy } from '@angular/core';
 import { AuTabs } from './tabs';
 
 /**
  * Tab panel inside `au-tabs`. Pair with a tab button using the same key.
+ *
+ * Projected content is moved into an internal `ngTabPanel` host rendered by `au-tabs`.
  *
  * @example
  * ```html
@@ -12,22 +14,21 @@ import { AuTabs } from './tabs';
 @Directive({
   selector: '[auTabPanel]',
   host: {
-    class: 'au-tabs__panel',
-    role: 'tabpanel',
-    '[class.au-tabs__panel--active]': 'isActive()',
-    '[attr.id]': 'panelId()',
-    '[attr.aria-labelledby]': 'tabId()',
-    '[attr.hidden]': 'isHidden() ? "" : null',
-    '[attr.tabindex]': 'isActive() ? 0 : null',
+    hidden: '',
+    'aria-hidden': 'true',
   },
 })
-export class AuTabPanel {
+export class AuTabPanel implements OnDestroy {
+  readonly element = inject(ElementRef<HTMLElement>);
   private readonly tabs = inject(AuTabs);
 
   readonly auTabPanel = input.required<string>();
 
-  readonly panelId = computed(() => this.tabs.panelIdFor(this.auTabPanel()));
-  readonly tabId = computed(() => this.tabs.tabIdFor(this.auTabPanel()));
-  readonly isActive = computed(() => this.tabs.value() === this.auTabPanel());
-  readonly isHidden = computed(() => !this.isActive());
+  private readonly registerWhenReady = afterNextRender(() => {
+    this.tabs.registerPanel(this);
+  });
+
+  ngOnDestroy(): void {
+    this.tabs.unregisterPanel(this);
+  }
 }

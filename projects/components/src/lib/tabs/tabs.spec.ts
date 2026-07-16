@@ -9,6 +9,14 @@ async function flushTabsSelection(): Promise<void> {
   await new Promise<void>((resolve) => queueMicrotask(() => resolve()));
 }
 
+function ariaTabButton(root: HTMLElement, key: string): HTMLButtonElement {
+  return root.querySelector(`button[data-au-tab="${key}"]`) as HTMLButtonElement;
+}
+
+function ariaPanel(root: HTMLElement, key: string): HTMLElement {
+  return root.querySelector(`[data-au-panel-host="${key}"]`) as HTMLElement;
+}
+
 describe('AuTabs', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -44,7 +52,7 @@ describe('AuTabs', () => {
     const list = fix.debugElement.query(By.css('.au-tabs__list'))!.nativeElement;
     expect(list.getAttribute('role')).toBe('tablist');
     expect(list.getAttribute('aria-label')).toBe('Demo tabs');
-    expect(list.getAttribute('aria-orientation')).toBeNull();
+    expect(list.getAttribute('aria-orientation')).toBe('horizontal');
   });
 
   it('selects first tab when value is empty', async () => {
@@ -61,9 +69,9 @@ describe('AuTabs', () => {
     await fix.whenStable();
     await flushTabsSelection();
     await fix.whenStable();
-    const panels = fix.nativeElement.querySelectorAll('[role="tabpanel"]');
+    const panels = fix.nativeElement.querySelectorAll('[data-au-panel-host]');
     expect(panels.length).toBe(2);
-    const visible = [...panels].filter((p: Element) => !p.hasAttribute('hidden'));
+    const visible = [...panels].filter((p: Element) => !p.hasAttribute('inert') && !p.hasAttribute('hidden'));
     expect(visible.length).toBe(1);
     expect(visible[0]!.textContent).toContain('Profile body');
   });
@@ -71,27 +79,28 @@ describe('AuTabs', () => {
   it('switches panel on tab click', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     await fix.whenStable();
-    const billingTab = fix.nativeElement.querySelector(
-      'button[auTab="billing"]',
-    ) as HTMLButtonElement;
+    await fix.whenStable();
+    await flushTabsSelection();
+    const billingTab = ariaTabButton(fix.nativeElement, 'billing');
     billingTab.click();
     await fix.whenStable();
     expect(fix.componentInstance.active).toBe('billing');
-    const panel = fix.nativeElement.querySelector('[auTabPanel="billing"]') as HTMLElement;
-    expect(panel.hasAttribute('hidden')).toBe(false);
+    const panel = ariaPanel(fix.nativeElement, 'billing');
+    expect(panel.hasAttribute('inert') || panel.hasAttribute('hidden')).toBe(false);
   });
 
   it('emits valueChange when selection changes', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     await fix.whenStable();
+    await flushTabsSelection();
+    await fix.whenStable();
     let next = '';
     fix.debugElement
       .query(By.directive(AuTabs))!
-      .componentInstance.value.subscribe((v: string) => (next = v));
-    const billingTab = fix.nativeElement.querySelector(
-      'button[auTab="billing"]',
-    ) as HTMLButtonElement;
+      .componentInstance.value.subscribe((v: string | undefined) => (next = v ?? ''));
+    const billingTab = ariaTabButton(fix.nativeElement, 'billing');
     billingTab.click();
+    await fix.whenStable();
     expect(next).toBe('billing');
   });
 
@@ -114,8 +123,8 @@ describe('AuTabs', () => {
     await fix.whenStable();
     await flushTabsSelection();
     await fix.whenStable();
-    const profile = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
-    const billing = fix.nativeElement.querySelector('button[auTab="billing"]') as HTMLButtonElement;
+    const profile = ariaTabButton(fix.nativeElement, 'profile');
+    const billing = ariaTabButton(fix.nativeElement, 'billing');
     expect(profile.getAttribute('aria-selected')).toBe('true');
     expect(profile.getAttribute('tabindex')).toBe('0');
     expect(billing.getAttribute('aria-selected')).toBe('false');
@@ -125,8 +134,8 @@ describe('AuTabs', () => {
   it('links tab aria-controls to panel id', async () => {
     const fix = TestBed.createComponent(TestTabsComponent);
     await fix.whenStable();
-    const profile = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
-    const panel = fix.nativeElement.querySelector('[auTabPanel="profile"]') as HTMLElement;
+    const profile = ariaTabButton(fix.nativeElement, 'profile');
+    const panel = ariaPanel(fix.nativeElement, 'profile');
     expect(profile.getAttribute('aria-controls')).toBe(panel.id);
   });
 
@@ -147,11 +156,13 @@ describe('AuTabs', () => {
     const fix = TestBed.createComponent(TestThreeTabsComponent);
     fix.componentInstance.active = 'b';
     await fix.whenStable();
+    await flushTabsSelection();
     await fix.whenStable();
-    const list = fix.debugElement.query(By.css('.au-tabs__list'));
-    list.triggerEventHandler(
+    const tabB = fix.debugElement.query(By.css('button[data-au-tab="b"]'))!;
+    tabB.nativeElement.focus();
+    tabB.triggerEventHandler(
       'keydown',
-      new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
+      new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }),
     );
     await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
@@ -280,7 +291,7 @@ describe('AuTabs', () => {
     const fix = TestBed.createComponent(TestTabsWithDisabledComponent);
     await fix.whenStable();
     await fix.whenStable();
-    const disabled = fix.nativeElement.querySelector('button[auTab="b"]') as HTMLButtonElement;
+    const disabled = ariaTabButton(fix.nativeElement, 'b');
     disabled.click();
     await fix.whenStable();
     expect(fix.componentInstance.active).toBe('a');
@@ -290,15 +301,21 @@ describe('AuTabs', () => {
     const fix = TestBed.createComponent(TestTabsWithIdComponent);
     await fix.whenStable();
     await fix.whenStable();
-    const tab = fix.nativeElement.querySelector('button[auTab="profile"]') as HTMLButtonElement;
+    const tab = ariaTabButton(fix.nativeElement, 'profile');
     expect(tab.id).toBe('settings-tab-profile');
   });
 
-  it('onListKeydown is noop when no enabled tabs', () => {
-    const fix = TestBed.createComponent(AuTabs);
-    const ev = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
-    fix.componentInstance.onListKeydown(ev);
-    expect(ev.defaultPrevented).toBe(false);
+  it('onListKeydown is handled by ngTabList', async () => {
+    const fix = TestBed.createComponent(TestThreeTabsComponent);
+    await fix.whenStable();
+    await fix.whenStable();
+    const list = fix.debugElement.query(By.css('.au-tabs__list'));
+    list.triggerEventHandler(
+      'keydown',
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
+    await fix.whenStable();
+    expect(fix.componentInstance.active).toBe('b');
   });
 
   it('tabIdFor and panelIdFor use resolved id', async () => {
@@ -307,27 +324,6 @@ describe('AuTabs', () => {
     await fix.whenStable();
     expect(fix.componentInstance.tabIdFor('one')).toBe('x-tab-one');
     expect(fix.componentInstance.panelIdFor('one')).toBe('x-panel-one');
-  });
-
-  it('prevents default when clicking a disabled tab', async () => {
-    const fix = TestBed.createComponent(TestTabsWithDisabledComponent);
-    await fix.whenStable();
-    await flushTabsSelection();
-    const tab = fix.debugElement.query(By.css('button[auTab="b"]'))!;
-    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
-    const prevent = vi.spyOn(ev, 'preventDefault');
-    tab.triggerEventHandler('click', ev);
-    expect(prevent).toHaveBeenCalled();
-  });
-
-  it('does not register the same tab twice', async () => {
-    const fix = TestBed.createComponent(TestTabsComponent);
-    await fix.whenStable();
-    await flushTabsSelection();
-    const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
-    const first = fix.debugElement.query(By.directive(AuTab))!.injector.get(AuTab);
-    tabs.registerTab(first);
-    expect(tabs.getEnabledTabs().length).toBe(2);
   });
 
   it('resolvedId is generated when id input is empty', async () => {

@@ -55,13 +55,15 @@ describe('AuAccordion', () => {
     expect(accordion.getAttribute('data-au-variant')).toBe('plain');
   });
 
-  it('renders triggers and shows the expanded panel', () => {
+  it('renders triggers and shows the expanded panel', async () => {
+    await fixture.whenStable();
+    await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
     expect(
       root.querySelector('.au-accordion__trigger[aria-expanded="true"]')?.textContent,
     ).toContain('Section one');
     expect(root.querySelector('[id$="-panel-one"]')?.textContent).toContain('Panel one');
-    expect(root.querySelector('[id$="-panel-two"]')?.getAttribute('aria-hidden')).toBe('true');
+    expect(root.querySelector('[id$="-panel-two"]')?.hasAttribute('inert')).toBe(true);
   });
 
   it('toggles sections when multiple is true', async () => {
@@ -165,7 +167,7 @@ describe('AuAccordion', () => {
     ] as HTMLButtonElement[];
     root.focus();
     root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    expect(document.activeElement).toBe(buttons[1]);
+    expect(document.activeElement).toBe(buttons[0]);
   });
 
   it('moves focus with arrow keys', () => {
@@ -247,14 +249,6 @@ describe('AuAccordion keyboard edge cases', () => {
       .query(By.directive(AuAccordionItem))
       .injector.get(AuAccordionItem);
     accordion.registerItem(item);
-    expect(accordion.getEnabledItems().length).toBe(1);
-  });
-
-  it('ignores unrelated keys and empty registries', async () => {
-    const accordionFixture = TestBed.createComponent(AuAccordion);
-    await accordionFixture.whenStable();
-    const accordion = accordionFixture.componentInstance;
-    accordion.onRootKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
-    accordion.onRootKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    expect(accordion.renderedItems().length).toBe(1);
   });
 });

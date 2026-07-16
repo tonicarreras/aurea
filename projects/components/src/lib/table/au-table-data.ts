@@ -7,6 +7,14 @@ export interface AuTableColumnReader {
   readonly sortable?: boolean;
 }
 
+export interface AuTableVirtualWindow {
+  readonly startIndex: number;
+  readonly endIndex: number;
+  readonly topSpacerPx: number;
+  readonly bottomSpacerPx: number;
+  readonly visibleRows: readonly unknown[];
+}
+
 export function formatTableCellText(value: unknown): string {
   if (value == null) {
     return '';
@@ -66,6 +74,70 @@ export function resolveTableViewRows<T>(
     return rows;
   }
   return sortTableRows(rows, col, sort.direction);
+}
+
+/** Total rows for pagination (explicit server total or local row count). */
+export function resolveTableTotalRows(rowCount: number, totalRows?: number): number {
+  return totalRows ?? rowCount;
+}
+
+export function tablePageCount(totalRows: number, pageSize: number): number {
+  const size = Math.max(1, pageSize);
+  return Math.max(1, Math.ceil(Math.max(0, totalRows) / size));
+}
+
+/** Slice rows for the active page (client pagination). */
+export function resolveTablePaginatedRows<T>(
+  rows: readonly T[],
+  page: number,
+  pageSize: number,
+): readonly T[] {
+  const size = Math.max(1, pageSize);
+  const safePage = Math.min(Math.max(1, page), tablePageCount(rows.length, size));
+  const start = (safePage - 1) * size;
+  return rows.slice(start, start + size);
+}
+
+export function resolveTableVirtualWindow(
+  rows: readonly unknown[],
+  scrollTop: number,
+  viewportHeight: number,
+  rowHeight: number,
+  overscan: number,
+): AuTableVirtualWindow {
+  const total = rows.length;
+  const safeRowHeight = Math.max(1, rowHeight);
+  const safeViewport = Math.max(0, viewportHeight);
+  if (total === 0) {
+    return {
+      startIndex: 0,
+      endIndex: 0,
+      topSpacerPx: 0,
+      bottomSpacerPx: 0,
+      visibleRows: [],
+    };
+  }
+  const startIndex = Math.max(0, Math.floor(scrollTop / safeRowHeight) - Math.max(0, overscan));
+  const visibleCount = Math.ceil(safeViewport / safeRowHeight) + Math.max(0, overscan) * 2;
+  const endIndex = Math.min(total, startIndex + visibleCount);
+  return {
+    startIndex,
+    endIndex,
+    topSpacerPx: startIndex * safeRowHeight,
+    bottomSpacerPx: (total - endIndex) * safeRowHeight,
+    visibleRows: rows.slice(startIndex, endIndex),
+  };
+}
+
+export function createTableSelectionLookup(
+  selection: readonly unknown[],
+  compare: (a: unknown, b: unknown) => boolean,
+): (row: unknown) => boolean {
+  if (selection.length === 0) {
+    return () => false;
+  }
+  const identity = new Set(selection);
+  return (row) => identity.has(row) || selection.some((selected) => compare(selected, row));
 }
 
 export function toggleTableSortState(
