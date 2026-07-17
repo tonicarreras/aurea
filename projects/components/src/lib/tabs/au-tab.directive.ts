@@ -1,7 +1,7 @@
 import {
   Directive,
   afterNextRender,
-  computed,
+  afterRenderEffect,
   inject,
   input,
   OnDestroy,
@@ -41,9 +41,16 @@ export class AuTab implements OnDestroy {
 
   readonly focusByTab = signal(false);
 
-  /* v8 ignore start -- HTMLElement textContent is always a string */
-  readonly label = computed(() => this.element.nativeElement.textContent?.trim() ?? '');
-  /* v8 ignore stop */
+  /** Visible label for the Aria-rendered tab (synced from projected content). */
+  private readonly labelState = signal('');
+  readonly label = this.labelState.asReadonly();
+
+  private readonly syncLabel = afterRenderEffect(() => {
+    const next = this.element.nativeElement.textContent?.trim() ?? '';
+    if (this.labelState() !== next) {
+      this.labelState.set(next);
+    }
+  });
 
   private readonly registerWhenReady = afterNextRender(() => {
     this.tabs.registerTab(this);

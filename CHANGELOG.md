@@ -9,6 +9,18 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.3.2] - 2026-07-17
+
+### Added
+
+- **`au-chip` `icon`** — optional leading `AuIconName` rendered before the label (keeps selectable chips readable without relying on projected content).
+
+## [2.3.1] - 2026-07-17
+
+### Fixed
+
+- **`au-tab` / `auAccordionItem` labels** — sync projected `textContent` via `afterRenderEffect` into a signal so Aria-rendered triggers keep visible labels (the previous `computed` had no reactive deps and could cache an empty string).
+
 ## [2.3.0] - 2026-07-17
 
 ### Added

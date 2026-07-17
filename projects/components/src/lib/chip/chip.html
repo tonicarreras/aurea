@@ -10,8 +10,15 @@
     (click)="onChipClick($event)"
   >
     <span class="au-chip__label">
+      @if (icon(); as iconName) {
+        <au-icon
+          class="au-chip__icon"
+          [name]="iconName"
+          size="sm"
+        />
+      }
       @if (resolvedLabel()) {
-        {{ resolvedLabel() }}
+        <span class="au-chip__text">{{ resolvedLabel() }}</span>
       } @else {
         <ng-content />
       }
@@ -23,8 +30,15 @@
     [class.au-chip__surface--disabled]="disabled()"
   >
     <span class="au-chip__label">
+      @if (icon(); as iconName) {
+        <au-icon
+          class="au-chip__icon"
+          [name]="iconName"
+          size="sm"
+        />
+      }
       @if (resolvedLabel()) {
-        {{ resolvedLabel() }}
+        <span class="au-chip__text">{{ resolvedLabel() }}</span>
       } @else {
         <ng-content />
       }
