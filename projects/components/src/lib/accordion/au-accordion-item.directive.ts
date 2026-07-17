@@ -45,7 +45,7 @@ export class AuAccordionItem implements OnDestroy {
   readonly label = this.labelState.asReadonly();
 
   private readonly syncLabel = afterRenderEffect(() => {
-    const next = this.element.nativeElement.textContent?.trim() ?? '';
+    const next = this.element.nativeElement.textContent.trim();
     if (this.labelState() !== next) {
       this.labelState.set(next);
     }

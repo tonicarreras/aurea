@@ -20,6 +20,10 @@ describe('field-temporal-native-guard', () => {
     expect(matchMedia).toHaveBeenCalledWith(AU_COARSE_POINTER_MQ);
   });
 
+  it('prefersCoarsePointer returns false without a browser window', () => {
+    expect(prefersCoarsePointer(null)).toBe(false);
+  });
+
   it('restoreTemporalPickerFocus focuses the icon on coarse pointers', () => {
     vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }));
     const input = document.createElement('input');
@@ -71,5 +75,23 @@ describe('field-temporal-native-guard', () => {
 
     fix.destroy();
     expect(removeListener).toHaveBeenCalledWith('change', mqListener);
+  });
+
+  it('bindCoarsePointerPreference reports a fine pointer when matchMedia is unavailable', () => {
+    @Component({ template: '' })
+    class Host {}
+
+    const onChange = vi.fn();
+    const fix = TestBed.createComponent(Host);
+
+    bindCoarsePointerPreference(
+      {} as Window,
+      onChange,
+      fix.componentRef.injector.get(DestroyRef),
+    );
+
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange).toHaveBeenCalledWith(false);
+    fix.destroy();
   });
 });
