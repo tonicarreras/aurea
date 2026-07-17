@@ -1,6 +1,6 @@
 import { Component, DestroyRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   AU_COARSE_POINTER_MQ,
@@ -10,6 +10,10 @@ import {
 } from './field-temporal-native-guard';
 
 describe('field-temporal-native-guard', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it('prefersCoarsePointer reads matchMedia', () => {
     const matchMedia = vi.fn().mockReturnValue({ matches: true });
     expect(prefersCoarsePointer({ matchMedia } as unknown as Window)).toBe(true);
