@@ -254,7 +254,7 @@ export const VirtualScroll: Story = {
     const canvas = within(canvasElement);
     await expect(await canvas.findByRole('heading', { name: 'Large roster' })).toBeVisible();
     const rows = await canvas.findAllByRole('row');
-    expect(rows.length).toBeLessThan(120);
+    await expect(rows.length).toBeLessThan(120);
   },
 };
 
@@ -313,8 +313,9 @@ export const ServerPaginated: Story = {
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const page3 = await canvas.findByRole('button', { name: 'Page 3' });
-    await userEvent.click(page3);
+    // Ellipsis pagination on page 1 shows [1, 2, 12]; open page 2 so page 3 appears.
+    await userEvent.click(await canvas.findByRole('button', { name: 'Page 2' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Page 3' }));
     await expect(await canvas.findByRole('cell', { name: 'Member 21' })).toBeVisible();
   },
 };
@@ -336,10 +337,26 @@ export const ServerPaginated: Story = {
       [(page)]="page"
       [striped]="striped()"
     >
-      <au-table-column name="name" header="Name" cellVariant="primary" />
-      <au-table-column name="role" header="Role" cellVariant="secondary" />
-      <au-table-column name="score" header="Score" align="end" />
-      <au-table-column name="status" header="Status" align="center" />
+      <au-table-column
+        name="name"
+        header="Name"
+        cellVariant="primary"
+      />
+      <au-table-column
+        name="role"
+        header="Role"
+        cellVariant="secondary"
+      />
+      <au-table-column
+        name="score"
+        header="Score"
+        align="end"
+      />
+      <au-table-column
+        name="status"
+        header="Status"
+        align="center"
+      />
     </au-table>
   `,
 })

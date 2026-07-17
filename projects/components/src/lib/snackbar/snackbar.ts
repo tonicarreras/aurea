@@ -32,12 +32,7 @@ import { resolveFieldListboxPortalRoot } from '../overlay/field-listbox-overlay'
 
 export type AuSnackbarVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
 export type AuSnackbarPosition =
-  | 'bottom-center'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'top-center'
-  | 'top-start'
-  | 'top-end';
+  'bottom-center' | 'bottom-start' | 'bottom-end' | 'top-center' | 'top-start' | 'top-end';
 
 /**
  * Design-system **snackbar**: brief feedback message with optional action and auto-dismiss.

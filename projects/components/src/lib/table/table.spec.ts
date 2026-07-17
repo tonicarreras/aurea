@@ -609,9 +609,10 @@ describe('AuTable selection', () => {
     selectAll.click();
     await fixture.whenStable();
     expect(fixture.componentInstance.selection.length).toBe(2);
-    expect(
-      fixture.componentInstance.selection.map((r) => (r as { name: string }).name),
-    ).toEqual(['Ada', 'Grace']);
+    expect(fixture.componentInstance.selection.map((r) => (r as { name: string }).name)).toEqual([
+      'Ada',
+      'Grace',
+    ]);
   });
 
   it('select-all toggles every visible row', async () => {
@@ -951,6 +952,73 @@ describe('AuTable pagination and virtual scroll', () => {
     expect(root.querySelector('.au-table__spacer-row')).toBeTruthy();
   });
 
+  it('handles scroll and page events while resetting virtual scroll for sort and page changes', async () => {
+    @Component({
+      imports: [AuTable, AuTableColumn],
+      template: `
+        <au-table
+          [data]="rows"
+          [virtualScroll]="virtual"
+          [paginated]="true"
+          [(page)]="page"
+        >
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+        </au-table>
+        <au-table [data]="rows">
+          <au-table-column
+            name="name"
+            header="Name"
+          />
+        </au-table>
+      `,
+    })
+    class ScrollHost {
+      rows = [{ name: 'a' }, { name: 'b' }];
+      virtual = true;
+      page = 1;
+    }
+
+    await TestBed.configureTestingModule({ imports: [ScrollHost] }).compileComponents();
+    const fixture = TestBed.createComponent(ScrollHost);
+    await fixture.whenStable();
+    const component = tableInstance(fixture);
+    const table = component as unknown as {
+      onScroll(event: Event): void;
+      onPageChange(next: number): void;
+      scrollTop(): number;
+    };
+
+    const viewport = document.createElement('div');
+    viewport.scrollTop = 88;
+    table.onScroll({ currentTarget: viewport } as unknown as Event);
+    expect(table.scrollTop()).toBe(88);
+
+    component.sort.set({ column: 'name', direction: 'asc' });
+    TestBed.flushEffects();
+    expect(table.scrollTop()).toBe(0);
+
+    viewport.scrollTop = 44;
+    table.onScroll({ currentTarget: viewport } as unknown as Event);
+    table.onPageChange(2);
+    TestBed.flushEffects();
+    expect(fixture.componentInstance.page).toBe(2);
+    expect(table.scrollTop()).toBe(0);
+
+    table.onScroll({ currentTarget: {} } as unknown as Event);
+    expect(table.scrollTop()).toBe(0);
+
+    const staticTable = fixture.debugElement.queryAll(By.directive(AuTable))[1]
+      .componentInstance as unknown as {
+      onScroll(event: Event): void;
+      scrollTop(): number;
+    };
+    staticTable.onScroll({ currentTarget: viewport } as unknown as Event);
+    expect(staticTable.scrollTop()).toBe(0);
+  });
+
   it('clamps page when pageCount shrinks', async () => {
     @Component({
       imports: [AuTable, AuTableColumn],
@@ -981,7 +1049,7 @@ describe('AuTable pagination and virtual scroll', () => {
 });
 
 function hostAttr(fixture: ComponentFixture<unknown>, name: string): string | null {
-  return (fixture.debugElement.query(By.directive(AuTable)).nativeElement as HTMLElement).getAttribute(
-    name,
-  );
+  return (
+    fixture.debugElement.query(By.directive(AuTable)).nativeElement as HTMLElement
+  ).getAttribute(name);
 }

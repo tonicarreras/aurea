@@ -91,8 +91,8 @@ Shared value sync lives in [`field-combobox-sync.ts`](../../projects/components/
 
 ### Not yet on Angular Aria
 
-| Component | Blocker |
-| --------- | ------- |
+| Component | Blocker                                      |
+| --------- | -------------------------------------------- |
 | `au-menu` | Projected items + `TooltipOverlay` portaling |
 
 ## Extending

@@ -10,13 +10,13 @@ Repo: **`aurea`** / npm `@aurea-design-system/components`. Consumido por **mirea
 
 ## Skills locales (`.agents/skills/`)
 
-| Skill | Cuándo |
-|-------|--------|
-| `aurea-ds` | Componentes, Storybook, exports, tokens, schematics |
-| `vitest` | Unit tests de la librería |
-| `playwright-best-practices` | Visual / docs E2E Playwright |
-| `bun` | Tooling Bun |
-| `accessibility` | WCAG en componentes |
+| Skill                       | Cuándo                                              |
+| --------------------------- | --------------------------------------------------- |
+| `aurea-ds`                  | Componentes, Storybook, exports, tokens, schematics |
+| `vitest`                    | Unit tests de la librería                           |
+| `playwright-best-practices` | Visual / docs E2E Playwright                        |
+| `bun`                       | Tooling Bun                                         |
+| `accessibility`             | WCAG en componentes                                 |
 
 `skills-lock.json` fija hashes de las skills vendor instaladas vía autoskills.
 

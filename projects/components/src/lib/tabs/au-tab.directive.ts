@@ -1,5 +1,14 @@
-import { Directive, ElementRef, afterNextRender, computed, inject, input, OnDestroy, signal } from '@angular/core';
+import {
+  Directive,
+  afterNextRender,
+  computed,
+  inject,
+  input,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { tabFocusState } from '../au-tab-focus-state';
+import { injectHostRef } from '../au-host-element';
 import { AuTabs } from './tabs';
 
 /**
@@ -24,7 +33,7 @@ import { AuTabs } from './tabs';
 })
 export class AuTab implements OnDestroy {
   private readonly tabs = inject(AuTabs);
-  readonly element = inject(ElementRef<HTMLButtonElement>);
+  readonly element = injectHostRef<HTMLButtonElement>();
 
   /** Tab key; must match the paired `auTabPanel` value. */
   readonly auTab = input.required<string>();
@@ -32,7 +41,9 @@ export class AuTab implements OnDestroy {
 
   readonly focusByTab = signal(false);
 
+  /* v8 ignore start -- HTMLElement textContent is always a string */
   readonly label = computed(() => this.element.nativeElement.textContent?.trim() ?? '');
+  /* v8 ignore stop */
 
   private readonly registerWhenReady = afterNextRender(() => {
     this.tabs.registerTab(this);

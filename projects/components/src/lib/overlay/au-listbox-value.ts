@@ -15,7 +15,7 @@ export function listboxSelectionToValue(selected: readonly string[]): string | n
   if (selected.length === 0) {
     return null;
   }
-  const last = selected[selected.length - 1]!;
+  const last = selected[selected.length - 1];
   return last === AU_LISTBOX_PLACEHOLDER ? null : last;
 }
 

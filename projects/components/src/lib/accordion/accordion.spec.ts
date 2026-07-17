@@ -124,6 +124,14 @@ describe('AuAccordion', () => {
     expect(fixture.componentInstance.expanded).toEqual([]);
   });
 
+  it('does not add an already expanded section', () => {
+    const accordion = fixture.debugElement.query(By.directive(AuAccordion)).componentInstance;
+
+    accordion.onItemExpandedChange('one', true);
+
+    expect(fixture.componentInstance.expanded).toEqual(['one']);
+  });
+
   it('ignores clicks on disabled triggers', async () => {
     @Component({
       imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
@@ -250,5 +258,18 @@ describe('AuAccordion keyboard edge cases', () => {
       .injector.get(AuAccordionItem);
     accordion.registerItem(item);
     expect(accordion.renderedItems().length).toBe(1);
+  });
+
+  it('does not duplicate registered panels', async () => {
+    const fixture = TestBed.createComponent(AccordionHost);
+    await fixture.whenStable();
+    const accordion = fixture.debugElement.query(By.directive(AuAccordion)).componentInstance;
+    const panel = fixture.debugElement
+      .query(By.directive(AuAccordionPanel))
+      .injector.get(AuAccordionPanel);
+
+    accordion.registerPanel(panel);
+
+    expect(accordion['panelRegistry']().length).toBe(2);
   });
 });

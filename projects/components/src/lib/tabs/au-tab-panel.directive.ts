@@ -1,4 +1,5 @@
-import { Directive, ElementRef, afterNextRender, inject, input, OnDestroy } from '@angular/core';
+import { Directive, afterNextRender, inject, input, OnDestroy } from '@angular/core';
+import { injectHostRef } from '../au-host-element';
 import { AuTabs } from './tabs';
 
 /**
@@ -19,7 +20,7 @@ import { AuTabs } from './tabs';
   },
 })
 export class AuTabPanel implements OnDestroy {
-  readonly element = inject(ElementRef<HTMLElement>);
+  readonly element = injectHostRef<HTMLElement>();
   private readonly tabs = inject(AuTabs);
 
   readonly auTabPanel = input.required<string>();

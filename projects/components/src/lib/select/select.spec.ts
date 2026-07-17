@@ -55,7 +55,10 @@ describe('AuSelect', () => {
   async function clickTrigger(fixture: ComponentFixture<AuSelectTestHost>): Promise<void> {
     const triggerDe = fixture.debugElement.query(By.css('.au-select__trigger'))!;
     await focusTrigger(fixture);
-    triggerDe.triggerEventHandler('click', new MouseEvent('click', { bubbles: true, cancelable: true }));
+    triggerDe.triggerEventHandler(
+      'click',
+      new MouseEvent('click', { bubbles: true, cancelable: true }),
+    );
     await flushRender(fixture);
   }
 
@@ -102,19 +105,6 @@ describe('AuSelect', () => {
     const listbox = queryListbox()!;
     listbox.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
     await flushRender(fixture);
-  }
-
-  async function hoverOption(
-    fixture: ComponentFixture<AuSelectTestHost>,
-    label: string,
-  ): Promise<void> {
-    await openListbox(fixture);
-    await keydownOnListbox(fixture, 'Home');
-    const options = queryListboxOptions();
-    const targetIndex = options.findIndex((el) => el.textContent?.trim() === label);
-    for (let i = 0; i < targetIndex; i++) {
-      await keydownOnListbox(fixture, 'ArrowDown');
-    }
   }
 
   beforeEach(async () => {
@@ -698,6 +688,20 @@ describe('AuSelect', () => {
     expect(n).toBe(0);
   });
 
+  it('setValue returns early for the current value', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.value = 'opt1';
+    });
+    const comp = CONTROL(fix) as unknown as { setValue(next: string | null): void };
+    const set = vi.spyOn(CONTROL(fix).value, 'set');
+
+    comp.setValue('opt1');
+
+    expect(set).not.toHaveBeenCalled();
+    set.mockRestore();
+  });
+
   it('highlights option on pointer enter', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
@@ -944,7 +948,10 @@ describe('AuSelect', () => {
     await fix.whenStable();
     const triggerDe = fix.debugElement.query(By.css('.au-select__trigger'))!;
     (triggerDe.nativeElement as HTMLButtonElement).focus();
-    triggerDe.triggerEventHandler('click', new MouseEvent('click', { bubbles: true, cancelable: true }));
+    triggerDe.triggerEventHandler(
+      'click',
+      new MouseEvent('click', { bubbles: true, cancelable: true }),
+    );
     await fix.whenStable();
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     await fix.whenStable();

@@ -519,4 +519,15 @@ describe('AuInternalDateCalendarPanel', () => {
     await fix.whenStable();
     expect(document.body.querySelector('.au-date-calendar')).toBeTruthy();
   });
+
+  it('uses today when firstEnabledIso cannot find an enabled day', () => {
+    const fix = createHost();
+    const panel = panelInstance(fix) as unknown as {
+      weeks: () => readonly { days: readonly { disabled: boolean; iso: string }[] }[];
+      firstEnabledIso(): string;
+    };
+    panel.weeks = () => [{ days: [{ disabled: true, iso: '2026-06-01' }] }];
+
+    expect(panel.firstEnabledIso()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
 });

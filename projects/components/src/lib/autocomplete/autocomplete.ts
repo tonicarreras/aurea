@@ -144,7 +144,9 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     return ids.length > 0 ? ids.join(' ') : null;
   });
 
-  readonly interactive = computed(() => isFieldComboboxInteractive(this.disabled(), this.readOnly()));
+  readonly interactive = computed(() =>
+    isFieldComboboxInteractive(this.disabled(), this.readOnly()),
+  );
 
   readonly selectedOption = computed(() => {
     const v = this.value();

@@ -44,7 +44,9 @@ describe('AuAccordionItem', () => {
     TestBed.configureTestingModule({ imports: [ItemHost] });
     const fixture = TestBed.createComponent(ItemHost);
     await fixture.whenStable();
-    const projected = fixture.nativeElement.querySelector('button[auAccordionItem]') as HTMLButtonElement;
+    const projected = fixture.nativeElement.querySelector(
+      'button[auAccordionItem]',
+    ) as HTMLButtonElement;
     expect(projected.hidden).toBe(true);
     expect(projected.getAttribute('aria-hidden')).toBe('true');
   });

@@ -1,16 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   afterRenderEffect,
   computed,
   effect,
-  inject,
   input,
   model,
   signal,
 } from '@angular/core';
 import { Tab, TabList, TabPanel, Tabs as NgTabs } from '@angular/aria/tabs';
+import { injectHostRef } from '../au-host-element';
 import { sortRegistryByDomOrder } from '../overlay/projection-bridge';
 import { AuTab } from './au-tab.directive';
 import { AuTabPanel } from './au-tab-panel.directive';
@@ -54,7 +53,7 @@ export type AuTabsSize = 'sm' | 'md' | 'lg';
 export class AuTabs {
   private static idCounter = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly tabRegistry = signal<readonly AuTab[]>([]);
   private readonly panelRegistry = signal<readonly AuTabPanel[]>([]);
 
@@ -78,9 +77,7 @@ export class AuTabs {
     sortRegistryByDomOrder(this.tabRegistry(), this.host.nativeElement),
   );
 
-  readonly enabledTabs = computed(() =>
-    this.tabRegistry().filter((tab) => !tab.auTabDisabled()),
-  );
+  readonly enabledTabs = computed(() => this.tabRegistry().filter((tab) => !tab.auTabDisabled()));
 
   readonly renderedPanels = computed(() => this.panelRegistry());
 
@@ -101,11 +98,17 @@ export class AuTabs {
       for (const panel of this.panelRegistry()) {
         const destination = this.host.nativeElement.querySelector(
           `[data-au-panel-host="${panel.auTabPanel()}"]`,
-        ) as HTMLElement | null;
+        );
         const source = panel.element.nativeElement;
-        if (!destination || destination === source || destination.contains(source)) {
+        /* v8 ignore start -- source is never rendered inside its generated destination */
+        if (
+          !(destination instanceof HTMLElement) ||
+          destination === source ||
+          destination.contains(source)
+        ) {
           continue;
         }
+        /* v8 ignore stop */
         while (source.firstChild) {
           destination.appendChild(source.firstChild);
         }

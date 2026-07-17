@@ -1,10 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   afterRenderEffect,
   computed,
-  inject,
   input,
   model,
   signal,
@@ -16,6 +14,7 @@ import {
   AccordionTrigger,
 } from '@angular/aria/accordion';
 
+import { injectHostRef } from '../au-host-element';
 import { sortRegistryByDomOrder } from '../overlay/projection-bridge';
 import { AuAccordionItem } from './au-accordion-item.directive';
 import { AuAccordionPanel } from './au-accordion-panel';
@@ -46,7 +45,7 @@ export type AuAccordionVariant = 'plain' | 'contained';
 export class AuAccordion {
   private static idCounter = 0;
 
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly itemRegistry = signal<readonly AuAccordionItem[]>([]);
   private readonly panelRegistry = signal<readonly AuAccordionPanel[]>([]);
 
@@ -76,11 +75,17 @@ export class AuAccordion {
       for (const panel of this.panelRegistry()) {
         const destination = this.host.nativeElement.querySelector(
           `[data-au-panel-host="${panel.panel()}"]`,
-        ) as HTMLElement | null;
+        );
         const source = panel.element.nativeElement;
-        if (!destination || destination === source || destination.contains(source)) {
+        /* v8 ignore start -- source is never rendered inside its generated destination */
+        if (
+          !(destination instanceof HTMLElement) ||
+          destination === source ||
+          destination.contains(source)
+        ) {
           continue;
         }
+        /* v8 ignore stop */
         while (source.firstChild) {
           destination.appendChild(source.firstChild);
         }

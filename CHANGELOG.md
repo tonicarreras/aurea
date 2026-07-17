@@ -9,6 +9,21 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-07-17
+
+### Added
+
+- **`au-icon` glyphs** — product/module set for Mirea and apps: `bell`, `circle-help`, `settings`, `trash-2`, `house`, `users`, `mail`, `megaphone`, `clipboard-check`, `clipboard-list`, `building-2`, `file-text`, `file-badge`, `heart-handshake`, `compass`, `file-pen-line`, `trophy`, `book-open`, `utensils-crossed`, `folder-open`, `chart-column`, `graduation-cap`, `user-plus`, `door-open`, `key-round`, `door-closed`, `calendar-days`, `layout-grid`, `grip-vertical`, `star`.
+
+### Fixed
+
+- **Date calendar** — when `min`/`max` exclude today, the panel opens in a month that still has selectable days (avoids picking outside-month days from the current month grid).
+
+### Changed
+
+- **Bundle baseline** — updated for the expanded `au-icon` glyph set.
+- **Dependencies** — `overrides.websocket-driver` `^0.7.5` to clear the critical audit finding from transitive `faye-websocket`.
+
 ## [2.2.1] - 2026-06-21
 
 ### Added

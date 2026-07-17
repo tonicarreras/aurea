@@ -220,7 +220,8 @@ export const KeyboardNavigation: Story = {
   play: async ({ canvasElement }) => {
     const combo = getCombobox(canvasElement, 'City');
     await playUserEvent.click(combo);
-    await playUserEvent.keyboard('{ArrowDown}{Enter}');
+    // First ArrowDown highlights Madrid; second moves to Barcelona.
+    await playUserEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
     await expect(combo).toHaveValue('Barcelona');
   },
 };

@@ -13,7 +13,6 @@ import {
   model,
   output,
   signal,
-  untracked,
 } from '@angular/core';
 import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
 import { Listbox, Option } from '@angular/aria/listbox';
@@ -160,7 +159,9 @@ export class AuSelect implements FormValueControl<string | null> {
     () => (this.value() === null || this.value() === undefined) && this.hasPlaceholder(),
   );
 
-  readonly interactive = computed(() => isFieldComboboxInteractive(this.disabled(), this.readOnly()));
+  readonly interactive = computed(() =>
+    isFieldComboboxInteractive(this.disabled(), this.readOnly()),
+  );
 
   readonly showEmpty = computed(
     () =>

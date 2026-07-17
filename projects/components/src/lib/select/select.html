@@ -72,38 +72,38 @@
       [softDisabled]="false"
       [attr.aria-label]="formField.label() || 'Options'"
     >
-        @if (hasPlaceholder()) {
-          <li
-            ngOption
-            #placeholderOpt="ngOption"
-            [value]="placeholderOptionValue"
-            [label]="placeholder()"
-            [id]="placeholderOptionId()"
-            class="au-field-listbox__option au-field-listbox__option--placeholder"
-            [class.au-field-listbox__option--active]="placeholderOpt.active()"
-            [class.au-field-listbox__option--selected]="value() === null"
-          >
-            {{ placeholder() }}
-          </li>
-        }
-        @for (opt of options(); track opt.value; let i = $index) {
-          <li
-            ngOption
-            #rowOpt="ngOption"
-            [value]="opt.value"
-            [label]="opt.label"
-            [disabled]="opt.disabled"
-            [id]="optionId(i)"
-            class="au-field-listbox__option"
-            [class.au-field-listbox__option--active]="rowOpt.active()"
-            [class.au-field-listbox__option--selected]="value() === opt.value"
-            [class.au-field-listbox__option--disabled]="opt.disabled"
-          >
-            {{ opt.label }}
-          </li>
-        }
-      </ul>
-    }
+      @if (hasPlaceholder()) {
+        <li
+          ngOption
+          #placeholderOpt="ngOption"
+          [value]="placeholderOptionValue"
+          [label]="placeholder()"
+          [id]="placeholderOptionId()"
+          class="au-field-listbox__option au-field-listbox__option--placeholder"
+          [class.au-field-listbox__option--active]="placeholderOpt.active()"
+          [class.au-field-listbox__option--selected]="value() === null"
+        >
+          {{ placeholder() }}
+        </li>
+      }
+      @for (opt of options(); track opt.value; let i = $index) {
+        <li
+          ngOption
+          #rowOpt="ngOption"
+          [value]="opt.value"
+          [label]="opt.label"
+          [disabled]="opt.disabled"
+          [id]="optionId(i)"
+          class="au-field-listbox__option"
+          [class.au-field-listbox__option--active]="rowOpt.active()"
+          [class.au-field-listbox__option--selected]="value() === opt.value"
+          [class.au-field-listbox__option--disabled]="opt.disabled"
+        >
+          {{ opt.label }}
+        </li>
+      }
+    </ul>
+  }
 </ng-template>
 
 @if (name()) {

@@ -71,7 +71,9 @@ describe('AuTabs', () => {
     await fix.whenStable();
     const panels = fix.nativeElement.querySelectorAll('[data-au-panel-host]');
     expect(panels.length).toBe(2);
-    const visible = [...panels].filter((p: Element) => !p.hasAttribute('inert') && !p.hasAttribute('hidden'));
+    const visible = [...panels].filter(
+      (p: Element) => !p.hasAttribute('inert') && !p.hasAttribute('hidden'),
+    );
     expect(visible.length).toBe(1);
     expect(visible[0]!.textContent).toContain('Profile body');
   });
@@ -115,6 +117,30 @@ describe('AuTabs', () => {
     tabs.value.subscribe(() => count++);
     tabs.selectTab('profile');
     expect(count).toBe(0);
+  });
+
+  it('updates value when selecting a different tab', async () => {
+    const fix = TestBed.createComponent(TestTabsComponent);
+    await fix.whenStable();
+    const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
+
+    tabs.selectTab('billing');
+
+    expect(tabs.value()).toBe('billing');
+  });
+
+  it('does not duplicate registered tabs or panels', async () => {
+    const fix = TestBed.createComponent(TestTabsComponent);
+    await fix.whenStable();
+    const tabs = fix.debugElement.query(By.directive(AuTabs))!.componentInstance as AuTabs;
+    const tab = fix.debugElement.query(By.directive(AuTab)).injector.get(AuTab);
+    const panel = fix.debugElement.query(By.directive(AuTabPanel)).injector.get(AuTabPanel);
+
+    tabs.registerTab(tab);
+    tabs.registerPanel(panel);
+
+    expect(tabs.renderedTabs().length).toBe(2);
+    expect(tabs.renderedPanels().length).toBe(2);
   });
 
   it('marks selected tab with aria-selected and tabindex 0', async () => {

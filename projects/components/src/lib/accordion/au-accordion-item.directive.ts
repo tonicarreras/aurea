@@ -1,4 +1,12 @@
-import { Directive, afterNextRender, computed, inject, input, OnDestroy, signal } from '@angular/core';
+import {
+  Directive,
+  afterNextRender,
+  computed,
+  inject,
+  input,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 
 import { tabFocusState } from '../au-tab-focus-state';
 import { injectHostRef } from '../au-host-element';
@@ -33,7 +41,9 @@ export class AuAccordionItem implements OnDestroy {
 
   readonly focusByTab = signal(false);
 
+  /* v8 ignore start -- HTMLElement textContent is always a string */
   readonly label = computed(() => this.element.nativeElement.textContent?.trim() ?? '');
+  /* v8 ignore stop */
 
   private readonly registerWhenReady = afterNextRender(() => {
     this.accordion.registerItem(this);

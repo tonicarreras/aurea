@@ -708,12 +708,65 @@ describe('AuAutocomplete', () => {
     expect(n).toBe(0);
   });
 
+  it('closes and refocuses when the selected option is reselected', async () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.value = 'mad';
+    });
+    const input = queryInput(fix);
+    const focus = vi.spyOn(input, 'focus');
+    const comp = CONTROL(fix);
+    comp.panelOpen.set(true);
+    await flushRender(fix);
+
+    comp.listboxValue.set([]);
+    await flushRender(fix);
+
+    expect(comp.panelOpen()).toBe(false);
+    expect(focus).toHaveBeenCalled();
+    focus.mockRestore();
+  });
+
+  it('applies an unknown listbox value without replacing the query', async () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+    });
+    const comp = CONTROL(fix);
+
+    comp.listboxValue.set(['unknown']);
+    await flushRender(fix);
+
+    expect(comp.value()).toBe('unknown');
+    expect(comp.comboboxValue()).toBe('unknown');
+  });
+
   it('syncs query to raw value when option missing', () => {
     const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.value = 'unknown-code';
     });
     expect(queryInput(fix).value).toBe('unknown-code');
+  });
+
+  it('handles nullish queries and an unknown selected option', () => {
+    const fix = createFieldFixture(AuAutocompleteTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.value = 'unknown-code';
+    });
+    const comp = CONTROL(fix) as unknown as {
+      comboboxValue: { set(value: string): void };
+      selectedOption(): AuAutocompleteOption | null;
+      filteredOptions(): readonly AuAutocompleteOption[];
+      meetsMinFilterLength(): boolean;
+      commitQueryOnClose(): void;
+    };
+
+    comp.comboboxValue.set(null as unknown as string);
+
+    expect(comp.selectedOption()).toBeNull();
+    expect(comp.filteredOptions()).toEqual(testOptions);
+    expect(comp.meetsMinFilterLength()).toBe(true);
+    comp.commitQueryOnClose();
   });
 
   it('shows displayError from error kind when message is absent', () => {

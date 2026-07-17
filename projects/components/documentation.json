@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "AutocompleteStoryArgs",
-            "id": "interface-AutocompleteStoryArgs-2b833fa78dbd95fa76e2d692002167eed3f5d9e89204e0f0d67f8d850d159799af28727325197b96f5fcf8341547eb21715d830263dbb383b8f2a3ba101a51e7",
+            "id": "interface-AutocompleteStoryArgs-794e101e7488071b59d55165b9c3a95b8969db11125fa56189f069acb5e3ec048798c7a4b3b8342f45974e5453a5543e6f27751c03974fce2b81714aa783187a",
             "file": "projects/components/src/lib/autocomplete/autocomplete.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, within } from 'storybook/test';\n\nimport { playUserEvent } from '../../../.storybook/story-user-event';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then pick an option. **play** autoplays on load (slower typing in the canvas; full speed in test-storybook).',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await playUserEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\nimport { expect, fn, within } from 'storybook/test';\n\nimport { playUserEvent } from '../../../.storybook/story-user-event';\n\nimport { AuFormField } from '../form-field/form-field';\nimport {\n  defaultFieldChromeArgs,\n  fieldChromeArgTypes,\n  formFieldControlRender,\n  type FieldChromeStoryArgs,\n} from '../form-field';\nimport { AuAutocomplete, type AuAutocompleteOption } from './autocomplete';\n\nconst cities: AuAutocompleteOption[] = [\n  { value: 'mad', label: 'Madrid' },\n  { value: 'bcn', label: 'Barcelona' },\n  { value: 'vlc', label: 'Valencia' },\n  { value: 'svq', label: 'Sevilla' },\n  { value: 'bio', label: 'Bilbao' },\n  { value: 'agp', label: 'Málaga' },\n];\n\ninterface AutocompleteStoryArgs extends FieldChromeStoryArgs {\n  valueChange: ReturnType<typeof fn>;\n  blur: ReturnType<typeof fn>;\n  value: string | null;\n  placeholder: string;\n  options: AuAutocompleteOption[];\n  disabled: boolean;\n  readOnly: boolean;\n  minFilterLength: number;\n  strictSelection: boolean;\n  caseSensitive: boolean;\n  size: 'sm' | 'md' | 'lg';\n  name: string;\n  errors: readonly unknown[];\n}\n\nconst meta: Meta<AutocompleteStoryArgs> = {\n  title: 'Aurea/Autocomplete',\n  component: AuAutocomplete,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('autocomplete'),\n  argTypes: {\n    ...fieldChromeArgTypes,\n    value: {\n      control: 'text',\n      description: 'Selected option `value` (`string | null`).',\n      table: { category: 'Value' },\n    },\n    valueChange: { table: { category: 'Events' } },\n    blur: { table: { category: 'Events' } },\n    placeholder: { control: 'text', table: { category: 'Field' } },\n    options: { control: false, table: { category: 'Field' } },\n    errors: { control: false, table: { category: 'Validation' } },\n    minFilterLength: { control: 'number', table: { category: 'Field' } },\n    strictSelection: { control: 'boolean', table: { category: 'Field' } },\n    caseSensitive: { control: 'boolean', table: { category: 'Field' } },\n    size: { control: 'select', options: ['sm', 'md', 'lg'], table: { category: 'Field' } },\n    disabled: { control: 'boolean', table: { category: 'Field' } },\n    readOnly: { control: 'boolean', table: { category: 'Field' } },\n    name: { control: 'text', table: { category: 'Field' } },\n  } as Meta<AutocompleteStoryArgs>['argTypes'],\n  args: {\n    ...defaultFieldChromeArgs,\n    valueChange: fn(),\n    blur: fn(),\n    value: null,\n    placeholder: '',\n    options: [],\n    disabled: false,\n    readOnly: false,\n    minFilterLength: 0,\n    strictSelection: true,\n    caseSensitive: false,\n    size: 'md',\n    name: '',\n    errors: [],\n  },\n  render: (args) =>\n    formFieldControlRender(\n      [AuFormField, AuAutocomplete],\n      args,\n      `<au-autocomplete\n  [(value)]=\"value\"\n  [options]=\"options\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [readOnly]=\"readOnly\"\n  [required]=\"required\"\n  [minFilterLength]=\"minFilterLength\"\n  [strictSelection]=\"strictSelection\"\n  [caseSensitive]=\"caseSensitive\"\n  [size]=\"size\"\n  [name]=\"name\"\n  [invalid]=\"invalid\"\n  [errors]=\"$any(errors)\"\n/>`,\n    ),\n};\n\nexport default meta;\ntype Story = StoryObj<AutocompleteStoryArgs>;\n\nfunction getCombobox(canvasElement: HTMLElement, name: string | RegExp) {\n  return within(canvasElement).getByRole('combobox', { name });\n}\n\n/** Listbox is portaled to `document.body` (see `FieldListboxOverlay`). */\nfunction getListbox(canvasElement: HTMLElement) {\n  return within(canvasElement.ownerDocument.body).getByRole('listbox');\n}\n\nexport const Default: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n};\n\n/** Interaction test: filter by typing and pick an option (CI / test-runner). */\nexport const TypeAndSelect: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Type to filter, then pick an option. **play** autoplays on load (slower typing in the canvas; full speed in test-storybook).',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Search cities…',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.type(combo, 'bar');\n    const listbox = getListbox(canvasElement);\n    await playUserEvent.click(within(listbox).getByRole('option', { name: 'Barcelona' }));\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const WithValue: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'vlc',\n  },\n};\n\nexport const WithError: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    errorMessage: 'Choose a city from the list.',\n    invalid: true,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, /City/);\n    await expect(combo).toHaveAttribute('aria-invalid', 'true');\n  },\n};\n\nexport const Disabled: Story = {\n  args: {\n    label: 'City',\n    options: cities,\n    value: 'mad',\n    disabled: true,\n  },\n};\n\nexport const WithDisabledOptions: Story = {\n  args: {\n    label: 'City',\n    placeholder: 'Search…',\n    options: [\n      { value: 'mad', label: 'Madrid' },\n      { value: 'old', label: 'Legacy (deprecated)', disabled: true },\n      { value: 'bcn', label: 'Barcelona' },\n    ],\n  },\n};\n\nexport const MinFilterLength: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'The list opens only after typing at least **`minFilterLength`** characters.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Type 2+ letters…',\n    options: cities,\n    minFilterLength: 2,\n  },\n};\n\nexport const KeyboardNavigation: Story = {\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    // First ArrowDown highlights Madrid; second moves to Barcelona.\n    await playUserEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n};\n\nexport const CompactSize: Story = {\n  args: { label: 'City', size: 'sm', options: cities, placeholder: 'Search…' },\n};\n\nexport const LargeSize: Story = {\n  args: { label: 'City', size: 'lg', options: cities, placeholder: 'Search…' },\n};\n",
             "properties": [
                 {
                     "name": "blur",
@@ -410,12 +410,12 @@
         },
         {
             "name": "FormFieldStoryArgs",
-            "id": "interface-FormFieldStoryArgs-d783fdeba21e5e71b54d7b07650150293cc56a00627b8c4296aa975fd32405d8a57a3532bef8c813da3773effb39158c38070bb2f5b5f02a54d1021ff5672249",
+            "id": "interface-FormFieldStoryArgs-1aa3f36cbd1b4a697b3e58128abb5564cd6dacfbe5c532a394ec3ca19ed1363ae7643199857e0b90c94ee8f95499663a84ceeb83f8fa383c36836d6776050bfe",
             "file": "projects/components/src/lib/form-field/form-field.stories.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`auDialogSubmit=\"form-id\"\\` or \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
             "properties": [
                 {
                     "name": "controlIdInput",
@@ -1926,8 +1926,123 @@
     "directives": [],
     "components": [
         {
+            "name": "ServerPaginatedDemo",
+            "id": "component-ServerPaginatedDemo-02bf2f5ad3257eb65321819686260cc8a9d2c4185978991fad405bb6f703bce209de90906cf6d075857334e94ea70f51cd8aebe677e263a90a6fdf16e462b55e",
+            "file": "projects/components/src/lib/table/table.stories.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "server-paginated-table-demo",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<au-table\n  [data]=\"data()\"\n  title=\"Server-backed pages\"\n  description=\"Pass the current page slice in data and totalRows for server pagination.\"\n  caption=\"Server-backed pages\"\n  [paginated]=\"true\"\n  [pageSize]=\"pageSize\"\n  [totalRows]=\"totalRows\"\n  [clientSort]=\"false\"\n  [(page)]=\"page\"\n  [striped]=\"striped()\"\n>\n  <au-table-column\n    name=\"name\"\n    header=\"Name\"\n    cellVariant=\"primary\"\n  />\n  <au-table-column\n    name=\"role\"\n    header=\"Role\"\n    cellVariant=\"secondary\"\n  />\n  <au-table-column\n    name=\"score\"\n    header=\"Score\"\n    align=\"end\"\n  />\n  <au-table-column\n    name=\"status\"\n    header=\"Status\"\n    align=\"center\"\n  />\n</au-table>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "striped",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 364,
+                    "modifierKind": [
+                        148
+                    ],
+                    "required": false
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "data",
+                    "defaultValue": "computed(() =>\n    manyRows.slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 368,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "page",
+                    "defaultValue": "signal(1)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 365,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "pageSize",
+                    "defaultValue": "10",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 366,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "totalRows",
+                    "defaultValue": "manyRows.length",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 367,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [
+                {
+                    "name": "AuTable"
+                },
+                {
+                    "name": "AuTableColumn"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';\nimport { expect, userEvent, within } from 'storybook/test';\n\nimport { AuBadge } from '../badge/badge';\nimport { AuButton } from '../button';\nimport { AuEmptyState } from '../empty-state/empty-state';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuTableCellDef } from './au-table-cell-def.directive';\nimport { AuTableColumn } from './au-table-column';\nimport { AuTable } from './table';\nimport type { AuTableSortState } from './table-types';\n\ntype Row = {\n  name: string;\n  role: string;\n  score: number;\n  status: 'active' | 'away';\n};\n\nconst rows: Row[] = [\n  { name: 'Ada Lovelace', role: 'Engineer', score: 98, status: 'active' },\n  { name: 'Grace Hopper', role: 'Admiral', score: 94, status: 'active' },\n  { name: 'Katherine Johnson', role: 'Mathematician', score: 97, status: 'away' },\n];\n\nconst storyImports = [AuTable, AuTableColumn, AuTableCellDef, AuBadge, AuEmptyState, AuButton];\n\nconst meta: Meta<AuTable> = {\n  title: 'Aurea/Table',\n  component: AuTable,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('table'),\n  argTypes: {\n    title: { control: 'text', table: { category: 'Content' } },\n    description: { control: 'text', table: { category: 'Content' } },\n    striped: { control: 'boolean', table: { category: 'Appearance' } },\n    compact: { control: 'boolean', table: { category: 'Appearance' } },\n    stickyHeader: { control: 'boolean', table: { category: 'Layout' } },\n    clientSort: { control: 'boolean', table: { category: 'Behavior' } },\n    selectionMode: {\n      control: 'select',\n      options: ['none', 'single', 'multiple'],\n      table: { category: 'Behavior' },\n    },\n  },\n  args: {\n    title: 'Team members',\n    description: 'Declare columns with au-table-column; optional auTableCell templates.',\n    striped: false,\n    compact: false,\n    stickyHeader: false,\n    clientSort: true,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<AuTable>;\n\nexport const Default: Story = {\n  render: (args) => {\n    const data = signal(rows);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [striped]=\"striped\"\n          [compact]=\"compact\"\n          [stickyHeader]=\"stickyHeader\"\n          [clientSort]=\"clientSort\"\n          [(sort)]=\"sort\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Team members' })).toBeVisible();\n    const sortBtn = await canvas.findByRole('button', { name: /sort by name/i });\n    await userEvent.click(sortBtn);\n    const cells = await canvas.findAllByRole('cell');\n    await expect(cells[0]).toHaveTextContent('Ada Lovelace');\n  },\n};\n\nexport const Striped: Story = {\n  args: { striped: true },\n  render: Default.render,\n};\n\nexport const SingleSelect: Story = {\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Pick one member\"\n          description=\"Single selection; only one row can be checked at a time.\"\n          caption=\"Team members\"\n          selectionMode=\"single\"\n          [(selection)]=\"selection\"\n          [striped]=\"striped\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const checks = await canvas.findAllByRole('checkbox', { name: /select row/i });\n    await userEvent.click(checks[0]);\n    await expect(canvas.getByRole('row', { selected: true })).toBeVisible();\n  },\n};\n\nexport const MultipleSelect: Story = {\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Team members\"\n          description=\"Multi-select with header checkbox and row checkboxes.\"\n          caption=\"Team members\"\n          selectionMode=\"multiple\"\n          [(selection)]=\"selection\"\n          [striped]=\"true\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const selectAll = await canvas.findByRole('checkbox', { name: /select all rows/i });\n    await userEvent.click(selectAll);\n    const rowChecks = await canvas.findAllByRole('checkbox', { name: /^select row$/i });\n    await expect(rowChecks[0]).toBeChecked();\n    await expect(rowChecks[1]).toBeChecked();\n  },\n};\n\nexport const Empty: Story = {\n  render: (args) => ({\n    props: { ...args, data: [] as Row[] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        title=\"Users\"\n        description=\"Manage team members.\"\n        caption=\"Users\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        <au-empty-state\n          title=\"No users yet\"\n          description=\"Create your first user to populate this table.\"\n          size=\"sm\"\n          [headingLevel]=\"3\"\n        >\n          <button auButton type=\"button\">Add user</button>\n        </au-empty-state>\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(\n      await canvas.findByRole('heading', { name: 'No users yet', level: 3 }),\n    ).toBeVisible();\n    await expect(await canvas.findByRole('button', { name: 'Add user' })).toBeVisible();\n  },\n};\n\nconst manyRows: Row[] = Array.from({ length: 120 }, (_, i) => ({\n  name: `Member ${i + 1}`,\n  role: i % 2 === 0 ? 'Engineer' : 'Designer',\n  score: 70 + (i % 30),\n  status: i % 3 === 0 ? 'away' : 'active',\n}));\n\nexport const VirtualScroll: Story = {\n  args: {\n    title: 'Large roster',\n    description: 'Virtual scroll keeps DOM rows bounded for long datasets.',\n  },\n  render: (args) => ({\n    props: { ...args, data: manyRows },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        [title]=\"title\"\n        [description]=\"description\"\n        caption=\"Large roster\"\n        [virtualScroll]=\"true\"\n        [rowHeight]=\"44\"\n        [viewportHeight]=\"320\"\n        [virtualOverscan]=\"4\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n        <au-table-column name=\"status\" header=\"Status\" align=\"center\" />\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Large roster' })).toBeVisible();\n    const rows = await canvas.findAllByRole('row');\n    await expect(rows.length).toBeLessThan(120);\n  },\n};\n\nexport const Paginated: Story = {\n  args: {\n    title: 'Team members',\n    description: 'Client pagination slices the sorted dataset in the footer.',\n  },\n  render: (args) => {\n    const data = signal(manyRows);\n    const page = signal(1);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, page, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [paginated]=\"true\"\n          [pageSize]=\"10\"\n          [(page)]=\"page\"\n          [(sort)]=\"sort\"\n          [striped]=\"striped\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\" />\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('navigation', { name: /pagination/i })).toBeVisible();\n    const page2 = await canvas.findByRole('button', { name: 'Page 2' });\n    await userEvent.click(page2);\n    await expect(await canvas.findByRole('cell', { name: 'Member 11' })).toBeVisible();\n  },\n};\n\nexport const ServerPaginated: Story = {\n  args: {\n    title: 'Server-backed pages',\n    description: 'Pass the current page slice in data and totalRows for server pagination.',\n    clientSort: false,\n    striped: true,\n  },\n  render: (args) => ({\n    props: { ...args },\n    moduleMetadata: { imports: [ServerPaginatedDemo, ...storyImports] },\n    template: `<server-paginated-table-demo [striped]=\"striped\" />`,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    // Ellipsis pagination on page 1 shows [1, 2, 12]; open page 2 so page 3 appears.\n    await userEvent.click(await canvas.findByRole('button', { name: 'Page 2' }));\n    await userEvent.click(await canvas.findByRole('button', { name: 'Page 3' }));\n    await expect(await canvas.findByRole('cell', { name: 'Member 21' })).toBeVisible();\n  },\n};\n\n@Component({\n  selector: 'server-paginated-table-demo',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  imports: [AuTable, AuTableColumn],\n  template: `\n    <au-table\n      [data]=\"data()\"\n      title=\"Server-backed pages\"\n      description=\"Pass the current page slice in data and totalRows for server pagination.\"\n      caption=\"Server-backed pages\"\n      [paginated]=\"true\"\n      [pageSize]=\"pageSize\"\n      [totalRows]=\"totalRows\"\n      [clientSort]=\"false\"\n      [(page)]=\"page\"\n      [striped]=\"striped()\"\n    >\n      <au-table-column\n        name=\"name\"\n        header=\"Name\"\n        cellVariant=\"primary\"\n      />\n      <au-table-column\n        name=\"role\"\n        header=\"Role\"\n        cellVariant=\"secondary\"\n      />\n      <au-table-column\n        name=\"score\"\n        header=\"Score\"\n        align=\"end\"\n      />\n      <au-table-column\n        name=\"status\"\n        header=\"Status\"\n        align=\"center\"\n      />\n    </au-table>\n  `,\n})\nclass ServerPaginatedDemo {\n  readonly striped = input(false);\n  readonly page = signal(1);\n  readonly pageSize = 10;\n  readonly totalRows = manyRows.length;\n  readonly data = computed(() =>\n    manyRows.slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),\n  );\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": []
+        },
+        {
             "name": "ValidateOnSubmitDemo",
-            "id": "component-ValidateOnSubmitDemo-d783fdeba21e5e71b54d7b07650150293cc56a00627b8c4296aa975fd32405d8a57a3532bef8c813da3773effb39158c38070bb2f5b5f02a54d1021ff5672249",
+            "id": "component-ValidateOnSubmitDemo-1aa3f36cbd1b4a697b3e58128abb5564cd6dacfbe5c532a394ec3ca19ed1363ae7643199857e0b90c94ee8f95499663a84ceeb83f8fa383c36836d6776050bfe",
             "file": "projects/components/src/lib/form-field/form-field.stories.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -2055,7 +2170,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, signal } from '@angular/core';\nimport { FormField, FormRoot, form, required } from '@angular/forms/signals';\nimport type { Meta, StoryObj } from '@storybook/angular';\nimport { storyMetaParameters } from '../story-docs/story-meta-parameters';\n\nimport { AuButton } from '../button';\nimport { AuInputText } from '../input-text';\nimport { AuMessage } from '../message/message';\nimport { AuSelect } from '../select/select';\nimport { AuStack } from '../layout/au-stack.directive';\nimport { AuFormDirective } from '../form/au-form';\nimport { AuFormField } from './form-field';\n\n/** Story args use plain values; do not name args `controlId` — it collides with controls' `controlId()` signals. */\n\ninterface FormFieldStoryArgs {\n  label: string;\n  hint: string;\n  errorMessage: string;\n  invalid: boolean;\n  required: boolean;\n  controlIdInput: string;\n}\n\nconst meta: Meta<FormFieldStoryArgs> = {\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<FormFieldStoryArgs>;\n\nexport const WithInput: Story = {\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuFormField, AuInputText] },\n    template: `\n      <div class=\"au-story-field\">\n        <au-form-field\n          [label]=\"label\"\n          [hint]=\"hint\"\n          [errorMessage]=\"errorMessage\"\n          [invalid]=\"invalid\"\n          [required]=\"required\"\n          [controlIdInput]=\"controlIdInput\"\n        >\n          <input auInputText placeholder=\"you@example.com\" />\n        </au-form-field>\n      </div>\n    `,\n  }),\n};\n\nexport const WithHint: Story = {\n  args: {\n    hint: 'Shown below the label, above the control.',\n    required: false,\n  },\n  render: WithInput.render,\n};\n\nexport const WithError: Story = {\n  args: {\n    hint: '',\n    invalid: true,\n    errorMessage: 'Enter a valid email address.',\n  },\n  render: WithInput.render,\n};\n\n@Component({\n  selector: 'validate-on-submit-demo',\n  imports: [\n    AuButton,\n    AuFormField,\n    AuInputText,\n    AuMessage,\n    AuSelect,\n    AuStack,\n    AuFormDirective,\n    FormField,\n    FormRoot,\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <div class=\"au-story-field\">\n      @if (profileForm().invalid() && submitAttempted()) {\n        <au-message\n          variant=\"warning\"\n          message=\"Please fix the errors below.\"\n        />\n      }\n      <p></p>\n      @if (saved()) {\n        <au-message\n          variant=\"success\"\n          message=\"Saved.\"\n        />\n      }\n\n      <form\n        auForm\n        [formRoot]=\"profileForm\"\n        [showValidation]=\"submitAttempted()\"\n        style=\"display: flex; flex-direction: column; gap: var(--au-space-4);\"\n      >\n        <div\n          auStack\n          gap=\"md\"\n        >\n          <au-form-field\n            label=\"Name\"\n            [required]=\"true\"\n          >\n            <input\n              auInputText\n              [formField]=\"profileForm.name\"\n              placeholder=\"Your name\"\n            />\n          </au-form-field>\n\n          <au-form-field\n            label=\"Role\"\n            [required]=\"true\"\n          >\n            <au-select\n              [formField]=\"profileForm.role\"\n              [options]=\"roleOptions\"\n              placeholder=\"Select a role\"\n            />\n          </au-form-field>\n        </div>\n\n        <button\n          auButton\n          type=\"submit\"\n        >\n          Submit\n        </button>\n      </form>\n    </div>\n  `,\n})\nclass ValidateOnSubmitDemo {\n  readonly submitAttempted = signal(false);\n  readonly saved = signal(false);\n\n  readonly profile = signal({ name: '' as string, role: null as string | null });\n\n  readonly profileForm = form(\n    this.profile,\n    (model) => {\n      required(model.name, { message: 'This field is required.' });\n      required(model.role, { message: 'This field is required.' });\n    },\n    {\n      submission: {\n        action: async () => {\n          this.saved.set(true);\n          this.submitAttempted.set(false);\n        },\n        onInvalid: () => {\n          this.submitAttempted.set(true);\n          this.saved.set(false);\n        },\n      },\n    },\n  );\n\n  readonly roleOptions = [\n    { value: 'admin', label: 'Admin' },\n    { value: 'editor', label: 'Editor' },\n    { value: 'viewer', label: 'Viewer' },\n  ];\n}\n\nexport const ValidateOnSubmit: Story = {\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`auDialogSubmit=\"form-id\"\\` or \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -3145,7 +3260,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    // First ArrowDown highlights Madrid; second moves to Barcelona.\n    await playUserEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
             },
             {
                 "name": "Large",
@@ -3268,6 +3383,16 @@
                 "defaultValue": "{\n  args: {\n    text: 'Tooltips wrap long copy instead of stretching past the viewport edge.',\n  },\n  render: Default.render,\n}"
             },
             {
+                "name": "manyRows",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Row[]",
+                "defaultValue": "Array.from({ length: 120 }, (_, i) => ({\n  name: `Member ${i + 1}`,\n  role: i % 2 === 0 ? 'Engineer' : 'Designer',\n  score: 70 + (i % 30),\n  status: i % 3 === 0 ? 'away' : 'active',\n}))"
+            },
+            {
                 "name": "MediaBleed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3311,16 +3436,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuAvatar>",
-                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3336,6 +3451,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuBreadcrumb>",
                 "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAvatar>",
+                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3838,6 +3963,16 @@
                 "defaultValue": "{\n  args: { variant: 'outlined' },\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" [interactive]=\"interactive\">\n        <h3 auCardHeader>Outlined card</h3>\n        <p auCardBody>Stronger border, no elevation shadow.</p>\n      </au-card>\n    `,\n    ),\n}"
             },
             {
+                "name": "Paginated",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    title: 'Team members',\n    description: 'Client pagination slices the sorted dataset in the footer.',\n  },\n  render: (args) => {\n    const data = signal(manyRows);\n    const page = signal(1);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, page, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [paginated]=\"true\"\n          [pageSize]=\"10\"\n          [(page)]=\"page\"\n          [(sort)]=\"sort\"\n          [striped]=\"striped\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\" />\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('navigation', { name: /pagination/i })).toBeVisible();\n    const page2 = await canvas.findByRole('button', { name: 'Page 2' });\n    await userEvent.click(page2);\n    await expect(await canvas.findByRole('cell', { name: 'Member 11' })).toBeVisible();\n  },\n}"
+            },
+            {
                 "name": "PickerTheming",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -4078,6 +4213,16 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "AU_ICON_NAMES.filter((n) =>\n  ['check-circle', 'check', 'warning', 'error', 'info', 'close', 'spinner'].includes(n),\n)"
+            },
+            {
+                "name": "ServerPaginated",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    title: 'Server-backed pages',\n    description: 'Pass the current page slice in data and totalRows for server pagination.',\n    clientSort: false,\n    striped: true,\n  },\n  render: (args) => ({\n    props: { ...args },\n    moduleMetadata: { imports: [ServerPaginatedDemo, ...storyImports] },\n    template: `<server-paginated-table-demo [striped]=\"striped\" />`,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    // Ellipsis pagination on page 1 shows [1, 2, 12]; open page 2 so page 3 appears.\n    await userEvent.click(await canvas.findByRole('button', { name: 'Page 2' }));\n    await userEvent.click(await canvas.findByRole('button', { name: 'Page 3' }));\n    await expect(await canvas.findByRole('cell', { name: 'Member 21' })).toBeVisible();\n  },\n}"
             },
             {
                 "name": "SignUp",
@@ -4479,7 +4624,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n}"
+                "defaultValue": "{\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`auDialogSubmit=\"form-id\"\\` or \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n}"
             },
             {
                 "name": "variants",
@@ -4530,6 +4675,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => tabsRender(args),\n}"
+            },
+            {
+                "name": "VirtualScroll",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/table/table.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    title: 'Large roster',\n    description: 'Virtual scroll keeps DOM rows bounded for long datasets.',\n  },\n  render: (args) => ({\n    props: { ...args, data: manyRows },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        [title]=\"title\"\n        [description]=\"description\"\n        caption=\"Large roster\"\n        [virtualScroll]=\"true\"\n        [rowHeight]=\"44\"\n        [viewportHeight]=\"320\"\n        [virtualOverscan]=\"4\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n        <au-table-column name=\"status\" header=\"Status\" align=\"center\" />\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Large roster' })).toBeVisible();\n    const rows = await canvas.findAllByRole('row');\n    await expect(rows.length).toBeLessThan(120);\n  },\n}"
             },
             {
                 "name": "Warning",
@@ -5446,17 +5601,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuBadge>",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
@@ -5470,6 +5614,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuBreadcrumb>",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6735,7 +6890,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    await playUserEvent.keyboard('{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Use **ArrowDown** / **ArrowUp**, **Enter** to select, **Escape** to close.',\n      },\n    },\n  },\n  args: {\n    label: 'City',\n    placeholder: 'Keyboard demo',\n    options: cities,\n  },\n  play: async ({ canvasElement }) => {\n    const combo = getCombobox(canvasElement, 'City');\n    await playUserEvent.click(combo);\n    // First ArrowDown highlights Madrid; second moves to Barcelona.\n    await playUserEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');\n    await expect(combo).toHaveValue('Barcelona');\n  },\n}"
                 },
                 {
                     "name": "LargeSize",
@@ -8392,6 +8547,16 @@
                     "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, data: [] as Row[] },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        title=\"Users\"\n        description=\"Manage team members.\"\n        caption=\"Users\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" />\n        <au-empty-state\n          title=\"No users yet\"\n          description=\"Create your first user to populate this table.\"\n          size=\"sm\"\n          [headingLevel]=\"3\"\n        >\n          <button auButton type=\"button\">Add user</button>\n        </au-empty-state>\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(\n      await canvas.findByRole('heading', { name: 'No users yet', level: 3 }),\n    ).toBeVisible();\n    await expect(await canvas.findByRole('button', { name: 'Add user' })).toBeVisible();\n  },\n}"
                 },
                 {
+                    "name": "manyRows",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Row[]",
+                    "defaultValue": "Array.from({ length: 120 }, (_, i) => ({\n  name: `Member ${i + 1}`,\n  role: i % 2 === 0 ? 'Engineer' : 'Designer',\n  score: 70 + (i % 30),\n  status: i % 3 === 0 ? 'away' : 'active',\n}))"
+                },
+                {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -8412,6 +8577,16 @@
                     "defaultValue": "{\n  render: (args) => {\n    const data = signal(rows);\n    const selection = signal<readonly unknown[]>([]);\n    return {\n      props: { ...args, data, selection },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          title=\"Team members\"\n          description=\"Multi-select with header checkbox and row checkboxes.\"\n          caption=\"Team members\"\n          selectionMode=\"multiple\"\n          [(selection)]=\"selection\"\n          [striped]=\"true\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\">\n            <ng-template auTableCell let-row>\n              <au-badge\n                [variant]=\"row.status === 'active' ? 'success' : 'warning'\"\n                [label]=\"row.status === 'active' ? 'Active' : 'Away'\"\n              />\n            </ng-template>\n          </au-table-column>\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    const selectAll = await canvas.findByRole('checkbox', { name: /select all rows/i });\n    await userEvent.click(selectAll);\n    const rowChecks = await canvas.findAllByRole('checkbox', { name: /^select row$/i });\n    await expect(rowChecks[0]).toBeChecked();\n    await expect(rowChecks[1]).toBeChecked();\n  },\n}"
                 },
                 {
+                    "name": "Paginated",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    title: 'Team members',\n    description: 'Client pagination slices the sorted dataset in the footer.',\n  },\n  render: (args) => {\n    const data = signal(manyRows);\n    const page = signal(1);\n    const sort = signal<AuTableSortState | null>(null);\n    return {\n      props: { ...args, data, page, sort },\n      moduleMetadata: { imports: storyImports },\n      template: `\n        <au-table\n          [data]=\"data()\"\n          [title]=\"title\"\n          [description]=\"description\"\n          caption=\"Team members\"\n          [paginated]=\"true\"\n          [pageSize]=\"10\"\n          [(page)]=\"page\"\n          [(sort)]=\"sort\"\n          [striped]=\"striped\"\n        >\n          <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n          <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n          <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n          <au-table-column name=\"status\" header=\"Status\" align=\"center\" />\n        </au-table>\n      `,\n    };\n  },\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('navigation', { name: /pagination/i })).toBeVisible();\n    const page2 = await canvas.findByRole('button', { name: 'Page 2' });\n    await userEvent.click(page2);\n    await expect(await canvas.findByRole('cell', { name: 'Member 11' })).toBeVisible();\n  },\n}"
+                },
+                {
                     "name": "rows",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -8420,6 +8595,16 @@
                     "deprecationMessage": "",
                     "type": "Row[]",
                     "defaultValue": "[\n  { name: 'Ada Lovelace', role: 'Engineer', score: 98, status: 'active' },\n  { name: 'Grace Hopper', role: 'Admiral', score: 94, status: 'active' },\n  { name: 'Katherine Johnson', role: 'Mathematician', score: 97, status: 'away' },\n]"
+                },
+                {
+                    "name": "ServerPaginated",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    title: 'Server-backed pages',\n    description: 'Pass the current page slice in data and totalRows for server pagination.',\n    clientSort: false,\n    striped: true,\n  },\n  render: (args) => ({\n    props: { ...args },\n    moduleMetadata: { imports: [ServerPaginatedDemo, ...storyImports] },\n    template: `<server-paginated-table-demo [striped]=\"striped\" />`,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    // Ellipsis pagination on page 1 shows [1, 2, 12]; open page 2 so page 3 appears.\n    await userEvent.click(await canvas.findByRole('button', { name: 'Page 2' }));\n    await userEvent.click(await canvas.findByRole('button', { name: 'Page 3' }));\n    await expect(await canvas.findByRole('cell', { name: 'Member 21' })).toBeVisible();\n  },\n}"
                 },
                 {
                     "name": "SingleSelect",
@@ -8450,6 +8635,16 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: { striped: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "VirtualScroll",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/table/table.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    title: 'Large roster',\n    description: 'Virtual scroll keeps DOM rows bounded for long datasets.',\n  },\n  render: (args) => ({\n    props: { ...args, data: manyRows },\n    moduleMetadata: { imports: storyImports },\n    template: `\n      <au-table\n        [data]=\"data\"\n        [title]=\"title\"\n        [description]=\"description\"\n        caption=\"Large roster\"\n        [virtualScroll]=\"true\"\n        [rowHeight]=\"44\"\n        [viewportHeight]=\"320\"\n        [virtualOverscan]=\"4\"\n        [striped]=\"striped\"\n      >\n        <au-table-column name=\"name\" header=\"Name\" [sortable]=\"true\" cellVariant=\"primary\" />\n        <au-table-column name=\"role\" header=\"Role\" cellVariant=\"secondary\" />\n        <au-table-column name=\"score\" header=\"Score\" align=\"end\" [sortable]=\"true\" />\n        <au-table-column name=\"status\" header=\"Status\" align=\"center\" />\n      </au-table>\n    `,\n  }),\n  play: async ({ canvasElement }) => {\n    const canvas = within(canvasElement);\n    await expect(await canvas.findByRole('heading', { name: 'Large roster' })).toBeVisible();\n    const rows = await canvas.findAllByRole('row');\n    await expect(rows.length).toBeLessThan(120);\n  },\n}"
                 }
             ],
             "projects/components/src/lib/tag-input/tag-input.stories.ts": [
@@ -8787,7 +8982,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n}"
+                    "defaultValue": "{\n  name: 'Validate on submit',\n  render: () => ({\n    moduleMetadata: { imports: [ValidateOnSubmitDemo] },\n    template: `<validate-on-submit-demo />`,\n  }),\n  parameters: {\n    docs: {\n      source: {\n        language: 'typescript',\n        code: `@Component({\n  imports: [AuFormField, AuFormDirective, AuInputText, AuSelect, AuButton, FormField, FormRoot],\n  template: \\`\n    <form auForm [formRoot]=\"profileForm\" [showValidation]=\"submitAttempted()\">\n      <au-form-field label=\"Name\" [required]=\"true\">\n        <input auInputText [formField]=\"profileForm.name\" />\n      </au-form-field>\n      <au-form-field label=\"Role\" [required]=\"true\">\n        <au-select [formField]=\"profileForm.role\" [options]=\"roleOptions\" />\n      </au-form-field>\n      <button auButton type=\"submit\">Submit</button>\n    </form>\n  \\`,\n})\nexport class ProfileForm {\n  readonly submitAttempted = signal(false);\n  readonly profile = signal({ name: '', role: null as string | null });\n  readonly profileForm = form(this.profile, (m) => {\n    required(m.name, { message: 'This field is required.' });\n    required(m.role, { message: 'This field is required.' });\n  }, {\n    submission: {\n      action: async () => { /* saved */ },\n      onInvalid: () => this.submitAttempted.set(true),\n    },\n  });\n}`.trim(),\n      },\n      description: {\n        story: `\nSignal form with **validate on submit** (app-owned visibility):\n\n1. \\`form[auForm]\\` with \\`[showValidation]=\"submitAttempted()\"\\` once — all fields inherit; override per field if needed.\n2. \\`[formRoot]\\` on the \\`<form>\\`; set \\`submitAttempted\\` in \\`submission.onInvalid\\` (or your own submit handler).\n3. Default without inherited \\`showValidation\\`: \\`showErrorsWhen=\"touched\"\\` uses control interaction only.\n4. Do not mix manual \\`[invalid]\\` on the wrapper with \\`[formField]\\` on the child.\n\nFor modal footers outside the form, use \\`auDialogSubmit=\"form-id\"\\` or \\`type=\"submit\"\\` + \\`[attr.form]=\"formId\"\\` (see composition guide).\n        `.trim(),\n      },\n    },\n  },\n}"
                 },
                 {
                     "name": "WithError",
@@ -9468,19 +9663,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/avatar/avatar.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuAvatar>",
-                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Story",
@@ -9501,6 +9683,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuBreadcrumb>",
                     "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/avatar/avatar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAvatar>",
+                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -13215,6 +13410,15 @@
             },
             {
                 "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ServerPaginatedDemo",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -13229,6 +13433,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Empty",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "manyRows",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -13258,7 +13472,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "Paginated",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "rows",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ServerPaginated",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -13289,6 +13523,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Striped",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/table/table.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "VirtualScroll",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

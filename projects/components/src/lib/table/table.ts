@@ -313,11 +313,7 @@ export class AuTable {
   }
 
   protected selectAllChecked(): boolean {
-    return tableSelectAllChecked(
-      this.paginatedRows(),
-      this.selection(),
-      this.compareSelection(),
-    );
+    return tableSelectAllChecked(this.paginatedRows(), this.selection(), this.compareSelection());
   }
 
   protected selectAllIndeterminate(): boolean {

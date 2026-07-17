@@ -1,5 +1,13 @@
-import { Directive, ElementRef, afterNextRender, inject, input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  afterNextRender,
+  inject,
+  input,
+  OnDestroy,
+} from '@angular/core';
 
+import { injectHostRef } from '../au-host-element';
 import { AuAccordion } from './accordion';
 
 /**
@@ -12,15 +20,17 @@ import { AuAccordion } from './accordion';
  * <au-accordion-panel panel="billing">…</au-accordion-panel>
  * ```
  */
-@Directive({
+@Component({
   selector: 'au-accordion-panel',
+  template: '<ng-content />',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     hidden: '',
     'aria-hidden': 'true',
   },
 })
 export class AuAccordionPanel implements OnDestroy {
-  readonly element = inject(ElementRef<HTMLElement>);
+  readonly element = injectHostRef<HTMLElement>();
   private readonly accordion = inject(AuAccordion);
 
   /** Section key; must match the paired `auAccordionItem` value. */
