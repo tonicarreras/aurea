@@ -84,11 +84,7 @@ describe('field-temporal-native-guard', () => {
     const onChange = vi.fn();
     const fix = TestBed.createComponent(Host);
 
-    bindCoarsePointerPreference(
-      {} as Window,
-      onChange,
-      fix.componentRef.injector.get(DestroyRef),
-    );
+    bindCoarsePointerPreference({} as Window, onChange, fix.componentRef.injector.get(DestroyRef));
 
     expect(onChange).toHaveBeenCalledOnce();
     expect(onChange).toHaveBeenCalledWith(false);

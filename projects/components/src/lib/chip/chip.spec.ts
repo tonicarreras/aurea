@@ -246,7 +246,9 @@ describe('AuChip', () => {
     await fixture.whenStable();
     const icon = fixture.nativeElement.querySelector('.au-chip__icon');
     expect(icon).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.au-chip__text')?.textContent?.trim()).toBe('Present');
+    expect(fixture.nativeElement.querySelector('.au-chip__text')?.textContent?.trim()).toBe(
+      'Present',
+    );
   });
 
   it('renders ng-content fallback when label is empty', async () => {

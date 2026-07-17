@@ -16,15 +16,11 @@ describe('field-temporal-options', () => {
     expect(hasTemporalBounds(undefined, '20:00')).toBe(true);
   });
 
-  it(
-    'buildDatePickerOptions uses default bounds when min/max are empty',
-    () => {
-      const options = buildDatePickerOptions('', '');
-      expect(options.length).toBeGreaterThan(0);
-      expect(options.every((o) => !o.disabled)).toBe(true);
-    },
-    15_000,
-  );
+  it('buildDatePickerOptions uses default bounds when min/max are empty', () => {
+    const options = buildDatePickerOptions('', '');
+    expect(options.length).toBeGreaterThan(0);
+    expect(options.every((o) => !o.disabled)).toBe(true);
+  }, 15_000);
 
   it('buildTimePickerOptions marks out-of-range slots disabled', () => {
     const options = buildTimePickerOptions('08:00', '20:00');
