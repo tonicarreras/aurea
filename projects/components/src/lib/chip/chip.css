@@ -42,12 +42,24 @@ button.au-chip__surface {
 }
 
 .au-chip__label {
-  display: block;
+  display: inline-flex;
   flex: 1 1 auto;
+  align-items: center;
+  gap: var(--au-space-1);
+  min-width: 0;
+  overflow: hidden;
+  text-align: start;
+}
+
+.au-chip__icon {
+  flex-shrink: 0;
+}
+
+.au-chip__text {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: start;
+  white-space: nowrap;
 }
 
 /* Sizes */

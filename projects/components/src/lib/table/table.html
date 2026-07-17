@@ -7,7 +7,12 @@
       }
     </div>
   }
-  <div class="au-table__scroll">
+  <div
+    class="au-table__scroll"
+    [class.au-table__scroll--virtual]="virtualScroll()"
+    [style.maxHeight.px]="virtualScroll() ? viewportHeight() : null"
+    (scroll)="onScroll($event)"
+  >
     <table class="au-table__grid">
       @if (caption()) {
         <caption class="au-table__caption--sr">
@@ -99,8 +104,27 @@
               />
             </td>
           </tr>
+        } @else if (bodyRows().length === 0) {
+          <tr class="au-table__empty-row">
+            <td [attr.colspan]="columnSpan()">
+              <ng-content select="au-empty-state">
+                <span class="au-table__empty-message">{{ emptyMessage() }}</span>
+              </ng-content>
+            </td>
+          </tr>
         } @else {
-          @for (row of viewRows(); track trackRow($index, row)) {
+          @if (virtualScroll() && virtualTopSpacer() > 0) {
+            <tr
+              class="au-table__spacer-row"
+              aria-hidden="true"
+            >
+              <td
+                [attr.colspan]="columnSpan()"
+                [style.height.px]="virtualTopSpacer()"
+              ></td>
+            </tr>
+          }
+          @for (row of bodyRows(); track trackRow($index, row)) {
             <tr
               [class]="rowClasses(row)"
               [attr.aria-selected]="rowAriaSelected(row)"
@@ -135,18 +159,31 @@
                 </td>
               }
             </tr>
-          } @empty {
-            <tr class="au-table__empty-row">
-              <td [attr.colspan]="columnSpan()">
-                <ng-content select="au-empty-state">
-                  <span class="au-table__empty-message">{{ emptyMessage() }}</span>
-                </ng-content>
-              </td>
+          }
+          @if (virtualScroll() && virtualBottomSpacer() > 0) {
+            <tr
+              class="au-table__spacer-row"
+              aria-hidden="true"
+            >
+              <td
+                [attr.colspan]="columnSpan()"
+                [style.height.px]="virtualBottomSpacer()"
+              ></td>
             </tr>
           }
         }
       </tbody>
     </table>
   </div>
+  @if (paginated()) {
+    <div class="au-table__footer">
+      <au-pagination
+        [page]="page()"
+        [pageCount]="pageCount()"
+        [disabled]="loading()"
+        (pageChange)="onPageChange($event)"
+      />
+    </div>
+  }
   <ng-content select="au-table-column" />
 </div>

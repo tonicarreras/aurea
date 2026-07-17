@@ -28,48 +28,26 @@ class ItemHost {
 }
 
 describe('AuAccordionItem', () => {
-  it('focuses the host button', async () => {
+  it('registers with the parent accordion and exposes the label', async () => {
     TestBed.configureTestingModule({ imports: [ItemHost] });
     const fixture = TestBed.createComponent(ItemHost);
     await fixture.whenStable();
+    const accordion = fixture.debugElement.query(By.directive(AuAccordion)).componentInstance;
     const item = fixture.debugElement
       .query(By.directive(AuAccordionItem))
       .injector.get(AuAccordionItem);
-    const button = fixture.nativeElement.querySelector(
-      '.au-accordion__trigger',
-    ) as HTMLButtonElement;
-    const focusSpy = vi.spyOn(button, 'focus');
-    item.focus();
-    expect(focusSpy).toHaveBeenCalled();
+    expect(accordion.renderedItems().length).toBe(1);
+    expect(item.label()).toBe('One');
   });
 
-  it('prevents click when disabled', async () => {
-    @Component({
-      imports: [AuAccordion, AuAccordionItem, AuAccordionPanel],
-      template: `
-        <au-accordion [(value)]="expanded">
-          <button
-            type="button"
-            auAccordionItem="one"
-            [auAccordionItemDisabled]="true"
-          >
-            One
-          </button>
-          <au-accordion-panel panel="one">Panel</au-accordion-panel>
-        </au-accordion>
-      `,
-    })
-    class DisabledItemHost {
-      expanded: string[] = [];
-    }
-
-    const fixture = TestBed.createComponent(DisabledItemHost);
+  it('marks projected trigger as hidden from assistive tech', async () => {
+    TestBed.configureTestingModule({ imports: [ItemHost] });
+    const fixture = TestBed.createComponent(ItemHost);
     await fixture.whenStable();
-    const item = fixture.debugElement
-      .query(By.directive(AuAccordionItem))
-      .injector.get(AuAccordionItem);
-    const preventDefault = vi.fn();
-    item['onClick']({ preventDefault } as unknown as MouseEvent);
-    expect(preventDefault).toHaveBeenCalled();
+    const projected = fixture.nativeElement.querySelector(
+      'button[auAccordionItem]',
+    ) as HTMLButtonElement;
+    expect(projected.hidden).toBe(true);
+    expect(projected.getAttribute('aria-hidden')).toBe('true');
   });
 });

@@ -1,6 +1,6 @@
 /**
  * Accordion — projected consumer markup (ng-content).
- * Root host: accordion.css · Panels: au-accordion-panel.css
+ * Root host: accordion.css · Projected triggers: au-accordion.css
  */
 
 au-accordion .au-accordion__item {

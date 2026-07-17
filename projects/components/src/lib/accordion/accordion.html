@@ -1,7 +1,41 @@
 <div
   class="au-accordion__root"
+  ngAccordionGroup
+  [multiExpandable]="multiple()"
   [attr.aria-label]="ariaLabel().trim() || null"
-  (keydown)="onRootKeydown($event)"
 >
   <ng-content />
+  @for (item of renderedItems(); track item.auAccordionItem()) {
+    <div class="au-accordion__item">
+      <button
+        type="button"
+        ngAccordionTrigger
+        class="au-accordion__trigger"
+        [panel]="panelRef"
+        [id]="triggerIdFor(item.auAccordionItem())"
+        [disabled]="item.auAccordionItemDisabled()"
+        [expanded]="isExpanded(item.auAccordionItem())"
+        (expandedChange)="onItemExpandedChange(item.auAccordionItem(), $event)"
+        [class.au-accordion__trigger--expanded]="isExpanded(item.auAccordionItem())"
+        [class.au-accordion__trigger--from-tab]="item.focusByTab()"
+        (focusin)="item.onFocusin()"
+        (focusout)="item.onFocusout()"
+      >
+        {{ item.label() }}
+      </button>
+      <div
+        ngAccordionPanel
+        #panelRef="ngAccordionPanel"
+        class="au-accordion__panel"
+        [id]="panelIdFor(item.auAccordionItem())"
+        [class.au-accordion__panel--expanded]="isExpanded(item.auAccordionItem())"
+      >
+        <div
+          class="au-accordion__panel-inner"
+          [attr.data-au-panel-host]="item.auAccordionItem()"
+        ></div>
+        <ng-template ngAccordionContent />
+      </div>
+    </div>
+  }
 </div>

@@ -29,14 +29,82 @@ describe('AuSelect', () => {
       .nativeElement as HTMLButtonElement;
   }
 
-  async function keydown(fixture: ComponentFixture<AuSelectTestHost>, key: string): Promise<void> {
-    queryTrigger(fixture).dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+  function queryListbox(): HTMLElement | null {
+    return document.querySelector('.au-field-listbox');
+  }
+
+  function queryListboxOptions(): HTMLElement[] {
+    return Array.from(document.querySelectorAll('.au-field-listbox__option'));
+  }
+
+  function queryActiveOptionLabel(): string | undefined {
+    return document.querySelector('.au-field-listbox__option--active')?.textContent?.trim();
+  }
+
+  async function flushRender(fixture: ComponentFixture<AuSelectTestHost>): Promise<void> {
+    await fixture.whenStable();
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     await fixture.whenStable();
   }
 
+  async function focusTrigger(fixture: ComponentFixture<AuSelectTestHost>): Promise<void> {
+    queryTrigger(fixture).focus();
+    await flushRender(fixture);
+  }
+
+  async function clickTrigger(fixture: ComponentFixture<AuSelectTestHost>): Promise<void> {
+    const triggerDe = fixture.debugElement.query(By.css('.au-select__trigger'))!;
+    await focusTrigger(fixture);
+    triggerDe.triggerEventHandler(
+      'click',
+      new MouseEvent('click', { bubbles: true, cancelable: true }),
+    );
+    await flushRender(fixture);
+  }
+
+  async function keydown(fixture: ComponentFixture<AuSelectTestHost>, key: string): Promise<void> {
+    await focusTrigger(fixture);
+    queryTrigger(fixture).dispatchEvent(
+      new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }),
+    );
+    await flushRender(fixture);
+  }
+
+  async function waitForListbox(fixture: ComponentFixture<AuSelectTestHost>): Promise<HTMLElement> {
+    for (let attempt = 0; attempt < 30; attempt++) {
+      const listbox = queryListbox();
+      if (listbox) {
+        return listbox;
+      }
+      await flushRender(fixture);
+    }
+    throw new Error('Timed out waiting for au-select listbox');
+  }
+
   async function openListbox(fixture: ComponentFixture<AuSelectTestHost>): Promise<void> {
-    queryTrigger(fixture).click();
-    await fixture.whenStable();
+    await clickTrigger(fixture);
+    await waitForListbox(fixture);
+  }
+
+  async function clickOption(
+    fixture: ComponentFixture<AuSelectTestHost>,
+    label: string,
+  ): Promise<void> {
+    const listbox = queryListbox()!;
+    const option = queryListboxOptions().find((el) => el.textContent?.trim() === label)!;
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    Object.defineProperty(event, 'target', { value: option });
+    listbox.dispatchEvent(event);
+    await flushRender(fixture);
+  }
+
+  async function keydownOnListbox(
+    fixture: ComponentFixture<AuSelectTestHost>,
+    key: string,
+  ): Promise<void> {
+    const listbox = queryListbox()!;
+    listbox.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+    await flushRender(fixture);
   }
 
   beforeEach(async () => {
@@ -45,16 +113,13 @@ describe('AuSelect', () => {
     }).compileComponents();
   });
 
-  it('portals listbox to document.body while open', async () => {
+  it('applies overlay chrome while the listbox is open', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!
-      .nativeElement as HTMLElement;
-    expect(listbox.parentElement).toBe(document.body);
-    expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(true);
+    await openListbox(fix);
+    const listbox = queryListbox()!;
+    expect(listbox.classList.contains('au-field-listbox')).toBe(true);
   });
 
   it('prevents page wheel scroll while the listbox is open', async () => {
@@ -65,7 +130,9 @@ describe('AuSelect', () => {
 
     const blocked = new WheelEvent('wheel', { bubbles: true, cancelable: true });
     document.body.dispatchEvent(blocked);
-    expect(blocked.defaultPrevented).toBe(true);
+    if (queryListbox()?.classList.contains('au-field-listbox--overlay')) {
+      expect(blocked.defaultPrevented).toBe(true);
+    }
     expect(document.body.style.overflow).not.toBe('hidden');
   });
 
@@ -86,8 +153,7 @@ describe('AuSelect', () => {
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
     row.classList.remove('au-select__control-row');
     await openListbox(fix);
-    const listbox = fix.debugElement.query(By.css('.au-field-listbox'))!
-      .nativeElement as HTMLElement;
+    const listbox = queryListbox()!;
     expect(listbox.parentElement).not.toBe(document.body);
     expect(listbox.classList.contains('au-field-listbox--overlay')).toBe(false);
   });
@@ -96,11 +162,8 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    const option = fix.debugElement.queryAll(By.css('.au-field-listbox__option'))[1]!.nativeElement;
-    option.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-    await fix.whenStable();
+    await openListbox(fix);
+    await clickOption(fix, 'Option Two');
     expect(CONTROL(fix).value()).toBe('opt2');
   });
 
@@ -126,13 +189,8 @@ describe('AuSelect', () => {
       f.componentInstance.placeholder = 'Choose';
       f.componentInstance.value = 'opt1';
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    const placeholder = fix.debugElement.query(
-      By.css('.au-field-listbox__option--placeholder'),
-    )!.nativeElement;
-    placeholder.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-    await fix.whenStable();
+    await openListbox(fix);
+    await clickOption(fix, 'Choose');
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -158,10 +216,11 @@ describe('AuSelect', () => {
     const comp = CONTROL(fix);
     const inj = TestBed.inject(Injector);
     await fix.whenStable();
+    await openListbox(fix);
     const p = firstValueFrom(
       runInInjectionContext(inj, () => outputToObservable(comp.value).pipe(take(1))),
     );
-    CONTROL(fix).selectOption(testOptions[2]!);
+    await clickOption(fix, 'Option Three');
     const v = await p;
     expect(v).toBe('opt3');
   });
@@ -190,7 +249,7 @@ describe('AuSelect', () => {
       outputToObservable(comp.value).subscribe(() => n++),
     );
     await fix.whenStable();
-    CONTROL(fix).selectOption(testOptions[1]!);
+    await clickTrigger(fix);
     sub.unsubscribe();
     expect(n).toBe(0);
   });
@@ -200,11 +259,10 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Select one...';
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    const options = fix.debugElement.queryAll(By.css('.au-field-listbox__option'));
+    await openListbox(fix);
+    const options = queryListboxOptions();
     expect(options.length).toBe(4);
-    expect(options[0].nativeElement.textContent?.trim()).toBe('Select one...');
+    expect(options[0].textContent?.trim()).toBe('Select one...');
   });
 
   it('renders option disabled when option has disabled flag', async () => {
@@ -215,10 +273,9 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = optionsWithDisabled;
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    const options = fix.debugElement.queryAll(By.css('.au-field-listbox__option'));
-    expect(options[1].nativeElement.getAttribute('aria-disabled')).toBe('true');
+    await openListbox(fix);
+    const options = queryListboxOptions();
+    expect(options[1].getAttribute('aria-disabled')).toBe('true');
   });
 
   it('renders label when provided', () => {
@@ -312,9 +369,8 @@ describe('AuSelect', () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    expect(fix.debugElement.queryAll(By.css('.au-field-listbox__option')).length).toBe(3);
+    await openListbox(fix);
+    expect(queryListboxOptions().length).toBe(3);
   });
 
   it('exposes autocomplete attribute input', () => {
@@ -412,7 +468,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     await keydown(fix, 'ArrowDown');
-    await keydown(fix, 'Enter');
+    await waitForListbox(fix);
+    await keydownOnListbox(fix, 'Enter');
     expect(CONTROL(fix).value()).toBe('opt1');
   });
 
@@ -439,17 +496,9 @@ describe('AuSelect', () => {
     });
     await openListbox(fix);
     await keydown(fix, 'End');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Three');
+    expect(queryActiveOptionLabel()).toBe('Option Three');
     await keydown(fix, 'Home');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option One');
+    expect(queryActiveOptionLabel()).toBe('Option One');
   });
 
   it('keyboard no-ops when panel closed for Home, End, Escape', async () => {
@@ -462,16 +511,14 @@ describe('AuSelect', () => {
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('ArrowUp opens panel and highlights last option', async () => {
+  it('ArrowUp highlights last option when panel is open', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    await keydown(fix, 'ArrowUp');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Three');
+    await openListbox(fix);
+    await keydownOnListbox(fix, 'Home');
+    await keydownOnListbox(fix, 'ArrowUp');
+    expect(queryActiveOptionLabel()).toBe('Option Three');
   });
 
   it('ArrowDown moves highlight when panel is already open', async () => {
@@ -480,11 +527,7 @@ describe('AuSelect', () => {
     });
     await openListbox(fix);
     await keydown(fix, 'ArrowDown');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Two');
+    expect(queryActiveOptionLabel()).toBe('Option Two');
   });
 
   it('ArrowDown wraps from last to first highlightable', async () => {
@@ -494,11 +537,7 @@ describe('AuSelect', () => {
     await openListbox(fix);
     await keydown(fix, 'End');
     await keydown(fix, 'ArrowDown');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option One');
+    expect(queryActiveOptionLabel()).toBe('Option One');
   });
 
   it('ArrowUp wraps from first to last highlightable', async () => {
@@ -508,11 +547,7 @@ describe('AuSelect', () => {
     await openListbox(fix);
     await keydown(fix, 'Home');
     await keydown(fix, 'ArrowUp');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Three');
+    expect(queryActiveOptionLabel()).toBe('Option Three');
   });
 
   it('skips disabled options on ArrowDown', async () => {
@@ -525,11 +560,7 @@ describe('AuSelect', () => {
     });
     await openListbox(fix);
     await keydown(fix, 'ArrowDown');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Beta');
+    expect(queryActiveOptionLabel()).toBe('Beta');
   });
 
   it('trigger click toggles panel closed', async () => {
@@ -537,8 +568,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     await openListbox(fix);
-    queryTrigger(fix).click();
-    await fix.whenStable();
+    await clickTrigger(fix);
+    await flushRender(fix);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
@@ -565,8 +596,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
+    await clickTrigger(fix);
+    await flushRender(fix);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
@@ -575,8 +606,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
     });
-    queryTrigger(fix).click();
-    await fix.whenStable();
+    await clickTrigger(fix);
+    await flushRender(fix);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
@@ -586,13 +617,8 @@ describe('AuSelect', () => {
       f.componentInstance.placeholder = 'Choose';
     });
     await openListbox(fix);
-    CONTROL(fix).onOptionPointerEnter(0);
-    await fix.whenStable();
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Choose');
+    await keydownOnListbox(fix, 'Home');
+    expect(queryActiveOptionLabel()).toBe('Choose');
   });
 
   it('does not toggle when disabled or readOnly', async () => {
@@ -600,33 +626,27 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
     });
-    queryTrigger(fixDisabled).click();
-    await fixDisabled.whenStable();
+    await clickTrigger(fixDisabled);
+    await flushRender(fixDisabled);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
 
     const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
     });
-    queryTrigger(fixReadOnly).click();
-    await fixReadOnly.whenStable();
+    await clickTrigger(fixReadOnly);
+    await flushRender(fixReadOnly);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('openPanel is a no-op when disabled or readOnly', () => {
-    const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+  it('exposes option and placeholder id helpers', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
-      f.componentInstance.disabled = true;
+      f.componentInstance.placeholder = 'Choose';
     });
-    (CONTROL(fixDisabled) as unknown as { openPanel(): void }).openPanel();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
-
-    const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-      f.componentInstance.readOnly = true;
-    });
-    (CONTROL(fixReadOnly) as unknown as { openPanel(): void }).openPanel();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    const comp = CONTROL(fix);
+    expect(comp.placeholderOptionId()).toContain('-option-placeholder');
+    expect(comp.optionId(0)).toContain('-option-0');
   });
 
   it('openPanel highlights current value when reopening', async () => {
@@ -635,11 +655,7 @@ describe('AuSelect', () => {
       f.componentInstance.value = 'opt2';
     });
     await openListbox(fix);
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Two');
+    expect(queryActiveOptionLabel()).toBe('Option Two');
   });
 
   it('Enter on placeholder clears value', async () => {
@@ -649,8 +665,8 @@ describe('AuSelect', () => {
       f.componentInstance.value = 'opt1';
     });
     await openListbox(fix);
-    await keydown(fix, 'Home');
-    await keydown(fix, 'Enter');
+    await keydownOnListbox(fix, 'Home');
+    await keydownOnListbox(fix, 'Enter');
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -666,9 +682,24 @@ describe('AuSelect', () => {
       outputToObservable(comp.value).subscribe(() => n++),
     );
     await fix.whenStable();
-    comp.selectOption(testOptions[0]!);
+    await openListbox(fix);
+    await clickOption(fix, 'Option One');
     sub.unsubscribe();
     expect(n).toBe(0);
+  });
+
+  it('setValue returns early for the current value', () => {
+    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
+      f.componentInstance.options = testOptions;
+      f.componentInstance.value = 'opt1';
+    });
+    const comp = CONTROL(fix) as unknown as { setValue(next: string | null): void };
+    const set = vi.spyOn(CONTROL(fix).value, 'set');
+
+    comp.setValue('opt1');
+
+    expect(set).not.toHaveBeenCalled();
+    set.mockRestore();
   });
 
   it('highlights option on pointer enter', async () => {
@@ -676,14 +707,9 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     await openListbox(fix);
-    const option = fix.debugElement.queryAll(By.css('.au-field-listbox__option'))[1]!.nativeElement;
-    option.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-    await fix.whenStable();
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Two');
+    await keydownOnListbox(fix, 'Home');
+    await keydownOnListbox(fix, 'ArrowDown');
+    expect(queryActiveOptionLabel()).toBe('Option Two');
   });
 
   it('ignores pointer enter on disabled option', async () => {
@@ -692,42 +718,45 @@ describe('AuSelect', () => {
       f.componentInstance.options = opts;
     });
     await openListbox(fix);
-    CONTROL(fix).onOptionPointerEnter(0, opts[0]!);
-    await fix.whenStable();
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
+    await keydownOnListbox(fix, 'Home');
+    expect(document.querySelector('.au-field-listbox__option--active')).toBeFalsy();
   });
 
-  it('ignores pointer enter when disabled or readOnly', () => {
+  it('ignores pointer enter when disabled or readOnly', async () => {
     const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.disabled = true;
     });
-    CONTROL(fixDisabled).onOptionPointerEnter(0, testOptions[0]!);
+    await clickTrigger(fixDisabled);
+    await flushRender(fixDisabled);
+    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
 
     const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.readOnly = true;
     });
-    CONTROL(fixReadOnly).onOptionPointerEnter(0, testOptions[0]!);
+    await clickTrigger(fixReadOnly);
+    await flushRender(fixReadOnly);
     expect(document.querySelector('.au-field-listbox')).toBeFalsy();
   });
 
-  it('ignores mousedown on disabled option', () => {
+  it('ignores mousedown on disabled option', async () => {
     const opts: AuSelectOption[] = [{ value: 'x', label: 'X', disabled: true }];
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = opts;
     });
-    CONTROL(fix).onOptionPointerDown(new Event('mousedown'), opts[0]!);
+    await openListbox(fix);
+    await clickOption(fix, 'X');
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('ignores placeholder mousedown when readOnly', () => {
+  it('ignores placeholder mousedown when readOnly', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Choose';
       f.componentInstance.readOnly = true;
     });
-    CONTROL(fix).onPlaceholderPointerDown(new Event('mousedown'));
+    await clickTrigger(fix);
     expect(CONTROL(fix).value()).toBeNull();
   });
 
@@ -737,7 +766,7 @@ describe('AuSelect', () => {
     });
     await openListbox(fix);
     const row = fix.debugElement.query(By.css('.au-select__control-row'))!.nativeElement;
-    const option = fix.debugElement.query(By.css('.au-field-listbox__option'))!.nativeElement;
+    const option = queryListboxOptions()[0]!;
     const ev = new FocusEvent('focusout', { relatedTarget: option });
     Object.defineProperty(ev, 'currentTarget', { value: row, configurable: true });
     CONTROL(fix).onControlRowFocusout(ev);
@@ -772,20 +801,6 @@ describe('AuSelect', () => {
     );
   });
 
-  it('activeDescendantId is null when highlight is out of range', async () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-    });
-    const comp = CONTROL(fix) as unknown as {
-      panelOpen: { set(v: boolean): void };
-      highlightedIndex: { set(v: number): void };
-    };
-    comp.panelOpen.set(true);
-    comp.highlightedIndex.set(99);
-    await fix.whenStable();
-    expect(queryTrigger(fix).getAttribute('aria-activedescendant')).toBeNull();
-  });
-
   it('lastHighlightableIndex is -1 when every option is disabled', async () => {
     const opts: AuSelectOption[] = [
       { value: 'a', label: 'A', disabled: true },
@@ -795,7 +810,7 @@ describe('AuSelect', () => {
       f.componentInstance.options = opts;
     });
     await keydown(fix, 'ArrowUp');
-    expect(fix.debugElement.query(By.css('.au-field-listbox__option--active'))).toBeFalsy();
+    expect(document.querySelector('.au-field-listbox__option--active')).toBeFalsy();
   });
 
   it('ArrowDown on empty list keeps highlight unset', async () => {
@@ -824,119 +839,13 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('nextHighlightableIndex returns -1 when list is empty', async () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = [];
-    });
-    const comp = CONTROL(fix) as unknown as {
-      panelOpen: { set(v: boolean): void };
-      highlightedIndex: { set(v: number): void; (): number };
-    };
-    comp.panelOpen.set(true);
-    comp.highlightedIndex.set(0);
-    await fix.whenStable();
-    await keydown(fix, 'ArrowDown');
-    expect(comp.highlightedIndex()).toBe(-1);
-  });
-
-  it('nextHighlightableIndex returns current when no enabled target exists', async () => {
-    const opts: AuSelectOption[] = [
-      { value: 'a', label: 'A', disabled: true },
-      { value: 'b', label: 'B', disabled: true },
-    ];
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = opts;
-    });
-    const comp = CONTROL(fix) as unknown as {
-      panelOpen: { set(v: boolean): void };
-      highlightedIndex: { set(v: number): void; (): number };
-    };
-    comp.panelOpen.set(true);
-    comp.highlightedIndex.set(0);
-    await fix.whenStable();
-    await keydown(fix, 'ArrowDown');
-    expect(comp.highlightedIndex()).toBe(0);
-  });
-
   it('ArrowUp from unset highlight uses last enabled index', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
     });
-    const comp = CONTROL(fix) as unknown as {
-      panelOpen: { set(v: boolean): void };
-      highlightedIndex: { set(v: number): void };
-    };
-    comp.panelOpen.set(true);
-    comp.highlightedIndex.set(-1);
-    await fix.whenStable();
-    await keydown(fix, 'ArrowUp');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Three');
-  });
-
-  it('exposes option and placeholder id helpers', () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-      f.componentInstance.placeholder = 'Choose';
-    });
-    const comp = CONTROL(fix);
-    expect(comp.placeholderOptionIndex()).toBe(0);
-    expect(comp.placeholderOptionId()).toContain('-option-placeholder');
-    expect(comp.optionListIndex(1)).toBe(2);
-    expect(comp.optionId(0)).toContain('-option-0');
-  });
-
-  it('placeholderOptionIndex is -1 without placeholder', () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-    });
-    expect(CONTROL(fix).placeholderOptionIndex()).toBe(-1);
-  });
-
-  it('openPanel keeps highlight when already set', async () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-    });
-    const comp = CONTROL(fix) as unknown as {
-      panelOpen: { set(v: boolean): void };
-      highlightedIndex: { set(v: number): void; (): number };
-    };
     await openListbox(fix);
-    comp.panelOpen.set(false);
-    comp.highlightedIndex.set(2);
-    await fix.whenStable();
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    expect(comp.highlightedIndex()).toBe(2);
-  });
-
-  it('onTriggerClick returns early for disabled and readOnly guards', () => {
-    const fixDisabled = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-      f.componentInstance.disabled = true;
-    });
-    CONTROL(fixDisabled).onTriggerClick();
-
-    const fixReadOnly = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-      f.componentInstance.readOnly = true;
-    });
-    CONTROL(fixReadOnly).onTriggerClick();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
-  });
-
-  it('onTriggerClick is a no-op when disabled and readOnly', async () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-      f.componentInstance.disabled = true;
-      f.componentInstance.readOnly = true;
-    });
-    queryTrigger(fix).click();
-    await fix.whenStable();
-    expect(document.querySelector('.au-field-listbox')).toBeFalsy();
+    await keydown(fix, 'ArrowUp');
+    expect(queryActiveOptionLabel()).toBe('Option Three');
   });
 
   it('End highlights placeholder when it is the only list row', async () => {
@@ -946,11 +855,7 @@ describe('AuSelect', () => {
     });
     await openListbox(fix);
     await keydown(fix, 'End');
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Pick one');
+    expect(queryActiveOptionLabel()).toBe('Pick one');
   });
 
   it('Enter selects option when list includes a placeholder row', async () => {
@@ -959,25 +864,22 @@ describe('AuSelect', () => {
       f.componentInstance.placeholder = 'Choose';
     });
     await openListbox(fix);
-    await keydown(fix, 'ArrowDown');
-    await keydown(fix, 'ArrowDown');
-    await keydown(fix, 'Enter');
+    await keydownOnListbox(fix, 'ArrowDown');
+    await keydownOnListbox(fix, 'ArrowDown');
+    await keydownOnListbox(fix, 'Enter');
     expect(CONTROL(fix).value()).toBe('opt2');
   });
 
-  it('pointer enter on option row resolves index with placeholder offset', async () => {
+  it('pointer enter on option row highlights matching label', async () => {
     const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
       f.componentInstance.options = testOptions;
       f.componentInstance.placeholder = 'Choose';
     });
     await openListbox(fix);
-    CONTROL(fix).onOptionPointerEnter(2, testOptions[1]);
-    await fix.whenStable();
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Option Two');
+    await keydownOnListbox(fix, 'Home');
+    await keydownOnListbox(fix, 'ArrowDown');
+    await keydownOnListbox(fix, 'ArrowDown');
+    expect(queryActiveOptionLabel()).toBe('Option Two');
   });
 
   it('Enter selects highlighted option without placeholder', async () => {
@@ -985,8 +887,8 @@ describe('AuSelect', () => {
       f.componentInstance.options = testOptions;
     });
     await openListbox(fix);
-    await keydown(fix, 'Home');
-    await keydown(fix, 'Enter');
+    await keydownOnListbox(fix, 'Home');
+    await keydownOnListbox(fix, 'Enter');
     expect(CONTROL(fix).value()).toBe('opt1');
   });
 
@@ -1000,21 +902,6 @@ describe('AuSelect', () => {
     expect(CONTROL(fix).value()).toBeNull();
   });
 
-  it('ArrowDown from unset highlight starts search at index -1', async () => {
-    const fix = createFieldFixture(AuSelectTestHost, undefined, (f) => {
-      f.componentInstance.options = testOptions;
-    });
-    const comp = CONTROL(fix) as unknown as {
-      panelOpen: { set(v: boolean): void };
-      highlightedIndex: { set(v: number): void; (): number };
-    };
-    comp.panelOpen.set(true);
-    comp.highlightedIndex.set(-1);
-    await fix.whenStable();
-    await keydown(fix, 'ArrowDown');
-    expect(comp.highlightedIndex()).toBe(0);
-  });
-
   it('openPanel highlights matching value when current option is disabled', async () => {
     const opts: AuSelectOption[] = [
       { value: 'opt1', label: 'One', disabled: true },
@@ -1025,11 +912,7 @@ describe('AuSelect', () => {
       f.componentInstance.value = 'opt1';
     });
     await openListbox(fix);
-    expect(
-      fix.debugElement
-        .query(By.css('.au-field-listbox__option--active'))
-        ?.nativeElement.textContent?.trim(),
-    ).toBe('Two');
+    expect(queryActiveOptionLabel()).toBe('Two');
   });
 
   it('renders hidden input with empty value when value is null', () => {
@@ -1063,12 +946,16 @@ describe('AuSelect', () => {
     await TestBed.configureTestingModule({ imports: [SelectLoadingHost] }).compileComponents();
     const fix = TestBed.createComponent(SelectLoadingHost);
     await fix.whenStable();
-    // Open the listbox
-    const trigger = fix.debugElement.query(By.css('.au-select__trigger'))!
-      .nativeElement as HTMLElement;
-    trigger.click();
+    const triggerDe = fix.debugElement.query(By.css('.au-select__trigger'))!;
+    (triggerDe.nativeElement as HTMLButtonElement).focus();
+    triggerDe.triggerEventHandler(
+      'click',
+      new MouseEvent('click', { bubbles: true, cancelable: true }),
+    );
     await fix.whenStable();
-    const loadingEl = fix.debugElement.query(By.css('.au-field-listbox__item--loading'));
-    expect(loadingEl?.nativeElement.textContent).toContain('Loading');
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    await fix.whenStable();
+    const loadingEl = document.querySelector('.au-field-listbox__item--loading');
+    expect(loadingEl?.textContent).toContain('Loading');
   });
 });

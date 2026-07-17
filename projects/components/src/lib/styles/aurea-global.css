@@ -1642,6 +1642,25 @@ au-table .au-table__scroll {
   overflow-x: auto;
 }
 
+au-table[data-au-virtual] .au-table__scroll--virtual {
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+au-table .au-table__spacer-row td {
+  padding: 0;
+  border: 0;
+  line-height: 0;
+}
+
+au-table .au-table__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--au-space-3) var(--au-table-shell-pad);
+  border-top: 1px solid var(--au-color-border-subtle);
+  background: var(--au-color-surface-raised);
+}
+
 au-table .au-table__grid {
   width: 100%;
   min-width: 100%;
@@ -2043,7 +2062,8 @@ au-tabs[data-au-variant='contained'] .au-tabs__tab--selected::after {
   line-height: var(--au-leading-normal);
 }
 
-.au-tabs__panel[hidden] {
+.au-tabs__panel[hidden],
+.au-tabs__panel[inert] {
   display: none !important;
 }
 
@@ -3644,7 +3664,7 @@ au-description-list[data-au-columns='3'][data-au-layout='vertical'] .au-descript
 /* --- ./au-accordion.css --- */
 /**
  * Accordion — projected consumer markup (ng-content).
- * Root host: accordion.css · Panels: au-accordion-panel.css
+ * Root host: accordion.css · Projected triggers: au-accordion.css
  */
 
 au-accordion .au-accordion__item {

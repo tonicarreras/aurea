@@ -17,10 +17,8 @@ export type AuThemeMode = 'light' | 'dark' | 'system' | 'high-contrast' | 'high-
   },
 })
 export class AuTheme {
-  private readonly destroyRef = inject(DestroyRef);
-
+  private readonly destroyRef: DestroyRef;
   readonly auTheme = input<AuThemeMode>('system');
-
   private readonly prefersDark = signal(false);
 
   readonly resolved = computed(() => {
@@ -36,7 +34,10 @@ export class AuTheme {
     return this.prefersDark() ? 'dark' : 'light';
   });
 
-  private readonly systemColorSchemeBinding = this.bindSystemColorScheme();
+  constructor() {
+    this.destroyRef = inject(DestroyRef);
+    this.bindSystemColorScheme();
+  }
 
   private bindSystemColorScheme(): void {
     if (typeof matchMedia === 'undefined') {

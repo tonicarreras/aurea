@@ -1,20 +1,34 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  model,
+  signal,
+  untracked,
+} from '@angular/core';
 
 import { AuCheckbox } from '../checkbox/au-checkbox.directive';
 import { AuIcon } from '../icon/icon';
+import { AuPagination } from '../pagination/pagination';
 import { AuSpinner } from '../spinner/spinner';
 import {
+  createTableSelectionLookup,
   formatTableCellText,
-  isTableRowSelected,
   nextTableRowSelection,
   nextTableSelectAllSelection,
   readTableCell,
+  resolveTablePaginatedRows,
+  resolveTableTotalRows,
   resolveTableViewRows,
+  resolveTableVirtualWindow,
   shouldIgnoreTableRowClick,
   tableColumnSortDirection,
   tableColumnSpan,
   tableHeaderAriaSort,
+  tablePageCount,
   tableSelectAllChecked,
   tableSelectAllIndeterminate,
   toggleTableSortState,
@@ -31,20 +45,25 @@ export type {
   AuTableSortState,
 } from './table-types';
 
-export type { AuTableColumnReader } from './au-table-data';
+export type { AuTableColumnReader, AuTableVirtualWindow } from './au-table-data';
 export {
   compareTableRows,
+  createTableSelectionLookup,
   formatTableCellText,
   isTableRowSelected,
   nextTableRowSelection,
   nextTableSelectAllSelection,
   readTableCell,
+  resolveTablePaginatedRows,
+  resolveTableTotalRows,
   resolveTableViewRows,
+  resolveTableVirtualWindow,
   shouldIgnoreTableRowClick,
   sortTableRows,
   tableColumnSortDirection,
   tableColumnSpan,
   tableHeaderAriaSort,
+  tablePageCount,
   tableSelectAllChecked,
   tableSelectAllIndeterminate,
   toggleTableSortState,
@@ -58,19 +77,22 @@ export {
   selector: 'au-table',
   templateUrl: './table.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuCheckbox, AuIcon, AuSpinner, NgTemplateOutlet],
+  imports: [AuCheckbox, AuIcon, AuPagination, AuSpinner, NgTemplateOutlet],
   host: {
     class: 'au-table',
     '[attr.data-au-striped]': 'striped() ? "" : null',
     '[attr.data-au-compact]': 'compact() ? "" : null',
     '[attr.data-au-sticky-header]': 'stickyHeader() ? "" : null',
     '[attr.data-au-loading]': 'loading() ? "" : null',
+    '[attr.data-au-virtual]': 'virtualScroll() ? "" : null',
+    '[attr.data-au-paginated]': 'paginated() ? "" : null',
     '[attr.data-au-selection]': 'selectionMode() !== "none" ? selectionMode() : null',
     '[attr.aria-busy]': 'loading() ? "true" : null',
   },
 })
 export class AuTable {
   private readonly columnRegistry = signal<readonly AuTableColumn[]>([]);
+  private readonly scrollTop = signal(0);
 
   /** Row data rendered in the table body. */
   readonly data = input.required<readonly unknown[]>();
@@ -84,8 +106,30 @@ export class AuTable {
   readonly loadingMessage = input('Loading…');
   readonly emptyMessage = input('No data');
   readonly sort = model<AuTableSortState | null>(null);
+  /** When false, `data` order is preserved and `sort` is emitted for server-side sorting. */
   readonly clientSort = input(true);
   readonly trackByFn = input<((index: number, row: unknown) => unknown) | undefined>(undefined);
+
+  /** Render only visible rows inside a fixed-height scroll viewport. */
+  readonly virtualScroll = input(false);
+  /** Uniform row height (px) required for virtual scroll. */
+  readonly rowHeight = input(44);
+  /** Scroll viewport height (px) when `virtualScroll` is true. */
+  readonly viewportHeight = input(400);
+  /** Extra rows rendered above/below the viewport while virtual scrolling. */
+  readonly virtualOverscan = input(3);
+
+  /** Show pagination footer and slice rows per page. */
+  readonly paginated = input(false);
+  /** Active page (1-based). */
+  readonly page = model(1);
+  /** Rows per page for client pagination. */
+  readonly pageSize = input(25);
+  /**
+   * Total row count for server pagination.
+   * When set, `data` is treated as the current page slice from the server.
+   */
+  readonly totalRows = input<number | undefined>(undefined);
 
   /** Row selection: `none`, one row (`single`), or many (`multiple`). */
   readonly selectionMode = input<AuTableSelectionMode>('none');
@@ -110,9 +154,82 @@ export class AuTable {
     resolveTableViewRows(this.data(), this.columnReaders(), this.sort(), this.clientSort()),
   );
 
+  readonly totalRowCount = computed(() =>
+    resolveTableTotalRows(this.viewRows().length, this.totalRows()),
+  );
+
+  readonly pageCount = computed(() => {
+    if (!this.paginated()) {
+      return 1;
+    }
+    return tablePageCount(this.totalRowCount(), this.pageSize());
+  });
+
+  readonly paginatedRows = computed(() => {
+    if (!this.paginated()) {
+      return this.viewRows();
+    }
+    if (this.totalRows() !== undefined) {
+      return this.viewRows();
+    }
+    return resolveTablePaginatedRows(this.viewRows(), this.page(), this.pageSize());
+  });
+
+  readonly virtualWindow = computed(() => {
+    if (!this.virtualScroll()) {
+      return {
+        startIndex: 0,
+        endIndex: this.paginatedRows().length,
+        topSpacerPx: 0,
+        bottomSpacerPx: 0,
+        visibleRows: this.paginatedRows(),
+      };
+    }
+    return resolveTableVirtualWindow(
+      this.paginatedRows(),
+      this.scrollTop(),
+      this.viewportHeight(),
+      this.rowHeight(),
+      this.virtualOverscan(),
+    );
+  });
+
+  readonly bodyRows = computed(() => this.virtualWindow().visibleRows);
+
+  readonly virtualTopSpacer = computed(() => this.virtualWindow().topSpacerPx);
+  readonly virtualBottomSpacer = computed(() => this.virtualWindow().bottomSpacerPx);
+
+  readonly selectionLookup = computed(() =>
+    createTableSelectionLookup(this.selection(), this.compareSelection()),
+  );
+
   readonly columnSpan = computed(() =>
     tableColumnSpan(this.columns().length, this.selectionMode()),
   );
+
+  constructor() {
+    effect(() => {
+      this.data();
+      this.sort();
+      this.page();
+      this.paginated();
+      this.virtualScroll();
+      untracked(() => {
+        if (this.scrollTop() !== 0) {
+          this.scrollTop.set(0);
+        }
+      });
+    });
+
+    effect(() => {
+      const count = this.pageCount();
+      untracked(() => {
+        if (this.page() > count) {
+          this.page.set(count);
+        }
+      });
+    });
+  }
 
   registerColumn(column: AuTableColumn): void {
     this.columnRegistry.update((list) => (list.includes(column) ? list : [...list, column]));
@@ -122,9 +239,25 @@ export class AuTable {
     this.columnRegistry.update((list) => list.filter((c) => c !== column));
   }
 
+  protected onScroll(event: Event): void {
+    if (!this.virtualScroll()) {
+      return;
+    }
+    const target = event.currentTarget;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    this.scrollTop.set(target.scrollTop);
+  }
+
+  protected onPageChange(next: number): void {
+    this.page.set(next);
+  }
+
   protected trackRow(index: number, row: unknown): unknown {
     const trackBy = this.trackByFn();
-    return trackBy ? trackBy(index, row) : index;
+    const baseIndex = this.virtualWindow().startIndex + index;
+    return trackBy ? trackBy(baseIndex, row) : baseIndex;
   }
 
   protected headerClasses(col: AuTableColumn): string {
@@ -176,19 +309,25 @@ export class AuTable {
   }
 
   protected isRowSelected(row: unknown): boolean {
-    return isTableRowSelected(row, this.selection(), this.compareSelection());
+    return this.selectionLookup()(row);
   }
 
   protected selectAllChecked(): boolean {
-    return tableSelectAllChecked(this.viewRows(), this.selection(), this.compareSelection());
+    return tableSelectAllChecked(this.paginatedRows(), this.selection(), this.compareSelection());
   }
 
   protected selectAllIndeterminate(): boolean {
-    return tableSelectAllIndeterminate(this.viewRows(), this.selection(), this.compareSelection());
+    return tableSelectAllIndeterminate(
+      this.paginatedRows(),
+      this.selection(),
+      this.compareSelection(),
+    );
   }
 
   protected setSelectAll(checked: boolean): void {
-    this.selection.set(nextTableSelectAllSelection(this.selectionMode(), checked, this.viewRows()));
+    this.selection.set(
+      nextTableSelectAllSelection(this.selectionMode(), checked, this.paginatedRows()),
+    );
   }
 
   protected setRowSelected(row: unknown, checked: boolean): void {

@@ -240,6 +240,17 @@ describe('AuChip', () => {
     expect(remove.classList.contains('au-chip__remove--from-tab')).toBe(true);
   });
 
+  it('renders leading icon when icon input is set', async () => {
+    fixture.componentRef.setInput('label', 'Present');
+    fixture.componentRef.setInput('icon', 'check-circle');
+    await fixture.whenStable();
+    const icon = fixture.nativeElement.querySelector('.au-chip__icon');
+    expect(icon).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.au-chip__text')?.textContent?.trim()).toBe(
+      'Present',
+    );
+  });
+
   it('renders ng-content fallback when label is empty', async () => {
     fixture.componentRef.setInput('label', '');
     await fixture.whenStable();

@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { AuDialog } from '../dialog/dialog';
 import { AuFormField } from '../form-field/form-field';
 import { AuInputDate } from './au-input-date.directive';
@@ -62,9 +62,14 @@ describe('AuInputDate', () => {
   }
 
   beforeEach(async () => {
+    stubPointerPreference(false);
     await TestBed.configureTestingModule({
       imports: [AuInputDateTestHost],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it('coerces numeric placeholder through transform', () => {

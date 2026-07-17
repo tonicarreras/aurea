@@ -5,15 +5,18 @@ import {
   DestroyRef,
   PLATFORM_ID,
   Renderer2,
-  effect,
   afterRenderEffect,
   computed,
+  effect,
   inject,
   input,
   model,
   output,
   signal,
+  untracked,
 } from '@angular/core';
+import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
+import { Listbox, Option } from '@angular/aria/listbox';
 import { injectHostRef } from '../au-host-element';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import type { AuSize } from '../au-size';
@@ -23,6 +26,12 @@ import { syncFormFieldControlState } from '../form-field/form-field';
 import { queryFieldNative } from '../form-field/form-field';
 import { tabFocusState } from '../au-tab-focus-state';
 import type { AuFieldOption } from '../field-option';
+import {
+  installComboboxDisplaySync,
+  installFieldComboboxListboxSync,
+  installFieldComboboxOverlayDetach,
+  isFieldComboboxInteractive,
+} from '../overlay/field-combobox-sync';
 import { FieldListboxOverlay, focusLeftFieldControl } from '../overlay/field-listbox-overlay';
 import { AuIcon } from '../icon/icon';
 import { AuSpinner } from '../spinner/spinner';
@@ -36,9 +45,7 @@ export type AuAutocompleteOption = AuFieldOption;
  * - **Signal forms:** implements {@link FormValueControl}; bind `[formField]` on `string | null` (option `value`).
  * - **Classic:** use `[(value)]` (empty field ↔ `null`, not `''`).
  * - **Filtering:** options match when `label` contains the query (case-insensitive by default).
- * - **Accessibility:** WAI-ARIA combobox pattern (`role="combobox"` + `listbox` / `option`).
- * - **Focus:** Tab into the field applies an **outer outline** on the control row; pointer focus uses an
- *   **inset** ring (`tabFocusState` + `--from-tab` CSS).
+ * - **Accessibility:** WAI-ARIA combobox via `@angular/aria/combobox` + `listbox`.
  *
  * @see {@link FormValueControl}
  */
@@ -47,7 +54,7 @@ export type AuAutocompleteOption = AuFieldOption;
   templateUrl: './autocomplete.html',
   styleUrl: './autocomplete.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AuIcon, AuSpinner],
+  imports: [AuIcon, AuSpinner, Combobox, ComboboxPopup, ComboboxWidget, Listbox, Option],
   host: {
     class: 'au-autocomplete',
     '[attr.data-au-size]': 'size()',
@@ -76,14 +83,11 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   readonly placeholder = input<string, string>('', {
     transform: (v) => (v == null ? '' : String(v)),
   });
-  /** Native `autocomplete` on the text input (defaults to `off` to avoid clashing with the listbox). */
   readonly autocomplete = input<string | undefined>('off');
   readonly size = input<AuSize>('md');
 
-  /** Minimum query length before filtering (0 = filter immediately, including empty query). */
   readonly minFilterLength = input(0);
   readonly caseSensitive = input(false);
-  /** When true, blur clears the value unless the query matches an option label exactly. */
   readonly strictSelection = input(true);
   readonly noResultsText = input<string, string>('No results', {
     transform: (v) => (v == null ? '' : String(v)),
@@ -95,9 +99,9 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   private readonly host = injectHostRef<HTMLElement>();
   private readonly destroyRef = inject(DestroyRef);
   protected readonly fieldFocusByTab = signal(false);
-  protected readonly panelOpen = signal(false);
-  protected readonly query = signal('');
-  protected readonly highlightedIndex = signal(-1);
+  readonly panelOpen = model(false);
+  readonly comboboxValue = model('');
+  readonly listboxValue = model<string[]>([]);
 
   private readonly document = inject(DOCUMENT);
 
@@ -107,6 +111,15 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     inject(PLATFORM_ID),
     this.destroyRef,
   );
+
+  private readonly syncListboxOverlay = afterRenderEffect(() => {
+    const input = this.inputNativeElement();
+    const anchor = input.closest('.au-autocomplete__control-row');
+    if (!(anchor instanceof HTMLElement)) {
+      return;
+    }
+    this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
+  });
 
   readonly controlId = computed(() => this.formField.controlId());
   readonly listboxId = computed(() => `${this.controlId()}-listbox`);
@@ -131,15 +144,9 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     return ids.length > 0 ? ids.join(' ') : null;
   });
 
-  constructor() {
-    effect(
-      syncFormFieldControlState(this.formField, {
-        displayError: () => this.displayError(),
-        effectiveInvalid: () => this.effectiveInvalid(),
-        required: () => this.required(),
-      }),
-    );
-  }
+  readonly interactive = computed(() =>
+    isFieldComboboxInteractive(this.disabled(), this.readOnly()),
+  );
 
   readonly selectedOption = computed(() => {
     const v = this.value();
@@ -149,28 +156,8 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     return this.options().find((o) => o.value === v) ?? null;
   });
 
-  /** Input text: query while filtering; selected label when closed (no post-render flash). */
-  readonly inputValue = computed(() => {
-    const q = this.query();
-    if (this.panelOpen()) {
-      return q;
-    }
-    const opt = this.selectedOption();
-    if (opt !== null && (q === '' || this.queryMatchesLabel(q, opt.label))) {
-      return opt.label;
-    }
-    if (q.length > 0) {
-      return q;
-    }
-    const v = this.value();
-    if (v != null) {
-      return String(v);
-    }
-    return '';
-  });
-
   readonly filteredOptions = computed(() => {
-    const q = this.query().trim();
+    const q = (this.comboboxValue() ?? '').trim();
     const min = this.minFilterLength();
     if (q.length < min) {
       return [];
@@ -187,163 +174,96 @@ export class AuAutocomplete implements FormValueControl<string | null> {
   });
 
   readonly meetsMinFilterLength = computed(
-    () => this.query().trim().length >= this.minFilterLength(),
+    () => (this.comboboxValue() ?? '').trim().length >= this.minFilterLength(),
   );
 
-  /** Listbox is shown only when the panel is open and the query meets `minFilterLength`. */
-  readonly listboxVisible = computed(() => this.panelOpen() && this.meetsMinFilterLength());
+  readonly listboxVisible = computed(
+    () =>
+      this.panelOpen() &&
+      this.interactive() &&
+      this.meetsMinFilterLength() &&
+      !this.loading() &&
+      this.filteredOptions().length > 0,
+  );
 
   readonly showNoResults = computed(
-    () => !this.loading() && this.listboxVisible() && this.filteredOptions().length === 0,
+    () =>
+      this.panelOpen() &&
+      this.interactive() &&
+      this.meetsMinFilterLength() &&
+      !this.loading() &&
+      this.filteredOptions().length === 0,
   );
 
-  readonly activeDescendantId = computed((): string | null => {
-    const i = this.highlightedIndex();
-    if (!this.listboxVisible() || i < 0) {
-      return null;
-    }
-    const opts = this.filteredOptions();
-    if (i >= opts.length) {
-      return null;
-    }
-    return this.optionId(i);
-  });
+  constructor() {
+    // softDisabled=false on ngCombobox: Aurea owns disabled/readOnly; Aria keeps keyboard/pointer for programmatic focus.
+    effect(
+      syncFormFieldControlState(this.formField, {
+        displayError: () => this.displayError(),
+        effectiveInvalid: () => this.effectiveInvalid(),
+        required: () => this.required(),
+      }),
+    );
 
-  private readonly syncListboxOverlay = afterRenderEffect(() => {
-    const input = this.inputNativeElement();
-    const anchor = input.closest('.au-autocomplete__control-row');
-    if (!(anchor instanceof HTMLElement)) {
-      return;
-    }
-    this.listboxOverlay.sync(this.listboxNative(), anchor, this.listboxVisible());
-  });
+    installFieldComboboxListboxSync({
+      value: this.value,
+      listboxValue: this.listboxValue,
+      hasPlaceholder: () => false,
+      applyValue: (next) => {
+        const option = this.options().find((entry) => entry.value === next);
+        if (option) {
+          this.comboboxValue.set(option.label);
+        }
+        this.setValue(next);
+      },
+      onReselectSameOption: () => {
+        this.closePanel();
+        this.inputNativeElement().focus();
+      },
+      onSelectionComplete: () => {
+        this.closePanel();
+        this.inputNativeElement().focus();
+      },
+    });
+
+    installComboboxDisplaySync({
+      value: () => this.value(),
+      options: () => this.options(),
+      panelOpen: () => this.panelOpen(),
+      comboboxValue: this.comboboxValue,
+    });
+
+    effect(() => {
+      const query = this.comboboxValue();
+      untracked(() => {
+        if (query === '') {
+          this.setValue(null);
+        }
+        if (!this.meetsMinFilterLength()) {
+          this.closePanel();
+        }
+      });
+    });
+
+    installFieldComboboxOverlayDetach(
+      () => this.panelOpen(),
+      () => this.listboxOverlay.detach(),
+    );
+  }
 
   optionId(index: number): string {
     return `${this.controlId()}-option-${index}`;
   }
 
-  onInput(event: Event): void {
-    if (this.disabled() || this.readOnly()) {
-      return;
-    }
-    const raw = (event.target as HTMLInputElement).value;
-    this.query.set(raw);
-    if (raw === '') {
-      this.setValue(null);
-    }
-    if (!this.meetsMinFilterLength()) {
-      this.closePanel(false);
-      return;
-    }
-    this.openPanel();
-    this.highlightedIndex.set(this.firstHighlightableIndex());
-  }
-
-  onKeydown(event: KeyboardEvent): void {
-    if (this.disabled() || this.readOnly()) {
-      return;
-    }
-    const opts = this.filteredOptions();
-    switch (event.key) {
-      case 'ArrowDown': {
-        event.preventDefault();
-        if (!this.panelOpen()) {
-          this.openPanel();
-          this.highlightedIndex.set(this.firstHighlightableIndex());
-          return;
-        }
-        this.highlightedIndex.update((i) => this.nextHighlightableIndex(i, opts, 1));
-        return;
-      }
-      case 'ArrowUp': {
-        event.preventDefault();
-        if (!this.panelOpen()) {
-          this.openPanel();
-          this.highlightedIndex.set(this.lastHighlightableIndex(opts));
-          return;
-        }
-        this.highlightedIndex.update((i) => this.nextHighlightableIndex(i, opts, -1));
-        return;
-      }
-      case 'Home': {
-        if (!this.panelOpen()) {
-          return;
-        }
-        event.preventDefault();
-        this.highlightedIndex.set(this.firstHighlightableIndex());
-        return;
-      }
-      case 'End': {
-        if (!this.panelOpen()) {
-          return;
-        }
-        event.preventDefault();
-        this.highlightedIndex.set(this.lastHighlightableIndex(opts));
-        return;
-      }
-      case 'Enter': {
-        if (!this.panelOpen()) {
-          return;
-        }
-        event.preventDefault();
-        const i = this.highlightedIndex();
-        if (i >= 0 && i < opts.length) {
-          this.selectOption(opts[i]);
-        }
-        return;
-      }
-      case 'Escape': {
-        if (!this.panelOpen()) {
-          return;
-        }
-        event.preventDefault();
-        this.closePanel(true);
-        return;
-      }
-      default:
-        return;
-    }
-  }
-
-  onOptionPointerEnter(index: number, option: AuAutocompleteOption): void {
-    if (option.disabled || this.disabled() || this.readOnly()) {
-      return;
-    }
-    this.highlightedIndex.set(index);
-  }
-
-  onOptionPointerDown(event: Event, option: AuAutocompleteOption): void {
-    event.preventDefault();
-    if (option.disabled || this.disabled() || this.readOnly()) {
-      return;
-    }
-    this.selectOption(option);
-  }
-
-  selectOption(option: AuAutocompleteOption): void {
-    if (option.disabled || this.disabled() || this.readOnly()) {
-      return;
-    }
-    this.query.set(option.label);
-    this.setValue(option.value);
-    this.closePanel(false);
-    this.inputNativeElement().focus();
-  }
-
   onInputFocus(): void {
-    if (this.disabled() || this.readOnly()) {
+    if (!this.interactive()) {
       return;
     }
     if (!this.panelOpen()) {
       const opt = this.selectedOption();
-      this.query.set(opt?.label ?? this.query());
-    }
-    if (!this.meetsMinFilterLength()) {
-      return;
-    }
-    this.openPanel();
-    if (this.highlightedIndex() < 0) {
-      this.highlightedIndex.set(this.firstHighlightableIndex());
+      if (opt) {
+        this.comboboxValue.set(opt.label);
+      }
     }
   }
 
@@ -362,7 +282,7 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     }
     this.fieldFocusByTab.set(false);
     this.commitQueryOnClose();
-    this.closePanel(false);
+    this.closePanel();
   }
 
   focus(): void {
@@ -380,34 +300,16 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     return (this.document.getElementById(this.listboxId()) as HTMLUListElement | null) ?? undefined;
   }
 
-  private openPanel(): void {
-    if (this.disabled() || this.readOnly()) {
-      return;
-    }
-    if (!this.meetsMinFilterLength()) {
-      return;
-    }
-    this.panelOpen.set(true);
-    if (this.highlightedIndex() < 0) {
-      this.highlightedIndex.set(this.firstHighlightableIndex());
-    }
-  }
-
-  private closePanel(resetQuery: boolean): void {
+  private closePanel(): void {
     this.listboxOverlay.detach();
     this.panelOpen.set(false);
-    this.highlightedIndex.set(-1);
-    if (resetQuery) {
-      const opt = this.selectedOption();
-      this.query.set(opt?.label ?? '');
-    }
   }
 
   private commitQueryOnClose(): void {
-    const q = this.query().trim();
+    const q = (this.comboboxValue() ?? '').trim();
     if (q === '') {
       this.setValue(null);
-      this.query.set('');
+      this.comboboxValue.set('');
       return;
     }
     if (!this.strictSelection()) {
@@ -415,12 +317,12 @@ export class AuAutocomplete implements FormValueControl<string | null> {
     }
     const match = this.findOptionByLabel(q) ?? this.findOptionByValue(q);
     if (match) {
-      this.query.set(match.label);
+      this.comboboxValue.set(match.label);
       this.setValue(match.value);
       return;
     }
     this.setValue(null);
-    this.query.set('');
+    this.comboboxValue.set('');
   }
 
   private setValue(next: string | null): void {
@@ -428,13 +330,6 @@ export class AuAutocomplete implements FormValueControl<string | null> {
       return;
     }
     this.value.set(next);
-  }
-
-  private queryMatchesLabel(query: string, label: string | null): boolean {
-    if (label === null) {
-      return false;
-    }
-    return this.caseSensitive() ? query === label : query.toLowerCase() === label.toLowerCase();
   }
 
   private findOptionByLabel(label: string): AuAutocompleteOption | undefined {
@@ -447,44 +342,5 @@ export class AuAutocomplete implements FormValueControl<string | null> {
 
   private findOptionByValue(val: string): AuAutocompleteOption | undefined {
     return this.options().find((o) => o.value === val);
-  }
-
-  private firstHighlightableIndex(): number {
-    const opts = this.filteredOptions();
-    return opts.findIndex((o) => !o.disabled);
-  }
-
-  private lastHighlightableIndex(opts: AuAutocompleteOption[]): number {
-    for (let i = opts.length - 1; i >= 0; i--) {
-      if (!opts[i].disabled) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  private nextHighlightableIndex(
-    current: number,
-    opts: AuAutocompleteOption[],
-    delta: 1 | -1,
-  ): number {
-    if (opts.length === 0) {
-      return -1;
-    }
-    let i = current < 0 ? (delta > 0 ? -1 : opts.length) : current;
-    let remaining = opts.length;
-    while (remaining--) {
-      i += delta;
-      if (i < 0) {
-        i = opts.length - 1;
-      }
-      if (i >= opts.length) {
-        i = 0;
-      }
-      if (!opts[i].disabled) {
-        return i;
-      }
-    }
-    return current;
   }
 }

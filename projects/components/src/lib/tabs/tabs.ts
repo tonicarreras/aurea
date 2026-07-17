@@ -1,5 +1,18 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  afterRenderEffect,
+  computed,
+  effect,
+  input,
+  model,
+  signal,
+} from '@angular/core';
+import { Tab, TabList, TabPanel, Tabs as NgTabs } from '@angular/aria/tabs';
+import { injectHostRef } from '../au-host-element';
+import { sortRegistryByDomOrder } from '../overlay/projection-bridge';
 import { AuTab } from './au-tab.directive';
+import { AuTabPanel } from './au-tab-panel.directive';
 
 export type AuTabsVariant = 'line' | 'contained';
 export type AuTabsOrientation = 'horizontal' | 'vertical';
@@ -12,7 +25,7 @@ export type AuTabsSize = 'sm' | 'md' | 'lg';
  * - **Value:** `[(value)]` matches `auTab` / `auTabPanel` string keys.
  * - **Structure:** `button[auTab]` inside the tablist; `[auTabPanel]` for each panel.
  * - **Keyboard:** Arrow keys move focus/selection; Home/End jump to ends (horizontal: Left/Right).
- * - **Accessibility:** `role="tablist"`, `tab`, `tabpanel`; only the active tab is in the tab order (`tabindex="0"`).
+ * - **Accessibility:** Behaviour delegated to `@angular/aria/tabs` (tablist, tab, tabpanel).
  *
  * @example
  * ```html
@@ -27,7 +40,9 @@ export type AuTabsSize = 'sm' | 'md' | 'lg';
 @Component({
   selector: 'au-tabs',
   templateUrl: './tabs.html',
+  styleUrl: './tabs.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgTabs, TabList, Tab, TabPanel],
   host: {
     class: 'au-tabs',
     '[attr.data-au-variant]': 'variant()',
@@ -38,10 +53,12 @@ export type AuTabsSize = 'sm' | 'md' | 'lg';
 export class AuTabs {
   private static idCounter = 0;
 
+  private readonly host = injectHostRef<HTMLElement>();
   private readonly tabRegistry = signal<readonly AuTab[]>([]);
+  private readonly panelRegistry = signal<readonly AuTabPanel[]>([]);
 
   /** Active tab key (matches `auTab` / `auTabPanel`). */
-  readonly value = model('');
+  readonly value = model<string | undefined>(undefined);
   /** Accessible name for the tablist when no visible label wraps the control. */
   readonly ariaLabel = input<string>('');
   /** Visual style: underline (line) or segmented control (contained). */
@@ -56,22 +73,63 @@ export class AuTabs {
     return custom || `au-tabs-${++AuTabs.idCounter}`;
   });
 
+  readonly renderedTabs = computed((): readonly AuTab[] =>
+    sortRegistryByDomOrder(this.tabRegistry(), this.host.nativeElement),
+  );
+
+  readonly enabledTabs = computed(() => this.tabRegistry().filter((tab) => !tab.auTabDisabled()));
+
+  readonly renderedPanels = computed(() => this.panelRegistry());
+
+  constructor() {
+    effect(() => {
+      const enabled = this.enabledTabs();
+      const current = this.value();
+      if (enabled.length === 0) {
+        return;
+      }
+      if (current && enabled.some((tab) => tab.auTab() === current)) {
+        return;
+      }
+      this.value.set(enabled[0].auTab());
+    });
+
+    afterRenderEffect(() => {
+      for (const panel of this.panelRegistry()) {
+        const destination = this.host.nativeElement.querySelector(
+          `[data-au-panel-host="${panel.auTabPanel()}"]`,
+        );
+        const source = panel.element.nativeElement;
+        /* v8 ignore start -- source is never rendered inside its generated destination */
+        if (
+          !(destination instanceof HTMLElement) ||
+          destination === source ||
+          destination.contains(source)
+        ) {
+          continue;
+        }
+        /* v8 ignore stop */
+        while (source.firstChild) {
+          destination.appendChild(source.firstChild);
+        }
+      }
+    });
+  }
+
   registerTab(tab: AuTab): void {
     this.tabRegistry.update((list) => (list.includes(tab) ? list : [...list, tab]));
-    this.scheduleEnsureValidSelection();
   }
 
   unregisterTab(tab: AuTab): void {
-    this.tabRegistry.update((list) => list.filter((t) => t !== tab));
-    this.scheduleEnsureValidSelection();
+    this.tabRegistry.update((list) => list.filter((entry) => entry !== tab));
   }
 
-  private scheduleEnsureValidSelection(): void {
-    queueMicrotask(() => this.ensureValidSelection());
+  registerPanel(panel: AuTabPanel): void {
+    this.panelRegistry.update((list) => (list.includes(panel) ? list : [...list, panel]));
   }
 
-  getEnabledTabs(): readonly AuTab[] {
-    return this.tabRegistry().filter((t) => !t.auTabDisabled());
+  unregisterPanel(panel: AuTabPanel): void {
+    this.panelRegistry.update((list) => list.filter((entry) => entry !== panel));
   }
 
   selectTab(next: string): void {
@@ -87,57 +145,5 @@ export class AuTabs {
 
   panelIdFor(value: string): string {
     return `${this.resolvedId()}-panel-${value}`;
-  }
-
-  onListKeydown(event: KeyboardEvent): void {
-    const enabled = this.getEnabledTabs();
-    if (enabled.length === 0) {
-      return;
-    }
-
-    const horizontal = this.orientation() === 'horizontal';
-    const prevKey = horizontal ? 'ArrowLeft' : 'ArrowUp';
-    const nextKey = horizontal ? 'ArrowRight' : 'ArrowDown';
-    const relevant = new Set([prevKey, nextKey, 'Home', 'End']);
-    if (!relevant.has(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const currentIndex = enabled.findIndex((t) => t.auTab() === this.value());
-    const start = Math.max(0, currentIndex);
-    let targetIndex = start;
-
-    switch (event.key) {
-      case nextKey:
-        targetIndex = (start + 1) % enabled.length;
-        break;
-      case prevKey:
-        targetIndex = (start - 1 + enabled.length) % enabled.length;
-        break;
-      case 'Home':
-        targetIndex = 0;
-        break;
-      case 'End':
-        targetIndex = enabled.length - 1;
-        break;
-    }
-
-    const target = enabled[targetIndex];
-    this.selectTab(target.auTab());
-    target.focus();
-  }
-
-  private ensureValidSelection(): void {
-    const enabled = this.getEnabledTabs();
-    if (enabled.length === 0) {
-      return;
-    }
-    const current = this.value();
-    if (current && enabled.some((t) => t.auTab() === current)) {
-      return;
-    }
-    this.selectTab(enabled[0].auTab());
   }
 }
