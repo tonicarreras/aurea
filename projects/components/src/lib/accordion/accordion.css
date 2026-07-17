@@ -1,6 +1,6 @@
 /**
  * Accordion root — host and in-template shell.
- * Projected items/triggers: styles/au-accordion.css (aurea-global).
+ * Projected triggers: styles/au-accordion.css (aurea-global).
  */
 
 :host {
@@ -31,4 +31,27 @@
   border-radius: var(--au-radius-surface);
   box-shadow: var(--au-elevation-flat);
   overflow: hidden;
+}
+
+.au-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  color: var(--au-color-text-secondary);
+  line-height: var(--au-leading-normal);
+  transition: grid-template-rows var(--au-duration-default) var(--au-ease-standard);
+}
+
+.au-accordion__panel.au-accordion__panel--expanded {
+  grid-template-rows: 1fr;
+}
+
+.au-accordion__panel-inner {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 var(--au-accordion-panel-padding-x, var(--au-space-4))
+    var(--au-accordion-panel-padding-y, var(--au-space-4));
+}
+
+.au-accordion__panel:not(.au-accordion__panel--expanded) .au-accordion__panel-inner {
+  padding-block: 0;
 }

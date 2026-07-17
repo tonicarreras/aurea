@@ -1,10 +1,10 @@
 import {
-  DestroyRef,
   Directive,
   afterNextRender,
-  computed,
+  afterRenderEffect,
   inject,
   input,
+  OnDestroy,
   signal,
 } from '@angular/core';
 
@@ -13,7 +13,10 @@ import { injectHostRef } from '../au-host-element';
 import { AuAccordion } from './accordion';
 
 /**
- * Accordion section trigger. Place on `<button type="button">`.
+ * Accordion section trigger marker. Place on `<button type="button">`.
+ *
+ * Projected buttons register their label with `au-accordion`; an internal
+ * `ngAccordionTrigger` button handles WAI-ARIA behaviour via `@angular/aria`.
  *
  * @example
  * ```html
@@ -24,59 +27,44 @@ import { AuAccordion } from './accordion';
   selector: 'button[auAccordionItem]',
   host: {
     type: 'button',
-    class: 'au-accordion__trigger',
-    '[class.au-accordion__trigger--expanded]': 'isExpanded()',
-    '[class.au-accordion__trigger--from-tab]': 'focusByTab()',
-    '[attr.id]': 'triggerId()',
-    '[attr.aria-expanded]': 'isExpanded() ? "true" : "false"',
-    '[attr.aria-controls]': 'panelId()',
-    '[attr.disabled]': 'auAccordionItemDisabled() ? true : null',
-    '(click)': 'onClick($event)',
-    '(focusin)': 'onFocusin()',
-    '(focusout)': 'onFocusout()',
+    hidden: '',
+    'aria-hidden': 'true',
+    tabindex: '-1',
   },
 })
-export class AuAccordionItem {
+export class AuAccordionItem implements OnDestroy {
   private readonly accordion = inject(AuAccordion);
-  private readonly host = injectHostRef<HTMLButtonElement>();
-  private readonly destroyRef = inject(DestroyRef);
+  readonly element = injectHostRef<HTMLButtonElement>();
 
   readonly auAccordionItem = input.required<string>();
   readonly auAccordionItemDisabled = input(false);
 
-  protected readonly focusByTab = signal(false);
+  readonly focusByTab = signal(false);
 
-  readonly hostElement = computed(() => this.host.nativeElement);
-  readonly triggerId = computed(() => this.accordion.triggerIdFor(this.auAccordionItem()));
-  readonly panelId = computed(() => this.accordion.panelIdFor(this.auAccordionItem()));
-  readonly isExpanded = computed(() => this.accordion.isExpanded(this.auAccordionItem()));
+  private readonly labelState = signal('');
+  readonly label = this.labelState.asReadonly();
+
+  private readonly syncLabel = afterRenderEffect(() => {
+    const next = this.element.nativeElement.textContent.trim();
+    if (this.labelState() !== next) {
+      this.labelState.set(next);
+    }
+  });
 
   private readonly registerWhenReady = afterNextRender(() => {
     this.accordion.registerItem(this);
   });
 
-  private readonly unregisterOnDestroy = this.destroyRef.onDestroy(() => {
+  ngOnDestroy(): void {
     this.accordion.unregisterItem(this);
-  });
-
-  focus(): void {
-    this.hostElement().focus();
   }
 
-  protected onClick(event: MouseEvent): void {
-    if (this.auAccordionItemDisabled()) {
-      event.preventDefault();
-      return;
-    }
-    this.accordion.toggleItem(this.auAccordionItem());
-  }
-
-  protected onFocusin(): void {
+  onFocusin(): void {
     tabFocusState.attach();
     this.focusByTab.set(tabFocusState.takeNextFocusIsFromTab());
   }
 
-  protected onFocusout(): void {
+  onFocusout(): void {
     this.focusByTab.set(false);
   }
 }

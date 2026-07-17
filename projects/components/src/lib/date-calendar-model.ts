@@ -46,12 +46,28 @@ export function addMonths(
 export function resolveViewMonth(
   selected: string | null,
   today = new Date(),
+  min?: string,
+  max?: string,
 ): { year: number; month: number } {
-  if (selected) {
+  if (selected && !isDateDisabled(selected, min, max)) {
     const date = parseIsoDate(selected);
     return { year: date.getFullYear(), month: date.getMonth() };
   }
-  return { year: today.getFullYear(), month: today.getMonth() };
+
+  const todayIso = formatIsoDate(today);
+  if (!isDateDisabled(todayIso, min, max)) {
+    return { year: today.getFullYear(), month: today.getMonth() };
+  }
+
+  // Today is outside the allowed range — open on the nearest bound month.
+  if (min && todayIso < min) {
+    const date = parseIsoDate(min);
+    return { year: date.getFullYear(), month: date.getMonth() };
+  }
+
+  // Reaching here means today is after max (a min-only range cannot disable today >= min).
+  const date = parseIsoDate(max as string);
+  return { year: date.getFullYear(), month: date.getMonth() };
 }
 
 function startOfWeek(date: Date, weekStartsOn: number): Date {

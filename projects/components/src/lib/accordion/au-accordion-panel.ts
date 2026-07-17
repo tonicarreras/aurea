@@ -1,9 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  afterNextRender,
+  inject,
+  input,
+  OnDestroy,
+} from '@angular/core';
 
+import { injectHostRef } from '../au-host-element';
 import { AuAccordion } from './accordion';
 
 /**
  * Accordion panel paired with `button[auAccordionItem]` using the same key.
+ *
+ * Projected content is moved into an internal `ngAccordionPanel` host rendered by `au-accordion`.
  *
  * @example
  * ```html
@@ -12,26 +22,25 @@ import { AuAccordion } from './accordion';
  */
 @Component({
   selector: 'au-accordion-panel',
-  template: '<div class="au-accordion__panel-inner"><ng-content /></div>',
-  styleUrl: './au-accordion-panel.css',
+  template: '<ng-content />',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'au-accordion__panel',
-    role: 'region',
-    '[attr.id]': 'panelId()',
-    '[attr.aria-labelledby]': 'triggerId()',
-    '[class.au-accordion__panel--expanded]': 'isExpanded()',
-    '[attr.aria-hidden]': 'isExpanded() ? null : "true"',
-    '[attr.inert]': 'isExpanded() ? null : ""',
+    hidden: '',
+    'aria-hidden': 'true',
   },
 })
-export class AuAccordionPanel {
+export class AuAccordionPanel implements OnDestroy {
+  readonly element = injectHostRef<HTMLElement>();
   private readonly accordion = inject(AuAccordion);
 
   /** Section key; must match the paired `auAccordionItem` value. */
   readonly panel = input.required<string>();
 
-  readonly panelId = computed(() => this.accordion.panelIdFor(this.panel()));
-  readonly triggerId = computed(() => this.accordion.triggerIdFor(this.panel()));
-  readonly isExpanded = computed(() => this.accordion.isExpanded(this.panel()));
+  private readonly registerWhenReady = afterNextRender(() => {
+    this.accordion.registerPanel(this);
+  });
+
+  ngOnDestroy(): void {
+    this.accordion.unregisterPanel(this);
+  }
 }

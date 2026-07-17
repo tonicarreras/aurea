@@ -2,17 +2,22 @@ import { describe, expect, it } from 'vitest';
 
 import {
   compareTableRows,
+  createTableSelectionLookup,
   formatTableCellText,
   isTableRowSelected,
   nextTableRowSelection,
   nextTableSelectAllSelection,
   readTableCell,
+  resolveTablePaginatedRows,
+  resolveTableTotalRows,
   resolveTableViewRows,
+  resolveTableVirtualWindow,
   shouldIgnoreTableRowClick,
   sortTableRows,
   tableColumnSortDirection,
   tableColumnSpan,
   tableHeaderAriaSort,
+  tablePageCount,
   tableSelectAllChecked,
   tableSelectAllIndeterminate,
   toggleTableSortState,
@@ -91,6 +96,44 @@ describe('au-table-data', () => {
     expect(tableSelectAllIndeterminate([row, other], [row], compare)).toBe(true);
     expect(nextTableRowSelection('single', other, true, [row], compare)).toEqual([other]);
     expect(nextTableSelectAllSelection('multiple', true, [row, other])).toEqual([row, other]);
+  });
+
+  it('resolves pagination totals and page slices', () => {
+    const rows = [1, 2, 3, 4, 5];
+    expect(resolveTableTotalRows(5)).toBe(5);
+    expect(resolveTableTotalRows(5, 100)).toBe(100);
+    expect(tablePageCount(10, 3)).toBe(4);
+    expect(tablePageCount(0, 25)).toBe(1);
+    expect(resolveTablePaginatedRows(rows, 1, 2)).toEqual([1, 2]);
+    expect(resolveTablePaginatedRows(rows, 2, 2)).toEqual([3, 4]);
+    expect(resolveTablePaginatedRows(rows, 99, 2)).toEqual([5]);
+  });
+
+  it('resolves virtual window with spacers and visible slice', () => {
+    const rows = Array.from({ length: 20 }, (_, i) => i + 1);
+    const window = resolveTableVirtualWindow(rows, 220, 200, 44, 1);
+    expect(window.startIndex).toBe(4);
+    expect(window.visibleRows).toEqual([5, 6, 7, 8, 9, 10, 11]);
+    expect(window.topSpacerPx).toBe(4 * 44);
+    expect(window.bottomSpacerPx).toBe((20 - window.endIndex) * 44);
+  });
+
+  it('returns empty virtual window for zero rows', () => {
+    const window = resolveTableVirtualWindow([], 100, 200, 44, 3);
+    expect(window.visibleRows).toEqual([]);
+    expect(window.topSpacerPx).toBe(0);
+    expect(window.bottomSpacerPx).toBe(0);
+  });
+
+  it('creates selection lookup with identity and compare fallback', () => {
+    const row = { id: 1 };
+    const copy = { id: 1 };
+    const compare = (a: unknown, b: unknown) =>
+      (a as { id: number }).id === (b as { id: number }).id;
+    const lookup = createTableSelectionLookup([row], compare);
+    expect(lookup(row)).toBe(true);
+    expect(lookup(copy)).toBe(true);
+    expect(lookup({ id: 2 })).toBe(false);
   });
 
   it('ignores row clicks from interactive descendants', () => {

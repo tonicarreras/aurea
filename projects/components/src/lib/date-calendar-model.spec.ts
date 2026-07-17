@@ -33,6 +33,27 @@ describe('date-calendar-model', () => {
     expect(resolveViewMonth('2026-08-12')).toEqual({ year: 2026, month: 7 });
   });
 
+  it('resolveViewMonth clamps to min/max when today is outside the range', () => {
+    const july = new Date(2026, 6, 17);
+    const may = new Date(2026, 4, 10);
+    expect(resolveViewMonth(null, july, '2026-06-01', '2026-06-30')).toEqual({
+      year: 2026,
+      month: 5,
+    });
+    expect(resolveViewMonth(null, may, '2026-06-01', '2026-06-30')).toEqual({
+      year: 2026,
+      month: 5,
+    });
+    expect(resolveViewMonth(null, july, undefined, '2026-06-30')).toEqual({
+      year: 2026,
+      month: 5,
+    });
+    expect(resolveViewMonth('2026-01-01', july, '2026-06-01', '2026-06-30')).toEqual({
+      year: 2026,
+      month: 5,
+    });
+  });
+
   it('shiftFocusedDay moves vertically and to week edges', () => {
     const iso = '2026-06-15';
     const midWeek = '2026-06-18';

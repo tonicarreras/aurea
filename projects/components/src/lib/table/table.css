@@ -68,6 +68,25 @@ au-table .au-table__scroll {
   overflow-x: auto;
 }
 
+au-table[data-au-virtual] .au-table__scroll--virtual {
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+au-table .au-table__spacer-row td {
+  padding: 0;
+  border: 0;
+  line-height: 0;
+}
+
+au-table .au-table__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--au-space-3) var(--au-table-shell-pad);
+  border-top: 1px solid var(--au-color-border-subtle);
+  background: var(--au-color-surface-raised);
+}
+
 au-table .au-table__grid {
   width: 100%;
   min-width: 100%;

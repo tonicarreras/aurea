@@ -32,12 +32,14 @@ describe('AuTabPanel', () => {
 class TestTabsPanelComponent {}
 
 describe('AuTabPanel integration', () => {
-  it('sets tabpanel role and ids', async () => {
+  it('sets tabpanel role and ids on the aria host', async () => {
     const fix = TestBed.createComponent(TestTabsPanelComponent);
     await fix.whenStable();
-    const panel = fix.nativeElement.querySelector('[auTabPanel]') as HTMLElement;
+    await fix.whenStable();
+    const panel = fix.nativeElement.querySelector('[data-au-panel-host="a"]') as HTMLElement;
     expect(panel.getAttribute('role')).toBe('tabpanel');
     expect(panel.id).toContain('-panel-a');
     expect(panel.getAttribute('aria-labelledby')).toContain('-tab-a');
+    expect(panel.textContent).toContain('Panel A');
   });
 });

@@ -84,7 +84,7 @@ Import a file from `styles/` into `aurea-global.css` **only** if at least one ap
 
 1. **Shared chrome** — one stylesheet targets several `au-*` hosts (e.g. `au-field-chrome.css` for `input[auInputText]`, `textarea[auTextarea]`, `au-select`, …).
 2. **Cross-host children** — layout/typography must reach elements rendered by another component or `display: contents` (e.g. `au-description-list.css` for `dt` / `dd` inside `au-description-item`).
-3. **Projected consumer DOM** — markup or directives declared in the parent template (e.g. `au-accordion` → `.au-accordion__item` divs and `button[auAccordionItem]` triggers). Use a child component `styleUrl` when the node is an `au-*` host (e.g. `au-accordion-panel`).
+3. **Projected consumer DOM** — markup or directives declared in the parent template (e.g. `au-accordion` → `.au-accordion__item` divs and `button[auAccordionItem]` triggers). Panel chrome lives on the internal `.au-accordion__panel` host in `accordion.css`.
 
 Do **not** add a global file for a single control whose template and host are fully owned by one component.
 

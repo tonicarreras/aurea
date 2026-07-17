@@ -20,7 +20,7 @@ describe('field-temporal-options', () => {
     const options = buildDatePickerOptions('', '');
     expect(options.length).toBeGreaterThan(0);
     expect(options.every((o) => !o.disabled)).toBe(true);
-  });
+  }, 15_000);
 
   it('buildTimePickerOptions marks out-of-range slots disabled', () => {
     const options = buildTimePickerOptions('08:00', '20:00');

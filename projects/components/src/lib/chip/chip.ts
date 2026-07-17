@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { injectHostRef } from '../au-host-element';
-import { AuIcon } from '../icon/icon';
+import { AuIcon, type AuIconName } from '../icon/icon';
 import { AuListItem } from '../list/au-list-item.directive';
 import { tabFocusState } from '../au-tab-focus-state';
 
@@ -31,6 +31,7 @@ export type AuChipSize = 'sm' | 'md';
  * <au-chip label="Angular" />
  * <au-chip label="TypeScript" removable (removed)="onRemove()" />
  * <au-chip label="Draft" selectable [(selected)]="draftOnly" />
+ * <au-chip label="Present" icon="check-circle" selectable [(selected)]="present" />
  * ```
  */
 @Component({
@@ -50,11 +51,15 @@ export type AuChipSize = 'sm' | 'md';
     '[attr.data-au-variant]': 'variant()',
     '[attr.data-au-size]': 'size()',
     '[attr.data-au-selected]': 'isSelectable() && selected() ? "" : null',
+    '[attr.data-au-has-icon]': 'icon() ? "" : null',
   },
 })
 export class AuChip {
   /** Visible text when not using projected content. */
   readonly label = input<string, string>('', { transform: (v) => (v == null ? '' : String(v)) });
+
+  /** Optional leading icon shown before the label. */
+  readonly icon = input<AuIconName | null>(null);
 
   /** Visual style: filled (default surface), outline (border), accent (selected/tinted). */
   readonly variant = input<AuChipVariant>('filled');

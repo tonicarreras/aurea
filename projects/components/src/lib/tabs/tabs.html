@@ -1,14 +1,48 @@
-<div class="au-tabs__root">
+<div
+  class="au-tabs__root"
+  ngTabs
+>
   <div
     class="au-tabs__list"
-    role="tablist"
+    ngTabList
+    [(selectedTab)]="value"
+    [orientation]="orientation()"
+    selectionMode="follow"
+    [softDisabled]="false"
     [attr.aria-label]="ariaLabel().trim() || null"
     [attr.aria-orientation]="orientation() === 'vertical' ? 'vertical' : null"
-    (keydown)="onListKeydown($event)"
   >
     <ng-content select="button[auTab]"></ng-content>
+    @for (tab of renderedTabs(); track tab.auTab()) {
+      <button
+        type="button"
+        ngTab
+        class="au-tabs__tab"
+        [value]="tab.auTab()"
+        [disabled]="tab.auTabDisabled()"
+        [id]="tabIdFor(tab.auTab())"
+        [attr.data-au-tab]="tab.auTab()"
+        [class.au-tabs__tab--from-tab]="tab.focusByTab()"
+        #ariaTab="ngTab"
+        [class.au-tabs__tab--selected]="ariaTab.selected()"
+        (focusin)="tab.onFocusin()"
+        (focusout)="tab.onFocusout()"
+      >
+        {{ tab.label() }}
+      </button>
+    }
   </div>
   <div class="au-tabs__panels">
     <ng-content select="[auTabPanel]"></ng-content>
+    @for (panel of renderedPanels(); track panel.auTabPanel()) {
+      <div
+        ngTabPanel
+        class="au-tabs__panel"
+        [value]="panel.auTabPanel()"
+        [id]="panelIdFor(panel.auTabPanel())"
+        [attr.data-au-panel-host]="panel.auTabPanel()"
+        [class.au-tabs__panel--active]="value() === panel.auTabPanel()"
+      ></div>
+    }
   </div>
 </div>

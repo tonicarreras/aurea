@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { AuInputTime } from './au-input-time.directive';
 import { AU_COARSE_POINTER_MQ } from '../field-temporal-native-guard';
 import {
@@ -36,9 +36,16 @@ describe('AuInputTime', () => {
   }
 
   beforeEach(async () => {
+    // Default to fine pointer so focus/toggle tests are not polluted by other suites
+    // that stub `(pointer: coarse)`.
+    stubPointerPreference(false);
     await TestBed.configureTestingModule({
       imports: [AuInputTimeTestHost],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it('coerces numeric placeholder through transform', () => {

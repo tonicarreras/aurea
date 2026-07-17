@@ -397,7 +397,12 @@ export class AuInternalDateCalendarPanel {
   }
 
   private syncViewFromSelection(): void {
-    const { year, month } = resolveViewMonth(this.selected());
+    const { year, month } = resolveViewMonth(
+      this.selected(),
+      new Date(),
+      this.minDate(),
+      this.maxDate(),
+    );
     this.viewYear.set(year);
     this.viewMonth.set(month);
     const selected = this.selected();

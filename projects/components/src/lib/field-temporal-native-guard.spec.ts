@@ -1,6 +1,6 @@
 import { Component, DestroyRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   AU_COARSE_POINTER_MQ,
@@ -10,10 +10,18 @@ import {
 } from './field-temporal-native-guard';
 
 describe('field-temporal-native-guard', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it('prefersCoarsePointer reads matchMedia', () => {
     const matchMedia = vi.fn().mockReturnValue({ matches: true });
     expect(prefersCoarsePointer({ matchMedia } as unknown as Window)).toBe(true);
     expect(matchMedia).toHaveBeenCalledWith(AU_COARSE_POINTER_MQ);
+  });
+
+  it('prefersCoarsePointer returns false without a browser window', () => {
+    expect(prefersCoarsePointer(null)).toBe(false);
   });
 
   it('restoreTemporalPickerFocus focuses the icon on coarse pointers', () => {
@@ -67,5 +75,19 @@ describe('field-temporal-native-guard', () => {
 
     fix.destroy();
     expect(removeListener).toHaveBeenCalledWith('change', mqListener);
+  });
+
+  it('bindCoarsePointerPreference reports a fine pointer when matchMedia is unavailable', () => {
+    @Component({ template: '' })
+    class Host {}
+
+    const onChange = vi.fn();
+    const fix = TestBed.createComponent(Host);
+
+    bindCoarsePointerPreference({} as Window, onChange, fix.componentRef.injector.get(DestroyRef));
+
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange).toHaveBeenCalledWith(false);
+    fix.destroy();
   });
 });
