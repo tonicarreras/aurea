@@ -1,0 +1,17 @@
+<div class="au-stepper__root">
+  <nav
+    class="au-stepper__nav"
+    [attr.aria-label]="ariaLabel().trim() || null"
+  >
+    <div
+      class="au-stepper__list"
+      (keydown)="onListKeydown($event)"
+    >
+      <ng-content select="button[auStep]" />
+    </div>
+  </nav>
+
+  <div class="au-stepper__panels">
+    <ng-content select="[auStepPanel]" />
+  </div>
+</div>

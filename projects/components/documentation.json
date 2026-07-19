@@ -2311,6 +2311,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Pre-checked checkbox (`checked` binding).',\n      },\n    },\n  },\n  args: {\n    label: 'Remember me',\n    checked: true,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "CheckoutWizard",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: {\n      ...args,\n      step: 'account',\n      accountDone: true,\n      shippingDone: false,\n    },\n    moduleMetadata: storyImports,\n    template: `\n      <au-stepper\n        [(value)]=\"step\"\n        [ariaLabel]=\"ariaLabel\"\n        [size]=\"size\"\n        [linear]=\"linear\"\n        [layout]=\"layout\"\n      >\n        <button type=\"button\" auStep=\"account\" [auStepCompleted]=\"accountDone\">Account</button>\n        <button type=\"button\" auStep=\"shipping\" [auStepCompleted]=\"shippingDone\">Shipping</button>\n        <button type=\"button\" auStep=\"review\">Review</button>\n\n        <section auStepPanel=\"account\">\n          <p>Create your account and contact details.</p>\n        </section>\n        <section auStepPanel=\"shipping\">\n          <p>Choose your shipping option.</p>\n        </section>\n        <section auStepPanel=\"review\">\n          <p>Review and confirm your order.</p>\n        </section>\n      </au-stepper>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "ChipGroup",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2576,16 +2586,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <button auButton style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</button>\n            <button auButton type=\"button\" (click)=\"open.set(false)\">Eliminar</button>\n          </div>`,\n  }),\n  args: {\n    title: '¿Quieres aceptar?',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2601,6 +2601,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <button auButton variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</button>\n        <button auButton type=\"button\" (click)=\"open.set(false)\">Apply</button>\n      </div>`,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Esta acción no se puede deshacer.</p>',\n    footer: `\n          <div auDialogFooter>\n            <button auButton style=\"margin-right: var(--au-space-2);\" variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancelar</button>\n            <button auButton type=\"button\" (click)=\"open.set(false)\">Eliminar</button>\n          </div>`,\n  }),\n  args: {\n    title: '¿Quieres aceptar?',\n    size: 'sm',\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'Confirmación destructiva con pie de acciones en el slot `auDialogFooter`.',\n      },\n    },\n  },\n}"
             },
             {
                 "name": "Default",
@@ -2961,16 +2971,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    variant: 'info',\n    message: 'This notice can be dismissed.',\n    dismissible: true,\n  },\n}"
-            },
-            {
-                "name": "DocsNavigation",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/steps/steps.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, section: 'overview' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-steps [(value)]=\"section\" [ariaLabel]=\"ariaLabel\" [size]=\"size\">\n        <button type=\"button\" auStep=\"overview\">Overview</button>\n        <button type=\"button\" auStep=\"api\">API</button>\n        <button type=\"button\" auStep=\"styling\">Styling</button>\n        <button type=\"button\" auStep=\"examples\">Examples</button>\n        <div auStepPanel=\"overview\"><p>Overview content</p></div>\n        <div auStepPanel=\"api\"><p>API reference</p></div>\n        <div auStepPanel=\"styling\"><p>Design tokens</p></div>\n        <div auStepPanel=\"examples\"><p>Usage examples</p></div>\n      </au-steps>\n    `,\n  }),\n}"
             },
             {
                 "name": "Dot",
@@ -3436,6 +3436,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuAvatar>",
+                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3451,16 +3461,6 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuBreadcrumb>",
                 "defaultValue": "{\n  title: 'Aurea/Breadcrumb',\n  component: AuBreadcrumb,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('breadcrumb'),\n  argTypes: {\n    items: {\n      control: 'object',\n      description: 'Trail segments: `{ label, href? }[]`.',\n      table: { category: 'Content' },\n    },\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuAvatar>",
-                "defaultValue": "{\n  title: 'Aurea/Avatar',\n  component: AuAvatar,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('avatar'),\n  argTypes: {\n    src: { control: 'text', table: { category: 'Content' } },\n    alt: { control: 'text', table: { category: 'Content' } },\n    name: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg', 'xl'],\n      table: { category: 'Appearance' },\n    },\n    shape: {\n      control: 'select',\n      options: ['circle', 'square'],\n      table: { category: 'Appearance' },\n    },\n    decorative: { control: 'boolean', table: { category: 'Accessibility' } },\n  },\n  args: {\n    src: '',\n    alt: '',\n    name: 'Jane Doe',\n    size: 'md',\n    shape: 'circle',\n    decorative: false,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3536,16 +3536,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<AuDialog>",
-                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('dialog'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3561,6 +3551,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<AuDrawer>",
                 "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<AuDialog>",
+                "defaultValue": "{\n  title: 'Aurea/Dialog',\n  component: AuDialog,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('dialog'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Dialog title',\n    size: 'md',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3596,21 +3596,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<FormFieldStoryArgs>",
-                "defaultValue": "{\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/components/src/lib/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<AuIcon>",
                 "defaultValue": "{\n  title: 'Aurea/Icon',\n  component: AuIcon,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('icon'),\n  argTypes: {\n    name: { control: 'select', options: [...AU_ICON_NAMES], table: { category: 'Content' } },\n    size: {\n      control: 'select',\n      options: ['xs', 'sm', 'md', 'lg'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    name: 'info',\n    size: 'md',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<FormFieldStoryArgs>",
+                "defaultValue": "{\n  title: 'Aurea/FormField',\n  component: AuFormField,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('form-field'),\n  argTypes: {\n    label: { control: 'text', table: { category: 'Content' } },\n    hint: { control: 'text', table: { category: 'Content' } },\n    errorMessage: { control: 'text', table: { category: 'Validation' } },\n    invalid: { control: 'boolean', table: { category: 'Validation' } },\n    required: { control: 'boolean', table: { category: 'Validation' } },\n    controlIdInput: { control: 'text', table: { category: 'Accessibility' } },\n  },\n  args: {\n    label: 'Email',\n    hint: 'We only use your email for notifications.',\n    errorMessage: '',\n    invalid: false,\n    required: true,\n    controlIdInput: 'story-email',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3806,11 +3806,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/steps/steps.stories.ts",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<AuSteps>",
-                "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('steps'),\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active step key (`[(value)]`).',\n      table: { category: 'State' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name of the step list.',\n      table: { category: 'Accessibility' },\n    },\n    layout: {\n      control: 'select',\n      options: ['tabs', 'sections'],\n      description: 'One panel at a time vs. scrollable sections.',\n      table: { category: 'Layout' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      description: 'Step button density.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
+                "type": "Meta<AuStepper>",
+                "defaultValue": "{\n  title: 'Aurea/Stepper',\n  component: AuStepper,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('stepper'),\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active step key (`[(value)]`).',\n      table: { category: 'State' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for step navigation.',\n      table: { category: 'Accessibility' },\n    },\n    linear: {\n      control: 'boolean',\n      description: 'Block jumps to future steps until previous ones are completed.',\n      table: { category: 'Behavior' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      description: 'Stepper density.',\n      table: { category: 'Appearance' },\n    },\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      description: 'Layout orientation.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    ariaLabel: 'Checkout progress',\n    size: 'md',\n    linear: true,\n    layout: 'horizontal',\n  },\n}"
             },
             {
                 "name": "meta",
@@ -3921,6 +3921,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin botón de cierre en la cabecera; usa backdrop o Escape.</p>',\n  }),\n  args: {\n    title: 'Sin botón cerrar',\n    showCloseButton: false,\n  },\n}"
+            },
+            {
+                "name": "NonLinear",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { linear: false },\n  render: CheckoutWizard.render,\n}"
             },
             {
                 "name": "On",
@@ -4478,11 +4488,11 @@
                 "name": "storyImports",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/components/src/lib/steps/steps.stories.ts",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{ imports: [AuSteps, AuStep, AuStepPanel] }"
+                "defaultValue": "{ imports: [AuStepper, AuStepperStep, AuStepperPanel] }"
             },
             {
                 "name": "storyImports",
@@ -4677,6 +4687,16 @@
                 "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => tabsRender(args),\n}"
             },
             {
+                "name": "VerticalLayout",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: { layout: 'vertical' },\n  render: CheckoutWizard.render,\n}"
+            },
+            {
                 "name": "VirtualScroll",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -4867,6 +4887,16 @@
                 "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',\n      },\n    },\n  },\n  args: {\n    label: 'I accept the privacy policy',\n    errorMessage: 'This field is required to continue.',\n    invalid: true,\n    checked: false,\n    size: 'md',\n  },\n}"
             },
             {
+                "name": "WithErrorStep",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, step: 'shipping' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-stepper [(value)]=\"step\" [ariaLabel]=\"ariaLabel\" [layout]=\"layout\" [linear]=\"linear\">\n        <button type=\"button\" auStep=\"account\" [auStepCompleted]=\"true\">Account</button>\n        <button type=\"button\" auStep=\"shipping\" [auStepError]=\"true\">Shipping</button>\n        <button type=\"button\" auStep=\"review\">Review</button>\n        <section auStepPanel=\"account\"><p>Account done.</p></section>\n        <section auStepPanel=\"shipping\"><p>Shipping has errors.</p></section>\n        <section auStepPanel=\"review\"><p>Review.</p></section>\n      </au-stepper>`,\n  }),\n}"
+            },
+            {
                 "name": "WithFooter",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -4965,6 +4995,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: (args) =>\n    cardRender(\n      args,\n      `\n      <au-card [variant]=\"variant\" [size]=\"size\" style=\"max-width: 22rem;\">\n        <img\n          auCardMedia\n          src=\"https://picsum.photos/seed/aurea-card/640/240\"\n          alt=\"Decorative cover\"\n          width=\"640\"\n          height=\"240\"\n        />\n        <h3 auCardHeader>Featured</h3>\n        <p auCardBody>Media is full-bleed; text keeps inner padding.</p>\n      </au-card>\n    `,\n    ),\n}"
+            },
+            {
+                "name": "WithOptionalStep",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, step: 'account', accountDone: true },\n    moduleMetadata: storyImports,\n    template: `\n      <au-stepper [(value)]=\"step\" [ariaLabel]=\"ariaLabel\" [layout]=\"layout\" [linear]=\"linear\">\n        <button type=\"button\" auStep=\"account\" [auStepCompleted]=\"true\">Account</button>\n        <button type=\"button\" auStep=\"shipping\" [auStepOptional]=\"true\" [auStepCompleted]=\"true\">Shipping</button>\n        <button type=\"button\" auStep=\"payment\" [auStepOptional]=\"true\">Payment</button>\n        <button type=\"button\" auStep=\"review\">Review</button>\n        <section auStepPanel=\"account\"><p>Account details.</p></section>\n        <section auStepPanel=\"shipping\"><p>Shipping info (optional).</p></section>\n        <section auStepPanel=\"payment\"><p>Payment (optional).</p></section>\n        <section auStepPanel=\"review\"><p>Review order.</p></section>\n      </au-stepper>`,\n  }),\n}"
             },
             {
                 "name": "WithoutIcon",
@@ -5601,6 +5641,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<AuAvatar>",
+                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<AuBadge>",
                 "file": "projects/components/src/lib/badge/badge.stories.ts",
                 "deprecated": false,
@@ -5614,17 +5665,6 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuBreadcrumb>",
                 "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<AuAvatar>",
-                "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5711,17 +5751,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuDialog>",
-                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 184
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<AuDivider>",
                 "file": "projects/components/src/lib/divider/divider.stories.ts",
                 "deprecated": false,
@@ -5735,6 +5764,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<AuDrawer>",
                 "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<AuDialog>",
+                "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5777,8 +5817,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<FormFieldStoryArgs>",
-                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
+                "rawtype": "StoryObj<AuIcon>",
+                "file": "projects/components/src/lib/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -5788,8 +5828,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuIcon>",
-                "file": "projects/components/src/lib/icon/icon.stories.ts",
+                "rawtype": "StoryObj<FormFieldStoryArgs>",
+                "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6008,8 +6048,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<AuSteps>",
-                "file": "projects/components/src/lib/steps/steps.stories.ts",
+                "rawtype": "StoryObj<AuStepper>",
+                "file": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6737,6 +6777,78 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story:\n          'Manual **`errorMessage`** (or **`errors`** from `[formField]`). Implements **`FormCheckboxControl`** for Angular signal forms on boolean fields.',\n      },\n    },\n  },\n  args: {\n    label: 'I accept the privacy policy',\n    errorMessage: 'This field is required to continue.',\n    invalid: true,\n    checked: false,\n    size: 'md',\n  },\n}"
+                }
+            ],
+            "projects/components/src/lib/stepper/stepper.stories.ts": [
+                {
+                    "name": "CheckoutWizard",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: {\n      ...args,\n      step: 'account',\n      accountDone: true,\n      shippingDone: false,\n    },\n    moduleMetadata: storyImports,\n    template: `\n      <au-stepper\n        [(value)]=\"step\"\n        [ariaLabel]=\"ariaLabel\"\n        [size]=\"size\"\n        [linear]=\"linear\"\n        [layout]=\"layout\"\n      >\n        <button type=\"button\" auStep=\"account\" [auStepCompleted]=\"accountDone\">Account</button>\n        <button type=\"button\" auStep=\"shipping\" [auStepCompleted]=\"shippingDone\">Shipping</button>\n        <button type=\"button\" auStep=\"review\">Review</button>\n\n        <section auStepPanel=\"account\">\n          <p>Create your account and contact details.</p>\n        </section>\n        <section auStepPanel=\"shipping\">\n          <p>Choose your shipping option.</p>\n        </section>\n        <section auStepPanel=\"review\">\n          <p>Review and confirm your order.</p>\n        </section>\n      </au-stepper>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuStepper>",
+                    "defaultValue": "{\n  title: 'Aurea/Stepper',\n  component: AuStepper,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('stepper'),\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active step key (`[(value)]`).',\n      table: { category: 'State' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name for step navigation.',\n      table: { category: 'Accessibility' },\n    },\n    linear: {\n      control: 'boolean',\n      description: 'Block jumps to future steps until previous ones are completed.',\n      table: { category: 'Behavior' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      description: 'Stepper density.',\n      table: { category: 'Appearance' },\n    },\n    layout: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      description: 'Layout orientation.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    ariaLabel: 'Checkout progress',\n    size: 'md',\n    linear: true,\n    layout: 'horizontal',\n  },\n}"
+                },
+                {
+                    "name": "NonLinear",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { linear: false },\n  render: CheckoutWizard.render,\n}"
+                },
+                {
+                    "name": "storyImports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{ imports: [AuStepper, AuStepperStep, AuStepperPanel] }"
+                },
+                {
+                    "name": "VerticalLayout",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { layout: 'vertical' },\n  render: CheckoutWizard.render,\n}"
+                },
+                {
+                    "name": "WithErrorStep",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, step: 'shipping' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-stepper [(value)]=\"step\" [ariaLabel]=\"ariaLabel\" [layout]=\"layout\" [linear]=\"linear\">\n        <button type=\"button\" auStep=\"account\" [auStepCompleted]=\"true\">Account</button>\n        <button type=\"button\" auStep=\"shipping\" [auStepError]=\"true\">Shipping</button>\n        <button type=\"button\" auStep=\"review\">Review</button>\n        <section auStepPanel=\"account\"><p>Account done.</p></section>\n        <section auStepPanel=\"shipping\"><p>Shipping has errors.</p></section>\n        <section auStepPanel=\"review\"><p>Review.</p></section>\n      </au-stepper>`,\n  }),\n}"
+                },
+                {
+                    "name": "WithOptionalStep",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, step: 'account', accountDone: true },\n    moduleMetadata: storyImports,\n    template: `\n      <au-stepper [(value)]=\"step\" [ariaLabel]=\"ariaLabel\" [layout]=\"layout\" [linear]=\"linear\">\n        <button type=\"button\" auStep=\"account\" [auStepCompleted]=\"true\">Account</button>\n        <button type=\"button\" auStep=\"shipping\" [auStepOptional]=\"true\" [auStepCompleted]=\"true\">Shipping</button>\n        <button type=\"button\" auStep=\"payment\" [auStepOptional]=\"true\">Payment</button>\n        <button type=\"button\" auStep=\"review\">Review</button>\n        <section auStepPanel=\"account\"><p>Account details.</p></section>\n        <section auStepPanel=\"shipping\"><p>Shipping info (optional).</p></section>\n        <section auStepPanel=\"payment\"><p>Payment (optional).</p></section>\n        <section auStepPanel=\"review\"><p>Review order.</p></section>\n      </au-stepper>`,\n  }),\n}"
                 }
             ],
             "projects/components/src/lib/chip/chip.stories.ts": [
@@ -7825,6 +7937,100 @@
                     "defaultValue": "{\n  parameters: {\n    docs: {\n      description: {\n        story: 'Advanced: project native `<dt>` and `<dd>` for custom markup inside descriptions.',\n      },\n    },\n  },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDescriptionList] },\n    template: `\n      <au-description-list [layout]=\"layout\" [columns]=\"columns\">\n        <dt>Name</dt><dd>Ada Lovelace</dd>\n        <dt>Email</dt><dd>ada@example.com</dd>\n      </au-description-list>\n    `,\n  }),\n}"
                 }
             ],
+            "projects/components/src/lib/divider/divider.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Inset",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDivider>",
+                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
+                },
+                {
+                    "name": "Vertical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "WithLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/divider/divider.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
+                }
+            ],
+            "projects/components/src/lib/drawer/drawer.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <button auButton variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</button>\n        <button auButton type=\"button\" (click)=\"open.set(false)\">Apply</button>\n      </div>`,\n  }),\n}"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Wider panel for forms or multi-step flows.</p>',\n  }),\n  args: { size: 'lg', title: 'Account settings' },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<AuDrawer>",
+                    "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
+                },
+                {
+                    "name": "StartPosition",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Panel slides in from the start edge (left in LTR).</p>',\n  }),\n  args: { position: 'start', title: 'Filters' },\n}"
+                }
+            ],
             "projects/components/src/lib/dialog/dialog.stories.ts": [
                 {
                     "name": "Default",
@@ -7925,100 +8131,6 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  ...dialogStory({\n    body: '<p>Sin título visible; el nombre accesible viene de <code>ariaLabel</code>.</p>',\n  }),\n  args: {\n    title: '',\n    ariaLabel: 'Información',\n  },\n}"
-                }
-            ],
-            "projects/components/src/lib/divider/divider.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"max-width: 24rem; display: flex; flex-direction: column; gap: 1rem;\">\n        <p style=\"margin: 0;\">Section above</p>\n        <au-divider [orientation]=\"orientation\" [inset]=\"inset\" [label]=\"label\" />\n        <p style=\"margin: 0;\">Section below</p>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Inset",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { inset: true },\n  render: Default.render,\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuDivider>",
-                    "defaultValue": "{\n  title: 'Aurea/Divider',\n  component: AuDivider,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('divider'),\n  argTypes: {\n    orientation: {\n      control: 'select',\n      options: ['horizontal', 'vertical'],\n      table: { category: 'Appearance' },\n    },\n    inset: {\n      control: 'boolean',\n      description: 'Indents the start edge (horizontal, unlabeled).',\n      table: { category: 'Appearance' },\n    },\n    label: {\n      control: 'text',\n      description: 'Centered caption between rules (horizontal).',\n      table: { category: 'Content' },\n    },\n  },\n  args: {\n    orientation: 'horizontal',\n    inset: false,\n    label: '',\n  },\n}"
-                },
-                {
-                    "name": "Vertical",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { orientation: 'vertical' },\n  render: (args) => ({\n    props: args,\n    moduleMetadata: { imports: [AuDivider] },\n    template: `\n      <div style=\"display: flex; align-items: stretch; gap: 1rem; min-height: 3rem;\">\n        <span>Projects</span>\n        <au-divider orientation=\"vertical\" />\n        <span>Archive</span>\n      </div>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "WithLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/divider/divider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: { label: 'or' },\n  render: Default.render,\n}"
-                }
-            ],
-            "projects/components/src/lib/drawer/drawer.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Navigation links, filters, or detail content.</p>',\n    footer: `\n      <div auDrawerFooter>\n        <button auButton variant=\"secondary\" type=\"button\" (click)=\"open.set(false)\">Cancel</button>\n        <button auButton type=\"button\" (click)=\"open.set(false)\">Apply</button>\n      </div>`,\n  }),\n}"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Wider panel for forms or multi-step flows.</p>',\n  }),\n  args: { size: 'lg', title: 'Account settings' },\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuDrawer>",
-                    "defaultValue": "{\n  title: 'Aurea/Drawer',\n  component: AuDrawer,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('drawer'),\n  argTypes: {\n    open: { control: 'boolean', table: { category: 'State' } },\n    close: { table: { category: 'Events' } },\n    title: { control: 'text', table: { category: 'Content' } },\n    showCloseButton: { control: 'boolean', table: { category: 'Content' } },\n    closeOnBackdrop: { control: 'boolean', table: { category: 'Behavior' } },\n    closeOnEscape: { control: 'boolean', table: { category: 'Behavior' } },\n    ariaLabel: { control: 'text', table: { category: 'Content' } },\n    position: {\n      control: 'select',\n      options: ['start', 'end'],\n      table: { category: 'Appearance' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg', 'full'],\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    open: false,\n    close: fn(),\n    title: 'Drawer title',\n    size: 'md',\n    position: 'end',\n    showCloseButton: true,\n    closeOnBackdrop: true,\n    closeOnEscape: true,\n    ariaLabel: '',\n  },\n}"
-                },
-                {
-                    "name": "StartPosition",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/drawer/drawer.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  ...drawerStory({\n    body: '<p>Panel slides in from the start edge (left in LTR).</p>',\n  }),\n  args: { position: 'start', title: 'Filters' },\n}"
                 }
             ],
             "projects/components/src/lib/file-upload/file-upload.stories.ts": [
@@ -8835,38 +8947,6 @@
                     "defaultValue": "{\n  title: 'Aurea/Progress',\n  component: AuProgress,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('progress'),\n  argTypes: {\n    mode: {\n      control: 'select',\n      options: ['determinate', 'indeterminate'],\n      description: 'Determinate shows a fill ratio; indeterminate animates.',\n      table: { category: 'Behavior' },\n    },\n    value: {\n      control: { type: 'range', min: 0, max: 100 },\n      description: 'Current value (determinate only).',\n      table: { category: 'State' },\n    },\n    max: {\n      control: 'number',\n      description: 'Maximum value (determinate only).',\n      table: { category: 'State' },\n    },\n    label: {\n      control: 'text',\n      description: 'Accessible name and `aria-valuetext` when non-empty.',\n      table: { category: 'Accessibility' },\n    },\n  },\n  args: { mode: 'determinate', value: 45, max: 100, label: '' },\n}"
                 }
             ],
-            "projects/components/src/lib/steps/steps.stories.ts": [
-                {
-                    "name": "DocsNavigation",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/steps/steps.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    props: { ...args, section: 'overview' },\n    moduleMetadata: storyImports,\n    template: `\n      <au-steps [(value)]=\"section\" [ariaLabel]=\"ariaLabel\" [size]=\"size\">\n        <button type=\"button\" auStep=\"overview\">Overview</button>\n        <button type=\"button\" auStep=\"api\">API</button>\n        <button type=\"button\" auStep=\"styling\">Styling</button>\n        <button type=\"button\" auStep=\"examples\">Examples</button>\n        <div auStepPanel=\"overview\"><p>Overview content</p></div>\n        <div auStepPanel=\"api\"><p>API reference</p></div>\n        <div auStepPanel=\"styling\"><p>Design tokens</p></div>\n        <div auStepPanel=\"examples\"><p>Usage examples</p></div>\n      </au-steps>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/steps/steps.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<AuSteps>",
-                    "defaultValue": "{\n  title: 'Aurea/Steps',\n  component: AuSteps,\n  tags: ['autodocs', 'au', 'stable'],\n  parameters: storyMetaParameters('steps'),\n  argTypes: {\n    value: {\n      control: 'text',\n      description: 'Active step key (`[(value)]`).',\n      table: { category: 'State' },\n    },\n    ariaLabel: {\n      control: 'text',\n      description: 'Accessible name of the step list.',\n      table: { category: 'Accessibility' },\n    },\n    layout: {\n      control: 'select',\n      options: ['tabs', 'sections'],\n      description: 'One panel at a time vs. scrollable sections.',\n      table: { category: 'Layout' },\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md'],\n      description: 'Step button density.',\n      table: { category: 'Appearance' },\n    },\n  },\n  args: {\n    ariaLabel: 'Documentation sections',\n    size: 'md',\n  },\n}"
-                },
-                {
-                    "name": "storyImports",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/components/src/lib/steps/steps.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{ imports: [AuSteps, AuStep, AuStepPanel] }"
-                }
-            ],
             "projects/components/src/lib/chip-group/chip-group.stories.ts": [
                 {
                     "name": "FilterChips",
@@ -9663,6 +9743,19 @@
                     "kind": 184
                 }
             ],
+            "projects/components/src/lib/avatar/avatar.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuAvatar>",
+                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
             "projects/components/src/lib/badge/badge.stories.ts": [
                 {
                     "name": "Story",
@@ -9683,19 +9776,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuBreadcrumb>",
                     "file": "projects/components/src/lib/breadcrumb/breadcrumb.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
-            "projects/components/src/lib/avatar/avatar.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuAvatar>",
-                    "file": "projects/components/src/lib/avatar/avatar.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -9793,19 +9873,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/dialog/dialog.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<AuDialog>",
-                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/divider/divider.stories.ts": [
                 {
                     "name": "Story",
@@ -9826,6 +9893,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuDrawer>",
                     "file": "projects/components/src/lib/drawer/drawer.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/dialog/dialog.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<AuDialog>",
+                    "file": "projects/components/src/lib/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -9871,19 +9951,6 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/form-field/form-field.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<FormFieldStoryArgs>",
-                    "file": "projects/components/src/lib/form-field/form-field.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 184
-                }
-            ],
             "projects/components/src/lib/icon/icon.stories.ts": [
                 {
                     "name": "Story",
@@ -9891,6 +9958,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<AuIcon>",
                     "file": "projects/components/src/lib/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ],
+            "projects/components/src/lib/form-field/form-field.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<FormFieldStoryArgs>",
+                    "file": "projects/components/src/lib/form-field/form-field.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -10131,13 +10211,13 @@
                     "kind": 184
                 }
             ],
-            "projects/components/src/lib/steps/steps.stories.ts": [
+            "projects/components/src/lib/stepper/stepper.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<AuSteps>",
-                    "file": "projects/components/src/lib/steps/steps.stories.ts",
+                    "rawtype": "StoryObj<AuStepper>",
+                    "file": "projects/components/src/lib/stepper/stepper.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -13310,17 +13390,17 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "DocsNavigation",
+                "name": "CheckoutWizard",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
             },
             {
-                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -13330,7 +13410,17 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "NonLinear",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -13340,7 +13430,37 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/components/src/lib/steps/steps.stories.ts",
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "VerticalLayout",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithErrorStep",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithOptionalStep",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/components/src/lib/stepper/stepper.stories.ts",
                 "type": "type alias",
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",

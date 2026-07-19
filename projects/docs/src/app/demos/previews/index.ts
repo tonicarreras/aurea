@@ -39,7 +39,6 @@ export * from './progress.preview';
 export * from './icon.preview';
 export * from './skeleton.preview';
 export * from './spinner.preview';
-export * from './steps.preview';
 export * from './divider.preview';
 export * from './empty-state.preview';
 export * from './tooltip.preview';

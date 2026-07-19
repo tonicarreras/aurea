@@ -31,7 +31,6 @@ import {
   IconDemo,
   SkeletonDemo,
   SpinnerDemo,
-  StepsDemo,
   DialogDemo,
   DividerDemo,
   DescriptionListDemo,
@@ -435,22 +434,6 @@ options: AuSelectOption[] = [
 <au-form-field label="Skills">
   <au-tag-input />
 </au-form-field>`,
-  },
-  {
-    slug: 'steps',
-    title: 'Steps',
-    exportName: 'AuSteps',
-    selector: 'au-steps',
-    summary: 'Navegación por secciones con `auStep`, `auStepPanel` y layouts tabs/sections.',
-    demoComponent: StepsDemo,
-    snippet: `import { AuStep, AuStepPanel, AuSteps } from '@aurea-design-system/components';
-
-<au-steps [(value)]="section" ariaLabel="Documentation">
-  <button type="button" auStep="overview">Overview</button>
-  <button type="button" auStep="api">API</button>
-  <div auStepPanel="overview">…</div>
-  <div auStepPanel="api">…</div>
-</au-steps>`,
   },
   {
     slug: 'chip',

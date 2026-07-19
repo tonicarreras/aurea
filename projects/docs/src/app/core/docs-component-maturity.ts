@@ -30,7 +30,7 @@ const MATURITY: Record<string, DocsComponentMaturityMeta> = {
   dialog: { level: 'stable', since: '0.2.0' },
   card: { level: 'stable', since: '0.1.0' },
   tabs: { level: 'stable', since: '1.5.0' },
-  steps: { level: 'stable', since: '1.5.0' },
+  stepper: { level: 'stable', since: '2.3.3' },
   chip: { level: 'stable', since: '0.2.0' },
   'chip-group': { level: 'stable', since: '1.5.0' },
   list: { level: 'stable', since: '1.5.0' },

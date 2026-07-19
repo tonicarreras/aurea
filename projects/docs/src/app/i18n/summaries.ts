@@ -98,10 +98,6 @@ export const COMPONENT_SUMMARIES: Record<string, LStr> = {
     'Loading placeholders (text, avatar, button) with pulse or wave.',
     'Placeholders de carga (texto, avatar, botón) con pulse o wave.',
   ),
-  steps: L(
-    'Documentation stepper with `auStep` / `auStepPanel` and keyboard nav.',
-    'Stepper de documentación con `auStep` / `auStepPanel` y teclado.',
-  ),
   divider: L(
     'Horizontal or vertical rules with optional inset and label.',
     'Reglas horizontales o verticales con sangría y etiqueta opcionales.',

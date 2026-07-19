@@ -47,15 +47,6 @@ export interface PreviewMessages {
   select: { label: string; placeholder: string };
   slider: { label: string; hint: string };
   snackbar: { show: string; message: string };
-  steps: {
-    ariaLabel: string;
-    overview: string;
-    api: string;
-    examples: string;
-    overviewPanel: string;
-    apiPanel: string;
-    examplesPanel: string;
-  };
   switch: { hint: string; label: string };
   tagInput: { label: string; hint: string; initialTags: string[] };
   table: {

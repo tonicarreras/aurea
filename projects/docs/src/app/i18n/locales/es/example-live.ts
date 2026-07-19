@@ -209,18 +209,6 @@ export const EXAMPLE_LIVE_ES: ExampleLiveMessages = {
     showError: 'Mostrar error',
     errorMessage: 'No se pudo guardar',
   },
-  steps: {
-    tabsAria: 'Secciones de documentación',
-    overview: 'Resumen',
-    api: 'API',
-    overviewPanel: 'Contenido del resumen',
-    apiPanel: 'Referencia de API',
-    sectionsAria: 'Secciones en la página',
-    intro: 'Intro',
-    usage: 'Uso',
-    introPanel: 'Introducción',
-    usagePanel: 'Notas de uso',
-  },
   switch: {
     push: 'Notificaciones push',
     airplane: 'Modo avión',

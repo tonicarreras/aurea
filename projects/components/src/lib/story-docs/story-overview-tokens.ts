@@ -131,9 +131,12 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
       examples: '`--au-color-skeleton-base`, `--au-color-skeleton-shimmer`',
     },
   ],
-  steps: [
-    { concern: 'Rail', examples: '`--au-color-border-subtle`, `--au-color-action-primary`' },
-    { concern: 'Focus', examples: '`--au-focus-tab`' },
+  stepper: [
+    {
+      concern: 'Index',
+      examples: '`--au-color-action-primary`, `--au-color-feedback-success-*`, `--au-color-feedback-error-*`',
+    },
+    { concern: 'Focus', examples: '`--au-color-focus-ring`' },
   ],
   divider: [
     {

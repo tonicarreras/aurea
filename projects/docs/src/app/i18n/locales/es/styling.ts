@@ -402,13 +402,6 @@ export const COMPONENT_DOC_STYLING_ES: Record<string, ComponentStylingToken[]> =
       description: 'Periodo de rotación (~0,9 s).',
     },
   ],
-  steps: [
-    { token: '--au-color-border-subtle', description: 'Línea bajo los pasos.' },
-    { token: '--au-color-action-primary', description: 'Paso activo e indicador.' },
-    { token: '--au-color-text-secondary', description: 'Pasos inactivos.' },
-    { token: '--au-focus-tab', description: 'Foco de teclado en botones de paso.' },
-    { token: '--au-space-6 / --au-space-10', description: 'Separación rail / paneles.' },
-  ],
   snackbar: [
     { token: '--au-z-toast', description: 'Capa de toasts sobre modales y dropdowns.' },
     {

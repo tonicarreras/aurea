@@ -205,18 +205,6 @@ export const EXAMPLE_LIVE_EN: ExampleLiveMessages = {
     showError: 'Show error',
     errorMessage: 'Could not save',
   },
-  steps: {
-    tabsAria: 'Documentation sections',
-    overview: 'Overview',
-    api: 'API',
-    overviewPanel: 'Overview content',
-    apiPanel: 'API reference',
-    sectionsAria: 'On-page sections',
-    intro: 'Intro',
-    usage: 'Usage',
-    introPanel: 'Introduction',
-    usagePanel: 'Usage notes',
-  },
   switch: {
     push: 'Push notifications',
     airplane: 'Airplane mode',

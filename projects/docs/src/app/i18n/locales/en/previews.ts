@@ -98,15 +98,6 @@ export const PREVIEWS_EN: PreviewMessages = {
   select: { label: 'Country', placeholder: 'Choose a country' },
   slider: { label: 'Volume', hint: 'Adjust speaker level.' },
   snackbar: { show: 'Show snackbar', message: 'Changes saved' },
-  steps: {
-    ariaLabel: 'Documentation sections',
-    overview: 'Overview',
-    api: 'API',
-    examples: 'Examples',
-    overviewPanel: 'Introduction and when to use the component.',
-    apiPanel: 'Inputs, outputs, and related directives.',
-    examplesPanel: 'Copy-ready snippets.',
-  },
   switch: { hint: 'You can change this in system settings.', label: 'System dark mode' },
   tagInput: {
     label: 'Skills',

@@ -24,7 +24,7 @@ test.describe('Docs site smoke', () => {
   test('api table descriptions follow locale on input-password', async ({ page }) => {
     await page.goto('/en/components/input-password');
     await page.locator('docs-shell').waitFor({ state: 'attached' });
-    await page.locator('.docs-component-steps [auStep="api"]').click();
+    await page.locator('.docs-component-tabs [auTab="api"]').click();
     await expect(page.locator('docs-component-api-table').first()).toContainText(
       /reveal\/hide button/i,
     );
@@ -34,7 +34,7 @@ test.describe('Docs site smoke', () => {
 
     await page.goto('/es/components/input-password');
     await page.locator('docs-shell').waitFor({ state: 'attached' });
-    await page.locator('.docs-component-steps [auStep="api"]').click();
+    await page.locator('.docs-component-tabs [auTab="api"]').click();
     await expect(page.locator('docs-component-api-table').first()).toContainText(
       /botón revelar\/ocultar/i,
     );

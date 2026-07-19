@@ -2,7 +2,7 @@ import { NgComponentOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, model } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AuButton, AuStep, AuStepPanel, AuSteps } from '@aurea-design-system/components';
+import { AuButton, AuTab, AuTabPanel, AuTabs } from '@aurea-design-system/components';
 import { map } from 'rxjs';
 
 import {
@@ -34,9 +34,9 @@ import { DocsTokenList } from '../shared/docs-token-list';
     NgComponentOutlet,
     RouterLink,
     AuButton,
-    AuSteps,
-    AuStep,
-    AuStepPanel,
+    AuTabs,
+    AuTab,
+    AuTabPanel,
     ComponentDocApiTable,
     DocsComponentExample,
     DocsComponentOverview,
@@ -49,9 +49,8 @@ import { DocsTokenList } from '../shared/docs-token-list';
         [title]="meta.title"
         [lead]="summaryText()"
       >
-        <au-steps
-          class="docs-component-steps"
-          layout="tabs"
+        <au-tabs
+          class="docs-component-tabs"
           [value]="section()"
           (valueChange)="onSectionChange($event)"
           [ariaLabel]="i18n.messages().componentDoc.sectionsAria(meta.title)"
@@ -59,31 +58,31 @@ import { DocsTokenList } from '../shared/docs-token-list';
         >
           <button
             type="button"
-            auStep="overview"
+            auTab="overview"
           >
             {{ i18n.messages().componentDoc.overview }}
           </button>
           <button
             type="button"
-            auStep="api"
+            auTab="api"
           >
             {{ i18n.messages().componentDoc.api }}
           </button>
           <button
             type="button"
-            auStep="styling"
+            auTab="styling"
           >
             {{ i18n.messages().componentDoc.styling }}
           </button>
           <button
             type="button"
-            auStep="examples"
+            auTab="examples"
           >
             {{ i18n.messages().componentDoc.examples }}
           </button>
 
           <div
-            auStepPanel="overview"
+            auTabPanel="overview"
             class="docs-component-step"
           >
             <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.overview }}</h2>
@@ -116,7 +115,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
           </div>
 
           <div
-            auStepPanel="api"
+            auTabPanel="api"
             class="docs-component-step"
           >
             <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.api }}</h2>
@@ -151,7 +150,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
           </div>
 
           <div
-            auStepPanel="styling"
+            auTabPanel="styling"
             class="docs-component-step"
           >
             <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.styling }}</h2>
@@ -167,7 +166,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
           </div>
 
           <div
-            auStepPanel="examples"
+            auTabPanel="examples"
             class="docs-component-step"
           >
             <h2 class="docs-component-step__title">{{ i18n.messages().componentDoc.examples }}</h2>
@@ -185,7 +184,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
               }
             </div>
           </div>
-        </au-steps>
+        </au-tabs>
       </docs-page>
     } @else {
       <docs-page
@@ -215,7 +214,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
       max-width: 100%;
     }
 
-    .docs-component-steps {
+    .docs-component-tabs {
       position: sticky;
       top: calc(var(--docs-header-height) + var(--au-space-3));
       z-index: calc(var(--au-z-sticky) - 2);
@@ -223,7 +222,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
       padding-block: var(--au-space-2);
     }
 
-    :host-context([data-au-theme='dark']) .docs-component-steps {
+    :host-context([data-au-theme='dark']) .docs-component-tabs {
       background: var(--au-color-surface-canvas);
     }
 
@@ -348,7 +347,7 @@ import { DocsTokenList } from '../shared/docs-token-list';
     }
 
     @media (max-width: 40rem) {
-      .docs-component-steps {
+      .docs-component-tabs {
         position: static;
         margin-bottom: var(--au-space-4);
       }
@@ -406,7 +405,9 @@ export class ComponentDocPage {
     return meta ? resolveComponentExamples(meta, this.i18n.locale()) : [];
   });
 
-  onSectionChange(next: string): void {
-    this.section.set(next as ComponentDocStepId);
+  onSectionChange(next: string | undefined): void {
+    if (next) {
+      this.section.set(next as ComponentDocStepId);
+    }
   }
 }

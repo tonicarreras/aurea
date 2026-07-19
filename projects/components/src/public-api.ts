@@ -48,7 +48,7 @@ export * from './lib/select';
 export * from './lib/skeleton';
 export * from './lib/spinner';
 export * from './lib/snackbar';
-export * from './lib/steps';
+export * from './lib/stepper';
 export * from './lib/switch';
 export * from './lib/table';
 export * from './lib/tabs';

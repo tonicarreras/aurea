@@ -274,10 +274,10 @@ Dialog footers outside the `<form>`: use `auDialogSubmit="form-id"` or `type="su
 | `AuDialog`           | `<au-dialog>`                        | Native `<dialog>`                                                      |
 | `AuCard`             | `<au-card>`                          | `AuCardFooter` directive                                               |
 | `AuTabs`             | `<au-tabs>`                          | `AuTab`, `AuTabPanel`                                                  |
+| `AuStepper`          | `<au-stepper>`                       | Numbered wizard (`AuStepperStep`, `AuStepperPanel`; stable **2.3.3**)  |
 | `AuChip`             | `<au-chip>`                          | Removable / selectable                                                 |
 | `AuChipGroup`        | `<au-chip-group>`                    | Filter / choice groups (stable **1.5.0**)                              |
 | `AuList`             | `<au-list>`                          | Removable list items (stable **1.5.0**)                                |
-| `AuSteps`            | `<au-steps>`                         | Step indicator (stable **1.5.0**)                                      |
 | `AuMessage`          | `<au-message>`                       | Inline / banner notices (`layout="banner"` since **1.5.0**)            |
 | `AuIcon`             | `<au-icon>`                          | SVG icon set                                                           |
 | `AuSkeleton`         | `<au-skeleton>`                      | Loading placeholder                                                    |

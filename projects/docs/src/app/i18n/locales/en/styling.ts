@@ -378,16 +378,6 @@ export const COMPONENT_DOC_STYLING_EN: Record<string, ComponentStylingToken[]> =
     },
     { token: '--au-duration-spinner', description: 'Rotation period (~0.9s).' },
   ],
-  steps: [
-    { token: '--au-color-border-subtle', description: 'Underline rail under step buttons.' },
-    { token: '--au-color-action-primary', description: 'Active step text and indicator.' },
-    { token: '--au-color-text-secondary', description: 'Inactive step labels.' },
-    { token: '--au-focus-tab', description: 'Keyboard focus on step buttons.' },
-    {
-      token: '--au-space-6 / --au-space-10',
-      description: 'Gap between rail and panels / sections.',
-    },
-  ],
   snackbar: [
     { token: '--au-z-toast', description: 'Toast layer above modals and dropdowns.' },
     {

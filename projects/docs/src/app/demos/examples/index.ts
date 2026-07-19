@@ -24,6 +24,5 @@ export * from './snackbar.examples';
 export * from './message.examples';
 export * from './icon.examples';
 export * from './skeleton.examples';
-export * from './steps.examples';
 export * from './divider.examples';
 export * from './tooltip.examples';

@@ -1,18 +1,18 @@
 /**
  * Component doc pages (Overview / API / Styling / Examples): one column width.
- * Imported from styles.css — applies inside docs-page + au-steps.
+ * Imported from styles.css — applies inside docs-page + au-tabs.
  */
 
-.docs-page__body au-steps,
-.docs-component-steps {
+.docs-page__body au-tabs,
+.docs-component-tabs {
   display: block;
   width: 100%;
   max-width: 100%;
 }
 
-.docs-component-steps .au-steps__root,
-.docs-component-steps .au-steps__panels,
-.docs-component-steps .au-steps__panel {
+.docs-component-tabs .au-tabs__root,
+.docs-component-tabs .au-tabs__panels,
+.docs-component-tabs .au-tabs__panel {
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -81,7 +81,7 @@ docs-demo-panel {
   > *:is(
     :has(au-table),
     :has(au-tabs),
-    :has(au-steps),
+    :has(au-tabs),
     :has(au-card),
     :has(au-dialog),
     :has(au-menu),
@@ -105,7 +105,7 @@ docs-demo-panel {
   > *:is(
     :has(au-table),
     :has(au-tabs),
-    :has(au-steps),
+    :has(au-tabs),
     :has(au-pagination),
     :has(au-breadcrumb),
     :has(.docs-preview--wide),

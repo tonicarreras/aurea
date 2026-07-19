@@ -47,7 +47,7 @@ export const VISUAL_STORIES: {
   { name: 'slider-default', id: 'aurea-slider--default', slug: 'slider' },
   { name: 'snackbar-default', id: 'aurea-snackbar--default', slug: 'snackbar' },
   { name: 'spinner-default', id: 'aurea-spinner--default', slug: 'spinner' },
-  { name: 'steps-docs-navigation', id: 'aurea-steps--docs-navigation', slug: 'steps' },
+  { name: 'stepper-checkout-wizard', id: 'aurea-stepper--checkout-wizard', slug: 'stepper' },
   { name: 'switch-default', id: 'aurea-switch--default', slug: 'switch' },
   { name: 'table-default', id: 'aurea-table--default', slug: 'table' },
   { name: 'tabs-default', id: 'aurea-tabs--default', slug: 'tabs' },

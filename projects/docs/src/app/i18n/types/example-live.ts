@@ -206,18 +206,6 @@ export interface ExampleLiveMessages {
     showError: string;
     errorMessage: string;
   };
-  steps: {
-    tabsAria: string;
-    overview: string;
-    api: string;
-    overviewPanel: string;
-    apiPanel: string;
-    sectionsAria: string;
-    intro: string;
-    usage: string;
-    introPanel: string;
-    usagePanel: string;
-  };
   switch: {
     push: string;
     airplane: string;

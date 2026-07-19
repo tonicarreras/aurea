@@ -680,45 +680,6 @@ export const COMPONENT_DOC_API_ES: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
-  steps: {
-    importNames: ['AuSteps', 'AuStep', 'AuStepPanel'],
-    sections: [
-      {
-        title: 'AuSteps',
-        rows: [
-          m('value', 'ModelSignal<string>', 'Clave del paso activo.'),
-          i('ariaLabel', 'string', 'Nombre accesible de la lista de pasos.', "''"),
-          i('layout', "'tabs' | 'sections'", 'Un panel vs. secciones con scroll.', "'tabs'"),
-          i('size', "'sm' | 'md'", 'Densidad de los botones.', "'md'"),
-          i('id', 'string', 'Id base para step/panel.', "''"),
-          o('valueChange', 'string', 'Al cambiar el paso activo.'),
-        ],
-      },
-      {
-        title: 'AuStep',
-        description: 'En `<button type="button" auStep="clave">`.',
-        rows: [
-          {
-            name: 'auStep',
-            type: 'string (requerido)',
-            description: 'Clave; coincide con `auStepPanel`.',
-          },
-          i('auStepDisabled', 'boolean', 'Desactiva el paso.', 'false'),
-        ],
-      },
-      {
-        title: 'AuStepPanel',
-        description: 'En `<div auStepPanel="clave">`.',
-        rows: [
-          {
-            name: 'auStepPanel',
-            type: 'string (requerido)',
-            description: 'Clave del panel emparejada con `auStep`.',
-          },
-        ],
-      },
-    ],
-  },
   chip: {
     importNames: ['AuChip'],
     sections: [

@@ -352,7 +352,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       title: 'Alternatives',
       items: [
         'Mutually exclusive views with persistent tab chrome → `au-tabs`.',
-        'Sequential wizard with validation gates → `au-steps`.',
+        'Numbered sequential wizard → `au-stepper`.',
       ],
     },
     anatomy: [
@@ -690,7 +690,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       title: 'Alternatives',
       items: [
         'App-wide navigation → router and menu.',
-        'Sequential steps with validation → `au-steps`.',
+        'Numbered sequential wizard → `au-stepper`.',
       ],
     },
     anatomy: [
@@ -942,32 +942,41 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
       'Use `decorative` inside buttons or other controls that already expose busy state.',
     ],
   },
-  steps: {
+  stepper: {
     intro: [
-      'Horizontal step navigation for docs and wizards: `button[auStep]` + `[auStepPanel]`.',
-      '`layout="tabs"` shows one panel; `layout="sections"` scrolls to visible sections.',
+      'Numbered sequential wizard: `au-stepper` + `button[auStep]` + `[auStepPanel]`.',
+      'Use `layout` horizontal/vertical and `linear` to gate progress. For section nav use `au-tabs`.',
     ],
     whenToUse: {
       title: 'When to use',
       items: [
-        'Documentation sites (Overview / API / Examples).',
-        'Multi-section pages with stable keys.',
+        'Multi-step wizards with completion state (`auStepCompleted`).',
+        'Optional / error step states (`auStepOptional`, `auStepError`).',
       ],
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: ['App primary nav → `au-tabs`.', 'Strict wizard with completion → dedicated stepper.'],
+      items: [
+        'Section / page nav without numbers → `au-tabs`.',
+        'App primary nav → `au-tabs`.',
+      ],
     },
     anatomy: [
-      { region: 'Step list', detail: 'Horizontal buttons with active indicator.' },
-      { region: 'Panels', detail: 'Tab panels or always-visible regions.' },
+      {
+        region: 'Step list',
+        detail: 'Numbered triggers via CSS `counter(stepper-index)`.',
+      },
+      {
+        region: 'Panels',
+        detail: 'One active region panel at a time.',
+      },
     ],
     accessibility: [
-      'Tabs layout: tablist + tab + tabpanel.',
-      'Sections layout: `aria-current` on active step.',
+      '`aria-current="step"` on the active trigger.',
+      '`aria-disabled` when linear mode blocks a future step.',
     ],
     keyboard: ['Arrow keys, Home, and End move between enabled steps.'],
-    relatedExports: ['AuStep', 'AuStepPanel', 'AuStepsLayout'],
+    relatedExports: ['AuStepperStep', 'AuStepperPanel', 'AuStepperLayout'],
   },
   divider: {
     intro: [

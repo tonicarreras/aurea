@@ -98,15 +98,6 @@ export const PREVIEWS_ES: PreviewMessages = {
   select: { label: 'País', placeholder: 'Elige un país' },
   slider: { label: 'Volumen', hint: 'Ajusta el nivel del altavoz.' },
   snackbar: { show: 'Mostrar snackbar', message: 'Cambios guardados' },
-  steps: {
-    ariaLabel: 'Secciones de documentación',
-    overview: 'Resumen',
-    api: 'API',
-    examples: 'Ejemplos',
-    overviewPanel: 'Introducción y cuándo usar el componente.',
-    apiPanel: 'Inputs, outputs y directivas relacionadas.',
-    examplesPanel: 'Fragmentos listos para copiar.',
-  },
   switch: { hint: 'Puedes cambiarlo en ajustes del sistema.', label: 'Modo oscuro del sistema' },
   tagInput: {
     label: 'Habilidades',

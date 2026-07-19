@@ -902,45 +902,6 @@ export const COMPONENT_DOC_API_EN: Record<string, ResolvedComponentApi> = {
       },
     ],
   },
-  steps: {
-    importNames: ['AuSteps', 'AuStep', 'AuStepPanel'],
-    sections: [
-      {
-        title: 'AuSteps',
-        rows: [
-          m('value', 'ModelSignal<string>', 'Active step key.'),
-          i('ariaLabel', 'string', 'Accessible name of the step list.', "''"),
-          i('layout', "'tabs' | 'sections'", 'One panel vs. scrollable sections.', "'tabs'"),
-          i('size', "'sm' | 'md'", 'Step button density.', "'md'"),
-          i('id', 'string', 'Base id for step/panel elements.', "''"),
-          o('valueChange', 'string', 'When the active step changes.'),
-        ],
-      },
-      {
-        title: 'AuStep',
-        description: 'On `<button type="button" auStep="key">`.',
-        rows: [
-          {
-            name: 'auStep',
-            type: 'string (required)',
-            description: 'Step key; matches `auStepPanel`.',
-          },
-          i('auStepDisabled', 'boolean', 'Disables the step.', 'false'),
-        ],
-      },
-      {
-        title: 'AuStepPanel',
-        description: 'On `<div auStepPanel="key">`.',
-        rows: [
-          {
-            name: 'auStepPanel',
-            type: 'string (required)',
-            description: 'Panel key paired with `auStep`.',
-          },
-        ],
-      },
-    ],
-  },
   badge: {
     importNames: ['AuBadge'],
     sections: [

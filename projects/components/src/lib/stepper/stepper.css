@@ -1,0 +1,253 @@
+/**
+ * Stepper — sequential progress for wizards.
+ */
+
+au-stepper {
+  display: block;
+  font-family: var(--au-font-sans);
+  color: var(--au-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+.au-stepper__root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-6);
+  width: 100%;
+}
+
+.au-stepper__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--au-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.au-stepper__step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--au-space-2);
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: var(--au-space-2) var(--au-space-3);
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+  color: var(--au-color-text-tertiary);
+  font: inherit;
+  font-size: var(--au-text-sm);
+  font-weight: var(--au-weight-medium);
+  line-height: var(--au-leading-normal);
+  text-align: left;
+  cursor: pointer;
+  transition: var(--au-transition-control);
+}
+
+.au-stepper__step--completed {
+  color: var(--au-color-text-secondary);
+}
+
+.au-stepper__step::before {
+  content: counter(stepper-index);
+  counter-increment: stepper-index;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  box-sizing: border-box;
+  border-radius: var(--au-radius-full);
+  border: var(--au-chrome-border);
+  background: var(--au-color-surface-raised);
+  color: var(--au-color-text-tertiary);
+  font-size: var(--au-text-xs);
+  font-weight: var(--au-weight-semibold);
+  flex: 0 0 auto;
+}
+
+.au-stepper__list {
+  counter-reset: stepper-index;
+}
+
+.au-stepper__step:hover:not(:disabled):not(.au-stepper__step--blocked):not(.au-stepper__step--current) {
+  border-color: var(--au-chrome-border-color-hover);
+  color: var(--au-color-text-primary);
+}
+
+.au-stepper__step--current {
+  border-color: var(--au-chrome-border-color);
+  background: var(--au-color-surface-raised);
+  color: var(--au-color-text-primary);
+  font-weight: var(--au-weight-semibold);
+  box-shadow: var(--au-focus-inset);
+}
+
+.au-stepper__step--current:hover {
+  border-color: var(--au-chrome-border-color);
+}
+
+.au-stepper__step--current::before {
+  border-color: var(--au-color-action-primary);
+  background: var(--au-color-action-primary);
+  color: #fff;
+}
+
+.au-stepper__step--completed::before {
+  content: '✓';
+  border-color: var(--au-color-feedback-success-border);
+  background: var(--au-color-feedback-success-bg);
+  color: var(--au-color-feedback-success-title);
+}
+
+.au-stepper__step--blocked {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.au-stepper__step--optional::after {
+  content: '(optional)';
+  margin-left: auto;
+  font-size: var(--au-text-xs);
+  color: var(--au-color-text-tertiary);
+  white-space: nowrap;
+}
+
+.au-stepper__step--error {
+  border-color: var(--au-color-form-error-border, var(--au-color-feedback-error-border));
+  background: var(--au-color-form-error-bg, var(--au-color-feedback-error-bg));
+}
+
+.au-stepper__step--error::before {
+  border-color: var(--au-color-feedback-error-border);
+  background: var(--au-color-feedback-error-bg);
+  color: var(--au-color-feedback-error-title);
+}
+
+.au-stepper__step:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+au-stepper[data-au-size='sm'] .au-stepper__step {
+  min-height: 2.25rem;
+  font-size: var(--au-text-xs);
+}
+
+.au-stepper__step:focus-visible:not(.au-stepper__step--from-tab) {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: var(--au-focus-inset);
+  outline: none;
+}
+
+.au-stepper__step--from-tab:focus-visible {
+  border-color: var(--au-chrome-border-color);
+  box-shadow: none;
+  outline: var(--au-focus-tab);
+  outline-offset: var(--au-focus-tab-offset);
+}
+
+.au-stepper__panels {
+  display: block;
+}
+
+.au-stepper__panel {
+  margin: 0;
+  padding: var(--au-space-4) var(--au-space-4);
+  box-sizing: border-box;
+  border: var(--au-chrome-border);
+  border-radius: var(--au-radius-field);
+  background: var(--au-color-surface-raised);
+  box-shadow: var(--au-elevation-flat);
+}
+
+.au-stepper__panel[hidden] {
+  display: none !important;
+}
+
+.au-stepper__panel--active {
+  animation: au-stepper-panel-in var(--au-duration-default) var(--au-ease-out) both;
+}
+
+@keyframes au-stepper-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-stepper__panel--active {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Vertical layout                                                    */
+/* ------------------------------------------------------------------ */
+
+au-stepper[data-au-layout='vertical'] .au-stepper__root {
+  flex-direction: row;
+}
+
+au-stepper[data-au-layout='vertical'] .au-stepper__nav {
+  flex: 0 0 auto;
+}
+
+au-stepper[data-au-layout='vertical'] .au-stepper__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--au-space-1);
+  grid-template-columns: none;
+  min-width: 12rem;
+}
+
+au-stepper[data-au-layout='vertical'] .au-stepper__panels {
+  flex: 1 1 auto;
+}
+
+/* Vertical connector line */
+
+au-stepper[data-au-layout='vertical'] .au-stepper__step::after {
+  content: '';
+  position: absolute;
+  left: calc(0.75rem - 1px);
+  top: 2.75rem;
+  bottom: -0.5rem;
+  width: 2px;
+  background: var(--au-color-border-subtle);
+  pointer-events: none;
+}
+
+au-stepper[data-au-layout='vertical'] .au-stepper__step:last-child::after {
+  display: none;
+}
+
+au-stepper[data-au-layout='vertical'] .au-stepper__step--completed::after {
+  background: var(--au-color-action-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Responsive: horizontal scroll on small screens                     */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 640px) {
+  au-stepper:not([data-au-layout='vertical']) .au-stepper__list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    grid-template-columns: unset;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(8rem, 1fr);
+  }
+}
