@@ -15,6 +15,8 @@
 
 /** Portaled chrome — keep overflow visible so the shared floating arrow is not clipped. */
 .au-popover__panel.au-floating-panel {
+  /* Below --au-z-dropdown so nested field listboxes (selects) stack above the menu. */
+  z-index: var(--au-z-popover);
   overflow: visible;
 }
 
@@ -24,6 +26,12 @@
   max-height: min(24rem, calc(100dvh - 2rem));
   padding: var(--au-space-4) var(--au-space-5);
   box-sizing: border-box;
+}
+
+/** Absolute listbox fallback must not be clipped while open inside the popover. */
+.au-popover__panel:has([data-au-listbox-open]) .au-popover__body,
+.au-popover__panel:has(.au-field-listbox--overlay) .au-popover__body {
+  overflow: visible;
 }
 
 .au-popover__panel:focus-visible {

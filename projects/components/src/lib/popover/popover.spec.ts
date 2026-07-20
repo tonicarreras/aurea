@@ -138,6 +138,22 @@ describe('AuPopover', () => {
     expect(fixture.componentInstance.open).toBe(false);
   });
 
+  it('stays open when clicking a portaled field listbox overlay', async () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.open = true;
+    await fixture.whenStable();
+
+    const listbox = document.createElement('ul');
+    listbox.className = 'au-field-listbox au-field-listbox--overlay';
+    document.body.appendChild(listbox);
+
+    listbox.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.open).toBe(true);
+
+    listbox.remove();
+  });
+
   it('ignores document click when target is not a Node', async () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.open = true;

@@ -111,7 +111,11 @@ export class AuPopover {
         }
         const panel = this.panelRef()?.nativeElement;
         const host = this.host.nativeElement;
-        return host.contains(target) || !!panel?.contains(target);
+        return (
+          host.contains(target) ||
+          !!panel?.contains(target) ||
+          isPortaledFieldOverlayTarget(target)
+        );
       }),
     );
   });
@@ -124,7 +128,10 @@ export class AuPopover {
     const onScroll = (event: Event): void => {
       const panel = this.panelRef()?.nativeElement;
       const target = event.target;
-      if (panel && target instanceof Node && panel.contains(target)) {
+      if (
+        (panel && target instanceof Node && panel.contains(target)) ||
+        isPortaledFieldOverlayTarget(target)
+      ) {
         return;
       }
       this.close();
@@ -168,7 +175,11 @@ export class AuPopover {
     }
     const host = this.host.nativeElement;
     const panel = this.panelRef()?.nativeElement;
-    if (host.contains(target) || panel?.contains(target)) {
+    if (
+      host.contains(target) ||
+      panel?.contains(target) ||
+      isPortaledFieldOverlayTarget(target)
+    ) {
       return;
     }
     this.close();
@@ -192,4 +203,9 @@ export class AuPopover {
     }
     handleDialogTabKeydown(event, panel);
   }
+}
+
+/** Portaled select/autocomplete listboxes live on `document.body`, outside the popover panel. */
+function isPortaledFieldOverlayTarget(target: EventTarget | null): boolean {
+  return target instanceof Element && target.closest('.au-field-listbox--overlay') !== null;
 }
