@@ -5,8 +5,8 @@ Repo: **`aurea`** / npm `@aurea-design-system/components`. Consumido por **mirea
 ## Antes de codificar
 
 1. Skill de proyecto: `.agents/skills/aurea-ds` (obligatoria en este repo).
-2. Angular genérico: skill global `angular-developer` (`~/.agents/skills/`) — no hay copia en el repo.
-3. **No usamos `.claude/`.** Skills solo en `.agents/skills/` (directorio gitignored; inventario abajo).
+2. Angular genérico: skill global `angular-developer` (`~/.agents/skills/` o `~/.cursor/skills/`) — no hay copia en el repo.
+3. Tooling de agentes: **Cursor** (`.cursor/` si existe; skills de producto en `.agents/skills/`, gitignored).
 
 ## Skills locales (`.agents/skills/`)
 
