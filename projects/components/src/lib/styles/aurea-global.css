@@ -2534,6 +2534,10 @@ au-dialog,
   border-top: 1px solid var(--au-color-border-subtle);
 }
 
+.au-dialog__native .au-dialog__footer:not(:has([auDialogFooter])) {
+  display: none;
+}
+
 .au-dialog__native .au-dialog__footer [auDialogFooter],
 .au-dialog__native [auDialogFooter],
 au-dialog [auDialogFooter] {
@@ -2739,6 +2743,10 @@ au-drawer,
   gap: var(--au-space-3);
   padding: var(--au-space-3) var(--au-space-4) var(--au-space-4);
   border-top: 1px solid var(--au-color-border-subtle);
+}
+
+.au-drawer__native .au-drawer__footer:not(:has([auDrawerFooter], [auDialogFooter])) {
+  display: none;
 }
 
 .au-drawer__native .au-drawer__footer [auDrawerFooter],

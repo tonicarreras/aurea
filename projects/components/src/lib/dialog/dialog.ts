@@ -43,7 +43,8 @@ import { focusInitialInDialogPanel, handleDialogTabKeydown } from './dialog-focu
  * - **Scroll:** background wheel/touch scroll is blocked while open; scroll inside `.au-dialog__body` still works.
  * - **Pointer:** background clicks are blocked while open so portaled dialogs do not leak interaction to the page.
  * - **Portal:** native `<dialog>` moves to `document.body` while open so it is not clipped by ancestor overflow.
- * - **Footer:** import `AuDialogFooter` in the host that projects `[auDialogFooter]`.
+ * - **Footer:** project actions with `[auDialogFooter]`. Importing `AuDialogFooter` is recommended
+ *   (enables `hasFooter()` / `footerSlot`); the attribute alone is enough for the actions to render.
  *
  * @example
  * ```html

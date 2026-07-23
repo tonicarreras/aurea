@@ -552,11 +552,13 @@ describe('AuDialog', () => {
     expect(n).toBe(0);
   });
 
-  it('does not render footer when auDialogFooter is absent', async () => {
+  it('keeps an empty footer slot when auDialogFooter is absent', async () => {
     const fix = TestBed.createComponent(AuDialog);
     fix.componentRef.setInput('open', true);
     await fix.whenStable();
-    expect(fix.debugElement.query(By.css('.au-dialog__footer'))).toBeNull();
+    const footer = fix.debugElement.query(By.css('.au-dialog__footer'));
+    expect(footer).not.toBeNull();
+    expect(footer!.nativeElement.querySelector('[auDialogFooter]')).toBeNull();
     expect(fix.componentInstance.hasFooter()).toBe(false);
     expect(fix.componentInstance.footerSlot()).toBeUndefined();
   });
@@ -567,6 +569,17 @@ describe('AuDialog', () => {
     const dialog = fix.debugElement.query(By.directive(AuDialog))!.componentInstance as AuDialog;
     expect(dialog.hasFooter()).toBe(true);
     expect(dialog.footerSlot()).toBeDefined();
+  });
+
+  it('renders footer actions from [auDialogFooter] without importing AuDialogFooter', async () => {
+    const fix = TestBed.createComponent(TestDialogFooterAttributeOnlyComponent);
+    await fix.whenStable();
+    const footer = fix.debugElement.query(By.css('.au-dialog__footer'));
+    expect(footer).not.toBeNull();
+    expect(footer!.nativeElement.textContent).toContain('Attribute-only save');
+    const dialog = fix.debugElement.query(By.directive(AuDialog))!.componentInstance as AuDialog;
+    // Directive instance is absent, but projected actions still render.
+    expect(dialog.hasFooter()).toBe(false);
   });
 
   it('polyfills showModal when showModal is missing', async () => {
@@ -838,6 +851,21 @@ class TestDialogComponent {}
   `,
 })
 class TestDialogWithFooterComponent {}
+
+@Component({
+  selector: 'test-dialog-footer-attr-only',
+  imports: [AuDialog],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <au-dialog [open]="true">
+      <p>Dialog body</p>
+      <div auDialogFooter>
+        <button type="button">Attribute-only save</button>
+      </div>
+    </au-dialog>
+  `,
+})
+class TestDialogFooterAttributeOnlyComponent {}
 
 @Component({
   selector: 'test-dialog-focus-trap',

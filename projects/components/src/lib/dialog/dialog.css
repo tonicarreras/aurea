@@ -174,6 +174,10 @@ au-dialog,
   border-top: 1px solid var(--au-color-border-subtle);
 }
 
+.au-dialog__native .au-dialog__footer:not(:has([auDialogFooter])) {
+  display: none;
+}
+
 .au-dialog__native .au-dialog__footer [auDialogFooter],
 .au-dialog__native [auDialogFooter],
 au-dialog [auDialogFooter] {

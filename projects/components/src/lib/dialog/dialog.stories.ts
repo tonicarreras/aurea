@@ -156,7 +156,7 @@ export const WithFooter: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Importa `AuDialogFooter` en el componente host que proyecta el pie.',
+        story: 'Proyecta acciones con `[auDialogFooter]`. Importar `AuDialogFooter` es recomendable.',
       },
     },
   },

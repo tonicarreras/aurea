@@ -173,6 +173,10 @@ au-drawer,
   border-top: 1px solid var(--au-color-border-subtle);
 }
 
+.au-drawer__native .au-drawer__footer:not(:has([auDrawerFooter], [auDialogFooter])) {
+  display: none;
+}
+
 .au-drawer__native .au-drawer__footer [auDrawerFooter],
 .au-drawer__native .au-drawer__footer [auDialogFooter],
 .au-drawer__native [auDrawerFooter],

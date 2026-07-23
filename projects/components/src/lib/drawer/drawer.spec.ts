@@ -261,6 +261,28 @@ describe('AuDrawer', () => {
     expect(drawer.hasFooter()).toBe(true);
   });
 
+  it('renders drawer footer actions without importing AuDialogFooter', async () => {
+    @Component({
+      imports: [AuDrawer],
+      template: `
+        <au-drawer [open]="true">
+          <div auDrawerFooter>
+            <button type="button">Attribute-only save</button>
+          </div>
+        </au-drawer>
+      `,
+    })
+    class Host {}
+
+    const fix = TestBed.createComponent(Host);
+    await fix.whenStable();
+    const footer = fix.debugElement.query(By.css('.au-drawer__footer'));
+    expect(footer).not.toBeNull();
+    expect(footer!.nativeElement.textContent).toContain('Attribute-only save');
+    const drawer = fix.debugElement.query(By.directive(AuDrawer)).componentInstance as AuDrawer;
+    expect(drawer.hasFooter()).toBe(false);
+  });
+
   it('polyfills close when close is not a function on the instance', async () => {
     const fix = TestBed.createComponent(AuDrawer);
     fix.componentRef.setInput('open', true);

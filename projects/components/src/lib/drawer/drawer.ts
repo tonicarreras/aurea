@@ -42,7 +42,8 @@ export type AuDrawerSize = 'sm' | 'md' | 'lg' | 'full';
  * - **Position:** `start` (left in LTR) or `end` (right in LTR).
  * - **Accessibility:** same focus trap as `au-dialog`; background wheel/touch scroll is blocked while open.
  * - **Portal:** native `<dialog>` moves to `document.body` while open so it covers the viewport.
- * - **Footer:** project actions with `[auDrawerFooter]` (alias of `AuDialogFooter`).
+ * - **Footer:** project actions with `[auDrawerFooter]` / `[auDialogFooter]`. Importing
+ *   `AuDialogFooter` is recommended (enables `hasFooter()`); the attribute alone is enough to render.
  */
 @Component({
   selector: 'au-drawer',

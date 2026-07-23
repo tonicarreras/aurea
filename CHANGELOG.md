@@ -9,6 +9,12 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+## [2.3.4] - 2026-07-23
+
+### Fixed
+
+- **`au-dialog` / `au-drawer` footer** — always project `[auDialogFooter]` / `[auDrawerFooter]` by attribute so primary actions remain visible even when the host forgets to import `AuDialogFooter`. Empty footers stay hidden via CSS.
+
 ## [2.3.2] - 2026-07-17
 
 ### Added

@@ -42,10 +42,13 @@
       <ng-content></ng-content>
     </div>
 
-    @if (hasFooter()) {
-      <footer class="au-dialog__footer">
-        <ng-content select="[auDialogFooter]"></ng-content>
-      </footer>
-    }
+    <!--
+      Always project the footer slot by attribute. Gating on contentChild(AuDialogFooter)
+      hid actions when hosts forgot to import the directive (attribute alone is enough for ng-content).
+      Empty footers are hidden via CSS (:not(:has([auDialogFooter]))).
+    -->
+    <footer class="au-dialog__footer">
+      <ng-content select="[auDialogFooter]"></ng-content>
+    </footer>
   </div>
 </dialog>
