@@ -163,7 +163,7 @@ export class AuStepper {
         break;
     }
 
-    const target = enabled[targetIndex]!;
+    const target = enabled[targetIndex];
     if (this.canSelect(target.auStep())) {
       this.selectStep(target.auStep());
     }
@@ -180,7 +180,7 @@ export class AuStepper {
       if (current && enabled.some((s) => s.auStep() === current)) {
         return;
       }
-      this.value.set(enabled[0]!.auStep());
+      this.value.set(enabled[0].auStep());
     });
   }
 }

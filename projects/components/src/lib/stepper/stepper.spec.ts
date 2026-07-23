@@ -92,7 +92,9 @@ describe('AuStepper', () => {
     await flushStepperSelection();
     fix.detectChanges();
 
-    const shipping = fix.nativeElement.querySelector('button[auStep="shipping"]') as HTMLButtonElement;
+    const shipping = fix.nativeElement.querySelector(
+      'button[auStep="shipping"]',
+    ) as HTMLButtonElement;
     shipping.click();
     fix.detectChanges();
 
@@ -120,7 +122,9 @@ describe('AuStepper', () => {
     await flushStepperSelection();
     fix.detectChanges();
 
-    const account = fix.nativeElement.querySelector('button[auStep="account"]') as HTMLButtonElement;
+    const account = fix.nativeElement.querySelector(
+      'button[auStep="account"]',
+    ) as HTMLButtonElement;
     expect(account.classList.contains('au-stepper__step--completed')).toBe(true);
   });
 
@@ -169,10 +173,29 @@ describe('AuStepper', () => {
     @Component({
       imports: [AuStepper, AuStepperStep, AuStepperPanel],
       template: `
-        <au-stepper [(value)]="active" ariaLabel="Test">
-          <button type="button" auStep="a" [auStepDisabled]="true">A</button>
-          <button type="button" auStep="b">B</button>
-          <button type="button" auStep="c">C</button>
+        <au-stepper
+          [(value)]="active"
+          ariaLabel="Test"
+        >
+          <button
+            type="button"
+            auStep="a"
+            [auStepDisabled]="true"
+          >
+            A
+          </button>
+          <button
+            type="button"
+            auStep="b"
+          >
+            B
+          </button>
+          <button
+            type="button"
+            auStep="c"
+          >
+            C
+          </button>
           <div auStepPanel="a">A</div>
           <div auStepPanel="b">B</div>
           <div auStepPanel="c">C</div>
@@ -223,7 +246,9 @@ describe('AuStepper', () => {
     await flushStepperSelection();
     fix.detectChanges();
 
-    const account = fix.nativeElement.querySelector('button[auStep="account"]') as HTMLButtonElement;
+    const account = fix.nativeElement.querySelector(
+      'button[auStep="account"]',
+    ) as HTMLButtonElement;
     account.click();
     fix.detectChanges();
     expect(fix.componentInstance.active).toBe('account');
@@ -233,9 +258,24 @@ describe('AuStepper', () => {
     @Component({
       imports: [AuStepper, AuStepperStep, AuStepperPanel],
       template: `
-        <au-stepper [(value)]="active" ariaLabel="Disabled">
-          <button type="button" auStep="a" [auStepDisabled]="true">A</button>
-          <button type="button" auStep="b" [auStepDisabled]="true">B</button>
+        <au-stepper
+          [(value)]="active"
+          ariaLabel="Disabled"
+        >
+          <button
+            type="button"
+            auStep="a"
+            [auStepDisabled]="true"
+          >
+            A
+          </button>
+          <button
+            type="button"
+            auStep="b"
+            [auStepDisabled]="true"
+          >
+            B
+          </button>
           <div auStepPanel="a">A</div>
           <div auStepPanel="b">B</div>
         </au-stepper>
@@ -264,9 +304,23 @@ describe('AuStepper', () => {
     @Component({
       imports: [AuStepper, AuStepperStep, AuStepperPanel],
       template: `
-        <au-stepper [(value)]="active" ariaLabel="Disabled">
-          <button type="button" auStep="a">A</button>
-          <button type="button" auStep="b" [auStepDisabled]="true">B</button>
+        <au-stepper
+          [(value)]="active"
+          ariaLabel="Disabled"
+        >
+          <button
+            type="button"
+            auStep="a"
+          >
+            A
+          </button>
+          <button
+            type="button"
+            auStep="b"
+            [auStepDisabled]="true"
+          >
+            B
+          </button>
           <div auStepPanel="a">A</div>
           <div auStepPanel="b">B</div>
         </au-stepper>
@@ -298,11 +352,37 @@ describe('AuStepper', () => {
     @Component({
       imports: [AuStepper, AuStepperStep, AuStepperPanel],
       template: `
-        <au-stepper [(value)]="active" ariaLabel="Test" [linear]="true">
-          <button type="button" auStep="first" [auStepCompleted]="true">First</button>
-          <button type="button" auStep="second">Second</button>
-          <button type="button" auStep="third" [auStepOptional]="true">Third</button>
-          <button type="button" auStep="fourth">Fourth</button>
+        <au-stepper
+          [(value)]="active"
+          ariaLabel="Test"
+          [linear]="true"
+        >
+          <button
+            type="button"
+            auStep="first"
+            [auStepCompleted]="true"
+          >
+            First
+          </button>
+          <button
+            type="button"
+            auStep="second"
+          >
+            Second
+          </button>
+          <button
+            type="button"
+            auStep="third"
+            [auStepOptional]="true"
+          >
+            Third
+          </button>
+          <button
+            type="button"
+            auStep="fourth"
+          >
+            Fourth
+          </button>
           <div auStepPanel="first">First</div>
           <div auStepPanel="second">Second</div>
           <div auStepPanel="third">Third</div>
@@ -341,9 +421,23 @@ describe('AuStepper', () => {
     @Component({
       imports: [AuStepper, AuStepperStep, AuStepperPanel],
       template: `
-        <au-stepper [(value)]="active" ariaLabel="Test">
-          <button type="button" auStep="a" [auStepError]="true">A</button>
-          <button type="button" auStep="b">B</button>
+        <au-stepper
+          [(value)]="active"
+          ariaLabel="Test"
+        >
+          <button
+            type="button"
+            auStep="a"
+            [auStepError]="true"
+          >
+            A
+          </button>
+          <button
+            type="button"
+            auStep="b"
+          >
+            B
+          </button>
           <div auStepPanel="a">A</div>
           <div auStepPanel="b">B</div>
         </au-stepper>
@@ -457,8 +551,18 @@ describe('AuStepper', () => {
           ariaLabel="Test"
           layout="vertical"
         >
-          <button type="button" auStep="a">A</button>
-          <button type="button" auStep="b">B</button>
+          <button
+            type="button"
+            auStep="a"
+          >
+            A
+          </button>
+          <button
+            type="button"
+            auStep="b"
+          >
+            B
+          </button>
           <div auStepPanel="a">A</div>
           <div auStepPanel="b">B</div>
         </au-stepper>

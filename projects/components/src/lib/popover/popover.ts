@@ -112,9 +112,7 @@ export class AuPopover {
         const panel = this.panelRef()?.nativeElement;
         const host = this.host.nativeElement;
         return (
-          host.contains(target) ||
-          !!panel?.contains(target) ||
-          isPortaledFieldOverlayTarget(target)
+          host.contains(target) || !!panel?.contains(target) || isPortaledFieldOverlayTarget(target)
         );
       }),
     );
@@ -175,11 +173,7 @@ export class AuPopover {
     }
     const host = this.host.nativeElement;
     const panel = this.panelRef()?.nativeElement;
-    if (
-      host.contains(target) ||
-      panel?.contains(target) ||
-      isPortaledFieldOverlayTarget(target)
-    ) {
+    if (host.contains(target) || panel?.contains(target) || isPortaledFieldOverlayTarget(target)) {
       return;
     }
     this.close();

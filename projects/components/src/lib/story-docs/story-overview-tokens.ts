@@ -134,7 +134,8 @@ export const STORY_OVERVIEW_TOKENS: Partial<Record<string, StoryDocsTokenRow[]>>
   stepper: [
     {
       concern: 'Index',
-      examples: '`--au-color-action-primary`, `--au-color-feedback-success-*`, `--au-color-feedback-error-*`',
+      examples:
+        '`--au-color-action-primary`, `--au-color-feedback-success-*`, `--au-color-feedback-error-*`',
     },
     { concern: 'Focus', examples: '`--au-color-focus-ring`' },
   ],

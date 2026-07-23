@@ -76,7 +76,9 @@ au-stepper {
   counter-reset: stepper-index;
 }
 
-.au-stepper__step:hover:not(:disabled):not(.au-stepper__step--blocked):not(.au-stepper__step--current) {
+.au-stepper__step:hover:not(:disabled):not(.au-stepper__step--blocked):not(
+    .au-stepper__step--current
+  ) {
   border-color: var(--au-chrome-border-color-hover);
   color: var(--au-color-text-primary);
 }

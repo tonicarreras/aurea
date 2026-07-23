@@ -956,10 +956,7 @@ export const OVERVIEWS_EN: Record<string, ComponentDocOverview> = {
     },
     whenNotToUse: {
       title: 'Alternatives',
-      items: [
-        'Section / page nav without numbers → `au-tabs`.',
-        'App primary nav → `au-tabs`.',
-      ],
+      items: ['Section / page nav without numbers → `au-tabs`.', 'App primary nav → `au-tabs`.'],
     },
     anatomy: [
       {
