@@ -9,6 +9,10 @@ Git tags for library releases use the prefix **`components-v`** (see [VERSIONING
 
 ## [Unreleased]
 
+### Fixed
+
+- **Pagination** — align the previous-page accessible name with the visible Prev label for speech input and accessibility checks.
+
 ## [2.3.2] - 2026-07-17
 
 ### Added
