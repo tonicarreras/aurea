@@ -73,10 +73,10 @@
     "@storybook/addon-vitest": "^10.5.2",
     "@storybook/angular": "^10.5.2",
     "@storybook/test-runner": "0.24.4",
-    "@testing-library/angular": "^19.4.1",
+    "@testing-library/angular": "^19.5.0",
     "@types/prismjs": "^1.26.6",
-    "@vitest/browser-playwright": "^4.1.10",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/browser-playwright": "^5.0.5",
+    "@vitest/coverage-v8": "^5.0.5",
     "ajv": "^8.20.0",
     "angular-eslint": "^22.1.0",
     "axe-playwright": "^2.2.2",
@@ -92,7 +92,7 @@
     "storybook": "^10.5.2",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.64.0",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.5"
   },
   "overrides": {
     "websocket-driver": "^0.7.5"
